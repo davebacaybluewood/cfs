@@ -155,7 +155,10 @@ const submitInvite = expressAsync(async (req, res) => {
     .then((response) => {
       response.send(response.message);
     })
-    .catch((error) => res.status(500).send(error.message));
+    .catch((error) => {
+      res.status(500);
+      throw new Error("Error occured in submission.");
+    });
 
   if (inviteeSave || sendHTMLEmail) {
     res.status(201).json({
