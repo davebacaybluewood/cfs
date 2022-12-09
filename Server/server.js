@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import inquiryRoutes from "./routes/inquiryRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+import path from "path";
 
 const app = express();
 dotenv.config();
