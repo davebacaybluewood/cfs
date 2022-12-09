@@ -10,7 +10,8 @@
     "client": "npm start --prefix Web",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node Server/seeder",
-    "data:destroy": "node Server/seeder -d"
+    "data:destroy": "node Server/seeder -d",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Web && npm run build --prefix Web"
   },
   "repository": {
     "type": "git",
