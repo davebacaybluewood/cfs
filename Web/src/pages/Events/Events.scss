@@ -1,10 +1,12 @@
+@import "~styles/base";
+
 .event-content {
   .banner {
     margin-bottom: 0;
   }
 
   .working-steps {
-    padding: 6rem;
+    padding: 3rem;
     background-color: #fff;
     height: auto;
     .title {
@@ -17,11 +19,18 @@
     }
     .steps {
       h1 {
-        color: #333;
+        color: #fff;
+        font-size: 10rem;
+        background: $main-color-gradient;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
       }
       h5 {
         color: #333;
         font-weight: 300;
+        font-size: 2rem;
 
         &::after {
           display: block;

@@ -20,7 +20,7 @@ const Portal = () => {
                   description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                   eiusmod tempor incididunt ut labore"
                   linkProps={{
-                    link: "https://i-paymaster.com/signup",
+                    link: "https://agent.comfortlifefinancial.com/signup",
                     text: "Sign up",
                   }}
                   bgFadedPosition="right"
@@ -41,7 +41,7 @@ const Portal = () => {
                   description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                   eiusmod tempor incididunt ut labore"
                   linkProps={{
-                    link: "https://i-paymaster.com/Users/Account/AccessDenied?ReturnUrl=%2f",
+                    link: "https://agent.comfortlifefinancial.com/",
                     text: "Login",
                   }}
                   bgFadedPosition="left"

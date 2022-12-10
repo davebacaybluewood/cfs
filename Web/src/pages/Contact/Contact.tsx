@@ -1,4 +1,5 @@
 import { Container, Grid } from "@mui/material";
+import { MAIN_CALENDLY_EVENT_LINK } from "constants/constants";
 import Banner from "library/Banner/Banner";
 import Button from "library/Button/Button";
 import HeaderTitle from "pages/Home/components/HeaderTitle/HeaderTitle";
@@ -38,7 +39,7 @@ const Contact = () => {
       >
         <Container>
           <HeaderTitle
-            title="+880 013 143 206"
+            title="+1 (626) 722-1611"
             bigTitle="To Make Requests For The Further Information"
             hasBorder={false}
           />
@@ -46,7 +47,7 @@ const Contact = () => {
             Book a Appointment
           </Button>
           <PopupModal
-            url="https://calendly.com/dave-bacay-vc/call-us-testing"
+            url={MAIN_CALENDLY_EVENT_LINK}
             onModalClose={() => setCalendlyModal(false)}
             open={calendlyModal}
             rootElement={document.getElementById("root") as any}

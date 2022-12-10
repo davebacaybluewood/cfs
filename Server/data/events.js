@@ -30,7 +30,7 @@ const events = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.",
     event_date: new Date(),
     image: "/assets/others/event-1.png",
-    ticket: "/assets/others/event-ticket.png",
+    ticket: "/assets/others/event-.png",
     variant: "dark",
     ticket_cloudinary_id: "asas",
     image_cloudinary_id: "asgasg",

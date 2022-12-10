@@ -1,4 +1,4 @@
-import { CONTACT_LIST, IMAGES } from "constants/constants";
+import { CONTACT_LIST, IMAGES, SOCIAL_LINKS } from "constants/constants";
 import {
   FaFacebookF,
   FaInstagram,
@@ -34,24 +34,25 @@ const Inquiries = () => {
         </ul>
         <ul className="right-icons">
           <li>
-            <div className="top-nav-icon">
-              <FaFacebookF />
-            </div>
+            <a href={SOCIAL_LINKS.TWITTER} target="_blank">
+              <div className="top-nav-icon">
+                <FaTwitter />
+              </div>
+            </a>
           </li>
           <li>
-            <div className="top-nav-icon">
-              <FaTwitter />
-            </div>
+            <a href={SOCIAL_LINKS.LINKEDIN} target="_blank">
+              <div className="top-nav-icon">
+                <FaLinkedinIn />
+              </div>
+            </a>
           </li>
           <li>
-            <div className="top-nav-icon">
-              <FaLinkedinIn />
-            </div>
-          </li>
-          <li>
-            <div className="top-nav-icon">
-              <FaInstagram />
-            </div>
+            <a href={SOCIAL_LINKS.INSTAGRAM} target="_blank">
+              <div className="top-nav-icon">
+                <FaInstagram />
+              </div>
+            </a>
           </li>
         </ul>
       </div>

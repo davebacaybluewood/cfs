@@ -53,11 +53,11 @@ const Events: React.FC = () => {
       <WorkingSteps
         bigTitle={
           <React.Fragment>
-            Some <span>easy steps</span> to go in a event!
+            Some <span>easy steps</span> to attend an event.
           </React.Fragment>
         }
         title="WORKING STEPS"
-        topTitle="Join With Us!"
+        topTitle="Join Us!"
         steps={eventSteps}
       />
       {events.map((event: EventsType, i: number) => (
@@ -123,7 +123,7 @@ const Events: React.FC = () => {
             variation="dark"
             className="download-button"
           >
-            <FaFileDownload /> DOWNLOAD TICKET
+            <FaFileDownload /> DOWNLOAD FLYER
           </Button>
         </DialogActions>
       </Dialog>

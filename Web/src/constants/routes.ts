@@ -2,6 +2,7 @@ const paths = {
   index: "/",
   home: "/home",
   solutions: "/solutions",
+  solutions_with_id: "/solutions/:id",
   portal: "/portal",
   contact: "/contact",
   about: "/about",

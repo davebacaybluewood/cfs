@@ -4,6 +4,13 @@
   padding: 0rem 0 3rem 0;
   .wrapper {
     position: relative;
+    .about-grid {
+      img {
+        width: 100%;
+        position: relative;
+        z-index: 999;
+      }
+    }
   }
   .line-svg {
     width: 500px;

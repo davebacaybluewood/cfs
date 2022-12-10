@@ -3,7 +3,6 @@
 .home-container {
   .welcome-section {
     position: relative;
-    height: 50vh;
 
     .welcome-section-container {
       display: flex;
@@ -201,11 +200,64 @@
     }
   }
 
-  .appointment-container {
+  .appoinment-content {
+    margin-top: 0;
+    padding-top: 4rem;
+    background-size: cover;
+    background-attachment: fixed;
+
+    .appointment-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      align-content: center;
+
+      .header-title {
+        text-align: center;
+
+        p {
+          margin-top: 1rem;
+          text-transform: uppercase;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+  .dialog-home {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     align-items: center;
-    align-content: center;
+    justify-items: center;
+    z-index: 999;
+
+    .exit-button {
+      border: none;
+      background-color: transparent;
+      position: fixed;
+      right: 2rem;
+      top: 2rem;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.5;
+      }
+
+      svg {
+        font-size: 3rem;
+        path {
+          color: #fff;
+        }
+      }
+    }
+
+    img {
+      width: 50%;
+      margin: auto;
+    }
   }
 }

@@ -112,32 +112,6 @@ const eventInvitation = ({
         " align="center">
       <!-- Fallback force center content -->
       <div style="text-align: center">
-        <!-- Email not displaying correctly -->
-        <table align="center" style="
-              text-align: center;
-              vertical-align: middle;
-              width: 600px;
-              max-width: 600px;
-            " width="600">
-          <tbody>
-            <tr>
-              <td style="width: 596px; vertical-align: middle" width="596">
-                <p style="
-                      font-size: 11px;
-                      line-height: 20px;
-                      font-family: 'Helvetica', Arial, sans-serif;
-                      font-weight: 400;
-                      text-decoration: none;
-                      color: #000000;
-                    "> Is this email not displaying correctly? <a class="link" style="text-decoration: underline" target="_blank" href="https://fullsphere.co.uk/html-emails/free-template/"><u>Click here</u></a
-                    >
-                    to view in browser
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <!-- Email not displaying correctly -->
     
            <!-- Start container for logo -->
            <table
@@ -172,7 +146,7 @@ const eventInvitation = ({
                      color: #ffffff;
                    "
                    alt="Logo"
-                   src="https://comfort-life-financial.vercel.app/assets/logos/comfort-life-financial-main-logo.png"
+                   src="https://res.cloudinary.com/dkjjkr88j/image/upload/v1670628557/comfort-life-new-logo_rnmgep.png"
                    align="center"
                    width="180"
                  />
@@ -192,7 +166,7 @@ const eventInvitation = ({
             width="570"
             >
             <h5 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight: 900; font-size: 20px;">
-                Hi There!
+                Hi ${fullName}!
             </h5>
             <p style="margin-bottom: 0; border-bottom: 1px solid #eeeeee; padding-bottom: 10px;">
                 You have been invited to join the event - ${eventName} on
@@ -363,7 +337,7 @@ const eventInvitation = ({
                       max-width: 180px;
                       text-align: center;
                       color: #ffffff;
-                    " alt="Logo" src="https://comfort-life-financial.vercel.app/assets/logos/comfort-life-financial-main-logo.png" align="center" width="180" />
+                    " alt="Logo" src="https://res.cloudinary.com/dkjjkr88j/image/upload/v1670628557/comfort-life-new-logo_rnmgep.png" align="center" width="180" />
                     <div style="border-bottom: 3px solid #333333; width: 100px; margin: auto; margin-top: 15px;"></div>
                 <p style="
                       margin-bottom: 0;

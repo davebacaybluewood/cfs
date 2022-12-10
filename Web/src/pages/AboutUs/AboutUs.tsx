@@ -34,15 +34,13 @@ const AboutUs = () => {
                 direction={isEven(index) ? "row" : "row-reverse"}
                 justifyContent="center"
                 alignItems="center"
+                className="about-grid"
               >
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                  <Parallax
-                    bgImage={item.image}
-                    strength={300}
-                    bgImageSizes="10%"
-                  >
+                  {/* <Parallax bgImage={item.image} strength={1}>
                     <div style={{ height: 500 }}></div>
-                  </Parallax>
+                  </Parallax> */}
+                  <img src={item.image} alt="happy photo" />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
                   <ContentCard {...item} isMobileMode={isMobileMode} />
@@ -52,7 +50,7 @@ const AboutUs = () => {
           </div>
         );
       })}
-      <div className="team-members">
+      {/* <div className="team-members">
         <Container>
           <HeaderTitle
             bigTitle="Our Awesome Creative Team Member"
@@ -78,7 +76,7 @@ const AboutUs = () => {
             ))}
           </Grid>
         </Container>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 import Card from "library/Card/Card";
 import { Container } from "@mui/system";
 import servicesData from "data/services";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContentCard, { ContentCardProps } from "library/ContentCard/ContentCard";
 import Video from "./components/Video/Video";
 import HeaderTitle from "./components/HeaderTitle/HeaderTitle";
@@ -23,11 +23,16 @@ import classNames from "classnames";
 import Title from "pages/Admin/components/Title/Title";
 import CardNumbers from "library/CardNumbers/CardNumbers";
 import { formatDate } from "helpers/dateFormatter";
+import { useNavigate } from "react-router-dom";
+import paths from "constants/routes";
+import CommonHeaderTitle from "library/HeaderTitle/HeaderTitle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const Home: React.FC = () => {
   const [services] = useState(servicesData);
   const [calendlyModal, setCalendlyModal] = useState(false);
   const isMobileMode = useResponsive("mobile");
+  const navigate = useNavigate();
 
   const cardContainerClassnames = classNames("card-container", {
     "card-container-mobile": isMobileMode,
@@ -94,9 +99,8 @@ const Home: React.FC = () => {
     icons: [
       {
         icon: <img src="/assets/icons/clock.png" alt="description-icon" />,
-        title: "Warranty Management",
-        description:
-          "Morem Ipsum is simply dummy text of the printing and presetting found it agency business.",
+        description: "Morem Ipsum",
+        title: "",
       },
       {
         icon: <img src="/assets/icons/clock.png" alt="description-icon" />,
@@ -132,6 +136,8 @@ const Home: React.FC = () => {
     onEventScheduled: () => console.log("test"),
   });
 
+  const [showPopup, setShowPopup] = useState(true);
+
   return (
     <div className="home-container">
       <div className="welcome-section">
@@ -150,7 +156,7 @@ const Home: React.FC = () => {
           </div>
         </Container>
       </div>
-      <Wrapper className={cardContainerClassnames}>
+      {/* <Wrapper className={cardContainerClassnames}>
         <Container>
           <Grid container spacing={2}>
             {services.slice(0, 4).map((service) => (
@@ -170,8 +176,8 @@ const Home: React.FC = () => {
             ))}
           </Grid>
         </Container>
-      </Wrapper>
-      <Wrapper className="endorsement">
+      </Wrapper> */}
+      {/* <Wrapper className="endorsement">
         <Container>
           <Grid container spacing={2} className="endorsement-container">
             <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -186,8 +192,8 @@ const Home: React.FC = () => {
             </Grid>
           </Grid>
         </Container>
-      </Wrapper>
-      <Wrapper className="services">
+      </Wrapper> */}
+      {/* <Wrapper className="services">
         <React.Fragment>
           <Video />
           <Container>
@@ -226,8 +232,8 @@ const Home: React.FC = () => {
             </Grid>
           </Container>
         </React.Fragment>
-      </Wrapper>
-      <Wrapper className="stragies">
+      </Wrapper> */}
+      {/* <Wrapper className="stragies">
         <Container>
           <Grid container spacing={2} className="endorsement-container">
             <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -248,7 +254,7 @@ const Home: React.FC = () => {
             </Grid>
           </Grid>
         </Container>
-      </Wrapper>
+      </Wrapper> */}
       <Wrapper
         className="solutions"
         style={{
@@ -269,14 +275,34 @@ const Home: React.FC = () => {
           </p>
           <Grid container spacing={2} className="solution-grid">
             <Grid item xs={12} lg={6}>
-              <div className="solution-item">
+              <div
+                className="solution-item"
+                onClick={() =>
+                  navigate(
+                    `${paths.solutions_with_id.replace(
+                      ":id",
+                      "life-insurance"
+                    )}#life-insurance`
+                  )
+                }
+              >
                 <h2>What is Life Insurance?</h2>
                 <img src="https://picsum.photos/536/354" />
               </div>
             </Grid>
             <Grid item xs={12} lg={6}></Grid>
             <Grid item xs={12} lg={6}>
-              <div className="solution-item">
+              <div
+                className="solution-item"
+                onClick={() =>
+                  navigate(
+                    `${paths.solutions_with_id.replace(
+                      ":id",
+                      "annuity"
+                    )}#annuity`
+                  )
+                }
+              >
                 <h2>What is an Annuity?</h2>
                 <img src="https://picsum.photos/536/354" />
               </div>
@@ -285,20 +311,28 @@ const Home: React.FC = () => {
           </Grid>
         </Container>
       </Wrapper>
-      <Wrapper>
+      <Wrapper
+        style={{
+          backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/10/team-bg2.jpg")`,
+        }}
+        className="appoinment-content"
+      >
         <React.Fragment>
           <Container>
             <Grid container spacing={2} className="appointment-container">
-              <Grid item xs={12} sm={12} md={6} lg={6}>
-                <ContentCard {...appointmentProps} />
-              </Grid>
-              <Grid item xs={12} sm={12} md={6} lg={6}>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <CommonHeaderTitle
+                  title="SCHEDULE A APPOINTMENT"
+                  bigTitle="To Make Requests For The Further Information"
+                  description="Or direct call to +1 (626) 722-1611"
+                />
                 <InlineWidget
-                  url="https://calendly.com/dave-bacay-vc/call-us-testing"
+                  url="https://calendly.com/gocfs/30min?primary_color=0057b7"
                   styles={{
-                    height: "800px",
+                    height: "850px",
                     width: "100%",
-                    marginBottom: "-5rem",
+                    marginBottom: "-6rem",
+                    marginTop: "-6rem",
                   }}
                 />
               </Grid>
@@ -306,8 +340,18 @@ const Home: React.FC = () => {
           </Container>
         </React.Fragment>
       </Wrapper>
+      {showPopup ? (
+        <div className="dialog-home" onClick={() => setShowPopup(false)}>
+          <button className="exit-button" onClick={() => setShowPopup(false)}>
+            <CancelIcon />
+          </button>
+          <img
+            src="https://res.cloudinary.com/dkjjkr88j/image/upload/v1670630849/merry-Christmas_agfssc.jpg"
+            alt="Merry Christmas"
+          />
+        </div>
+      ) : null}
     </div>
   );
 };
-
 export default Home;

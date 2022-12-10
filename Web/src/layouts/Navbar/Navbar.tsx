@@ -1,25 +1,29 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
-import { IMAGES } from "constants/constants";
+import { IMAGES, MAIN_CALENDLY_EVENT_LINK } from "constants/constants";
 import Topnav from "./components/Topnav/Topnav";
 import { Button, Container } from "@mui/material";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import { Drawer } from "@mui/material";
 import useResponsive from "hooks/useResponsive";
 import paths from "constants/routes";
+import { PopupModal } from "react-calendly";
 
 const Navbar: React.FC = () => {
   const url = window.location.href;
   const currentPage = url.split("/")[3];
   const [openDrawer, setDrawer] = useState(false);
   const isMobileMode = useResponsive("mobile");
+  const [calendlyModal, setCalendlyModal] = useState(false);
   const navLinks = [
     {
       className: "nav-item",
       linkProps: {
         className: `nav-links ${
-          currentPage === paths.home.substring(1) ? "nav-links-active" : ""
+          currentPage === paths.home.substring(1) || currentPage === ""
+            ? "nav-links-active"
+            : ""
         }`,
         to: paths.home,
         text: "Home",
@@ -77,7 +81,7 @@ const Navbar: React.FC = () => {
           currentPage === paths.portal.substring(1) ? "nav-links-active" : ""
         }`,
         to: paths.portal,
-        text: "Portal",
+        text: "Agent Portal",
       },
       dropdown: false,
     },
@@ -101,8 +105,11 @@ const Navbar: React.FC = () => {
                   <Link {...link.linkProps}>{link.linkProps.text}</Link>
                 </li>
               ))}
-              <li className="highlight-button">
-                <Link to="/">TALK TO US</Link>
+              <li
+                className="highlight-button"
+                onClick={() => setCalendlyModal(true)}
+              >
+                TALK TO US
               </li>
             </ul>
           )}
@@ -131,6 +138,12 @@ const Navbar: React.FC = () => {
           </ul>
         </Drawer>
       )}
+      <PopupModal
+        url={MAIN_CALENDLY_EVENT_LINK}
+        onModalClose={() => setCalendlyModal(false)}
+        open={calendlyModal}
+        rootElement={document.getElementById("root") as any}
+      />
     </React.Fragment>
   );
 };

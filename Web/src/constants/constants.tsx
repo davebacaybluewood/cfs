@@ -14,7 +14,7 @@ import Events from "pages/Events/Events";
 import EventInvites from "pages/EventInvites/EventInvites";
 import adminRoutes from "pages/Admin/routes";
 
-export const MAIN_LOCALHOST = "http://localhost:3000";
+export const MAIN_LOCALHOST = "https://comfortlifefinancial.com";
 
 /* Web App Constant Images */
 export const IMAGES = {
@@ -35,13 +35,7 @@ export const REACT_ROUTES: ReactRoutesType[] = [
   ...adminRoutes,
   {
     PATH: paths.index,
-    ELEMENT: (
-      <PageWrapper
-        component={<ComingSoon />}
-        showFooter={false}
-        showNavbar={false}
-      />
-    ),
+    ELEMENT: <PageWrapper component={<Home />} />,
   },
   {
     PATH: paths.home,
@@ -61,6 +55,10 @@ export const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     PATH: paths.solutions,
+    ELEMENT: <PageWrapper component={<Solutions />} />,
+  },
+  {
+    PATH: paths.solutions_with_id,
     ELEMENT: <PageWrapper component={<Solutions />} />,
   },
   {
@@ -85,8 +83,8 @@ export const REACT_ROUTES: ReactRoutesType[] = [
 
 export const CONTACT_LIST = [
   {
-    NAME: "Tel (US)",
-    VALUE: "70 5066 4501 / 10 5501 3107",
+    NAME: "TEL",
+    VALUE: "+1 (626) 722-1611",
     FLAG_CODE: "581",
     icon: <LocalPhoneIcon />,
   },
@@ -110,14 +108,24 @@ export const eventSteps = [
   },
   {
     title: "03",
-    subTitle: "Get the refence ID",
+    subTitle: "Get the reference ID",
     description: "",
   },
   {
     title: "04",
-    subTitle: "Get in touch!",
+    subTitle: "Mark your calendars!",
     description: "",
   },
 ];
 
+export const MAIN_CALENDLY_EVENT_LINK =
+  "https://calendly.com/gocfs/30min?primary_color=0057b7";
+
 export const BLANK_VALUE: string = "—";
+
+export const SOCIAL_LINKS = {
+  TWITTER: "https://twitter.com/CFS_Platform",
+  INSTAGRAM: "https://www.instagram.com/cfs_platform/",
+  LINKEDIN:
+    "https://www.linkedin.com/in/comfort-financial-solutions-92708b258/",
+};

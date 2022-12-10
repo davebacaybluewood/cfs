@@ -135,7 +135,7 @@ const submitInvite = expressAsync(async (req, res) => {
     agentNumber: checkBlankValue(inviteeSave.agentNumber),
     invitee: checkBlankValue(inviteeSave.invitee),
     remarks: checkBlankValue(inviteeSave.remarks),
-    invitationLink: `http://localhost:3000/${inviteeSave.referenceId}`,
+    invitationLink: `https://comfortlifefinancial.com/events/invites/${inviteeSave.referenceId}`,
   });
 
   const mailAttachments = [

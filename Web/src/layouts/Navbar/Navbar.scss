@@ -74,16 +74,11 @@ $navlink-color-hovered: #0c5adb;
           background: white !important;
           border-color: #232323;
 
-          a {
-            color: #333;
-            border-color: transparent;
-          }
+          color: #333;
         }
 
-        a {
-          font-weight: 400;
-          color: white;
-        }
+        font-weight: 400;
+        color: white;
       }
     }
   }

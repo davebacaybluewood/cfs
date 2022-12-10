@@ -19,7 +19,7 @@ import { submitInvite } from "redux/actions/eventActions";
 import { useDispatch, useSelector } from "react-redux";
 import { enforceFormat, formatToPhone } from "helpers/mobileNumberFormatter";
 import { agents } from "data/agents";
-import { formatDate, formatISODateToDate } from "helpers/dateFormatter";
+import { formatISODateToDate } from "helpers/dateFormatter";
 
 export type EventCardVariant = "light" | "dark";
 
@@ -240,7 +240,7 @@ const EventCard: React.FC<IEventCard> = (props) => {
                       const withAutoComplete = (
                         <Grid item {...{ ...data.colDef }} key={index}>
                           <Autocomplete
-                            options={agents}
+                            options={[]}
                             getOptionLabel={(option: any) => option}
                             freeSolo
                             onChange={(e, value) => {

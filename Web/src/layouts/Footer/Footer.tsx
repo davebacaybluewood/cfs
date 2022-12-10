@@ -1,4 +1,4 @@
-import { IMAGES } from "constants/constants";
+import { IMAGES, SOCIAL_LINKS } from "constants/constants";
 import {
   FaFacebookF,
   FaInstagram,
@@ -11,28 +11,31 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-wrapper">
         <img src={IMAGES.COMPANY_LOGOS.MAIN} alt={IMAGES.COMPANY_LOGOS.MAIN} />
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-        </p>
-        <ul className="social-icons">
+        <p>Comfort Life Enterprise LLC offers insurance products</p>
+        <ul>
           <li>
+            Headquarters: 3601 W. Sahara Ave STE 201, Las Vegas, NV 89102.
+          </li>
+          <li>Phone: (626) 722-1611</li>
+        </ul>
+        <ul className="social-icons">
+          {/* <li>
             <a href="https://facebook.com" target="_blank">
               <FaFacebookF />
             </a>
-          </li>
+          </li> */}
           <li>
-            <a href="https://facebook.com" target="_blank">
+            <a href={SOCIAL_LINKS.TWITTER} target="_blank">
               <FaTwitter />
             </a>
           </li>
           <li>
-            <a href="https://facebook.com" target="_blank">
+            <a href={SOCIAL_LINKS.LINKEDIN} target="_blank">
               <FaLinkedinIn />
             </a>
           </li>
           <li>
-            <a href="https://facebook.com" target="_blank">
+            <a href={SOCIAL_LINKS.INSTAGRAM} target="_blank">
               <FaInstagram />
             </a>
           </li>

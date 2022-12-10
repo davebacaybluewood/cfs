@@ -7,12 +7,14 @@ import {
 import { Container } from "@mui/system";
 import ContactWithUs from "library/ContactWithUs/ContactWithUs";
 import HeaderTitle from "library/HeaderTitle/HeaderTitle";
-import React from "react";
+import React, { useState } from "react";
 import WorkingSteps from "./components/WorkingSteps";
 import "./Solutions.scss";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LifeInsurance from "./components/LifeInsurance";
 import Anuality from "./components/Anuality";
+import { useParams } from "react-router-dom";
+import useScroll from "hooks/useScroll";
 
 const workingSteps = [
   {
@@ -38,6 +40,14 @@ const workingSteps = [
 ];
 
 const Solutions = () => {
+  useScroll();
+  const { id } = useParams();
+  const [expanded, setExpanded] = useState(id);
+
+  const handleChange = (panel: any) => (event: any, newExpanded: any) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
   return (
     <div className="services-content">
       <div className="welcome-section">
@@ -46,20 +56,20 @@ const Solutions = () => {
           alt="welcome-bg"
         />
         <div className="captions">
-          <h5>Choose The Best Financial Service Company in the World.</h5>
-          <h1>Lorem ipsum dolor sit amet, consectetur.</h1>
+          {/* <h5>Helping You Get One Step Closer to a better future</h5> */}
+          <h1>Get the best solution for your needs.</h1>
         </div>
       </div>
       <Container>
         <div className="services-card-section">
           <HeaderTitle
             bigTitle="Solutions"
-            title="Lores ipsum dolor sit"
+            title="Closer to a better future"
             description="We provide the necessary services to you."
           />
         </div>
         <div className="solutions">
-          <div className="solutions-item">
+          <div className="solutions-item" id="life-insurance">
             <div className="solution-header">
               <h2>Life Insurance</h2>
               <p>
@@ -71,7 +81,10 @@ const Solutions = () => {
                 (premium) to the insurance company.
               </p>
             </div>
-            <Accordion>
+            <Accordion
+              expanded={expanded === "life-insurance"}
+              onChange={handleChange("life-insurance")}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -84,7 +97,7 @@ const Solutions = () => {
               </AccordionDetails>
             </Accordion>
           </div>
-          <div className="solutions-item">
+          <div className="solutions-item" id="annuity">
             <div className="solution-header">
               <h2>Annualities</h2>
               <p>
@@ -94,7 +107,10 @@ const Solutions = () => {
                 payments are required to purchase an annuity.
               </p>
             </div>
-            <Accordion>
+            <Accordion
+              expanded={expanded === "annuity"}
+              onChange={handleChange("annuity")}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
