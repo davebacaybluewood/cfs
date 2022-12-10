@@ -17,10 +17,9 @@ const Portal = () => {
               <div style={{ height: 700 }}>
                 <PortalContent
                   title="New Member"
-                  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labore"
+                  description=""
                   linkProps={{
-                    link: "https://agent.comfortlifefinancial.com/signup",
+                    link: "https://agent.comfortfinancialsolutions.com/signup",
                     text: "Sign up",
                   }}
                   bgFadedPosition="right"
@@ -38,10 +37,9 @@ const Portal = () => {
                 <PortalContent
                   title="Agent
                   Back Office"
-                  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labore"
+                  description=""
                   linkProps={{
-                    link: "https://agent.comfortlifefinancial.com/",
+                    link: "https://agent.comfortfinancialsolutions.com/",
                     text: "Login",
                   }}
                   bgFadedPosition="left"

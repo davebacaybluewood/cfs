@@ -17,7 +17,7 @@ const AboutUs = () => {
     <div className="about">
       <Banner
         bigTitle="About Us"
-        title="Learn more about Comfort Life"
+        title="Learn more about Comfort Financial"
         hasBorder={true}
       />
       {aboutUs.map((item, index) => {

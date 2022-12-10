@@ -145,7 +145,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
             },
             {
               name: "remarks",
-              label: "Remarks",
+              label: "Comments",
               value: values.remarks,
               colDef: {
                 xs: 12,
@@ -158,7 +158,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
           return (
             <div>
               <div className="form-instructions">
-                <h2>FILLUP FORM</h2>
+                <h2>RVSP FORM</h2>
                 <p>(*) fields are required.</p>
               </div>
 

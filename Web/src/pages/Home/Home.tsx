@@ -270,7 +270,7 @@ const Home: React.FC = () => {
           <p className="description">
             There's a lot to know, and we have the information to help you make
             informed decision about your financial future. Let's take a closer
-            look at what it means to have a annuity or life insurance, and why
+            look at what it means to have an annuity or life insurance, and why
             both are important.
           </p>
           <Grid container spacing={2} className="solution-grid">

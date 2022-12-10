@@ -99,7 +99,7 @@ const Solutions = () => {
           </div>
           <div className="solutions-item" id="annuity">
             <div className="solution-header">
-              <h2>Annualities</h2>
+              <h2>Annuities</h2>
               <p>
                 An annuity is a contract with an insurance provider that calls
                 for regular payments to be made by the insurer to you, either

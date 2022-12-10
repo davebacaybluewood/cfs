@@ -75,7 +75,7 @@ const Form = () => {
   return (
     <div className="contact-form">
       <div className="form-instructions">
-        <h2>FILLUP FORM</h2>
+        <h2>CONTACT FORM</h2>
         <p>All fields are required.</p>
       </div>
       <Formik

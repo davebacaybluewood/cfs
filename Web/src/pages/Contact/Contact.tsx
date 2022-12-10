@@ -44,7 +44,7 @@ const Contact = () => {
             hasBorder={false}
           />
           <Button onClick={() => setCalendlyModal(true)}>
-            Book a Appointment
+            Book an Appointment
           </Button>
           <PopupModal
             url={MAIN_CALENDLY_EVENT_LINK}

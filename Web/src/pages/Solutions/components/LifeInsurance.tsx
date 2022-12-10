@@ -46,7 +46,7 @@ const LifeInsurance: React.FC = () => {
           disabling condition that requires regular monitoring, long-term care
           (LTC) insurance is a type of coverage that offers nursing-home care,
           home-health care, personal or adult daycare. LTC insurance provides
-          more options and flexibility than a lot of public assistance programs
+          more options and flexibility than a lot of public assistance programs.
         </p>
       </div>
       <div className="article">

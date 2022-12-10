@@ -180,7 +180,7 @@ const EventCard: React.FC<IEventCard> = (props) => {
             },
             {
               name: "remarks",
-              label: "Remarks",
+              label: "Comments",
               value: values.remarks,
               colDef: {
                 xs: 12,
@@ -230,7 +230,7 @@ const EventCard: React.FC<IEventCard> = (props) => {
                   <p>{props.description}</p>
                 </div>
                 <div className="form-instructions">
-                  <h2>FILLUP FORM</h2>
+                  <h2>RVSP FORM</h2>
                   <p>(*) fields are required.</p>
                 </div>
 
