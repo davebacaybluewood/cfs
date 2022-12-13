@@ -324,7 +324,7 @@ const Home: React.FC = () => {
                 <CommonHeaderTitle
                   title="SCHEDULE A APPOINTMENT"
                   bigTitle="To Make Requests For The Further Information"
-                  description="Or direct call to +1 (626) 722-1611"
+                  description="Or direct call to +1 (702) 900-5666"
                 />
                 <InlineWidget
                   url="https://calendly.com/gocfs/30min?primary_color=0057b7"

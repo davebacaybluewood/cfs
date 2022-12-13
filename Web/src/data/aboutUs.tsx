@@ -1,8 +1,8 @@
 const aboutUs = [
   {
     header: "OUR VISION",
-    firstTitle: "To help re-enforce ",
-    secondTitle: "& boost the value of a family's financial portfolio.",
+    firstTitle: "To help re-enforcing ",
+    secondTitle: "& boosting the value of a family's financial portfolio.",
     description:
       "To help individuals and families build a comfortable future by assisting them in reinforcing and increasing the value of their portfolio through financial(or economic) awareness, and well developed financial solutions that reduces risks and amplify growth. ",
     image: "/assets/others/about-1.jpg",

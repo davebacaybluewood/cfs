@@ -84,7 +84,7 @@ export const REACT_ROUTES: ReactRoutesType[] = [
 export const CONTACT_LIST = [
   {
     NAME: "TEL",
-    VALUE: "+1 (626) 722-1611",
+    VALUE: "+1 (702) 900-5666",
     FLAG_CODE: "581",
     icon: <LocalPhoneIcon />,
   },

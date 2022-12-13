@@ -39,7 +39,7 @@ const Contact = () => {
       >
         <Container>
           <HeaderTitle
-            title="+1 (626) 722-1611"
+            title="+1 (702) 900-5666"
             bigTitle="To Make Requests For The Further Information"
             hasBorder={false}
           />

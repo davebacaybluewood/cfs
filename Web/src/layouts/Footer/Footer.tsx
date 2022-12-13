@@ -16,7 +16,7 @@ const Footer = () => {
           <li>
             Headquarters: 3601 W. Sahara Ave STE 201, Las Vegas, NV 89102.
           </li>
-          <li>Phone: (626) 722-1611</li>
+          <li>Phone: (702) 900-5666</li>
         </ul>
         <ul className="social-icons">
           {/* <li>

@@ -155,7 +155,7 @@ const submitInvite = expressAsync(async (req, res) => {
       mailContent,
       mailAttachments
     )
-      .then((response) => {
+      .then((request, response) => {
         response.send(response.message);
       })
       .catch((error) => {

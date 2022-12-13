@@ -20,7 +20,7 @@ const Topnav = () => {
             <div className="top-nav-icon">
               <CallIcon />
             </div>
-            <span>+1 (626) 722-1611</span>
+            <span>+1 (702) 900-5666</span>
           </li>
           <li>
             <div className="top-nav-icon">
