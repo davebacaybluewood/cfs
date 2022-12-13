@@ -135,7 +135,7 @@ const submitInvite = expressAsync(async (req, res) => {
     agentNumber: checkBlankValue(inviteeSave.agentNumber),
     invitee: checkBlankValue(inviteeSave.invitee),
     remarks: checkBlankValue(inviteeSave.remarks),
-    invitationLink: `https://comfortlifefinancial.com/events/invites/${inviteeSave.referenceId}`,
+    invitationLink: `https://www.comfortfinancialsolutions.com/events/invites/${inviteeSave.referenceId}`,
   });
 
   const mailAttachments = [
@@ -146,19 +146,28 @@ const submitInvite = expressAsync(async (req, res) => {
       cid: "event-invitation.png",
     },
   ];
-  const sendHTMLEmail = sendEmail(
-    emailAddress,
-    mailSubject,
-    mailContent,
-    mailAttachments
-  )
-    .then((response) => {
-      response.send(response.message);
-    })
-    .catch((error) => {
-      res.status(500);
-      throw new Error("Error occured in submission.");
-    });
+
+  let sendHTMLEmail;
+  try {
+    sendHTMLEmail = sendEmail(
+      emailAddress,
+      mailSubject,
+      mailContent,
+      mailAttachments
+    )
+      .then((response) => {
+        response.send(response.message);
+      })
+      .catch((error) => {
+        res.status(500);
+        console.log(error);
+        throw new Error("Error occured in submission.");
+      });
+  } catch (error) {
+    res.status(500);
+    console.log(error);
+    throw new Error("Error occured in submission.");
+  }
 
   if (inviteeSave || sendHTMLEmail) {
     res.status(201).json({

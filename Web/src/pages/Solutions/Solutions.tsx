@@ -48,6 +48,11 @@ const Solutions = () => {
     setExpanded(newExpanded ? panel : false);
   };
 
+  const lifeInsuranceAccordions = solutionData.filter(
+    (s) => s.type === "life-insurance"
+  );
+  const annuityAccordions = solutionData.filter((s) => s.type === "annuity");
+
   return (
     <div className="services-content">
       <div className="welcome-section">
@@ -81,7 +86,7 @@ const Solutions = () => {
                 (premium) to the insurance company.
               </p>
             </div>
-            {solutionData.map((solution) => (
+            {lifeInsuranceAccordions.map((solution) => (
               <Accordion
                 expanded={expanded === solution.title}
                 onChange={handleChange(solution.title)}
@@ -111,21 +116,25 @@ const Solutions = () => {
                 payments are required to purchase an annuity.
               </p>
             </div>
-            <Accordion
-              expanded={expanded === "annuity"}
-              onChange={handleChange("annuity")}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+            {annuityAccordions.map((solution) => (
+              <Accordion
+                expanded={expanded === solution.title}
+                onChange={handleChange(solution.title)}
               >
-                <Typography>More Information</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Anuality />
-              </AccordionDetails>
-            </Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>{solution.title}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className="article-content">
+                    <div className="article">{solution.description}</div>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            ))}
           </div>
         </div>
         <ContactWithUs />

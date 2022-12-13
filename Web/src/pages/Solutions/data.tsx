@@ -1,4 +1,9 @@
 import React from "react";
+import {
+  FaMoneyBillWave,
+  FaPrayingHands,
+  FaHandsHelping,
+} from "react-icons/fa";
 
 type SolutionTypes = {
   title: string;
@@ -81,6 +86,44 @@ const solutionData: SolutionTypes[] = [
       </React.Fragment>
     ),
     type: "life-insurance",
+  },
+  {
+    title: "Immediate",
+    description: (
+      <React.Fragment>
+        <p>
+          Gives access to income payments, which typically start a year after
+          the premium is paid.
+        </p>
+      </React.Fragment>
+    ),
+    type: "annuity",
+  },
+  {
+    title: "Referred ",
+    description: (
+      <React.Fragment>
+        <p>
+          Offer income payments that start later, frequently several years
+          later. Long-term savings goals are the focus of deferred annuities.
+        </p>
+        <ul>
+          <li>
+            <FaPrayingHands />
+            Fixed Interest Rates Annuities
+          </li>
+          <li>
+            <FaMoneyBillWave />
+            Indexed Annuities
+          </li>
+          <li>
+            <FaHandsHelping />
+            Variable Annuities
+          </li>
+        </ul>
+      </React.Fragment>
+    ),
+    type: "annuity",
   },
 ];
 

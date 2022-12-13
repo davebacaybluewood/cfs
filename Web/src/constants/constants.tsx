@@ -14,7 +14,7 @@ import Events from "pages/Events/Events";
 import EventInvites from "pages/EventInvites/EventInvites";
 import adminRoutes from "pages/Admin/routes";
 
-export const MAIN_LOCALHOST = "https://comfortlifefinancial.com";
+export const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
 
 /* Web App Constant Images */
 export const IMAGES = {
