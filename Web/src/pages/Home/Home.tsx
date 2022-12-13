@@ -275,7 +275,11 @@ const Home: React.FC = () => {
             look at what it means to have an annuity or life insurance, and why
             both are important.
           </p>
-          <Grid container spacing={2} className="solution-grid">
+          <Grid
+            container
+            spacing={isMobileMode ? 1 : 2}
+            className="solution-grid"
+          >
             <Grid item xs={12} lg={6}>
               <div
                 className="solution-item"
@@ -348,7 +352,7 @@ const Home: React.FC = () => {
             <CancelIcon />
           </button>
           <img
-            src="https://res.cloudinary.com/dkjjkr88j/image/upload/v1670630849/merry-Christmas_agfssc.jpg"
+            src="https://res.cloudinary.com/dkjjkr88j/image/upload/v1670970055/Optimized-Happy_Holidays_CFS_l3vpef.jpg"
             alt="Merry Christmas"
           />
         </div>
