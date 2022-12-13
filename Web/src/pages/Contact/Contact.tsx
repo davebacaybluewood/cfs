@@ -2,6 +2,7 @@ import { Container, Grid } from "@mui/material";
 import { MAIN_CALENDLY_EVENT_LINK } from "constants/constants";
 import Banner from "library/Banner/Banner";
 import Button from "library/Button/Button";
+import PageTitle from "library/PageTitle/PageTitle";
 import HeaderTitle from "pages/Home/components/HeaderTitle/HeaderTitle";
 import Wrapper from "pages/Home/components/Wrapper/Wrapper";
 import { useState } from "react";
@@ -15,6 +16,7 @@ const Contact = () => {
 
   return (
     <div className="contact">
+      <PageTitle title="Contact" />
       <Banner
         bigTitle="Contact Us"
         title="Share your suggestions and feedback with us."

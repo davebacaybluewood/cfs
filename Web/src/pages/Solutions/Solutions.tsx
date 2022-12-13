@@ -15,6 +15,7 @@ import Anuality from "./components/Anuality";
 import { useParams } from "react-router-dom";
 import useScroll from "hooks/useScroll";
 import solutionData from "./data";
+import PageTitle from "library/PageTitle/PageTitle";
 
 const workingSteps = [
   {
@@ -55,6 +56,7 @@ const Solutions = () => {
 
   return (
     <div className="services-content">
+      <PageTitle title="Solutions" />
       <div className="welcome-section">
         <img
           src="https://demo.casethemes.net/itfirm/wp-content/uploads/2021/12/h5-bg-slider1.jpg"
@@ -62,7 +64,7 @@ const Solutions = () => {
         />
         <div className="captions">
           {/* <h5>Helping You Get One Step Closer to a better future</h5> */}
-          <h1>Get the best solution for your needs.</h1>
+          <h1>Get the best solution in building a comfortable future.</h1>
         </div>
       </div>
       <Container>

@@ -1,18 +1,18 @@
 const aboutUs = [
   {
     header: "OUR VISION",
-    firstTitle: "To help re-enforcing ",
-    secondTitle: "& boosting the value of a family's financial portfolio.",
+    firstTitle: "A force of good that brings economic awareness ",
+    secondTitle: "& financial solutions to create wealth for families.",
     description:
-      "To help individuals and families build a comfortable future by assisting them in reinforcing and increasing the value of their portfolio through financial(or economic) awareness, and well developed financial solutions that reduces risks and amplify growth. ",
+      "To be a top financial institution in the insurance industry that brings economic awareness and financial solutions to create wealth for individuals and families.",
     image: "/assets/others/about-1.jpg",
   },
   {
     header: "OUR MISSION",
-    firstTitle: "A force of good that brings economic awareness",
-    secondTitle: "& financial solutions to create wealth for families.",
+    firstTitle: "To help re-enforce ",
+    secondTitle: "& boost the value of a family's financial portfolio.",
     description:
-      "To be a top financial institution in the insurance industry that brings economic awareness and financial solutions to create wealth for individuals and families.",
+      "To help individuals and families build a comfortable future by assisting them in reinforcing and increasing the value of their portfolio through financial(or economic) awareness, and well developed financial solutions that reduces risks and amplify growth. ",
     image: "/assets/others/about-2.jpg",
   },
   // {

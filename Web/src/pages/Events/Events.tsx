@@ -24,6 +24,7 @@ import paths from "constants/routes";
 import { FaFileDownload } from "react-icons/fa";
 // @ts-ignore
 import { saveAs } from "file-saver";
+import PageTitle from "library/PageTitle/PageTitle";
 
 const Events: React.FC = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const Events: React.FC = () => {
 
   return (
     <div className="event-content">
+      <PageTitle title={`Events`} />
       <Banner bigTitle="Events" title="See latest updates" hasBorder />
       <WorkingSteps
         bigTitle={

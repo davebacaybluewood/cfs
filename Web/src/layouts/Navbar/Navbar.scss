@@ -139,8 +139,9 @@ $navlink-color-hovered: #0c5adb;
         position: relative;
         top: 1px;
         font-size: 3rem;
+        color: #fff !important;
         path {
-          color: #fff;
+          color: #fff !important;
         }
       }
     }

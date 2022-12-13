@@ -7,6 +7,7 @@ import { isEven, isOdd } from "helpers/isEvenOrOdd";
 import useResponsive from "hooks/useResponsive";
 import Banner from "library/Banner/Banner";
 import ContentCard from "library/ContentCard/ContentCard";
+import PageTitle from "library/PageTitle/PageTitle";
 import HeaderTitle from "pages/Home/components/HeaderTitle/HeaderTitle";
 import { Parallax } from "react-parallax";
 import "./AboutUs.scss";
@@ -15,6 +16,7 @@ const AboutUs = () => {
   const isMobileMode = useResponsive("mobile");
   return (
     <div className="about">
+      <PageTitle title="About Us" />
       <Banner
         bigTitle="About Us"
         title="Learn more about Comfort Financial"

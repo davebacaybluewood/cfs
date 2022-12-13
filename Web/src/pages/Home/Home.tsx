@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import paths from "constants/routes";
 import CommonHeaderTitle from "library/HeaderTitle/HeaderTitle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import PageTitle from "library/PageTitle/PageTitle";
 
 const Home: React.FC = () => {
   const [services] = useState(servicesData);
@@ -140,6 +141,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container">
+      <PageTitle title="Home" />
       <div className="welcome-section">
         <Container className="welcome-section-container">
           <div className="welcome-section-image">

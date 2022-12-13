@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listEventInviteDetails } from "redux/actions/eventActions";
 import Spinner from "library/Spinner/Spinner";
 import { formatDate } from "helpers/dateFormatter";
+import PageTitle from "library/PageTitle/PageTitle";
 
 const EventInvites: React.FC = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const EventInvites: React.FC = () => {
 
   return (
     <div className="event-invites">
+      <PageTitle title={`${event.title} event`} />
       <Banner title="COME WITH US" bigTitle="Event Invite" hasBorder />
       <div className="event-invite-content">
         <Container>
