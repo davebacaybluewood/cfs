@@ -158,7 +158,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
           return (
             <div>
               <div className="form-instructions">
-                <h2>RVSP FORM</h2>
+                <h2>RSVP FORM</h2>
                 <p>(*) fields are required.</p>
               </div>
 
