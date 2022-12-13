@@ -85,25 +85,77 @@ $navlink-color-hovered: #0c5adb;
 }
 
 .nav-links-drawer {
-  list-style: none;
-  li {
-    margin-bottom: 1rem;
-    width: 100%;
-    padding: 2rem 10rem 2rem 2rem;
-    cursor: pointer;
+  .drawer-ul {
+    list-style: none;
+    li {
+      margin-bottom: 1rem;
+      width: 100%;
+      padding: 2rem 10rem 2rem 2rem;
+      cursor: pointer;
 
-    &:hover {
-      background-color: $main-color;
+      &:hover {
+        background-color: $main-color;
+
+        a {
+          color: #fff;
+        }
+      }
 
       a {
-        color: #fff;
+        text-decoration: none;
+        font-size: 1.6rem;
+        color: #333;
       }
     }
+  }
 
-    a {
-      text-decoration: none;
-      font-size: 1.6rem;
+  .mobile-icons {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    color: white;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+    transition: 0.5s;
+    cursor: pointer;
+    display: inline-block;
+
+    .top-nav-icon {
+      background: $main-color-gradient;
+      text-align: center;
+      border: 1px solid rgba(238, 238, 238, 0.3);
+      margin-bottom: 0;
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 1rem 0;
+
+      &:hover {
+        opacity: 0.5;
+      }
+      svg {
+        position: relative;
+        top: 1px;
+        font-size: 3rem;
+        path {
+          color: #fff;
+        }
+      }
+    }
+    .icon-text {
+      padding-bottom: 5px;
+      border-bottom: 1px dotted #eee;
+      text-align: center;
+      text-transform: uppercase;
       color: #333;
+      font-size: 1.3rem;
+
+      &:hover {
+        cursor: auto;
+        opacity: 1;
+      }
     }
   }
 }

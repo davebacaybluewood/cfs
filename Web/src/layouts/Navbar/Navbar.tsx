@@ -9,6 +9,7 @@ import { Drawer } from "@mui/material";
 import useResponsive from "hooks/useResponsive";
 import paths from "constants/routes";
 import { PopupModal } from "react-calendly";
+import SocialIcons from "./components/Topnav/SocialIcons";
 
 const Navbar: React.FC = () => {
   const url = window.location.href;
@@ -128,14 +129,16 @@ const Navbar: React.FC = () => {
           anchor="right"
           open={openDrawer}
           onClose={() => setDrawer(false)}
+          className="nav-links-drawer"
         >
-          <ul className="nav-links-drawer">
+          <ul className="drawer-ul">
             {navLinks.map((link, index) => (
               <li key={index}>
                 <Link {...link.linkProps}>{link.linkProps.text}</Link>
               </li>
             ))}
           </ul>
+          <SocialIcons className="mobile-icons" />
         </Drawer>
       )}
       <PopupModal

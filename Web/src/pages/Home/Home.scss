@@ -10,6 +10,10 @@
       flex-wrap: nowrap;
       flex-direction: row;
       align-items: center;
+
+      @media screen and (max-width: 500px) {
+        flex-direction: column;
+      }
     }
 
     &-image {
@@ -31,6 +35,10 @@
         width: 600px;
         margin: auto;
         margin-bottom: 2rem;
+
+        @media screen and (max-width: 600px) {
+          width: 100%;
+        }
       }
     }
   }
@@ -151,6 +159,10 @@
       font-size: 1.4rem;
       margin-bottom: 3rem;
       line-height: 20px;
+
+      @media screen and (max-width: 500px) {
+        width: 100%;
+      }
     }
 
     .solution-grid {
@@ -216,6 +228,10 @@
       .header-title {
         text-align: center;
 
+        @media screen and (max-width: 500px) {
+          margin-bottom: 8rem;
+        }
+
         p {
           margin-top: 1rem;
           text-transform: uppercase;
@@ -258,6 +274,10 @@
     img {
       width: 50%;
       margin: auto;
+
+      @media screen and (max-width: $deviceMode) {
+        width: 90%;
+      }
     }
   }
 }

@@ -12,7 +12,7 @@ const aboutUs = [
     firstTitle: "A force of good that brings economic awareness",
     secondTitle: "& financial solutions to create wealth for families.",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "To be a top financial institution in the insurance industry that brings economic awareness and financial solutions to create wealth for individuals and families.",
     image: "/assets/others/about-2.jpg",
   },
   // {

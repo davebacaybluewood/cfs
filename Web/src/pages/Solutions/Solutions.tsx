@@ -11,10 +11,10 @@ import React, { useState } from "react";
 import WorkingSteps from "./components/WorkingSteps";
 import "./Solutions.scss";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import LifeInsurance from "./components/LifeInsurance";
 import Anuality from "./components/Anuality";
 import { useParams } from "react-router-dom";
 import useScroll from "hooks/useScroll";
+import solutionData from "./data";
 
 const workingSteps = [
   {
@@ -81,21 +81,25 @@ const Solutions = () => {
                 (premium) to the insurance company.
               </p>
             </div>
-            <Accordion
-              expanded={expanded === "life-insurance"}
-              onChange={handleChange("life-insurance")}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+            {solutionData.map((solution) => (
+              <Accordion
+                expanded={expanded === solution.title}
+                onChange={handleChange(solution.title)}
               >
-                <Typography>More Information</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <LifeInsurance />
-              </AccordionDetails>
-            </Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>{solution.title}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className="article-content">
+                    <div className="article">{solution.description}</div>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            ))}
           </div>
           <div className="solutions-item" id="annuity">
             <div className="solution-header">
