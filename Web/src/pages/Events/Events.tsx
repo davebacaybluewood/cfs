@@ -99,7 +99,11 @@ const Events: React.FC = () => {
               disabled
               InputProps={{
                 endAdornment: (
-                  <IconButton onClick={() => copyToClipboard("Hello World")}>
+                  <IconButton
+                    onClick={() =>
+                      navigator.clipboard.writeText(clipboardValue)
+                    }
+                  >
                     <ContentCopy />
                   </IconButton>
                 ),

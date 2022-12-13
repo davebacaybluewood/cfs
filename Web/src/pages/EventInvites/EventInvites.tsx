@@ -19,7 +19,7 @@ import Button from "library/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { listEventInviteDetails } from "redux/actions/eventActions";
 import Spinner from "library/Spinner/Spinner";
-import { formatDate } from "helpers/dateFormatter";
+import { formatDate, formatISODateToDate } from "helpers/dateFormatter";
 import PageTitle from "library/PageTitle/PageTitle";
 
 const EventInvites: React.FC = () => {
@@ -54,7 +54,10 @@ const EventInvites: React.FC = () => {
           <div className="event-description">
             <div className="date-wrapper">
               <CalendarTodayIcon />{" "}
-              <div>{formatDate(event.event_date, "fullFormat")}</div>
+              <div>
+                {formatISODateToDate(event.event_date?.toString())} - 4:00 PM
+                PST
+              </div>
             </div>
             <h1>{event.title}</h1>
             <img src={event.image} alt={event.title} />

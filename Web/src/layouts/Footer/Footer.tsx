@@ -41,7 +41,6 @@ const Footer = () => {
           </li>
         </ul>
         <ul>
-          <li>Return Policy</li>
           <li>Privacy Policy</li>
           <li>Terms and Conditions</li>
         </ul>

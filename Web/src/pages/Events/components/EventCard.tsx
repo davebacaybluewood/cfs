@@ -84,7 +84,7 @@ const EventCard: React.FC<IEventCard> = (props) => {
         <div className="event-card-content">
           <div className="date-wrapper">
             <CalendarTodayIcon />
-            {formatISODateToDate(props.event_date.toString())}
+            {formatISODateToDate(props.event_date.toString())} - 4:00 PM PST
           </div>
           <h1>{props.title}</h1>
           <p>{props.description}</p>
@@ -224,7 +224,8 @@ const EventCard: React.FC<IEventCard> = (props) => {
                 <div className="event-captions">
                   <div className="date-wrapper">
                     <CalendarTodayIcon />{" "}
-                    {formatISODateToDate(props.event_date.toString())}
+                    {formatISODateToDate(props.event_date.toString())} - 4:00 PM
+                    PST
                   </div>
                   <h2>{props.title}</h2>
                   <p>{props.description}</p>

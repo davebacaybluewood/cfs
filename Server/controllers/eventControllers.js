@@ -80,7 +80,7 @@ const getEventByRefId = expressAsync(async (req, res) => {
       title: event.title,
       ticket: event.ticket,
       description: event.description,
-      event_date: event.createdAt,
+      event_date: event.event_date,
       image: event.image,
       variant: event.variant,
       fullName: eventInvite.fullName,
