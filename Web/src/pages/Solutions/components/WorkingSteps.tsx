@@ -35,7 +35,7 @@ const WorkingSteps: React.FC<IWorkingSteps> = (props) => {
 
         <Grid container spacing={2} className="steps">
           {props.steps?.map((item, i) => (
-            <Grid item sm={6} md={3} key={i}>
+            <Grid item xs={6} sm={6} md={3} key={i}>
               <h1>{item.title}</h1>
               <h5>{item.subTitle}</h5>
               <p>{item.description}</p>
