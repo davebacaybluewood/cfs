@@ -14,7 +14,7 @@ const Portal = () => {
               strength={500}
               bgImageSizes="100%"
             >
-              <div style={{ height: 700 }}>
+              <div style={{ height: 1000 }}>
                 <PortalContent
                   title="New Member"
                   description=""
@@ -33,7 +33,7 @@ const Portal = () => {
               strength={500}
               bgImageSizes="100%"
             >
-              <div style={{ height: 700 }}>
+              <div style={{ height: 1000 }}>
                 <PortalContent
                   title="Agent
                   Back Office"

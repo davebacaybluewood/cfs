@@ -42,7 +42,7 @@ const Contact = () => {
         <Container>
           <HeaderTitle
             title="+1 (702) 900-5666"
-            bigTitle="To Make Requests For The Further Information"
+            bigTitle="For Quote Request And Further Information"
             hasBorder={false}
           />
           <Button onClick={() => setCalendlyModal(true)}>

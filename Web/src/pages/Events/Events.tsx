@@ -25,6 +25,7 @@ import { FaFileDownload } from "react-icons/fa";
 // @ts-ignore
 import { saveAs } from "file-saver";
 import PageTitle from "library/PageTitle/PageTitle";
+import copyToClipboard from "helpers/clipboardCopy";
 
 const Events: React.FC = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const Events: React.FC = () => {
   return (
     <div className="event-content">
       <PageTitle title={`Events`} />
-      <Banner bigTitle="Events" title="See latest updates" hasBorder />
+      <Banner bigTitle="Events" title="See Upcoming Events" hasBorder />
       <WorkingSteps
         bigTitle={
           <React.Fragment>
@@ -98,11 +99,7 @@ const Events: React.FC = () => {
               disabled
               InputProps={{
                 endAdornment: (
-                  <IconButton
-                    onClick={() =>
-                      navigator.clipboard.writeText(clipboardValue)
-                    }
-                  >
+                  <IconButton onClick={() => copyToClipboard("Hello World")}>
                     <ContentCopy />
                   </IconButton>
                 ),
