@@ -54,7 +54,7 @@ const EventInvites: React.FC = () => {
           <div className="event-description">
             <div className="date-wrapper">
               <CalendarTodayIcon />{" "}
-              <div>{formatISODateToDate(event.event_date?.toString())}</div>
+              <div>{formatISODateToDate(event.event_date?.toString())} PST</div>
             </div>
             <h1>{event.title}</h1>
             <img src={event.image} alt={event.title} />
