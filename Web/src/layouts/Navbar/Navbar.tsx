@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
 import { IMAGES, MAIN_CALENDLY_EVENT_LINK } from "constants/constants";
 import Topnav from "./components/Topnav/Topnav";
@@ -17,6 +17,12 @@ const Navbar: React.FC = () => {
   const [openDrawer, setDrawer] = useState(false);
   const isMobileMode = useResponsive("mobile");
   const [calendlyModal, setCalendlyModal] = useState(false);
+  const navigate = useNavigate();
+
+  const changeLink = (url: string) => {
+    navigate(url);
+    setDrawer(false);
+  };
   const navLinks = [
     {
       className: "nav-item",
@@ -133,7 +139,7 @@ const Navbar: React.FC = () => {
         >
           <ul className="drawer-ul">
             {navLinks.map((link, index) => (
-              <li key={index}>
+              <li key={index} onClick={() => changeLink(link.linkProps.to)}>
                 <Link {...link.linkProps}>{link.linkProps.text}</Link>
               </li>
             ))}
