@@ -100,7 +100,7 @@ const solutionData: SolutionTypes[] = [
     type: "annuity",
   },
   {
-    title: "Referred ",
+    title: "Deferred ",
     description: (
       <React.Fragment>
         <p>
