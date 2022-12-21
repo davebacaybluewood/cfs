@@ -16,7 +16,7 @@ const Anuality: React.FC = () => {
           the premium is paid.
         </p>
         <p>
-          <i>Referred:</i>
+          <i>Deffered:</i>
         </p>
         <p>
           Offer income payments that start later, frequently several years

@@ -91,7 +91,7 @@ const Home: React.FC = () => {
   };
 
   const appointmentProps: ContentCardProps = {
-    header: "SCHEDULE A APPOINTMENT",
+    header: "SCHEDULE AN APPOINTMENT",
     firstTitle: "Lorem ipsum dolor sit amet",
     secondTitle: "Consectetur adipiscing elit",
     isMobileMode: isMobileMode,
@@ -328,7 +328,7 @@ const Home: React.FC = () => {
             <Grid container spacing={2} className="appointment-container">
               <Grid item xs={12} sm={12} md={12} lg={12}>
                 <CommonHeaderTitle
-                  title="SCHEDULE A APPOINTMENT"
+                  title="SCHEDULE AN APPOINTMENT"
                   bigTitle="To Make Requests For The Further Information"
                   description="Or direct call to +1 (702) 900-5666"
                 />
