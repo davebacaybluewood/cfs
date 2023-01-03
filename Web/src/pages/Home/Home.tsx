@@ -293,7 +293,7 @@ const Home: React.FC = () => {
                 }
               >
                 <h2>What is Life Insurance?</h2>
-                <img src="https://picsum.photos/536/354" />
+                {/* <img src="https://picsum.photos/536/354" /> */}
               </div>
             </Grid>
             <Grid item xs={12} lg={6}></Grid>
@@ -310,7 +310,7 @@ const Home: React.FC = () => {
                 }
               >
                 <h2>What is an Annuity?</h2>
-                <img src="https://picsum.photos/536/354" />
+                {/* <img src="https://picsum.photos/536/354" /> */}
               </div>
             </Grid>
             <Grid item xs={12} lg={6}></Grid>
@@ -346,7 +346,7 @@ const Home: React.FC = () => {
           </Container>
         </React.Fragment>
       </Wrapper>
-      {showPopup ? (
+      {/* {showPopup ? (
         <div className="dialog-home" onClick={() => setShowPopup(false)}>
           <button className="exit-button" onClick={() => setShowPopup(false)}>
             <CancelIcon />
@@ -356,7 +356,7 @@ const Home: React.FC = () => {
             alt="Merry Christmas"
           />
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

@@ -187,14 +187,14 @@
         }
 
         &:hover {
+          cursor: pointer;
           img {
             filter: grayscale(0);
             opacity: 1;
             transform: scale(1.1) rotate(-1deg);
           }
           h2 {
-            color: white;
-            cursor: pointer;
+            opacity: 0.7;
           }
         }
 

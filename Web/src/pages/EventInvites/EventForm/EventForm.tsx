@@ -181,7 +181,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
                 </Grid>
                 <Promt isDirty={dirty} />
                 <Spinner isVisible={isSubmitting} />
-                <Button variation="dark" type="submit">
+                <Button variation="dark" type="submit" disabled>
                   Submit
                 </Button>
               </form>
