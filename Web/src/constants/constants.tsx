@@ -13,6 +13,8 @@ import Solutions from "pages/Solutions/Solutions";
 import Events from "pages/Events/Events";
 import EventInvites from "pages/EventInvites/EventInvites";
 import adminRoutes from "pages/Admin/routes";
+import Medias from "pages/Medias/Medias";
+import MediasLanding from "pages/Medias/MediasLanding";
 
 export const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
 
@@ -68,6 +70,14 @@ export const REACT_ROUTES: ReactRoutesType[] = [
   {
     PATH: paths.event_invites,
     ELEMENT: <PageWrapper component={<EventInvites />} />,
+  },
+  {
+    PATH: paths.media,
+    ELEMENT: <PageWrapper component={<MediasLanding />} />,
+  },
+  {
+    PATH: paths.media_with_id,
+    ELEMENT: <PageWrapper component={<Medias />} />,
   },
   {
     PATH: "*",

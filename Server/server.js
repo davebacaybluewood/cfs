@@ -6,6 +6,7 @@ import eventRoutes from "./routes/eventRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import inquiryRoutes from "./routes/inquiryRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import mediaRoutes from "./routes/mediaRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
 
@@ -23,6 +24,7 @@ app.use("/api/events/", eventRoutes);
 app.use("/api/users/", userRoutes);
 app.use("/api/inquiries/", inquiryRoutes);
 app.use("/api/contacts/", contactRoutes);
+app.use("/api/medias/", mediaRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/Web/build")));

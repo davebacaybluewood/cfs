@@ -9,6 +9,8 @@ const paths = {
   invalid: "/invalid",
   events: "/events",
   event_invites: "/events/invites/:id",
+  media: "/media",
+  media_with_id: "/media/:id",
 
   /** ADMIN PATHS */
   login: "/admin/login",

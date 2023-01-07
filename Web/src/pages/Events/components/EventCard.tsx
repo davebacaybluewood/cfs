@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { enforceFormat, formatToPhone } from "helpers/mobileNumberFormatter";
 import { agents } from "data/agents";
 import { formatISODateToDate } from "helpers/dateFormatter";
+import { useNavigate } from "react-router-dom";
 
 export type EventCardVariant = "light" | "dark";
 
@@ -51,6 +52,7 @@ const EventCard: React.FC<IEventCard> = (props) => {
   const dispatch = useDispatch();
   const eventInvitesList = useSelector((state: any) => state?.eventInvitesList);
   const { loading, error } = eventInvitesList;
+  const navigate = useNavigate();
 
   const [showDrawer, setShowDrawer] = useState(false);
   const eventCardCn = classNames("event-card", {
@@ -88,8 +90,17 @@ const EventCard: React.FC<IEventCard> = (props) => {
           </div>
           <h1>{props.title}</h1>
           <p>{props.description}</p>
-          <Button onClick={() => setShowDrawer(true)} disabled>
+          {/* <Button onClick={() => setShowDrawer(true)} disabled>
             BOOK NOW
+          </Button> */}
+          <Button
+            onClick={() =>
+              navigate(
+                paths.media_with_id.replace(":id", "639ce4ff061e6ed3a75acf51")
+              )
+            }
+          >
+            VIEW MEDIAS
           </Button>
         </div>
       </div>

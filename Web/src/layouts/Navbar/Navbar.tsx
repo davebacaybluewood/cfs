@@ -23,72 +23,71 @@ const Navbar: React.FC = () => {
     navigate(url);
     setDrawer(false);
   };
+
+  const setActive = (path: string) => {
+    if (currentPage === path.substring(1)) {
+      return "nav-links nav-links-active";
+    } else if (path === paths.home && currentPage === "") {
+      return "nav-links nav-links-active";
+    }
+
+    return "nav-links";
+  };
+
   const navLinks = [
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.home.substring(1) || currentPage === ""
-            ? "nav-links-active"
-            : ""
-        }`,
+        className: setActive(paths.home),
         to: paths.home,
         text: "Home",
       },
       dropdown: false,
     },
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.events.substring(1) ? "nav-links-active" : ""
-        }`,
+        className: setActive(paths.events),
         to: paths.events,
         text: "Events",
       },
       dropdown: false,
     },
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.about.substring(1) ? "nav-links-active" : ""
-        }`,
+        className: setActive(paths.about),
         to: paths.about,
         text: "About Us",
       },
       dropdown: false,
     },
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.contact.substring(1) ? "nav-links-active" : ""
-        }`,
+        className: setActive(paths.contact),
         to: paths.contact,
         text: "Contact",
       },
       dropdown: false,
     },
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.solutions.substring(1) ? "nav-links-active" : ""
-        }`,
+        className: setActive(paths.solutions),
         to: paths.solutions,
         text: "Solutions",
       },
       dropdown: false,
     },
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.portal.substring(1) ? "nav-links-active" : ""
-        }`,
+        className: setActive(paths.portal),
         to: paths.portal,
         text: "Agent Portal",
+      },
+      dropdown: false,
+    },
+    {
+      linkProps: {
+        className: setActive(paths.media),
+        to: paths.media,
+        text: "Media",
       },
       dropdown: false,
     },
