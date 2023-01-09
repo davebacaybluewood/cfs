@@ -8,10 +8,14 @@ import "./Medias.scss";
 import { FaDownload, FaFacebookSquare, FaPlayCircle } from "react-icons/fa";
 import { FacebookShareButton } from "react-share";
 import { Grid } from "@mui/material";
+import videos from "./videos";
 
 const MediasLanding: React.FC = () => {
   const [index, setIndex] = useState(-1);
-  const [video, setVideo] = useState("");
+  const [video, setVideo] = useState({
+    src: "",
+    width: 900,
+  });
   const [showVideo, setShowVideo] = useState(false);
 
   const currentImage = images[index];
@@ -31,7 +35,9 @@ const MediasLanding: React.FC = () => {
       .then((blob) => {
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-        link.download = filename;
+        const filteredFilename =
+          filename.slice(0, filename.lastIndexOf(".")) + ".jpg";
+        link.download = filteredFilename;
         link.click();
       })
       .catch(console.error);
@@ -66,90 +72,37 @@ const MediasLanding: React.FC = () => {
       <div id="container">
         <div className="video-container">
           <Grid container spacing={0}>
-            <Grid item sm={6} md={3}>
-              <div
-                className="video-item"
-                style={{
-                  backgroundImage: `url("https://res.cloudinary.com/dfm2vczpy/image/upload/v1673042672/CFS%20Christmas/CFS%20Christmas%20Party%20Video/Video%20Thumbnail/Screenshot_2_iwqaxw.png")`,
-                }}
-              >
-                <div className="bg-overlay"></div>
-                <div
-                  className="play-button"
-                  onClick={() => {
-                    setShowVideo(true);
-                    setVideo(
-                      "https://res.cloudinary.com/dfm2vczpy/video/upload/v1673032003/CFS%20Christmas/CFS%20Christmas%20Party%20Video/XUKI8672_n32nfm.mov"
-                    );
-                  }}
+            {videos.map((video: any) => {
+              return (
+                <Grid
+                  item
+                  sm={video.gridCols?.sm || 6}
+                  md={video.gridCols?.md || 3}
+                  lg={video.gridCols?.lg || 3}
                 >
-                  <FaPlayCircle />
-                </div>
-              </div>
-            </Grid>
-            <Grid item sm={6} md={3}>
-              <div
-                className="video-item"
-                style={{
-                  backgroundImage: `url("https://res.cloudinary.com/dfm2vczpy/image/upload/v1673047589/CFS%20Christmas/CFS%20Christmas%20Party%20Video/Video%20Thumbnail/cgme_ue4mai.png")`,
-                }}
-              >
-                <div className="bg-overlay"></div>
-                <div
-                  className="play-button"
-                  onClick={() => {
-                    setShowVideo(true);
-                    setVideo(
-                      "https://res.cloudinary.com/dfm2vczpy/video/upload/v1673031748/CFS%20Christmas/CFS%20Christmas%20Party%20Video/CGME5740_bzppxk.mov"
-                    );
-                  }}
-                >
-                  <FaPlayCircle />
-                </div>
-              </div>
-            </Grid>
-            <Grid item sm={6} md={3}>
-              <div
-                className="video-item"
-                style={{
-                  backgroundImage: `url("https://res.cloudinary.com/dfm2vczpy/image/upload/v1673047754/CFS%20Christmas/CFS%20Christmas%20Party%20Video/Video%20Thumbnail/bfz_lb3mut.png")`,
-                }}
-              >
-                <div className="bg-overlay"></div>
-                <div
-                  className="play-button"
-                  onClick={() => {
-                    setShowVideo(true);
-                    setVideo(
-                      "https://res.cloudinary.com/dfm2vczpy/video/upload/v1673031751/CFS%20Christmas/CFS%20Christmas%20Party%20Video/BZFT0200_rc3xk0.mov"
-                    );
-                  }}
-                >
-                  <FaPlayCircle />
-                </div>
-              </div>
-            </Grid>
-            <Grid item sm={6} md={3}>
-              <div
-                className="video-item"
-                style={{
-                  backgroundImage: `url("https://res.cloudinary.com/dfm2vczpy/image/upload/v1672895253/CFS%20Christmas/CFS%20Christmas%20Party%20Video/CFS%20Party%20Pictures/IMG_0909_tsigqr.jpg")`,
-                }}
-              >
-                <div className="bg-overlay"></div>
-                <div
-                  className="play-button"
-                  onClick={() => {
-                    setShowVideo(true);
-                    setVideo(
-                      "https://res.cloudinary.com/dfm2vczpy/video/upload/v1673031483/CFS%20Christmas/CFS%20Christmas%20Party%20Video/IMG_0943_fvm1js.mov"
-                    );
-                  }}
-                >
-                  <FaPlayCircle />
-                </div>
-              </div>
-            </Grid>
+                  <div
+                    className="video-item"
+                    style={{
+                      backgroundImage: `url(${video.backgroundImage})`,
+                    }}
+                  >
+                    <div className="bg-overlay"></div>
+                    <div
+                      className="play-button"
+                      onClick={() => {
+                        setShowVideo(true);
+                        setVideo({
+                          src: video.videoSrc,
+                          width: video.width || 900,
+                        });
+                      }}
+                    >
+                      <FaPlayCircle />
+                    </div>
+                  </div>
+                </Grid>
+              );
+            })}
           </Grid>
         </div>
         <div className="card-container">
@@ -190,12 +143,15 @@ const MediasLanding: React.FC = () => {
             className="videoplay-overlay"
             onClick={() => {
               setShowVideo(false);
-              setVideo("");
+              setVideo({
+                src: "",
+                width: 0,
+              });
             }}
           />
-          <video controls muted={false} autoPlay>
-            <source src={video} type="video/mp4" />
-            <source src={video} type="video/ogg" />
+          <video controls muted={false} autoPlay style={{ width: video.width }}>
+            <source src={video.src} type="video/mp4" />
+            <source src={video.src} type="video/ogg" />
             Your browser does not support HTML video.
           </video>
         </div>
