@@ -45,25 +45,9 @@ const Navbar: React.FC = () => {
     },
     {
       linkProps: {
-        className: setActive(paths.events),
-        to: paths.events,
-        text: "Events",
-      },
-      dropdown: false,
-    },
-    {
-      linkProps: {
         className: setActive(paths.about),
         to: paths.about,
         text: "About Us",
-      },
-      dropdown: false,
-    },
-    {
-      linkProps: {
-        className: setActive(paths.contact),
-        to: paths.contact,
-        text: "Contact",
       },
       dropdown: false,
     },
@@ -77,9 +61,17 @@ const Navbar: React.FC = () => {
     },
     {
       linkProps: {
-        className: setActive(paths.portal),
-        to: paths.portal,
-        text: "Agent Portal",
+        className: setActive(paths.contact),
+        to: paths.contact,
+        text: "Contact Us",
+      },
+      dropdown: false,
+    },
+    {
+      linkProps: {
+        className: setActive(paths.events),
+        to: paths.events,
+        text: "Events",
       },
       dropdown: false,
     },
@@ -88,6 +80,14 @@ const Navbar: React.FC = () => {
         className: setActive(paths.media),
         to: paths.media,
         text: "Media",
+      },
+      dropdown: false,
+    },
+    {
+      linkProps: {
+        className: setActive(paths.portal),
+        to: paths.portal,
+        text: "Agent Portal",
       },
       dropdown: false,
     },
