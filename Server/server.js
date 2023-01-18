@@ -9,6 +9,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 import mediaRoutes from "./routes/mediaRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
+import { ApolloServer, gql } from "apollo-server-express";
 
 const app = express();
 const __dirname = path.resolve();
@@ -38,14 +39,44 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`;
+const resolvers = {
+  Query: {
+    hello: () => "Hello World!",
+  },
+};
+
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: {},
+});
+
 /** Middleware */
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(
-  PORT,
-  console.log(
-    `Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow
-      .bold
-  )
-);
+const startServer = async () => {
+  try {
+    // Apply Apollo-Express-Server Middlware to express application
+    await apolloServer.start();
+    apolloServer.applyMiddleware({ app });
+
+    app.listen(
+      PORT,
+      console.log(
+        `Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`
+          .yellow.bold
+      )
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Invoke Start Application Function
+startServer();
