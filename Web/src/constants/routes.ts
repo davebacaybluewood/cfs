@@ -1,4 +1,7 @@
+import adminPathsNew from "AdminNew/constants/routes";
+
 const paths = {
+  ...adminPathsNew,
   index: "/",
   home: "/home",
   solutions: "/solutions",
