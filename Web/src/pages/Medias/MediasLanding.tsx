@@ -22,7 +22,7 @@ const MediasLanding: React.FC = () => {
           <div
             className="album"
             style={{
-              backgroundImage: `url("https://res.cloudinary.com/dfm2vczpy/image/upload/v1672895275/CFS%20Christmas/CFS%20Christmas%20Party%20Video/CFS%20Party%20Pictures/IMG_1269_wvbogx.jpg")`,
+              backgroundImage: `url("https://res.cloudinary.com/dfm2vczpy/image/upload/v1673993161/medias/Christmas%20Party%20Medias/Images/Final%20CFS%20Christmas%20Party%20Media/CFS_Christmas_Party_50_fqs39i.jpg")`,
             }}
           >
             <div className="album-captions">
