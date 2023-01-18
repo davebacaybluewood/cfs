@@ -1,14 +1,31 @@
 $color-red: #ed3e4b;
 // $main-color: #7d26cd;
-$main-color: rgb(113, 20, 239);
+$main-color: #021025;
 $main-color-gradient: linear-gradient(
   90deg,
-  #1475f7 0%,
-  $main-color 10%,
+  #0057b7 0%,
+  $main-color 30%,
   $main-color
 ) !important;
+$main-color-new: #0057b7;
+
+/** Screen Size */
 $smallDevice: 300px;
 $deviceMode: 900px;
+
+/* Default Colors */
+$grey-50: #fafafc;
+$grey-100: #f6f6fa;
+$grey-200: #eaeaf2;
+$grey-250: #e1e1e6;
+$grey-300: #c4c4cd;
+$grey-400: #747480;
+$grey-450: #717171;
+$grey-500: #2e2e38;
+$grey-510: #2e2e3c;
+$grey-550: #23232f;
+$grey-600: #1a1a24;
+$grey-800: rgba(0, 0, 0, 0.05);
 
 *,
 *::after,
@@ -48,4 +65,69 @@ pre {
 .MuiPaper-elevation {
   border-left: 3px solid $main-color;
   background: #fff !important;
+}
+
+.loading-text {
+  text-align: center;
+}
+
+@mixin center-vertically {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.thumbnail {
+  border: 1px solid #ddd; /* Gray border */
+  border-radius: 4px; /* Rounded border */
+  padding: 5px; /* Some padding */
+  width: 150px; /* Set a small width */
+}
+
+.image-holder {
+  margin-top: 1rem;
+}
+.page-form {
+  .MuiInputBase-root {
+    font-size: 1.4rem !important;
+  }
+  .form-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    box-shadow: 3px 3px 3px #eee;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-top: 2px solid #eee;
+
+    button {
+      height: 40px;
+      margin-right: 1rem;
+      margin-top: 0;
+    }
+  }
+}
+.form-alert {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  border-color: red;
+  background-color: rgba(255, 0, 0, 0.103) !important;
+
+  .MuiAlert-message {
+    font-size: 1.3rem;
+  }
+
+  svg {
+    path {
+      color: red;
+    }
+  }
 }

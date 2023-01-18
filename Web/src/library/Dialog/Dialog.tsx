@@ -5,48 +5,58 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Button } from "@mui/material";
-import usePrompt from "hooks/useCallbackPrompt";
+import "./Dialog.scss";
 
 interface IDialog extends DialogProps {
   isDirty?: boolean;
+  titleText?: string;
+  contentText?: string;
+  agreeText?: string;
+  disagreeText?: string;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<any>>;
+  agreeHandler: () => void;
 }
+
+export type DialogState = {
+  open: boolean;
+  id: string | number;
+};
 const Dialog: React.FC<IDialog> = (props) => {
-  const [open, setOpen] = React.useState(props.open);
-
-  usePrompt(
-    "All changes you made to this form will be undone. Are you sure you want discard changes?",
-    props.isDirty
-  );
-
-  const handleClose = () => {
-    setOpen(false);
+  const agreeHandler = () => {
+    props.setOpen(false);
+    props.agreeHandler();
   };
 
-  React.useEffect(() => {}, [open]);
+  const disagreeHandler = () => {
+    props.setOpen(false);
+  };
+
+  React.useEffect(() => {}, [props.open, props.agreeHandler]);
   return (
     <DialogMUI
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      open={props.open}
+      onClose={disagreeHandler}
+      className="custom-dialog"
     >
-      <DialogTitle id="alert-dialog-title">
-        {"Use Google's location service?"}
-      </DialogTitle>
+      <DialogTitle>{props.titleText}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Let Google help apps determine location. This means sending anonymous
-          location data to Google, even when no apps are running.
-        </DialogContentText>
+        <DialogContentText>{props.contentText}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Disagree</Button>
-        <Button onClick={handleClose} autoFocus>
-          Agree
-        </Button>
+        <Button onClick={agreeHandler}>{props.disagreeText}</Button>
+        <Button autoFocus>{props.agreeText}</Button>
       </DialogActions>
     </DialogMUI>
   );
+};
+
+Dialog.defaultProps = {
+  titleText: "Delete Data",
+  contentText:
+    "This data will permanently deleted. Are you sure you want to delete this data?",
+  agreeText: "Agree",
+  disagreeText: "Disagree",
 };
 
 export default Dialog;

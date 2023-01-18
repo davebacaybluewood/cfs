@@ -1,0 +1,56 @@
+@import "~styles/base";
+
+.card-number {
+  width: 100%;
+  height: 300px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-size: cover;
+  background-attachment: fixed;
+  border-top: 2px solid transparent;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 2rem;
+  flex-direction: row;
+
+  &:hover {
+    border-top: 2px solid #333;
+
+    .date {
+      opacity: 1;
+    }
+  }
+  .captions {
+    position: relative;
+    h5 {
+      font-weight: 900;
+      font-size: 2.7rem;
+      color: #fff;
+    }
+    p {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+  }
+
+  .date {
+    color: rgb(167, 167, 167);
+    font-size: 4.1rem;
+    font-weight: 900;
+    align-self: flex-start;
+    flex-basis: auto;
+    order: 0;
+    flex-grow: 0;
+    flex-shrink: 1;
+    opacity: 0.4;
+    transition: 0.5s;
+    text-align: right;
+  }
+
+  img {
+    width: 100%;
+  }
+}

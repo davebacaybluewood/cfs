@@ -1,0 +1,188 @@
+//
+//  These remaining colors need to be fixed with UX to use the prop colors from the agreed color palette
+//
+$color-blackTwo: #3f3f48;
+$color-blackThree: #585860;
+$color-eyGrey7: #fafafc;
+$color-eyGrey32: #e7e7ea;
+$color-eyGrey33: #2e2e38;
+
+// --------------------------------------------------
+// Color Variables - from MOTIF
+// --------------------------------------------------
+
+// Primary Colors
+$white: #fff;
+$black: #000;
+
+$grey-50: #fafafc;
+$grey-100: #f6f6fa;
+$grey-200: #eaeaf2;
+$grey-250: #e1e1e6;
+$grey-300: #c4c4cd;
+$grey-400: #747480;
+$grey-450: #717171;
+$grey-500: #2e2e38;
+$grey-510: #2e2e3c;
+$grey-550: #23232f;
+$grey-600: #1a1a24;
+$grey-800: rgba(0, 0, 0, 0.05);
+
+$yellow-400: #ffe600;
+
+// Secondary Colors
+$green-100: #8ce8ad;
+$green-200: #57e188;
+$green-300: #34c768;
+$green-400: #2db757;
+$green-500: #189d3e;
+$green-600: #168736;
+$green-700: #13652a;
+
+$teal-100: #93f0e6;
+$teal-200: #60e6e1;
+$teal-300: #42c9c2;
+$teal-400: #27acaa;
+$teal-500: #109090;
+$teal-600: #0d7575;
+$teal-700: #004f4f;
+
+$blue-100: #87d3f2;
+$blue-200: #4ebeeb;
+$blue-300: #35a4e8;
+$blue-400: #188ce5;
+$blue-500: #1777cf;
+$blue-600: #155cb4;
+$blue-700: #082c65;
+
+$purple-100: #9c82d4;
+$purple-200: #724bc3;
+$purple-300: #542ea5;
+$purple-400: #3d108a;
+$purple-500: #240d75;
+$purple-600: #0a095a;
+$purple-700: #15173e;
+
+$maroon-100: #c981b2;
+$maroon-200: #b14891;
+$maroon-300: #922b73;
+$maroon-400: #750e5c;
+$maroon-500: #5a0a42;
+$maroon-600: #42152d;
+$maroon-700: #351c21;
+
+$red-100: #ff9a91;
+$red-200: #ff736a;
+$red-300: #f95d54;
+$red-400: #ff4136;
+$red-500: #e0362c;
+$red-600: #b9251c;
+$red-700: #7a130d;
+
+$orange-100: #ffb46a;
+$orange-200: #ff9831;
+$orange-300: #ff810a;
+$orange-400: #ff6d00;
+$orange-500: #f76900;
+$orange-600: #eb4f00;
+$orange-700: #bc2f00;
+
+// Social Colors
+$linkedin-light: #00a0dc;
+$linkedin-dark: #0077b5;
+$twitter: #1da1f2;
+$youtube: #fe0000;
+$facebook: #3c5a99;
+$facebook-light: #5a7cc5;
+$google: #ea4335;
+
+:export {
+  color_blackTwo: $color-blackTwo;
+  color_blackThree: $color-blackThree;
+  color_eyGrey7: $color-eyGrey7;
+  color_eyGrey32: $color-eyGrey32;
+  color_eyGrey33: $color-eyGrey33;
+
+  white: $white;
+  black: $black;
+
+  grey_50: $grey-50;
+  grey_100: $grey-100;
+  grey_200: $grey-200;
+  grey_250: $grey-250;
+  grey_300: $grey-300;
+  grey_400: $grey-400;
+  grey_450: $grey-450;
+  grey_500: $grey-500;
+  grey_550: $grey-550;
+  grey_600: $grey-600;
+  grey_800: $grey-800;
+
+  yellow_400: $yellow-400;
+
+  // Secondary Colors:// Secondary Colors;
+  green_100: $green-100;
+  green_200: $green-200;
+  green_300: $green-300;
+  green_400: $green-400;
+  green_500: $green-500;
+  green_600: $green-600;
+  green_700: $green-700;
+
+  teal_100: $teal-100;
+  teal_200: $teal-200;
+  teal_300: $teal-300;
+  teal_400: $teal-400;
+  teal_500: $teal-500;
+  teal_600: $teal-600;
+  teal_700: $teal-700;
+
+  blue_100: $blue-100;
+  blue_200: $blue-200;
+  blue_300: $blue-300;
+  blue_400: $blue-400;
+  blue_500: $blue-500;
+  blue_600: $blue-600;
+  blue_700: $blue-700;
+
+  purple_100: $purple-100;
+  purple_200: $purple-200;
+  purple_300: $purple-300;
+  purple_400: $purple-400;
+  purple_500: $purple-500;
+  purple_600: $purple-600;
+  purple_700: $purple-700;
+
+  maroon_100: $maroon-100;
+  maroon_200: $maroon-200;
+  maroon_300: $maroon-300;
+  maroon_400: $maroon-400;
+  maroon_500: $maroon-500;
+  maroon_600: $maroon-600;
+  maroon_700: $maroon-700;
+
+  red_100: $red-100;
+  red_200: $red-200;
+  red_300: $red-300;
+  red_400: $red-400;
+  red_500: $red-500;
+  red_600: $red-600;
+  red_700: $red-700;
+
+  orange_100: $orange-100;
+  orange_200: $orange-200;
+  orange_300: $orange-300;
+  orange_400: $orange-400;
+  orange_500: $orange-500;
+  orange_600: $orange-600;
+  orange_700: $orange-700;
+
+  // Social Colors:// Social Colors;
+  linkedin_light: $linkedin-light;
+  linkedin_dark: $linkedin-dark;
+  twitter: $twitter;
+  youtube: $youtube;
+  facebook: $facebook;
+  facebook_light: $facebook-light;
+  google: $google;
+}

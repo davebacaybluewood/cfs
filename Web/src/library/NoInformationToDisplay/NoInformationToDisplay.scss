@@ -1,0 +1,45 @@
+@import "~styles/base";
+.no-info-to-display {
+  padding-left: 1%;
+  background-color: $grey-100;
+  border: 1px solid $grey-250;
+
+  .no-info-to-display-content {
+    padding: 1rem;
+    .info-icon {
+      color: $grey-400;
+      position: relative;
+      top: 3px;
+    }
+
+    .no-info-to-display-text {
+      padding-left: 5px;
+      font-size: 12px;
+    }
+  }
+
+  &.secondary {
+    background-color: white;
+    box-shadow: 4px 4px 4px #eaeaf2;
+
+    .info-icon {
+      color: black;
+    }
+  }
+  &.primary {
+    background-color: $grey-100;
+    padding: 0;
+    .info-icon {
+      color: $grey-400;
+    }
+  }
+  &.has-icon {
+    height: auto;
+    padding: 40px 10px 40px 30px;
+    display: flex;
+
+    .paper-svg {
+      margin-right: 40px;
+    }
+  }
+}

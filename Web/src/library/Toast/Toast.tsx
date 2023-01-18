@@ -10,7 +10,7 @@ interface IToast {
 const Toast: React.FC<IToast> = (props) => {
   useEffect(() => {
     if (props.isVisible) {
-      setTimeout(() => props.setter(false), 10000);
+      setTimeout(() => props.setter(false), 7000);
     }
   }, [props]);
 

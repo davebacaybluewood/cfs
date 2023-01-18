@@ -1,0 +1,26 @@
+.admin-table-container {
+  box-shadow: 3px 3px 3px #eee;
+  border-left: 1px solid #eee;
+  .MuiTableCell-head {
+    font-size: 16px;
+    font-weight: 900;
+    background-color: #eee;
+  }
+  .MuiTableCell-body {
+    font-size: 12px;
+  }
+
+  .action-buttons {
+    button {
+      margin-right: 0.5rem;
+      margin-bottom: 0.3rem;
+      margin-top: 0.3rem;
+    }
+  }
+  .MuiCircularProgress-root {
+    margin: auto;
+    .MuiCircularProgress-circleIndeterminate {
+      color: #333;
+    }
+  }
+}

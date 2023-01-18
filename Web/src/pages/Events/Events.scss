@@ -1,0 +1,106 @@
+@import "~styles/base";
+
+.event-content {
+  .banner {
+    margin-bottom: 0;
+  }
+
+  .working-steps {
+    padding: 3rem;
+    background-color: #fff;
+    height: auto;
+    .title {
+      h5 {
+        color: #333;
+      }
+      h1 {
+        color: #333;
+      }
+    }
+    .steps {
+      h1 {
+        color: #fff;
+        font-size: 10rem;
+        background: $main-color-gradient;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+      }
+      h5 {
+        color: #333;
+        font-weight: 300;
+        font-size: 2rem;
+
+        &::after {
+          display: block;
+          width: 100px;
+          content: "";
+          background-color: #333;
+          height: 3px;
+          margin: auto;
+          margin-top: 1rem;
+        }
+      }
+      p {
+        color: #333;
+      }
+    }
+  }
+}
+.custom-dialog {
+  .custom-dialog-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    background-color: rgb(196, 228, 196);
+    padding: 1rem;
+    border-radius: 10px;
+    color: #333;
+    svg {
+      font-size: 3rem;
+      margin-right: 1rem;
+      path {
+        color: green;
+      }
+    }
+    span {
+      font-weight: 900;
+      font-size: 1.7rem;
+      text-transform: uppercase;
+    }
+  }
+  .copy-input {
+    margin-top: 2rem !important;
+
+    .MuiInputBase-root,
+    .MuiInputLabel-root,
+    .MuiFormControlLabel-root span {
+      font-size: 1.6rem;
+    }
+
+    .sent-email-instructions {
+      font-size: 1.3rem;
+      font-style: italic;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .ticket-img {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+
+  .download-button {
+    svg {
+      margin-right: 0.7rem;
+    }
+    path {
+      color: white;
+    }
+  }
+}

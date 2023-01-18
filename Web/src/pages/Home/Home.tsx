@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 import Card from "library/Card/Card";
 import { Container } from "@mui/system";
 import servicesData from "data/services";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContentCard, { ContentCardProps } from "library/ContentCard/ContentCard";
 import Video from "./components/Video/Video";
 import HeaderTitle from "./components/HeaderTitle/HeaderTitle";
@@ -20,18 +20,23 @@ import useResponsive from "hooks/useResponsive";
 import Wrapper from "./components/Wrapper/Wrapper";
 import React from "react";
 import classNames from "classnames";
+import Title from "pages/Admin/components/Title/Title";
+import CardNumbers from "library/CardNumbers/CardNumbers";
+import { formatDate } from "helpers/dateFormatter";
+import { useNavigate } from "react-router-dom";
+import paths from "constants/routes";
+import CommonHeaderTitle from "library/HeaderTitle/HeaderTitle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import PageTitle from "library/PageTitle/PageTitle";
 
 const Home: React.FC = () => {
   const [services] = useState(servicesData);
   const [calendlyModal, setCalendlyModal] = useState(false);
   const isMobileMode = useResponsive("mobile");
+  const navigate = useNavigate();
 
   const cardContainerClassnames = classNames("card-container", {
     "card-container-mobile": isMobileMode,
-  });
-
-  const sliderCaptionClassnames = classNames("slider-captions", {
-    "slider-captions-mobile": isMobileMode,
   });
 
   const servicesProps = {
@@ -86,7 +91,7 @@ const Home: React.FC = () => {
   };
 
   const appointmentProps: ContentCardProps = {
-    header: "SCHEDULE A APPOINTMENT",
+    header: "SCHEDULE AN APPOINTMENT",
     firstTitle: "Lorem ipsum dolor sit amet",
     secondTitle: "Consectetur adipiscing elit",
     isMobileMode: isMobileMode,
@@ -95,9 +100,8 @@ const Home: React.FC = () => {
     icons: [
       {
         icon: <img src="/assets/icons/clock.png" alt="description-icon" />,
-        title: "Warranty Management",
-        description:
-          "Morem Ipsum is simply dummy text of the printing and presetting found it agency business.",
+        description: "Morem Ipsum",
+        title: "",
       },
       {
         icon: <img src="/assets/icons/clock.png" alt="description-icon" />,
@@ -133,32 +137,28 @@ const Home: React.FC = () => {
     onEventScheduled: () => console.log("test"),
   });
 
+  const [showPopup, setShowPopup] = useState(true);
+
   return (
     <div className="home-container">
+      <PageTitle title="Home" />
       <div className="welcome-section">
-        <AwesomeSlider
-          bullets={false}
-          animation="cubeAnimation"
-          infinite={true}
-          mobileTouch={true}
-        >
-          <div>
-            <div className={sliderCaptionClassnames}>
-              <h5>Welcome to Comfort Life Financial</h5>
-              <h1>We are creative financial for your life.</h1>
-            </div>
-            <img src="https://techno.dreamitsolution.net/wp-content/uploads/2020/10/slider2.png" />
+        <Container className="welcome-section-container">
+          <div className="welcome-section-image">
+            <img src="/assets/others/happy-fam.png" alt="happy family" />
           </div>
-          <div>
-            <div className={sliderCaptionClassnames}>
-              <h5>Welcome to Comfort Life Financial</h5>
-              <h1>We are creative financial for your life.</h1>
-            </div>
-            <img src="https://techno.dreamitsolution.net/wp-content/uploads/2020/10/slider2.png" />
+          <div className="welcome-section-captions">
+            <h2>We are CFS</h2>
+            <p>
+              CFS helps individuals and families build a comfortable future by
+              advocating Financial Awareness and providing Risk Management
+              Solutions.
+            </p>
+            <p>CFS offers Life Insurance and Annuities.</p>
           </div>
-        </AwesomeSlider>
+        </Container>
       </div>
-      <Wrapper className={cardContainerClassnames}>
+      {/* <Wrapper className={cardContainerClassnames}>
         <Container>
           <Grid container spacing={2}>
             {services.slice(0, 4).map((service) => (
@@ -178,8 +178,8 @@ const Home: React.FC = () => {
             ))}
           </Grid>
         </Container>
-      </Wrapper>
-      <Wrapper className="endorsement">
+      </Wrapper> */}
+      {/* <Wrapper className="endorsement">
         <Container>
           <Grid container spacing={2} className="endorsement-container">
             <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -194,8 +194,8 @@ const Home: React.FC = () => {
             </Grid>
           </Grid>
         </Container>
-      </Wrapper>
-      <Wrapper className="services">
+      </Wrapper> */}
+      {/* <Wrapper className="services">
         <React.Fragment>
           <Video />
           <Container>
@@ -217,6 +217,7 @@ const Home: React.FC = () => {
                           <img
                             src="/assets/icons/money-plant-white.png"
                             width={70}
+                            alt="services-plant"
                           />
                         ),
                       },
@@ -233,8 +234,8 @@ const Home: React.FC = () => {
             </Grid>
           </Container>
         </React.Fragment>
-      </Wrapper>
-      <Wrapper className="stragies">
+      </Wrapper> */}
+      {/* <Wrapper className="stragies">
         <Container>
           <Grid container spacing={2} className="endorsement-container">
             <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -255,40 +256,89 @@ const Home: React.FC = () => {
             </Grid>
           </Grid>
         </Container>
-      </Wrapper>
+      </Wrapper> */}
       <Wrapper
-        className="contact"
-        style={{ backgroundImage: `url("/assets/others/bg.png")` }}
+        className="solutions"
+        style={{
+          backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/12/slider05-1.jpg")`,
+        }}
       >
         <Container>
           <HeaderTitle
-            title="+880 013 143 206"
-            bigTitle="To Make Requests For The Further Information"
-            hasBorder={false}
+            title="Solutions"
+            bigTitle="Let's get started"
+            hasBorder={true}
           />
-          <Button onClick={() => setCalendlyModal(true)}>Contact Us</Button>
-          <PopupModal
-            url="https://calendly.com/dave-bacay-vc/call-us-testing"
-            onModalClose={() => setCalendlyModal(false)}
-            open={calendlyModal}
-            rootElement={document.getElementById("root") as any}
-          />
+          <p className="description">
+            There's a lot to know, and we have the information to help you make
+            informed decision about your financial future. Let's take a closer
+            look at what it means to have an annuity or life insurance, and why
+            both are important.
+          </p>
+          <Grid
+            container
+            spacing={isMobileMode ? 1 : 2}
+            className="solution-grid"
+          >
+            <Grid item xs={12} lg={6}>
+              <div
+                className="solution-item"
+                onClick={() =>
+                  navigate(
+                    `${paths.solutions_with_id.replace(
+                      ":id",
+                      "life-insurance"
+                    )}#life-insurance`
+                  )
+                }
+              >
+                <h2>What is Life Insurance?</h2>
+                {/* <img src="https://picsum.photos/536/354" /> */}
+              </div>
+            </Grid>
+            <Grid item xs={12} lg={6}></Grid>
+            <Grid item xs={12} lg={6}>
+              <div
+                className="solution-item"
+                onClick={() =>
+                  navigate(
+                    `${paths.solutions_with_id.replace(
+                      ":id",
+                      "annuity"
+                    )}#annuity`
+                  )
+                }
+              >
+                <h2>What is an Annuity?</h2>
+                {/* <img src="https://picsum.photos/536/354" /> */}
+              </div>
+            </Grid>
+            <Grid item xs={12} lg={6}></Grid>
+          </Grid>
         </Container>
       </Wrapper>
-      <Wrapper>
+      <Wrapper
+        style={{
+          backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/10/team-bg2.jpg")`,
+        }}
+        className="appoinment-content"
+      >
         <React.Fragment>
           <Container>
             <Grid container spacing={2} className="appointment-container">
-              <Grid item xs={12} sm={12} md={6} lg={6}>
-                <ContentCard {...appointmentProps} />
-              </Grid>
-              <Grid item xs={12} sm={12} md={6} lg={6}>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <CommonHeaderTitle
+                  title="SCHEDULE AN APPOINTMENT"
+                  bigTitle="To Make Requests For The Further Information"
+                  description="Or direct call to +1 (702) 900-5666"
+                />
                 <InlineWidget
-                  url="https://calendly.com/dave-bacay-vc/call-us-testing"
+                  url="https://calendly.com/gocfs/30min?primary_color=0057b7"
                   styles={{
-                    height: "950px",
+                    height: "850px",
                     width: "100%",
-                    marginBottom: "-5rem",
+                    marginBottom: "-6rem",
+                    marginTop: "-6rem",
                   }}
                 />
               </Grid>
@@ -296,8 +346,18 @@ const Home: React.FC = () => {
           </Container>
         </React.Fragment>
       </Wrapper>
+      {/* {showPopup ? (
+        <div className="dialog-home" onClick={() => setShowPopup(false)}>
+          <button className="exit-button" onClick={() => setShowPopup(false)}>
+            <CancelIcon />
+          </button>
+          <img
+            src="https://res.cloudinary.com/dkjjkr88j/image/upload/v1670970055/Optimized-Happy_Holidays_CFS_l3vpef.jpg"
+            alt="Merry Christmas"
+          />
+        </div>
+      ) : null} */}
     </div>
   );
 };
-
 export default Home;

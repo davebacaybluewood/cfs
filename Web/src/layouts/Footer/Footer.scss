@@ -25,6 +25,23 @@
       }
     }
 
+    .social-icons {
+      li {
+        background: $main-color-new;
+        border-radius: 50%;
+        padding: 10px 12px;
+        margin: 0 0.2rem;
+
+        svg {
+          font-size: 1.3rem;
+          color: #fff !important;
+          path {
+            color: #fff;
+          }
+        }
+      }
+    }
+
     ul {
       margin: 1rem 0;
       li {
@@ -41,7 +58,7 @@
   }
 
   .bottom-footer {
-    background-color: $main-color;
+    background: $main-color-gradient;
     padding: 1rem;
     color: white;
   }

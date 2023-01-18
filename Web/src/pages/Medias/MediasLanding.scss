@@ -1,0 +1,56 @@
+@import "~styles/base";
+
+.media-wrapper {
+  .banner {
+    margin-bottom: 0;
+  }
+  .album-container {
+    .album {
+      height: 700px;
+      z-index: 999;
+      position: relative;
+      transition: all 0.5s;
+      background-size: cover;
+      background-position: 0px -120px;
+      background-repeat: no-repeat;
+
+      @include center-vertically;
+      text-align: center;
+
+      .album-captions {
+        h2 {
+          color: #fff;
+          font-weight: 900;
+          font-size: 6rem;
+          margin-bottom: 2rem;
+        }
+
+        a {
+          font-size: 1.6rem;
+          margin-top: 3rem;
+          color: #fff;
+          text-transform: uppercase;
+          text-decoration: none;
+          border-bottom: 1px solid #fff;
+        }
+        .date-wrapper {
+          span {
+            font-size: 1.3rem;
+            color: #fff;
+          }
+        }
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 6, 17, 0.75);
+        z-index: -1;
+      }
+    }
+  }
+}

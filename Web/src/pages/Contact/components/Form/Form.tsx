@@ -10,6 +10,8 @@ import emailjs from "@emailjs/browser";
 import { useRef, useState } from "react";
 import Spinner from "library/Spinner/Spinner";
 import Toast from "library/Toast/Toast";
+import { submitInquiry } from "redux/actions/inquiryActions";
+import { useDispatch } from "react-redux";
 
 type FormikData = {
   fullName: string;
@@ -20,7 +22,7 @@ type FormikData = {
   inquiryType: string;
 };
 
-interface ILabeledInput {
+export interface ILabeledInput {
   name: string;
   label: string;
   value: string;
@@ -29,7 +31,11 @@ interface ILabeledInput {
     md: number;
     lg: number;
   };
+  disabled?: boolean;
   isTextArea?: boolean;
+  type?: string;
+  isAutoComplete?: boolean;
+  isDate?: boolean;
 }
 const Form = () => {
   const [showToast, setShowToast] = useState(false);
@@ -53,6 +59,7 @@ const Form = () => {
   });
 
   const form = useRef<any>();
+  const dispatch = useDispatch();
 
   const emailJSCredsAdmins = {
     service: "service_rs7qsgl",
@@ -68,7 +75,7 @@ const Form = () => {
   return (
     <div className="contact-form">
       <div className="form-instructions">
-        <h2>FILLUP FORM</h2>
+        <h2>CONTACT FORM</h2>
         <p>All fields are required.</p>
       </div>
       <Formik
@@ -76,6 +83,17 @@ const Form = () => {
         validationSchema={validationSchema}
         onSubmit={(data: FormikData, { setSubmitting, resetForm }) => {
           setSubmitting(true);
+
+          dispatch(
+            submitInquiry(
+              data.fullName,
+              data.mobileNumber,
+              data.emailAddress,
+              data.subject,
+              data.message,
+              data.inquiryType
+            ) as any
+          );
           emailjs
             .sendForm(
               emailJSCredsAdmins.service,
@@ -102,8 +120,6 @@ const Form = () => {
                 )
                 .then(
                   (result) => {
-                    console.log(result.text);
-                    console.log(result);
                     console.log(form.current);
                     setSubmitting(false);
                     setShowToast(true);
@@ -240,7 +256,6 @@ const Form = () => {
                   SUBMIT
                 </Button>
               </Grid>
-              <Promt isDirty={dirty} />
               <Spinner isVisible={isSubmitting} />
               <Toast setter={setShowToast} isVisible={showToast} />
             </form>

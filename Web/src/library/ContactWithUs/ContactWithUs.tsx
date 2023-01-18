@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./ContactWithUs.scss";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { PopupModal } from "react-calendly";
+import { MAIN_CALENDLY_EVENT_LINK } from "constants/constants";
 
 const ContactWithUs = () => {
   const [calendlyModal, setCalendlyModal] = useState(false);
@@ -22,7 +23,7 @@ const ContactWithUs = () => {
         </div>
       </div>
       <PopupModal
-        url="https://calendly.com/dave-bacay-vc/call-us-testing"
+        url={MAIN_CALENDLY_EVENT_LINK}
         onModalClose={() => setCalendlyModal(false)}
         open={calendlyModal}
         rootElement={document.getElementById("root") as any}

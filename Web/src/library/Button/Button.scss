@@ -19,3 +19,26 @@ button.custom-button-disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+button.custom-button-dark {
+  background-color: #333;
+  border-color: #eee;
+  color: #fff;
+
+  &:hover {
+    background-color: transparent;
+    border: 1px solid #eee;
+    color: #333;
+  }
+}
+
+button.custom-button-light {
+  background-color: #fff;
+  color: #333;
+
+  &:hover {
+    background-color: transparent;
+    border: 1px solid #eee;
+    color: #333;
+  }
+}

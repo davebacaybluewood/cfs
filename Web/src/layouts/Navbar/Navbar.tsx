@@ -1,72 +1,93 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
-import { IMAGES } from "constants/constants";
+import { IMAGES, MAIN_CALENDLY_EVENT_LINK } from "constants/constants";
 import Topnav from "./components/Topnav/Topnav";
 import { Button, Container } from "@mui/material";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import { Drawer } from "@mui/material";
 import useResponsive from "hooks/useResponsive";
 import paths from "constants/routes";
+import { PopupModal } from "react-calendly";
+import SocialIcons from "./components/Topnav/SocialIcons";
 
 const Navbar: React.FC = () => {
   const url = window.location.href;
   const currentPage = url.split("/")[3];
   const [openDrawer, setDrawer] = useState(false);
   const isMobileMode = useResponsive("mobile");
+  const [calendlyModal, setCalendlyModal] = useState(false);
+  const navigate = useNavigate();
+
+  const changeLink = (url: string) => {
+    navigate(url);
+    setDrawer(false);
+  };
+
+  const setActive = (path: string) => {
+    if (currentPage === path.substring(1)) {
+      return "nav-links nav-links-active";
+    } else if (path === paths.home && currentPage === "") {
+      return "nav-links nav-links-active";
+    }
+
+    return "nav-links";
+  };
+
   const navLinks = [
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.home.substring(1) ? "nav-links-active" : ""
-        }`,
+        className: setActive(paths.home),
         to: paths.home,
         text: "Home",
       },
       dropdown: false,
     },
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.about.substring(1) ? "nav-links-active" : ""
-        }`,
+        className: setActive(paths.events),
+        to: paths.events,
+        text: "Events",
+      },
+      dropdown: false,
+    },
+    {
+      linkProps: {
+        className: setActive(paths.about),
         to: paths.about,
         text: "About Us",
       },
       dropdown: false,
     },
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.contact.substring(1) ? "nav-links-active" : ""
-        }`,
+        className: setActive(paths.contact),
         to: paths.contact,
         text: "Contact",
       },
       dropdown: false,
     },
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.services.substring(1) ? "nav-links-active" : ""
-        }`,
-        to: paths.services,
-        text: "Services",
+        className: setActive(paths.solutions),
+        to: paths.solutions,
+        text: "Solutions",
       },
       dropdown: false,
     },
     {
-      className: "nav-item",
       linkProps: {
-        className: `nav-links ${
-          currentPage === paths.portal.substring(1) ? "nav-links-active" : ""
-        }`,
+        className: setActive(paths.portal),
         to: paths.portal,
-        text: "Portal",
+        text: "Agent Portal",
+      },
+      dropdown: false,
+    },
+    {
+      linkProps: {
+        className: setActive(paths.media),
+        to: paths.media,
+        text: "Media",
       },
       dropdown: false,
     },
@@ -90,6 +111,12 @@ const Navbar: React.FC = () => {
                   <Link {...link.linkProps}>{link.linkProps.text}</Link>
                 </li>
               ))}
+              <li
+                className="highlight-button"
+                onClick={() => setCalendlyModal(true)}
+              >
+                TALK TO US
+              </li>
             </ul>
           )}
           {isMobileMode && (
@@ -107,16 +134,24 @@ const Navbar: React.FC = () => {
           anchor="right"
           open={openDrawer}
           onClose={() => setDrawer(false)}
+          className="nav-links-drawer"
         >
-          <ul className="nav-links-drawer">
+          <ul className="drawer-ul">
             {navLinks.map((link, index) => (
-              <li key={index}>
+              <li key={index} onClick={() => changeLink(link.linkProps.to)}>
                 <Link {...link.linkProps}>{link.linkProps.text}</Link>
               </li>
             ))}
           </ul>
+          <SocialIcons className="mobile-icons" />
         </Drawer>
       )}
+      <PopupModal
+        url={MAIN_CALENDLY_EVENT_LINK}
+        onModalClose={() => setCalendlyModal(false)}
+        open={calendlyModal}
+        rootElement={document.getElementById("root") as any}
+      />
     </React.Fragment>
   );
 };

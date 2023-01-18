@@ -54,19 +54,21 @@
     }
   }
 
-  ul {
+  ul.left-icons {
     list-style: none;
     margin: 0.5rem 0;
     li {
       display: inline-block;
-      margin-right: 3rem;
+      margin-right: 2rem;
       color: white;
-      font-size: 1.2rem;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
       font-weight: 300;
-      @media screen and (max-width: 497px) {
-        margin-bottom: 1rem;
 
-        &:nth-child(2) {
+      @media screen and (max-width: 497px) {
+        margin-right: 1rem;
+
+        &:nth-child(3) {
           margin-bottom: 0;
         }
       }
@@ -76,6 +78,10 @@
         padding: 5px 7px;
         border-radius: 100%;
         text-align: center;
+
+        @media screen and (max-width: 500px) {
+          padding: 2px 4px;
+        }
       }
       svg {
         position: relative;
@@ -88,6 +94,59 @@
       span {
         margin-left: 0.8rem;
         font-weight: 400;
+      }
+    }
+    li > * {
+      display: inline-block;
+      vertical-align: middle;
+      color: #fff;
+    }
+  }
+
+  ul.right-icons {
+    list-style: none;
+    margin: 0.5rem 0;
+
+    @media screen and (max-width: 700px) {
+      display: none;
+    }
+    li {
+      display: inline-block;
+      margin-left: 0.5rem;
+      color: white;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      font-weight: 300;
+      transition: 0.5s;
+      cursor: pointer;
+
+      .top-nav-icon {
+        background: $main-color-gradient;
+        padding: 5px 7px;
+        border-radius: 3px;
+        text-align: center;
+        border: 1px solid rgba(238, 238, 238, 0.3);
+      }
+      svg {
+        position: relative;
+        top: 1px;
+        path {
+          color: #fff;
+        }
+      }
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+    .icon-text {
+      margin-right: 1rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dotted #eee;
+
+      &:hover {
+        cursor: auto;
+        opacity: 1;
       }
     }
     li > * {

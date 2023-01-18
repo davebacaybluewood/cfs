@@ -2,7 +2,6 @@ import classNames from "classnames";
 import Footer from "layouts/Footer/Footer";
 import Navbar from "layouts/Navbar/Navbar";
 import React from "react";
-import "../../styles/base.scss";
 
 interface IPageWrapper {
   showNavbar?: boolean;

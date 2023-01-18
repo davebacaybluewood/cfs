@@ -14,13 +14,12 @@ const Portal = () => {
               strength={500}
               bgImageSizes="100%"
             >
-              <div style={{ height: 700 }}>
+              <div style={{ height: 1000 }}>
                 <PortalContent
                   title="New Member"
-                  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labore"
+                  description=""
                   linkProps={{
-                    link: "https://i-paymaster.com/signup",
+                    link: "https://agent.comfortfinancialsolutions.com/signup",
                     text: "Sign up",
                   }}
                   bgFadedPosition="right"
@@ -34,14 +33,13 @@ const Portal = () => {
               strength={500}
               bgImageSizes="100%"
             >
-              <div style={{ height: 700 }}>
+              <div style={{ height: 1000 }}>
                 <PortalContent
                   title="Agent
                   Back Office"
-                  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labore"
+                  description=""
                   linkProps={{
-                    link: "https://i-paymaster.com/Users/Account/AccessDenied?ReturnUrl=%2f",
+                    link: "https://agent.comfortfinancialsolutions.com/",
                     text: "Login",
                   }}
                   bgFadedPosition="left"

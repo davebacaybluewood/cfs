@@ -4,6 +4,7 @@ import { TextField, FilledTextFieldProps } from "@mui/material";
 
 interface IFormikTextInput extends FilledTextFieldProps {
   isTextArea?: boolean;
+  isDate?: boolean;
 }
 const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
   const [field, meta, helper] = useField<string>(props.name ?? "");
@@ -23,11 +24,18 @@ const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
     helper.setValue(newValue);
   }, [props?.value]);
 
+  const clonedProps = {
+    ...props,
+  };
+
+  delete clonedProps.isTextArea;
+  delete clonedProps.isDate;
+
   return (
     <React.Fragment>
       <TextField
         {...field}
-        {...props}
+        {...clonedProps}
         value={field.value}
         onChange={handleOnChange}
         helperText={errorText}
@@ -36,6 +44,12 @@ const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
         variant="filled"
         fullWidth
         className="filled-input"
+        multiline={props.isTextArea}
+        rows={props.isTextArea ? 4 : 0}
+        type={
+          props.isDate ? "datetime-local" : !props.type ? "text" : props.type
+        }
+        placeholder={props.placeholder ?? "Add text here ..."}
       />
     </React.Fragment>
   );

@@ -1,6 +1,8 @@
 import { Container, Grid } from "@mui/material";
+import { MAIN_CALENDLY_EVENT_LINK } from "constants/constants";
 import Banner from "library/Banner/Banner";
 import Button from "library/Button/Button";
+import PageTitle from "library/PageTitle/PageTitle";
 import HeaderTitle from "pages/Home/components/HeaderTitle/HeaderTitle";
 import Wrapper from "pages/Home/components/Wrapper/Wrapper";
 import { useState } from "react";
@@ -14,13 +16,15 @@ const Contact = () => {
 
   return (
     <div className="contact">
+      <PageTitle title="Contact" />
       <Banner
         bigTitle="Contact Us"
         title="Share your suggestions and feedback with us."
         hasBorder={true}
+        backgroundImage="https://demo.casethemes.net/itfirm/wp-content/uploads/2021/09/bg-pagetitle.jpg"
       />
       <Container>
-        <Grid container spacing={2}>
+        <Grid container spacing={5}>
           <Grid item xs={12} md={8} lg={8}>
             <Form />
           </Grid>
@@ -37,15 +41,15 @@ const Contact = () => {
       >
         <Container>
           <HeaderTitle
-            title="+880 013 143 206"
-            bigTitle="To Make Requests For The Further Information"
+            title="+1 (702) 900-5666"
+            bigTitle="For Quote Request And Further Information"
             hasBorder={false}
           />
           <Button onClick={() => setCalendlyModal(true)}>
-            Book a Appointment
+            Book an Appointment
           </Button>
           <PopupModal
-            url="https://calendly.com/dave-bacay-vc/call-us-testing"
+            url={MAIN_CALENDLY_EVENT_LINK}
             onModalClose={() => setCalendlyModal(false)}
             open={calendlyModal}
             rootElement={document.getElementById("root") as any}

@@ -7,6 +7,7 @@ import { isEven, isOdd } from "helpers/isEvenOrOdd";
 import useResponsive from "hooks/useResponsive";
 import Banner from "library/Banner/Banner";
 import ContentCard from "library/ContentCard/ContentCard";
+import PageTitle from "library/PageTitle/PageTitle";
 import HeaderTitle from "pages/Home/components/HeaderTitle/HeaderTitle";
 import { Parallax } from "react-parallax";
 import "./AboutUs.scss";
@@ -15,9 +16,10 @@ const AboutUs = () => {
   const isMobileMode = useResponsive("mobile");
   return (
     <div className="about">
+      <PageTitle title="About Us" />
       <Banner
         bigTitle="About Us"
-        title="Learn more about Comfort Life"
+        title="Learn more about Comfort Financial"
         hasBorder={true}
       />
       {aboutUs.map((item, index) => {
@@ -34,15 +36,13 @@ const AboutUs = () => {
                 direction={isEven(index) ? "row" : "row-reverse"}
                 justifyContent="center"
                 alignItems="center"
+                className="about-grid"
               >
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                  <Parallax
-                    bgImage={item.image}
-                    strength={300}
-                    bgImageSizes="10%"
-                  >
+                  {/* <Parallax bgImage={item.image} strength={1}>
                     <div style={{ height: 500 }}></div>
-                  </Parallax>
+                  </Parallax> */}
+                  <img src={item.image} alt="happy photo" />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
                   <ContentCard {...item} isMobileMode={isMobileMode} />
@@ -52,7 +52,7 @@ const AboutUs = () => {
           </div>
         );
       })}
-      <div className="team-members">
+      {/* <div className="team-members">
         <Container>
           <HeaderTitle
             bigTitle="Our Awesome Creative Team Member"
@@ -78,7 +78,7 @@ const AboutUs = () => {
             ))}
           </Grid>
         </Container>
-      </div>
+      </div> */}
     </div>
   );
 };

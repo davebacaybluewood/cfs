@@ -1,0 +1,19 @@
+.event-form-container {
+  .form-instructions {
+    margin-bottom: 1rem;
+    h2 {
+      font-weight: 900;
+    }
+    p {
+      font-size: 1.2rem;
+      font-style: italic;
+    }
+  }
+  .form {
+    .MuiInputBase-root,
+    .MuiInputLabel-root,
+    .MuiFormControlLabel-root span {
+      font-size: 1.3rem;
+    }
+  }
+}

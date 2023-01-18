@@ -1,32 +1,71 @@
-import { Button, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import CallIcon from "@mui/icons-material/Call";
 import EmailIcon from "@mui/icons-material/Email";
 import "./Topnav.scss";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaLinkedinIn,
+  FaInstagram,
+} from "react-icons/fa";
+import { SOCIAL_LINKS } from "constants/constants";
 
 const Topnav = () => {
   return (
     <div className="top-nav">
       <Container className="top-nav-container">
-        <ul>
+        <ul className="left-icons">
           <li>
             <div className="top-nav-icon">
               <CallIcon />
             </div>
-            <span>+880 013 143 206</span>
+            <span>+1 (702) 900-5666</span>
           </li>
           <li>
             <div className="top-nav-icon">
               <EmailIcon />
             </div>
-            <span>test@gmail.com</span>
+            <span>support@gocfs.pro</span>
+          </li>
+          <li>
+            <div className="top-nav-icon">
+              <LocationOnIcon />
+            </div>
+            <span>Las Vegas, NV</span>
           </li>
         </ul>
-        <Button variant="outlined" className="contact-btn">
-          <span>
-            Contact Us Now <ArrowRightAltIcon />
-          </span>
-        </Button>
+        <ul className="right-icons">
+          <li className="icon-text">
+            <span>Follow Our Socials</span>
+          </li>
+          {/* <li>
+            <div className="top-nav-icon">
+              <FaFacebookF />
+            </div>
+          </li> */}
+          <li>
+            <div className="top-nav-icon">
+              <a href={SOCIAL_LINKS.TWITTER} target="_blank">
+                <FaTwitter />
+              </a>
+            </div>
+          </li>
+          <li>
+            <div className="top-nav-icon">
+              <a href={SOCIAL_LINKS.LINKEDIN} target="_blank">
+                <FaLinkedinIn />
+              </a>
+            </div>
+          </li>
+          <li>
+            <div className="top-nav-icon">
+              <a href={SOCIAL_LINKS.INSTAGRAM} target="_blank">
+                <FaInstagram />
+              </a>
+            </div>
+          </li>
+        </ul>
       </Container>
     </div>
   );
