@@ -1,5 +1,5 @@
+import adminPathsNew from "AdminNew/constants/routes";
 import classNames from "classnames";
-import paths from "constants/routes";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
 
   useEffect(() => {
     if (!userInfo) {
-      navigate(paths.login);
+      navigate(adminPathsNew.login);
     }
   }, [userInfo]);
 

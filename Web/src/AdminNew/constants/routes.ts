@@ -14,6 +14,14 @@ const adminPathsNew = {
   faqs: adminCfsRoute + "faqs",
   raiseSupport: adminCfsRoute + "raise-support",
   contactAdmin: adminCfsRoute + "contact-admin",
+  adminAgents: adminCfsRoute + "agents",
+  adminAgentProfile: adminCfsRoute + "agents/:id",
+  adminAgentForm: adminCfsRoute + "agents/form/:action",
+  agentRequests: adminCfsRoute + "agent-requests",
+  inquiries: adminCfsRoute + "inquiries",
+  newAdminEvents: adminCfsRoute + "events",
+  newAdminEventsForm: adminCfsRoute + "events/:id",
+  newAdminEventInvites: adminCfsRoute + "event-invites",
 } as const;
 
 export default adminPathsNew;

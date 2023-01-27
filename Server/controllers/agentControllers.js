@@ -117,6 +117,26 @@ const updateAgent = expressAsync(async (req, res) => {
 // @route   POST /api/agents/
 // @access  Private/Admin
 const createAgent = expressAsync(async (req, res) => {
+  const tempTestimonial = [
+    {
+      name: "Dave Spencer Bacay",
+      title: "Finance Agent",
+      comment:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      name: "Slater Young",
+      title: "Finance Agent",
+      comment:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      name: "Dev Chris Jones",
+      title: "Web Developer",
+      comment:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+  ];
   try {
     const emailIsExist = await User.findOne({ email: req.body.emailAddress });
 
@@ -150,7 +170,7 @@ const createAgent = expressAsync(async (req, res) => {
       twitter: req.body.twitter?.toString(),
       languages: req.body.languages,
       role: ROLES.ROLE_AGENT,
-      testimonials: req.body.testimonials,
+      testimonials: tempTestimonial,
       telNumber: req.body.telNumber,
       password: req.body.password,
       avatar: agentImgResult.secure_url,

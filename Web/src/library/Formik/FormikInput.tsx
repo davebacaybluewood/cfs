@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useField } from "formik";
-import { TextField, FilledTextFieldProps } from "@mui/material";
+import { TextField, BaseTextFieldProps } from "@mui/material";
 
-interface IFormikTextInput extends FilledTextFieldProps {
+interface IFormikTextInput extends BaseTextFieldProps {
   isTextArea?: boolean;
   isDate?: boolean;
 }
@@ -41,7 +41,7 @@ const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
         helperText={errorText}
         error={!!errorText}
         label={props.label}
-        variant="filled"
+        variant={props.variant ?? "filled"}
         fullWidth
         className="filled-input"
         multiline={props.isTextArea}

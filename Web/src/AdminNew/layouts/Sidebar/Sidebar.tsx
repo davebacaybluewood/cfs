@@ -1,37 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   ProSidebar,
   Menu,
   MenuItem,
-  SubMenu,
   SidebarHeader,
   SidebarFooter,
   SidebarContent,
 } from "react-pro-sidebar";
-import {
-  FaGlobe,
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-  FaTachometerAlt,
-  FaGem,
-  FaSkyatlas,
-  FaBookReader,
-  FaPeopleCarry,
-  FaUserLock,
-  FaChartArea,
-  FaGlassCheers,
-  FaFly,
-  FaEnvelopeOpenText,
-  FaRegCalendarAlt,
-  FaUserSecret,
-  FaCogs,
-  FaRegCalendarCheck,
-} from "react-icons/fa";
+import { FaGlobe, FaAngleDoubleRight } from "react-icons/fa";
 import React from "react";
 import "./Sidebar.scss";
-import { Button } from "@mui/material";
 import { IMAGES } from "constants/constants";
-import paths from "constants/routes";
 import getSidebarLinks, { ISidebarLinks } from "./helpers/getSidebarLinks";
 import { MAIN_WEBSITE_LINK, ROLES } from "AdminNew/constants/constants";
 
@@ -50,8 +29,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   handleToggleSidebar,
   handleCollapsedChange,
 }) => {
-  const sidebarLinks = getSidebarLinks(ROLES.ROLE_AGENT).sidebarMainLinks;
-  const sidebarOtherLinks = getSidebarLinks(ROLES.ROLE_AGENT).otherLinks;
+  const LOGGED_IN_ROLE = ROLES.ROLE_MASTER_ADMIN;
+  const sidebarLinks = getSidebarLinks(LOGGED_IN_ROLE).sidebarMainLinks;
+
+  const sidebarOtherLinks = getSidebarLinks(LOGGED_IN_ROLE).sidebarOtherLinks;
 
   return (
     <ProSidebar

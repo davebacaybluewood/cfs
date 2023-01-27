@@ -14,6 +14,10 @@ const paths = {
   event_invites: "/events/invites/:id",
   media: "/media",
   media_with_id: "/media/:id",
+  agent_with_id: "/agents/:id",
+  webinarForm: "/webinar/:videoId/:agentId",
+  webinarAppointment: "/webinar/:videoId/:agentId/:submissionId",
+  agentRegistration: "/agent-registration",
 
   /** ADMIN PATHS */
   login: "/admin/login",

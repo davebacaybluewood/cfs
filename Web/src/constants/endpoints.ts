@@ -15,6 +15,8 @@ const ENDPOINTS = {
   EVENT_INVITE_BY_EVENT_ID: "/api/events/eventInviteCount/:id",
   USER_ADMIN_LIST: "/api/users",
   USER_ADMIN_BY_ID: "/api/users/:id",
+  AGENTS: "/api/agents",
+  AGENT_BY_ID: "/api/agents/:id",
 };
 
 export default ENDPOINTS;

@@ -1,8 +1,16 @@
+import AgentForm from "AdminNew/pages/Agents/AgentForm";
+import AgentProfile from "AdminNew/pages/Agents/AgentProfile";
+import AgentRequest from "AdminNew/pages/Agents/AgentRequest";
 import Appointments from "AdminNew/pages/Appointments/Appointments";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
 import Contacts from "AdminNew/pages/Contacts/Contacts";
+import EventInvites from "AdminNew/pages/EventInvites/EventInvites";
+import Events from "AdminNew/pages/Events/Events";
+import EventsForm from "AdminNew/pages/Events/EventsForm";
 import FAQs from "AdminNew/pages/FAQs/FAQs";
+import Inquiries from "AdminNew/pages/Inquiries/Inquiries";
+import Login from "AdminNew/pages/Login/Login";
 import Notifications from "AdminNew/pages/Notifications/Notifications";
 import Profile from "AdminNew/pages/Profile/Profile";
 import RaiseSupport from "AdminNew/pages/RaiseSupport/RaiseSupport";
@@ -10,7 +18,6 @@ import Settings from "AdminNew/pages/Settings/Settings";
 import GuardedWrapper from "../layouts/GuardedWrapper";
 import Agents from "../pages/Agents/Agents";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import Login from "../pages/Login/Login";
 import adminPathsNew from "./routes";
 
 export const ROLES = {
@@ -39,6 +46,14 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <Agents />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.agentRequests,
+    ELEMENT: (
+      <GuardedWrapper>
+        <AgentRequest />
       </GuardedWrapper>
     ),
   },
@@ -119,6 +134,54 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <ContactAdmin />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminAgentForm,
+    ELEMENT: (
+      <GuardedWrapper>
+        <AgentForm />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminAgentProfile,
+    ELEMENT: (
+      <GuardedWrapper>
+        <AgentProfile />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.inquiries,
+    ELEMENT: (
+      <GuardedWrapper>
+        <Inquiries />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.newAdminEvents,
+    ELEMENT: (
+      <GuardedWrapper>
+        <Events />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.newAdminEventsForm,
+    ELEMENT: (
+      <GuardedWrapper>
+        <EventsForm />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.newAdminEventInvites,
+    ELEMENT: (
+      <GuardedWrapper>
+        <EventInvites />
       </GuardedWrapper>
     ),
   },

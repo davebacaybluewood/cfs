@@ -1,0 +1,56 @@
+@import "~styles/base";
+
+.login-container {
+  height: 100vh;
+  position: relative;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  .form-wrapper {
+    border-radius: 5px;
+    border-left: 2px solid $main-color-new;
+    border-top: 2px solid $main-color-new;
+    width: 500px;
+    margin: auto;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 2rem;
+
+    img {
+      width: 200px;
+      margin: auto;
+      margin-bottom: 2rem;
+    }
+
+    .form-alert {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      border-color: red;
+      background-color: rgba(255, 0, 0, 0.103) !important;
+
+      svg {
+        path {
+          color: red;
+        }
+      }
+    }
+
+    .form-instructions {
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1rem;
+
+      h2 {
+        font-weight: 900;
+      }
+    }
+
+    .MuiInputBase-root,
+    .MuiInputLabel-root,
+    .MuiFormControlLabel-root span {
+      font-size: 1.3rem;
+    }
+  }
+}

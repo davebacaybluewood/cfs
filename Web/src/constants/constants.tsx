@@ -16,6 +16,11 @@ import adminRoutes from "pages/Admin/routes";
 import Medias from "pages/Medias/Medias";
 import MediasLanding from "pages/Medias/MediasLanding";
 import { adminRoutesNew } from "AdminNew/constants/constants";
+import Agents from "pages/Agents/Agents";
+import AgentVideos from "pages/Agents/components/AgentVideos";
+import AgentWebinar from "pages/Agents/AgentWebinar";
+import AgentRegistration from "pages/Agents/AgentsLanding/AgentRegistration";
+import AgentAppointment from "pages/Agents/AgentAppointment";
 
 export const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
 
@@ -80,6 +85,22 @@ export const REACT_ROUTES: ReactRoutesType[] = [
   {
     PATH: paths.media_with_id,
     ELEMENT: <PageWrapper component={<Medias />} />,
+  },
+  {
+    PATH: paths.agent_with_id,
+    ELEMENT: <PageWrapper component={<Agents />} />,
+  },
+  {
+    PATH: paths.webinarForm,
+    ELEMENT: <PageWrapper component={<AgentWebinar showCalendly={false} />} />,
+  },
+  {
+    PATH: paths.webinarAppointment,
+    ELEMENT: <PageWrapper component={<AgentAppointment showForm={false} />} />,
+  },
+  {
+    PATH: paths.agentRegistration,
+    ELEMENT: <PageWrapper component={<AgentRegistration />} />,
   },
   {
     PATH: "*",
