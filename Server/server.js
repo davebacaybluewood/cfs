@@ -11,6 +11,7 @@ import agentRoutes from "./routes/agentRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
 import { ApolloServer, gql } from "apollo-server-express";
+import cors from "cors";
 
 const app = express();
 const __dirname = path.resolve();
@@ -19,7 +20,13 @@ dotenv.config();
 connectDB();
 
 const PORT = process.env.PORT || 5000;
+const corsOptions = {
+  origin: "*",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
 
+app.use(cors(corsOptions)); // Use this after the variable declaration
 app.use(express.json());
 
 app.use("/api/events/", eventRoutes);
