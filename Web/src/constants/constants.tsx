@@ -15,6 +15,7 @@ import EventInvites from "pages/EventInvites/EventInvites";
 import adminRoutes from "pages/Admin/routes";
 import Medias from "pages/Medias/Medias";
 import MediasLanding from "pages/Medias/MediasLanding";
+import { adminRoutesNew } from "AdminNew/constants/constants";
 
 export const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
 
@@ -35,6 +36,7 @@ export const COMPANY_NAME = "Comfort Life Financial";
 
 export const REACT_ROUTES: ReactRoutesType[] = [
   ...adminRoutes,
+  ...adminRoutesNew,
   {
     PATH: paths.index,
     ELEMENT: <PageWrapper component={<Home />} />,

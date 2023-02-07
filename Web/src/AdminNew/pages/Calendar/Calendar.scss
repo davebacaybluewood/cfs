@@ -1,0 +1,17 @@
+.calendar-wrapper {
+  .calendar-box-content {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+    padding: 2rem;
+  }
+
+  .calendar-items {
+    h2 {
+      font-weight: 300;
+      color: rgba(51, 48, 60, 0.8);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  }
+}
