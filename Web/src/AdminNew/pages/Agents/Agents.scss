@@ -5,7 +5,9 @@
     border-left: 2px solid $main-color;
     padding-left: 2rem;
     transition: all 0.5s;
+    background-color: #fff;
     cursor: pointer;
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
 
     &:hover {
       box-shadow: 3px 3px 3px #eee;
@@ -17,6 +19,7 @@
       }
       h1 {
         font-weight: 900;
+        margin-bottom: 5px;
       }
       p {
         font-size: 1.2rem;

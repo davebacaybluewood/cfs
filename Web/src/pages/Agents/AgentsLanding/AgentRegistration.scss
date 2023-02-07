@@ -1,5 +1,30 @@
 .agent-registration-wrapper {
-  margin-bottom: 3rem;
+  .container-wrapper {
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    padding: 4rem 0;
+  }
+  .banner {
+    padding: 10rem 0;
+    h5,
+    h1 {
+      color: white;
+    }
+    .divider {
+      background-color: white;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 6, 17, 0.75);
+      z-index: -1;
+    }
+  }
   .spinner-form-container {
     position: fixed;
     left: 0;
@@ -12,6 +37,9 @@
     z-index: 999;
   }
   .agent-form {
+    background-color: #fff;
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+    padding: 2rem;
     .form-header {
       border-bottom: 1px solid #eee;
       margin-bottom: 1rem;
@@ -24,6 +52,15 @@
         font-weight: 300;
         font-size: 1.2rem;
       }
+    }
+
+    .MuiAlert-message {
+      position: relative;
+      top: 2px;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      font-family: "Roboto", sans-serif;
     }
 
     .form-error {
@@ -45,8 +82,9 @@
 
       h2 {
         font-weight: 900;
-        font-size: 1.7rem;
-        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
       }
     }
   }
@@ -54,5 +92,9 @@
   .form-actions {
     text-align: right;
     margin-top: 1rem;
+
+    button {
+      margin-left: 1rem;
+    }
   }
 }

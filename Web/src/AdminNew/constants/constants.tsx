@@ -1,6 +1,7 @@
 import AgentForm from "AdminNew/pages/Agents/AgentForm";
 import AgentProfile from "AdminNew/pages/Agents/AgentProfile";
 import AgentRequest from "AdminNew/pages/Agents/AgentRequest";
+import AgentRequestProfile from "AdminNew/pages/Agents/AgentRequestProfile";
 import Appointments from "AdminNew/pages/Appointments/Appointments";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
@@ -58,6 +59,14 @@ export const adminRoutesNew = [
     ),
   },
   {
+    PATH: adminPathsNew.adminAgentRequestProfile,
+    ELEMENT: (
+      <GuardedWrapper>
+        <AgentRequestProfile />
+      </GuardedWrapper>
+    ),
+  },
+  {
     PATH: adminPathsNew.dashboard,
     ELEMENT: (
       <GuardedWrapper>
@@ -65,14 +74,14 @@ export const adminRoutesNew = [
       </GuardedWrapper>
     ),
   },
-  {
-    PATH: adminPathsNew.profile,
-    ELEMENT: (
-      <GuardedWrapper>
-        <Profile />
-      </GuardedWrapper>
-    ),
-  },
+  // {
+  //   PATH: adminPathsNew.profile,
+  //   ELEMENT: (
+  //     <GuardedWrapper>
+  //       <Profile />
+  //     </GuardedWrapper>
+  //   ),
+  // },
   {
     PATH: adminPathsNew.appointments,
     ELEMENT: (

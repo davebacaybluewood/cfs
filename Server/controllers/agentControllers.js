@@ -2,9 +2,11 @@ import Agents from "../models/agentModel.js";
 import expressAsync from "express-async-handler";
 import cloudinary from "../utils/cloudinary.js";
 import undefinedValidator from "./helpers/undefinedValidator.js";
-import { ROLES } from "../constants/constants.js";
+import { AGENT_STATUSES, ROLES } from "../constants/constants.js";
 import User from "../models/userModel.js";
-import generateToken from "../utils/generateToken.js";
+import { v4 as uuidv4 } from "uuid";
+import agentRegistrationSuccess from "../emailTemplates/agent-registration-success.js";
+import sendEmail from "../utils/sendNodeMail.js";
 
 /**
  * @desc: Fetch all agents
@@ -12,7 +14,19 @@ import generateToken from "../utils/generateToken.js";
  * @acess: Private
  */
 const getAgents = expressAsync(async (req, res) => {
-  const agents = await Agents.find({});
+  const status = req.query.status;
+  const filteredAgentOptions = {
+    role: ROLES.ROLE_AGENT,
+    status: status ? status : undefined,
+  };
+
+  /** Remove the status key if status is falsy */
+  for (let i in filteredAgentOptions) {
+    if (!filteredAgentOptions[i]) {
+      delete filteredAgentOptions[i];
+    }
+  }
+  const agents = await Agents.find(filteredAgentOptions);
   res.json(agents);
 });
 
@@ -113,31 +127,49 @@ const updateAgent = expressAsync(async (req, res) => {
   }
 });
 
-// @desc    Create a agent
-// @route   POST /api/agents/
+// @desc    Edit the status of the agent
+// @route   PUT /api/agent-status
 // @access  Private/Admin
+const updateAgentStatus = expressAsync(async (req, res) => {
+  const agent = await Agents.findById(req.params.id);
+  const statusDesired = req.body.status;
+  const isPending = statusDesired === AGENT_STATUSES.PENDING ? true : false;
+
+  if (agent) {
+    agent.status = req.body.status;
+    agent.isDeclined = isPending;
+
+    const user = new User({
+      userGuid: agent.userGuid,
+      name: agent.name,
+      email: agent.emailAddress,
+      password: agent.password,
+      role: ROLES.ROLE_AGENT,
+    });
+
+    if (user && agent) {
+      const updatedAgent = await agent.save();
+      const createdUser = await user.save();
+      res.json(updatedAgent);
+    }
+  } else {
+    res.status(404);
+    throw new Error("Agent not found");
+  }
+
+  await agent.save();
+  res.json(agent);
+});
+
+/**
+  @desc    Create a agent
+  @route   POST /api/agents/
+  @access  Private/Admin
+*/
 const createAgent = expressAsync(async (req, res) => {
-  const tempTestimonial = [
-    {
-      name: "Dave Spencer Bacay",
-      title: "Finance Agent",
-      comment:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    {
-      name: "Slater Young",
-      title: "Finance Agent",
-      comment:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    {
-      name: "Dev Chris Jones",
-      title: "Web Developer",
-      comment:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-  ];
+  const userGuid = uuidv4();
   try {
+    /** Check if the email is existing. */
     const emailIsExist = await User.findOne({ email: req.body.emailAddress });
 
     if (emailIsExist) {
@@ -145,19 +177,14 @@ const createAgent = expressAsync(async (req, res) => {
       throw new Error("Email already exists.");
     }
 
-    const user = await User.create({
-      name: req.body.fullName.toString(),
-      email: req.body.emailAddress.toString(),
-      password: req.body.password.toString(),
-    });
-
-    // /** Upload image to cloudinary */
+    /** Upload image to cloudinary */
     const agentImgResult = await cloudinary.v2.uploader.upload(req.file.path, {
       folder: "agent-avatars",
       use_filename: true,
     });
 
-    let agent = new Agents({
+    const agent = new Agents({
+      userGuid,
       name: req.body.fullName.toString(),
       title: req.body.title?.toString(),
       bio: req.body.bio.toString(),
@@ -170,28 +197,46 @@ const createAgent = expressAsync(async (req, res) => {
       twitter: req.body.twitter?.toString(),
       languages: req.body.languages,
       role: ROLES.ROLE_AGENT,
-      testimonials: tempTestimonial,
+      status: AGENT_STATUSES.PENDING,
       telNumber: req.body.telNumber,
       password: req.body.password,
       avatar: agentImgResult.secure_url,
       avatar_cloudinary_id: agentImgResult.public_id,
     });
 
-    if (user && agent) {
+    if (agent) {
       await agent.save();
 
-      res.status(201).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        token: generateToken(user._id),
-      });
+      const mailSubject = "Registration Complete";
+      const mailContent = agentRegistrationSuccess({ agentId: agent._id });
+
+      let sendHTMLEmail;
+      try {
+        sendHTMLEmail = sendEmail(
+          agent.emailAddress,
+          mailSubject,
+          mailContent,
+          []
+        )
+          .then((request, response) => {
+            response.send(response.message);
+          })
+          .catch((error) => {
+            res.status(500);
+            console.log(error);
+            throw new Error("Error occured in submission.");
+          });
+      } catch (error) {
+        res.status(500);
+        console.log(error);
+        throw new Error("Error occured in submission.");
+      }
+
+      res.status(201).json(agent);
     } else {
       res.status(400);
       throw new Error("Invalid user data.");
     }
-    res.json(agent);
   } catch (err) {
     console.log(err);
     res.status(404);
@@ -199,4 +244,11 @@ const createAgent = expressAsync(async (req, res) => {
   }
 });
 
-export { getAgents, getSingleAgent, deleteAgent, updateAgent, createAgent };
+export {
+  getAgents,
+  getSingleAgent,
+  deleteAgent,
+  updateAgent,
+  createAgent,
+  updateAgentStatus,
+};

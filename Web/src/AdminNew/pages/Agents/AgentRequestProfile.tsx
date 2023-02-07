@@ -8,7 +8,7 @@ import { CrumbTypes } from "../Dashboard/types";
 import Profile from "../Profile/Profile";
 import "./AgentProfile.scss";
 
-const AgentProfile: React.FC = () => {
+const AgentRequestProfile: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ const AgentProfile: React.FC = () => {
       isActive: false,
     },
     {
-      title: "Agents",
+      title: "Agent Requests",
       url: paths.adminAgents,
       isActive: false,
     },
@@ -42,4 +42,4 @@ const AgentProfile: React.FC = () => {
   );
 };
 
-export default AgentProfile;
+export default AgentRequestProfile;

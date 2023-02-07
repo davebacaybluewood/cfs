@@ -7,6 +7,11 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    userGuid: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     email: {
       type: String,
       required: true,
@@ -19,6 +24,10 @@ const userSchema = mongoose.Schema(
     isAdmin: {
       type: Boolean,
       default: false,
+    },
+    role: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

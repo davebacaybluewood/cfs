@@ -1,4 +1,30 @@
 .agent-profile-wrapper {
+  .profile-wrapper {
+    background-color: #fff;
+
+    .profile-status {
+      border: 1px solid #ed6c02;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      color: #333;
+
+      svg {
+        color: #ed6c02;
+
+        path {
+          color: #ed6c02;
+        }
+      }
+
+      .MuiAlert-message {
+        color: #333;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        font-weight: 900;
+      }
+    }
+  }
   .title-with-subtitle {
     button {
       margin-left: 1rem;

@@ -1,7 +1,9 @@
 import { Box, Grid, Paper } from "@mui/material";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
+import UserProvider from "AdminNew/context/UserProvider";
 import paths from "constants/routes";
-import React from "react";
+import React, { useContext } from "react";
+import { boolean } from "yup";
 import Calendar from "../Dashboard/components/Calendar/Calendar";
 import { CrumbTypes } from "../Dashboard/types";
 import AboutProfile from "./components/AboutProfile/AboutProfile";
@@ -26,63 +28,71 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
-const agentTestimonails: TestiMonialTypes[] = [
-  {
-    name: "Dave Spencer Bacay",
-    testimonial:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    title: "Client Title",
-  },
-  {
-    name: "Dave Spencer Bacay",
-    testimonial:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    title: "Client Title",
-  },
-  {
-    name: "Dave Spencer Bacay",
-    testimonial:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    title: "Client Title",
-  },
-];
+const agentTestimonails: TestiMonialTypes[] = [];
 
-const Profile: React.FC = () => {
+type ProfileTypes = {
+  _id: string;
+  name: string;
+  avatar: string;
+  title: string;
+  bio: string;
+  phoneNumber: string;
+  emailAddress: string;
+  address: string;
+  calendlyLink: string;
+  twitter: string;
+  instagram: string;
+  linkedIn: string;
+  facebook: string;
+  testimonials: string[];
+  status: string;
+};
+type ProfileProps = {
+  crumbs: CrumbTypes[];
+  profile: ProfileTypes;
+  loading: boolean;
+  error: boolean;
+};
+
+const Profile: React.FC<ProfileProps> = (props) => {
+  const { crumbs, profile, loading, error } = props;
+
   return (
     <Wrapper
       breadcrumb={crumbs}
-      error={false}
-      loading={false}
+      error={error}
+      loading={loading}
       className="profile-wrapper"
     >
       <Grid spacing={2} container>
         <Grid item sm={12} md={12} lg={12}>
           <ProfileHeader
-            address={agent.address}
-            avatar={agent.avatar}
-            bio={agent.bio}
-            calendlyLink={agent.calendlyLink}
-            emailAddress={agent.emailAddress}
-            facebook={agent.facebook}
-            instagram={agent.instagram}
-            linkedIn={agent.linkedIn}
-            name={agent.name}
-            phoneNumber={agent.phoneNumber}
-            testimonials={agent.testimonials}
-            title={agent.title}
-            twitter={agent.twitter}
-            status={agent.status}
+            _id={profile._id}
+            address={profile.address}
+            avatar={profile.avatar}
+            bio={profile.bio}
+            calendlyLink={profile.calendlyLink}
+            emailAddress={profile.emailAddress}
+            facebook={profile.facebook}
+            instagram={profile.instagram}
+            linkedIn={profile.linkedIn}
+            name={profile.name}
+            phoneNumber={profile.phoneNumber}
+            testimonials={profile.testimonials}
+            title={profile.title}
+            twitter={profile.twitter}
+            status={profile.status}
           />
         </Grid>
         <Grid item sm={12} md={4} lg={4}>
           <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
             <AboutProfile />
             <Overview
-              numberOfAppointments={2}
-              numberOfContacts={3}
-              numberOfLeads={12}
-              numberOfTestimonials={55}
-              numberOfVisits={222}
+              numberOfAppointments={0}
+              numberOfContacts={0}
+              numberOfLeads={0}
+              numberOfTestimonials={0}
+              numberOfVisits={0}
             />
           </Paper>
         </Grid>

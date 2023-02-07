@@ -13,6 +13,7 @@ import { listAgents } from "redux/actions/agentActions";
 import { RootState } from "store";
 import { CrumbTypes } from "../Dashboard/types";
 import "./Agents.scss";
+import { AgentStatuses } from "./types";
 
 const PAGE_LIMIT = 9;
 
@@ -29,18 +30,37 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
-type AdminAgents = {
+type AdminAgentsProps = {
   title?: string;
   subtitle?: string;
   showHeaderButtons?: boolean;
+  agentStatus?: AgentStatuses;
 };
-const AdminAgents: React.FC<AdminAgents> = (props) => {
+const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
   const ROLE = ROLES.ROLE_MASTER_ADMIN;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  let agentStatus: AgentStatuses | undefined;
+  switch (props.agentStatus as AgentStatuses | undefined) {
+    case AgentStatuses.ACTIVATED:
+      agentStatus = AgentStatuses.ACTIVATED;
+      break;
+    case AgentStatuses.DEACTIVATED:
+      agentStatus = AgentStatuses.DEACTIVATED;
+      break;
+    case AgentStatuses.PENDING:
+      agentStatus = AgentStatuses.PENDING;
+      break;
+    case AgentStatuses.DECLINED:
+      agentStatus = AgentStatuses.DECLINED;
+      break;
+    default:
+      agentStatus = AgentStatuses.ACTIVATED;
+  }
+
   useEffect(() => {
-    dispatch(listAgents(ROLE) as any);
+    dispatch(listAgents(ROLE, agentStatus) as any);
   }, [dispatch]);
 
   const agentSelector = useSelector((state: RootState) => state.agentList);
@@ -59,19 +79,12 @@ const AdminAgents: React.FC<AdminAgents> = (props) => {
       error={error}
       breadcrumb={crumbs}
     >
-      <Title title={props.title ?? ""} subtitle={props.subtitle ?? ""}>
-        <ComponentValidator showNull={!props.showHeaderButtons}>
-          <Button
-            variant="contained"
-            onClick={() =>
-              navigate(paths.adminAgentForm.replace(":action", "add"))
-            }
-          >
-            Add Agent
-          </Button>
-        </ComponentValidator>
-      </Title>
-      <NoInformationToDisplay showNoInfo={agents.length === 0}>
+      <Title title={props.title ?? ""} subtitle={props.subtitle ?? ""}></Title>
+      <NoInformationToDisplay
+        showNoInfo={agents.length === 0 && !loading}
+        message="There's no agent available."
+        title="No information to display."
+      >
         <Grid container spacing={3}>
           {agents.slice(0, pageLimit).map((agent: any) => {
             return (
@@ -79,7 +92,14 @@ const AdminAgents: React.FC<AdminAgents> = (props) => {
                 <div
                   className="item"
                   onClick={() =>
-                    navigate(paths.adminAgentProfile.replace(":id", agent._id))
+                    navigate(
+                      agent.status !== AgentStatuses.ACTIVATED
+                        ? paths.adminAgentRequestProfile.replace(
+                            ":id",
+                            agent._id
+                          )
+                        : paths.adminAgentProfile.replace(":id", agent._id)
+                    )
                   }
                 >
                   <Grid container alignItems="center">

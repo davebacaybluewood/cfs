@@ -1,4 +1,5 @@
 import { ROLES } from "AdminNew/constants/constants";
+import { AgentStatuses } from "AdminNew/pages/Agents/types";
 import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
 import {
@@ -52,14 +53,18 @@ const tempAgents = [
   },
 ];
 export const listAgents =
-  (role: string) => async (dispatch: any, getState: any) => {
+  (role: string, status?: AgentStatuses) =>
+  async (dispatch: any, getState: any) => {
     try {
       dispatch({
         type: AGENT_ACTION_TYPES.AGENT_ACTION_GET_REQUEST,
       });
 
+      const queryStatus = `?status=${status ? status : ""}`;
+      console.log(ENDPOINTS.AGENTS + queryStatus);
+
       const { data } = await axios.get(
-        ENDPOINTS.AGENTS,
+        ENDPOINTS.AGENTS + queryStatus,
         userInfoConfig(getState)
       );
 

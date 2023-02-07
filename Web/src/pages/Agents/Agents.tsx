@@ -8,13 +8,17 @@ import CommonHeaderTitle from "library/HeaderTitle/HeaderTitle";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 import { FaQuoteRight } from "react-icons/fa";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { listSingleAgent } from "redux/actions/agentActions";
 import { RootState } from "store";
 import AgentProfile from "./components/AgentProfile";
 import Testimonials from "./components/Testimonials";
 import AgentVideos from "./components/AgentVideos";
+import Spinner from "AdminNew/components/Spinner/Spinner";
+import AgentPending from "./components/AgentPending";
+import paths from "constants/routes";
+import { AgentStatuses } from "AdminNew/pages/Agents/types";
 
 const tempTestimonials = [
   {
@@ -39,6 +43,7 @@ type AgentsProps = {
   showAppointment?: boolean;
   noContainer?: boolean;
   agentProfile?: any;
+  noPendingValidation?: boolean;
 };
 
 const FilteredContainer: React.FC<FilteredContainerProps> = (props) => {
@@ -51,6 +56,7 @@ const FilteredContainer: React.FC<FilteredContainerProps> = (props) => {
 const Agents: React.FC<AgentsProps> = (props) => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(listSingleAgent(id ?? "") as any);
@@ -68,6 +74,10 @@ const Agents: React.FC<AgentsProps> = (props) => {
     onEventScheduled: (e) => console.log(e.data.payload),
   });
 
+  if (error) {
+    navigate(paths.invalid);
+  }
+
   return (
     <div className="agent-wrapper">
       <PageTitle title="Agents" />
@@ -78,42 +88,52 @@ const Agents: React.FC<AgentsProps> = (props) => {
           hasBorder={true}
         />
       </ComponentValidator>
-      <FilteredContainer noSpacing={props.noContainer}>
-        <AgentProfile noContainer={props.noContainer} agent={agent} />
-        <Testimonials testimonials={tempTestimonials} />
-        <AgentVideos />
-      </FilteredContainer>
-      <ComponentValidator showNull={!props.showAppointment}>
-        <Wrapper
-          style={{
-            backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/10/team-bg2.jpg")`,
-          }}
-          className="appoinment-content"
-        >
-          <React.Fragment>
-            <Container>
-              <Grid container spacing={2} className="appointment-container">
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <CommonHeaderTitle
-                    title="SCHEDULE A APPOINTMENT"
-                    bigTitle="To Make Requests For The Further Information"
-                    description={`Or direct call to ${agent.phoneNumber}`}
-                  />
-                  <InlineWidget
-                    url="https://calendly.com/gocfs/30min?primary_color=0057b7"
-                    styles={{
-                      height: "850px",
-                      width: "100%",
-                      marginBottom: "-6rem",
-                      marginTop: "-6rem",
-                    }}
-                  />
-                </Grid>
-              </Grid>
-            </Container>
-          </React.Fragment>
-        </Wrapper>
-      </ComponentValidator>
+      {loading ? (
+        <Spinner />
+      ) : !agent.status ? (
+        <Container>
+          <AgentPending />
+        </Container>
+      ) : (
+        <React.Fragment>
+          <FilteredContainer noSpacing={props.noContainer}>
+            <AgentProfile noContainer={props.noContainer} agent={agent} />
+            <Testimonials testimonials={tempTestimonials} />
+            <AgentVideos />
+          </FilteredContainer>
+          <ComponentValidator showNull={!props.showAppointment}>
+            <Wrapper
+              style={{
+                backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/10/team-bg2.jpg")`,
+              }}
+              className="appoinment-content"
+            >
+              <React.Fragment>
+                <Container>
+                  <Grid container spacing={2} className="appointment-container">
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                      <CommonHeaderTitle
+                        title="SCHEDULE A APPOINTMENT"
+                        bigTitle="To Make Requests For The Further Information"
+                        description={`Or direct call to ${agent.phoneNumber}`}
+                      />
+                      <InlineWidget
+                        url="https://calendly.com/gocfs/30min?primary_color=0057b7"
+                        styles={{
+                          height: "850px",
+                          width: "100%",
+                          marginBottom: "-6rem",
+                          marginTop: "-6rem",
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Container>
+              </React.Fragment>
+            </Wrapper>
+          </ComponentValidator>
+        </React.Fragment>
+      )}
     </div>
   );
 };
@@ -122,6 +142,7 @@ Agents.defaultProps = {
   showAppointment: true,
   showBanner: true,
   noContainer: false,
+  noPendingValidation: false,
 };
 
 export default Agents;

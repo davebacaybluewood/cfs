@@ -19,14 +19,21 @@ import {
   FaSplotch,
   FaThumbsUp,
   FaUserPlus,
+  FaUserTimes,
 } from "react-icons/fa";
 
 export interface ISidebarLinks {
   linkText: string;
-  link: string;
+  link?: string;
   isActive?: boolean;
   icon: React.ReactNode;
   role: string[];
+  isSubMenu?: boolean;
+  subLinks?: {
+    linkText?: string;
+    link?: string;
+    icon?: React.ReactNode;
+  }[];
 }
 
 const getSidebarLinks = (role: string) => {
@@ -83,9 +90,33 @@ const getSidebarLinks = (role: string) => {
       role: [ROLES.ROLE_AGENT],
     },
     {
-      linkText: "Agents",
-      link: paths.agents,
+      linkText: "Agents Submenu",
       isActive: currentPage === adminPathsNew.agents.split("/")[2],
+      icon: <FaUserSecret />,
+      role: [ROLES.ROLE_MASTER_ADMIN],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "Activated Agents",
+          icon: <FaUserSecret />,
+          link: paths.agents,
+        },
+        {
+          linkText: "Agent Requests",
+          icon: <FaUserSecret />,
+          link: paths.agents,
+        },
+        {
+          linkText: "Declined Agents",
+          icon: <FaUserSecret />,
+          link: paths.agents,
+        },
+      ],
+    },
+    {
+      linkText: "Agents",
+      link: paths.agentRequests,
+      isActive: currentPage === adminPathsNew.agentRequests.split("/")[2],
       icon: <FaUserSecret />,
       role: [ROLES.ROLE_MASTER_ADMIN],
     },
@@ -94,6 +125,13 @@ const getSidebarLinks = (role: string) => {
       link: paths.agentRequests,
       isActive: currentPage === adminPathsNew.agentRequests.split("/")[2],
       icon: <FaUserPlus />,
+      role: [ROLES.ROLE_MASTER_ADMIN],
+    },
+    {
+      linkText: "Declined Agents",
+      link: paths.declinedAgents,
+      isActive: currentPage === adminPathsNew.declinedAgents.split("/")[2],
+      icon: <FaUserTimes />,
       role: [ROLES.ROLE_MASTER_ADMIN],
     },
     {

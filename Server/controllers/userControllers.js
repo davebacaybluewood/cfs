@@ -71,8 +71,10 @@ const getUserProfile = expressAsync(async (req, res) => {
     res.json({
       _id: user._id,
       name: user.name,
+      userGuid: user.userGuid,
       email: user.email,
       isAdmin: user.isAdmin,
+      role: user.role,
     });
   } else {
     res.status(401);

@@ -194,3 +194,25 @@
     }
   }
 }
+
+.agent-pending-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  img {
+    width: 500px;
+  }
+
+  h2 {
+    font-weight: 900;
+    font-size: 3rem;
+    text-transform: uppercase;
+  }
+  p {
+    margin-top: 1rem;
+    font-weight: 300;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+}

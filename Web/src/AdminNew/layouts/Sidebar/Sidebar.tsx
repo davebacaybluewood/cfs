@@ -6,13 +6,16 @@ import {
   SidebarHeader,
   SidebarFooter,
   SidebarContent,
+  SubMenu,
 } from "react-pro-sidebar";
 import { FaGlobe, FaAngleDoubleRight } from "react-icons/fa";
-import React from "react";
+import React, { useContext } from "react";
 import "./Sidebar.scss";
 import { IMAGES } from "constants/constants";
 import getSidebarLinks, { ISidebarLinks } from "./helpers/getSidebarLinks";
 import { MAIN_WEBSITE_LINK, ROLES } from "AdminNew/constants/constants";
+import { UserContext } from "AdminNew/context/UserProvider";
+import classNames from "classnames";
 
 type SidebarProps = {
   image?: string;
@@ -29,9 +32,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   handleToggleSidebar,
   handleCollapsedChange,
 }) => {
-  const LOGGED_IN_ROLE = ROLES.ROLE_MASTER_ADMIN;
-  const sidebarLinks = getSidebarLinks(LOGGED_IN_ROLE).sidebarMainLinks;
+  const userCtx = useContext(UserContext) as any;
+  const LOGGED_IN_ROLE = userCtx.user.role;
 
+  const sidebarLinks = getSidebarLinks(LOGGED_IN_ROLE).sidebarMainLinks;
   const sidebarOtherLinks = getSidebarLinks(LOGGED_IN_ROLE).sidebarOtherLinks;
 
   return (
@@ -63,10 +67,29 @@ const Sidebar: React.FC<SidebarProps> = ({
         <h2 className="sidebar-label">Main Links</h2>
         <Menu iconShape="circle">
           {sidebarLinks.map((link: ISidebarLinks, index: number) => {
+            const submenuClassnames = classNames({
+              "active-submenu": link.isActive,
+              "submenu-default": true,
+            });
+            if (link.isSubMenu) {
+              return (
+                <SubMenu
+                  title={link.linkText}
+                  icon={link.icon}
+                  className={submenuClassnames}
+                >
+                  {link.subLinks?.map((sm) => (
+                    <MenuItem icon={sm.icon}>
+                      <NavLink to={sm.link ?? ""}>{sm.linkText}</NavLink>
+                    </MenuItem>
+                  ))}
+                </SubMenu>
+              );
+            }
             return (
               <MenuItem icon={link.icon} active={link.isActive} key={index}>
                 {link.linkText}
-                <NavLink to={link.link} />
+                <NavLink to={link.link ?? ""} />
               </MenuItem>
             );
           })}
@@ -78,7 +101,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             return (
               <MenuItem icon={link.icon} active={link.isActive} key={index}>
                 {link.linkText}
-                <NavLink to={link.link} />
+                <NavLink to={link.link ?? ""} />
               </MenuItem>
             );
           })}

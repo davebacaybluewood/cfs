@@ -21,6 +21,8 @@ import AgentVideos from "pages/Agents/components/AgentVideos";
 import AgentWebinar from "pages/Agents/AgentWebinar";
 import AgentRegistration from "pages/Agents/AgentsLanding/AgentRegistration";
 import AgentAppointment from "pages/Agents/AgentAppointment";
+import AgentRegistrationSuccess from "pages/Agents/AgentsLanding/AgentRegistrationSuccess";
+import AgentCheckStatus from "pages/Agents/AgentsLanding/AgentCheckStatus";
 
 export const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
 
@@ -101,6 +103,18 @@ export const REACT_ROUTES: ReactRoutesType[] = [
   {
     PATH: paths.agentRegistration,
     ELEMENT: <PageWrapper component={<AgentRegistration />} />,
+  },
+  {
+    PATH: paths.agentRegistration,
+    ELEMENT: <PageWrapper component={<AgentRegistration />} />,
+  },
+  {
+    PATH: paths.agentRegistrationSuccess,
+    ELEMENT: <PageWrapper component={<AgentRegistrationSuccess />} />,
+  },
+  {
+    PATH: paths.agent_check_status,
+    ELEMENT: <PageWrapper component={<AgentCheckStatus />} />,
   },
   {
     PATH: "*",
