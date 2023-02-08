@@ -28,6 +28,7 @@ import paths from "constants/routes";
 import CommonHeaderTitle from "library/HeaderTitle/HeaderTitle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PageTitle from "library/PageTitle/PageTitle";
+import Helmet from "react-helmet";
 
 const Home: React.FC = () => {
   const [services] = useState(servicesData);
@@ -140,25 +141,32 @@ const Home: React.FC = () => {
   const [showPopup, setShowPopup] = useState(true);
 
   return (
-    <div className="home-container">
-      <PageTitle title="Home" />
-      <div className="welcome-section">
-        <Container className="welcome-section-container">
-          <div className="welcome-section-image">
-            <img src="/assets/others/happy-fam.png" alt="happy family" />
-          </div>
-          <div className="welcome-section-captions">
-            <h2>We are CFS</h2>
-            <p>
-              CFS helps individuals and families build a comfortable future by
-              advocating Financial Awareness and providing Risk Management
-              Solutions.
-            </p>
-            <p>CFS offers Life Insurance and Annuities.</p>
-          </div>
-        </Container>
-      </div>
-      {/* <Wrapper className={cardContainerClassnames}>
+    <React.Fragment>
+      <Helmet>
+        <meta
+          name="google-site-verification"
+          content="-8SXobMJclzxTwefhzJ8i5kaM7zpKD-I3VqkfnJtWwc"
+        />
+      </Helmet>
+      <div className="home-container">
+        {/* <PageTitle title="Home" /> */}
+        <div className="welcome-section">
+          <Container className="welcome-section-container">
+            <div className="welcome-section-image">
+              <img src="/assets/others/happy-fam.png" alt="happy family" />
+            </div>
+            <div className="welcome-section-captions">
+              <h2>We are CFS</h2>
+              <p>
+                CFS helps individuals and families build a comfortable future by
+                advocating Financial Awareness and providing Risk Management
+                Solutions.
+              </p>
+              <p>CFS offers Life Insurance and Annuities.</p>
+            </div>
+          </Container>
+        </div>
+        {/* <Wrapper className={cardContainerClassnames}>
         <Container>
           <Grid container spacing={2}>
             {services.slice(0, 4).map((service) => (
@@ -179,7 +187,7 @@ const Home: React.FC = () => {
           </Grid>
         </Container>
       </Wrapper> */}
-      {/* <Wrapper className="endorsement">
+        {/* <Wrapper className="endorsement">
         <Container>
           <Grid container spacing={2} className="endorsement-container">
             <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -195,7 +203,7 @@ const Home: React.FC = () => {
           </Grid>
         </Container>
       </Wrapper> */}
-      {/* <Wrapper className="services">
+        {/* <Wrapper className="services">
         <React.Fragment>
           <Video />
           <Container>
@@ -235,7 +243,7 @@ const Home: React.FC = () => {
           </Container>
         </React.Fragment>
       </Wrapper> */}
-      {/* <Wrapper className="stragies">
+        {/* <Wrapper className="stragies">
         <Container>
           <Grid container spacing={2} className="endorsement-container">
             <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -257,96 +265,96 @@ const Home: React.FC = () => {
           </Grid>
         </Container>
       </Wrapper> */}
-      <Wrapper
-        className="solutions"
-        style={{
-          backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/12/slider05-1.jpg")`,
-        }}
-      >
-        <Container>
-          <HeaderTitle
-            title="Solutions"
-            bigTitle="Let's get started"
-            hasBorder={true}
-          />
-          <p className="description">
-            There's a lot to know, and we have the information to help you make
-            informed decision about your financial future. Let's take a closer
-            look at what it means to have an annuity or life insurance, and why
-            both are important.
-          </p>
-          <Grid
-            container
-            spacing={isMobileMode ? 1 : 2}
-            className="solution-grid"
-          >
-            <Grid item xs={12} lg={6}>
-              <div
-                className="solution-item"
-                onClick={() =>
-                  navigate(
-                    `${paths.solutions_with_id.replace(
-                      ":id",
-                      "life-insurance"
-                    )}#life-insurance`
-                  )
-                }
-              >
-                <h2>What is Life Insurance?</h2>
-                {/* <img src="https://picsum.photos/536/354" /> */}
-              </div>
-            </Grid>
-            <Grid item xs={12} lg={6}></Grid>
-            <Grid item xs={12} lg={6}>
-              <div
-                className="solution-item"
-                onClick={() =>
-                  navigate(
-                    `${paths.solutions_with_id.replace(
-                      ":id",
-                      "annuity"
-                    )}#annuity`
-                  )
-                }
-              >
-                <h2>What is an Annuity?</h2>
-                {/* <img src="https://picsum.photos/536/354" /> */}
-              </div>
-            </Grid>
-            <Grid item xs={12} lg={6}></Grid>
-          </Grid>
-        </Container>
-      </Wrapper>
-      <Wrapper
-        style={{
-          backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/10/team-bg2.jpg")`,
-        }}
-        className="appoinment-content"
-      >
-        <React.Fragment>
+        <Wrapper
+          className="solutions"
+          style={{
+            backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/12/slider05-1.jpg")`,
+          }}
+        >
           <Container>
-            <Grid container spacing={2} className="appointment-container">
-              <Grid item xs={12} sm={12} md={12} lg={12}>
-                <CommonHeaderTitle
-                  title="SCHEDULE AN APPOINTMENT"
-                  bigTitle="To Make Requests For The Further Information"
-                  description="Or direct call to +1 (702) 900-5666"
-                />
-                <InlineWidget
-                  url="https://calendly.com/gocfs/30min?primary_color=0057b7"
-                  styles={{
-                    height: "850px",
-                    width: "100%",
-                    marginBottom: "-6rem",
-                    marginTop: "-6rem",
-                  }}
-                />
+            <HeaderTitle
+              title="Solutions"
+              bigTitle="Let's get started"
+              hasBorder={true}
+            />
+            <p className="description">
+              There's a lot to know, and we have the information to help you
+              make informed decision about your financial future. Let's take a
+              closer look at what it means to have an annuity or life insurance,
+              and why both are important.
+            </p>
+            <Grid
+              container
+              spacing={isMobileMode ? 1 : 2}
+              className="solution-grid"
+            >
+              <Grid item xs={12} lg={6}>
+                <div
+                  className="solution-item"
+                  onClick={() =>
+                    navigate(
+                      `${paths.solutions_with_id.replace(
+                        ":id",
+                        "life-insurance"
+                      )}#life-insurance`
+                    )
+                  }
+                >
+                  <h2>What is Life Insurance?</h2>
+                  {/* <img src="https://picsum.photos/536/354" /> */}
+                </div>
               </Grid>
+              <Grid item xs={12} lg={6}></Grid>
+              <Grid item xs={12} lg={6}>
+                <div
+                  className="solution-item"
+                  onClick={() =>
+                    navigate(
+                      `${paths.solutions_with_id.replace(
+                        ":id",
+                        "annuity"
+                      )}#annuity`
+                    )
+                  }
+                >
+                  <h2>What is an Annuity?</h2>
+                  {/* <img src="https://picsum.photos/536/354" /> */}
+                </div>
+              </Grid>
+              <Grid item xs={12} lg={6}></Grid>
             </Grid>
           </Container>
-        </React.Fragment>
-      </Wrapper>
-      {/* {showPopup ? (
+        </Wrapper>
+        <Wrapper
+          style={{
+            backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/10/team-bg2.jpg")`,
+          }}
+          className="appoinment-content"
+        >
+          <React.Fragment>
+            <Container>
+              <Grid container spacing={2} className="appointment-container">
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <CommonHeaderTitle
+                    title="SCHEDULE AN APPOINTMENT"
+                    bigTitle="To Make Requests For The Further Information"
+                    description="Or direct call to +1 (702) 900-5666"
+                  />
+                  <InlineWidget
+                    url="https://calendly.com/gocfs/30min?primary_color=0057b7"
+                    styles={{
+                      height: "850px",
+                      width: "100%",
+                      marginBottom: "-6rem",
+                      marginTop: "-6rem",
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Container>
+          </React.Fragment>
+        </Wrapper>
+        {/* {showPopup ? (
         <div className="dialog-home" onClick={() => setShowPopup(false)}>
           <button className="exit-button" onClick={() => setShowPopup(false)}>
             <CancelIcon />
@@ -357,7 +365,8 @@ const Home: React.FC = () => {
           />
         </div>
       ) : null} */}
-    </div>
+      </div>
+    </React.Fragment>
   );
 };
 export default Home;
