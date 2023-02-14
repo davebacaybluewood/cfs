@@ -21,12 +21,12 @@ import {
 import { Container } from "@mui/system";
 import "./AgentRegistration.scss";
 import Button from "library/Button/Button";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createAgent } from "redux/actions/agentActions";
 import agentRegisterValidationSchema from "./helpers/validationSchema";
 import getStyles from "./helpers/getStyles";
-import { langOptions, MenuProps } from "./utils";
+import { langOptions, MenuProps, specialtiesOptions } from "./utils";
 import { useNavigate } from "react-router-dom";
 import paths from "constants/routes";
 import { ValuesTypes } from "./types";
@@ -34,21 +34,22 @@ import { ROLES } from "AdminNew/constants/constants";
 
 const AgentRegistration = () => {
   const initialValues: Omit<ValuesTypes, "role"> = {
-    fullName: "",
-    position: "",
-    bio: "",
+    fullName: "Dave Spencer Bacay",
+    position: "Finance Position",
+    bio: "This is a bio",
     avatar: "",
-    phoneNumber: "",
-    emailAddress: "",
-    address: "B",
-    twitter: "",
-    instagram: "",
-    linkedIn: "",
-    facebook: "",
-    telNumber: "",
-    password: "",
-    confirmPassword: "",
+    phoneNumber: "054412353",
+    emailAddress: "dave@testdata.com",
+    address: "Blk 44 Ph2 PH",
+    twitter: "https://twitter.com",
+    instagram: "https://twitter.com",
+    linkedIn: "https://twitter.com",
+    facebook: "https://twitter.com",
+    telNumber: "123123",
+    password: "123123",
+    confirmPassword: "123123",
     languages: [],
+    specialties: [],
   };
 
   const validationSchema = agentRegisterValidationSchema();
@@ -107,7 +108,8 @@ const AgentRegistration = () => {
                     values.password,
                     values.telNumber,
                     ROLES.ROLE_AGENT,
-                    values.languages
+                    values.languages,
+                    values.specialties
                   ) as any
                 );
               }}
@@ -238,6 +240,69 @@ const AgentRegistration = () => {
                                   style={getStyles(
                                     name,
                                     values.languages,
+                                    theme
+                                  )}
+                                >
+                                  {name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12}>
+                          <FormControl
+                            variant="outlined"
+                            fullWidth
+                            error={Boolean(
+                              values.specialties.length === 0 &&
+                                touched.specialties
+                            )}
+                          >
+                            <InputLabel id="specialties-label">
+                              Specialties
+                            </InputLabel>
+                            <Select
+                              labelId="specialties-label"
+                              id="specialties-chip"
+                              multiple
+                              value={values.specialties}
+                              onChange={(event) => {
+                                setFieldValue(
+                                  "specialties",
+                                  event.target.value
+                                );
+                                setFieldTouched("specialties", true);
+                              }}
+                              variant="outlined"
+                              name="specialties"
+                              input={
+                                <OutlinedInput
+                                  id="select-multiple-chip"
+                                  label="Chip"
+                                />
+                              }
+                              renderValue={(selected) => (
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    flexWrap: "wrap",
+                                    gap: 0.5,
+                                  }}
+                                >
+                                  {selected.map((value: any) => (
+                                    <Chip key={value} label={value} />
+                                  ))}
+                                </Box>
+                              )}
+                              MenuProps={MenuProps}
+                            >
+                              {specialtiesOptions.map((name) => (
+                                <MenuItem
+                                  key={name}
+                                  value={name}
+                                  style={getStyles(
+                                    name,
+                                    values.specialties,
                                     theme
                                   )}
                                 >

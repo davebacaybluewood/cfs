@@ -115,7 +115,8 @@ export const createAgent =
     password: string,
     telNumber: string,
     role: string,
-    languages: string[]
+    languages: string[],
+    specialties: string[]
   ) =>
   async (dispatch: any, getState: any) => {
     try {
@@ -123,14 +124,9 @@ export const createAgent =
         type: ADD_AGENT_ACTION_TYPES.ADD_AGENT_ACTION_REQUEST,
       });
 
-      const {
-        userLogin: { userInfo },
-      } = getState();
-
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
@@ -152,6 +148,7 @@ export const createAgent =
           telNumber,
           role,
           languages,
+          specialties,
         },
         config
       );

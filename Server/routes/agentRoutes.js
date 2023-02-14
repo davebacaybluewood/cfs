@@ -3,6 +3,7 @@ import {
   createAgent,
   deleteAgent,
   getAgents,
+  getAgentsCount,
   getSingleAgent,
   updateAgent,
   updateAgentStatus,
@@ -15,9 +16,10 @@ const router = express.Router();
 router
   .route("/")
   .get(getAgents)
-  .post(protect, multer.single("avatar"), createAgent)
+  .post(multer.single("avatar"), createAgent)
   .put(multer.single("avatar"), updateAgent);
 router.route("/:id").get(getSingleAgent).delete(protect, deleteAgent);
 router.route("/agent-status/:id").put(protect, adminAuth, updateAgentStatus);
+router.route("/agent-counts/all").get(protect, adminAuth, getAgentsCount);
 
 export default router;

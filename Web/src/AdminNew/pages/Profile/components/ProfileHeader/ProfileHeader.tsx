@@ -12,6 +12,7 @@ import {
   FaSwatchbook,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import HeaderButtons from "./HeaderButtons";
 import "./ProfileHeader.scss";
 
 type ProfileHeaderProps = {
@@ -32,45 +33,6 @@ type ProfileHeaderProps = {
   testimonials: string[];
 };
 const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const approveHandler = (agentId: string) => {
-    axios
-      .put(
-        ENDPOINTS.AGENT_UPDATE_STATUS.replace(":agentId", agentId),
-        {
-          status: AgentStatuses.ACTIVATED,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${getUserToken()}`,
-          },
-        }
-      )
-      .then(() => {
-        navigate(paths.agents);
-      })
-      .catch((error) => {
-        alert(getUserToken());
-      });
-  };
-
-  const declineHandler = (agentId: string) => {};
-  const pendingButtons = (
-    <React.Fragment>
-      <button onClick={() => declineHandler(props._id)}>Decline</button>
-      <button onClick={() => approveHandler(props._id)}>Approve</button>
-    </React.Fragment>
-  );
-
-  const activeButtons = (
-    <button
-      onClick={() => navigate(paths.adminAgentForm.replace(":action", "add"))}
-    >
-      Deactivate This Account
-    </button>
-  );
   return (
     <div className="profile-header">
       <div className="profile-banner" />
@@ -98,11 +60,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
             </ul>
           </div>
         </div>
-        <div className="profile-actions">
-          {props.status !== AgentStatuses.ACTIVATED
-            ? pendingButtons
-            : activeButtons}
-        </div>
+        <HeaderButtons status={props.status as AgentStatuses} id={props._id} />
       </div>
     </div>
   );

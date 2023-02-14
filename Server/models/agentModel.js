@@ -82,6 +82,10 @@ const agentSchema = mongoose.Schema(
     webinars: {
       type: [String],
     },
+    specialties: {
+      type: [String],
+      required: true,
+    },
     isDeclined: {
       type: Boolean,
       default: false,

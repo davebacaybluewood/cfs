@@ -31,6 +31,36 @@ const getAgents = expressAsync(async (req, res) => {
 });
 
 /**
+ * @desc: Fetch all agent counts
+ * @route: GET /api/agent-counts
+ * @acess: Private
+ */
+const getAgentsCount = expressAsync(async (req, res) => {
+  const activeAgents = await Agents.find({
+    role: ROLES.ROLE_AGENT,
+    status: AGENT_STATUSES.ACTIVATED,
+  });
+  const declinedAgents = await Agents.find({
+    role: ROLES.ROLE_AGENT,
+    status: AGENT_STATUSES.DECLINED,
+  });
+  const pendingAgents = await Agents.find({
+    role: ROLES.ROLE_AGENT,
+    status: AGENT_STATUSES.PENDING,
+  });
+  const deactivatedAgents = await Agents.find({
+    role: ROLES.ROLE_AGENT,
+    status: AGENT_STATUSES.DEACTIVATED,
+  });
+  res.json({
+    activeAgents: activeAgents.length,
+    declinedAgents: declinedAgents.length,
+    pendingAgents: pendingAgents.length,
+    deactivatedAgents: deactivatedAgents.length,
+  });
+});
+
+/**
  * @desc: Fetch single agent
  * @route: GET /api/agents/:id
  * @acess: Private
@@ -196,6 +226,7 @@ const createAgent = expressAsync(async (req, res) => {
       linkedIn: req.body.linkedIn?.toString(),
       twitter: req.body.twitter?.toString(),
       languages: req.body.languages,
+      specialties: req.body.specialties,
       role: ROLES.ROLE_AGENT,
       status: AGENT_STATUSES.PENDING,
       telNumber: req.body.telNumber,
@@ -208,7 +239,10 @@ const createAgent = expressAsync(async (req, res) => {
       await agent.save();
 
       const mailSubject = "Registration Complete";
-      const mailContent = agentRegistrationSuccess({ agentId: agent._id });
+      const mailContent = agentRegistrationSuccess({
+        agentId: agent._id,
+        specialties: agent.specialties,
+      });
 
       let sendHTMLEmail;
       try {
@@ -251,4 +285,5 @@ export {
   updateAgent,
   createAgent,
   updateAgentStatus,
+  getAgentsCount,
 };

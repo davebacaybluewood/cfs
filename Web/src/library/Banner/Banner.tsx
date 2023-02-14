@@ -7,20 +7,24 @@ interface BannerProps extends React.HTMLProps<HTMLDivElement> {
   bigTitle: string;
   hasBorder?: boolean;
   backgroundImage?: string;
+  children?: React.ReactNode;
 }
 const Banner: React.FC<BannerProps> = (props) => {
   if (!props.isVisible) {
     return <React.Fragment />;
   }
   return (
-    <div
-      className="banner"
-      style={{ backgroundImage: `url(${props.backgroundImage})` }}
-    >
-      <h5>{props.title}</h5>
-      <h1>{props.bigTitle}</h1>
-      {props.hasBorder && <div className="divider" />}
-    </div>
+    <React.Fragment>
+      <div
+        className="banner"
+        style={{ backgroundImage: `url(${props.backgroundImage})` }}
+      >
+        <h5>{props.title}</h5>
+        <h1>{props.bigTitle}</h1>
+        {props.children}
+        {props.hasBorder && <div className="divider" />}
+      </div>
+    </React.Fragment>
   );
 };
 

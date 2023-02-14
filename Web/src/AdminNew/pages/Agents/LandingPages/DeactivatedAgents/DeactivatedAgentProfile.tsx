@@ -1,14 +1,15 @@
 import paths from "constants/routes";
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { listSingleAgent } from "redux/actions/agentActions";
 import { RootState } from "store";
-import { CrumbTypes } from "../Dashboard/types";
-import Profile from "../Profile/Profile";
-import "./AgentProfile.scss";
+import { CrumbTypes } from "../../../Dashboard/types";
+import Profile from "../../../Profile/Profile";
+import "../../AgentProfile.scss";
 
-const AgentProfile: React.FC = () => {
+const DeactivatedAgentProfile: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -26,7 +27,7 @@ const AgentProfile: React.FC = () => {
       isActive: false,
     },
     {
-      title: "Agents",
+      title: "Deactivated Agents",
       url: paths.adminAgents,
       isActive: false,
     },
@@ -37,9 +38,19 @@ const AgentProfile: React.FC = () => {
     },
   ];
 
+  if (error) {
+    return (
+      <NoInformationToDisplay
+        showNoInfo={error}
+        message="There's no agent available."
+        title="No information to display."
+      />
+    );
+  }
+
   return (
     <Profile error={error} loading={loading} profile={agent} crumbs={crumbs} />
   );
 };
 
-export default AgentProfile;
+export default DeactivatedAgentProfile;

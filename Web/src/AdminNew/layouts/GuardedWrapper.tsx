@@ -4,6 +4,7 @@ import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import AdminSidebar from "./Sidebar/Sidebar";
 
 type GuardedWrapperProps = {
@@ -47,6 +48,7 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
         />
         <main>{props.children}</main>
       </div>
+      <ToastContainer />
     </UserProvider>
   );
 };

@@ -1,7 +1,9 @@
 import { OUTSOURCE_LINKS, ROLES } from "AdminNew/constants/constants";
 import adminPathsNew from "AdminNew/constants/routes";
+import ENDPOINTS from "constants/endpoints";
 import paths from "constants/routes";
-import React from "react";
+import getUserToken from "helpers/getUserToken";
+import React, { useEffect, useState } from "react";
 import {
   FaTachometerAlt,
   FaBookReader,
@@ -33,12 +35,70 @@ export interface ISidebarLinks {
     linkText?: string;
     link?: string;
     icon?: React.ReactNode;
+    isActive?: boolean;
+    badge?: string;
   }[];
 }
 
-const getSidebarLinks = (role: string) => {
-  const currentPage = document.location.href.split("/")[4];
+type AgentStatistics = {
+  loading: boolean;
+  error: null;
+  agentCount?: {
+    activeAgents: number;
+    deactivatedAgents: number;
+    declinedAgents: number;
+    pendingAgents: number;
+  };
+};
+const useSidebarLinks = (role: string) => {
+  const [data, setData] = useState<AgentStatistics>({
+    loading: false,
+    error: null,
+    agentCount: {
+      activeAgents: 0,
+      deactivatedAgents: 0,
+      declinedAgents: 0,
+      pendingAgents: 0,
+    },
+  });
 
+  useEffect(() => {
+    setData({
+      loading: true,
+      error: null,
+      agentCount: {
+        activeAgents: 0,
+        deactivatedAgents: 0,
+        declinedAgents: 0,
+        pendingAgents: 0,
+      },
+    });
+    fetch(ENDPOINTS.AGENT_COUNTS, {
+      headers: {
+        Authorization: `Bearer ${getUserToken()}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setData({ loading: false, error: null, agentCount: data });
+      })
+      .catch((error) => {
+        setData({
+          loading: false,
+          error,
+          agentCount: {
+            activeAgents: 0,
+            deactivatedAgents: 0,
+            declinedAgents: 0,
+            pendingAgents: 0,
+          },
+        });
+      });
+  }, []);
+
+  const { agentCount } = data;
+
+  const currentPage = document.location.href.split("/")[4];
   const sidebarLinks: ISidebarLinks[] = [
     {
       linkText: "Dashboard",
@@ -91,7 +151,11 @@ const getSidebarLinks = (role: string) => {
     },
     {
       linkText: "Agents Submenu",
-      isActive: currentPage === adminPathsNew.agents.split("/")[2],
+      isActive:
+        currentPage === adminPathsNew.agents.split("/")[2] ||
+        currentPage === adminPathsNew.agentRequests.split("/")[2] ||
+        currentPage === adminPathsNew.deactivatedAgents.split("/")[2] ||
+        currentPage === adminPathsNew.declinedAgents.split("/")[2],
       icon: <FaUserSecret />,
       role: [ROLES.ROLE_MASTER_ADMIN],
       isSubMenu: true,
@@ -100,40 +164,34 @@ const getSidebarLinks = (role: string) => {
           linkText: "Activated Agents",
           icon: <FaUserSecret />,
           link: paths.agents,
+          isActive: currentPage === adminPathsNew.agents.split("/")[2],
+          badge: agentCount?.activeAgents?.toString(),
         },
         {
           linkText: "Agent Requests",
           icon: <FaUserSecret />,
-          link: paths.agents,
+          link: paths.agentRequests,
+          isActive: currentPage === adminPathsNew.agentRequests.split("/")[2],
+          badge: agentCount?.pendingAgents?.toString(),
         },
         {
           linkText: "Declined Agents",
           icon: <FaUserSecret />,
-          link: paths.agents,
+          link: paths.declinedAgents,
+          isActive: currentPage === adminPathsNew.declinedAgents.split("/")[2],
+          badge: agentCount?.declinedAgents?.toString(),
+        },
+        {
+          linkText: "Deactivated Agents",
+          icon: <FaUserSecret />,
+          link: paths.deactivatedAgents,
+          isActive:
+            currentPage === adminPathsNew.deactivatedAgents.split("/")[2],
+          badge: agentCount?.deactivatedAgents?.toString(),
         },
       ],
     },
-    {
-      linkText: "Agents",
-      link: paths.agentRequests,
-      isActive: currentPage === adminPathsNew.agentRequests.split("/")[2],
-      icon: <FaUserSecret />,
-      role: [ROLES.ROLE_MASTER_ADMIN],
-    },
-    {
-      linkText: "Agent Requests",
-      link: paths.agentRequests,
-      isActive: currentPage === adminPathsNew.agentRequests.split("/")[2],
-      icon: <FaUserPlus />,
-      role: [ROLES.ROLE_MASTER_ADMIN],
-    },
-    {
-      linkText: "Declined Agents",
-      link: paths.declinedAgents,
-      isActive: currentPage === adminPathsNew.declinedAgents.split("/")[2],
-      icon: <FaUserTimes />,
-      role: [ROLES.ROLE_MASTER_ADMIN],
-    },
+
     {
       linkText: "Inquiries",
       link: paths.inquiries,
@@ -209,4 +267,4 @@ const getSidebarLinks = (role: string) => {
   };
 };
 
-export default getSidebarLinks;
+export default useSidebarLinks;

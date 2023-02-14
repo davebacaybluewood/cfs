@@ -173,6 +173,28 @@ body {
       .pro-inner-item {
         padding: 8px 35px 8px 20px !important;
       }
+
+      .suffix-wrapper {
+        background: $main-color-gradient;
+        padding: 3px 7px;
+        border-radius: 3px;
+        position: relative;
+        left: 8px;
+
+        .badge {
+          color: #fff !important;
+        }
+      }
+    }
+
+    .react-slidedown {
+      .pro-menu-item.active {
+        background: #fff !important;
+
+        a {
+          color: #333 !important;
+        }
+      }
     }
   }
   .active-submenu {
@@ -189,6 +211,9 @@ body {
           }
         }
       }
+    }
+    .pro-menu a {
+      color: #333 !important;
     }
     &:hover {
       opacity: 1 !important;

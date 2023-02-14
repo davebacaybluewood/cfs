@@ -1,9 +1,6 @@
 import { Box, Grid, Paper } from "@mui/material";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
-import UserProvider from "AdminNew/context/UserProvider";
-import paths from "constants/routes";
-import React, { useContext } from "react";
-import { boolean } from "yup";
+import React from "react";
 import Calendar from "../Dashboard/components/Calendar/Calendar";
 import { CrumbTypes } from "../Dashboard/types";
 import AboutProfile from "./components/AboutProfile/AboutProfile";
@@ -12,23 +9,52 @@ import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
 import Testimonials, {
   TestiMonialTypes,
 } from "./components/Testimonials/Testimonials";
+import Webinars from "./components/Webinars/Webinars";
 import "./Profile.scss";
-import agent from "./test-data";
 
-const crumbs: CrumbTypes[] = [
+const agentTestimonails: TestiMonialTypes[] = [
   {
-    title: "Comfort Life Finance Admin",
-    url: paths.dashboard,
-    isActive: false,
+    title: "Finance Developer",
+    name: "Dave Bacay",
+    testimonial:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    isDisplayed: true,
   },
   {
-    title: "Profile",
-    url: paths.profile,
-    isActive: true,
+    title: "Finance Developer",
+    name: "Dave Bacay",
+    testimonial:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    isDisplayed: false,
+  },
+  {
+    title: "Finance Developer",
+    name: "Dave Bacay",
+    testimonial:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    isDisplayed: true,
   },
 ];
-
-const agentTestimonails: TestiMonialTypes[] = [];
+const webinars = [
+  {
+    title: "Webinar Title",
+    description: "Number of appointments: 9",
+    image:
+      "https://res.cloudinary.com/dfm2vczpy/image/upload/v1673031487/sample.jpg",
+  },
+  {
+    title: "Webinar Title",
+    description: "Number of appointments: 9",
+    image:
+      "https://res.cloudinary.com/dfm2vczpy/image/upload/v1673031487/sample.jpg",
+  },
+  {
+    title: "Webinar Title",
+    description: "Number of appointments: 9",
+    image:
+      "https://res.cloudinary.com/dfm2vczpy/image/upload/v1673031487/sample.jpg",
+  },
+];
 
 type ProfileTypes = {
   _id: string;
@@ -46,6 +72,8 @@ type ProfileTypes = {
   facebook: string;
   testimonials: string[];
   status: string;
+  languages: string[];
+  specialties: string[];
 };
 type ProfileProps = {
   crumbs: CrumbTypes[];
@@ -86,7 +114,19 @@ const Profile: React.FC<ProfileProps> = (props) => {
         </Grid>
         <Grid item sm={12} md={4} lg={4}>
           <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
-            <AboutProfile />
+            <AboutProfile
+              languages={profile.languages}
+              specialties={profile.specialties}
+              contactNumber={profile.phoneNumber}
+              fulllName={profile.name}
+              emailAdress={profile.emailAddress}
+              position={profile.title}
+              address={profile.address}
+              linkedIn={profile.linkedIn}
+              facebook={profile.facebook}
+              instagram={profile.instagram}
+              twitter={profile.twitter}
+            />
             <Overview
               numberOfAppointments={0}
               numberOfContacts={0}
@@ -96,10 +136,18 @@ const Profile: React.FC<ProfileProps> = (props) => {
             />
           </Paper>
         </Grid>
-        <Grid item sm={12} md={8} lg={8}>
+        <Grid item sm={12} md={12} lg={8}>
           <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
-            <Testimonials testimonials={agentTestimonails} />
+            {/* <Testimonials testimonials={agentTestimonails} /> */}
+            <Webinars webinars={webinars} />
           </Paper>
+        </Grid>
+        <Grid item sm={12} md={12} lg={12}>
+          <Box>
+            <Paper>
+              <Testimonials testimonials={agentTestimonails} />
+            </Paper>
+          </Box>
         </Grid>
         <Grid item sm={12} md={12} lg={12}>
           <Box>

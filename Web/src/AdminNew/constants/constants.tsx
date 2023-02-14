@@ -1,7 +1,11 @@
 import AgentForm from "AdminNew/pages/Agents/AgentForm";
-import AgentProfile from "AdminNew/pages/Agents/AgentProfile";
-import AgentRequest from "AdminNew/pages/Agents/AgentRequest";
-import AgentRequestProfile from "AdminNew/pages/Agents/AgentRequestProfile";
+import AgentProfile from "AdminNew/pages/Agents/LandingPages/ActiveAgents/AgentProfile";
+import AgentRequest from "AdminNew/pages/Agents/LandingPages/AgentRequests/AgentRequest";
+import AgentRequestProfile from "AdminNew/pages/Agents/LandingPages/AgentRequests/AgentRequestProfile";
+import DeactivatedAgentProfile from "AdminNew/pages/Agents/LandingPages/DeactivatedAgents/DeactivatedAgentProfile";
+import DeactivatedAgents from "AdminNew/pages/Agents/LandingPages/DeactivatedAgents/DeactivatedAgents";
+import DeclinedAgentProfile from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgentProfile";
+import DeclinedAgents from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgents";
 import Appointments from "AdminNew/pages/Appointments/Appointments";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
@@ -17,7 +21,7 @@ import Profile from "AdminNew/pages/Profile/Profile";
 import RaiseSupport from "AdminNew/pages/RaiseSupport/RaiseSupport";
 import Settings from "AdminNew/pages/Settings/Settings";
 import GuardedWrapper from "../layouts/GuardedWrapper";
-import Agents from "../pages/Agents/Agents";
+import Agents from "../pages/Agents/LandingPages/ActiveAgents/Agents";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import adminPathsNew from "./routes";
 
@@ -59,10 +63,50 @@ export const adminRoutesNew = [
     ),
   },
   {
+    PATH: adminPathsNew.declinedAgents,
+    ELEMENT: (
+      <GuardedWrapper>
+        <DeclinedAgents />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.deactivatedAgents,
+    ELEMENT: (
+      <GuardedWrapper>
+        <DeactivatedAgents />
+      </GuardedWrapper>
+    ),
+  },
+  {
     PATH: adminPathsNew.adminAgentRequestProfile,
     ELEMENT: (
       <GuardedWrapper>
         <AgentRequestProfile />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminAgentProfile,
+    ELEMENT: (
+      <GuardedWrapper>
+        <AgentProfile />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminDeclinedAgentProfile,
+    ELEMENT: (
+      <GuardedWrapper>
+        <DeclinedAgentProfile />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminDeactivatedAgentProfile,
+    ELEMENT: (
+      <GuardedWrapper>
+        <DeactivatedAgentProfile />
       </GuardedWrapper>
     ),
   },
@@ -151,14 +195,6 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <AgentForm />
-      </GuardedWrapper>
-    ),
-  },
-  {
-    PATH: adminPathsNew.adminAgentProfile,
-    ELEMENT: (
-      <GuardedWrapper>
-        <AgentProfile />
       </GuardedWrapper>
     ),
   },

@@ -8,5 +8,12 @@ const MenuProps = {
   },
 };
 const langOptions = ["Chinese", "Spanish"];
+const specialtiesOptions = ["Item 1", "Item 2"];
 
-export { ITEM_HEIGHT, ITEM_PADDING_TOP, MenuProps, langOptions };
+export {
+  ITEM_HEIGHT,
+  ITEM_PADDING_TOP,
+  MenuProps,
+  langOptions,
+  specialtiesOptions,
+};

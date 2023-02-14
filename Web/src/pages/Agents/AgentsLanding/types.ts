@@ -15,4 +15,5 @@ export type ValuesTypes = {
   confirmPassword: string;
   role: string;
   languages: string[];
+  specialties: string[];
 };

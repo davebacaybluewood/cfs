@@ -12,7 +12,7 @@ import { FaGlobe, FaAngleDoubleRight } from "react-icons/fa";
 import React, { useContext } from "react";
 import "./Sidebar.scss";
 import { IMAGES } from "constants/constants";
-import getSidebarLinks, { ISidebarLinks } from "./helpers/getSidebarLinks";
+import useSidebarLinks, { ISidebarLinks } from "./hooks/useSidebarLinks";
 import { MAIN_WEBSITE_LINK, ROLES } from "AdminNew/constants/constants";
 import { UserContext } from "AdminNew/context/UserProvider";
 import classNames from "classnames";
@@ -35,8 +35,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   const userCtx = useContext(UserContext) as any;
   const LOGGED_IN_ROLE = userCtx.user.role;
 
-  const sidebarLinks = getSidebarLinks(LOGGED_IN_ROLE).sidebarMainLinks;
-  const sidebarOtherLinks = getSidebarLinks(LOGGED_IN_ROLE).sidebarOtherLinks;
+  const sidebarLinks = useSidebarLinks(LOGGED_IN_ROLE).sidebarMainLinks;
+  const sidebarOtherLinks = useSidebarLinks(LOGGED_IN_ROLE).sidebarOtherLinks;
 
   return (
     <ProSidebar
@@ -77,9 +77,14 @@ const Sidebar: React.FC<SidebarProps> = ({
                   title={link.linkText}
                   icon={link.icon}
                   className={submenuClassnames}
+                  open={true}
                 >
                   {link.subLinks?.map((sm) => (
-                    <MenuItem icon={sm.icon}>
+                    <MenuItem
+                      icon={sm.icon}
+                      suffix={<span className="badge">{sm.badge}</span>}
+                      active={sm.isActive}
+                    >
                       <NavLink to={sm.link ?? ""}>{sm.linkText}</NavLink>
                     </MenuItem>
                   ))}

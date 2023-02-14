@@ -1,6 +1,6 @@
 import React from "react";
-import AdminAgents from "./Agents";
-import { AgentStatuses } from "./types";
+import AdminAgents from "../ActiveAgents/Agents";
+import { AgentStatuses } from "../../types";
 
 const AgentRequest: React.FC = () => {
   return (
