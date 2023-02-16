@@ -102,9 +102,19 @@ const Agents: React.FC<AgentsProps> = (props) => {
               testimonials={agent.testimonials}
               agentId={agent._id ?? ""}
             />
-            <AgentVideos />
+            <ComponentValidator
+              showNull={
+                true /** This will change after webinar feature completed */
+              }
+            >
+              <AgentVideos />
+            </ComponentValidator>
           </FilteredContainer>
-          <ComponentValidator showNull={!props.showAppointment}>
+          <ComponentValidator
+            showNull={
+              true /** This will change after webinar feature completed */
+            }
+          >
             <Wrapper
               style={{
                 backgroundImage: `url("https://techno.dreamitsolution.net/wp-content/uploads/2020/10/team-bg2.jpg")`,

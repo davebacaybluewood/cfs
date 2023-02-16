@@ -1,6 +1,15 @@
 import { AGENT_SPECIALTIES } from "../constants/constants.js";
 
 const agentRegistrationSuccess = ({ agentId, specialties }) => {
+  const isWealthBuilder = specialties.includes(AGENT_SPECIALTIES[0]);
+  const isFinancialFreedom = specialties.includes(AGENT_SPECIALTIES[1]);
+  const buttonLabel =
+    isWealthBuilder && !isFinancialFreedom
+      ? "Sign up for Wealth Builder"
+      : !isWealthBuilder && isFinancialFreedom
+      ? "Sign up for Financial Freedom"
+      : "Sign up for Wealth Builder";
+
   const specialtyButton = `<!-- specialty button -->
   <tr>
     <td align="left" bgcolor="#ffffff">
@@ -27,7 +36,7 @@ const agentRegistrationSuccess = ({ agentId, specialties }) => {
                       text-decoration: none;
                       border-radius: 6px;
                     "
-                    >Specialty Link</a
+                    >${buttonLabel}</a
                   >
                 </td>
               </tr>
@@ -38,9 +47,6 @@ const agentRegistrationSuccess = ({ agentId, specialties }) => {
     </td>
   </tr>
   <!-- specialty button -->`;
-
-  const isWealthBuilder = specialties.includes(AGENT_SPECIALTIES[0]);
-  const isFinancialFreedom = specialties.includes(AGENT_SPECIALTIES[1]);
   return `<!DOCTYPE html>
     <html>
       <head>
@@ -282,7 +288,7 @@ const agentRegistrationSuccess = ({ agentId, specialties }) => {
                     "
                   >
                     <p style="margin: 0">
-                      Thank you for registring in Comfort Life Financial Agents. It
+                      Thank you for registering in Comfort Life Financial Agents. It
                       will take 3-5 business days to process your request.
                     </p>
                   </td>

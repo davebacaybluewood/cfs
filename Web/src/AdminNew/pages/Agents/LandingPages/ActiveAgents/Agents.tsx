@@ -101,8 +101,8 @@ const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
       break;
     default:
       breadCrumb = {
-        text: "",
-        link: "",
+        text: "Activated Agents",
+        link: paths.agents,
       };
   }
 

@@ -202,7 +202,8 @@ const AgentRegistration = () => {
                             )}
                           >
                             <InputLabel id="languages-label">
-                              Languages (Pick at least 1)
+                              Additional Languages (You can choose more than
+                              one)
                             </InputLabel>
                             <Select
                               labelId="languages-label"
@@ -262,7 +263,7 @@ const AgentRegistration = () => {
                             )}
                           >
                             <InputLabel id="specialties-label">
-                              Specialties (Pick at least 1)
+                              Specialties (You can choose more than one)
                             </InputLabel>
                             <Select
                               labelId="specialties-label"
