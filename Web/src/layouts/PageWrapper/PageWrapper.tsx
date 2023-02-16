@@ -2,6 +2,8 @@ import classNames from "classnames";
 import Footer from "layouts/Footer/Footer";
 import Navbar from "layouts/Navbar/Navbar";
 import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IPageWrapper {
   showNavbar?: boolean;
@@ -18,6 +20,7 @@ const PageWrapper: React.FC<IPageWrapper> = (props) => {
       {props.showNavbar && <Navbar />}
       {props.component}
       {props.showFooter && <Footer />}
+      <ToastContainer />
     </div>
   );
 };

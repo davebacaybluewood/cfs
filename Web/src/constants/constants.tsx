@@ -176,3 +176,10 @@ export const SOCIAL_LINKS = {
   LINKEDIN:
     "https://www.linkedin.com/in/comfort-financial-solutions-92708b258/",
 };
+
+export const AGENT_SPECIALTIES = [
+  "Wealth Builder",
+  "Financial Freedom",
+  "Long Term Care",
+  "Legacy Builder",
+];

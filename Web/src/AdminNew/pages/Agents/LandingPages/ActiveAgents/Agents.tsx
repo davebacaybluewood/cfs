@@ -141,7 +141,7 @@ const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
               <Grid item xs={12} sm={6} md={4}>
                 <div
                   className="item"
-                  onClick={() => cardClickHandler(agent._id)}
+                  onClick={() => cardClickHandler(agent.userGuid)}
                 >
                   <Grid container alignItems="center">
                     <Grid item xs={12} sm={12} md={7}>

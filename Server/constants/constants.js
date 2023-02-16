@@ -13,9 +13,9 @@ export const AGENT_STATUSES = {
   DEACTIVATED: "DEACTIVATED",
 };
 
-export const AGENT_SPECIALTIES = {
-  WEALTH_BUILDER: "WEALTH BUILDER",
-  FINANCIAL_FREEDOM: "FINANCIAL_FREEDOM",
-  LEGACY_BUILDER: "LEGACY_BUILDER",
-  LONG_TERM_CARE: "LONG_TERM_CARE",
-};
+export const AGENT_SPECIALTIES = [
+  "Wealth Builder",
+  "Financial Freedom",
+  "Long Term Care",
+  "Legacy Builder",
+];

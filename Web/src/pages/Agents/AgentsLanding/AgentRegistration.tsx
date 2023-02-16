@@ -31,6 +31,7 @@ import { useNavigate } from "react-router-dom";
 import paths from "constants/routes";
 import { ValuesTypes } from "./types";
 import { ROLES } from "AdminNew/constants/constants";
+import { AGENT_SPECIALTIES } from "constants/constants";
 
 const AgentRegistration = () => {
   const initialValues: Omit<ValuesTypes, "role"> = {
@@ -62,7 +63,9 @@ const AgentRegistration = () => {
 
   useEffect(() => {
     if (success) {
-      navigate(paths.agentRegistrationSuccess.replace(":agentId", agent._id));
+      navigate(
+        paths.agentRegistrationSuccess.replace(":agentId", agent.userGuid)
+      );
     }
   }, [success, navigate]);
 
@@ -199,7 +202,7 @@ const AgentRegistration = () => {
                             )}
                           >
                             <InputLabel id="languages-label">
-                              Languages
+                              Languages (Pick at least 1)
                             </InputLabel>
                             <Select
                               labelId="languages-label"
@@ -259,7 +262,7 @@ const AgentRegistration = () => {
                             )}
                           >
                             <InputLabel id="specialties-label">
-                              Specialties
+                              Specialties (Pick at least 1)
                             </InputLabel>
                             <Select
                               labelId="specialties-label"
@@ -296,7 +299,7 @@ const AgentRegistration = () => {
                               )}
                               MenuProps={MenuProps}
                             >
-                              {specialtiesOptions.map((name) => (
+                              {AGENT_SPECIALTIES.map((name) => (
                                 <MenuItem
                                   key={name}
                                   value={name}

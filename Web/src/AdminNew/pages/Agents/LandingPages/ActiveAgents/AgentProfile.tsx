@@ -13,7 +13,7 @@ const AgentProfile: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listSingleAgent(id ?? "") as any);
+    dispatch(listSingleAgent(id ?? "", true) as any);
   }, [dispatch, id]);
 
   const agentSelector = useSelector((state: RootState) => state.agentSingle);

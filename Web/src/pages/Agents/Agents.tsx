@@ -98,7 +98,10 @@ const Agents: React.FC<AgentsProps> = (props) => {
         <React.Fragment>
           <FilteredContainer noSpacing={props.noContainer}>
             <AgentProfile noContainer={props.noContainer} agent={agent} />
-            <Testimonials testimonials={tempTestimonials} />
+            <Testimonials
+              testimonials={agent.testimonials}
+              agentId={agent._id ?? ""}
+            />
             <AgentVideos />
           </FilteredContainer>
           <ComponentValidator showNull={!props.showAppointment}>

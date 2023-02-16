@@ -1,4 +1,46 @@
-const agentRegistrationSuccess = ({ agentId }) => {
+import { AGENT_SPECIALTIES } from "../constants/constants.js";
+
+const agentRegistrationSuccess = ({ agentId, specialties }) => {
+  const specialtyButton = `<!-- specialty button -->
+  <tr>
+    <td align="left" bgcolor="#ffffff">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td align="center" bgcolor="#ffffff" style="padding: 12px">
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td
+                  align="center"
+                  bgcolor="#1a82e2"
+                  style="border-radius: 6px"
+                >
+                  <a
+                    href=${`https://comfortfinancial.app.agencyrocket.com/signup`}
+                    target="_blank"
+                    style="
+                      display: inline-block;
+                      padding: 16px 36px;
+                      font-family: 'Source Sans Pro', Helvetica, Arial,
+                        sans-serif;
+                      font-size: 16px;
+                      color: #ffffff;
+                      text-decoration: none;
+                      border-radius: 6px;
+                    "
+                    >Specialty Link</a
+                  >
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <!-- specialty button -->`;
+
+  const isWealthBuilder = specialties.includes(AGENT_SPECIALTIES[0]);
+  const isFinancialFreedom = specialties.includes(AGENT_SPECIALTIES[1]);
   return `<!DOCTYPE html>
     <html>
       <head>
@@ -267,8 +309,8 @@ const agentRegistrationSuccess = ({ agentId }) => {
                       your browser:
                     </p>
                     <p style="margin: 0">
-                      <a href=${`http://localhost:3000/agents/status/${agentId}`} target="_blank"
-                        >http://localhost:3000/agents/status/${agentId}</a
+                      <a href=${`https://www.comfortfinancialsolutions.com/agents/status/${agentId}`} target="_blank"
+                        >https://www.comfortfinancialsolutions.com/agents/status/${agentId}</a
                       >
                     </p>
                   </td>
@@ -289,7 +331,7 @@ const agentRegistrationSuccess = ({ agentId }) => {
                                 style="border-radius: 6px"
                               >
                                 <a
-                                  href=${`http://localhost:3000/agents/status/${agentId}`}
+                                  href=${`https://www.comfortfinancialsolutions.com/agents/status/${agentId}`}
                                   target="_blank"
                                   style="
                                     display: inline-block;
@@ -301,7 +343,7 @@ const agentRegistrationSuccess = ({ agentId }) => {
                                     text-decoration: none;
                                     border-radius: 6px;
                                   "
-                                  >Track Your Account</a
+                                  >Track Your Status</a
                                 >
                               </td>
                             </tr>
@@ -312,6 +354,8 @@ const agentRegistrationSuccess = ({ agentId }) => {
                   </td>
                 </tr>
                 <!-- end button -->
+
+                ${isWealthBuilder || isFinancialFreedom ? specialtyButton : ""}
     
                 <!-- start copy -->
                 <tr>

@@ -15,6 +15,7 @@ import sendEmail from "../utils/sendNodeMail.js";
  */
 const getAgents = expressAsync(async (req, res) => {
   const status = req.query.status;
+
   const filteredAgentOptions = {
     role: ROLES.ROLE_AGENT,
     status: status ? status : undefined,
@@ -66,12 +67,56 @@ const getAgentsCount = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const getSingleAgent = expressAsync(async (req, res) => {
-  const agent = await Agents.findOne({
-    _id: req.params.id,
-  });
+  const role = req.query.role;
 
-  if (agent) {
-    res.json(agent);
+  if (req.params.id) {
+    if (role === ROLES.ROLE_MASTER_ADMIN) {
+      const agent = await Agents.find({ userGuid: req.params.id });
+      res.json(agent[0]);
+    } else {
+      const agent = await Agents.aggregate([
+        {
+          $match: {
+            userGuid: req.params.id,
+          },
+        },
+        {
+          $project: {
+            name: 1,
+            userGuid: 1,
+            avatar: 1,
+            title: 1,
+            bio: 1,
+            phoneNumber: 1,
+            emailAddress: 1,
+            address: 1,
+            twitter: 1,
+            instagram: 1,
+            linkedIn: 1,
+            facebook: 1,
+            password: 1,
+            languages: 1,
+            role: 1,
+            status: 1,
+            telNumber: 1,
+            webinars: 1,
+            specialties: 1,
+            isDeclined: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            testimonials: {
+              $filter: {
+                input: "$testimonials",
+                cond: {
+                  $eq: ["$$this.isDisplayed", true],
+                },
+              },
+            },
+          },
+        },
+      ]);
+      res.json(agent[0]);
+    }
   } else {
     res.status(404);
     throw new Error("Agent not found.");
@@ -278,6 +323,57 @@ const createAgent = expressAsync(async (req, res) => {
   }
 });
 
+// @desc    Add new testimonial
+// @route   POST /api/agents/:id/testimonials
+// @access  Private
+const addAgentTestimonial = expressAsync(async (req, res) => {
+  const { name, title, comment, emailAddress } = req.body;
+  const testimonialGuid = uuidv4();
+  const agent = await Agents.findById(req.params.id);
+
+  if (agent) {
+    const testimonial = {
+      name: name.toString(),
+      title: title.toString(),
+      comment: comment.toString(),
+      emailAddress: emailAddress.toString(),
+      testimonialGuid,
+    };
+
+    agent.testimonials.push(testimonial);
+
+    await agent.save();
+    res.status(201).json({ message: "Testimonial added" });
+  } else {
+    res.status(404);
+    throw new Error("Testimonial not found");
+  }
+});
+
+// @desc    Display the testimonial
+// @route   PUT /api/agents/:id/testimonials/update
+// @access  Private
+const updateAgentTestimonial = expressAsync(async (req, res) => {
+  const { testimonialGuid } = req.body;
+
+  const agent = await Agents.findOne({ userGuid: req.params.id }).then(
+    (agent) => {
+      let testimonial = agent.testimonials.find(
+        (t) => t.testimonialGuid === testimonialGuid
+      );
+
+      testimonial.isDisplayed = testimonial.isDisplayed ? false : true;
+      return agent.save();
+    }
+  );
+
+  if (Object.keys(agent).length !== 0) {
+    res.status(200).json(agent.testimonials);
+  } else {
+    res.status(400).json("Bad Request");
+  }
+});
+
 export {
   getAgents,
   getSingleAgent,
@@ -286,4 +382,6 @@ export {
   createAgent,
   updateAgentStatus,
   getAgentsCount,
+  addAgentTestimonial,
+  updateAgentTestimonial,
 };

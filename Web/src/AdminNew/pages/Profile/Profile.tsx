@@ -1,6 +1,6 @@
 import { Box, Grid, Paper } from "@mui/material";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
-import React from "react";
+import React, { useState } from "react";
 import Calendar from "../Dashboard/components/Calendar/Calendar";
 import { CrumbTypes } from "../Dashboard/types";
 import AboutProfile from "./components/AboutProfile/AboutProfile";
@@ -12,29 +12,6 @@ import Testimonials, {
 import Webinars from "./components/Webinars/Webinars";
 import "./Profile.scss";
 
-const agentTestimonails: TestiMonialTypes[] = [
-  {
-    title: "Finance Developer",
-    name: "Dave Bacay",
-    testimonial:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    isDisplayed: true,
-  },
-  {
-    title: "Finance Developer",
-    name: "Dave Bacay",
-    testimonial:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    isDisplayed: false,
-  },
-  {
-    title: "Finance Developer",
-    name: "Dave Bacay",
-    testimonial:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    isDisplayed: true,
-  },
-];
 const webinars = [
   {
     title: "Webinar Title",
@@ -58,6 +35,7 @@ const webinars = [
 
 type ProfileTypes = {
   _id: string;
+  userGuid: string;
   name: string;
   avatar: string;
   title: string;
@@ -84,12 +62,13 @@ type ProfileProps = {
 
 const Profile: React.FC<ProfileProps> = (props) => {
   const { crumbs, profile, loading, error } = props;
+  const [pageLoading, setPageLoading] = useState(false);
 
   return (
     <Wrapper
       breadcrumb={crumbs}
       error={error}
-      loading={loading}
+      loading={loading || pageLoading}
       className="profile-wrapper"
     >
       <Grid spacing={2} container>
@@ -145,7 +124,11 @@ const Profile: React.FC<ProfileProps> = (props) => {
         <Grid item sm={12} md={12} lg={12}>
           <Box>
             <Paper>
-              <Testimonials testimonials={agentTestimonails} />
+              <Testimonials
+                testimonials={profile.testimonials as any}
+                setPageLoading={setPageLoading}
+                agentId={profile.userGuid}
+              />
             </Paper>
           </Box>
         </Grid>

@@ -237,3 +237,19 @@
     margin-bottom: 1rem;
   }
 }
+
+.testimonial-dialog {
+  .MuiTypography-root {
+    font-size: 1.3rem;
+    font-weight: 300;
+  }
+  .dialog-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+  }
+  .dialog-description,
+  .MuiInputBase-input,
+  .MuiFormLabel-root {
+    font-size: 1.3rem;
+  }
+}

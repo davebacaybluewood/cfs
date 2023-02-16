@@ -6,6 +6,9 @@ const testimonialsSchema = mongoose.Schema(
     name: { type: String, required: true },
     title: { type: String, required: true },
     comment: { type: String, required: true },
+    emailAddress: { type: String, required: true },
+    testimonialGuid: { type: String, required: true },
+    isDisplayed: { type: Boolean, default: false },
   },
   {
     timestamps: true,

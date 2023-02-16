@@ -20,6 +20,8 @@ const ENDPOINTS = {
   AGENT_UPDATE_STATUS: "/api/agents/agent-status/:agentId",
   ADMIN_PROFILE: "/api/users/profile",
   AGENT_COUNTS: "/api/agents/agent-counts/all",
+  AGENT_TESTIMONIALS: "/api/agents/:agentId/testimonials",
+  AGENT_TESTIMONIALS_STATUS: "/api/agents/:agentId/testimonials/update",
 };
 
 export default ENDPOINTS;

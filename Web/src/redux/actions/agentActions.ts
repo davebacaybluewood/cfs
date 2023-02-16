@@ -80,24 +80,29 @@ export const listAgents =
     }
   };
 
-export const listSingleAgent = (id: string) => async (dispatch: any) => {
-  try {
-    dispatch({
-      type: SINGLE_AGENT_ACTION_TYPES.SINGLE_AGENT_ACTION_GET_REQUEST,
-    });
-    const { data } = await axios.get(ENDPOINTS.AGENT_BY_ID.replace(":id", id));
+export const listSingleAgent =
+  (id: string, isAdmin: boolean = false) =>
+  async (dispatch: any) => {
+    try {
+      const query = isAdmin ? `?role=${ROLES.ROLE_MASTER_ADMIN}` : "";
+      dispatch({
+        type: SINGLE_AGENT_ACTION_TYPES.SINGLE_AGENT_ACTION_GET_REQUEST,
+      });
+      const { data } = await axios.get(
+        ENDPOINTS.AGENT_BY_ID.replace(":id", id) + query
+      );
 
-    dispatch({
-      type: SINGLE_AGENT_ACTION_TYPES.SINGLE_AGENT_ACTION_GET_SUCCESS,
-      payload: data,
-    });
-  } catch (error: any) {
-    dispatch({
-      type: SINGLE_AGENT_ACTION_TYPES.SINGLE_AGENT_ACTION_GET_FAIL,
-      payload: errorMessage(error),
-    });
-  }
-};
+      dispatch({
+        type: SINGLE_AGENT_ACTION_TYPES.SINGLE_AGENT_ACTION_GET_SUCCESS,
+        payload: data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: SINGLE_AGENT_ACTION_TYPES.SINGLE_AGENT_ACTION_GET_FAIL,
+        payload: errorMessage(error),
+      });
+    }
+  };
 
 export const createAgent =
   (
