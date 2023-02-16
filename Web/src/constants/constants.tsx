@@ -152,3 +152,5 @@ export const SOCIAL_LINKS = {
   LINKEDIN:
     "https://www.linkedin.com/in/comfort-financial-solutions-92708b258/",
 };
+
+export const MAX_CARD_TEXT: number = 255;
