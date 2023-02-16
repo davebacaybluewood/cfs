@@ -1,0 +1,16 @@
+.blogs-banner-container {
+  padding: 1rem;
+  margin: 1rem;
+  background-image: url("https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=600");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    font-size: 5rem;
+    font-weight: 900;
+    color: white;
+  }
+}

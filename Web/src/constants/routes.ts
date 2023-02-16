@@ -11,6 +11,8 @@ const paths = {
   about: "/about",
   invalid: "/invalid",
   events: "/events",
+  blogs: "/blogs",
+  blogsSingle: "/blogs/:id",
   event_invites: "/events/invites/:id",
   media: "/media",
   media_with_id: "/media/:id",

@@ -77,6 +77,14 @@ const Navbar: React.FC = () => {
     },
     {
       linkProps: {
+        className: setActive(paths.blogs),
+        to: paths.blogs,
+        text: "Blogs",
+      },
+      dropdown: false,
+    },
+    {
+      linkProps: {
         className: setActive(paths.media),
         to: paths.media,
         text: "Media",

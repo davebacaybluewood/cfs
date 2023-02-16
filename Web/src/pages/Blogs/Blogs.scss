@@ -1,0 +1,117 @@
+.blogs {
+  .banner {
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h1 {
+      color: white;
+    }
+  }
+  .blogs-container {
+    background-color: white;
+    border-radius: 5px;
+    padding: 1rem;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1), 0px 5px 5px rgba(0, 0, 0, 0.15);
+    &:hover {
+      transform: scale(1.05);
+      transition: all 0.5s ease;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.013),
+        0px 5px 5px rgba(0, 0, 0, 0.15);
+    }
+    &:not(hover) {
+      transition: all 0.5s ease-out;
+    }
+    .centered-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      h2 {
+        font-size: 3rem;
+        font-weight: 900;
+      }
+      .tags-container {
+        display: flex;
+        gap: 0.5rem;
+        .chip {
+          border: 1px solid lightgray;
+          border-radius: 5rem;
+          p {
+            color: white;
+            background: linear-gradient(
+              90deg,
+              #0057b7 0%,
+              #021025 30%,
+              #021025
+            ) !important;
+          }
+        }
+      }
+      .contents {
+        background: linear-gradient(
+          90deg,
+          #0057b7 0%,
+          #021025 30%,
+          #021025
+        ) !important;
+        padding: 1rem;
+        border-radius: 5px;
+        .description {
+          color: white;
+          font-size: 1.5rem;
+          padding: 1rem 0;
+          span {
+            color: white;
+            text-decoration: underline;
+            font-size: 1.5rem;
+            font-weight: 900;
+            cursor: pointer;
+            &:hover {
+              color: rgb(219, 90, 90);
+              transition: all 0.5s ease;
+            }
+            &:not(hover) {
+              color: white;
+              transition: all 0.5s ease;
+            }
+          }
+        }
+        .author,
+        .date {
+          font-size: 1.3rem;
+          color: white;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: flex-end;
+        }
+        .date {
+          margin-bottom: 1rem;
+        }
+      }
+
+      img {
+        width: 100%;
+        border-radius: 5px;
+      }
+    }
+    .author-date-views-content {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      .views {
+        gap: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
+  }
+}
