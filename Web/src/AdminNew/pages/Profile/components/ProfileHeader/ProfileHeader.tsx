@@ -1,13 +1,22 @@
-import React from "react";
+import { Button } from "@mui/material";
+import { AgentStatuses } from "AdminNew/pages/Agents/types";
+import axios from "axios";
+import ENDPOINTS from "constants/endpoints";
+import paths from "constants/routes";
+import getUserToken from "helpers/getUserToken";
+import React, { useState } from "react";
 import {
   FaCheckDouble,
   FaMapMarked,
   FaPhone,
   FaSwatchbook,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import HeaderButtons from "./HeaderButtons";
 import "./ProfileHeader.scss";
 
 type ProfileHeaderProps = {
+  _id: string;
   name: string;
   avatar: string;
   title: string;
@@ -51,9 +60,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
             </ul>
           </div>
         </div>
-        <div className="profile-actions">
-          <button>EDIT PROFILE</button>
-        </div>
+        <HeaderButtons status={props.status as AgentStatuses} id={props._id} />
       </div>
     </div>
   );

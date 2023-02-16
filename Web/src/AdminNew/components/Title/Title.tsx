@@ -12,6 +12,7 @@ type TitleProps = {
   visibility?: boolean;
   className?: string;
   link?: string;
+  children?: React.ReactNode;
 };
 const Title: React.FC<TitleProps> = (props) => {
   const titleClassnames = classNames("title-with-subtitle", props.className);
@@ -22,10 +23,8 @@ const Title: React.FC<TitleProps> = (props) => {
         <h2>{props.title}</h2>
         <p>{props.subtitle}</p>
       </div>
-      <ComponentValidator showNull={!props.link}>
-        <Link to={paths.about} className="title-link">
-          <FaAngleDoubleRight />
-        </Link>
+      <ComponentValidator showNull={!props.children}>
+        <div>{props.children}</div>
       </ComponentValidator>
     </div>
   );

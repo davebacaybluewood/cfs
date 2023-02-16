@@ -1,39 +1,21 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   ProSidebar,
   Menu,
   MenuItem,
-  SubMenu,
   SidebarHeader,
   SidebarFooter,
   SidebarContent,
+  SubMenu,
 } from "react-pro-sidebar";
-import {
-  FaGlobe,
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-  FaTachometerAlt,
-  FaGem,
-  FaSkyatlas,
-  FaBookReader,
-  FaPeopleCarry,
-  FaUserLock,
-  FaChartArea,
-  FaGlassCheers,
-  FaFly,
-  FaEnvelopeOpenText,
-  FaRegCalendarAlt,
-  FaUserSecret,
-  FaCogs,
-  FaRegCalendarCheck,
-} from "react-icons/fa";
-import React from "react";
+import { FaGlobe, FaAngleDoubleRight } from "react-icons/fa";
+import React, { useContext } from "react";
 import "./Sidebar.scss";
-import { Button } from "@mui/material";
 import { IMAGES } from "constants/constants";
-import paths from "constants/routes";
-import getSidebarLinks, { ISidebarLinks } from "./helpers/getSidebarLinks";
+import useSidebarLinks, { ISidebarLinks } from "./hooks/useSidebarLinks";
 import { MAIN_WEBSITE_LINK, ROLES } from "AdminNew/constants/constants";
+import { UserContext } from "AdminNew/context/UserProvider";
+import classNames from "classnames";
 
 type SidebarProps = {
   image?: string;
@@ -50,8 +32,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   handleToggleSidebar,
   handleCollapsedChange,
 }) => {
-  const sidebarLinks = getSidebarLinks(ROLES.ROLE_AGENT).sidebarMainLinks;
-  const sidebarOtherLinks = getSidebarLinks(ROLES.ROLE_AGENT).otherLinks;
+  const userCtx = useContext(UserContext) as any;
+  const LOGGED_IN_ROLE = userCtx.user.role;
+
+  const sidebarLinks = useSidebarLinks(LOGGED_IN_ROLE).sidebarMainLinks;
+  const sidebarOtherLinks = useSidebarLinks(LOGGED_IN_ROLE).sidebarOtherLinks;
 
   return (
     <ProSidebar
@@ -82,10 +67,34 @@ const Sidebar: React.FC<SidebarProps> = ({
         <h2 className="sidebar-label">Main Links</h2>
         <Menu iconShape="circle">
           {sidebarLinks.map((link: ISidebarLinks, index: number) => {
+            const submenuClassnames = classNames({
+              "active-submenu": link.isActive,
+              "submenu-default": true,
+            });
+            if (link.isSubMenu) {
+              return (
+                <SubMenu
+                  title={link.linkText}
+                  icon={link.icon}
+                  className={submenuClassnames}
+                  open={true}
+                >
+                  {link.subLinks?.map((sm) => (
+                    <MenuItem
+                      icon={sm.icon}
+                      suffix={<span className="badge">{sm.badge}</span>}
+                      active={sm.isActive}
+                    >
+                      <NavLink to={sm.link ?? ""}>{sm.linkText}</NavLink>
+                    </MenuItem>
+                  ))}
+                </SubMenu>
+              );
+            }
             return (
               <MenuItem icon={link.icon} active={link.isActive} key={index}>
                 {link.linkText}
-                <NavLink to={link.link} />
+                <NavLink to={link.link ?? ""} />
               </MenuItem>
             );
           })}
@@ -97,7 +106,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             return (
               <MenuItem icon={link.icon} active={link.isActive} key={index}>
                 {link.linkText}
-                <NavLink to={link.link} />
+                <NavLink to={link.link ?? ""} />
               </MenuItem>
             );
           })}

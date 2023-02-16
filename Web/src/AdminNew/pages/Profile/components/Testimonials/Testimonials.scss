@@ -38,6 +38,9 @@ $main-color-gradient: linear-gradient(
 
     .client-from {
       margin-top: 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
 
       h5 {
         font-size: 1.7rem;
@@ -46,6 +49,30 @@ $main-color-gradient: linear-gradient(
       p {
         font-weight: 300;
         font-size: 1.5rem;
+      }
+
+      button {
+        width: 25px;
+        height: 25px;
+        background: linear-gradient(
+          90deg,
+          #0057b7 0%,
+          $main-color 30%,
+          $main-color
+        ) !important;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+
+        svg {
+          position: relative;
+          top: 2px;
+          color: #fff;
+
+          path {
+            color: #fff;
+          }
+        }
       }
     }
   }

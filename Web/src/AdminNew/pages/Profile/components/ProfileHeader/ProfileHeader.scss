@@ -1,4 +1,7 @@
 .profile-wrapper {
+  .MuiDialogContentText-root {
+    font-size: 1.6rem !important;
+  }
   .profile-header {
     background-color: white;
     border-radius: 4px;
@@ -35,6 +38,8 @@
           cursor: pointer;
           color: #fff;
           border-radius: 4px;
+          text-transform: uppercase;
+          margin-left: 0.5rem;
         }
       }
 
