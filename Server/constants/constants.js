@@ -5,3 +5,17 @@ export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
   ROLE_MASTER_ADMIN: "ROLE_MASTER_ADMIN",
 };
+
+export const AGENT_STATUSES = {
+  ACTIVATED: "ACTIVATED",
+  DECLINED: "DECLINED",
+  PENDING: "PENDING",
+  DEACTIVATED: "DEACTIVATED",
+};
+
+export const AGENT_SPECIALTIES = [
+  "Wealth Builder",
+  "Financial Freedom",
+  "Long Term Care",
+  "Legacy Builder",
+];

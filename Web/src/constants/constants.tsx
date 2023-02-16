@@ -16,6 +16,13 @@ import adminRoutes from "pages/Admin/routes";
 import Medias from "pages/Medias/Medias";
 import MediasLanding from "pages/Medias/MediasLanding";
 import { adminRoutesNew } from "AdminNew/constants/constants";
+import Agents from "pages/Agents/Agents";
+import AgentVideos from "pages/Agents/components/AgentVideos";
+import AgentWebinar from "pages/Agents/AgentWebinar";
+import AgentRegistration from "pages/Agents/AgentsLanding/AgentRegistration";
+import AgentAppointment from "pages/Agents/AgentAppointment";
+import AgentRegistrationSuccess from "pages/Agents/AgentsLanding/AgentRegistrationSuccess";
+import AgentCheckStatus from "pages/Agents/AgentsLanding/AgentCheckStatus";
 
 export const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
 
@@ -82,6 +89,34 @@ export const REACT_ROUTES: ReactRoutesType[] = [
     ELEMENT: <PageWrapper component={<Medias />} />,
   },
   {
+    PATH: paths.agent_with_id,
+    ELEMENT: <PageWrapper component={<Agents />} />,
+  },
+  {
+    PATH: paths.webinarForm,
+    ELEMENT: <PageWrapper component={<AgentWebinar showCalendly={false} />} />,
+  },
+  {
+    PATH: paths.webinarAppointment,
+    ELEMENT: <PageWrapper component={<AgentAppointment showForm={false} />} />,
+  },
+  {
+    PATH: paths.agentRegistration,
+    ELEMENT: <PageWrapper component={<AgentRegistration />} />,
+  },
+  {
+    PATH: paths.agentRegistration,
+    ELEMENT: <PageWrapper component={<AgentRegistration />} />,
+  },
+  {
+    PATH: paths.agentRegistrationSuccess,
+    ELEMENT: <PageWrapper component={<AgentRegistrationSuccess />} />,
+  },
+  {
+    PATH: paths.agent_check_status,
+    ELEMENT: <PageWrapper component={<AgentCheckStatus />} />,
+  },
+  {
     PATH: "*",
     ELEMENT: (
       <PageWrapper
@@ -141,3 +176,10 @@ export const SOCIAL_LINKS = {
   LINKEDIN:
     "https://www.linkedin.com/in/comfort-financial-solutions-92708b258/",
 };
+
+export const AGENT_SPECIALTIES = [
+  "Wealth Builder",
+  "Financial Freedom",
+  "Long Term Care",
+  "Legacy Builder",
+];

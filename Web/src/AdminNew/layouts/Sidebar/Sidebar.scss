@@ -24,6 +24,23 @@ body {
   position: relative;
   background-color: #f8f7fa;
 
+  .pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout::-webkit-scrollbar {
+    width: 5px;
+  }
+  .pro-sidebar
+    > .pro-sidebar-inner
+    > .pro-sidebar-layout::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  .pro-sidebar
+    > .pro-sidebar-inner
+    > .pro-sidebar-layout::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  }
+
   .admin-logo {
     width: 150px;
     margin: auto;
@@ -127,6 +144,15 @@ body {
       }
     }
   }
+  .submenu-default {
+    .pro-inner-list-item {
+      background: white !important;
+      padding: 1rem;
+      .pro-item-content {
+        color: #333;
+      }
+    }
+  }
 
   .pro-sidebar .pro-menu .pro-menu-item {
     padding: 0;
@@ -140,6 +166,69 @@ body {
       }
     }
   }
+
+  /** Submenu Style */
+  .pro-sub-menu {
+    .pro-menu-item {
+      .pro-inner-item {
+        padding: 8px 35px 8px 20px !important;
+      }
+
+      .suffix-wrapper {
+        background: $main-color-gradient;
+        padding: 3px 7px;
+        border-radius: 3px;
+        position: relative;
+        left: 8px;
+
+        .badge {
+          color: #fff !important;
+        }
+      }
+    }
+
+    .react-slidedown {
+      .pro-menu-item.active {
+        background: #fff !important;
+
+        a {
+          color: #333 !important;
+        }
+      }
+    }
+  }
+  .active-submenu {
+    background: $main-color-gradient;
+    .pro-inner-item {
+      .pro-item-content {
+        color: white;
+      }
+
+      .pro-icon-wrapper {
+        svg {
+          path {
+            color: #fff !important;
+          }
+        }
+      }
+    }
+    .pro-menu a {
+      color: #333 !important;
+    }
+    &:hover {
+      opacity: 1 !important;
+
+      .pro-inner-list-item {
+        background: white !important;
+        .pro-item-content {
+          a {
+            color: #333 !important;
+          }
+        }
+      }
+    }
+  }
+
   .pro-sidebar-content {
     .pro-menu {
       padding: 0;

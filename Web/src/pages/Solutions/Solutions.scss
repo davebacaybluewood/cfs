@@ -59,6 +59,40 @@
   .solutions {
     .solutions-item {
       margin-bottom: 3rem;
+      .description-items {
+        margin-top: 1rem;
+        .description-item {
+          box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+          padding: 1rem;
+          transition: 0.5s;
+
+          h2 {
+            font-weight: 900;
+            margin-top: 1rem;
+            margin-bottom: 0.3rem;
+            font-size: 1.6rem;
+          }
+          p {
+            font-size: 1.3rem;
+            font-weight: 300;
+          }
+
+          a {
+            text-transform: uppercase;
+            border-bottom: 1px dotted rgb(15, 15, 102);
+            text-decoration: none;
+            color: rgb(15, 15, 102);
+          }
+
+          &:hover {
+            box-shadow: none;
+            cursor: pointer;
+          }
+        }
+        img {
+          width: 100%;
+        }
+      }
       .solution-header {
         margin-bottom: 2rem;
         h2 {

@@ -1,15 +1,22 @@
+import { Grid } from "@mui/material";
+import paths from "constants/routes";
 import React from "react";
 import {
   FaMoneyBillWave,
   FaPrayingHands,
   FaHandsHelping,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 type SolutionTypes = {
   title: string;
   type: "life-insurance" | "annuity";
   description: string | JSX.Element;
 };
+
+const videoId = "639ce557061e6ed3a75acf64";
+const agentId = "639ce557061e6ed3a75acf64";
+
 const solutionData: SolutionTypes[] = [
   {
     title: "Whole Life",
@@ -31,6 +38,50 @@ const solutionData: SolutionTypes[] = [
           that can be used to pay for things like retirement or medical
           expenditures.
         </p>
+        <div className="description-items">
+          <Grid container spacing={2}>
+            <Grid item sm={6} md={6} lg={6}>
+              <div className="description-item">
+                <img
+                  src="https://res.cloudinary.com/dfm2vczpy/image/upload/v1674172213/other-assets/logo2_nkptbs.svg"
+                  alt="solution-logo"
+                />
+                <h2>The Debt Action Plan Program Overview</h2>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <Link
+                  to={paths.webinarForm
+                    .replace(":videoId", videoId)
+                    .replace(":agentId", agentId)}
+                >
+                  Learn More
+                </Link>
+              </div>
+            </Grid>
+            <Grid item sm={6} md={6} lg={6}>
+              <div className="description-item">
+                <img
+                  src="https://res.cloudinary.com/dfm2vczpy/image/upload/v1674172213/other-assets/logo2_nkptbs.svg"
+                  alt="solution-logo"
+                />
+                <h2>The Debt Action Plan Program Overview</h2>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <Link
+                  to={paths.webinarForm
+                    .replace(":videoId", videoId)
+                    .replace(":agentId", agentId)}
+                >
+                  Learn More
+                </Link>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
       </React.Fragment>
     ),
     type: "life-insurance",

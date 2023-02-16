@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <HistoryRouter history={createBrowserHistory({ window })}>
+      <HistoryRouter history={createBrowserHistory({ window }) as any}>
         <Routes>
           {REACT_ROUTES.map((ROUTE, index) => (
             <React.Fragment key={index}>
