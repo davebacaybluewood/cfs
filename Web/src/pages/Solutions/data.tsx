@@ -38,7 +38,7 @@ const solutionData: SolutionTypes[] = [
           that can be used to pay for things like retirement or medical
           expenditures.
         </p>
-        <div className="description-items">
+        {/* <div className="description-items">
           <Grid container spacing={2}>
             <Grid item sm={6} md={6} lg={6}>
               <div className="description-item">
@@ -81,7 +81,7 @@ const solutionData: SolutionTypes[] = [
               </div>
             </Grid>
           </Grid>
-        </div>
+        </div> */}
       </React.Fragment>
     ),
     type: "life-insurance",
