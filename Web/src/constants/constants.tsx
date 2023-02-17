@@ -172,9 +172,9 @@ export const BLANK_VALUE: string = "—";
 
 export const SOCIAL_LINKS = {
   TWITTER: "https://twitter.com/CFS_Platform",
-  INSTAGRAM: "https://www.instagram.com/cfs_platform/",
-  LINKEDIN:
-    "https://www.linkedin.com/in/comfort-financial-solutions-92708b258/",
+  INSTAGRAM: "https://www.instagram.com/gocfspro",
+  LINKEDIN: "https://www.linkedin.com/company/gocfspro",
+  FACEBOOK: "https://www.facebook.com/gocfspro",
 };
 
 export const AGENT_SPECIALTIES = [

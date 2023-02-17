@@ -54,6 +54,13 @@ const Inquiries = () => {
               </div>
             </a>
           </li>
+          <li>
+            <a href={SOCIAL_LINKS.FACEBOOK} target="_blank">
+              <div className="top-nav-icon">
+                <FaFacebookF />
+              </div>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
