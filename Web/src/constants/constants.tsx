@@ -171,7 +171,7 @@ export const MAIN_CALENDLY_EVENT_LINK =
 export const BLANK_VALUE: string = "—";
 
 export const SOCIAL_LINKS = {
-  TWITTER: "https://twitter.com/CFS_Platform",
+  TWITTER: "https://twitter.com/goCFSpro",
   INSTAGRAM: "https://www.instagram.com/gocfspro",
   LINKEDIN: "https://www.linkedin.com/company/gocfspro",
   FACEBOOK: "https://www.facebook.com/gocfspro",
