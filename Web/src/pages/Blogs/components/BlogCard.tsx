@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import paths from "constants/routes";
 import Chip, { ChipTypes } from "./Chip/Chip";
 import { formatISODateToDate } from "helpers/dateFormatter";
+import "./BlogCard.scss";
 
 interface IBlogCard {
   id: string;

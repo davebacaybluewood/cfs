@@ -6,6 +6,9 @@ const testimonialsSchema = mongoose.Schema(
     name: { type: String, required: true },
     title: { type: String, required: true },
     comment: { type: String, required: true },
+    emailAddress: { type: String, required: true },
+    testimonialGuid: { type: String, required: true },
+    isDisplayed: { type: Boolean, default: false },
   },
   {
     timestamps: true,
@@ -17,6 +20,11 @@ const agentSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
+    },
+    userGuid: {
+      type: String,
+      required: true,
+      unique: true,
     },
     avatar: {
       type: String,
@@ -57,6 +65,10 @@ const agentSchema = mongoose.Schema(
     facebook: {
       type: String,
     },
+    password: {
+      type: String,
+      require: true,
+    },
     testimonials: [testimonialsSchema],
     languages: [String],
     role: {
@@ -64,15 +76,22 @@ const agentSchema = mongoose.Schema(
       required: true,
     },
     status: {
-      type: Boolean,
-      default: false,
+      type: String,
+      enum: ["ACTIVATED", "DECLINED", "PENDING", "DEACTIVATED"],
     },
     telNumber: {
       type: String,
     },
-    password: {
-      type: String,
+    webinars: {
+      type: [String],
+    },
+    specialties: {
+      type: [String],
       required: true,
+    },
+    isDeclined: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -80,17 +99,17 @@ const agentSchema = mongoose.Schema(
   }
 );
 
-agentSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
+// agentSchema.methods.matchPassword = async function (enteredPassword) {
+//   return await bcrypt.compare(enteredPassword, this.password);
+// };
 
-agentSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
-  }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
+// agentSchema.pre("save", async function (next) {
+//   if (!this.isModified("password")) {
+//     next();
+//   }
+//   const salt = await bcrypt.genSalt(10);
+//   this.password = await bcrypt.hash(this.password, salt);
+// });
 
 const Agent = mongoose.model("Agent", agentSchema);
 

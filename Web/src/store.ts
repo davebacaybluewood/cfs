@@ -18,6 +18,11 @@ import {
 } from "redux/reducers/userReducers";
 import { contactListReducer } from "redux/reducers/contactReducers";
 import { inquiryListReducer } from "redux/reducers/inquiryReducers";
+import {
+  agentListReducer,
+  agentListSingleReducer,
+  createAgentReducer,
+} from "redux/reducers/agentReducers";
 
 const reducer = combineReducers({
   eventList: eventListReducer,
@@ -35,7 +40,12 @@ const reducer = combineReducers({
   eventSingleDetails: eventListSingleReducer,
   userAdminList: userListReducer,
   userAdminRegister: userRegisterReducer,
+  agentList: agentListReducer,
+  agentSingle: agentListSingleReducer,
+  agentAdd: createAgentReducer,
 });
+
+export type RootState = ReturnType<typeof reducer>;
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo") as string)

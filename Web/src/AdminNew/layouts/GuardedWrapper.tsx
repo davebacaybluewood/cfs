@@ -1,8 +1,10 @@
+import adminPathsNew from "AdminNew/constants/routes";
+import UserProvider from "AdminNew/context/UserProvider";
 import classNames from "classnames";
-import paths from "constants/routes";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import AdminSidebar from "./Sidebar/Sidebar";
 
 type GuardedWrapperProps = {
@@ -14,10 +16,11 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
   const navigate = useNavigate();
   const userLogin = useSelector((state: any) => state.userLogin);
   const { userInfo } = userLogin;
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     if (!userInfo) {
-      navigate(paths.login);
+      navigate(adminPathsNew.login);
     }
   }, [userInfo]);
 
@@ -35,15 +38,18 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
   });
 
   return (
-    <div className={adminClassnames}>
-      <AdminSidebar
-        collapsed={collapsed}
-        toggled={toggled}
-        handleToggleSidebar={handleToggleSidebar}
-        handleCollapsedChange={handleCollapsedChange}
-      />
-      <main>{props.children}</main>
-    </div>
+    <UserProvider>
+      <div className={adminClassnames}>
+        <AdminSidebar
+          collapsed={collapsed}
+          toggled={toggled}
+          handleToggleSidebar={handleToggleSidebar}
+          handleCollapsedChange={handleCollapsedChange}
+        />
+        <main>{props.children}</main>
+      </div>
+      <ToastContainer />
+    </UserProvider>
   );
 };
 
