@@ -1,7 +1,13 @@
 .chip {
   span {
-    background-color: lightgray;
+    background: linear-gradient(
+      90deg,
+      #0057b7 0%,
+      #021025 30%,
+      #021025
+    ) !important;
     padding: 0.5rem;
     border-radius: 5px;
+    color: white;
   }
 }

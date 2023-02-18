@@ -188,7 +188,7 @@ export const SOCIAL_LINKS = {
     "https://www.linkedin.com/in/comfort-financial-solutions-92708b258/",
 };
 
-export const MAX_CARD_TEXT: number = 255;
+export const MAX_CARD_TEXT: number = 150;
 export const AGENT_SPECIALTIES = [
   "Wealth Builder",
   "Financial Freedom",

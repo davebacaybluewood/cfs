@@ -44,15 +44,15 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
           <p className="date">
             {formatISODateToDate(props.dateCreated.toString())}
           </p>
+          <div className="author-date-views-content">
+            <p className="views">
+              <span>
+                <VisibilityIcon />
+              </span>
+              {props.numberOfVisits}
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="author-date-views-content">
-        <p className="views">
-          <span>
-            <VisibilityIcon />
-          </span>
-          {props.numberOfVisits}
-        </p>
       </div>
     </div>
   );

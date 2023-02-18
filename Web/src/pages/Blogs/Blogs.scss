@@ -1,16 +1,56 @@
 .blogs {
   .banner {
-    height: 30vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 10rem 0;
+    h5,
     h1 {
       color: white;
     }
+    .divider {
+      background-color: white;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 6, 17, 0.75);
+      z-index: -1;
+    }
   }
   .blog-grid {
-    &:nth-child(odd) {
-      transform: scale(0.9);
+    .blogs-container {
+      .centered-content {
+        h2 {
+          margin: 1rem;
+          font-size: 2rem;
+        }
+        .tags-container {
+          padding-bottom: 1rem;
+          .chip {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            span {
+              padding: 0.5rem;
+              border-radius: 5rem;
+            }
+          }
+        }
+        .contents {
+          border-bottom: none;
+          .description {
+            font-size: 1.3rem;
+            .read-more {
+              font-size: 1.5rem;
+            }
+          }
+          .author,
+          .date {
+            color: gray;
+          }
+        }
+      }
     }
   }
 }

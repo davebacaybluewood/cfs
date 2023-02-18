@@ -1,7 +1,7 @@
 export const blogs = [
   {
     id: "536935ae-9ed3-4373-8c99-49aff5e5014b",
-    title: "Title",
+    title: "Comfort Blog: First Blog",
     tags: [
       {
         description: "good",
@@ -20,7 +20,7 @@ export const blogs = [
   },
   {
     id: "9b5ceaba-a66f-43e7-b123-3e5eefd0b81f",
-    title: "Title",
+    title: "Comfort Blog: Second Blog",
     tags: [
       {
         description: "good",
@@ -39,7 +39,7 @@ export const blogs = [
   },
   {
     id: "31802826-2248-4d44-ac87-d46766986bce",
-    title: "Title",
+    title: "Comfor Blog: Third Blog",
     tags: [
       {
         description: "good",
@@ -58,7 +58,7 @@ export const blogs = [
   },
   {
     id: "1f5dbc34-8902-4d86-b60b-c2f695a05d9b",
-    title: "Title",
+    title: "Comfort Blog: Fourth Blog",
     tags: [
       {
         description: "good",
@@ -77,7 +77,7 @@ export const blogs = [
   },
   {
     id: "5bfef272-0f99-4f28-bebf-dc5b78350bd5",
-    title: "Title",
+    title: "Comfort Blog: Fifth Blog",
     tags: [
       {
         description: "good",
@@ -96,7 +96,7 @@ export const blogs = [
   },
   {
     id: "791be592-c9aa-4564-8808-a972cbf42b72",
-    title: "Title",
+    title: "Comfort Blog: Sixth Blog",
     tags: [
       {
         description: "good",
