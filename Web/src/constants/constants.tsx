@@ -16,6 +16,8 @@ import adminRoutes from "pages/Admin/routes";
 import Medias from "pages/Medias/Medias";
 import MediasLanding from "pages/Medias/MediasLanding";
 import { adminRoutesNew } from "AdminNew/constants/constants";
+import Blogs from "pages/Blogs/Blogs";
+import SingleBlog from "pages/Blogs/landing/SingleBlog";
 import Agents from "pages/Agents/Agents";
 import AgentVideos from "pages/Agents/components/AgentVideos";
 import AgentWebinar from "pages/Agents/AgentWebinar";
@@ -76,9 +78,18 @@ export const REACT_ROUTES: ReactRoutesType[] = [
     PATH: paths.events,
     ELEMENT: <PageWrapper component={<Events />} />,
   },
+
   {
     PATH: paths.event_invites,
     ELEMENT: <PageWrapper component={<EventInvites />} />,
+  },
+  {
+    PATH: paths.blogs,
+    ELEMENT: <PageWrapper component={<Blogs />} />,
+  },
+  {
+    PATH: paths.blogsSingle,
+    ELEMENT: <PageWrapper component={<SingleBlog />} />,
   },
   {
     PATH: paths.media,
@@ -177,6 +188,7 @@ export const SOCIAL_LINKS = {
     "https://www.linkedin.com/in/comfort-financial-solutions-92708b258/",
 };
 
+export const MAX_CARD_TEXT: number = 150;
 export const AGENT_SPECIALTIES = [
   "Wealth Builder",
   "Financial Freedom",

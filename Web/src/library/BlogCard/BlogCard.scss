@@ -1,0 +1,90 @@
+.blogs-container {
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  padding: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+  &:hover {
+    transition: all 0.5s ease;
+    box-shadow: 1px 10px 5px rgba(0, 0, 0, 0.15),
+      1px 10px 5px rgba(0, 0, 0, 0.15);
+  }
+  &:not(hover) {
+    transition: all 0.5s ease-out;
+  }
+  .centered-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h2 {
+      text-align: center;
+      width: 100%;
+      font-size: 3rem;
+      font-weight: 900;
+    }
+    .tags-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid lightgray;
+      .chip {
+        margin-bottom: 1rem;
+      }
+    }
+    .contents {
+      padding: 1rem;
+      border-radius: 5px;
+      border-bottom: 1px solid lightgray;
+      .description {
+        font-size: 1.5rem;
+        padding: 0rem 0;
+        border: 1px 0 1px 0 solid gray;
+        .read-more {
+          text-decoration: underline;
+          font-size: 1.5rem;
+          font-weight: 900;
+          cursor: pointer;
+          &:hover {
+            color: rgb(219, 90, 90);
+            transition: all 0.5s ease;
+          }
+          &:not(hover) {
+            transition: all 0.5s ease;
+          }
+        }
+      }
+      .author,
+      .date {
+        font-size: 1.3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+      .date {
+        margin-bottom: 1rem;
+      }
+      .views {
+        gap: 0.5rem;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        text-align: center;
+        span {
+          position: relative;
+          top: 0.2rem;
+        }
+      }
+    }
+
+    img {
+      width: 100%;
+      border-radius: 5px;
+    }
+  }
+}
