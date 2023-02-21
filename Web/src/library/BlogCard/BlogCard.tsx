@@ -30,16 +30,10 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
         <h2>{props.title}</h2>
         <Chip tags={props.tags}></Chip>
         <div className="contents">
-          {props.content.length > MAX_CARD_TEXT ? (
-            <p className="description">
-              {props.content.substring(0, MAX_CARD_TEXT)}...
-              <p className="read-more" onClick={() => blogHandler(props.id)}>
-                Read More
-              </p>
-            </p>
-          ) : (
-            <p className="description">{props.content}</p>
-          )}
+          <p className="description">{props.content.replace(/<[^>]*>/g, "")}</p>
+          <p className="read-more" onClick={() => blogHandler(props.id)}>
+            Read More
+          </p>
           <p className="author">{props.author}</p>
           <p className="date">
             {formatISODateToDate(props.dateCreated.toString())}

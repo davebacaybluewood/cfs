@@ -14,47 +14,90 @@
       margin: 1rem;
       width: 100%;
       height: 100%;
-      border-radius: 5px;
+      border-radius: 2rem;
     }
   }
-  .blog-tags-container {
+  .blog-title {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
-    gap: 1rem;
-    p {
-      font-size: 1.5rem;
-      color: gray;
+    border-bottom: 1px solid #eee;
+    width: 80%;
+    position: relative;
+    left: 10%;
+    margin: 1rem;
+    h1 {
+      font-size: 3rem;
     }
-    .tags-container {
+    .blog-tags-container {
       display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
       gap: 1rem;
-      .chip {
+      width: 100%;
+      p {
+        font-size: 1.5rem;
+        color: gray;
+      }
+      .tags-container {
+        display: flex;
+        gap: 1rem;
+        .chip {
+        }
+      }
+    }
+    .blog-author-date-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 2rem;
+      margin: 1rem;
+      p {
+        font-size: 1.5rem;
+        color: gray;
       }
     }
   }
-  .blog-author-date-container {
-    position: relative;
-    left: 15%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    border-bottom: 1px solid gray;
-    width: 70%;
-    p {
-      font-size: 1.5rem;
-      color: gray;
-    }
-  }
+
   .blog-content-container {
     position: relative;
     left: 15%;
     width: 70%;
     padding: 1rem;
     p {
+      word-spacing: 0.3rem;
+      line-height: 20px;
       font-size: 1.5rem;
+    }
+    .blog-share-icons {
+      margin: 1rem;
+      .share-icon {
+        border: none;
+        font-size: 2.5rem;
+        &:hover {
+          background: none;
+          path {
+            color: #333;
+          }
+        }
+      }
+      svg {
+        border: 1px solid gray;
+        padding: 0.5rem;
+        border-radius: 1rem;
+        margin: 1rem;
+        width: 5rem;
+        font-size: 3rem;
+        cursor: pointer;
+        &:hover {
+          background: linear-gradient(90deg, #0057b7 0%, #021025 30%, #021025);
+          path {
+            color: white;
+          }
+        }
+      }
     }
   }
 }
