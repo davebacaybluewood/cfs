@@ -41,47 +41,50 @@
       border-radius: 5px;
       border-bottom: 1px solid lightgray;
       .description {
-        font-size: 1.5rem;
+        overflow: hidden;
+        font-size: 1.3rem;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3; /* number of lines to show */
+        line-height: 20px; /* fallback */
+        max-height: 1 * 2; /* fallback */
         padding: 0rem 0;
         border: 1px 0 1px 0 solid gray;
-        .read-more {
-          text-decoration: underline;
-          font-size: 1.5rem;
-          font-weight: 900;
-          cursor: pointer;
-          &:hover {
-            color: rgb(219, 90, 90);
-            transition: all 0.5s ease;
-          }
-          &:not(hover) {
-            transition: all 0.5s ease;
-          }
-        }
+        margin: 1rem;
       }
       .author,
       .date {
         font-size: 1.3rem;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: flex-end;
         align-items: flex-end;
+        gap: 1rem;
+        span {
+          svg {
+            font-size: 2rem;
+          }
+        }
       }
       .date {
         margin-bottom: 1rem;
       }
-      .views {
-        gap: 0.5rem;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        text-align: center;
-        span {
-          position: relative;
-          top: 0.2rem;
-        }
-      }
     }
-
+    .read-more {
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      text-transform: uppercase;
+      color: white;
+      border-radius: 5px;
+      border: 1px solid #eee;
+      cursor: pointer;
+      background: linear-gradient(90deg, #0057b7 0%, #021025 30%, #021025);
+      width: 100%;
+    }
     img {
       width: 100%;
       border-radius: 5px;

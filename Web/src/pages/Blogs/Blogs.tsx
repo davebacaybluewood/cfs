@@ -19,14 +19,14 @@ const Blogs: React.FC = () => {
       <Container>
         <Grid
           container
-          spacing={6}
-          paddingLeft={12}
-          paddingRight={12}
+          spacing={{ xs: 2, sm: 2, md: 6, lg: 6 }}
+          paddingLeft={{ xs: 0, sm: 0, md: 12, lg: 12 }}
+          paddingRight={{ xs: 0, sm: 0, md: 12, lg: 12 }}
           marginBottom={3}
         >
           {blogs.map((blog) => {
             return (
-              <Grid item xs={6} sm={6} md={4} lg={4} className="blog-grid">
+              <Grid item xs={12} sm={6} md={4} lg={4} className="blog-grid">
                 <BlogCard {...blog} />
               </Grid>
             );
