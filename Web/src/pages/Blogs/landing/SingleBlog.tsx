@@ -11,16 +11,12 @@ const SingleBlog: React.FC = () => {
   const params = useParams();
   const blogId = params.id;
   const blogItem: any = blogs.find((b) => b.id === blogId);
-  const socialIcon = blogItem.socialLinks.map((social: any) => {
-    console.log(social);
+  const socialIcon = blogItem.socialLinks.map((social: string) => {
     return social;
   });
-  // const shareButtons = blogItem.socialLinks.map((social:any) => {
-  //   if(social)
-  // })
+  //copy link function
   const [linkCopied, setLinkCopied] = useState(false);
   const currentLink = window.location.href;
-  //copy link function
   const copyLinkHandler = () => {
     navigator.clipboard.writeText(currentLink);
     setLinkCopied(true);
@@ -59,13 +55,12 @@ const SingleBlog: React.FC = () => {
             className="share-icon"
             onClick={copyLinkHandler}
           />
-          {linkCopied && <span>Link Copied!</span>}
-
-          {/* <FontAwesome.FaShare className="share-icon" /> */}
           {socialIcon.map((icon: any) => {
             const Icon = (FontAwesome as any)[icon.icon];
             return <Icon />;
           })}
+
+          <Box>{linkCopied && <span>Link Copied!</span>}</Box>
         </Box>
       </Box>
     </Container>

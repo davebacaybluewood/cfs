@@ -4,9 +4,11 @@ export const blogs = [
     title: "Comfort Blog: First Blog",
     tags: [
       {
+        link: "",
         description: "good",
       },
       {
+        link: "",
         description: "great",
       },
     ],
@@ -75,9 +77,11 @@ export const blogs = [
     title: "Comfort Blog: Second Blog",
     tags: [
       {
+        link: "",
         description: "good",
       },
       {
+        link: "",
         description: "great",
       },
     ],
@@ -116,9 +120,11 @@ export const blogs = [
     title: "Comfor Blog: Third Blog",
     tags: [
       {
+        link: "",
         description: "good",
       },
       {
+        link: "",
         description: "great",
       },
     ],
@@ -157,9 +163,11 @@ export const blogs = [
     title: "Comfort Blog: Fourth Blog",
     tags: [
       {
+        link: "",
         description: "good",
       },
       {
+        link: "",
         description: "great",
       },
     ],
@@ -198,9 +206,11 @@ export const blogs = [
     title: "Comfort Blog: Fifth Blog",
     tags: [
       {
+        link: "",
         description: "good",
       },
       {
+        link: "",
         description: "great",
       },
     ],
@@ -239,9 +249,11 @@ export const blogs = [
     title: "Comfort Blog: Sixth Blog",
     tags: [
       {
+        link: "",
         description: "good",
       },
       {
+        link: "",
         description: "great",
       },
     ],
