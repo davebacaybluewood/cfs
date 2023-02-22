@@ -45,3 +45,20 @@ export const formatISODateToDate = (date: string) => {
     formatAMPM(formattedDate)
   );
 };
+
+//DATE ONLY
+export const formatISODateOnly = (date: string) => {
+  const formattedDate = new Date(date);
+  let year = formattedDate.getFullYear();
+  let month = (formattedDate.getMonth() + 1).toString();
+  let dt = formattedDate.getDate().toString();
+
+  if (parseInt(dt) < 10) {
+    dt = "0" + dt;
+  }
+  if (parseInt(month) < 10) {
+    month = "0" + month;
+  }
+
+  return formatDate(new Date(year + "-" + month + "-" + dt), "fullFormat");
+};

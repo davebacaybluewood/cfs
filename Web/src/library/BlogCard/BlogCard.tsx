@@ -1,11 +1,10 @@
-import { MAX_CARD_TEXT } from "constants/constants";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import paths from "constants/routes";
 import Chip, { ChipTypes } from "pages/Blogs/components/Chip/Chip";
-import { formatISODateToDate } from "helpers/dateFormatter";
+import { formatISODateOnly } from "helpers/dateFormatter";
 import "./BlogCard.scss";
+import { FaRegCalendarAlt, FaUserEdit } from "react-icons/fa";
 
 interface IBlogCard {
   id: string;
@@ -31,22 +30,26 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
         <Chip tags={props.tags}></Chip>
         <div className="contents">
           <p className="description">{props.content.replace(/<[^>]*>/g, "")}</p>
-          <p className="read-more" onClick={() => blogHandler(props.id)}>
-            Read More
+          <p className="author">
+            {props.author}
+            <span>
+              <FaUserEdit />
+            </span>
           </p>
-          <p className="author">{props.author}</p>
           <p className="date">
-            {formatISODateToDate(props.dateCreated.toString())}
+            {formatISODateOnly(props.dateCreated.toString())}
+            <span>
+              <FaRegCalendarAlt />
+            </span>
           </p>
-          <div className="author-date-views-content">
-            <p className="views">
-              <span>
-                <VisibilityIcon />
-              </span>
-              {props.numberOfVisits}
-            </p>
-          </div>
         </div>
+        <button
+          type="button"
+          className="read-more"
+          onClick={() => blogHandler(props.id)}
+        >
+          Read More
+        </button>
       </div>
     </div>
   );

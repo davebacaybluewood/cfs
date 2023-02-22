@@ -25,29 +25,42 @@
         h2 {
           margin: 1rem;
           font-size: 2rem;
+          @media only screen and (max-width: 768px) {
+            font-size: 2.5rem;
+          }
         }
         .tags-container {
           padding-bottom: 1rem;
           .chip {
             font-size: 0.9rem;
             text-transform: uppercase;
+
             span {
               padding: 0.5rem;
-              border-radius: 5rem;
+              border-radius: 5px;
             }
           }
         }
         .contents {
           border-bottom: none;
           .description {
-            font-size: 1.3rem;
-            .read-more {
-              font-size: 1.3rem;
-            }
+            font-size: 1.5rem;
+            margin: 1rem 0;
           }
           .author,
           .date {
             color: gray;
+            @media only screen and (max-width: 768px) {
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              align-items: flex-start;
+            }
+          }
+        }
+        .read-more {
+          @media only screen and (max-width: 768px) {
+            font-size: 1.3rem;
           }
         }
       }
