@@ -83,7 +83,7 @@ const Login: React.FC = () => {
               return (
                 <div>
                   <div className="form-instructions">
-                    <h2>ADMIN FORM</h2>
+                    <h2>Portal Login</h2>
                     <p>(*) fields are required.</p>
                   </div>
 

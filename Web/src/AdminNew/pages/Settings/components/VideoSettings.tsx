@@ -64,7 +64,7 @@ const VideoSettings = () => {
               name="socmeds"
             />
           }
-          label="Display Social Medias"
+          label="Display Social Media"
         />
         <FormControlLabel
           control={

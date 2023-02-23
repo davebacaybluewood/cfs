@@ -71,9 +71,9 @@ const AgentRegistration = () => {
 
   return (
     <div className="agent-registration-wrapper">
-      <PageTitle title="Agent Registration" />
+      <PageTitle title="Personal Agent Website Registration" />
       <Banner
-        bigTitle="Agent Registration"
+        bigTitle="Personal Agent Website Registration"
         title="BE PART OF US"
         hasBorder={true}
         backgroundImage="https://demo.casethemes.net/itfirm/wp-content/uploads/2021/09/bg-pagetitle.jpg"
