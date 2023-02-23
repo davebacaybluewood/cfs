@@ -1,5 +1,4 @@
 import { AgentStatuses } from "AdminNew/pages/Agents/types";
-import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
 import getUserToken from "helpers/getUserToken";
 import React, { Dispatch, SetStateAction, useState } from "react";
@@ -11,16 +10,25 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
+  Grid,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import paths from "constants/routes";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import Spinner from "library/Spinner/Spinner";
+import FormikTextInput from "library/Formik/FormikInput";
 
 type HeaderButtonsProps = {
   status: AgentStatuses;
   id: string;
   setOpen: Dispatch<SetStateAction<any>>;
   setDialogStatus: Dispatch<SetStateAction<any>>;
+  setFormDialogStatus: Dispatch<SetStateAction<any>>;
+};
+
+type CalendlyInputTypes = {
+  personalWebPage: string;
 };
 
 const ActionButtons: React.FC<HeaderButtonsProps> = (props) => {
@@ -36,6 +44,11 @@ const ActionButtons: React.FC<HeaderButtonsProps> = (props) => {
     props.setDialogStatus(AgentStatuses.DEACTIVATED);
     props.setOpen(true);
   };
+
+  const activateWithFormHandler = () => {
+    props.setFormDialogStatus(true);
+  };
+
   if (props.status === AgentStatuses.ACTIVATED) {
     return <button onClick={deactivateHandler}>Deactivate This Agent</button>;
   } else if (props.status === AgentStatuses.DEACTIVATED) {
@@ -46,25 +59,31 @@ const ActionButtons: React.FC<HeaderButtonsProps> = (props) => {
     return (
       <React.Fragment>
         <button onClick={declineHandler}>Decline This Agent</button>
-        <button onClick={activateHandler}>Activate This Agent</button>
+        <button onClick={activateWithFormHandler}>Activate This Agent</button>
       </React.Fragment>
     );
   }
   return <React.Fragment />;
 };
 const HeaderButtons: React.FC<
-  Omit<HeaderButtonsProps, "setOpen" | "setDialogStatus">
+  Omit<
+    HeaderButtonsProps,
+    "setOpen" | "setDialogStatus" | "setFormDialogStatus"
+  >
 > = (props) => {
   const [agentStatus, setAgentStatus] = useState(props.status);
   const [dialogStatus, setDialogStatus] = useState<AgentStatuses>(
     AgentStatuses.ACTIVATED
   );
+  const [openFormDialog, setOpenFormDialog] = useState(false);
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
+    setOpenFormDialog(false);
   };
+  const [loading, setLoading] = useState(false);
 
   const statusHandler = (agentId: string) => {
     const status =
@@ -76,6 +95,7 @@ const HeaderButtons: React.FC<
         ? AgentStatuses.DECLINED
         : AgentStatuses.ACTIVATED;
 
+    setLoading(true);
     fetch(ENDPOINTS.AGENT_UPDATE_STATUS.replace(":agentId", agentId), {
       method: "PUT",
       headers: {
@@ -109,6 +129,7 @@ const HeaderButtons: React.FC<
       })
       .then((result) => {
         console.log(result);
+        setLoading(false);
       });
   };
 
@@ -121,17 +142,29 @@ const HeaderButtons: React.FC<
       ? "Decline"
       : "";
 
+  const initialValues: CalendlyInputTypes = {
+    personalWebPage: "",
+  };
+
+  const validationSchema = Yup.object({
+    personalWebPage: Yup.string().required(
+      "Personal Calendar field is required."
+    ),
+  });
+
   return (
     <div className="profile-actions">
+      <Spinner isVisible={loading} />
       <ActionButtons
         {...props}
         setOpen={setOpen}
         setDialogStatus={setDialogStatus}
+        setFormDialogStatus={setOpenFormDialog}
       />
       <ToastContainer />
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-          <DialogContentText fontSize={18}>
+          <DialogContentText fontSize={15}>
             Are you sure you want to {dialogMessageStatus.toLowerCase()} the
             status of this agent?
           </DialogContentText>
@@ -148,6 +181,79 @@ const HeaderButtons: React.FC<
             Yes, I want to {dialogMessageStatus} this Agent
           </Button>
         </DialogActions>
+      </Dialog>
+      <Dialog open={openFormDialog} onClose={handleClose}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={async (values, actions) => {
+            setLoading(true);
+            fetch(ENDPOINTS.AGENT_UPDATE_STATUS.replace(":agentId", props.id), {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + getUserToken(),
+              },
+              body: JSON.stringify({
+                status: AgentStatuses.ACTIVATED,
+                calendlyLink: values.personalWebPage,
+              }),
+            })
+              .then((response) => {
+                toast.info(`Agent Activated`, {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
+                navigate(paths.agents);
+              })
+              .then((result) => {
+                console.log(result);
+                setLoading(false);
+              });
+          }}
+        >
+          {({ values, handleSubmit }) => {
+            return (
+              <React.Fragment>
+                <DialogContent className="form-dialog">
+                  <DialogContentText fontSize={18}>
+                    By Approving this agent, you need to add additional details.
+                  </DialogContentText>
+                  <Grid container spacing={1} marginTop={1}>
+                    <Grid item xs={12} lg={12}>
+                      <FormikTextInput
+                        name="personalWebPage"
+                        label="Personal Calendar *"
+                        value={values.personalWebPage}
+                        className="text-input"
+                        variant="standard"
+                        error={!!values.personalWebPage}
+                      />
+                    </Grid>
+                  </Grid>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} style={{ fontSize: "13px" }}>
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => handleSubmit()}
+                    autoFocus
+                    style={{ fontSize: "13px" }}
+                  >
+                    Activate This Agent
+                  </Button>
+                </DialogActions>
+              </React.Fragment>
+            );
+          }}
+        </Formik>
       </Dialog>
     </div>
   );

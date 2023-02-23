@@ -104,7 +104,7 @@ const Agents: React.FC<AgentsProps> = (props) => {
             />
             <ComponentValidator
               showNull={
-                true /** This will change after webinar feature completed */
+                false /** This will change after webinar feature completed */
               }
             >
               <AgentVideos />
@@ -112,7 +112,7 @@ const Agents: React.FC<AgentsProps> = (props) => {
           </FilteredContainer>
           <ComponentValidator
             showNull={
-              true /** This will change after webinar feature completed */
+              false /** This will change after webinar feature completed */
             }
           >
             <Wrapper

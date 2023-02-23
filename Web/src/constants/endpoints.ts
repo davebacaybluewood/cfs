@@ -22,6 +22,8 @@ const ENDPOINTS = {
   AGENT_COUNTS: "/api/agents/agent-counts/all",
   AGENT_TESTIMONIALS: "/api/agents/:agentId/testimonials",
   AGENT_TESTIMONIALS_STATUS: "/api/agents/:agentId/testimonials/update",
+  WEBINARS: "/api/webinars",
+  WEBINAR_SINGLE: "/api/webinars/:webinarId",
 };
 
 export default ENDPOINTS;

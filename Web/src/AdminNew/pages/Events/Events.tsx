@@ -14,7 +14,7 @@ import Form from "./components/Form";
 
 const crumbs: CrumbTypes[] = [
   {
-    title: "Comfort Life Finance Admin",
+    title: "Comfort Financial Solutions",
     url: paths.dashboard,
     isActive: false,
   },

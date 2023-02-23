@@ -20,8 +20,7 @@ import {
   FaQuestionCircle,
   FaSplotch,
   FaThumbsUp,
-  FaUserPlus,
-  FaUserTimes,
+  FaFileAlt,
 } from "react-icons/fa";
 
 export interface ISidebarLinks {
@@ -213,6 +212,32 @@ const useSidebarLinks = (role: string) => {
         currentPage === adminPathsNew.newAdminEventInvites.split("/")[2],
       icon: <FaThumbsUp />,
       role: [ROLES.ROLE_MASTER_ADMIN],
+    },
+    {
+      linkText: "File Maintenance",
+      isActive:
+        currentPage === adminPathsNew.webinar.split("/")[2] ||
+        currentPage === adminPathsNew.webinarSingle.split("/")[2],
+      icon: <FaFileAlt />,
+      role: [ROLES.ROLE_MASTER_ADMIN],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "Webinars",
+          link: paths.webinar,
+          isActive: currentPage === adminPathsNew.webinar.split("/")[2],
+        },
+        // {
+        //   linkText: "Company Information",
+        //   link: paths.homeMetatags,
+        //   isActive: currentPage === adminPathsNew.homeMetatags.split("/")[2],
+        // },
+        // {
+        //   linkText: "Home Meta Tags",
+        //   link: paths.homeMetatags,
+        //   isActive: currentPage === adminPathsNew.homeMetatags.split("/")[2],
+        // },
+      ],
     },
   ];
 

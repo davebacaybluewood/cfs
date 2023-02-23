@@ -91,7 +91,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
             status={profile.status}
           />
         </Grid>
-        <Grid item sm={12} md={4} lg={4}>
+        <Grid item sm={12} md={12} lg={4}>
           <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
             <AboutProfile
               languages={profile.languages}
