@@ -8,6 +8,7 @@ import inquiryRoutes from "./routes/inquiryRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import mediaRoutes from "./routes/mediaRoutes.js";
 import agentRoutes from "./routes/agentRoutes.js";
+import webinarRoutes from "./routes/webinarRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
 import { ApolloServer, gql } from "apollo-server-express";
@@ -35,6 +36,7 @@ app.use("/api/inquiries/", inquiryRoutes);
 app.use("/api/contacts/", contactRoutes);
 app.use("/api/medias/", mediaRoutes);
 app.use("/api/agents/", agentRoutes);
+app.use("/api/webinars/", webinarRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/Web/build")));

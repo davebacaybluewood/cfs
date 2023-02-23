@@ -124,7 +124,7 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
 
   const crumbs = [
     {
-      title: "Comfort Life Finance Admin",
+      title: "Comfort Financial Solutions",
       url: "",
     },
     {

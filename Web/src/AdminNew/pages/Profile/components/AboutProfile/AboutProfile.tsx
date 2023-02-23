@@ -75,8 +75,8 @@ const AboutProfile: React.FC<AboutProfileProps> = (props) => {
               Languages:{" "}
             </span>
             <span className="list-value">
-              {props.languages?.map((language) => (
-                <Badge content={language} variant="secondary" />
+              {props.languages?.map((language, index) => (
+                <Badge content={language} variant="secondary" key={index} />
               ))}
             </span>
           </li>
@@ -86,8 +86,8 @@ const AboutProfile: React.FC<AboutProfileProps> = (props) => {
               Specialties:{" "}
             </span>
             <span className="list-value">
-              {props.specialties?.map((specialty) => (
-                <Badge content={specialty} variant="secondary" />
+              {props.specialties?.map((specialty, index) => (
+                <Badge content={specialty} variant="secondary" key={index} />
               ))}
             </span>
           </li>

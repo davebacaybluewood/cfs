@@ -209,10 +209,15 @@ const updateAgentStatus = expressAsync(async (req, res) => {
   const agent = await Agents.findById(req.params.id);
   const statusDesired = req.body.status;
   const isPending = statusDesired === AGENT_STATUSES.PENDING ? true : false;
+  const calendlyLink = req.body.calendlyLink;
 
   if (agent) {
     agent.status = req.body.status;
     agent.isDeclined = isPending;
+
+    if (calendlyLink) {
+      agent.calendlyLink = calendlyLink;
+    }
 
     const user = new User({
       userGuid: agent.userGuid,

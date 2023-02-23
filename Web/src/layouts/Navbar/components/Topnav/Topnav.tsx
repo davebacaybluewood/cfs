@@ -8,6 +8,7 @@ import {
   FaTwitter,
   FaLinkedinIn,
   FaInstagram,
+  FaFacebook,
 } from "react-icons/fa";
 import { SOCIAL_LINKS } from "constants/constants";
 
@@ -62,6 +63,13 @@ const Topnav = () => {
             <div className="top-nav-icon">
               <a href={SOCIAL_LINKS.INSTAGRAM} target="_blank">
                 <FaInstagram />
+              </a>
+            </div>
+          </li>
+          <li>
+            <div className="top-nav-icon">
+              <a href={SOCIAL_LINKS.FACEBOOK} target="_blank">
+                <FaFacebook />
               </a>
             </div>
           </li>

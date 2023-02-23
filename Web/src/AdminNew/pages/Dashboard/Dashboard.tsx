@@ -32,7 +32,7 @@ import BoxTable from "./components/BoxTable/BoxTable";
 
 const crumbs: CrumbTypes[] = [
   {
-    title: "Comfort Life Finance Admin",
+    title: "Comfort Financial Solutions",
     url: paths.dashboard,
     isActive: false,
   },
