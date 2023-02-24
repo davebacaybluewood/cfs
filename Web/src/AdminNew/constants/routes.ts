@@ -11,6 +11,8 @@ const adminPathsNew = {
   contacts: adminCfsRoute + "contacts",
   settings: adminCfsRoute + "settings",
   notifications: adminCfsRoute + "notifications",
+  adminBlogs: adminCfsRoute + "blogs",
+  adminViewBlogs: adminCfsRoute + "blogs/view/:id",
   faqs: adminCfsRoute + "faqs",
   raiseSupport: adminCfsRoute + "raise-support",
   contactAdmin: adminCfsRoute + "contact-admin",

@@ -1,0 +1,91 @@
+.admin-blog-grid {
+  .blogs-container {
+    .centered-content {
+      .contents {
+        padding: 0;
+        margin: 1rem;
+        width: 100%;
+        .author,
+        .date {
+          text-transform: uppercase;
+          font-size: 1rem;
+          flex-direction: row-reverse;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .author {
+          width: 100%;
+          font-size: 1rem;
+          span {
+            svg {
+              font-size: 1rem;
+            }
+          }
+        }
+        .date {
+          width: 100%;
+          font-size: 1rem;
+          span {
+            svg {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 300;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .tags-container {
+        .chip {
+          gap: 0;
+          text-transform: uppercase;
+          margin-bottom: 1rem;
+          span {
+            padding: 3px 5px;
+            font-size: 0.7rem;
+          }
+        }
+      }
+      .read-more {
+        font-size: 1rem;
+        background: none;
+        border: none;
+        color: black;
+      }
+
+      .statistics-blog {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        text-transform: uppercase;
+        color: black;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        font-size: 1rem;
+        background: none;
+      }
+      .view-blog {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        text-transform: uppercase;
+        color: white;
+        border-radius: 5px;
+        border: 1px solid #eee;
+        cursor: pointer;
+        background: linear-gradient(90deg, #0057b7 0%, #021025 30%, #021025);
+        width: 100%;
+        font-size: 1rem;
+      }
+    }
+  }
+}
