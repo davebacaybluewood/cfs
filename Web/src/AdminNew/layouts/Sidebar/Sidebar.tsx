@@ -78,12 +78,18 @@ const Sidebar: React.FC<SidebarProps> = ({
                   icon={link.icon}
                   className={submenuClassnames}
                   open={true}
+                  key={index}
                 >
-                  {link.subLinks?.map((sm) => (
+                  {link.subLinks?.map((sm, sLIndex) => (
                     <MenuItem
                       icon={sm.icon}
-                      suffix={<span className="badge">{sm.badge}</span>}
+                      suffix={
+                        sm.badge ? (
+                          <span className="badge">{sm.badge}</span>
+                        ) : null
+                      }
                       active={sm.isActive}
+                      key={sLIndex}
                     >
                       <NavLink to={sm.link ?? ""}>{sm.linkText}</NavLink>
                     </MenuItem>

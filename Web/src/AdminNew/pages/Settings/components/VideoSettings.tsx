@@ -3,6 +3,12 @@ import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import useFetchWebinars, {
+  WebinarValuesType,
+} from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchWebinars";
+import useFetchAgent from "AdminNew/pages/Agents/hooks/useFetchAgent";
+import { useContext } from "react";
+import { UserContext } from "AdminNew/context/UserProvider";
 
 const VideoSettings = () => {
   const [state, setState] = React.useState({
@@ -21,6 +27,10 @@ const VideoSettings = () => {
       [event.target.name]: event.target.checked,
     });
   };
+  const userCtx = useContext(UserContext) as any;
+  const { webinars } = useFetchWebinars();
+  const { agent } = useFetchAgent(userCtx.userGuid) as any;
+  const agentWebinars = agent?.webinars;
 
   return (
     <FormControl
@@ -29,36 +39,23 @@ const VideoSettings = () => {
       className="toggle-settings"
     >
       <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={state.gilad}
-              onChange={handleChange}
-              name="gilad"
+        {webinars.map((webinar: WebinarValuesType, index: number) => {
+          console.log(webinar.webinarGuid);
+          return (
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={
+                    agentWebinars?.includes(webinar?.webinarGuid) || false
+                  }
+                  onChange={handleChange}
+                  name={index.toString()}
+                />
+              }
+              label={webinar.title}
             />
-          }
-          label="Video 1"
-        />
-        <FormControlLabel
-          control={
-            <Switch
-              checked={state.jason}
-              onChange={handleChange}
-              name="jason"
-            />
-          }
-          label="Video 2"
-        />
-        <FormControlLabel
-          control={
-            <Switch
-              checked={state.antoine}
-              onChange={handleChange}
-              name="antoine"
-            />
-          }
-          label="Video 3"
-        />
+          );
+        })}
         <FormControlLabel
           control={
             <Switch
@@ -67,7 +64,7 @@ const VideoSettings = () => {
               name="socmeds"
             />
           }
-          label="Display Social Medias"
+          label="Display Social Media"
         />
         <FormControlLabel
           control={

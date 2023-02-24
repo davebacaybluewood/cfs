@@ -6,7 +6,7 @@ import { CrumbTypes } from "../Dashboard/types";
 
 const crumbs: CrumbTypes[] = [
   {
-    title: "Comfort Life Finance Admin",
+    title: "Comfort Financial Solutions",
     url: paths.dashboard,
     isActive: false,
   },

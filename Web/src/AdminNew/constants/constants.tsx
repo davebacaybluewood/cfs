@@ -16,6 +16,9 @@ import EventInvites from "AdminNew/pages/EventInvites/EventInvites";
 import Events from "AdminNew/pages/Events/Events";
 import EventsForm from "AdminNew/pages/Events/EventsForm";
 import FAQs from "AdminNew/pages/FAQs/FAQs";
+import WebinarForm from "AdminNew/pages/FileMaintenance/pages/Webinars/WebinarForm";
+import Webinars from "AdminNew/pages/FileMaintenance/pages/Webinars/Webinars";
+import WebinarSingle from "AdminNew/pages/FileMaintenance/pages/Webinars/WebinarSingle";
 import Inquiries from "AdminNew/pages/Inquiries/Inquiries";
 import Login from "AdminNew/pages/Login/Login";
 import Notifications from "AdminNew/pages/Notifications/Notifications";
@@ -246,6 +249,30 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <ViewBlogs />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.webinar,
+    ELEMENT: (
+      <GuardedWrapper>
+        <Webinars />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.webinarSingle,
+    ELEMENT: (
+      <GuardedWrapper>
+        <WebinarSingle />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.webinarAdminForm,
+    ELEMENT: (
+      <GuardedWrapper>
+        <WebinarForm />
       </GuardedWrapper>
     ),
   },

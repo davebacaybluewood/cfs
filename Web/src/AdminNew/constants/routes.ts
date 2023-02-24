@@ -29,6 +29,10 @@ const adminPathsNew = {
   newAdminEvents: adminCfsRoute + "events",
   newAdminEventsForm: adminCfsRoute + "events/:id",
   newAdminEventInvites: adminCfsRoute + "event-invites",
+  webinar: adminCfsRoute + "webinar",
+  webinarSingle: adminCfsRoute + "webinar/:webinarId",
+  webinarAdminForm: adminCfsRoute + "webinar-form/:id",
+  homeMetatags: adminCfsRoute + "home-metatags",
 } as const;
 
 export default adminPathsNew;

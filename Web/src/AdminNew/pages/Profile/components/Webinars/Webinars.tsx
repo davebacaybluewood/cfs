@@ -23,7 +23,7 @@ const Webinars: React.FC<WebinarsProps> = (props) => {
       >
         <React.Fragment>
           {props.webinars?.map((webinar, index) => (
-            <div className="item">
+            <div className="item" key={index}>
               <h2>{webinar.title}</h2>
               <p>{webinar.description}</p>
             </div>

@@ -89,3 +89,10 @@
     }
   }
 }
+
+.form-dialog {
+  .MuiInputBase-input,
+  .MuiFormLabel-root {
+    font-size: 1.6rem !important;
+  }
+}

@@ -28,6 +28,7 @@ const Testimonials: React.FC<TestimonialsProps> = (props) => {
   const [pageLoading, setPageLoading] = useState(false);
 
   useEffect(() => {}, [testimonialsState]);
+
   const testimonialStatusHandler = async (testimonialId: string) => {
     setPageLoading(true);
     try {
@@ -47,9 +48,7 @@ const Testimonials: React.FC<TestimonialsProps> = (props) => {
       );
 
       const newData = await response.json();
-
       setTestimonialsState(newData);
-
       toast.success(`Testimonial Updated!`, {
         position: "top-right",
         autoClose: 5000,
