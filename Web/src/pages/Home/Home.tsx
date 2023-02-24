@@ -147,6 +147,7 @@ const Home: React.FC = () => {
           name="google-site-verification"
           content="-8SXobMJclzxTwefhzJ8i5kaM7zpKD-I3VqkfnJtWwc"
         />
+        <meta name="msvalidate.01" content="11FA9EC5F1F79FDD3E3761BCB55B12D1" />
       </Helmet>
       <div className="home-container">
         {/* <PageTitle title="Home" /> */}
