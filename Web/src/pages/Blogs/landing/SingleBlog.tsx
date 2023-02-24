@@ -6,6 +6,7 @@ import { blogs } from "data/blogs";
 import { formatISODateOnly } from "helpers/dateFormatter";
 import Chip from "../components/Chip/Chip";
 import * as FontAwesome from "react-icons/fa";
+import ReactHtmlParser from "html-react-parser";
 
 const SingleBlog: React.FC = () => {
   const params = useParams();
@@ -48,9 +49,9 @@ const SingleBlog: React.FC = () => {
         </Box>
       </Box>
       <Box className="blog-content-container">
-        <p>{blogItem.content.replace(/<[^>]*>/g, "")}</p>
+        <p>{ReactHtmlParser(blogItem?.content ?? "")}</p>
         <Box className="blog-share-icons">
-          <h2>Share Blog: </h2>
+          <h2>Share This Blog: </h2>
           <FontAwesome.FaLink
             className="share-icon"
             onClick={copyLinkHandler}

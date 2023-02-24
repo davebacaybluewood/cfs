@@ -7,6 +7,9 @@ import DeactivatedAgents from "AdminNew/pages/Agents/LandingPages/DeactivatedAge
 import DeclinedAgentProfile from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgentProfile";
 import DeclinedAgents from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgents";
 import Appointments from "AdminNew/pages/Appointments/Appointments";
+import Blogs from "AdminNew/pages/Blogs/Blogs";
+import ViewBlogs from "AdminNew/pages/Blogs/landing/ViewBlogs";
+import ViewBlog from "AdminNew/pages/Blogs/landing/ViewBlogs";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
 import Contacts from "AdminNew/pages/Contacts/Contacts";
@@ -27,6 +30,7 @@ import adminPathsNew from "./routes";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
+  ROLE_EDITOR: "ROLE_EDITOR",
   ROLE_MASTER_ADMIN: "ROLE_MASTER_ADMIN",
 };
 
@@ -227,6 +231,22 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <EventInvites />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminBlogs,
+    ELEMENT: (
+      <GuardedWrapper>
+        <Blogs />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminViewBlogs,
+    ELEMENT: (
+      <GuardedWrapper>
+        <ViewBlogs />
       </GuardedWrapper>
     ),
   },
