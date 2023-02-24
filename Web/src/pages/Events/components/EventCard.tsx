@@ -100,7 +100,7 @@ const EventCard: React.FC<IEventCard> = (props) => {
               )
             }
           >
-            VIEW MEDIAS
+            VIEW MEDIA
           </Button>
         </div>
       </div>
