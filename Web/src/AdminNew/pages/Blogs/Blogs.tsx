@@ -16,7 +16,7 @@ const crumbs: CrumbTypes[] = [
   },
   {
     title: "Blogs",
-    url: paths.faqs,
+    url: paths.adminBlogs,
     isActive: true,
   },
 ];
@@ -39,6 +39,7 @@ const Blogs: React.FC = () => {
                 title={blog.title}
                 numberOfVisits={blog.numberOfVisits}
                 showStatistics={true}
+                isAdmin={true}
               />
             </Grid>
           );

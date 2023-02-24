@@ -33,7 +33,6 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
     navigate(paths.blogsSingle.replace(":id", id));
   };
   const adminBlogHandler = (id: string) => {
-    console.log(id);
     navigate(paths.adminViewBlogs.replace(":id", id));
   };
   return (
@@ -68,16 +67,7 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
             </span>
           </p>
         </div>
-        {!currentPath.includes("/cfs-a") && (
-          <button
-            type="button"
-            className="read-more"
-            onClick={() => blogHandler(props.id)}
-          >
-            Read More
-          </button>
-        )}
-        {currentPath.includes("/cfs-a/blogs") && (
+        {props.isAdmin ? (
           <React.Fragment>
             <button
               type="button"
@@ -95,6 +85,16 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
               onClick={() => blogHandler(props.id)}
             >
               View Blog
+            </button>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <button
+              type="button"
+              className="read-more"
+              onClick={() => blogHandler(props.id)}
+            >
+              Read More
             </button>
           </React.Fragment>
         )}

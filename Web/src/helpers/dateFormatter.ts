@@ -3,7 +3,6 @@ export const formatDate = (
   type: "dashFormat" | "fullFormat"
 ) => {
   const options = {
-    // weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",

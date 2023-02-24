@@ -9,7 +9,6 @@ import DeclinedAgents from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/De
 import Appointments from "AdminNew/pages/Appointments/Appointments";
 import Blogs from "AdminNew/pages/Blogs/Blogs";
 import ViewBlogs from "AdminNew/pages/Blogs/landing/ViewBlogs";
-import ViewBlog from "AdminNew/pages/Blogs/landing/ViewBlogs";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
 import Contacts from "AdminNew/pages/Contacts/Contacts";

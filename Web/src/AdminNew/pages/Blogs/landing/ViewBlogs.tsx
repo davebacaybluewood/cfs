@@ -18,7 +18,7 @@ const crumbs: CrumbTypes[] = [
   },
   {
     title: "View Blog",
-    url: paths.faqs,
+    url: paths.adminViewBlogs,
     isActive: true,
   },
 ];
