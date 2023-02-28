@@ -10,6 +10,19 @@ type HeaderTypeProps = {
   createdAt: Date;
   wayOfAppointment: string;
 };
+
+type HeaderLabeledValueProps = {
+  label: string;
+  value: string;
+};
+const HeaderLabeledValue: React.FC<HeaderLabeledValueProps> = (props) => {
+  return (
+    <div className="description-item">
+      <h3>Title</h3>
+      <p>Appointment Title</p>
+    </div>
+  );
+};
 const Header: React.FC<HeaderTypeProps> = (props) => {
   return (
     <div className="appointment-header-parent">

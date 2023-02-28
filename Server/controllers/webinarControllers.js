@@ -308,6 +308,7 @@ const submitAppointment = expressAsync(async (req, res) => {
                 calendly_name: name,
                 calendly_email: email,
                 calendly_created_at: created_at,
+                appointment_type: "W",
               });
               appointment.save();
               return email;

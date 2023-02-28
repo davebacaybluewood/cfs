@@ -148,7 +148,7 @@ export const adminRoutesNew = [
     ),
   },
   {
-    PATH: adminPathsNew.schedulesAppointments,
+    PATH: adminPathsNew.scheduledAppointments,
     ELEMENT: (
       <GuardedWrapper>
         <ScheduleAppointment />

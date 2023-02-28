@@ -1,6 +1,10 @@
 import Agents from "../models/agentModel.js";
 import expressAsync from "express-async-handler";
-import { AGENT_STATUSES, ROLES } from "../constants/constants.js";
+import {
+  AGENT_STATUSES,
+  APPOINTMENT_TYPES,
+  ROLES,
+} from "../constants/constants.js";
 import AgentAppointment from "../models/agentAppointment.js";
 
 /**
@@ -10,6 +14,7 @@ import AgentAppointment from "../models/agentAppointment.js";
  */
 const getAgentAppointments = expressAsync(async (req, res) => {
   const status = req.query.status;
+  const type = req.query.type;
 
   const filteredAgentOptions = {
     role: ROLES.ROLE_AGENT,
@@ -23,31 +28,45 @@ const getAgentAppointments = expressAsync(async (req, res) => {
     }
   }
 
+  const filteredAppointmentOptions = type
+    ? {
+        appointment_type:
+          type === APPOINTMENT_TYPES.WEBINAR
+            ? APPOINTMENT_TYPES.WEBINAR
+            : APPOINTMENT_TYPES.PAW,
+      }
+    : {};
+
   const agents = await Agents.find(filteredAgentOptions);
-  const appointments = await AgentAppointment.find({});
+  const appointments = await AgentAppointment.find(filteredAppointmentOptions);
+
+  const data = agents
+    .map((agent) => {
+      const noOfAppointments = () => {
+        const appointment = appointments
+          .map((apData) => {
+            console.log(apData);
+            return apData.agentGuid === agent.userGuid;
+          })
+          .filter((data) => data);
+
+        return appointment.length;
+      };
+      return {
+        _id: agent._id,
+        agentGuid: agent.userGuid,
+        avatar: agent.avatar,
+        name: agent.name,
+        emailAddress: agent.emailAddress,
+        numberOfAppointments: noOfAppointments(),
+        title: agent.title,
+      };
+    })
+    .filter((data) => data.numberOfAppointments !== 0);
 
   const filteredAgents = {
-    totalRecords: agents.length,
-    data: agents
-      .map((agent) => {
-        const noOfAppointments = () => {
-          const appointment = appointments
-            .map((apData) => apData.agentGuid === agent.userGuid)
-            .filter((data) => data);
-
-          return appointment.length;
-        };
-        return {
-          _id: agent._id,
-          agentGuid: agent.userGuid,
-          avatar: agent.avatar,
-          name: agent.name,
-          emailAddress: agent.emailAddress,
-          numberOfAppointments: noOfAppointments(),
-          title: agent.title,
-        };
-      })
-      .filter((data) => data.numberOfAppointments !== 0),
+    data: data,
+    totalRecords: data.length,
   };
 
   res.json(filteredAgents);

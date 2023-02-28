@@ -1,14 +1,13 @@
-import { Grid, Paper } from "@mui/material";
+import { Grid } from "@mui/material";
 import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
-import axios from "axios";
-import ENDPOINTS from "constants/endpoints";
+import adminPathsNew from "AdminNew/constants/routes";
 import paths from "constants/routes";
-import getUserToken from "helpers/getUserToken";
-import React, { useEffect, useState } from "react";
+import url_params from "helpers/url_params";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { CrumbTypes } from "../Dashboard/types";
 import "./Appointments.scss";
-import AppointmentCards from "./components/AppointmentCards";
 import useGetAppointments from "./hooks/useGetAppointments";
 
 const crumbs: CrumbTypes[] = [
@@ -31,43 +30,40 @@ export const APPOINTMENT_STATUS = {
 };
 
 const Appointments: React.FC = () => {
-  // const { appointments, isLoading } = useGetAppointments();
-  const [isLoading, setIsLoading] = useState(false);
-  const [appointments, setAppointments] = useState([]);
+  const { appointments, loading } = useGetAppointments(
+    url_params.type ? url_params.type : ""
+  );
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      setIsLoading(true);
-      let res = await axios({
-        method: "get",
-        url: ENDPOINTS.APPOINTMENT_AGENTS,
-        headers: {
-          Authorization: "Bearer " + getUserToken(),
-          "Content-Type": "application/json",
-        },
-      });
+  const cardClickHandler = (id: string) => {
+    navigate({
+      pathname: adminPathsNew.scheduledAppointments.replace(
+        ":appointmentId",
+        id
+      ),
+      search: `?type=${url_params.type === "paw" ? "paw" : "webinar"}`,
+    });
+  };
 
-      console.log(res.data.data);
-
-      setAppointments(res.data.data);
-      setIsLoading(false);
-    };
-
-    fetchAppointments();
-  }, []);
-
+  useEffect(() => {}, [url_params]);
   return (
     <Wrapper
       breadcrumb={crumbs}
       error={false}
-      loading={isLoading}
+      loading={loading}
       className="appointment-container"
     >
       <Title title="Appointments" subtitle="View all your appointments." />
       <Grid container spacing={2}>
-        {appointments.map((appointment: any) => {
+        {appointments.map((appointment) => {
           return (
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              onClick={() => cardClickHandler(appointment.agentGuid)}
+            >
               <div className="item">
                 <Grid container alignItems="center">
                   <Grid item xs={12} sm={12} md={7}>

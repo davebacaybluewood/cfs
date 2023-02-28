@@ -18,7 +18,7 @@ const AppointmentCards: React.FC<AppointmentCardsProps> = (props) => {
   const navigate = useNavigate();
 
   const cardClickHandler = (id: string) => {
-    navigate(adminPathsNew.schedulesAppointments.replace(":appointmentId", id));
+    navigate(adminPathsNew.scheduledAppointments.replace(":appointmentId", id));
   };
 
   return (

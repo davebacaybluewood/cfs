@@ -35,12 +35,12 @@ const AppointmentInformation: React.FC = () => {
     },
     {
       title: "Scheduled Appointments",
-      url: paths.schedulesAppointments,
+      url: paths.scheduledAppointments,
       isActive: true,
     },
     {
       title: "Appointment Name",
-      url: paths.schedulesAppointments,
+      url: paths.scheduledAppointments,
       isActive: true,
     },
   ];

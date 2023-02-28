@@ -54,6 +54,10 @@ const agentAppointmentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    appointment_type: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

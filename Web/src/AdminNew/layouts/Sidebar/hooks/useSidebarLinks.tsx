@@ -121,6 +121,21 @@ const useSidebarLinks = (role: string) => {
       isActive: currentPage === adminPathsNew.appointments.split("/")[2],
       icon: <FaRegCalendarCheck />,
       role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN],
+      isSubMenu: role === ROLES.ROLE_MASTER_ADMIN,
+      subLinks: [
+        {
+          linkText: "Webinar Appointments",
+          icon: <FaUserSecret />,
+          link: paths.appointments + "?type=webinar",
+          isActive: currentPage === adminPathsNew.appointments.split("/")[2],
+        },
+        {
+          linkText: "PAW Appointments",
+          icon: <FaUserSecret />,
+          link: paths.appointments + "?type=paw",
+          isActive: currentPage === adminPathsNew.appointments.split("/")[2],
+        },
+      ],
     },
     {
       linkText: "Calendar",

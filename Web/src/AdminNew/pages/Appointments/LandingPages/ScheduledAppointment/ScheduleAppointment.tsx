@@ -23,7 +23,7 @@ const crumbs: CrumbTypes[] = [
   },
   {
     title: "Scheduled Appointments",
-    url: paths.schedulesAppointments,
+    url: paths.scheduledAppointments,
     isActive: true,
   },
 ];
