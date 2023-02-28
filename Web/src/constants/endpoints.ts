@@ -24,6 +24,12 @@ const ENDPOINTS = {
   AGENT_TESTIMONIALS_STATUS: "/api/agents/:agentId/testimonials/update",
   WEBINARS: "/api/webinars",
   WEBINAR_SINGLE: "/api/webinars/:webinarId",
+  AGENT_WEBINAR_UPDATE: "/api/agents/:webinarGuid/:agentId/webinar",
+  AGENT_WEBINARS: "/api/agents/webinars/active",
+  AGENT_WEBINAR_FORM: "/api/webinars/:webinarId/:agentGuid/submit-webinar",
+  APPOINTMENT_AGENTS: "/api/appointments",
 };
+
+const array = ["asdasd", "asdasdasfasf"];
 
 export default ENDPOINTS;

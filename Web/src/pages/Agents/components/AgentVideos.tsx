@@ -1,25 +1,27 @@
 import { Grid } from "@mui/material";
+import Spinner from "AdminNew/components/Spinner/Spinner";
+import { WebinarValuesType } from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchWebinars";
 import paths from "constants/routes";
 import Banner from "library/Banner/Banner";
 import React from "react";
-import { FaPlayCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import AgentVideoItem from "./AgentVideoItem";
 
-const AgentVideos: React.FC = () => {
+type AgentVideosProps = {
+  webinars: WebinarValuesType[];
+  loading: boolean;
+  agentId: string;
+};
+const AgentVideos: React.FC<AgentVideosProps> = (props) => {
   const navigate = useNavigate();
-  const videoId = "639ce557061e6ed3a75acf64";
-  const agentId = "639ce557061e6ed3a75acf64";
 
-  const clickHandler = () => {
+  const clickHandler = (webinarGuid: string) => {
     navigate(
       paths.webinarForm
-        .replace(":videoId", videoId)
-        .replace(":agentId", agentId)
+        .replace(":videoId", webinarGuid)
+        .replace(":agentId", props.agentId)
     );
   };
-  const tempVideo =
-    "https://res.cloudinary.com/dfm2vczpy/image/upload/v1674084195/agent-videos/thumbnails/video-thumbnail-1_fbiem1.png";
   return (
     <div className="agent-videos">
       <Banner
@@ -27,29 +29,23 @@ const AgentVideos: React.FC = () => {
         title="See our overview videos"
         hasBorder={true}
       />
-      <Grid container spacing={2}>
-        <Grid item sm={12} md={4} lg={4}>
-          <AgentVideoItem
-            onClick={() => clickHandler()}
-            thumbnail={tempVideo}
-            title="The Debt Action Plan Program Overview"
-          />
+      {props.loading ? (
+        <Spinner />
+      ) : (
+        <Grid container spacing={2}>
+          {props.webinars?.map((webinar) => {
+            return (
+              <Grid item sm={12} md={4} lg={4} key={webinar?._id}>
+                <AgentVideoItem
+                  onClick={() => clickHandler(webinar?._id ?? "")}
+                  thumbnail={webinar.thumbnail}
+                  title={webinar.title}
+                />
+              </Grid>
+            );
+          })}
         </Grid>
-        <Grid item sm={12} md={4} lg={4}>
-          <AgentVideoItem
-            onClick={() => clickHandler()}
-            thumbnail={tempVideo}
-            title="The Debt Action Plan Program Overview"
-          />
-        </Grid>
-        <Grid item sm={12} md={4} lg={4}>
-          <AgentVideoItem
-            onClick={() => clickHandler()}
-            thumbnail={tempVideo}
-            title="The Debt Action Plan Program Overview"
-          />
-        </Grid>
-      </Grid>
+      )}
     </div>
   );
 };

@@ -6,7 +6,6 @@ import "./Agents.scss";
 import Wrapper from "pages/Home/components/Wrapper/Wrapper";
 import CommonHeaderTitle from "library/HeaderTitle/HeaderTitle";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
-import { FaQuoteRight } from "react-icons/fa";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,22 +17,8 @@ import AgentVideos from "./components/AgentVideos";
 import Spinner from "AdminNew/components/Spinner/Spinner";
 import AgentPending from "./components/AgentPending";
 import paths from "constants/routes";
-import { AgentStatuses } from "AdminNew/pages/Agents/types";
+import useFetchAgentWebinars from "AdminNew/pages/Profile/components/Webinars/hooks/useFetchAgentWebinars";
 
-const tempTestimonials = [
-  {
-    testimonial:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    name: "Dave Spencer Bacay",
-    title: "Web Developer",
-  },
-  {
-    testimonial:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    name: "Dave Spencer Bacay",
-    title: "Web Developer",
-  },
-];
 type FilteredContainerProps = {
   noSpacing?: boolean;
   children: React.ReactNode;
@@ -74,6 +59,10 @@ const Agents: React.FC<AgentsProps> = (props) => {
     onEventScheduled: (e) => console.log(e.data.payload),
   });
 
+  const { webinars, loading: webinarLoading } = useFetchAgentWebinars(
+    agent?.webinars
+  );
+
   if (error) {
     navigate(paths.invalid);
   }
@@ -107,7 +96,11 @@ const Agents: React.FC<AgentsProps> = (props) => {
                 false /** This will change after webinar feature completed */
               }
             >
-              <AgentVideos />
+              <AgentVideos
+                webinars={webinars}
+                loading={webinarLoading}
+                agentId={agent.userGuid}
+              />
             </ComponentValidator>
           </FilteredContainer>
           <ComponentValidator

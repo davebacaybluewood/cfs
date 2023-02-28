@@ -72,28 +72,30 @@ const useSidebarLinks = (role: string) => {
         pendingAgents: 0,
       },
     });
-    fetch(ENDPOINTS.AGENT_COUNTS, {
-      headers: {
-        Authorization: `Bearer ${getUserToken()}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setData({ loading: false, error: null, agentCount: data });
+    if (role === ROLES.ROLE_MASTER_ADMIN) {
+      fetch(ENDPOINTS.AGENT_COUNTS, {
+        headers: {
+          Authorization: `Bearer ${getUserToken()}`,
+        },
       })
-      .catch((error) => {
-        setData({
-          loading: false,
-          error,
-          agentCount: {
-            activeAgents: 0,
-            deactivatedAgents: 0,
-            declinedAgents: 0,
-            pendingAgents: 0,
-          },
+        .then((response) => response.json())
+        .then((data) => {
+          setData({ loading: false, error: null, agentCount: data });
+        })
+        .catch((error) => {
+          setData({
+            loading: false,
+            error,
+            agentCount: {
+              activeAgents: 0,
+              deactivatedAgents: 0,
+              declinedAgents: 0,
+              pendingAgents: 0,
+            },
+          });
         });
-      });
-  }, []);
+    }
+  }, [role]);
 
   const { agentCount } = data;
 

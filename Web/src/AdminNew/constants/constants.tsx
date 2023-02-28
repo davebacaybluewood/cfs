@@ -7,6 +7,8 @@ import DeactivatedAgents from "AdminNew/pages/Agents/LandingPages/DeactivatedAge
 import DeclinedAgentProfile from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgentProfile";
 import DeclinedAgents from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgents";
 import Appointments from "AdminNew/pages/Appointments/Appointments";
+import AppointmentInformation from "AdminNew/pages/Appointments/LandingPages/ScheduledAppointment/AppointmentInformation";
+import ScheduleAppointment from "AdminNew/pages/Appointments/LandingPages/ScheduledAppointment/ScheduleAppointment";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
 import Contacts from "AdminNew/pages/Contacts/Contacts";
@@ -134,6 +136,22 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <Appointments />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.appointmentInformation,
+    ELEMENT: (
+      <GuardedWrapper>
+        <AppointmentInformation />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.schedulesAppointments,
+    ELEMENT: (
+      <GuardedWrapper>
+        <ScheduleAppointment />
       </GuardedWrapper>
     ),
   },

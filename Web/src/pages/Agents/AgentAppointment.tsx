@@ -1,10 +1,12 @@
 import { Grid } from "@mui/material";
 import { Container } from "@mui/system";
+import useFetchWebinars from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchWebinars";
 import Banner from "library/Banner/Banner";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import PageTitle from "library/PageTitle/PageTitle";
 import React from "react";
-import { InlineWidget } from "react-calendly";
+import { InlineWidget, useCalendlyEventListener } from "react-calendly";
+import { useParams } from "react-router-dom";
 import "./AgentWebinar.scss";
 import VideoDescription from "./components/VideoDescription";
 import WebinarForm from "./components/WebinarForm";
@@ -15,6 +17,19 @@ type AgentAppointmentProps = {
   showVideoDescription?: boolean;
 };
 const AgentAppointment: React.FC<AgentAppointmentProps> = (props) => {
+  const { videoId } = useParams();
+  const { webinars, loading } = useFetchWebinars(videoId);
+
+  useCalendlyEventListener({
+    onProfilePageViewed: () => console.log("onProfilePageViewed"),
+    onDateAndTimeSelected: (e) => console.log(e),
+    onEventTypeViewed: () => console.log("onEventTypeViewed"),
+    onEventScheduled: (e) => {
+      const inviteLink = e.data.payload.invitee;
+      console.log(inviteLink);
+    },
+  });
+
   return (
     <div className="agent-webinar">
       <PageTitle title="Agent Webinar" />
@@ -26,13 +41,16 @@ const AgentAppointment: React.FC<AgentAppointmentProps> = (props) => {
             <div className="webinar-item">
               <iframe
                 className="embed-responsive-item"
-                src="https://player.vimeo.com/video/629521217?title=0&byline=0&portrait=0"
+                src={webinars?.fullVideo}
                 allow="autoplay; fullscreen"
                 allowFullScreen
                 data-ready="true"
               ></iframe>
               <ComponentValidator showNull={!props.showVideoDescription}>
-                <VideoDescription />
+                <VideoDescription
+                  title={webinars?.title}
+                  content={webinars?.fullVideoContent}
+                />
               </ComponentValidator>
             </div>
           </Grid>

@@ -8,13 +8,9 @@ const useFetchAgent = (userGuid: string) => {
 
   useEffect(() => {
     setLoading(true);
+    console.log(userGuid);
     axios
-      .get(
-        ENDPOINTS.AGENT_BY_ID.replace(
-          ":id",
-          "86888bcd-bc70-4ad3-a83b-9be75583700e"
-        )
-      )
+      .get(ENDPOINTS.AGENT_BY_ID.replace(":id", userGuid))
       .then((response) => {
         setAgent(response.data);
         setLoading(false);
@@ -22,7 +18,7 @@ const useFetchAgent = (userGuid: string) => {
       .catch((error) => {
         setLoading(false);
       });
-  }, []);
+  }, [userGuid]);
 
   return {
     agent,

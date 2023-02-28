@@ -1,17 +1,9 @@
-import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import { Button } from "@mui/material";
 import "./Calendar.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { listEvents } from "redux/actions/eventActions";
-import { formatDate } from "helpers/dateFormatter";
-import DrawerBase, { Anchor } from "library/Drawer/Drawer";
-import React from "react";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 const Calendar = () => {
   return (
@@ -24,7 +16,7 @@ const Calendar = () => {
           center: "title",
           right: "",
         }}
-        initialView="dayGridMonth"
+        initialView="timeGridDay"
         editable={true}
         selectable={true}
         selectMirror={true}
@@ -33,7 +25,10 @@ const Calendar = () => {
         eventTextColor="white"
         select={(event) => console.log(event)}
         eventClick={(event) => console.log(event)}
-        initialEvents={[]}
+        initialEvents={[
+          { title: "event 1", date: "2023-02-28T03:04:05.678123Z" },
+          { title: "event 2", date: "2023-02-28T03:04:05.678123Z" },
+        ]}
       />
 
       {/* <DrawerBase

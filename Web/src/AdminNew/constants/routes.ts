@@ -7,6 +7,9 @@ const adminPathsNew = {
   dashboard: adminCfsRoute + "dashboard",
   profile: adminCfsRoute + "profile",
   appointments: adminCfsRoute + "appointments",
+  schedulesAppointments: adminCfsRoute + "appointments/:appointmentId",
+  appointmentInformation:
+    adminCfsRoute + "appointments/:appointmentId/:scheduledId",
   calendar: adminCfsRoute + "calendar",
   contacts: adminCfsRoute + "contacts",
   settings: adminCfsRoute + "settings",

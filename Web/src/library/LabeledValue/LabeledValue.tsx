@@ -7,18 +7,32 @@ interface ILabeledValue {
   subTitle?: string;
   isVisible?: boolean;
   variant?: "light" | "bold";
+  icon?: React.ReactNode;
 }
 
 const LabeledValue: React.FC<ILabeledValue> = (props) => {
   const labelValueClassnames = classNames("label-value", {
     "label-value-bold": props.variant === "bold",
     "label-value-light": props.variant === "light",
+    "label-value-icon": props.icon,
   });
   if (props.isVisible) {
     return (
       <div className={labelValueClassnames}>
-        <h5>{props.title}</h5>
-        <p>{props.subTitle}</p>
+        {props.icon ? (
+          <React.Fragment>
+            <div className="icon">{props.icon}</div>
+            <div className="caption">
+              <h5>{props.title}</h5>
+              <p>{props.subTitle}</p>
+            </div>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <h5>{props.title}</h5>
+            <p>{props.subTitle}</p>
+          </React.Fragment>
+        )}
       </div>
     );
   }

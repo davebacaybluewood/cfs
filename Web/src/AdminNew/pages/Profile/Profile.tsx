@@ -6,9 +6,7 @@ import { CrumbTypes } from "../Dashboard/types";
 import AboutProfile from "./components/AboutProfile/AboutProfile";
 import Overview from "./components/Overview/Overview";
 import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
-import Testimonials, {
-  TestiMonialTypes,
-} from "./components/Testimonials/Testimonials";
+import Testimonials from "./components/Testimonials/Testimonials";
 import Webinars from "./components/Webinars/Webinars";
 import "./Profile.scss";
 
@@ -52,6 +50,7 @@ type ProfileTypes = {
   status: string;
   languages: string[];
   specialties: string[];
+  webinars: string[];
 };
 type ProfileProps = {
   crumbs: CrumbTypes[];
@@ -63,6 +62,8 @@ type ProfileProps = {
 const Profile: React.FC<ProfileProps> = (props) => {
   const { crumbs, profile, loading, error } = props;
   const [pageLoading, setPageLoading] = useState(false);
+
+  console.log(profile);
 
   return (
     <Wrapper
@@ -117,8 +118,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
         </Grid>
         <Grid item sm={12} md={12} lg={8}>
           <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
-            {/* <Testimonials testimonials={agentTestimonails} /> */}
-            <Webinars webinars={webinars} />
+            <Webinars webinarGuids={profile.webinars} />
           </Paper>
         </Grid>
         <Grid item sm={12} md={12} lg={12}>

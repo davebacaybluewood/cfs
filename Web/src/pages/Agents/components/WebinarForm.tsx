@@ -1,5 +1,4 @@
 import {
-  Alert,
   Button,
   FormControl,
   Grid,
@@ -8,22 +7,23 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import ENDPOINTS from "constants/endpoints";
 import paths from "constants/routes";
 import US_STATES from "constants/states-and-location";
 import { Formik } from "formik";
-import FormikDropdown from "library/Formik/FormikDropdown";
 import FormikTextInput from "library/Formik/FormikInput";
-import React from "react";
+import Spinner from "library/Spinner/Spinner";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 
 const WebinarForm: React.FC = () => {
   const navigate = useNavigate();
   const { videoId, agentId } = useParams();
-  const submissionId = "639ce557061e6ed3a75acf64";
+  const [loading, setLoading] = useState(false);
   const initialValues = {
     emailAddress: "",
-    name: "",
+    fullName: "",
     state: "",
   };
 
@@ -36,25 +36,49 @@ const WebinarForm: React.FC = () => {
   });
 
   const [state, setState] = React.useState("");
-  const handleChange = (event: SelectChangeEvent) => {
-    setState(event.target.value as string);
-  };
+  // const handleChange =;
 
   return (
     <div className="submission-form">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(data, { setSubmitting, resetForm }) =>
-          navigate(
-            paths.webinarAppointment
-              .replace(":videoId", videoId ?? "")
-              .replace(":agentId", agentId ?? "")
-              .replace(":submissionId", submissionId ?? "")
+        onSubmit={(data, { setSubmitting, resetForm }) => {
+          setLoading(true);
+          fetch(
+            ENDPOINTS.AGENT_WEBINAR_FORM.replace(
+              ":webinarId",
+              videoId ?? ""
+            ).replace(":agentGuid", agentId ?? ""),
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name: data.fullName,
+                email: data.emailAddress,
+                state: data.state,
+                videoId,
+                agentId,
+              }),
+            }
           )
-        }
+            .then((response: any) => {
+              return response.json();
+            })
+            .then((res) => {
+              navigate(
+                paths.webinarAppointment
+                  .replace(":videoId", videoId ?? "")
+                  .replace(":agentId", agentId ?? "")
+                  .replace(":submissionId", res.submissionId ?? "")
+              );
+            })
+            .catch((error) => console.log(error));
+        }}
       >
-        {({ values, handleSubmit, dirty, isSubmitting }) => {
+        {({ handleSubmit, setFieldValue }) => {
           return (
             <React.Fragment>
               <div className="form-instructions">
@@ -93,7 +117,10 @@ const WebinarForm: React.FC = () => {
                         value={state}
                         name="state"
                         label="State"
-                        onChange={handleChange}
+                        onChange={(event: SelectChangeEvent) => {
+                          setFieldValue("state", event.target.value);
+                          setState(event.target.value as string);
+                        }}
                       >
                         {US_STATES.map((usState) => (
                           <MenuItem value={usState.name}>
@@ -108,6 +135,7 @@ const WebinarForm: React.FC = () => {
                   VIEW WEBINER
                 </Button>
               </form>
+              <Spinner isVisible={loading} />
             </React.Fragment>
           );
         }}
