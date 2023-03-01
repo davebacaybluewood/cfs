@@ -1,3 +1,18 @@
+.add-blogs {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  button {
+    border: none;
+    background-color: transparent;
+    margin-left: 1rem;
+    cursor: pointer;
+    font-size: 2rem;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
 .admin-blog-grid {
   .blogs-container {
     .centered-content {

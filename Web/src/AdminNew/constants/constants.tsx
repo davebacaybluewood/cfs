@@ -8,6 +8,7 @@ import DeclinedAgentProfile from "AdminNew/pages/Agents/LandingPages/DeclinedAge
 import DeclinedAgents from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgents";
 import Appointments from "AdminNew/pages/Appointments/Appointments";
 import Blogs from "AdminNew/pages/Blogs/Blogs";
+import BlogForm from "AdminNew/pages/Blogs/component/BlogForm";
 import ViewBlogs from "AdminNew/pages/Blogs/landing/ViewBlogs";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
@@ -249,6 +250,14 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <ViewBlogs />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminBlogForm,
+    ELEMENT: (
+      <GuardedWrapper>
+        <BlogForm />
       </GuardedWrapper>
     ),
   },

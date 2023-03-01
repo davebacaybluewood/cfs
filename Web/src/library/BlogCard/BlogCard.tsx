@@ -30,10 +30,10 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
   const currentPath = window.location.href;
   const navigate = useNavigate();
   const blogHandler = (id: string) => {
-    navigate(paths.blogsSingle.replace(":id", id));
+    navigate(paths.adminViewBlogs.replace(":id", id));
   };
   const adminBlogHandler = (id: string) => {
-    navigate(paths.adminViewBlogs.replace(":id", id));
+    navigate(paths.adminBlogForm.replace(":id", id));
   };
   return (
     <div className="blogs-container">

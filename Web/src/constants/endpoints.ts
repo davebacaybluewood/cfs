@@ -24,6 +24,8 @@ const ENDPOINTS = {
   AGENT_TESTIMONIALS_STATUS: "/api/agents/:agentId/testimonials/update",
   WEBINARS: "/api/webinars",
   WEBINAR_SINGLE: "/api/webinars/:webinarId",
+  BLOGS: "/api/blogs",
+  BLOGS_SINGLE: "/api/blogs/:blogId",
 };
 
 export default ENDPOINTS;
