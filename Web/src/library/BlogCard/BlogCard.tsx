@@ -29,16 +29,23 @@ interface IBlogCard {
 const BlogCard: React.FC<IBlogCard> = (props) => {
   const currentPath = window.location.href;
   const navigate = useNavigate();
+
   const blogHandler = (id: string) => {
     navigate(paths.blogsSingle.replace(":id", id));
   };
-  const adminBlogHandler = (id: string) => {
+  const adminViewBlogHandler = (id: string) => {
     navigate(paths.adminViewBlogs.replace(":id", id));
+  };
+  const adminEditBlogHandler = (id: string) => {
+    navigate(paths.adminBlogForm.replace(":id", id));
   };
   return (
     <div className="blogs-container">
       <div className="centered-content">
-        <img src={props.thumbnail} alt={props.thumbnail} />
+        <div className="thumbnail-container">
+          <img src={props.thumbnail} alt={props.thumbnail} />
+        </div>
+
         <h2>{props.title}</h2>
         <Chip tags={props.tags}></Chip>
         <div className="contents">
@@ -72,7 +79,7 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
             <button
               type="button"
               className="read-more"
-              onClick={() => adminBlogHandler(props.id)}
+              onClick={() => adminEditBlogHandler(props.id)}
             >
               Edit Blog
             </button>
@@ -82,7 +89,7 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
             <button
               type="button"
               className="view-blog"
-              onClick={() => blogHandler(props.id)}
+              onClick={() => adminViewBlogHandler(props.id)}
             >
               View Blog
             </button>

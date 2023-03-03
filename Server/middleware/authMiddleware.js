@@ -93,6 +93,33 @@ const agentAuth = expressAsync(async (req, res, next) => {
     throw new Error("Not autorized, auth failed..");
   }
 });
+const blogAuth = expressAsync(async (req, res, next) => {
+  let token;
+  console.log(req.user);
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith(BEARER) &&
+    req.user &&
+    req.user.role === ROLES.ROLE_EDITOR
+  ) {
+    try {
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_TOKEN);
+      req.user = await User.findById(decoded.id).select("-password");
+
+      next();
+    } catch (error) {
+      console.error(error);
+      res.status(401);
+      throw new Error("Not autorized, auth failed.");
+    }
+  }
+
+  if (!token) {
+    res.status(401);
+    throw new Error("Not autorized, auth failed..");
+  }
+});
 
 const admin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
@@ -103,4 +130,4 @@ const admin = (req, res, next) => {
   }
 };
 
-export { protect, admin, agentAuth, adminAuth };
+export { protect, admin, agentAuth, adminAuth, blogAuth };
