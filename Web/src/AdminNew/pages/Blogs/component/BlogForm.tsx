@@ -111,7 +111,7 @@ const BlogForm: React.FC = () => {
               progress: undefined,
               theme: "light",
             });
-            navigate(paths.adminBlogForm);
+            navigate(paths.adminBlogs);
           })
           .then((result) => {
             console.log(result);
@@ -141,7 +141,7 @@ const BlogForm: React.FC = () => {
               progress: undefined,
               theme: "light",
             });
-            navigate(paths.blogs);
+            navigate(paths.adminBlogs);
           })
           .then((result) => {
             console.log(result);
@@ -195,7 +195,9 @@ const BlogForm: React.FC = () => {
                       }}
                     />
                   </MUIButton>
-                  <img src={values.thumbnail} alt={values.thumbnail}></img>
+                  <div className="img-container">
+                    <img src={values.thumbnail} alt={values.thumbnail}></img>
+                  </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <FormikTextInput
@@ -203,6 +205,7 @@ const BlogForm: React.FC = () => {
                     label="Blog Title"
                     value={values.title}
                     variant="filled"
+                    InputLabelProps={{ shrink: !!values.title }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -211,6 +214,7 @@ const BlogForm: React.FC = () => {
                     label="Blog Author"
                     value={values.author}
                     variant="filled"
+                    InputLabelProps={{ shrink: !!values.author }}
                   />
                 </Grid>
                 <Grid item sm={12} md={12} lg={12}>

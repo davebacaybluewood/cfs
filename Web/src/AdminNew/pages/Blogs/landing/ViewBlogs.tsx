@@ -23,6 +23,7 @@ import { BlogType } from "../Blogs";
 import webinars from "data/webinars";
 import getUserToken from "helpers/getUserToken";
 import axios from "axios";
+import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -40,30 +41,12 @@ const crumbs: CrumbTypes[] = [
 const ViewBlogs: React.FC = () => {
   const params = useParams();
   const blogId = params.id;
-  const [blog, setBlog] = useState<BlogType>({
-    _id: "",
-    thumbnail: "",
-    title: "",
-    tags: [],
-    content: "",
-    author: "",
-    createdAt: new Date(),
-  });
-  const [loading, setLoading] = useState(false);
+
   const [actionLoading, setActionLoading] = useState(false);
   const [actionDialog, setActionDialog] = useState(false);
-  useEffect(() => {
-    const getBlog = async () => {
-      const request = await fetch(
-        ENDPOINTS.BLOGS_SINGLE.replace(":blogId", blogId ?? "")
-      );
-      const response = await request.json();
-
-      setBlog(response);
-      setLoading(false);
-    };
-    getBlog();
-  }, [blog, blogId]);
+  const [thumbnail, setThumbnail] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const { blogs: blog, loading } = useFetchBlogs(blogId);
 
   const navigate = useNavigate();
   const breadcrumb = [
@@ -108,10 +91,10 @@ const ViewBlogs: React.FC = () => {
       error={false}
       breadcrumb={breadcrumb}
     >
-      <div className="webinar-content">
-        <div className="webinar-content-header">
+      <div className="blog-content">
+        <div className="blog-content-header">
           <h2>{blog.title}</h2>
-          <div className="webinar-actions">
+          <div className="blog-actions">
             <button
               onClick={() =>
                 navigate(paths.adminBlogForm.replace(":id", blogId ?? ""))
@@ -127,12 +110,20 @@ const ViewBlogs: React.FC = () => {
         <div className="blog-html">
           <h3 className="blog-label">Blog Thumbnail</h3>
           <div className="blog-thumbnail-container">
-            <img src={blog.thumbnail} alt={blog.thumbnail} />
+            <Button
+              variant="contained"
+              onClick={() => {
+                setThumbnail(blog.thumbnail);
+                setOpenModal(true);
+              }}
+            >
+              View Thumbnail
+            </Button>
           </div>
         </div>
         <div className="blog-html">
           <h3 className="blog-label">Blog Title</h3>
-          {ReactHtmlParser(blog?.title ?? "")}
+          <p className="blog-title">{ReactHtmlParser(blog?.title ?? "")}</p>
         </div>
         <div className="blog-html">
           <h3 className="blog-label">Blog Content</h3>
@@ -140,6 +131,9 @@ const ViewBlogs: React.FC = () => {
         </div>
       </div>
 
+      <Dialog onClose={() => setOpenModal(false)} open={openModal}>
+        <img src={thumbnail} alt={thumbnail} />
+      </Dialog>
       <Dialog open={actionDialog} onClose={() => setActionDialog(false)}>
         <DialogContent>
           <DialogContentText fontSize={15}>

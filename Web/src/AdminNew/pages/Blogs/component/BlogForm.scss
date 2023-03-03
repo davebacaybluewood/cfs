@@ -26,9 +26,17 @@
       .blog-thumbnail-button {
         margin-bottom: 1rem;
       }
-      img {
-        width: 100%;
-        height: 30vh;
+      .img-container {
+        position: relative;
+        width: 50%;
+        height: 50vh;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }

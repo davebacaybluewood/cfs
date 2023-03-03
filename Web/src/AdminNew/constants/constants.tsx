@@ -9,6 +9,7 @@ import DeclinedAgents from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/De
 import Appointments from "AdminNew/pages/Appointments/Appointments";
 import Blogs from "AdminNew/pages/Blogs/Blogs";
 import BlogForm from "AdminNew/pages/Blogs/component/BlogForm";
+import FileMaintenance from "AdminNew/pages/Blogs/FileMaintenance/FileMaintenance";
 import ViewBlogs from "AdminNew/pages/Blogs/landing/ViewBlogs";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
@@ -242,6 +243,14 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <Blogs />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminBlogsFileMaintenance,
+    ELEMENT: (
+      <GuardedWrapper>
+        <FileMaintenance />
       </GuardedWrapper>
     ),
   },

@@ -150,10 +150,28 @@ const useSidebarLinks = (role: string) => {
     },
     {
       linkText: "Blogs",
-      link: paths.adminBlogs,
-      isActive: currentPage === adminPathsNew.adminBlogs.split("/")[2],
+      isActive:
+        currentPage === adminPathsNew.adminBlogs.split("/")[2] ||
+        currentPage === adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
       icon: <FaBell />,
       role: [ROLES.ROLE_EDITOR],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "All Blogs",
+          icon: <FaFileAlt />,
+          link: paths.adminBlogs,
+          isActive: currentPage === adminPathsNew.adminBlogs.split("/")[2],
+        },
+        {
+          linkText: "File Maintenance",
+          icon: <FaFileAlt />,
+          link: paths.adminBlogsFileMaintenance,
+          isActive:
+            currentPage ===
+            adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
+        },
+      ],
     },
     {
       linkText: "Agents Submenu",

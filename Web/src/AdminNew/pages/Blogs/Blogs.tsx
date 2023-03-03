@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
+import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
 import paths from "constants/routes";
 import BlogCard from "library/BlogCard/BlogCard";
@@ -40,16 +41,19 @@ export type BlogType = {
 
 const Blogs: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogType[]>([]);
+  const [users, setUsers] = useState([]);
+  const [authorId, setAuthorId] = useState();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
     const getBlogs = async () => {
       const request = await fetch(ENDPOINTS.BLOGS);
       const response = await request.json();
-
       setBlogs(response);
+      setAuthorId(response.author);
       setLoading(false);
     };
+
     getBlogs();
   }, [blogs]);
 
