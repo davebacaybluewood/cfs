@@ -6,6 +6,7 @@ import BlogCard from "library/BlogCard/BlogCard";
 import { Container, Grid } from "@mui/material";
 import { blogs } from "data/blogs";
 import ENDPOINTS from "constants/endpoints";
+import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 
 export type ChipTypes = {
   _id: string;
@@ -24,19 +25,8 @@ export type BlogType = {
 };
 
 const Blogs: React.FC = () => {
-  const [blogs, setBlogs] = useState<BlogType[]>([]);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    const getBlogs = async () => {
-      const request = await fetch(ENDPOINTS.BLOGS);
-      const response = await request.json();
+  const { blogs } = useFetchBlogs();
 
-      setBlogs(response);
-      setLoading(false);
-    };
-    getBlogs();
-  }, [blogs]);
   return (
     <div className="blogs">
       <PageTitle title="Blogs" />
@@ -54,8 +44,8 @@ const Blogs: React.FC = () => {
           paddingRight={{ xs: 0, sm: 0, md: 12, lg: 12 }}
           marginBottom={3}
         >
-          {blogs.map((blog) => {
-            const tags = blog.tags.map((tag) => {
+          {blogs.map((blog: any) => {
+            const tags = blog.tags.map((tag: any) => {
               return {
                 description: tag.label,
                 link: "/",

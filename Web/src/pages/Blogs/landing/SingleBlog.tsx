@@ -7,6 +7,7 @@ import Chip from "../components/Chip/Chip";
 import * as FontAwesome from "react-icons/fa";
 import ReactHtmlParser from "html-react-parser";
 import ENDPOINTS from "constants/endpoints";
+import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 
 export type ChipTypes = {
   _id: string;
@@ -27,23 +28,11 @@ export type BlogType = {
 const SingleBlog: React.FC = () => {
   const params = useParams();
   const blogId = params.id;
-  const [blogs, setBlogs] = useState<BlogType[]>([]);
+  const { blogs: blog } = useFetchBlogs(blogId);
 
-  useEffect(() => {
-    const getBlogs = async () => {
-      const request = await fetch(ENDPOINTS.BLOGS);
-      const response = await request.json();
-
-      setBlogs(response);
-    };
-    getBlogs();
-  }, [blogs]);
-
-  const blogItem: any = blogs.find((b) => b._id === blogId);
   // const socialIcon = blogItem.socialLinks.map((social: string) => {
   //   return social;
   // });
-  //copy link function
   const [linkCopied, setLinkCopied] = useState(false);
   const currentLink = window.location.href;
   const copyLinkHandler = () => {
@@ -54,10 +43,10 @@ const SingleBlog: React.FC = () => {
   return (
     <Container className="single-blog-container">
       <Box className="blog-thumbnail">
-        <img src={blogItem?.thumbnail} alt={blogItem?.thumbnail} />
+        <img src={blog?.thumbnail} alt={blog?.thumbnail} />
       </Box>
       <Box className="blog-title">
-        <h1>{blogItem?.title}</h1>
+        <h1>{blog?.title}</h1>
         {/* <Box className="blog-tags-container">
           <Chip tags={blogItem?.tags}></Chip>
         </Box> */}
@@ -66,18 +55,18 @@ const SingleBlog: React.FC = () => {
             <span>
               <FontAwesome.FaCalendarAlt />
             </span>
-            {formatISODateOnly(blogItem?.dateCreated)}
+            {formatISODateOnly(blog?.dateCreated)}
           </p>
           <p>
             <span>
               <FontAwesome.FaUserEdit />
             </span>
-            {blogItem?.author}
+            {blog?.author}
           </p>
         </Box>
       </Box>
       <Box className="blog-content-container">
-        <p>{ReactHtmlParser(blogItem?.content ?? "")}</p>
+        <p>{ReactHtmlParser(blog?.content ?? "")}</p>
         <Box className="blog-share-icons">
           <h2>Share This Blog: </h2>
           <FontAwesome.FaLink

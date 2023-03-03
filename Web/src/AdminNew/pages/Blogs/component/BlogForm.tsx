@@ -61,7 +61,7 @@ const BlogForm: React.FC = () => {
     author: Yup.string().required("Author Field is Required."),
     content: Yup.string().required("Content Field is Required."),
   });
-  //real quill
+
   const realQuillModules = useMemo(
     () => ({
       toolbar: {
@@ -76,7 +76,7 @@ const BlogForm: React.FC = () => {
     }),
     []
   );
-  //submit blog form
+
   const submitBlogFormHandler = (values: any) => {
     setIsLoading(true);
     const config = {
@@ -148,7 +148,7 @@ const BlogForm: React.FC = () => {
             setIsLoading(false);
           });
   };
-  //back to blogs
+
   const backToBlogsHandler = () => {
     navigate(paths.adminBlogs);
   };
