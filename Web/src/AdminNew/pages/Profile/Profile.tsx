@@ -84,6 +84,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
               instagram={profile.instagram}
               twitter={profile.twitter}
               agentGuid={profile.userGuid}
+              status={profile.status}
             />
             <Overview
               numberOfAppointments={0}

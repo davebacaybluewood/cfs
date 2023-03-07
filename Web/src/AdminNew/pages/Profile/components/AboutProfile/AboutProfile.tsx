@@ -18,6 +18,8 @@ import {
 } from "react-icons/fa";
 import Badge from "AdminNew/components/Badge/Badge";
 import { CURRENT_DOMAIN } from "constants/constants";
+import ComponentValidator from "library/ComponentValidator/ComponentValidator";
+import { AgentStatuses } from "AdminNew/pages/Agents/types";
 
 type AboutProfileProps = {
   specialties: string[];
@@ -32,6 +34,7 @@ type AboutProfileProps = {
   twitter: string;
   instagram: string;
   agentGuid: string;
+  status: string;
 };
 const AboutProfile: React.FC<AboutProfileProps> = (props) => {
   return (
@@ -101,20 +104,25 @@ const AboutProfile: React.FC<AboutProfileProps> = (props) => {
       <div className="about-info">
         <h2>Social Medias</h2>
         <ul>
-          <li>
-            <span className="list-label">
-              <FaGlobeAmericas />
-              Personal Website:{" "}
-            </span>
-            <span className="list-value">
-              <a
-                href={`${CURRENT_DOMAIN}/agents/${props.agentGuid}`}
-                target="_blank"
-              >
-                Visit Link <FaExternalLinkAlt />
-              </a>{" "}
-            </span>
-          </li>
+          <ComponentValidator
+            showNull={props.status !== AgentStatuses.ACTIVATED}
+          >
+            <li>
+              <span className="list-label">
+                <FaGlobeAmericas />
+                Personal Website:{" "}
+              </span>
+              <span className="list-value">
+                <a
+                  href={`${CURRENT_DOMAIN}/agents/${props.agentGuid}`}
+                  target="_blank"
+                >
+                  Visit Link <FaExternalLinkAlt />
+                </a>{" "}
+              </span>
+            </li>
+          </ComponentValidator>
+
           <li>
             <span className="list-label">
               <FaLinkedin />

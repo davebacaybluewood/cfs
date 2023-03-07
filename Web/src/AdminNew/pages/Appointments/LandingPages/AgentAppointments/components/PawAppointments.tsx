@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import Spinner from "AdminNew/components/Spinner/Spinner";
 import useGetScheduleAppointment from "AdminNew/pages/Appointments/hooks/useGetScheduleAppointment";
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import React from "react";
 import AppointmentList from "../../ScheduledAppointment/components/AppointmentList";
 
@@ -26,23 +27,29 @@ const PawAppointments: React.FC<PawAppointmentsProps> = (props) => {
   return (
     <Grid container spacing={2}>
       <Grid item sm={6} md={6} lg={12}>
-        {appointmentListLoading ? (
-          <Spinner />
-        ) : (
-          <AppointmentList
-            appointment={
-              filteredAppointmentList ?? [
-                {
-                  title: "",
-                  date: "",
-                  _id: "",
-                  status: "",
-                  meeting_link: "",
-                },
-              ]
-            }
-          />
-        )}
+        <NoInformationToDisplay
+          showNoInfo={filteredAppointmentList?.length === 0}
+          title="No Information to display."
+          message="There's no current appointment."
+        >
+          {appointmentListLoading ? (
+            <Spinner />
+          ) : (
+            <AppointmentList
+              appointment={
+                filteredAppointmentList ?? [
+                  {
+                    title: "",
+                    date: "",
+                    _id: "",
+                    status: "",
+                    meeting_link: "",
+                  },
+                ]
+              }
+            />
+          )}
+        </NoInformationToDisplay>
       </Grid>
     </Grid>
   );

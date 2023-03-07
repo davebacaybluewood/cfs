@@ -57,7 +57,7 @@ const Appointments: React.FC = () => {
         subtitle="View all appointments."
       />
       <NoInformationToDisplay
-        showNoInfo={appointments?.length === 0 && !loading}
+        showNoInfo={appointments?.length === 0}
         title="No Information to display."
         message="There's no current appointment."
       >
