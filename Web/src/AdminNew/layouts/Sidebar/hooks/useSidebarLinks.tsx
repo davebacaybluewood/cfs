@@ -125,18 +125,18 @@ const useSidebarLinks = (role: string) => {
       role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN],
       isSubMenu: role === ROLES.ROLE_MASTER_ADMIN || role === ROLES.ROLE_AGENT,
       subLinks: [
-        {
-          linkText: "Webinar Appointments",
-          icon: <FaUserSecret />,
-          link:
-            role === ROLES.ROLE_MASTER_ADMIN
-              ? paths.typeAppointments.replace(":typeId", "webinar")
-              : adminPathsNew.agentAppointments
-                  .replace(":agentId", userContext.user.userGuid)
-                  .replace(":typeId", "webinar"),
-          isActive:
-            currentPage === adminPathsNew.typeAppointments.split("/")[2],
-        },
+        // {
+        //   linkText: "Webinar Appointments",
+        //   icon: <FaUserSecret />,
+        //   link:
+        //     role === ROLES.ROLE_MASTER_ADMIN
+        //       ? paths.typeAppointments.replace(":typeId", "webinar")
+        //       : adminPathsNew.agentAppointments
+        //           .replace(":agentId", userContext.user.userGuid)
+        //           .replace(":typeId", "webinar"),
+        //   isActive:
+        //     currentPage === adminPathsNew.typeAppointments.split("/")[2],
+        // },
         {
           linkText: "PAW Appointments",
           icon: <FaUserSecret />,
