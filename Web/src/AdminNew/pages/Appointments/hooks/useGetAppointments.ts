@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
 import getUserToken from "helpers/getUserToken";
@@ -21,7 +21,6 @@ type FetchDataResult = {
 const useGetAppointments = (appointment_type: string): FetchDataResult => {
   const [isLoading, setIsLoading] = useState(false);
   const [appointments, setAppointments] = useState<AppointmentTypes[]>([]);
-  const params = useParams();
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -46,7 +45,7 @@ const useGetAppointments = (appointment_type: string): FetchDataResult => {
     };
 
     fetchAppointments();
-  }, [params, appointment_type]);
+  }, [appointment_type]);
 
   return {
     appointments: appointments,

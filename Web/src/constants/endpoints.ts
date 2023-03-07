@@ -28,6 +28,12 @@ const ENDPOINTS = {
   AGENT_WEBINARS: "/api/agents/webinars/active",
   AGENT_WEBINAR_FORM: "/api/webinars/:webinarId/:agentGuid/submit-webinar",
   APPOINTMENT_AGENTS: "/api/appointments",
+  APPOINTMENT_AGENTS_SCHEDULED_APPOINTMENTS:
+    "/api/appointments/:webinarGuid/:agentGuid",
+  WEBINAR_APPOINTMENT_AGENTS_COUNT:
+    "/api/webinars/:agentId/agent-appointments-count",
+  APPOINTMENT_AGENT_CALENDLY: "/api/webinars/:agentId/submit-appointment",
+  APPOINTMENT_SINGLE: "/api/appointments/:appointmentId",
 };
 
 const array = ["asdasd", "asdasdasfasf"];

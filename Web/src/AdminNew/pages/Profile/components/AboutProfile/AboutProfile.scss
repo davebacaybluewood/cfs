@@ -1,8 +1,6 @@
 .about-wrapper {
   background-color: white;
   border-radius: 4px;
-  //   box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
-  //   padding: 2rem;
 
   .about-info {
     margin-bottom: 2rem;
@@ -45,6 +43,28 @@
         }
         .list-value {
           color: rgba(51, 48, 60, 0.7);
+
+          a {
+            background: transparent;
+            border: none;
+            color: #333;
+            font-size: 1.2rem;
+            border-bottom: 1px dotted #333;
+            padding-right: 0;
+            opacity: 0.8;
+            cursor: pointer;
+            text-decoration: none;
+
+            svg {
+              font-size: 1rem;
+              margin-left: 0.3rem;
+              margin-right: 0;
+            }
+
+            &:hover {
+              opacity: 1;
+            }
+          }
         }
       }
     }

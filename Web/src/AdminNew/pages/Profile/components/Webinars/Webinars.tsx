@@ -1,14 +1,19 @@
 import Spinner from "AdminNew/components/Spinner/Spinner";
+import { SCHEDULE_TYPES } from "AdminNew/constants/constants";
+import adminPathsNew from "AdminNew/constants/routes";
+import useGetWebinarsWithCounts from "AdminNew/pages/Appointments/hooks/useGetWebinarsWithCounts";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import useFetchAgentWebinars from "./hooks/useFetchAgentWebinars";
 import "./Webinars.scss";
 
 type WebinarsProps = {
-  webinarGuids: string[];
+  agentGuid: string;
 };
 const Webinars: React.FC<WebinarsProps> = (props) => {
-  const { webinars, loading } = useFetchAgentWebinars(props.webinarGuids);
+  const { loading, webinars } = useGetWebinarsWithCounts(props.agentGuid);
+  const navigate = useNavigate();
 
   return (
     <div className="webinar-container">
@@ -24,10 +29,21 @@ const Webinars: React.FC<WebinarsProps> = (props) => {
           variant="secondary"
         >
           <React.Fragment>
-            {webinars?.map((webinar, index) => (
-              <div className="item" key={webinar?._id}>
+            {webinars?.map((webinar) => (
+              <div
+                className="item"
+                key={webinar?._id}
+                onClick={() =>
+                  navigate(
+                    adminPathsNew.scheduledAppointments
+                      .replace(":agentGuid", props.agentGuid)
+                      .replace(":typeId", SCHEDULE_TYPES.WEBINAR.toLowerCase())
+                      .replace(":webinarGuid", webinar.webinarGuid ?? "")
+                  )
+                }
+              >
                 <h2>{webinar.title}</h2>
-                <p>Test</p>
+                <p>Number of appointments: {webinar?.noOfAppointments}</p>
               </div>
             ))}
           </React.Fragment>

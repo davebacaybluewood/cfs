@@ -105,6 +105,7 @@ const getSingleAgent = expressAsync(async (req, res) => {
             isDeclined: 1,
             createdAt: 1,
             updatedAt: 1,
+            calendlyLink: 1,
             testimonials: {
               $filter: {
                 input: "$testimonials",
@@ -144,7 +145,6 @@ const deleteAgent = expressAsync(async (req, res) => {
 // @route   PUT /api/agents/update-agent
 // @access  Private/Admin
 const updateAgent = expressAsync(async (req, res) => {
-  console.log(req.file);
   try {
     /** Upload avatar to cloudinary */
     let agentImgResult;

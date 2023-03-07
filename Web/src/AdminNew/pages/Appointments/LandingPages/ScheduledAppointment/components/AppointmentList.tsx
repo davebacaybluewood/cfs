@@ -8,9 +8,10 @@ import "./AppointmentList.scss";
 
 export type AppointmentListType = {
   title: string;
-  date: Date;
+  date: string;
   _id: string;
   status: string;
+  meeting_link: string;
 };
 type AppointmentListProps = {
   appointment: AppointmentListType[];
@@ -19,21 +20,24 @@ const AppointmentList: React.FC<AppointmentListProps> = (props) => {
   const navigate = useNavigate();
 
   const viewMorehandler = (id: string) => {
-    navigate(adminPathsNew.appointmentInformation.replace(":id", id));
+    navigate(
+      adminPathsNew.appointmentInformation.replace(":appointmentId", id)
+    );
   };
+
   return (
     <div className="appointment-list">
-      {props.appointment.map((appointment) => {
+      {props.appointment?.map((appointment) => {
         const status =
-          appointment.status === APPOINTMENT_STATUS.ACTIVE
+          appointment.status === APPOINTMENT_STATUS.ACTIVE.toLowerCase()
             ? "success"
-            : appointment.status === APPOINTMENT_STATUS.CANCELLED
+            : appointment.status === APPOINTMENT_STATUS.CANCELLED.toLowerCase()
             ? "danger"
             : "warning";
         const statusLabel =
-          appointment.status === APPOINTMENT_STATUS.ACTIVE
+          appointment.status === APPOINTMENT_STATUS.ACTIVE.toLowerCase()
             ? "Active"
-            : appointment.status === APPOINTMENT_STATUS.CANCELLED
+            : appointment.status === APPOINTMENT_STATUS.CANCELLED.toLowerCase()
             ? "Cancelled"
             : "Ongoing";
 
@@ -41,7 +45,7 @@ const AppointmentList: React.FC<AppointmentListProps> = (props) => {
           <div className="appointment-list-item">
             <div className="information">
               <h4>{appointment.title}</h4>
-              <p>{formatISODateOnly(appointment.date.toString())}</p>
+              <p>{formatISODateOnly(appointment.date?.toString())}</p>
               <div>
                 <Circle variant={status}>Status: {statusLabel}</Circle>
               </div>
@@ -50,7 +54,9 @@ const AppointmentList: React.FC<AppointmentListProps> = (props) => {
               <button onClick={() => viewMorehandler(appointment._id)}>
                 View More Information
               </button>
-              <button onClick={() => viewMorehandler(appointment._id)}>
+              <button
+                onClick={() => window.open(appointment.meeting_link, "_blank")}
+              >
                 View Google Meet
               </button>
             </div>

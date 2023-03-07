@@ -2,65 +2,108 @@ import { Grid } from "@mui/material";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
 import { CrumbTypes } from "AdminNew/pages/Dashboard/types";
 import paths from "constants/routes";
-import AppointmentList, {
-  AppointmentListType,
-} from "./components/AppointmentList";
+import AppointmentList from "./components/AppointmentList";
 import DashboardCard from "pages/Admin/pages/Dashboard/components/DashboardCard";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaEnvelopeOpenText } from "react-icons/fa";
 import Header from "./components/Header";
+import axios from "axios";
+import ENDPOINTS from "constants/endpoints";
+import { useParams } from "react-router-dom";
+import getUserToken from "helpers/getUserToken";
+import Spinner from "AdminNew/components/Spinner/Spinner";
+import useGetScheduleAppointment from "../../hooks/useGetScheduleAppointment";
+import useFetchWebinars from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchWebinars";
+import useFetchAgent from "AdminNew/pages/Agents/hooks/useFetchAgent";
+import { formatISODateOnly } from "helpers/dateFormatter";
 
-const crumbs: CrumbTypes[] = [
-  {
-    title: "Comfort Financial Solutions",
-    url: paths.dashboard,
-    isActive: false,
-  },
-  {
-    title: "Appointments",
-    url: paths.appointments,
-    isActive: true,
-  },
-  {
-    title: "Scheduled Appointments",
-    url: paths.scheduledAppointments,
-    isActive: true,
-  },
-];
 const ScheduleAppointment: React.FC = () => {
-  const appointmentList: AppointmentListType[] = [
+  const { agentGuid, webinarGuid } = useParams();
+  const { webinars } = useFetchWebinars(webinarGuid, true);
+  const { appointmentList, appointmentListLoading } = useGetScheduleAppointment(
+    agentGuid ?? "",
+    webinarGuid ?? ""
+  );
+  const { agent } = useFetchAgent(agentGuid ?? "");
+
+  const filteredAppointmentList = appointmentList?.map((appointment) => {
+    return {
+      title: appointment.name,
+      date: appointment.calendly_end_time.toString(),
+      _id: appointment._id,
+      status: appointment.calendly_status,
+      meeting_link: appointment.meeting_link,
+    };
+  });
+
+  const crumbs: CrumbTypes[] = [
     {
-      title: "Dave Spencer Bacay",
-      date: new Date(),
-      _id: "3223fd-b912-4ecc-8104-534432c9548c",
-      status: "ACTIVE",
+      title: "Comfort Financial Solutions",
+      url: paths.dashboard,
+      isActive: false,
     },
     {
-      title: "Dave Spencer Bacay",
-      date: new Date(),
-      _id: "ssdv213-b912-4ecc-8104-534432c9548c",
-      status: "ONGOING",
+      title: "Appointments",
+      url: paths.appointments,
+      isActive: true,
     },
     {
-      title: "Dave Spencer Bacay",
-      date: new Date(),
-      _id: "jhg2344-b912-4ecc-8104-534432c9548c",
-      status: "CANCELLED",
+      title: "Webinar Appointments",
+      url: paths.scheduledAppointments,
+      isActive: false,
+    },
+    {
+      title: webinars[0]?.title,
+      url: paths.scheduledAppointments,
+      isActive: true,
     },
   ];
+
+  const headerCols = [
+    {
+      label: "Title",
+      value: webinars[0]?.title,
+    },
+    {
+      label: "Webinar ID",
+      value: webinars[0]?.webinarGuid,
+    },
+    {
+      label: "Webinar Created",
+      value: formatISODateOnly(webinars[0]?.createdAt),
+    },
+    {
+      label: "Agent",
+      value: agent?.name,
+    },
+    {
+      label: "Agent ID",
+      value: agent?.userGuid,
+    },
+  ];
+
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={false}>
-      <Header
-        title="Appointment Name"
-        agent="Dave Spencer Bacay"
-        appointmentId="123123-123123-123123"
-        createdAt={new Date()}
-        typeOfAppointment="Webinar"
-        wayOfAppointment="Google Meet"
-      />
+      <Header title={webinars[0]?.title} cols={headerCols} />
       <Grid container spacing={2}>
         <Grid item sm={6} md={6} lg={9}>
-          <AppointmentList appointment={appointmentList} />
+          {appointmentListLoading ? (
+            <Spinner />
+          ) : (
+            <AppointmentList
+              appointment={
+                filteredAppointmentList ?? [
+                  {
+                    title: "",
+                    date: "",
+                    _id: "",
+                    status: "",
+                    meeting_link: "",
+                  },
+                ]
+              }
+            />
+          )}
         </Grid>
         <Grid item sm={6} md={6} lg={3}>
           <Grid spacing={2} container>

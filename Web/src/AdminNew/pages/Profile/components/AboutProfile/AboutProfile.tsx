@@ -12,8 +12,12 @@ import {
   FaRegUser,
   FaFlag,
   FaStar,
+  FaGlobeAmericas,
+  FaExternalLinkAlt,
+  FaLinkedin,
 } from "react-icons/fa";
 import Badge from "AdminNew/components/Badge/Badge";
+import { CURRENT_DOMAIN } from "constants/constants";
 
 type AboutProfileProps = {
   specialties: string[];
@@ -27,6 +31,7 @@ type AboutProfileProps = {
   facebook: string;
   twitter: string;
   instagram: string;
+  agentGuid: string;
 };
 const AboutProfile: React.FC<AboutProfileProps> = (props) => {
   return (
@@ -98,31 +103,61 @@ const AboutProfile: React.FC<AboutProfileProps> = (props) => {
         <ul>
           <li>
             <span className="list-label">
-              <FaFacebookF />
-              LinkedIn:{" "}
+              <FaGlobeAmericas />
+              Personal Website:{" "}
             </span>
-            <span className="list-value">{props.linkedIn}</span>
+            <span className="list-value">
+              <a
+                href={`${CURRENT_DOMAIN}/agents/${props.agentGuid}`}
+                target="_blank"
+              >
+                Visit Link <FaExternalLinkAlt />
+              </a>{" "}
+            </span>
           </li>
           <li>
             <span className="list-label">
-              <FaTwitter />
+              <FaLinkedin />
+              LinkedIn:{" "}
+            </span>
+            <span className="list-value">
+              <a href={props.linkedIn} target="_blank">
+                Visit Link <FaExternalLinkAlt />
+              </a>
+            </span>
+          </li>
+          <li>
+            <span className="list-label">
+              <FaFacebookF />
               Facebook:{" "}
             </span>
-            <span className="list-value">{props.facebook} </span>
+            <span className="list-value">
+              <a href={props.facebook} target="_blank">
+                Visit Link <FaExternalLinkAlt />
+              </a>{" "}
+            </span>
           </li>
           <li>
             <span className="list-label">
               <FaInstagram />
               Instagram:{" "}
             </span>
-            <span className="list-value">{props.instagram} </span>
+            <span className="list-value">
+              <a href={props.instagram} target="_blank">
+                Visit Link <FaExternalLinkAlt />
+              </a>
+            </span>
           </li>
           <li>
             <span className="list-label">
-              <AiOutlineUser />
+              <FaTwitter />
               Twitter:{" "}
             </span>
-            <span className="list-value">{props.twitter} </span>
+            <span className="list-value">
+              <a href={props.twitter} target="_blank">
+                Visit Link <FaExternalLinkAlt />
+              </a>
+            </span>
           </li>
         </ul>
       </div>

@@ -29,6 +29,7 @@ import Test from "TestAutomate/Test";
 import RootTest from "TestAutomate/RootTest";
 
 export const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
+export const CURRENT_DOMAIN = window.location.origin;
 
 /* Web App Constant Images */
 export const IMAGES = {

@@ -2,8 +2,8 @@ import { WebinarValuesType } from "AdminNew/pages/FileMaintenance/pages/Webinars
 import ENDPOINTS from "constants/endpoints";
 import { useEffect, useState } from "react";
 
-const useFetchAgentWebinars = (webinarGuids: string[]) => {
-  const [webinars, setWebinars] = useState<WebinarValuesType[]>([]);
+const useFetchAgentWebinars = (webinarGuids: string[] | undefined) => {
+  const [webinars, setWebinars] = useState<WebinarValuesType[]>();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

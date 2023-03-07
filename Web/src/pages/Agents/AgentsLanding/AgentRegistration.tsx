@@ -84,7 +84,7 @@ const AgentRegistration = () => {
           <div className="agent-form">
             <div className="form-header">
               <h2>Registration Form</h2>
-              <p>All fields are required.</p>
+              <p>(*) fields are required.</p>
             </div>
             <ComponentValidator showNull={!error}>
               <Alert variant="filled" severity="error" className="form-alert">

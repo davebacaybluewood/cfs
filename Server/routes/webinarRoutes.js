@@ -3,6 +3,7 @@ import {
   createWebinar,
   deleteWebinar,
   getActiveWebinars,
+  getAgentWebinarAppointments,
   getAllWebinars,
   getSingleWebinar,
   submitAgentWebinar,
@@ -23,8 +24,11 @@ router
   .get(getSingleWebinar)
   .delete(protect, adminAuth, deleteWebinar)
   .put(protect, adminAuth, multer.single("thumbnail"), updateWebinar);
+router
+  .route("/:agentId/agent-appointments-count")
+  .get(protect, getAgentWebinarAppointments);
 router.route("/:webinarId/agents").get(getActiveWebinars);
 router.route("/:webinarId/:agentId/submit-webinar").post(submitAgentWebinar);
-router.route("/:webinarId/:agentId/submit-appointment").post(submitAppointment);
+router.route("/:agentId/submit-appointment").post(submitAppointment);
 
 export default router;

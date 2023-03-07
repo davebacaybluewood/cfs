@@ -16,7 +16,6 @@ const agentAppointmentSchema = mongoose.Schema(
     },
     webinarGuid: {
       type: String,
-      required: true,
     },
     agentGuid: {
       type: String,
@@ -55,6 +54,13 @@ const agentAppointmentSchema = mongoose.Schema(
       required: true,
     },
     appointment_type: {
+      type: String,
+      required: true,
+    },
+    calendly_notes: {
+      type: String,
+    },
+    meeting_link: {
       type: String,
       required: true,
     },

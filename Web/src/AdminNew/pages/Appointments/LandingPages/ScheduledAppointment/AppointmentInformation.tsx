@@ -6,11 +6,11 @@ import DashboardCard from "pages/Admin/pages/Dashboard/components/DashboardCard"
 import React from "react";
 import Header from "./components/Header";
 import "./AppointmentInformation.scss";
-import Calendar from "AdminNew/pages/Dashboard/components/Calendar/Calendar";
 import LabeledValue from "library/LabeledValue/LabeledValue";
 import {
   FaCalendarAlt,
   FaClock,
+  FaExternalLinkAlt,
   FaGlobeEurope,
   FaLink,
   FaRegClock,
@@ -20,31 +20,17 @@ import {
 } from "react-icons/fa";
 import { formatISODateOnly } from "helpers/dateFormatter";
 import Circle from "library/Icons/Circle";
+import { useParams } from "react-router-dom";
+import useGetAppointmentInformation from "../../hooks/useGetAppointmentInformation";
+import useFetchAgent from "AdminNew/pages/Agents/hooks/useFetchAgent";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import listPlugin from "@fullcalendar/list";
+import { APPOINTMENT_STATUSES } from "AdminNew/constants/constants";
 
 const AppointmentInformation: React.FC = () => {
-  const crumbs: CrumbTypes[] = [
-    {
-      title: "Comfort Financial Solutions",
-      url: paths.dashboard,
-      isActive: false,
-    },
-    {
-      title: "Appointments",
-      url: paths.appointments,
-      isActive: true,
-    },
-    {
-      title: "Scheduled Appointments",
-      url: paths.scheduledAppointments,
-      isActive: true,
-    },
-    {
-      title: "Appointment Name",
-      url: paths.scheduledAppointments,
-      isActive: true,
-    },
-  ];
-
   const invisibleObj = {
     title: "",
     value: "",
@@ -55,11 +41,29 @@ const AppointmentInformation: React.FC = () => {
       lg: 3,
     },
   };
+  const { appointmentId } = useParams();
+  const { appointmentInfo, loading } = useGetAppointmentInformation(
+    appointmentId ?? ""
+  );
+  const { agent } = useFetchAgent(appointmentInfo?.agentGuid ?? "");
+  const appoinment_type =
+    appointmentInfo?.appointment_type === "WEBINAR"
+      ? "Webinar"
+      : "Personal Agent Website";
+
+  const appointmentStatus =
+    appointmentInfo?.calendly_status?.toLowerCase() ===
+    APPOINTMENT_STATUSES.CANCELLED.toLowerCase()
+      ? "danger"
+      : appointmentInfo?.calendly_status?.toLowerCase() ===
+        APPOINTMENT_STATUSES.ACTIVE.toLowerCase()
+      ? "success"
+      : "warning";
 
   const appointmentCols = [
     {
       title: "Name",
-      value: "Dave Spencer Bacay",
+      value: appointmentInfo?.name,
       icon: <FaUserAlt />,
       cols: {
         sm: 6,
@@ -69,7 +73,7 @@ const AppointmentInformation: React.FC = () => {
     },
     {
       title: "Email Address",
-      value: "spencerbacay@testdata.com",
+      value: appointmentInfo?.email,
       icon: <FaUserAlt />,
       cols: {
         sm: 6,
@@ -79,7 +83,7 @@ const AppointmentInformation: React.FC = () => {
     },
     {
       title: "Date Created",
-      value: formatISODateOnly(new Date().toString()),
+      value: formatISODateOnly(appointmentInfo?.createdAt ?? ""),
       icon: <FaCalendarAlt />,
       cols: {
         sm: 6,
@@ -90,7 +94,7 @@ const AppointmentInformation: React.FC = () => {
     invisibleObj,
     {
       title: "Appointment Date",
-      value: formatISODateOnly(new Date().toString()),
+      value: formatISODateOnly(appointmentInfo?.calendly_end_time ?? ""),
       icon: <FaCalendarAlt />,
       cols: {
         sm: 6,
@@ -100,7 +104,9 @@ const AppointmentInformation: React.FC = () => {
     },
     {
       title: "Appointment Start Time",
-      value: formatISODateOnly(new Date().toString()),
+      value: new Date(
+        appointmentInfo?.calendly_start_time ?? ""
+      ).toLocaleTimeString(),
       icon: <FaClock />,
       cols: {
         sm: 6,
@@ -110,7 +116,9 @@ const AppointmentInformation: React.FC = () => {
     },
     {
       title: "Appointment End Time",
-      value: formatISODateOnly(new Date().toString()),
+      value: new Date(
+        appointmentInfo?.calendly_end_time ?? ""
+      ).toLocaleTimeString(),
       icon: <FaRegClock />,
       cols: {
         sm: 6,
@@ -120,7 +128,7 @@ const AppointmentInformation: React.FC = () => {
     },
     {
       title: "Timezone",
-      value: "Asia/Manila",
+      value: appointmentInfo?.calendly_timezone,
       icon: <FaGlobeEurope />,
       cols: {
         sm: 6,
@@ -130,8 +138,8 @@ const AppointmentInformation: React.FC = () => {
     },
     {
       title: "Appointment Status",
-      value: "Active",
-      icon: <Circle variant="success" />,
+      value: appointmentInfo?.calendly_status?.toLocaleUpperCase(),
+      icon: <Circle variant={appointmentStatus} />,
       cols: {
         sm: 6,
         md: 6,
@@ -140,7 +148,15 @@ const AppointmentInformation: React.FC = () => {
     },
     {
       title: "Appointment Link",
-      value: "https://calendly.com",
+      value: (
+        <a
+          href={appointmentInfo?.meeting_link}
+          target="_blank"
+          className="link-info"
+        >
+          {appointmentInfo?.meeting_link} <FaExternalLinkAlt />
+        </a>
+      ),
       icon: <FaLink />,
       cols: {
         sm: 6,
@@ -152,7 +168,7 @@ const AppointmentInformation: React.FC = () => {
     invisibleObj,
     {
       title: "Appointment Note",
-      value: "This is a note",
+      value: appointmentInfo?.calendly_notes,
       icon: <FaRegStickyNote />,
       cols: {
         sm: 12,
@@ -161,15 +177,49 @@ const AppointmentInformation: React.FC = () => {
       },
     },
   ];
+
+  const crumbs: CrumbTypes[] = [
+    {
+      title: "Comfort Financial Solutions",
+      url: paths.dashboard,
+      isActive: false,
+    },
+    {
+      title: "Appointments",
+      url: paths.appointments,
+      isActive: false,
+    },
+    {
+      title: "Scheduled Appointments",
+      url: paths.scheduledAppointments,
+      isActive: false,
+    },
+    {
+      title: appointmentInfo?.name + " - " + appoinment_type,
+      url: paths.scheduledAppointments,
+      isActive: true,
+    },
+  ];
+
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={false}>
       <Header
-        title="Appointment Name"
-        agent="Dave Spencer Bacay"
-        appointmentId="123123-123123-123123"
-        createdAt={new Date()}
-        typeOfAppointment="Webinar"
+        title={appointmentInfo?.name ?? ""}
+        agent={agent?.name}
+        appointmentId={appointmentInfo?._id}
+        createdAt={new Date(appointmentInfo?.createdAt ?? "")}
+        typeOfAppointment={{
+          code: appointmentInfo?.appointment_type ?? "",
+          text: appoinment_type,
+        }}
         wayOfAppointment="Google Meet"
+        hasActions={
+          appointmentInfo?.calendly_status !==
+          APPOINTMENT_STATUSES.CANCELLED.toLowerCase()
+        }
+        agentGuid={agent?.userGuid}
+        webinarGuid={appointmentInfo?.webinarGuid}
+        id={appointmentInfo?._id}
       />
       <div className="appointment-container">
         <Grid container spacing={2}>
@@ -188,7 +238,7 @@ const AppointmentInformation: React.FC = () => {
                       <LabeledValue
                         title={col.title}
                         icon={col.icon}
-                        subTitle={col.value}
+                        subTitle={col.value as string}
                       />
                     </Grid>
                   );
@@ -198,7 +248,36 @@ const AppointmentInformation: React.FC = () => {
           </Grid>
           <Grid item sm={12} lg={12}>
             <div className="appointment-information">
-              <Calendar />
+              <FullCalendar
+                height="75vh"
+                plugins={[
+                  dayGridPlugin,
+                  timeGridPlugin,
+                  interactionPlugin,
+                  listPlugin,
+                ]}
+                headerToolbar={{
+                  left: "",
+                  center: "title",
+                  right: "",
+                }}
+                initialView="timeGridDay"
+                editable={true}
+                selectable={true}
+                selectMirror={true}
+                dayMaxEvents={true}
+                select={(event) => console.log(event)}
+                eventClick={(event) => console.log(event)}
+                displayEventTime={false}
+                eventTextColor="#FFFFFF"
+                initialEvents={[
+                  {
+                    title: "event 1",
+                    date: "2023-03-02T03:02:05.678123Z",
+                  },
+                  { title: "event 2", date: "2023-03-02T03:04:05.678123Z" },
+                ]}
+              />
             </div>
           </Grid>
         </Grid>

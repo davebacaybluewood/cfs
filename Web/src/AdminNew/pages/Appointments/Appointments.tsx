@@ -4,8 +4,9 @@ import Wrapper from "AdminNew/components/Wrapper/Wrapper";
 import adminPathsNew from "AdminNew/constants/routes";
 import paths from "constants/routes";
 import url_params from "helpers/url_params";
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CrumbTypes } from "../Dashboard/types";
 import "./Appointments.scss";
 import useGetAppointments from "./hooks/useGetAppointments";
@@ -30,22 +31,20 @@ export const APPOINTMENT_STATUS = {
 };
 
 const Appointments: React.FC = () => {
-  const { appointments, loading } = useGetAppointments(
-    url_params.type ? url_params.type : ""
-  );
   const navigate = useNavigate();
+  const { typeId } = useParams();
+  const { appointments, loading } = useGetAppointments(typeId ?? "");
 
-  const cardClickHandler = (id: string) => {
+  const cardClickHandler = (agentId: string) => {
     navigate({
-      pathname: adminPathsNew.scheduledAppointments.replace(
-        ":appointmentId",
-        id
-      ),
-      search: `?type=${url_params.type === "paw" ? "paw" : "webinar"}`,
+      pathname: adminPathsNew.agentAppointments
+        .replace(":agentId", agentId ?? "")
+        .replace(":typeId", typeId ?? ""),
     });
   };
 
-  useEffect(() => {}, [url_params]);
+  const pageTitle = typeId === "webinar" ? "Webinar" : "Personal Website";
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -53,40 +52,49 @@ const Appointments: React.FC = () => {
       loading={loading}
       className="appointment-container"
     >
-      <Title title="Appointments" subtitle="View all your appointments." />
-      <Grid container spacing={2}>
-        {appointments.map((appointment) => {
-          return (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              onClick={() => cardClickHandler(appointment.agentGuid)}
-            >
-              <div className="item">
-                <Grid container alignItems="center">
-                  <Grid item xs={12} sm={12} md={7}>
-                    <div className="card-captions">
-                      <h5>{appointment.title}</h5>
-                      <h1>{appointment.name}</h1>
-                      <p>
-                        Number of appointment:{" "}
-                        {appointment.numberOfAppointments}
-                      </p>
-                    </div>
+      <Title
+        title={pageTitle + " Appointments"}
+        subtitle="View all appointments."
+      />
+      <NoInformationToDisplay
+        showNoInfo={appointments?.length === 0 && !loading}
+        title="No Information to display."
+        message="There's no current appointment."
+      >
+        <Grid container spacing={2}>
+          {appointments.map((appointment) => {
+            return (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                onClick={() => cardClickHandler(appointment.agentGuid)}
+              >
+                <div className="item">
+                  <Grid container alignItems="center">
+                    <Grid item xs={12} sm={12} md={7}>
+                      <div className="card-captions">
+                        <h5>{appointment.title}</h5>
+                        <h1>{appointment.name}</h1>
+                        <p>
+                          Number of appointment:{" "}
+                          {appointment.numberOfAppointments}
+                        </p>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={5}>
+                      <div className="card-image">
+                        <img src={appointment.avatar} className="agent-img" />
+                      </div>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={5}>
-                    <div className="card-image">
-                      <img src={appointment.avatar} className="agent-img" />
-                    </div>
-                  </Grid>
-                </Grid>
-              </div>
-            </Grid>
-          );
-        })}
-      </Grid>
+                </div>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </NoInformationToDisplay>
     </Wrapper>
   );
 };

@@ -1,0 +1,20 @@
+.appointment-card-v2 {
+  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  h2 {
+    font-weight: 900;
+    font-size: 2rem;
+  }
+  p {
+    font-size: 1.3rem;
+    font-weight: 300;
+  }
+}

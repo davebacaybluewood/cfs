@@ -18,6 +18,7 @@ import Spinner from "AdminNew/components/Spinner/Spinner";
 import AgentPending from "./components/AgentPending";
 import paths from "constants/routes";
 import useFetchAgentWebinars from "AdminNew/pages/Profile/components/Webinars/hooks/useFetchAgentWebinars";
+import ENDPOINTS from "constants/endpoints";
 
 type FilteredContainerProps = {
   noSpacing?: boolean;
@@ -56,7 +57,30 @@ const Agents: React.FC<AgentsProps> = (props) => {
     onProfilePageViewed: () => console.log("onProfilePageViewed"),
     onDateAndTimeSelected: (e) => console.log(e),
     onEventTypeViewed: () => console.log("onEventTypeViewed"),
-    onEventScheduled: (e) => console.log(e.data.payload),
+    onEventScheduled: (e) => {
+      const inviteLink = e.data.payload.invitee.uri;
+      console.log(inviteLink);
+      const getActiveWebinars = async () => {
+        const req = await fetch(
+          ENDPOINTS.APPOINTMENT_AGENT_CALENDLY.replace(":agentId", id ?? ""),
+          {
+            method: "post",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              state: "State Test",
+              calendlyURI: inviteLink,
+              appointment_type: "PAW",
+              webinarGuid: "",
+            }),
+          }
+        );
+
+        const response = await req.json();
+        console.log(response);
+      };
+
+      getActiveWebinars();
+    },
   });
 
   const { webinars, loading: webinarLoading } = useFetchAgentWebinars(
@@ -97,7 +121,7 @@ const Agents: React.FC<AgentsProps> = (props) => {
               }
             >
               <AgentVideos
-                webinars={webinars}
+                webinars={webinars ?? []}
                 loading={webinarLoading}
                 agentId={agent.userGuid}
               />
@@ -124,7 +148,7 @@ const Agents: React.FC<AgentsProps> = (props) => {
                         description={`Or direct call to ${agent.phoneNumber}`}
                       />
                       <InlineWidget
-                        url="https://calendly.com/gocfs/30min?primary_color=0057b7"
+                        url={agent?.calendlyLink}
                         styles={{
                           height: "850px",
                           width: "100%",
