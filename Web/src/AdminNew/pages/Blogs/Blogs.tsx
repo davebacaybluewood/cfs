@@ -1,7 +1,6 @@
 import { Grid } from "@mui/material";
 import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
-import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
 import paths from "constants/routes";
 import BlogCard from "library/BlogCard/BlogCard";

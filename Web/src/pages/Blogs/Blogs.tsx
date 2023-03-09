@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Blogs.scss";
 import Banner from "library/Banner/Banner";
 import PageTitle from "library/PageTitle/PageTitle";
 import BlogCard from "library/BlogCard/BlogCard";
 import { Container, Grid } from "@mui/material";
-import { blogs } from "data/blogs";
-import ENDPOINTS from "constants/endpoints";
 import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 
 export type ChipTypes = {

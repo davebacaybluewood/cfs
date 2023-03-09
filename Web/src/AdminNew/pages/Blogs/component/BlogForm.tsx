@@ -1,27 +1,35 @@
-import { Grid, Button as MUIButton, InputLabel, Select, FormControl, OutlinedInput, Box, Chip, MenuItem, useTheme } from "@mui/material";
+import {
+  Grid,
+  Button as MUIButton,
+  InputLabel,
+  Select,
+  FormControl,
+  OutlinedInput,
+  Box,
+  Chip,
+  MenuItem,
+} from "@mui/material";
 import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
 import { CrumbTypes } from "AdminNew/pages/Dashboard/types";
-import useFetchBlogs, { BlogValueType } from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
+import useFetchBlogs, {
+  BlogValueType,
+} from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 import ENDPOINTS from "constants/endpoints";
 import paths from "constants/routes";
 import { Formik } from "formik";
 import getUserToken from "helpers/getUserToken";
 import Button from "library/Button/Button";
 import FormikTextInput from "library/Formik/FormikInput";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BlogType } from "../Blogs";
 import "./BlogForm.scss";
 import Spinner from "library/Spinner/Spinner";
 import { UserContext } from "AdminNew/context/UserProvider";
-import useFetchAuthor from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchAuthor";
-import agent from "AdminNew/pages/Profile/test-data";
-import getStyles from "pages/Agents/AgentsLanding/helpers/getStyles";
 import { MenuProps } from "pages/Agents/AgentsLanding/utils";
 import { tagOptions } from "../utils";
 
@@ -44,7 +52,6 @@ const BlogForm: React.FC = () => {
   const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const userCtx = useContext(UserContext) as any;
-  const theme = useTheme();
 
   const addInitialValues: Omit<BlogValueType, "role"> = {
     thumbnail: "",
@@ -60,7 +67,6 @@ const BlogForm: React.FC = () => {
     tags: blogs?.tags ?? [],
     content: blogs?.content,
   };
-
 
   const isEditMode = id !== "add";
   const initialValues = !isEditMode ? addInitialValues : editInitialValues;
@@ -175,9 +181,15 @@ const BlogForm: React.FC = () => {
         onSubmit={(values) => submitBlogFormHandler(values)}
         enableReinitialize={true}
       >
-        {({ values, setFieldValue, setFieldTouched, handleSubmit, touched }) => {
+        {({
+          values,
+          setFieldValue,
+          setFieldTouched,
+          handleSubmit,
+          touched,
+        }) => {
           console.log(values);
-          
+
           return (
             <div className="blog-form">
               <Grid container spacing={2} className="blog-form-container">
@@ -229,72 +241,56 @@ const BlogForm: React.FC = () => {
                     InputLabelProps={{ shrink: !!values.author }}
                   />
                 </Grid>
-                
+
                 <Grid item xs={12} sm={12} md={12}>
-                          <FormControl
-                            variant="outlined"
-                            fullWidth
-                            // error={Boolean(
-                            //   values.tags.length === 0 && touched.tags
-                            // )}
-                          >
-                            
-                            <InputLabel id="languages-label">
-                              Put Some Tags (You can choose more than
-                              one)
-                            </InputLabel>
-                            <Select
-                              labelId="languages-label"
-                              id="languages-chip"
-                              multiple
-                              value={values.tags}
-                              onChange={(event) => {
-                                const tags = event.target.value?.map((tag:any) => {
-                                  return {label: tag}
-                                })
-                                console.log(event.target.value);
-                                setFieldValue("tags", event.target.value);
-                                setFieldTouched("tags", true);
-                              }}
-                              variant="outlined"
-                              name="languages"
-                              input={
-                                <OutlinedInput
-                                  id="select-multiple-chip"
-                                  label="Chip"
-                                />
-                              }
-                              renderValue={(selected) => (
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    gap: 0.5,
-                                  }}
-                                >
-                                  {selected.map((value: any) => (
-                                    <Chip key={value?.label} label={value?.label} />
-                                  ))}
-                                </Box>
-                              )}
-                              MenuProps={MenuProps}
-                            >
-                              {tagOptions.map((name) => (
-                                <MenuItem
-                                  key={name.label}
-                                  value={{label: name.label} as any}
-                                  // style={getStyles(
-                                  //   name,
-                                  //   values.tags,
-                                  //   theme
-                                  // )}
-                                >
-                                  {name.label}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-                        </Grid>
+                  <FormControl variant="outlined" fullWidth>
+                    <InputLabel id="languages-label">
+                      Put Some Tags (You can choose more than one)
+                    </InputLabel>
+                    <Select
+                      labelId="languages-label"
+                      id="languages-chip"
+                      multiple
+                      value={values.tags}
+                      onChange={(event) => {
+                        const tags = event.target.value?.map((tag: any) => {
+                          return { label: tag };
+                        });
+                        console.log(event.target.value);
+                        setFieldValue("tags", event.target.value);
+                        setFieldTouched("tags", true);
+                      }}
+                      variant="outlined"
+                      name="languages"
+                      input={
+                        <OutlinedInput id="select-multiple-chip" label="Chip" />
+                      }
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            gap: 0.5,
+                          }}
+                        >
+                          {selected.map((value: any) => (
+                            <Chip key={value?.label} label={value?.label} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {tagOptions.map((name) => (
+                        <MenuItem
+                          key={name.label}
+                          value={{ label: name.label } as any}
+                        >
+                          {name.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
                 <Grid item sm={12} md={12} lg={12}>
                   <h5 className="form-label">Blog Content</h5>
                   <ReactQuill
@@ -317,7 +313,6 @@ const BlogForm: React.FC = () => {
                   Submit
                 </Button>
               </div>
-              {<pre>{JSON.stringify(values, null, 2)}</pre>}
             </div>
           );
         }}
