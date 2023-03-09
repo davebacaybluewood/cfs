@@ -36,6 +36,7 @@ export type BlogType = {
   tags: ChipTypes[];
   content?: string;
   author: string;
+  authorName: string;
   createdAt?: Date;
 };
 
@@ -82,7 +83,7 @@ const Blogs: React.FC = () => {
           return (
             <Grid item xs={12} sm={6} md={2} lg={2} className="admin-blog-grid">
               <BlogCard
-                author={blog.author}
+                author={blog.authorName}
                 dateCreated={new Date(blog.createdAt?.toString() ?? "")}
                 id={blog._id}
                 tags={tags}

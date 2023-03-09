@@ -10,7 +10,26 @@ import undefinedValidator from "./helpers/undefinedValidator.js";
  */
 
 const getAllBlogs = expressAsync(async (req, res) => {
-  const blogs = await Blogs.find({});
+  const blogs = await Blogs.aggregate([
+    {
+      "$lookup": {
+        "from": "users",
+        "localField": "author",
+        "foreignField": "_id",
+        "as": "blogDoc",
+      },
+    },
+    {
+      "$set": {
+        "authorName": {
+          "$first": "$blogDoc.name",
+        },
+      },
+    },
+    {
+      "$unset": "blogDoc",
+    },
+  ]);
   res.json(blogs);
 });
 /**

@@ -87,7 +87,6 @@ const agentSchema = mongoose.Schema(
     },
     specialties: {
       type: [String],
-      required: true,
     },
     isDeclined: {
       type: Boolean,

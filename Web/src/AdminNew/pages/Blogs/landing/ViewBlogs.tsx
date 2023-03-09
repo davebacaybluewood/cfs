@@ -66,6 +66,9 @@ const ViewBlogs: React.FC = () => {
       isActive: true,
     },
   ];
+  const visitBlogHandler = (id:string) => {
+    navigate(paths.blogsSingle.replace(":id", id))
+  }
   //deletet blog function
   const deleteBlog = () => {
     const config = {
@@ -95,6 +98,7 @@ const ViewBlogs: React.FC = () => {
         <div className="blog-content-header">
           <h2>{blog.title}</h2>
           <div className="blog-actions">
+            <button className="blog-visit-btn" onClick={() => visitBlogHandler(blog._id)}>Visit Blog</button>
             <button
               onClick={() =>
                 navigate(paths.adminBlogForm.replace(":id", blogId ?? ""))

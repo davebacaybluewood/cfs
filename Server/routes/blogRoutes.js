@@ -6,7 +6,8 @@ import {
   getSingleBlog,
   updateBlog,
 } from "../controllers/blogControllers.js";
-import { blogAuth, protect } from "../middleware/authMiddleware.js";
+import { getEditors } from "../controllers/editorController.js";
+import { adminAuth, blogAuth, protect } from "../middleware/authMiddleware.js";
 import multerConfig from "../utils/multer.js";
 
 const router = express.Router();
@@ -14,11 +15,12 @@ const router = express.Router();
 router
   .route("/")
   .get(getAllBlogs)
-  .post(protect, blogAuth, multerConfig.single("thumbnail"), createBlog);
+  .post(protect, multerConfig.single("thumbnail"), createBlog);
 router
   .route("/:id")
   .get(getSingleBlog)
-  .put(protect, blogAuth, multerConfig.single("thumbnail"), updateBlog)
+  .put(protect, multerConfig.single("thumbnail"), updateBlog)
   .delete(deleteBlog);
+router.route("/editor/accounts").get(protect, adminAuth, getEditors);
 
 export default router;

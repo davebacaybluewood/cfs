@@ -1,0 +1,34 @@
+.editor-card-container {
+  display: flex;
+  width: 100%;
+  border: 1px solid gray;
+  padding: 1rem;
+  gap: 1rem;
+  background: linear-gradient(
+    90deg,
+    #0057b7 0%,
+    #021025 30%,
+    #021025
+  ) !important;
+  .editor-card-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    word-wrap: break-word;
+    gap: 1rem;
+    p {
+      color: #eee;
+      font-size: 2rem;
+    }
+    .details-email {
+      font-size: 1.5rem;
+    }
+  }
+  .editor-card-thumbnail {
+    width: 50%;
+    img {
+      width: 100%;
+    }
+  }
+}
