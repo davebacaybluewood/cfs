@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Blogs.scss";
 import Banner from "library/Banner/Banner";
 import PageTitle from "library/PageTitle/PageTitle";
 import BlogCard from "library/BlogCard/BlogCard";
 import { Container, Grid } from "@mui/material";
-import { blogs } from "data/blogs";
-import ENDPOINTS from "constants/endpoints";
 import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 
 export type ChipTypes = {
@@ -20,6 +18,7 @@ export type BlogType = {
   tags: ChipTypes[];
   content?: string;
   author: string;
+  authorName: string;
   createdAt?: Date;
   dateCreated: Date;
 };
@@ -54,7 +53,7 @@ const Blogs: React.FC = () => {
             return (
               <Grid item xs={12} sm={6} md={4} lg={4} className="blog-grid">
                 <BlogCard
-                  author={blog.author}
+                  author={blog.authorName}
                   dateCreated={new Date(blog.createdAt?.toString() ?? "")}
                   id={blog._id}
                   tags={tags}

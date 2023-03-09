@@ -15,6 +15,11 @@
       margin-bottom: 0;
     }
     .blog-actions {
+      .blog-visit-btn {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
       button {
         border: none;
         background-color: transparent;

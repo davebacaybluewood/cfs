@@ -21,6 +21,7 @@ import {
   FaSplotch,
   FaThumbsUp,
   FaFileAlt,
+  FaNewspaper,
 } from "react-icons/fa";
 
 export interface ISidebarLinks {
@@ -237,6 +238,22 @@ const useSidebarLinks = (role: string) => {
         currentPage === adminPathsNew.newAdminEventInvites.split("/")[2],
       icon: <FaThumbsUp />,
       role: [ROLES.ROLE_MASTER_ADMIN],
+    },
+    {
+      linkText: "Blog Resources",
+      icon: <FaNewspaper />,
+      role: [ROLES.ROLE_MASTER_ADMIN],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "Manage Editors",
+          link: paths.adminBlogUsers,
+        },
+        {
+          linkText: "Blogs",
+          link: paths.adminBlogs,
+        },
+      ],
     },
     {
       linkText: "File Maintenance",

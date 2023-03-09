@@ -3,13 +3,12 @@ import ENDPOINTS from "constants/endpoints";
 import { useState, useEffect } from "react";
 
 export type BlogValueType = {
-  _id: string;
   thumbnail: string;
   title: string;
-  tags: [];
+  tags: any;
   content: string;
   author: string;
-  createdAt: Date;
+  createdAt?: Date;
 };
 
 const useFetchBlogs = (id?: string) => {
@@ -25,6 +24,7 @@ const useFetchBlogs = (id?: string) => {
       axios
         .get(endpoint)
         .then((response) => {
+          console.log(response.data)
           setBlogs(response.data);
           setLoading(false);
         })

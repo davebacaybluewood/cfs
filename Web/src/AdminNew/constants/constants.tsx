@@ -11,6 +11,7 @@ import Blogs from "AdminNew/pages/Blogs/Blogs";
 import BlogForm from "AdminNew/pages/Blogs/component/BlogForm";
 import FileMaintenance from "AdminNew/pages/Blogs/FileMaintenance/FileMaintenance";
 import ViewBlogs from "AdminNew/pages/Blogs/landing/ViewBlogs";
+import ManageEditors from "AdminNew/pages/Blogs/ManageEditors/ManageEditors";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
 import Contacts from "AdminNew/pages/Contacts/Contacts";
@@ -267,6 +268,14 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <BlogForm />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminBlogUsers,
+    ELEMENT: (
+      <GuardedWrapper>
+        <ManageEditors />
       </GuardedWrapper>
     ),
   },
