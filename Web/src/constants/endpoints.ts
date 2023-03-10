@@ -34,6 +34,8 @@ const ENDPOINTS = {
     "/api/webinars/:agentId/agent-appointments-count",
   APPOINTMENT_AGENT_CALENDLY: "/api/webinars/:agentId/submit-appointment",
   APPOINTMENT_SINGLE: "/api/appointments/:appointmentId",
+  BLOGS: "/api/blogs",
+  BLOGS_SINGLE: "/api/blogs/:blogId",
 };
 
 const array = ["asdasd", "asdasdasfasf"];

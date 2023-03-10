@@ -22,6 +22,7 @@ import {
   FaSplotch,
   FaThumbsUp,
   FaFileAlt,
+  FaNewspaper,
 } from "react-icons/fa";
 
 export interface ISidebarLinks {
@@ -180,6 +181,31 @@ const useSidebarLinks = (role: string) => {
       role: [ROLES.ROLE_AGENT],
     },
     {
+      linkText: "Blogs",
+      isActive:
+        currentPage === adminPathsNew.adminBlogs.split("/")[2] ||
+        currentPage === adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
+      icon: <FaBell />,
+      role: [ROLES.ROLE_EDITOR],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "All Blogs",
+          icon: <FaFileAlt />,
+          link: paths.adminBlogs,
+          isActive: currentPage === adminPathsNew.adminBlogs.split("/")[2],
+        },
+        {
+          linkText: "File Maintenance",
+          icon: <FaFileAlt />,
+          link: paths.adminBlogsFileMaintenance,
+          isActive:
+            currentPage ===
+            adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
+        },
+      ],
+    },
+    {
       linkText: "Agents Submenu",
       isActive:
         currentPage === adminPathsNew.agents.split("/")[2] ||
@@ -245,6 +271,22 @@ const useSidebarLinks = (role: string) => {
       role: [ROLES.ROLE_MASTER_ADMIN],
     },
     {
+      linkText: "Blog Resources",
+      icon: <FaNewspaper />,
+      role: [ROLES.ROLE_MASTER_ADMIN],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "Manage Editors",
+          link: paths.adminBlogUsers,
+        },
+        {
+          linkText: "Blogs",
+          link: paths.adminBlogs,
+        },
+      ],
+    },
+    {
       linkText: "File Maintenance",
       isActive:
         currentPage === adminPathsNew.webinar.split("/")[2] ||
@@ -282,35 +324,35 @@ const useSidebarLinks = (role: string) => {
       link: paths.faqs,
       isActive: currentPage === adminPathsNew.faqs.split("/")[2],
       icon: <FaQuestion />,
-      role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN],
+      role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN, ROLES.ROLE_EDITOR],
     },
     {
       linkText: "Raise Support",
       link: paths.raiseSupport,
       isActive: currentPage === adminPathsNew.raiseSupport.split("/")[2],
       icon: <FaConciergeBell />,
-      role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN],
+      role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN, ROLES.ROLE_EDITOR],
     },
     {
       linkText: "Contact Admin",
       link: paths.contactAdmin,
       isActive: currentPage === adminPathsNew.contactAdmin.split("/")[2],
       icon: <FaPhoneAlt />,
-      role: [ROLES.ROLE_AGENT],
+      role: [ROLES.ROLE_AGENT, ROLES.ROLE_EDITOR],
     },
     {
       linkText: "Agency Rocket",
       link: OUTSOURCE_LINKS.AGENCY_ROCKET,
       isActive: false,
       icon: <FaGlobe />,
-      role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN],
+      role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN, ROLES.ROLE_EDITOR],
     },
     {
       linkText: "Back Office",
       link: OUTSOURCE_LINKS.BACK_OFFICE,
       isActive: false,
       icon: <FaGlobe />,
-      role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN],
+      role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN, ROLES.ROLE_EDITOR],
     },
   ];
 

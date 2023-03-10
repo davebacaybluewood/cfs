@@ -19,9 +19,18 @@
       z-index: -1;
     }
   }
+  .error-container {
+    margin-bottom: 2rem;
+  }
   .blog-grid {
     .blogs-container {
       .centered-content {
+        .thumbnail-container {
+          width: 100%;
+          img {
+            width: 100%;
+          }
+        }
         h2 {
           margin: 1rem;
           font-size: 2rem;
@@ -42,19 +51,31 @@
           }
         }
         .contents {
+          width: 100%;
           border-bottom: none;
           .description {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin: 1rem 0;
           }
           .author,
           .date {
+            font-size: 1.2rem;
+            width: 100%;
             color: gray;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
             @media only screen and (max-width: 768px) {
               display: flex;
               flex-direction: column;
               justify-content: flex-start;
               align-items: flex-start;
+            }
+            svg {
+              font-size: 1.3rem;
+              path {
+                color: gray;
+              }
             }
           }
         }

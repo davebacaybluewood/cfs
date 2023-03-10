@@ -10,6 +10,11 @@ import Appointments from "AdminNew/pages/Appointments/Appointments";
 import AgentAppointments from "AdminNew/pages/Appointments/LandingPages/AgentAppointments/AgentAppointments";
 import AppointmentInformation from "AdminNew/pages/Appointments/LandingPages/ScheduledAppointment/AppointmentInformation";
 import ScheduleAppointment from "AdminNew/pages/Appointments/LandingPages/ScheduledAppointment/ScheduleAppointment";
+import Blogs from "AdminNew/pages/Blogs/Blogs";
+import BlogForm from "AdminNew/pages/Blogs/component/BlogForm";
+import FileMaintenance from "AdminNew/pages/Blogs/FileMaintenance/FileMaintenance";
+import ViewBlogs from "AdminNew/pages/Blogs/landing/ViewBlogs";
+import ManageEditors from "AdminNew/pages/Blogs/ManageEditors/ManageEditors";
 import Calendar from "AdminNew/pages/Calendar/Calendar";
 import ContactAdmin from "AdminNew/pages/ContactAdmin/ContactAdmin";
 import Contacts from "AdminNew/pages/Contacts/Contacts";
@@ -33,6 +38,7 @@ import adminPathsNew from "./routes";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
+  ROLE_EDITOR: "ROLE_EDITOR",
   ROLE_MASTER_ADMIN: "ROLE_MASTER_ADMIN",
 };
 
@@ -276,6 +282,46 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <EventInvites />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminBlogs,
+    ELEMENT: (
+      <GuardedWrapper>
+        <Blogs />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminBlogsFileMaintenance,
+    ELEMENT: (
+      <GuardedWrapper>
+        <FileMaintenance />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminViewBlogs,
+    ELEMENT: (
+      <GuardedWrapper>
+        <ViewBlogs />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminBlogForm,
+    ELEMENT: (
+      <GuardedWrapper>
+        <BlogForm />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.adminBlogUsers,
+    ELEMENT: (
+      <GuardedWrapper>
+        <ManageEditors />
       </GuardedWrapper>
     ),
   },

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 
 const testimonialsSchema = mongoose.Schema(
   {
@@ -87,7 +86,6 @@ const agentSchema = mongoose.Schema(
     },
     specialties: {
       type: [String],
-      required: true,
     },
     isDeclined: {
       type: Boolean,

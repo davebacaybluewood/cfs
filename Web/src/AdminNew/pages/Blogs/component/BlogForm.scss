@@ -1,0 +1,43 @@
+.form-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  box-shadow: 3px 3px 3px #eee;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  border-top: 2px solid #eee;
+  background-color: #fff;
+
+  button {
+    height: 40px;
+    margin-right: 1rem;
+    margin-top: 0;
+  }
+}
+.blog-form {
+  margin-bottom: 5rem;
+  .blog-form-container {
+    .blog-thumbnail-upload-container {
+      .blog-thumbnail-button {
+        margin-bottom: 1rem;
+      }
+      .img-container {
+        position: relative;
+        width: 50%;
+        height: 50vh;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
