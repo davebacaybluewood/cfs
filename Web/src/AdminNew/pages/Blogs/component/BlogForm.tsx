@@ -61,11 +61,11 @@ const BlogForm: React.FC = () => {
     content: "",
   };
   const editInitialValues: Omit<BlogValueType, "role"> = {
-    thumbnail: blogs?.thumbnail,
-    title: blogs?.title,
-    author: blogs?.author,
-    tags: blogs?.tags ?? [],
-    content: blogs?.content,
+    thumbnail: blogs[0]?.thumbnail,
+    title: blogs[0]?.title,
+    author: blogs[0]?.singleAuthorName,
+    tags: blogs[0]?.tags ?? [],
+    content: blogs[0]?.content,
   };
 
   const isEditMode = id !== "add";
