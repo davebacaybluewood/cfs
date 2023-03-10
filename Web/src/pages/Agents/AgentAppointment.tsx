@@ -1,10 +1,13 @@
 import { Grid } from "@mui/material";
 import { Container } from "@mui/system";
+import useFetchWebinars from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchWebinars";
+import ENDPOINTS from "constants/endpoints";
 import Banner from "library/Banner/Banner";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import PageTitle from "library/PageTitle/PageTitle";
 import React from "react";
-import { InlineWidget } from "react-calendly";
+import { InlineWidget, useCalendlyEventListener } from "react-calendly";
+import { useParams } from "react-router-dom";
 import "./AgentWebinar.scss";
 import VideoDescription from "./components/VideoDescription";
 import WebinarForm from "./components/WebinarForm";
@@ -15,6 +18,42 @@ type AgentAppointmentProps = {
   showVideoDescription?: boolean;
 };
 const AgentAppointment: React.FC<AgentAppointmentProps> = (props) => {
+  const { videoId, agentId } = useParams();
+  const { webinars, loading } = useFetchWebinars(videoId);
+
+  useCalendlyEventListener({
+    onProfilePageViewed: () => console.log("onProfilePageViewed"),
+    onDateAndTimeSelected: (e) => console.log(e),
+    onEventTypeViewed: () => console.log("onEventTypeViewed"),
+    onEventScheduled: (e) => {
+      const inviteLink = e.data.payload.invitee.uri;
+      console.log(inviteLink);
+      const getActiveWebinars = async () => {
+        const req = await fetch(
+          ENDPOINTS.APPOINTMENT_AGENT_CALENDLY.replace(
+            ":agentId",
+            agentId ?? ""
+          ),
+          {
+            method: "post",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              state: "Teswet",
+              calendlyURI: inviteLink,
+              appointment_type: "WEBINAR",
+              webinarGuid: webinars?.webinarGuid,
+            }),
+          }
+        );
+
+        const response = await req.json();
+        console.log(response);
+      };
+
+      getActiveWebinars();
+    },
+  });
+
   return (
     <div className="agent-webinar">
       <PageTitle title="Agent Webinar" />
@@ -26,23 +65,28 @@ const AgentAppointment: React.FC<AgentAppointmentProps> = (props) => {
             <div className="webinar-item">
               <iframe
                 className="embed-responsive-item"
-                src="https://player.vimeo.com/video/629521217?title=0&byline=0&portrait=0"
+                src={webinars?.fullVideo}
                 allow="autoplay; fullscreen"
                 allowFullScreen
                 data-ready="true"
               ></iframe>
               <ComponentValidator showNull={!props.showVideoDescription}>
-                <VideoDescription />
+                <VideoDescription
+                  title={webinars?.title}
+                  content={webinars?.fullVideoContent}
+                />
               </ComponentValidator>
             </div>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <ComponentValidator showNull={!props.showForm}>
+            <ComponentValidator
+              showNull={!props.showForm || !props.showCalendly}
+            >
               <WebinarForm />
             </ComponentValidator>
             <ComponentValidator showNull={!props.showCalendly}>
               <InlineWidget
-                url="https://calendly.com/gocfs/the-debt-action-plan-program?primary_color=0057b7"
+                url={webinars?.calendlyLink ?? ""}
                 styles={{
                   height: "992px",
                   width: "100%",

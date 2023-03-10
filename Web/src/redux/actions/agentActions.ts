@@ -61,7 +61,6 @@ export const listAgents =
       });
 
       const queryStatus = `?status=${status ? status : ""}`;
-      console.log(ENDPOINTS.AGENTS + queryStatus);
 
       const { data } = await axios.get(
         ENDPOINTS.AGENTS + queryStatus,

@@ -1,10 +1,12 @@
 import { Grid } from "@mui/material";
 import { Container } from "@mui/system";
+import useFetchWebinars from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchWebinars";
 import Banner from "library/Banner/Banner";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import PageTitle from "library/PageTitle/PageTitle";
 import React from "react";
 import { InlineWidget } from "react-calendly";
+import { useParams } from "react-router-dom";
 import "./AgentWebinar.scss";
 import VideoDescription from "./components/VideoDescription";
 import WebinarForm from "./components/WebinarForm";
@@ -15,6 +17,8 @@ type AgentWebinarProps = {
   showVideoDescription?: boolean;
 };
 const AgentWebinar: React.FC<AgentWebinarProps> = (props) => {
+  const { videoId } = useParams();
+  const { webinars, loading } = useFetchWebinars(videoId);
   return (
     <div className="agent-webinar">
       <PageTitle title="Agent Webinar" />
@@ -30,13 +34,16 @@ const AgentWebinar: React.FC<AgentWebinarProps> = (props) => {
             <div className="webinar-item">
               <iframe
                 className="embed-responsive-item"
-                src="https://player.vimeo.com/video/628662751?title=0&amp;byline=0&amp;portrait=0"
+                src={webinars?.introVideo}
                 allow="autoplay; fullscreen"
                 allowFullScreen
                 data-ready="true"
               ></iframe>
               <ComponentValidator showNull={!props.showVideoDescription}>
-                <VideoDescription />
+                <VideoDescription
+                  content={webinars?.introVideoContent}
+                  title={webinars?.title}
+                />
               </ComponentValidator>
             </div>
           </Grid>

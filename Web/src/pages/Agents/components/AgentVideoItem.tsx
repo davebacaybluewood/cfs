@@ -1,6 +1,5 @@
 import React from "react";
 import { FaPlayCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 type AgentVideoItemProps = {
   thumbnail: string;

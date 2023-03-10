@@ -164,7 +164,7 @@ const WebinarSingle: React.FC = (props) => {
 
       <Dialog onClose={() => setOpenModal(false)} open={openModal}>
         <iframe
-          className="embed-responsive-item"
+          className="embed-responsive-item-admin"
           src={video}
           allow="autoplay; fullscreen"
           allowFullScreen

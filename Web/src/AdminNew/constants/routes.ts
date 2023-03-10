@@ -6,7 +6,13 @@ const adminPathsNew = {
   agents: adminCfsRoute + "agents",
   dashboard: adminCfsRoute + "dashboard",
   profile: adminCfsRoute + "profile",
-  appointments: adminCfsRoute + "appointments",
+  appointments: adminCfsRoute + "appointments/",
+  typeAppointments: adminCfsRoute + "appointments/:typeId",
+  agentAppointments: adminCfsRoute + "appointments/:agentId/:typeId",
+  scheduledAppointments:
+    adminCfsRoute + "appointments/:agentGuid/:typeId/:webinarGuid",
+  appointmentInformation:
+    adminCfsRoute + "scheduled-appointment/:appointmentId",
   calendar: adminCfsRoute + "calendar",
   contacts: adminCfsRoute + "contacts",
   settings: adminCfsRoute + "settings",

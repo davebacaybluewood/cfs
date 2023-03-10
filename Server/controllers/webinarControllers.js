@@ -4,6 +4,9 @@ import Agents from "../models/agentModel.js";
 import cloudinary from "../utils/cloudinary.js";
 import undefinedValidator from "./helpers/undefinedValidator.js";
 import { v4 as uuidv4 } from "uuid";
+import WebinarAppointment from "../models/webinarAppointmentModel.js";
+import fetch from "node-fetch";
+import AgentAppointment from "../models/agentAppointment.js";
 
 /**
  * @desc: Fetch all webinars
@@ -21,7 +24,17 @@ const getAllWebinars = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const getSingleWebinar = expressAsync(async (req, res) => {
-  const webinar = await Webinars.findById(req.params.id);
+  const webinarGuid = req.query.isGuid;
+
+  let webinar;
+  if (webinarGuid) {
+    webinar = await Webinars.find({
+      webinarGuid: req.params.id,
+    });
+  } else {
+    webinar = await Webinars.findById(req.params.id);
+  }
+
   res.json(webinar);
 });
 
@@ -164,6 +177,243 @@ const getActiveWebinars = expressAsync(async (req, res) => {
   res.json(agents);
 });
 
+/**
+ * @desc:  Get the active webinar for agents
+ * @route: GET /api/webinars/:webinarId/agents
+ * @acess: Public
+ */
+const getAgentWebinarAppointments = expressAsync(async (req, res) => {
+  const userGuid = req.params.agentId;
+  const agents = await Agents.find({
+    userGuid: userGuid,
+  });
+
+  const webinars = await Webinars.find({
+    webinarGuid: { $in: agents[0].webinars },
+  });
+
+  const appointments = await AgentAppointment.find({
+    agentGuid: userGuid,
+  });
+
+  const filteredWebinars = webinars.map((webinar) => {
+    const noOfAppointments = () => {
+      const appointment = appointments
+        .map((apData) => {
+          return apData.webinarGuid === webinar.webinarGuid;
+        })
+        .filter((data) => data);
+
+      return appointment.length;
+    };
+    return {
+      title: webinar?.title,
+      webinarGuid: webinar?.webinarGuid,
+      _id: webinar?._id,
+      thumbnail: webinar?.thumbnail,
+      noOfAppointments: noOfAppointments(),
+    };
+  });
+
+  res.json(filteredWebinars);
+});
+/**
+ * @desc:  Submit a webinar form for the agent
+ * @route: POST /api/webinars/:webinarId/:agentId
+ * @acess: Public
+ */
+const submitAgentWebinar = expressAsync(async (req, res) => {
+  try {
+    const webinarGuid = req.params.webinarId;
+    const agentGuid = req.params.agentId;
+    const webinars = await Webinars.find({ _id: webinarGuid });
+    if (webinars.length === 0) {
+      res.status(404).json();
+      throw new Error("Error occured in submitting webinar.");
+    } else {
+      let newData = new WebinarAppointment({
+        name: req.body.name?.toString(),
+        state: req.body.state?.toString(),
+        email: req.body.email?.toString(),
+        webinarGuid: webinarGuid,
+        agentGuid: agentGuid,
+      });
+
+      await newData.save();
+      res.status(201).json({ submissionId: newData._id });
+      res.json(webinars);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(404);
+    throw new Error("Error occured in submitting webinar.");
+  }
+});
+
+/**
+ * @desc:  Submit a webinar appointment to the agent.
+ * @steps  1. Use the calendly URI response from Calendly hook to get the appointment information
+ * @steps  2. Get the email, name, created_at, status, timezone, uri, eventURI, from the calendlyURI
+ * @steps  3. Get the start_time and end_time from eventURI (eventURI is from calendlyURI)
+ * @steps  4. Add the data to our database
+ * @note   CALENDLY PERSONAL TOKEN IS NEEDED
+ * @route: POST /:webinarId/:agentId/submit-appointment
+ * @acess: Public
+ */
+const submitAppointment = expressAsync(async (req, res) => {
+  try {
+    const calendlyUri = req.body.calendlyURI;
+    const webinarGuid = req.body.webinarGuid;
+    const agentGuid = req.params.agentId;
+    const state = req.body.state;
+    const appointment_type = req.body.appointment_type;
+
+    fetch(calendlyUri, {
+      headers: {
+        Authorization: `Bearer ${process.env.CALENDLY_PERSONAL_TOKEN}`,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((res) => {
+        /** Get the email, name, created_at, status, timezone, uri, eventURI, from the calendlyURI */
+        const email = res.resource.email;
+        const name = res.resource.name;
+        const created_at = res.resource.created_at;
+        const timezone = res.resource.timezone;
+        const uri = res.resource.uri;
+        const status = res.resource.status;
+        const eventURI = res.resource.event;
+        const questionsNotes = res.resource.questions_and_answers;
+        const event = res.resource.event;
+
+        return {
+          email,
+          name,
+          created_at,
+          status,
+          timezone,
+          uri,
+          eventURI,
+          questionsNotes,
+          event,
+        };
+      })
+      .then(
+        ({
+          email,
+          name,
+          created_at,
+          status,
+          timezone,
+          uri,
+          eventURI,
+          questionsNotes,
+          event,
+        }) => {
+          /** Get the start_time and end_time from eventURI */
+          fetch(eventURI, {
+            headers: {
+              Authorization: `Bearer ${process.env.CALENDLY_PERSONAL_TOKEN}`,
+            },
+          })
+            .then((calRes) => calRes.json())
+            .then((lastCalRes) => {
+              const start_time = lastCalRes.resource.start_time;
+              const end_time = lastCalRes.resource.end_time;
+
+              return {
+                start_time,
+                end_time,
+                email,
+                name,
+                created_at,
+                status,
+                timezone,
+                uri,
+                questionsNotes,
+                event,
+              };
+            })
+            .then((final_res) => final_res)
+            .then(async (final_response_data) => {
+              const getMeetingLink = async () => {
+                const response = await fetch(final_response_data.event, {
+                  headers: {
+                    Authorization: `Bearer ${process.env.CALENDLY_PERSONAL_TOKEN}`,
+                  },
+                });
+
+                const data = await response.json();
+                return data.resource.location.join_url;
+              };
+
+              return {
+                start_time: final_response_data.start_time,
+                end_time: final_response_data.end_time,
+                email: final_response_data.email,
+                name: final_response_data.name,
+                created_at: final_response_data.created_at,
+                status: final_response_data.status,
+                timezone: final_response_data.timezone,
+                uri: final_response_data.uri,
+                questionsNotes: final_response_data.questionsNotes,
+                meetingLink: await getMeetingLink(),
+              };
+            })
+            .then((response_with_meeting_link) => {
+              return response_with_meeting_link;
+            })
+            .then(
+              ({
+                start_time,
+                end_time,
+                email,
+                name,
+                created_at,
+                status,
+                timezone,
+                uri,
+                questionsNotes,
+                meetingLink,
+              }) => {
+                const appointment = new AgentAppointment({
+                  name,
+                  state,
+                  email,
+                  webinarGuid,
+                  agentGuid,
+                  calendly_start_time: start_time,
+                  calendly_end_time: end_time,
+                  calendly_timezone: timezone,
+                  calendly_status: status,
+                  calendly_uri: uri,
+                  calendly_name: name,
+                  calendly_email: email,
+                  calendly_created_at: created_at,
+                  appointment_type: appointment_type,
+                  calendly_notes: questionsNotes[0]?.answer ?? "",
+                  meeting_link: meetingLink,
+                });
+                appointment.save();
+                return email;
+              }
+            )
+            .then((email) => {
+              res
+                .status(200)
+                .json({ message: "Appointment has been scheduled." });
+            });
+        }
+      );
+  } catch (err) {
+    console.log(err);
+    res.status(404);
+    throw new Error("Error occured in submitting webinar.");
+  }
+});
+
 export {
   getAllWebinars,
   getSingleWebinar,
@@ -171,4 +421,7 @@ export {
   deleteWebinar,
   updateWebinar,
   getActiveWebinars,
+  submitAgentWebinar,
+  submitAppointment,
+  getAgentWebinarAppointments,
 };

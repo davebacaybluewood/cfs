@@ -1,11 +1,14 @@
-import { Grid, Paper } from "@mui/material";
+import { Grid } from "@mui/material";
 import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
+import adminPathsNew from "AdminNew/constants/routes";
 import paths from "constants/routes";
-import React from "react";
+import url_params from "helpers/url_params";
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { CrumbTypes } from "../Dashboard/types";
 import "./Appointments.scss";
-import AppointmentCards from "./components/AppointmentCards";
 import useGetAppointments from "./hooks/useGetAppointments";
 
 const crumbs: CrumbTypes[] = [
@@ -21,38 +24,77 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
+export const APPOINTMENT_STATUS = {
+  ONGOING: "ONGOING",
+  ACTIVE: "ACTIVE",
+  CANCELLED: "CANCELLED",
+};
+
 const Appointments: React.FC = () => {
-  const { appointments, isLoading } = useGetAppointments();
+  const navigate = useNavigate();
+  const { typeId } = useParams();
+  const { appointments, loading } = useGetAppointments(typeId ?? "");
+
+  const cardClickHandler = (agentId: string) => {
+    navigate({
+      pathname: adminPathsNew.agentAppointments
+        .replace(":agentId", agentId ?? "")
+        .replace(":typeId", typeId ?? ""),
+    });
+  };
+
+  const pageTitle = typeId === "webinar" ? "Webinar" : "Personal Website";
+
   return (
     <Wrapper
       breadcrumb={crumbs}
       error={false}
-      loading={isLoading}
+      loading={loading}
       className="appointment-container"
     >
-      <Title title="Appointments" subtitle="View all your appointments." />
-      <Grid container spacing={2}>
-        {appointments.map((appointment: any) => {
-          return (
-            <Grid item sm={6} md={3} lg={3} key={appointment.scheduling_url}>
-              <Paper
-                elevation={3}
-                sx={{ p: 0, height: "100%" }}
-                className="appointment-card"
-                style={{ borderColor: appointment.color }}
+      <Title
+        title={pageTitle + " Appointments"}
+        subtitle="View all appointments."
+      />
+      <NoInformationToDisplay
+        showNoInfo={appointments?.length === 0}
+        title="No Information to display."
+        message="There's no current appointment."
+      >
+        <Grid container spacing={2}>
+          {appointments.map((appointment) => {
+            return (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                onClick={() => cardClickHandler(appointment.agentGuid)}
               >
-                <AppointmentCards
-                  borderColor={appointment.color}
-                  id={appointment.scheduling_url}
-                  description={appointment.description_plain}
-                  link={appointment.scheduling_url}
-                  title={appointment.name}
-                />
-              </Paper>
-            </Grid>
-          );
-        })}
-      </Grid>
+                <div className="item">
+                  <Grid container alignItems="center">
+                    <Grid item xs={12} sm={12} md={7}>
+                      <div className="card-captions">
+                        <h5>{appointment.title}</h5>
+                        <h1>{appointment.name}</h1>
+                        <p>
+                          Number of appointment:{" "}
+                          {appointment.numberOfAppointments}
+                        </p>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={5}>
+                      <div className="card-image">
+                        <img src={appointment.avatar} className="agent-img" />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </div>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </NoInformationToDisplay>
     </Wrapper>
   );
 };

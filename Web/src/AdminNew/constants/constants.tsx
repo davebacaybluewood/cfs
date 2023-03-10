@@ -7,6 +7,9 @@ import DeactivatedAgents from "AdminNew/pages/Agents/LandingPages/DeactivatedAge
 import DeclinedAgentProfile from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgentProfile";
 import DeclinedAgents from "AdminNew/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgents";
 import Appointments from "AdminNew/pages/Appointments/Appointments";
+import AgentAppointments from "AdminNew/pages/Appointments/LandingPages/AgentAppointments/AgentAppointments";
+import AppointmentInformation from "AdminNew/pages/Appointments/LandingPages/ScheduledAppointment/AppointmentInformation";
+import ScheduleAppointment from "AdminNew/pages/Appointments/LandingPages/ScheduledAppointment/ScheduleAppointment";
 import Blogs from "AdminNew/pages/Blogs/Blogs";
 import BlogForm from "AdminNew/pages/Blogs/component/BlogForm";
 import FileMaintenance from "AdminNew/pages/Blogs/FileMaintenance/FileMaintenance";
@@ -49,6 +52,17 @@ export const MAIN_WEBSITE_LINK = [
   "https://www.comfortfinancialsolutions.com/",
   "https://www.gocfs.pro/",
 ];
+
+export const SCHEDULE_TYPES = {
+  WEBINAR: "WEBINAR",
+  PAW: "PAW",
+};
+
+export const APPOINTMENT_STATUSES = {
+  CANCELLED: "CANCELLED",
+  ACTIVE: "ACTIVE",
+  ONGOING: "ONGOING",
+};
 
 export const adminRoutesNew = [
   {
@@ -140,6 +154,38 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <Appointments />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.typeAppointments,
+    ELEMENT: (
+      <GuardedWrapper>
+        <Appointments />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.agentAppointments,
+    ELEMENT: (
+      <GuardedWrapper>
+        <AgentAppointments />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.appointmentInformation,
+    ELEMENT: (
+      <GuardedWrapper>
+        <AppointmentInformation />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.scheduledAppointments,
+    ELEMENT: (
+      <GuardedWrapper>
+        <ScheduleAppointment />
       </GuardedWrapper>
     ),
   },

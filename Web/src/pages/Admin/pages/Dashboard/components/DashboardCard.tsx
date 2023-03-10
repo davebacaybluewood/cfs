@@ -8,6 +8,7 @@ type DashboardCardProps = {
   countText: string;
   icon?: React.ReactNode;
   url: string;
+  linkLabel?: string;
 };
 const DashboardCard: React.FC<DashboardCardProps> = (props) => {
   return (
@@ -22,7 +23,7 @@ const DashboardCard: React.FC<DashboardCardProps> = (props) => {
         </div>
       </div>
       <Link to={props.url}>
-        View All Information <FaAngleRight />
+        {props.linkLabel} <FaAngleRight />
       </Link>
     </div>
   );
@@ -30,6 +31,7 @@ const DashboardCard: React.FC<DashboardCardProps> = (props) => {
 
 DashboardCard.defaultProps = {
   icon: <FaGlobe />,
+  linkLabel: "View All Appointments",
 };
 
 export default DashboardCard;

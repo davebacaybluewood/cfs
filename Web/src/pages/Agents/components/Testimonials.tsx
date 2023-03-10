@@ -14,7 +14,6 @@ import Banner from "library/Banner/Banner";
 import FormikTextInput from "library/Formik/FormikInput";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import axios from "axios";
 import { toast } from "react-toastify";
 import Spinner from "library/Spinner/Spinner";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
@@ -52,7 +51,6 @@ const Testimonials: React.FC<TestimonialProps> = (props) => {
     emailAddress: Yup.string().required("Email Address field is required."),
     title: Yup.string().required("Title field is required."),
   });
-  console.log(props.testimonials);
   return (
     <div className="testimonials">
       <Spinner isVisible={loading} />

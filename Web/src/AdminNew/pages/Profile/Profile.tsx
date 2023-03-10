@@ -6,32 +6,9 @@ import { CrumbTypes } from "../Dashboard/types";
 import AboutProfile from "./components/AboutProfile/AboutProfile";
 import Overview from "./components/Overview/Overview";
 import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
-import Testimonials, {
-  TestiMonialTypes,
-} from "./components/Testimonials/Testimonials";
+import Testimonials from "./components/Testimonials/Testimonials";
 import Webinars from "./components/Webinars/Webinars";
 import "./Profile.scss";
-
-const webinars = [
-  {
-    title: "Webinar Title",
-    description: "Number of appointments: 9",
-    image:
-      "https://res.cloudinary.com/dfm2vczpy/image/upload/v1673031487/sample.jpg",
-  },
-  {
-    title: "Webinar Title",
-    description: "Number of appointments: 9",
-    image:
-      "https://res.cloudinary.com/dfm2vczpy/image/upload/v1673031487/sample.jpg",
-  },
-  {
-    title: "Webinar Title",
-    description: "Number of appointments: 9",
-    image:
-      "https://res.cloudinary.com/dfm2vczpy/image/upload/v1673031487/sample.jpg",
-  },
-];
 
 type ProfileTypes = {
   _id: string;
@@ -52,6 +29,7 @@ type ProfileTypes = {
   status: string;
   languages: string[];
   specialties: string[];
+  webinars: string[];
 };
 type ProfileProps = {
   crumbs: CrumbTypes[];
@@ -105,6 +83,8 @@ const Profile: React.FC<ProfileProps> = (props) => {
               facebook={profile.facebook}
               instagram={profile.instagram}
               twitter={profile.twitter}
+              agentGuid={profile.userGuid}
+              status={profile.status}
             />
             <Overview
               numberOfAppointments={0}
@@ -117,8 +97,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
         </Grid>
         <Grid item sm={12} md={12} lg={8}>
           <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
-            {/* <Testimonials testimonials={agentTestimonails} /> */}
-            <Webinars webinars={webinars} />
+            <Webinars agentGuid={props.profile.userGuid} />
           </Paper>
         </Grid>
         <Grid item sm={12} md={12} lg={12}>

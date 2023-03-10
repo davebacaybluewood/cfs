@@ -25,8 +25,11 @@ import AgentRegistration from "pages/Agents/AgentsLanding/AgentRegistration";
 import AgentAppointment from "pages/Agents/AgentAppointment";
 import AgentRegistrationSuccess from "pages/Agents/AgentsLanding/AgentRegistrationSuccess";
 import AgentCheckStatus from "pages/Agents/AgentsLanding/AgentCheckStatus";
+import Test from "TestAutomate/Test";
+import RootTest from "TestAutomate/RootTest";
 
 export const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
+export const CURRENT_DOMAIN = window.location.origin;
 
 /* Web App Constant Images */
 export const IMAGES = {
@@ -126,6 +129,10 @@ export const REACT_ROUTES: ReactRoutesType[] = [
   {
     PATH: paths.agent_check_status,
     ELEMENT: <PageWrapper component={<AgentCheckStatus />} />,
+  },
+  {
+    PATH: "/test",
+    ELEMENT: <PageWrapper component={<RootTest />} />,
   },
   {
     PATH: "*",

@@ -21,3 +21,26 @@
     font-weight: 400;
   }
 }
+
+.label-value-icon {
+  display: flex;
+  align-items: center;
+
+  .icon {
+    margin-right: 1rem;
+    svg {
+      font-size: 1.5rem;
+    }
+  }
+  .caption {
+    h5 {
+      font-weight: 300;
+      font-size: 1.3rem;
+      margin-bottom: 0;
+      text-transform: capitalize;
+    }
+    p {
+      font-size: 1.6rem;
+    }
+  }
+}

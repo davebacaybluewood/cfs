@@ -61,16 +61,16 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
             {props.content?.replace(/<[^>]*>/g, "")}
           </p>
           <p className="author">
-            {props.author}
             <span>
               <FaUserEdit />
             </span>
+            {props.author}
           </p>
           <p className="date">
-            {formatISODateOnly(props.dateCreated.toString())}
             <span>
               <FaRegCalendarAlt />
             </span>
+            {formatISODateOnly(props.dateCreated.toString())}
           </p>
         </div>
         {props.isAdmin ? (

@@ -20,3 +20,14 @@ export const AGENT_SPECIALTIES = [
   "Long Term Care",
   "Legacy Builder",
 ];
+
+export const APPOINTMENT_TYPES = {
+  WEBINAR: "WEBINAR",
+  PAW: "PAW",
+};
+
+export const APPOINTMENT_STATUSES = {
+  CANCELLED: "CANCELLED",
+  ACTIVE: "ACTIVE",
+  ONGOING: "ONGOING",
+};

@@ -1,4 +1,5 @@
 import Agents from "../models/agentModel.js";
+import Webinars from "../models/webinarModel.js";
 import expressAsync from "express-async-handler";
 import cloudinary from "../utils/cloudinary.js";
 import undefinedValidator from "./helpers/undefinedValidator.js";
@@ -104,6 +105,7 @@ const getSingleAgent = expressAsync(async (req, res) => {
             isDeclined: 1,
             createdAt: 1,
             updatedAt: 1,
+            calendlyLink: 1,
             testimonials: {
               $filter: {
                 input: "$testimonials",
@@ -143,7 +145,6 @@ const deleteAgent = expressAsync(async (req, res) => {
 // @route   PUT /api/agents/update-agent
 // @access  Private/Admin
 const updateAgent = expressAsync(async (req, res) => {
-  console.log(req.file);
   try {
     /** Upload avatar to cloudinary */
     let agentImgResult;
@@ -379,6 +380,43 @@ const updateAgentTestimonial = expressAsync(async (req, res) => {
   }
 });
 
+const updateAgentWebinar = expressAsync(async (req, res) => {
+  const webinarGuid = req.params.webinarGuid;
+  const isAdd = req.body.mode;
+  const agentWebinars = await Agents.find({ userGuid: req.params.agentId });
+
+  if (!isAdd) {
+    await Agents.update(
+      { userGuid: req.params.agentId },
+      {
+        $pull: {
+          webinars: webinarGuid,
+        },
+      }
+    );
+    res.status(201).json(agentWebinars);
+  } else {
+    await Agents.update(
+      { userGuid: req.params.agentId },
+      {
+        $push: {
+          webinars: webinarGuid,
+        },
+      }
+    );
+    res.status(201).json(agentWebinars);
+  }
+});
+
+const getAllActiveWebinar = expressAsync(async (req, res) => {
+  const webinarGuids = req.body.webinarGuids;
+  const activeWebinars = await Webinars.find({
+    webinarGuid: { $in: webinarGuids },
+  });
+
+  res.status(200).json(activeWebinars);
+});
+
 export {
   getAgents,
   getSingleAgent,
@@ -389,4 +427,6 @@ export {
   getAgentsCount,
   addAgentTestimonial,
   updateAgentTestimonial,
+  updateAgentWebinar,
+  getAllActiveWebinar,
 };

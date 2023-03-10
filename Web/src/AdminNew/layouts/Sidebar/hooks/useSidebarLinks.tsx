@@ -1,9 +1,10 @@
 import { OUTSOURCE_LINKS, ROLES } from "AdminNew/constants/constants";
 import adminPathsNew from "AdminNew/constants/routes";
+import { UserContext } from "AdminNew/context/UserProvider";
 import ENDPOINTS from "constants/endpoints";
 import paths from "constants/routes";
 import getUserToken from "helpers/getUserToken";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   FaTachometerAlt,
   FaBookReader,
@@ -73,32 +74,35 @@ const useSidebarLinks = (role: string) => {
         pendingAgents: 0,
       },
     });
-    fetch(ENDPOINTS.AGENT_COUNTS, {
-      headers: {
-        Authorization: `Bearer ${getUserToken()}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setData({ loading: false, error: null, agentCount: data });
+    if (role === ROLES.ROLE_MASTER_ADMIN) {
+      fetch(ENDPOINTS.AGENT_COUNTS, {
+        headers: {
+          Authorization: `Bearer ${getUserToken()}`,
+        },
       })
-      .catch((error) => {
-        setData({
-          loading: false,
-          error,
-          agentCount: {
-            activeAgents: 0,
-            deactivatedAgents: 0,
-            declinedAgents: 0,
-            pendingAgents: 0,
-          },
+        .then((response) => response.json())
+        .then((data) => {
+          setData({ loading: false, error: null, agentCount: data });
+        })
+        .catch((error) => {
+          setData({
+            loading: false,
+            error,
+            agentCount: {
+              activeAgents: 0,
+              deactivatedAgents: 0,
+              declinedAgents: 0,
+              pendingAgents: 0,
+            },
+          });
         });
-      });
-  }, []);
+    }
+  }, [role]);
 
   const { agentCount } = data;
 
   const currentPage = document.location.href.split("/")[4];
+  const userContext = useContext<any>(UserContext);
   const sidebarLinks: ISidebarLinks[] = [
     {
       linkText: "Dashboard",
@@ -120,6 +124,33 @@ const useSidebarLinks = (role: string) => {
       isActive: currentPage === adminPathsNew.appointments.split("/")[2],
       icon: <FaRegCalendarCheck />,
       role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN],
+      isSubMenu: role === ROLES.ROLE_MASTER_ADMIN || role === ROLES.ROLE_AGENT,
+      subLinks: [
+        // {
+        //   linkText: "Webinar Appointments",
+        //   icon: <FaUserSecret />,
+        //   link:
+        //     role === ROLES.ROLE_MASTER_ADMIN
+        //       ? paths.typeAppointments.replace(":typeId", "webinar")
+        //       : adminPathsNew.agentAppointments
+        //           .replace(":agentId", userContext.user.userGuid)
+        //           .replace(":typeId", "webinar"),
+        //   isActive:
+        //     currentPage === adminPathsNew.typeAppointments.split("/")[2],
+        // },
+        {
+          linkText: "PAW Appointments",
+          icon: <FaUserSecret />,
+          link:
+            role === ROLES.ROLE_MASTER_ADMIN
+              ? paths.typeAppointments.replace(":typeId", "paw")
+              : adminPathsNew.agentAppointments
+                  .replace(":agentId", userContext.user.userGuid)
+                  .replace(":typeId", "paw"),
+          isActive:
+            currentPage === adminPathsNew.typeAppointments.split("/")[2],
+        },
+      ],
     },
     {
       linkText: "Calendar",
