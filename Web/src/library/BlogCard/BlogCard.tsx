@@ -27,7 +27,6 @@ interface IBlogCard {
 }
 
 const BlogCard: React.FC<IBlogCard> = (props) => {
-  const currentPath = window.location.href;
   const navigate = useNavigate();
 
   const blogHandler = (id: string) => {

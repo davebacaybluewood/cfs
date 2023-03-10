@@ -2,6 +2,7 @@ import expressAsync from "express-async-handler";
 import Blogs from "../models/blogModel.js";
 import cloudinaryImport from "../utils/cloudinary.js";
 import undefinedValidator from "./helpers/undefinedValidator.js";
+import mongoose from "mongoose";
 
 /**
  * @desc: Fetch all blogs
@@ -12,22 +13,22 @@ import undefinedValidator from "./helpers/undefinedValidator.js";
 const getAllBlogs = expressAsync(async (req, res) => {
   const blogs = await Blogs.aggregate([
     {
-      "$lookup": {
-        "from": "users",
-        "localField": "author",
-        "foreignField": "_id",
-        "as": "blogDoc",
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "_id",
+        as: "blogDoc",
       },
     },
     {
-      "$set": {
-        "authorName": {
-          "$first": "$blogDoc.name",
+      $set: {
+        authorName: {
+          $first: "$blogDoc.name",
         },
       },
     },
     {
-      "$unset": "blogDoc",
+      $unset: "blogDoc",
     },
   ]);
   res.json(blogs);
@@ -38,7 +39,30 @@ const getAllBlogs = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const getSingleBlog = expressAsync(async (req, res) => {
-  const singleBlog = await Blogs.findById(req.params.id);
+  let id = mongoose.Types.ObjectId(req.params.id);
+  const singleBlog = await Blogs.aggregate([
+    {
+      $match: { _id: id },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "_id",
+        as: "singleBlogDoc",
+      },
+    },
+    {
+      $set: {
+        singleAuthorName: {
+          $first: "$singleBlogDoc.name",
+        },
+      },
+    },
+    {
+      $unset: "singleBlogDoc",
+    },
+  ]);
   res.status(200).json(singleBlog);
 });
 

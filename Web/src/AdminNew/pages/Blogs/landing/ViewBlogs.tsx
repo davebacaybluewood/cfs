@@ -17,6 +17,7 @@ import ENDPOINTS from "constants/endpoints";
 import getUserToken from "helpers/getUserToken";
 import axios from "axios";
 import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
+import Chip from "pages/Blogs/components/Chip/Chip";
 
 const ViewBlogs: React.FC = () => {
   const params = useParams();
@@ -41,7 +42,7 @@ const ViewBlogs: React.FC = () => {
       isActive: false,
     },
     {
-      title: blog.title || "",
+      title: blog[0]?.title || "",
       url: paths.blogsSingle,
       isActive: true,
     },
@@ -67,6 +68,13 @@ const ViewBlogs: React.FC = () => {
         setActionLoading(false);
       });
   };
+  //tags
+  const tagLists = blog[0]?.tags?.map((tag: any) => {
+    return {
+      description: tag.label,
+      link: "/",
+    };
+  });
   return (
     <Wrapper
       className="webinar-admin-container"
@@ -76,11 +84,11 @@ const ViewBlogs: React.FC = () => {
     >
       <div className="blog-content">
         <div className="blog-content-header">
-          <h2>{blog.title}</h2>
+          <h2>{blog[0]?.title}</h2>
           <div className="blog-actions">
             <button
               className="blog-visit-btn"
-              onClick={() => visitBlogHandler(blog._id)}
+              onClick={() => visitBlogHandler(blog[0]?._id)}
             >
               Visit Blog
             </button>
@@ -102,7 +110,7 @@ const ViewBlogs: React.FC = () => {
             <Button
               variant="contained"
               onClick={() => {
-                setThumbnail(blog.thumbnail);
+                setThumbnail(blog[0]?.thumbnail);
                 setOpenModal(true);
               }}
             >
@@ -112,11 +120,15 @@ const ViewBlogs: React.FC = () => {
         </div>
         <div className="blog-html">
           <h3 className="blog-label">Blog Title</h3>
-          <p className="blog-title">{ReactHtmlParser(blog?.title ?? "")}</p>
+          <p className="blog-title">{ReactHtmlParser(blog[0]?.title ?? "")}</p>
+        </div>
+        <div className="blog-html">
+          <h3 className="blog-label">Blog Tags</h3>
+          <Chip tags={tagLists ?? []}></Chip>
         </div>
         <div className="blog-html">
           <h3 className="blog-label">Blog Content</h3>
-          {ReactHtmlParser(blog?.content ?? "")}
+          {ReactHtmlParser(blog[0]?.content ?? "")}
         </div>
       </div>
 
@@ -126,7 +138,7 @@ const ViewBlogs: React.FC = () => {
       <Dialog open={actionDialog} onClose={() => setActionDialog(false)}>
         <DialogContent>
           <DialogContentText fontSize={15}>
-            Are you sure you want to delete {blog.title}?
+            Are you sure you want to delete {blog[0]?.title}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
