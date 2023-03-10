@@ -86,7 +86,6 @@ export const REACT_ROUTES: ReactRoutesType[] = [
     PATH: paths.event_invites,
     ELEMENT: <PageWrapper component={<EventInvites />} />,
   },
-  /* !! Uncomment it if the blog features are completed.
   {
     PATH: paths.blogs,
     ELEMENT: <PageWrapper component={<Blogs />} />,
@@ -95,7 +94,6 @@ export const REACT_ROUTES: ReactRoutesType[] = [
     PATH: paths.blogsSingle,
     ELEMENT: <PageWrapper component={<SingleBlog />} />,
   },
-  */
   {
     PATH: paths.media,
     ELEMENT: <PageWrapper component={<MediasLanding />} />,
