@@ -21,7 +21,7 @@ import { Formik } from "formik";
 import getUserToken from "helpers/getUserToken";
 import Button from "library/Button/Button";
 import FormikTextInput from "library/Formik/FormikInput";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
@@ -52,6 +52,11 @@ const BlogForm: React.FC = () => {
   const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const userCtx = useContext(UserContext) as any;
+  const defaultThumbnail =
+    "https://res.cloudinary.com/dfm2vczpy/image/upload/v1678487475/blogs/assets/upload-bg_nwys30.jpg";
+  const [thumbnailPreview, setThumbnailPreview] = useState<any>("");
+
+  useEffect(() => {}, [thumbnailPreview]);
 
   const addInitialValues: Omit<BlogValueType, "role"> = {
     thumbnail: "",
@@ -212,6 +217,13 @@ const BlogForm: React.FC = () => {
                       hidden
                       name="thumbnail"
                       onChange={(event) => {
+                        const fileReader = new FileReader();
+                        fileReader.onload = () => {
+                          if (fileReader.readyState === 2) {
+                            setThumbnailPreview(fileReader.result);
+                          }
+                        };
+                        fileReader.readAsDataURL(event.target.files![0]);
                         setFieldValue(
                           "thumbnail",
                           event.currentTarget.files![0]
@@ -220,7 +232,18 @@ const BlogForm: React.FC = () => {
                     />
                   </MUIButton>
                   <div className="img-container">
-                    <img src={values.thumbnail} alt={values.thumbnail}></img>
+                    <img
+                      src={
+                        isEditMode && thumbnailPreview !== ""
+                          ? thumbnailPreview
+                          : isEditMode
+                          ? values.thumbnail
+                          : !isEditMode
+                          ? thumbnailPreview || defaultThumbnail
+                          : defaultThumbnail
+                      }
+                      alt={isEditMode ? values.thumbnail : thumbnailPreview}
+                    ></img>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
