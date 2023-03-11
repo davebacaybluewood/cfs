@@ -52,6 +52,8 @@ const BlogForm: React.FC = () => {
   const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const userCtx = useContext(UserContext) as any;
+  const defaultThumbnail =
+    "https://res.cloudinary.com/dfm2vczpy/image/upload/v1678487475/blogs/assets/upload-bg_nwys30.jpg";
   const [thumbnailPreview, setThumbnailPreview] = useState<any>("");
 
   useEffect(() => {}, [thumbnailPreview]);
@@ -232,9 +234,13 @@ const BlogForm: React.FC = () => {
                   <div className="img-container">
                     <img
                       src={
-                        isEditMode && !thumbnailPreview
+                        isEditMode && thumbnailPreview !== ""
+                          ? thumbnailPreview
+                          : isEditMode
                           ? values.thumbnail
-                          : thumbnailPreview
+                          : !isEditMode
+                          ? thumbnailPreview || defaultThumbnail
+                          : defaultThumbnail
                       }
                       alt={isEditMode ? values.thumbnail : thumbnailPreview}
                     ></img>
