@@ -6,6 +6,7 @@ import BlogCard from "library/BlogCard/BlogCard";
 import { Container, Grid } from "@mui/material";
 import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
+import Spinner from "library/Spinner/Spinner";
 
 export type ChipTypes = {
   _id: string;
@@ -25,8 +26,7 @@ export type BlogType = {
 };
 
 const Blogs: React.FC = () => {
-  const { blogs } = useFetchBlogs();
-
+  const { blogs, loading } = useFetchBlogs();
   return (
     <div className="blogs">
       <PageTitle title="Blogs" />
@@ -36,6 +36,8 @@ const Blogs: React.FC = () => {
         hasBorder={true}
         backgroundImage="https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=600"
       />
+
+      <Spinner isVisible={loading} />
       <Container>
         <NoInformationToDisplay
           showNoInfo={blogs.length === 0}

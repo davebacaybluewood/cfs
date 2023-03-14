@@ -48,7 +48,7 @@ const crumbs: CrumbTypes[] = [
 
 const BlogForm: React.FC = () => {
   const { id } = useParams();
-  const { blogs } = useFetchBlogs(id);
+  const { blogs, loading: blogLoading } = useFetchBlogs(id);
   const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const userCtx = useContext(UserContext) as any;
@@ -175,8 +175,7 @@ const BlogForm: React.FC = () => {
     navigate(paths.adminBlogs);
   };
   return (
-    <Wrapper breadcrumb={crumbs} error={false} loading={false}>
-      <Spinner isVisible={loading} />
+    <Wrapper breadcrumb={crumbs} error={false} loading={blogLoading}>
       <Title
         title={isEditMode ? "Edit Blog" : "Add Blog"}
         subtitle="All fields (*) are required."

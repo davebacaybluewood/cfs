@@ -7,6 +7,7 @@ import * as FontAwesome from "react-icons/fa";
 import ReactHtmlParser from "html-react-parser";
 import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 import Chip from "../components/Chip/Chip";
+import Spinner from "library/Spinner/Spinner";
 
 export type ChipTypes = {
   _id: string;
@@ -28,7 +29,7 @@ export type BlogType = {
 const SingleBlog: React.FC = () => {
   const params = useParams();
   const blogId = params.id;
-  const { blogs: blog } = useFetchBlogs(blogId);
+  const { blogs: blog, loading } = useFetchBlogs(blogId);
 
   // const socialIcon = blogItem.socialLinks.map((social: string) => {
   //   return social;
@@ -51,6 +52,7 @@ const SingleBlog: React.FC = () => {
   //parse content
   return (
     <Container className="single-blog-container">
+      <Spinner isVisible={loading} />
       <Box className="blog-thumbnail">
         <img src={blog[0]?.thumbnail} alt={blog[0]?.thumbnail} />
       </Box>

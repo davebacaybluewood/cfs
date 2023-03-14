@@ -52,11 +52,11 @@ const ViewBlogs: React.FC = () => {
   };
   //deletet blog function
   const deleteBlog = () => {
+    setActionLoading(true);
     const config = {
       Authorization: "Bearer " + getUserToken(),
     };
     const endpoint = ENDPOINTS.BLOGS_SINGLE.replace(":blogId", blogId ?? "");
-    setActionLoading(true);
     axios
       .delete(endpoint, { headers: config })
       .then((response) => {

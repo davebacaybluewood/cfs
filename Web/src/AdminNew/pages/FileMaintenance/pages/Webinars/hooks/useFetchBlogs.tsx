@@ -24,7 +24,6 @@ const useFetchBlogs = (id?: string) => {
       axios
         .get(endpoint)
         .then((response) => {
-          console.log(response.data)
           setBlogs(response.data);
           setLoading(false);
         })
