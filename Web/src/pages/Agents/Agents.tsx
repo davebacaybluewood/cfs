@@ -1,7 +1,7 @@
 import { Container, Grid } from "@mui/material";
 import Banner from "library/Banner/Banner";
 import PageTitle from "library/PageTitle/PageTitle";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Agents.scss";
 import Wrapper from "pages/Home/components/Wrapper/Wrapper";
 import CommonHeaderTitle from "library/HeaderTitle/HeaderTitle";
@@ -19,6 +19,7 @@ import AgentPending from "./components/AgentPending";
 import paths from "constants/routes";
 import useFetchAgentWebinars from "AdminNew/pages/Profile/components/Webinars/hooks/useFetchAgentWebinars";
 import ENDPOINTS from "constants/endpoints";
+import { NOTIFICATION_ENUMS } from "constants/constants";
 
 type FilteredContainerProps = {
   noSpacing?: boolean;
@@ -41,6 +42,7 @@ const FilteredContainer: React.FC<FilteredContainerProps> = (props) => {
 
 const Agents: React.FC<AgentsProps> = (props) => {
   const { id } = useParams();
+  const [agentWebinarGuids, setAgentWebinarGuids] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -83,9 +85,21 @@ const Agents: React.FC<AgentsProps> = (props) => {
     },
   });
 
-  const { webinars, loading: webinarLoading } = useFetchAgentWebinars(
-    agent?.webinars
-  );
+  /** Fetch the activated webinars */
+  useEffect(() => {
+    const agentWebinarGuids = agent?.webinars
+      ?.filter(
+        (data: any) =>
+          data.status === NOTIFICATION_ENUMS.WEBINARS.WEBINAR_APPROVED
+      )
+      .map((data: any) => data.webinarGuid);
+
+    setAgentWebinarGuids(agentWebinarGuids);
+  }, [agent?.webinars]);
+
+  /** Pass the activated webinar guids */
+  const { webinars, loading: webinarLoading } =
+    useFetchAgentWebinars(agentWebinarGuids);
 
   if (error) {
     navigate(paths.invalid);

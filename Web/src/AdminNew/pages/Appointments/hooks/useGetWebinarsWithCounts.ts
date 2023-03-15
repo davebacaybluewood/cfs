@@ -7,8 +7,8 @@ type WebinarPreview = Pick<
   WebinarValuesType,
   "_id" | "title" | "noOfAppointments" | "webinarGuid"
 >;
-const useGetWebinarsWithCounts = (agentGuid: string) => {
-  const [webinars, setWebinars] = useState<WebinarPreview[]>();
+const useGetWebinarsWithCounts = (agentGuid?: string) => {
+  const [webinars, setWebinars] = useState<WebinarPreview[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const useGetWebinarsWithCounts = (agentGuid: string) => {
       const response = await fetch(
         ENDPOINTS.WEBINAR_APPOINTMENT_AGENTS_COUNT.replace(
           ":agentId",
-          agentGuid
+          agentGuid ?? ""
         ),
         {
           headers: {

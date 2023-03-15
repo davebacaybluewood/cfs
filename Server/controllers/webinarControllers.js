@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import WebinarAppointment from "../models/webinarAppointmentModel.js";
 import fetch from "node-fetch";
 import AgentAppointment from "../models/agentAppointment.js";
+import { AGENT_STATUSES, NOTIFICATION_ENUMS } from "../constants/constants.js";
 
 /**
  * @desc: Fetch all webinars
@@ -184,12 +185,15 @@ const getActiveWebinars = expressAsync(async (req, res) => {
  */
 const getAgentWebinarAppointments = expressAsync(async (req, res) => {
   const userGuid = req.params.agentId;
+
   const agents = await Agents.find({
     userGuid: userGuid,
   });
 
+  const agentWebinarGuids = agents[0].webinars.map((data) => data.webinarGuid);
+
   const webinars = await Webinars.find({
-    webinarGuid: { $in: agents[0].webinars },
+    webinarGuid: { $in: agentWebinarGuids },
   });
 
   const appointments = await AgentAppointment.find({
@@ -397,10 +401,34 @@ const submitAppointment = expressAsync(async (req, res) => {
                   meeting_link: meetingLink,
                 });
                 appointment.save();
-                return email;
+                return {
+                  start_time,
+                  end_time,
+                  email,
+                  name,
+                  created_at,
+                  status,
+                  timezone,
+                  uri,
+                  questionsNotes,
+                  meetingLink,
+                };
               }
             )
-            .then((email) => {
+            .then((email_response) => {
+              const {
+                start_time,
+                end_time,
+                email,
+                name,
+                created_at,
+                status,
+                timezone,
+                uri,
+                questionsNotes,
+                meetingLink,
+              } = email_response;
+
               res
                 .status(200)
                 .json({ message: "Appointment has been scheduled." });
@@ -414,6 +442,71 @@ const submitAppointment = expressAsync(async (req, res) => {
   }
 });
 
+const getAgentFilteredWebinars = expressAsync(async (req, res) => {
+  const agentWebinars = await Agents.find({});
+  const webinars = await Webinars.find({});
+  const status = req.params.status;
+
+  const allAgentWebinars = agentWebinars
+    .filter((data) => data.status === AGENT_STATUSES.ACTIVATED)
+    .map((data) => {
+      const webinars = data?.webinars
+        ?.filter((data) => data.status === status)
+        ?.map((webinar) => {
+          return {
+            userGuid: webinar.userGuid,
+            webinarGuid: webinar.webinarGuid,
+            status: webinar.status,
+            calendlyUrl: webinar.calendlyUrl,
+            _id: webinar._id,
+            thumbnail: webinar?.thumbnail,
+            name: data?.name,
+            createdAt: webinar.createdAt,
+          };
+        });
+
+      return webinars;
+    })
+    .flat(1);
+
+  const joinedWebinars = allAgentWebinars.map((data) => {
+    return webinars
+      .filter((webinar) => webinar.webinarGuid === data.webinarGuid)
+      .map((webinarData) => {
+        return {
+          _id: webinarData._id,
+          title: webinarData.title,
+          webinarGuid: webinarData.webinarGuid,
+          introVideo: webinarData.introVideo,
+          introVideoContent: webinarData.introVideoContent,
+          introVideoTimeTracker: webinarData.introVideoTimeTracker,
+          fullVideo: webinarData.fullVideo,
+          fullVideoContent: webinarData.fullVideoContent,
+          fullVideoTimeTracker: webinarData.fullVideoTimeTracker,
+          calendlyLink: webinarData.calendlyLink,
+          userGuid: data.userGuid,
+          name: data.name,
+          thumbnail: webinarData.thumbnail,
+          createdAt: webinarData.createdAt,
+        };
+      });
+  });
+
+  res.json(joinedWebinars.flat(1));
+});
+
+const getSingleAgentWebinar = expressAsync(async (req, res) => {
+  const agentGuid = req.params.agentGuid;
+  const webinarGuid = req.params.webinarGuid;
+  const agent = await Agents.find({ userGuid: agentGuid });
+
+  const agentWebinars = agent[0]?.webinars
+    .filter((filData) => filData.webinarGuid === webinarGuid)
+    .map((data) => data);
+
+  res.json(agentWebinars[0]);
+});
+
 export {
   getAllWebinars,
   getSingleWebinar,
@@ -424,4 +517,6 @@ export {
   submitAgentWebinar,
   submitAppointment,
   getAgentWebinarAppointments,
+  getAgentFilteredWebinars,
+  getSingleAgentWebinar,
 };

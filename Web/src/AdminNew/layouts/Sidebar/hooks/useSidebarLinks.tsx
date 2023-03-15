@@ -1,6 +1,7 @@
 import { OUTSOURCE_LINKS, ROLES } from "AdminNew/constants/constants";
 import adminPathsNew from "AdminNew/constants/routes";
 import { UserContext } from "AdminNew/context/UserProvider";
+import { NOTIFICATION_ENUMS } from "constants/constants";
 import ENDPOINTS from "constants/endpoints";
 import paths from "constants/routes";
 import getUserToken from "helpers/getUserToken";
@@ -23,6 +24,7 @@ import {
   FaThumbsUp,
   FaFileAlt,
   FaNewspaper,
+  FaPhotoVideo,
 } from "react-icons/fa";
 
 export interface ISidebarLinks {
@@ -102,7 +104,7 @@ const useSidebarLinks = (role: string) => {
   const { agentCount } = data;
 
   const currentPage = document.location.href.split("/")[4];
-  const userContext = useContext<any>(UserContext);
+  const userContext = useContext(UserContext);
   const sidebarLinks: ISidebarLinks[] = [
     {
       linkText: "Dashboard",
@@ -126,18 +128,18 @@ const useSidebarLinks = (role: string) => {
       role: [ROLES.ROLE_AGENT, ROLES.ROLE_MASTER_ADMIN],
       isSubMenu: role === ROLES.ROLE_MASTER_ADMIN || role === ROLES.ROLE_AGENT,
       subLinks: [
-        // {
-        //   linkText: "Webinar Appointments",
-        //   icon: <FaUserSecret />,
-        //   link:
-        //     role === ROLES.ROLE_MASTER_ADMIN
-        //       ? paths.typeAppointments.replace(":typeId", "webinar")
-        //       : adminPathsNew.agentAppointments
-        //           .replace(":agentId", userContext.user.userGuid)
-        //           .replace(":typeId", "webinar"),
-        //   isActive:
-        //     currentPage === adminPathsNew.typeAppointments.split("/")[2],
-        // },
+        {
+          linkText: "Webinar Appointments",
+          icon: <FaUserSecret />,
+          link:
+            role === ROLES.ROLE_MASTER_ADMIN
+              ? paths.typeAppointments.replace(":typeId", "webinar")
+              : adminPathsNew.agentAppointments
+                  .replace(":agentId", userContext.user?.userGuid ?? "")
+                  .replace(":typeId", "webinar"),
+          isActive:
+            currentPage === adminPathsNew.typeAppointments.split("/")[2],
+        },
         {
           linkText: "PAW Appointments",
           icon: <FaUserSecret />,
@@ -145,7 +147,7 @@ const useSidebarLinks = (role: string) => {
             role === ROLES.ROLE_MASTER_ADMIN
               ? paths.typeAppointments.replace(":typeId", "paw")
               : adminPathsNew.agentAppointments
-                  .replace(":agentId", userContext.user.userGuid)
+                  .replace(":agentId", userContext.user?.userGuid ?? "")
                   .replace(":typeId", "paw"),
           isActive:
             currentPage === adminPathsNew.typeAppointments.split("/")[2],
@@ -271,6 +273,64 @@ const useSidebarLinks = (role: string) => {
       role: [ROLES.ROLE_MASTER_ADMIN],
     },
     {
+      linkText: "Webinar Resources",
+      isActive: currentPage === adminPathsNew.webinar.split("/")[2],
+      icon: <FaPhotoVideo />,
+      role: [ROLES.ROLE_MASTER_ADMIN],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "Webinars",
+          link: paths.webinar,
+          isActive: currentPage === adminPathsNew.webinar.split("/")[2],
+        },
+        {
+          linkText: "Agent Webinars",
+          link: paths.allAgentWebinars.replace(
+            ":status",
+            NOTIFICATION_ENUMS.WEBINARS.WEBINAR_APPROVED.toLowerCase()
+          ),
+          isActive:
+            currentPage === adminPathsNew.allAgentWebinars.split("/")[2],
+        },
+        {
+          linkText: "Webinar Requests",
+          link: paths.allAgentWebinars.replace(
+            ":status",
+            NOTIFICATION_ENUMS.WEBINARS.WEBINAR_REQUEST.toLowerCase()
+          ),
+          isActive:
+            currentPage === adminPathsNew.requestedWebinars.split("/")[2],
+        },
+      ],
+    },
+    {
+      linkText: "My Webinars",
+      isActive: currentPage === adminPathsNew.cfsWebinars.split("/")[2],
+      icon: <FaPhotoVideo />,
+      role: [ROLES.ROLE_AGENT],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "CFS Webinars",
+          link: paths.cfsWebinars,
+          isActive: currentPage === adminPathsNew.cfsWebinars.split("/")[2],
+        },
+        {
+          linkText: "Activated Webinars",
+          link: paths.activatedWebinars,
+          isActive:
+            currentPage === adminPathsNew.activatedWebinars.split("/")[2],
+        },
+        {
+          linkText: "Requested Webinars",
+          link: paths.requestedWebinars,
+          isActive:
+            currentPage === adminPathsNew.requestedWebinars.split("/")[2],
+        },
+      ],
+    },
+    {
       linkText: "Blog Resources",
       icon: <FaNewspaper />,
       role: [ROLES.ROLE_MASTER_ADMIN],
@@ -286,32 +346,32 @@ const useSidebarLinks = (role: string) => {
         },
       ],
     },
-    {
-      linkText: "File Maintenance",
-      isActive:
-        currentPage === adminPathsNew.webinar.split("/")[2] ||
-        currentPage === adminPathsNew.webinarSingle.split("/")[2],
-      icon: <FaFileAlt />,
-      role: [ROLES.ROLE_MASTER_ADMIN],
-      isSubMenu: true,
-      subLinks: [
-        {
-          linkText: "Webinars",
-          link: paths.webinar,
-          isActive: currentPage === adminPathsNew.webinar.split("/")[2],
-        },
-        // {
-        //   linkText: "Company Information",
-        //   link: paths.homeMetatags,
-        //   isActive: currentPage === adminPathsNew.homeMetatags.split("/")[2],
-        // },
-        // {
-        //   linkText: "Home Meta Tags",
-        //   link: paths.homeMetatags,
-        //   isActive: currentPage === adminPathsNew.homeMetatags.split("/")[2],
-        // },
-      ],
-    },
+    // {
+    //   linkText: "File Maintenance",
+    //   isActive:
+    //     currentPage === adminPathsNew.webinar.split("/")[2] ||
+    //     currentPage === adminPathsNew.webinarSingle.split("/")[2],
+    //   icon: <FaFileAlt />,
+    //   role: [ROLES.ROLE_MASTER_ADMIN],
+    //   isSubMenu: true,
+    //   subLinks: [
+    //     {
+    //       linkText: "Webinars",
+    //       link: paths.webinar,
+    //       isActive: currentPage === adminPathsNew.webinar.split("/")[2],
+    //     },
+    // {
+    //   linkText: "Company Information",
+    //   link: paths.homeMetatags,
+    //   isActive: currentPage === adminPathsNew.homeMetatags.split("/")[2],
+    // },
+    // {
+    //   linkText: "Home Meta Tags",
+    //   link: paths.homeMetatags,
+    //   isActive: currentPage === adminPathsNew.homeMetatags.split("/")[2],
+    // },
+    //   ],
+    // },
   ];
 
   const sidebarMainLinks = sidebarLinks.filter((link: ISidebarLinks) =>

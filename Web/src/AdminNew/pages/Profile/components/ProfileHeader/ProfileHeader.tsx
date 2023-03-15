@@ -12,7 +12,7 @@ import {
   FaSwatchbook,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import HeaderButtons from "./HeaderButtons";
+import HeaderButtons, { HeaderButtonConfigs } from "./HeaderButtons";
 import "./ProfileHeader.scss";
 
 type ProfileHeaderProps = {
@@ -31,6 +31,7 @@ type ProfileHeaderProps = {
   linkedIn: string;
   facebook: string;
   testimonials: string[];
+  headerConfigs?: HeaderButtonConfigs;
 };
 const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
   return (
@@ -60,7 +61,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
             </ul>
           </div>
         </div>
-        <HeaderButtons status={props.status as AgentStatuses} id={props._id} />
+        <HeaderButtons
+          status={props.status as AgentStatuses}
+          id={props._id}
+          headerConfigs={props.headerConfigs}
+        />
       </div>
     </div>
   );

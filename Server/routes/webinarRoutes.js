@@ -3,8 +3,10 @@ import {
   createWebinar,
   deleteWebinar,
   getActiveWebinars,
+  getAgentFilteredWebinars,
   getAgentWebinarAppointments,
   getAllWebinars,
+  getSingleAgentWebinar,
   getSingleWebinar,
   submitAgentWebinar,
   submitAppointment,
@@ -30,5 +32,9 @@ router
 router.route("/:webinarId/agents").get(getActiveWebinars);
 router.route("/:webinarId/:agentId/submit-webinar").post(submitAgentWebinar);
 router.route("/:agentId/submit-appointment").post(submitAppointment);
+router.route("/filtered/:status").post(protect, getAgentFilteredWebinars);
+router
+  .route("/single-agent-webinar/:webinarGuid/:agentGuid")
+  .get(getSingleAgentWebinar);
 
 export default router;

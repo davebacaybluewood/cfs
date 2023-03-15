@@ -32,11 +32,13 @@ const Sidebar: React.FC<SidebarProps> = ({
   handleToggleSidebar,
   handleCollapsedChange,
 }) => {
-  const userCtx = useContext(UserContext) as any;
-  const LOGGED_IN_ROLE = userCtx.user.role;
+  const userCtx = useContext(UserContext);
+  const LOGGED_IN_ROLE = userCtx.user?.role;
 
-  const sidebarLinks = useSidebarLinks(LOGGED_IN_ROLE).sidebarMainLinks;
-  const sidebarOtherLinks = useSidebarLinks(LOGGED_IN_ROLE).sidebarOtherLinks;
+  const sidebarLinks = useSidebarLinks(LOGGED_IN_ROLE ?? "").sidebarMainLinks;
+  const sidebarOtherLinks = useSidebarLinks(
+    LOGGED_IN_ROLE ?? ""
+  ).sidebarOtherLinks;
 
   return (
     <ProSidebar
@@ -77,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   title={link.linkText}
                   icon={link.icon}
                   className={submenuClassnames}
-                  open={true}
+                  // open={link.open}
                   key={index}
                 >
                   {link.subLinks?.map((sm, sLIndex) => (

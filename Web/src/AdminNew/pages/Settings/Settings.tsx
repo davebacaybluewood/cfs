@@ -32,13 +32,13 @@ const Settings: React.FC = () => {
     >
       <Box>
         <Paper>
-          <div className="setting">
+          {/* <div className="setting">
             <Title
               title="Video Settings"
               subtitle="Configure your personal page settings."
             />
             <VideoSettings />
-          </div>
+          </div> */}
           <div className="setting">
             <Title
               title="Admin Settings"

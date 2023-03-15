@@ -5,16 +5,15 @@ import useGetWebinarsWithCounts from "AdminNew/pages/Appointments/hooks/useGetWe
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useFetchAgentWebinars from "./hooks/useFetchAgentWebinars";
 import "./Webinars.scss";
 
 type WebinarsProps = {
   agentGuid: string;
 };
 const Webinars: React.FC<WebinarsProps> = (props) => {
-  const { loading, webinars } = useGetWebinarsWithCounts(props.agentGuid);
-  const navigate = useNavigate();
+  const { loading, webinars } = useGetWebinarsWithCounts(props.agentGuid ?? "");
 
+  const navigate = useNavigate();
   return (
     <div className="webinar-container">
       <h2>Webinars</h2>

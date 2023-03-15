@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { NOTIFICATION_ENUMS } from "../constants/constants.js";
 
 const testimonialsSchema = mongoose.Schema(
   {
@@ -8,6 +9,27 @@ const testimonialsSchema = mongoose.Schema(
     emailAddress: { type: String, required: true },
     testimonialGuid: { type: String, required: true },
     isDisplayed: { type: Boolean, default: false },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const webinarSchema = mongoose.Schema(
+  {
+    userGuid: { type: String, required: true },
+    webinarGuid: { type: String, required: true },
+    calendlyUrl: { type: String },
+    status: {
+      type: String,
+      required: true,
+      default: NOTIFICATION_ENUMS.WEBINARS.WEBINAR_REQUEST,
+      enum: [
+        NOTIFICATION_ENUMS.WEBINARS.WEBINAR_REQUEST,
+        NOTIFICATION_ENUMS.WEBINARS.WEBINAR_DECLINED,
+        NOTIFICATION_ENUMS.WEBINARS.WEBINAR_APPROVED,
+      ],
+    },
   },
   {
     timestamps: true,
@@ -82,7 +104,7 @@ const agentSchema = mongoose.Schema(
       type: String,
     },
     webinars: {
-      type: [String],
+      type: [webinarSchema],
     },
     specialties: {
       type: [String],

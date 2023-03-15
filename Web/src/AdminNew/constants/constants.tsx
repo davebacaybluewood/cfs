@@ -28,13 +28,18 @@ import WebinarSingle from "AdminNew/pages/FileMaintenance/pages/Webinars/Webinar
 import Inquiries from "AdminNew/pages/Inquiries/Inquiries";
 import Login from "AdminNew/pages/Login/Login";
 import Notifications from "AdminNew/pages/Notifications/Notifications";
-import Profile from "AdminNew/pages/Profile/Profile";
 import RaiseSupport from "AdminNew/pages/RaiseSupport/RaiseSupport";
 import Settings from "AdminNew/pages/Settings/Settings";
+import UserProfile from "AdminNew/pages/UserProfile/UserProfile";
+import CFSWebinars from "AdminNew/pages/Webinars/LandingPages/CFSWebinars";
+import ActivatedWebinars from "AdminNew/pages/Webinars/LandingPages/ActivatedWebinars";
+import RequestedWebinars from "AdminNew/pages/Webinars/LandingPages/RequestedWebinars";
+import DynamicWebinarInformation from "AdminNew/pages/Webinars/LandingPages/WebinarSingle/DynamicWebinarInformation";
 import GuardedWrapper from "../layouts/GuardedWrapper";
 import Agents from "../pages/Agents/LandingPages/ActiveAgents/Agents";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import adminPathsNew from "./routes";
+import AdminWebinars from "AdminNew/pages/Webinars/LandingPages/AdminWebinars";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -114,6 +119,14 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <AgentProfile />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.profile,
+    ELEMENT: (
+      <GuardedWrapper>
+        <UserProfile />
       </GuardedWrapper>
     ),
   },
@@ -330,6 +343,54 @@ export const adminRoutesNew = [
     ELEMENT: (
       <GuardedWrapper>
         <Webinars />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.cfsWebinars,
+    ELEMENT: (
+      <GuardedWrapper>
+        <CFSWebinars />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.activatedWebinars,
+    ELEMENT: (
+      <GuardedWrapper>
+        <ActivatedWebinars />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.requestedWebinars,
+    ELEMENT: (
+      <GuardedWrapper>
+        <RequestedWebinars />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.allAgentWebinars,
+    ELEMENT: (
+      <GuardedWrapper>
+        <AdminWebinars />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.requestedWebinars,
+    ELEMENT: (
+      <GuardedWrapper>
+        <RequestedWebinars />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    PATH: adminPathsNew.viewSingleDynamicWebinar,
+    ELEMENT: (
+      <GuardedWrapper>
+        <DynamicWebinarInformation />
       </GuardedWrapper>
     ),
   },

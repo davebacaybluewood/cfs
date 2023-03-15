@@ -246,7 +246,7 @@ const AppointmentInformation: React.FC = () => {
               </Grid>
             </div>
           </Grid>
-          <Grid item sm={12} lg={12}>
+          {/* <Grid item sm={12} lg={12}>
             <div className="appointment-information">
               <FullCalendar
                 height="75vh"
@@ -279,7 +279,7 @@ const AppointmentInformation: React.FC = () => {
                 ]}
               />
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
     </Wrapper>
