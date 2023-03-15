@@ -1,34 +1,42 @@
+import { AgentData } from "AdminNew/pages/Agents/hooks/useFetchAgent";
 import ENDPOINTS from "constants/endpoints";
 import getUserToken from "helpers/getUserToken";
 import React, { createContext, useEffect, useState } from "react";
 
-export const UserContext = createContext({});
+type UserContextData = {
+  loading: boolean;
+  error: boolean | null;
+  user: AgentData | undefined;
+};
+export const UserContext = createContext<UserContextData>({
+  error: false,
+  loading: false,
+  user: undefined,
+});
 
 const UserProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   const [data, setData] = useState({
     loading: false,
     error: null,
-    user: {},
+    user: undefined,
   });
-
+  const localData = localStorage.getItem("userInfo");
   useEffect(() => {
-    setData({ loading: true, error: null, user: {} });
-    fetch(ENDPOINTS.ADMIN_PROFILE, {
-      headers: {
-        Authorization: `Bearer ${getUserToken()}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setData({ loading: false, error: null, user: data });
-      })
-      .catch((error) => {
-        setData({ loading: false, error, user: {} });
-      });
-  }, []);
+    setData({ loading: true, error: null, user: undefined });
+
+    setData({
+      loading: false,
+      error: null,
+      user: JSON.parse(localData as any),
+    });
+  }, [localData]);
 
   return (
-    <UserContext.Provider value={data}>{props.children}</UserContext.Provider>
+    <UserContext.Provider
+      value={{ loading: data.loading, error: data.error, user: data.user }}
+    >
+      {props.children}
+    </UserContext.Provider>
   );
 };
 

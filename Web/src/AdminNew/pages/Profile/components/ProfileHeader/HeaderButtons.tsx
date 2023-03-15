@@ -18,13 +18,18 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Spinner from "library/Spinner/Spinner";
 import FormikTextInput from "library/Formik/FormikInput";
+import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 
+export type HeaderButtonConfigs = {
+  isProfileView?: boolean;
+};
 type HeaderButtonsProps = {
   status: AgentStatuses;
   id: string;
   setOpen: Dispatch<SetStateAction<any>>;
   setDialogStatus: Dispatch<SetStateAction<any>>;
   setFormDialogStatus: Dispatch<SetStateAction<any>>;
+  headerConfigs?: HeaderButtonConfigs;
 };
 
 type CalendlyInputTypes = {
@@ -155,12 +160,16 @@ const HeaderButtons: React.FC<
   return (
     <div className="profile-actions">
       <Spinner isVisible={loading} />
-      <ActionButtons
-        {...props}
-        setOpen={setOpen}
-        setDialogStatus={setDialogStatus}
-        setFormDialogStatus={setOpenFormDialog}
-      />
+      <ComponentValidator
+        showNull={props.headerConfigs?.isProfileView === true}
+      >
+        <ActionButtons
+          {...props}
+          setOpen={setOpen}
+          setDialogStatus={setDialogStatus}
+          setFormDialogStatus={setOpenFormDialog}
+        />
+      </ComponentValidator>
       <ToastContainer />
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>

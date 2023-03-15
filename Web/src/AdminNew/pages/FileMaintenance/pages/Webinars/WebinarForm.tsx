@@ -124,7 +124,6 @@ const WebinarForm: React.FC = () => {
             navigate(paths.webinar);
           })
           .then((result) => {
-            console.log(result);
             setIsLoading(false);
           })
       : axios
@@ -159,7 +158,6 @@ const WebinarForm: React.FC = () => {
             navigate(paths.webinar);
           })
           .then((result) => {
-            console.log(result);
             setIsLoading(false);
           });
   };

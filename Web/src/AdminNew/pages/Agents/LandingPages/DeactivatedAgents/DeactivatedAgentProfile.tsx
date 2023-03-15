@@ -49,7 +49,13 @@ const DeactivatedAgentProfile: React.FC = () => {
   }
 
   return (
-    <Profile error={error} loading={loading} profile={agent} crumbs={crumbs} />
+    <Profile
+      error={error}
+      loading={loading}
+      profile={agent}
+      crumbs={crumbs}
+      headerConfigs={{ isProfileView: false }}
+    />
   );
 };
 

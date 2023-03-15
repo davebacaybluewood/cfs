@@ -24,8 +24,11 @@ const ENDPOINTS = {
   AGENT_TESTIMONIALS_STATUS: "/api/agents/:agentId/testimonials/update",
   WEBINARS: "/api/webinars",
   WEBINAR_SINGLE: "/api/webinars/:webinarId",
+  AGENT_WEBINAR_SINGLE:
+    "/api/webinars/single-agent-webinar/:webinarGuid/:agentGuid",
   AGENT_WEBINAR_UPDATE: "/api/agents/:webinarGuid/:agentId/webinar",
   AGENT_WEBINARS: "/api/agents/webinars/active",
+  AGENT_WEBINARS_FILTERED: "/api/webinars/filtered/:status",
   AGENT_WEBINAR_FORM: "/api/webinars/:webinarId/:agentGuid/submit-webinar",
   APPOINTMENT_AGENTS: "/api/appointments",
   APPOINTMENT_AGENTS_SCHEDULED_APPOINTMENTS:
@@ -37,7 +40,5 @@ const ENDPOINTS = {
   BLOGS: "/api/blogs",
   BLOGS_SINGLE: "/api/blogs/:blogId",
 };
-
-const array = ["asdasd", "asdasdasfasf"];
 
 export default ENDPOINTS;

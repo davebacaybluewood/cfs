@@ -3,7 +3,11 @@ import Webinars from "../models/webinarModel.js";
 import expressAsync from "express-async-handler";
 import cloudinary from "../utils/cloudinary.js";
 import undefinedValidator from "./helpers/undefinedValidator.js";
-import { AGENT_STATUSES, ROLES } from "../constants/constants.js";
+import {
+  AGENT_STATUSES,
+  NOTIFICATION_ENUMS,
+  ROLES,
+} from "../constants/constants.js";
 import User from "../models/userModel.js";
 import { v4 as uuidv4 } from "uuid";
 import agentRegistrationSuccess from "../emailTemplates/agent-registration-success.js";
@@ -383,28 +387,40 @@ const updateAgentTestimonial = expressAsync(async (req, res) => {
 const updateAgentWebinar = expressAsync(async (req, res) => {
   const webinarGuid = req.params.webinarGuid;
   const isAdd = req.body.mode;
-  const agentWebinars = await Agents.find({ userGuid: req.params.agentId });
+
+  const webinarData = {
+    userGuid: req.params.agentId,
+    webinarGuid: req.params.webinarGuid,
+    calendlyUrl: req.body.calendlyUrl,
+    status: req.body.status,
+  };
 
   if (!isAdd) {
-    await Agents.update(
-      { userGuid: req.params.agentId },
-      {
-        $pull: {
-          webinars: webinarGuid,
-        },
+    const agent = await Agents.findOne({ userGuid: req.params.agentId }).then(
+      (agent) => {
+        let webinar = agent.webinars?.find(
+          (t) => t.webinarGuid === webinarGuid
+        );
+
+        webinar.status = webinarData.status;
+        webinar.calendlyUrl = webinarData.calendlyUrl;
+        return agent.save();
       }
     );
-    res.status(201).json(agentWebinars);
+    res.status(201).json(agent);
   } else {
     await Agents.update(
       { userGuid: req.params.agentId },
       {
         $push: {
-          webinars: webinarGuid,
+          webinars: webinarData,
         },
       }
     );
-    res.status(201).json(agentWebinars);
+    const updatedAgentInfo = await Agents.find({
+      userGuid: req.params.agentId,
+    });
+    res.status(201).json(updatedAgentInfo);
   }
 });
 

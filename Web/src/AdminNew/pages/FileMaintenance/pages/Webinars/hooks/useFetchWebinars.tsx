@@ -37,6 +37,11 @@ const useFetchWebinars = (id?: string, isGuid?: boolean) => {
           setLoading(false);
         });
     }
+
+    return () => {
+      setLoading(false);
+      setWebinars([]);
+    };
   }, [id]);
 
   return {

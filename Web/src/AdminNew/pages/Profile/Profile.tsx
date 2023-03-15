@@ -1,10 +1,13 @@
 import { Box, Grid, Paper } from "@mui/material";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
+import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import React, { useState } from "react";
+import { AgentData } from "../Agents/hooks/useFetchAgent";
 import Calendar from "../Dashboard/components/Calendar/Calendar";
 import { CrumbTypes } from "../Dashboard/types";
 import AboutProfile from "./components/AboutProfile/AboutProfile";
 import Overview from "./components/Overview/Overview";
+import { HeaderButtonConfigs } from "./components/ProfileHeader/HeaderButtons";
 import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
 import Testimonials from "./components/Testimonials/Testimonials";
 import Webinars from "./components/Webinars/Webinars";
@@ -33,9 +36,10 @@ type ProfileTypes = {
 };
 type ProfileProps = {
   crumbs: CrumbTypes[];
-  profile: ProfileTypes;
+  profile?: AgentData;
   loading: boolean;
   error: boolean;
+  headerConfigs: HeaderButtonConfigs;
 };
 
 const Profile: React.FC<ProfileProps> = (props) => {
@@ -52,39 +56,40 @@ const Profile: React.FC<ProfileProps> = (props) => {
       <Grid spacing={2} container>
         <Grid item sm={12} md={12} lg={12}>
           <ProfileHeader
-            _id={profile._id}
-            address={profile.address}
-            avatar={profile.avatar}
-            bio={profile.bio}
-            calendlyLink={profile.calendlyLink}
-            emailAddress={profile.emailAddress}
-            facebook={profile.facebook}
-            instagram={profile.instagram}
-            linkedIn={profile.linkedIn}
-            name={profile.name}
-            phoneNumber={profile.phoneNumber}
-            testimonials={profile.testimonials}
-            title={profile.title}
-            twitter={profile.twitter}
-            status={profile.status}
+            _id={profile?._id ?? ""}
+            address={profile?.address ?? ""}
+            avatar={profile?.avatar ?? ""}
+            bio={profile?.bio ?? ""}
+            calendlyLink={profile?.calendlyLink ?? ""}
+            emailAddress={profile?.emailAddress ?? ""}
+            facebook={profile?.facebook ?? ""}
+            instagram={profile?.instagram ?? ""}
+            linkedIn={profile?.linkedIn ?? ""}
+            name={profile?.name ?? ""}
+            phoneNumber={profile?.phoneNumber ?? ""}
+            testimonials={profile?.testimonials ?? []}
+            title={profile?.title ?? ""}
+            twitter={profile?.twitter ?? ""}
+            status={profile?.status ?? ""}
+            headerConfigs={props.headerConfigs}
           />
         </Grid>
         <Grid item sm={12} md={12} lg={4}>
           <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
             <AboutProfile
-              languages={profile.languages}
-              specialties={profile.specialties}
-              contactNumber={profile.phoneNumber}
-              fulllName={profile.name}
-              emailAdress={profile.emailAddress}
-              position={profile.title}
-              address={profile.address}
-              linkedIn={profile.linkedIn}
-              facebook={profile.facebook}
-              instagram={profile.instagram}
-              twitter={profile.twitter}
-              agentGuid={profile.userGuid}
-              status={profile.status}
+              languages={profile?.languages ?? []}
+              specialties={profile?.specialties ?? []}
+              contactNumber={profile?.phoneNumber ?? ""}
+              fulllName={profile?.name ?? ""}
+              emailAdress={profile?.emailAddress ?? ""}
+              position={profile?.title ?? ""}
+              address={profile?.address ?? ""}
+              linkedIn={profile?.linkedIn ?? ""}
+              facebook={profile?.facebook ?? ""}
+              instagram={profile?.instagram ?? ""}
+              twitter={profile?.twitter ?? ""}
+              agentGuid={profile?.userGuid ?? ""}
+              status={profile?.status ?? ""}
             />
             <Overview
               numberOfAppointments={0}
@@ -97,27 +102,29 @@ const Profile: React.FC<ProfileProps> = (props) => {
         </Grid>
         <Grid item sm={12} md={12} lg={8}>
           <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
-            <Webinars agentGuid={props.profile.userGuid} />
+            <ComponentValidator showNull={!profile?.userGuid}>
+              <Webinars agentGuid={profile?.userGuid ?? ""} />
+            </ComponentValidator>
           </Paper>
         </Grid>
         <Grid item sm={12} md={12} lg={12}>
           <Box>
             <Paper>
               <Testimonials
-                testimonials={profile.testimonials as any}
+                testimonials={profile?.testimonials as any}
                 setPageLoading={setPageLoading}
-                agentId={profile.userGuid}
+                agentId={profile?.userGuid ?? ""}
               />
             </Paper>
           </Box>
         </Grid>
-        <Grid item sm={12} md={12} lg={12}>
+        {/* <Grid item sm={12} md={12} lg={12}>
           <Box>
             <Paper>
               <Calendar />
             </Paper>
           </Box>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Wrapper>
   );

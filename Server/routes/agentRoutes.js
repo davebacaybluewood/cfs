@@ -27,9 +27,7 @@ router.route("/agent-status/:id").put(protect, adminAuth, updateAgentStatus);
 router.route("/agent-counts/all").get(protect, adminAuth, getAgentsCount);
 router.route("/:id/testimonials").put(addAgentTestimonial);
 router.route("/:id/testimonials/update").put(protect, updateAgentTestimonial);
-router
-  .route("/:webinarGuid/:agentId/webinar")
-  .put(protect, agentAuth, updateAgentWebinar);
+router.route("/:webinarGuid/:agentId/webinar").put(protect, updateAgentWebinar);
 router.route("/webinars/active").post(getAllActiveWebinar);
 
 export default router;

@@ -27,9 +27,10 @@ export type AgentData = {
   createdAt: string;
   updatedAt: string;
   testimonials?: string[];
+  calendlyLink: string;
 };
 const useFetchAgent = (userGuid: string) => {
-  const [agent, setAgent] = useState<AgentData>();
+  const [agent, setAgent] = useState<any>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const useFetchAgent = (userGuid: string) => {
   }, [userGuid]);
 
   return {
-    agent,
+    agent: agent,
     loading,
   };
 };

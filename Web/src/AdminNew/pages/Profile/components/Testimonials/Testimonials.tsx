@@ -22,12 +22,14 @@ type TestimonialsProps = {
   agentId: string;
 };
 const Testimonials: React.FC<TestimonialsProps> = (props) => {
-  const [testimonialsState, setTestimonialsState] = useState(
-    props.testimonials
-  );
+  const [testimonialsState, setTestimonialsState] = useState<
+    TestiMonialTypes[]
+  >([]);
   const [pageLoading, setPageLoading] = useState(false);
 
-  useEffect(() => {}, [testimonialsState]);
+  useEffect(() => {
+    setTestimonialsState(props.testimonials);
+  }, [props.testimonials]);
 
   const testimonialStatusHandler = async (testimonialId: string) => {
     setPageLoading(true);
