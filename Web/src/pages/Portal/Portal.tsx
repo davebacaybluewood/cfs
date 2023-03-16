@@ -1,11 +1,24 @@
 import { Box, Grid } from "@mui/material";
+import ReactHelmet from "react-helmet";
 import { Parallax } from "react-parallax";
 import PortalContent from "./components/PortalContent";
 import "./Portal.scss";
 
 const Portal = () => {
+  const metaKeywords = ["life insurance portal", "insurance agent portal"].join(
+    ", "
+  );
   return (
     <div className="portal-container">
+      <ReactHelmet>
+        <title>Life Insurance Portal | Comfort Financial Solutions</title>
+        <meta
+          name="description"
+          content="Take charge of your financial future by attending insurance and financial events hosted by Comfort Financial Solutions. Discover how to manage your finances!"
+        />
+        <meta name="keywords" content={metaKeywords} />
+        <link rel="canonical" href={window.location.href} />
+      </ReactHelmet>
       <Box>
         <Grid container>
           <Grid item xs={12} sm={12} md={6} lg={6}>

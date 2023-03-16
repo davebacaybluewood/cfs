@@ -26,6 +26,7 @@ import { FaFileDownload } from "react-icons/fa";
 import { saveAs } from "file-saver";
 import PageTitle from "library/PageTitle/PageTitle";
 import copyToClipboard from "helpers/clipboardCopy";
+import ReactHelmet from "react-helmet";
 
 const Events: React.FC = () => {
   const dispatch = useDispatch();
@@ -49,9 +50,29 @@ const Events: React.FC = () => {
     saveAs(ticket, "Event Ticket"); // Put your image url here.
   };
 
+  const metaKeywords = [
+    "insurance qualifying events",
+    "insurance qualifying life events",
+    "event insurance in california",
+    "insurance company events",
+    "insurance events near me",
+    "insurance news california",
+    "event insurance las vegas",
+  ].join(", ");
+
   return (
     <div className="event-content">
-      <PageTitle title={`Events`} />
+      <ReactHelmet>
+        <title>
+          Financial Events | Insurance Events | Comfort Financial Solutions
+        </title>
+        <meta
+          name="description"
+          content="Take charge of your financial future by attending insurance and financial events hosted by Comfort Financial Solutions. Discover how to manage your finances!"
+        />
+        <meta name="keywords" content={metaKeywords} />
+        <link rel="canonical" href={window.location.href} />
+      </ReactHelmet>
       <Banner bigTitle="Events" title="See Upcoming Events" hasBorder />
       <WorkingSteps
         bigTitle={
