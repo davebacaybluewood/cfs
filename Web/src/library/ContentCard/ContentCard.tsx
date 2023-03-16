@@ -22,7 +22,7 @@ const ContentCard: React.FC<ContentCardProps> = (props) => {
     <div className={contentCardClassnames}>
       <h5 className="header">{props.header}</h5>
       <div className="content-card-title">
-        <h1>{props.firstTitle}</h1>
+        <h2>{props.firstTitle}</h2>
         <h3>{props.secondTitle}</h3>
       </div>
       {/* <div className="divider" /> */}

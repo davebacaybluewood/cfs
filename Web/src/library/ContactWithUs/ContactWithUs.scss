@@ -24,7 +24,7 @@
     flex-wrap: nowrap;
     justify-content: flex-start;
     width: 100%;
-    h1 {
+    h2 {
       margin-top: 1rem;
     }
     button {
@@ -34,7 +34,7 @@
   }
 
   .captions {
-    h1,
+    h2,
     h5,
     p {
       color: white;
@@ -50,7 +50,7 @@
       font-style: italic;
       color: #8ba5cc;
     }
-    h1 {
+    h2 {
       font-size: 3rem;
     }
   }

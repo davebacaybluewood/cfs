@@ -27,7 +27,7 @@ const WorkingSteps: React.FC<IWorkingSteps> = (props) => {
         <div className="title">
           <h5>{props.topTitle || "Working Steps"}</h5>
           {typeof props.title === "string" ? (
-            <h1>{props.bigTitle}</h1>
+            <h2>{props.bigTitle}</h2>
           ) : (
             props.bigTitle
           )}
@@ -36,7 +36,7 @@ const WorkingSteps: React.FC<IWorkingSteps> = (props) => {
         <Grid container spacing={2} className="steps">
           {props.steps?.map((item, i) => (
             <Grid item xs={6} sm={6} md={3} key={i}>
-              <h1>{item.title}</h1>
+              <h2>{item.title}</h2>
               <h5>{item.subTitle}</h5>
               <p>{item.description}</p>
             </Grid>

@@ -11,11 +11,11 @@ import React, { useState } from "react";
 import WorkingSteps from "./components/WorkingSteps";
 import "./Solutions.scss";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Anuality from "./components/Anuality";
 import { useParams } from "react-router-dom";
 import useScroll from "hooks/useScroll";
 import solutionData from "./data";
 import PageTitle from "library/PageTitle/PageTitle";
+import ReactHelmet from "react-helmet";
 
 const workingSteps = [
   {
@@ -54,9 +54,29 @@ const Solutions = () => {
   );
   const annuityAccordions = solutionData.filter((s) => s.type === "annuity");
 
+  const metaKeywords = [
+    "annuities rate",
+    "annuities life insurance",
+    "annuity for life insurance",
+    "annuities interest rates",
+  ].join(", ");
+
+  const metaDatas = {
+    metaKeywords,
+    metaDescription:
+      "Comfort Financial Solutions offers annuity, insurance, and financial security solutions to help you meet your goals and secure your financial future. Contact us today!",
+  };
+
   return (
     <div className="services-content">
-      <PageTitle title="Solutions" />
+      <ReactHelmet>
+        <title>
+          Annuities and Life Insurance Products | Comfort Financial Solutions
+        </title>
+        <link rel="canonical" href={window.location.href} />
+        <meta name="description" content={metaDatas.metaDescription} />
+        <meta name="keywords" content={metaDatas.metaKeywords} />
+      </ReactHelmet>
       <div className="welcome-section">
         <img
           src="https://demo.casethemes.net/itfirm/wp-content/uploads/2021/12/h5-bg-slider1.jpg"
@@ -64,13 +84,13 @@ const Solutions = () => {
         />
         <div className="captions">
           {/* <h5>Helping You Get One Step Closer to a better future</h5> */}
-          <h1>Get the best solution in building a comfortable future.</h1>
+          <h2>Get the best solution in building a comfortable future.</h2>
         </div>
       </div>
       <Container>
         <div className="services-card-section">
           <HeaderTitle
-            bigTitle="Solutions"
+            bigTitle="Financial Solutions"
             title="Closer to a better future"
             description="We provide the necessary services to you."
           />

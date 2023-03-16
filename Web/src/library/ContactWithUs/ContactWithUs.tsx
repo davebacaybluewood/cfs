@@ -14,7 +14,7 @@ const ContactWithUs = () => {
           <p>Powered by Calendly</p>
         </div>
         <div className="captions">
-          <h1>Contact With Us!</h1>
+          <h2>Contact With Us!</h2>
         </div>
         <div>
           <button onClick={() => setCalendlyModal(true)}>

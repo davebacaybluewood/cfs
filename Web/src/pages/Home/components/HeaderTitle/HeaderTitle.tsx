@@ -10,7 +10,7 @@ const HeaderTitle: React.FC<HeaderTitleProps> = (props) => {
   return (
     <div className="header-title">
       <h5>{props.title}</h5>
-      <h1>{props.bigTitle}</h1>
+      <h2>{props.bigTitle}</h2>
       {props.hasBorder && <div className="divider" />}
     </div>
   );
