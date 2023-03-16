@@ -14,18 +14,6 @@ export type ChipTypes = {
   label: string;
 };
 
-export type BlogType = {
-  _id: string;
-  thumbnail: string;
-  title: string;
-  tags: ChipTypes[];
-  content?: string;
-  author: string;
-  authorName: string;
-  createdAt?: Date;
-  dateCreated: Date;
-};
-
 const SingleBlog: React.FC = () => {
   const params = useParams();
   const blogId = params.id;
@@ -42,13 +30,13 @@ const SingleBlog: React.FC = () => {
     setLinkCopied(true);
   };
 
-  //tags
   const tagLists = blog[0]?.tags?.map((tag: any) => {
     return {
       description: tag.label,
       link: "/",
     };
   });
+
   //parse content
   return (
     <Container className="single-blog-container">
@@ -66,7 +54,7 @@ const SingleBlog: React.FC = () => {
             <span>
               <FontAwesome.FaCalendarAlt />
             </span>
-            {formatISODateOnly(blog[0]?.createdAt)}
+            {formatISODateOnly(blog[0]?.createdAt?.toString() ?? "") ?? ""}
           </p>
           <p>
             <span>

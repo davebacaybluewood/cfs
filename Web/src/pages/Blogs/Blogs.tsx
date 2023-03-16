@@ -8,25 +8,9 @@ import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/u
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import Spinner from "library/Spinner/Spinner";
 
-export type ChipTypes = {
-  _id: string;
-  label: string;
-};
-
-export type BlogType = {
-  _id: string;
-  thumbnail: string;
-  title: string;
-  tags: ChipTypes[];
-  content?: string;
-  author: string;
-  authorName: string;
-  createdAt?: Date;
-  dateCreated: Date;
-};
-
 const Blogs: React.FC = () => {
   const { blogs, loading } = useFetchBlogs();
+  console.log(blogs);
   return (
     <div className="blogs">
       <PageTitle title="Blogs" />
@@ -36,42 +20,44 @@ const Blogs: React.FC = () => {
         hasBorder={true}
         backgroundImage="https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=600"
       />
-
-      <Spinner isVisible={loading} />
-      <Container>
-        <NoInformationToDisplay
-          showNoInfo={blogs.length === 0}
-          message="No Blogs Available"
-          title="No Information to Display"
-        >
-          <Grid container spacing={2} marginBottom={3}>
-            {blogs.map((blog: any) => {
-              const tags = blog.tags.map((tag: any) => {
-                return {
-                  description: tag.label,
-                  link: "/",
-                };
-              });
-              return (
-                <Grid item xs={12} sm={6} md={4} lg={4} className="blog-grid">
-                  <BlogCard
-                    author={blog.authorName}
-                    dateCreated={new Date(blog.createdAt?.toString() ?? "")}
-                    id={blog._id}
-                    tags={tags}
-                    content={blog.content}
-                    thumbnail={blog.thumbnail}
-                    title={blog.title}
-                    numberOfVisits={0}
-                    showStatistics={false}
-                    isAdmin={false}
-                  />
-                </Grid>
-              );
-            })}
-          </Grid>
-        </NoInformationToDisplay>
-      </Container>
+      {loading ? (
+        <Spinner isVisible={true} />
+      ) : (
+        <Container>
+          <NoInformationToDisplay
+            showNoInfo={blogs.length === 0}
+            message="No Blogs Available"
+            title="No Information to Display"
+          >
+            <Grid container spacing={2} marginBottom={3}>
+              {blogs.map((blog: any) => {
+                const tags = blog.tags.map((tag: any) => {
+                  return {
+                    description: tag.label,
+                    link: "/",
+                  };
+                });
+                return (
+                  <Grid item xs={12} sm={6} md={4} lg={4} className="blog-grid">
+                    <BlogCard
+                      author={blog.authorName}
+                      dateCreated={new Date(blog.createdAt?.toString() ?? "")}
+                      id={blog._id}
+                      tags={tags}
+                      content={blog.content}
+                      thumbnail={blog.thumbnail}
+                      title={blog.title}
+                      numberOfVisits={0}
+                      showStatistics={false}
+                      isAdmin={false}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </NoInformationToDisplay>
+        </Container>
+      )}
     </div>
   );
 };

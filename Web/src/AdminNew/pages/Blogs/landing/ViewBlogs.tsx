@@ -6,7 +6,6 @@ import {
   DialogContentText,
 } from "@mui/material";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
-import { CrumbTypes } from "AdminNew/pages/Dashboard/types";
 import paths from "constants/routes";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,6 +17,7 @@ import getUserToken from "helpers/getUserToken";
 import axios from "axios";
 import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 import Chip from "pages/Blogs/components/Chip/Chip";
+import { toast } from "react-toastify";
 
 const ViewBlogs: React.FC = () => {
   const params = useParams();
@@ -50,7 +50,7 @@ const ViewBlogs: React.FC = () => {
   const visitBlogHandler = (id: string) => {
     navigate(paths.blogsSingle.replace(":id", id));
   };
-  //deletet blog function
+
   const deleteBlog = () => {
     setActionLoading(true);
     const config = {
@@ -61,6 +61,16 @@ const ViewBlogs: React.FC = () => {
       .delete(endpoint, { headers: config })
       .then((response) => {
         setActionLoading(false);
+        toast.info(`Blog Deleted`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         navigate(paths.adminBlogs);
       })
       .catch((error) => {
@@ -68,7 +78,6 @@ const ViewBlogs: React.FC = () => {
         setActionLoading(false);
       });
   };
-  //tags
   const tagLists = blog[0]?.tags?.map((tag: any) => {
     return {
       description: tag.label,
@@ -88,7 +97,7 @@ const ViewBlogs: React.FC = () => {
           <div className="blog-actions">
             <button
               className="blog-visit-btn"
-              onClick={() => visitBlogHandler(blog[0]?._id)}
+              onClick={() => visitBlogHandler(blog[0]?._id!)}
             >
               Visit Blog
             </button>

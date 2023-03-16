@@ -1,11 +1,10 @@
 import { Grid } from "@mui/material";
 import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
-import ENDPOINTS from "constants/endpoints";
 import paths from "constants/routes";
 import BlogCard from "library/BlogCard/BlogCard";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { CrumbTypes } from "../Dashboard/types";
@@ -30,19 +29,8 @@ export type ChipTypes = {
   label: string;
 };
 
-export type BlogType = {
-  _id: string;
-  thumbnail: string;
-  title: string;
-  tags: ChipTypes[];
-  content?: string;
-  author: string;
-  authorName: string;
-  createdAt?: Date;
-};
-
 const Blogs: React.FC = () => {
-  const { blogs: blogs, loading } = useFetchBlogs();
+  const { blogs, loading } = useFetchBlogs();
 
   const navigate = useNavigate();
 
@@ -64,7 +52,7 @@ const Blogs: React.FC = () => {
       >
         <Grid container marginBottom={3}>
           {blogs?.map((blog: any) => {
-            const tags = blog.tags.map((tag: any) => {
+            const tags = blog.tags.map((tag: ChipTypes) => {
               return {
                 description: tag.label,
                 link: "/",
