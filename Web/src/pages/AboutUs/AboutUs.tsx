@@ -19,11 +19,6 @@ const AboutUs = () => {
     "financial awareness",
   ].join(", ");
 
-  const metaDatas = {
-    metaKeywords,
-    metaDescription:
-      "Comfort Financial Solutions helps individuals and families build a comfortable future by advocating for life insurance solutions",
-  };
   return (
     <React.Fragment>
       <div className="about">
@@ -34,7 +29,7 @@ const AboutUs = () => {
           <link rel="canonical" href={window.location.href} />
           <meta
             name="description"
-            content="Comfort Financial Solutions is an annuity and life insurance advisor that offers financial solution to help secure your financial future. Contact us today!"
+            content="Comfort Financial Solutions is an annuity and life insurance advisor that offers financial solutions to help secure your financial future. Contact us today!"
           />
           <meta
             name="keywords"

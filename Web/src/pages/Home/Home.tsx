@@ -153,7 +153,7 @@ const Home: React.FC = () => {
   const metaDatas = {
     metaKeywords,
     metaDescription:
-      "Comfort Financial Solutions helps individuals and families build a comfortable future by advocating for life insurance solutions",
+      "Comfort Financial Solutions helps individuals and families build a comfortable future by advocating for life insurance and providing risk management solutions.",
   };
 
   return (
