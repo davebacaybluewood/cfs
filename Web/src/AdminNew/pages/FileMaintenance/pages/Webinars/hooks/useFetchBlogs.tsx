@@ -1,18 +1,23 @@
+import { ChipTypes } from "AdminNew/pages/Blogs/Blogs";
 import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
 import { useState, useEffect } from "react";
 
 export type BlogValueType = {
+  _id?: string;
   thumbnail: string;
   title: string;
-  tags: any;
-  content: string;
+  tags: ChipTypes[];
+  content?: string;
   author: string;
+  authorName?: string;
+  singleAuthorName?: string;
   createdAt?: Date;
+  dateCreated?: Date;
 };
 
 const useFetchBlogs = (id?: string) => {
-  const [blogs, setBlogs] = useState<any>([]);
+  const [blogs, setBlogs] = useState<BlogValueType[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,7 +29,6 @@ const useFetchBlogs = (id?: string) => {
       axios
         .get(endpoint)
         .then((response) => {
-          console.log(response.data)
           setBlogs(response.data);
           setLoading(false);
         })

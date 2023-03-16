@@ -36,7 +36,35 @@ const blogSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+/**
+ * Meta Tags
+ */
+const blogMetatagSchema = mongoose.Schema(
+  {
+    blog: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "blogs",
+    },
+    blogMetatagTitle: {
+      type: String,
+      required: true,
+    },
+    blogMetatagDescription: {
+      type: String,
+      required: true,
+    },
+    blogMetatagKeywords: {
+      type: [String],
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Blogs = mongoose.model("Blogs", blogSchema);
+export const MetaTags = mongoose.model("MetaTags", blogMetatagSchema);
 
 export default Blogs;

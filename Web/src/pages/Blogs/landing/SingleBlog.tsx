@@ -7,28 +7,17 @@ import * as FontAwesome from "react-icons/fa";
 import ReactHtmlParser from "html-react-parser";
 import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 import Chip from "../components/Chip/Chip";
+import Spinner from "library/Spinner/Spinner";
 
 export type ChipTypes = {
   _id: string;
   label: string;
 };
 
-export type BlogType = {
-  _id: string;
-  thumbnail: string;
-  title: string;
-  tags: ChipTypes[];
-  content?: string;
-  author: string;
-  authorName: string;
-  createdAt?: Date;
-  dateCreated: Date;
-};
-
 const SingleBlog: React.FC = () => {
   const params = useParams();
   const blogId = params.id;
-  const { blogs: blog } = useFetchBlogs(blogId);
+  const { blogs: blog, loading } = useFetchBlogs(blogId);
 
   // const socialIcon = blogItem.socialLinks.map((social: string) => {
   //   return social;
@@ -41,16 +30,17 @@ const SingleBlog: React.FC = () => {
     setLinkCopied(true);
   };
 
-  //tags
   const tagLists = blog[0]?.tags?.map((tag: any) => {
     return {
       description: tag.label,
       link: "/",
     };
   });
+
   //parse content
   return (
     <Container className="single-blog-container">
+      <Spinner isVisible={loading} />
       <Box className="blog-thumbnail">
         <img src={blog[0]?.thumbnail} alt={blog[0]?.thumbnail} />
       </Box>
@@ -64,7 +54,7 @@ const SingleBlog: React.FC = () => {
             <span>
               <FontAwesome.FaCalendarAlt />
             </span>
-            {formatISODateOnly(blog[0]?.createdAt)}
+            {formatISODateOnly(blog[0]?.createdAt?.toString() ?? "") ?? ""}
           </p>
           <p>
             <span>

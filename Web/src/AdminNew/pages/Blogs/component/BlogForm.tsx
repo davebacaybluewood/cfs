@@ -68,7 +68,7 @@ const BlogForm: React.FC = () => {
   const editInitialValues: Omit<BlogValueType, "role"> = {
     thumbnail: blogs[0]?.thumbnail,
     title: blogs[0]?.title,
-    author: blogs[0]?.singleAuthorName,
+    author: blogs[0]?.singleAuthorName ?? "",
     tags: blogs[0]?.tags ?? [],
     content: blogs[0]?.content,
   };
@@ -132,10 +132,10 @@ const BlogForm: React.FC = () => {
               progress: undefined,
               theme: "light",
             });
+            setIsLoading(true);
             navigate(paths.adminBlogs);
           })
           .then((result) => {
-            console.log(result);
             setIsLoading(false);
           })
       : axios
@@ -163,10 +163,10 @@ const BlogForm: React.FC = () => {
               progress: undefined,
               theme: "light",
             });
+            setIsLoading(true);
             navigate(paths.adminBlogs);
           })
           .then((result) => {
-            console.log(result);
             setIsLoading(false);
           });
   };
@@ -175,8 +175,7 @@ const BlogForm: React.FC = () => {
     navigate(paths.adminBlogs);
   };
   return (
-    <Wrapper breadcrumb={crumbs} error={false} loading={false}>
-      <Spinner isVisible={loading} />
+    <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <Title
         title={isEditMode ? "Edit Blog" : "Add Blog"}
         subtitle="All fields (*) are required."
@@ -276,10 +275,6 @@ const BlogForm: React.FC = () => {
                       multiple
                       value={values.tags}
                       onChange={(event) => {
-                        const tags = event.target.value?.map((tag: any) => {
-                          return { label: tag };
-                        });
-                        console.log(event.target.value);
                         setFieldValue("tags", event.target.value);
                         setFieldTouched("tags", true);
                       }}

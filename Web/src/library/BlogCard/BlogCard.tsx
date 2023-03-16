@@ -30,6 +30,7 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
   const navigate = useNavigate();
 
   const blogHandler = (id: string) => {
+    window.scrollTo(0, 0);
     navigate(paths.blogsSingle.replace(":id", id));
   };
   const adminViewBlogHandler = (id: string) => {
