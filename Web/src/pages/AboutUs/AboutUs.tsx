@@ -2,20 +2,23 @@ import { Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import classNames from "classnames";
 import aboutUs from "data/aboutUs";
-import members from "data/members";
 import { isEven, isOdd } from "helpers/isEvenOrOdd";
 import useResponsive from "hooks/useResponsive";
 import Banner from "library/Banner/Banner";
 import ContentCard from "library/ContentCard/ContentCard";
-import PageTitle from "library/PageTitle/PageTitle";
-import HeaderTitle from "pages/Home/components/HeaderTitle/HeaderTitle";
-import { Parallax } from "react-parallax";
 import "./AboutUs.scss";
 import ReactHelmet from "react-helmet";
 import React from "react";
 
 const AboutUs = () => {
   const isMobileMode = useResponsive("mobile");
+
+  const metaKeywords = [
+    "financial advisor las vegas nv",
+    "life insurance agent los angeles",
+    "financial awareness",
+  ].join(", ");
+
   return (
     <React.Fragment>
       <div className="about">
@@ -23,7 +26,7 @@ const AboutUs = () => {
           <title>
             Financial & Life Insurance Advisor | Comfort Financial Solutions
           </title>
-          <link rel="canonical" href="http://localhost:3000/about" />
+          <link rel="canonical" href={window.location.href} />
           <meta
             name="description"
             content="Comfort Financial Solutions is an annuity and life insurance advisor that offers financial solutions to help secure your financial future. Contact us today!"

@@ -6,11 +6,25 @@ import { formatDate, formatISODateToDate } from "helpers/dateFormatter";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { Link } from "react-router-dom";
 import paths from "constants/routes";
+import { Helmet } from "react-helmet";
 
 const MediasLanding: React.FC = () => {
+  const metaKeywords = ["insurance news california"].join(", ");
+
+  const metaDatas = {
+    metaKeywords,
+    metaDescription:
+      "Discover the latest financial news and trends with our latest CFS blog posts. Trust the financial experts at Comfort Financial Solutions for all your financial needs.",
+  };
+
   return (
     <div className="media-wrapper">
-      <PageTitle title="Medias" />
+      <Helmet>
+        <title>General Life Insurance News | Comfort Financial Solutions</title>
+        <meta name="description" content={metaDatas.metaDescription}></meta>
+        <meta name="keywords" content={metaDatas.metaKeywords}></meta>
+        <link rel="canonical" href={window.location.href} />
+      </Helmet>
       <Banner
         bigTitle="Media "
         title="Explore the enjoyment with us."

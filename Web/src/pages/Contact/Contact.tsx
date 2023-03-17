@@ -7,6 +7,7 @@ import HeaderTitle from "pages/Home/components/HeaderTitle/HeaderTitle";
 import Wrapper from "pages/Home/components/Wrapper/Wrapper";
 import { useState } from "react";
 import { PopupModal } from "react-calendly";
+import ReactHelmet from "react-helmet";
 import Form from "./components/Form/Form";
 import Inquiries from "./components/Inquiries/Inquiries";
 import "./Contact.scss";
@@ -14,9 +15,24 @@ import "./Contact.scss";
 const Contact = () => {
   const [calendlyModal, setCalendlyModal] = useState(false);
 
+  const metaKeywords = [
+    "insurance qualifying events",
+    "contact life insurance agency",
+  ].join(", ");
+
   return (
     <div className="contact">
-      <PageTitle title="Contact" />
+      <ReactHelmet>
+        <title>
+          Life Insurance Agency | Contact Comfort Financial Solutions
+        </title>
+        <meta
+          name="description"
+          content="Our financial specialist can assist you in identifying the ideal life insurance products for you. Contact Comfort Financial Solutions today for assistance!"
+        />
+        <meta name="keywords" content={metaKeywords} />
+        <link rel="canonical" href={window.location.href} />
+      </ReactHelmet>
       <Banner
         bigTitle="Contact Us"
         title="Share your suggestions and feedback with us."

@@ -138,7 +138,23 @@ const Home: React.FC = () => {
     onEventScheduled: () => console.log("test"),
   });
 
-  const [showPopup, setShowPopup] = useState(true);
+  const metaKeywords = [
+    "life insurance company",
+    "life insurance company north america",
+    "life insurance company usa",
+    "life insurance company in usa",
+    "annuity near me",
+    "life insurance agency",
+    "life insurance company near me",
+    "life insurance policy near me",
+    "annuities",
+  ].join(", ");
+
+  const metaDatas = {
+    metaKeywords,
+    metaDescription:
+      "Comfort Financial Solutions helps individuals and families build a comfortable future by advocating for life insurance and providing risk management solutions.",
+  };
 
   return (
     <React.Fragment>
@@ -148,6 +164,12 @@ const Home: React.FC = () => {
           content="-8SXobMJclzxTwefhzJ8i5kaM7zpKD-I3VqkfnJtWwc"
         />
         <meta name="msvalidate.01" content="11FA9EC5F1F79FDD3E3761BCB55B12D1" />
+        <title>
+          Life Insurance Company | Annuities | Comfort Financial Solutions
+        </title>
+        <meta name="description" content={metaDatas.metaDescription}></meta>
+        <meta name="keywords" content={metaDatas.metaKeywords}></meta>
+        <link rel="canonical" href={window.location.href} />
       </Helmet>
       <div className="home-container">
         {/* <PageTitle title="Home" /> */}
@@ -157,7 +179,7 @@ const Home: React.FC = () => {
               <img src="/assets/others/happy-fam.png" alt="happy family" />
             </div>
             <div className="welcome-section-captions">
-              <h2>We are CFS</h2>
+              <h1>We are CFS</h1>
               <p>
                 CFS helps individuals and families build a comfortable future by
                 advocating Financial Awareness and providing Risk Management
