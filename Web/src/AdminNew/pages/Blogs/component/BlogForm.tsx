@@ -28,12 +28,12 @@ import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "./BlogForm.scss";
-import Spinner from "library/Spinner/Spinner";
 import { UserContext } from "AdminNew/context/UserProvider";
 import { MenuProps } from "pages/Agents/AgentsLanding/utils";
 import { tagOptions } from "../utils";
 import MultiSelectInput from "library/MultiSelectInput/MultiSelectInput";
-import AsyncCreatableSelect from "library/AsyncCreatableSelect/AsyncCreatableSelect";
+import ComponentValidator from "library/ComponentValidator/ComponentValidator";
+import Spinner from "library/Spinner/Spinner";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -60,25 +60,10 @@ const BlogForm: React.FC = () => {
 
   useEffect(() => {}, [thumbnailPreview]);
 
-  const data = [
-    {
-      label: "sample1",
-      value: "sample",
-    },
-    {
-      label: "sample2",
-      value: "sample22",
-    },
-    {
-      label: "sample3",
-      value: "sample33",
-    },
-  ];
-
   const addInitialValues: Omit<BlogValueType, "role"> = {
     metaTagTitle: "",
     metaTagDescription: "",
-    metaTagKeywords: data,
+    metaTagKeywords: [],
     thumbnail: "",
     title: "",
     author: "",
@@ -138,7 +123,11 @@ const BlogForm: React.FC = () => {
             {
               metaTagTitle: values.metaTagTitle.toString(),
               metaTagDescription: values.metaTagDescription.toString(),
-              metaTagKeywords: values.metaTagKeywords,
+              metaTagKeywords: values.metaTagKeywords.map((kw: any) => {
+                return {
+                  keyword: kw.value,
+                };
+              }),
               title: values.title.toString(),
               thumbnail: values.thumbnail,
               author: userCtx.user._id,
@@ -172,7 +161,11 @@ const BlogForm: React.FC = () => {
             {
               metaTagTitle: values.metaTagTitle.toString(),
               metaTagDescription: values.metaTagDescription.toString(),
-              metaTagKeywords: values.metaTagKeywords,
+              metaTagKeywords: values.metaTagKeywords.map((kw: any) => {
+                return {
+                  keyword: kw.value,
+                };
+              }),
               title: values.title.toString(),
               thumbnail: values.thumbnail,
               author: userCtx.user._id,
@@ -204,7 +197,8 @@ const BlogForm: React.FC = () => {
     navigate(paths.adminBlogs);
   };
   return (
-    <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
+    <Wrapper breadcrumb={crumbs} error={false}>
+      <Spinner isVisible={loading} />
       <Title
         title={isEditMode ? "Edit Blog" : "Add Blog"}
         subtitle="All fields (*) are required."
@@ -246,22 +240,39 @@ const BlogForm: React.FC = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
-                  {/* <AsyncCreatableSelect
-                    value={values.metaTagKeywords}
+                  <MultiSelectInput
+                    value={
+                      values.metaTagKeywords.map((data: any) => {
+                        return {
+                          label: data.keyword,
+                          value: data.keyword,
+                          keyword: data.keyword,
+                        };
+                      }) as any
+                    }
                     name="metaTagKeywords"
-                    onChange={(data: any) => {
-                      console.log("EVENT", data);
-                      const clonedMetaTagKeywords = [...values.metaTagKeywords];
-                      const metaTagKeywordsData = [
-                        ...clonedMetaTagKeywords,
-                        data[values.metaTagKeywords.length],
-                      ];
-                      setFieldValue("metaTagKeywords", metaTagKeywordsData);
-                      setFieldTouched("metaTagKeywords", true);
+                    onCreate={(e: any) => {
+                      console.log(e);
+                      setFieldValue("metaTagKeywords", e);
                     }}
-                    defaultValue={data}
-                  /> */}
-                  <MultiSelectInput />
+                    onChange={(e: any) => {
+                      console.log(e);
+                      setFieldValue("metaTagKeywords", e);
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <MultiSelectInput
+                    value={values.tags as any}
+                    name="tags"
+                    onCreate={(e: any) => {
+                      console.log(e);
+                      setFieldValue("tags", e);
+                    }}
+                    onChange={(e: any) => {
+                      setFieldValue("tags", e);
+                    }}
+                  />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <h2>Blog</h2>
@@ -299,20 +310,22 @@ const BlogForm: React.FC = () => {
                       }}
                     />
                   </MUIButton>
-                  <div className="img-container">
-                    <img
-                      src={
-                        isEditMode && thumbnailPreview !== ""
-                          ? thumbnailPreview
-                          : isEditMode
-                          ? values.thumbnail
-                          : !isEditMode
-                          ? thumbnailPreview || defaultThumbnail
-                          : defaultThumbnail
-                      }
-                      alt={isEditMode ? values.thumbnail : thumbnailPreview}
-                    ></img>
-                  </div>
+                  <ComponentValidator showNull={!values.thumbnail}>
+                    <div className="img-container">
+                      <img
+                        src={
+                          isEditMode && thumbnailPreview !== ""
+                            ? thumbnailPreview
+                            : isEditMode
+                            ? values.thumbnail
+                            : !isEditMode
+                            ? thumbnailPreview || defaultThumbnail
+                            : defaultThumbnail
+                        }
+                        alt={isEditMode ? values.thumbnail : thumbnailPreview}
+                      ></img>
+                    </div>
+                  </ComponentValidator>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <FormikTextInput
@@ -333,51 +346,6 @@ const BlogForm: React.FC = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12}>
-                  <FormControl variant="outlined" fullWidth>
-                    <InputLabel id="languages-label">
-                      Put Some Tags (You can choose more than one)
-                    </InputLabel>
-                    <Select
-                      labelId="languages-label"
-                      id="languages-chip"
-                      multiple
-                      value={values.tags}
-                      onChange={(event) => {
-                        setFieldValue("tags", event.target.value);
-                        setFieldTouched("tags", true);
-                      }}
-                      variant="outlined"
-                      name="languages"
-                      input={
-                        <OutlinedInput id="select-multiple-chip" label="Chip" />
-                      }
-                      renderValue={(selected) => (
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            gap: 0.5,
-                          }}
-                        >
-                          {selected.map((value: any) => (
-                            <Chip key={value?.label} label={value?.label} />
-                          ))}
-                        </Box>
-                      )}
-                      MenuProps={MenuProps}
-                    >
-                      {tagOptions.map((name) => (
-                        <MenuItem
-                          key={name.label}
-                          value={{ label: name.label } as any}
-                        >
-                          {name.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
                 <Grid item sm={12} md={12} lg={12}>
                   <h5 className="form-label">Blog Content</h5>
                   <ReactQuill

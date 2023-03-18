@@ -22,6 +22,10 @@
 .blog-form {
   margin-bottom: 5rem;
   .blog-form-container {
+    .MuiInputBase-root,
+    .MuiFormLabel-root {
+      font-size: 1.4rem !important;
+    }
     .blog-thumbnail-upload-container {
       .blog-thumbnail-button {
         margin-bottom: 1rem;

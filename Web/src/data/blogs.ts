@@ -312,12 +312,3 @@ export const metaTagOption: IMetaTagOption[] = [
     label: "sample 3",
   },
 ];
-export const createOption = (label: string) => ({
-  label,
-  value: label.toLowerCase().replace(/\W/g, ""),
-});
-export const blogMetaTags = [
-  { keyword: createOption("meta tag 1") },
-  { keyword: createOption("meta tag 2") },
-  { keyword: createOption("meta tag 3") },
-];

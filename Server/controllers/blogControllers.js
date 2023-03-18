@@ -134,6 +134,18 @@ const updateBlog = expressAsync(async (req, res) => {
       blog.content = undefinedValidator(blog.content, req.body.content);
       blog.tags = undefinedValidator(blog.tags, req.body.tags);
       blog.author = undefinedValidator(blog.author, req.body.author);
+      blog.metaTagTitle = undefinedValidator(
+        blog.metaTagTitle,
+        req.body.metaTagTitle
+      );
+      blog.metaTagDescription = undefinedValidator(
+        blog.metaTagDescription,
+        req.body.metaTagDescription
+      );
+      blog.metaTagKeywords = undefinedValidator(
+        blog.metaTagKeywords,
+        req.body.metaTagKeywords
+      );
       blog.thumbnail =
         blogThumbnailResult.secure_url ?? ""
           ? blogThumbnailResult.secure_url
