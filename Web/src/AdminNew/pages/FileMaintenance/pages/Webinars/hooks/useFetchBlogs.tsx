@@ -1,10 +1,13 @@
-import { ChipTypes } from "AdminNew/pages/Blogs/Blogs";
+import { ChipTypes, MetaTagKeywordsTypes } from "AdminNew/pages/Blogs/types";
 import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
 import { useState, useEffect } from "react";
 
 export type BlogValueType = {
   _id?: string;
+  metaTagTitle: string;
+  metaTagDescription: string;
+  metaTagKeywords: MetaTagKeywordsTypes[];
   thumbnail: string;
   title: string;
   tags: ChipTypes[];

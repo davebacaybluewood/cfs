@@ -4,11 +4,9 @@
   border-radius: 5px;
   padding: 1rem;
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
   &:hover {
     transition: all 0.5s ease;
-    box-shadow: 1px 10px 5px rgba(0, 0, 0, 0.15),
-      1px 10px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
   }
   &:not(hover) {
     transition: all 0.5s ease-out;

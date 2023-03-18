@@ -32,6 +32,8 @@ import Spinner from "library/Spinner/Spinner";
 import { UserContext } from "AdminNew/context/UserProvider";
 import { MenuProps } from "pages/Agents/AgentsLanding/utils";
 import { tagOptions } from "../utils";
+import MultiSelectInput from "library/MultiSelectInput/MultiSelectInput";
+import AsyncCreatableSelect from "library/AsyncCreatableSelect/AsyncCreatableSelect";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -58,7 +60,25 @@ const BlogForm: React.FC = () => {
 
   useEffect(() => {}, [thumbnailPreview]);
 
+  const data = [
+    {
+      label: "sample1",
+      value: "sample",
+    },
+    {
+      label: "sample2",
+      value: "sample22",
+    },
+    {
+      label: "sample3",
+      value: "sample33",
+    },
+  ];
+
   const addInitialValues: Omit<BlogValueType, "role"> = {
+    metaTagTitle: "",
+    metaTagDescription: "",
+    metaTagKeywords: data,
     thumbnail: "",
     title: "",
     author: "",
@@ -66,6 +86,9 @@ const BlogForm: React.FC = () => {
     content: "",
   };
   const editInitialValues: Omit<BlogValueType, "role"> = {
+    metaTagTitle: blogs[0]?.metaTagTitle,
+    metaTagDescription: blogs[0]?.metaTagDescription,
+    metaTagKeywords: blogs[0]?.metaTagKeywords ?? [],
     thumbnail: blogs[0]?.thumbnail,
     title: blogs[0]?.title,
     author: blogs[0]?.singleAuthorName ?? "",
@@ -113,6 +136,9 @@ const BlogForm: React.FC = () => {
               ? ENDPOINTS.BLOGS_SINGLE.replace(":blogId", id ?? "")
               : ENDPOINTS.BLOGS,
             {
+              metaTagTitle: values.metaTagTitle.toString(),
+              metaTagDescription: values.metaTagDescription.toString(),
+              metaTagKeywords: values.metaTagKeywords,
               title: values.title.toString(),
               thumbnail: values.thumbnail,
               author: userCtx.user._id,
@@ -144,6 +170,9 @@ const BlogForm: React.FC = () => {
               ? ENDPOINTS.BLOGS_SINGLE.replace(":blogId", id ?? "")
               : ENDPOINTS.BLOGS,
             {
+              metaTagTitle: values.metaTagTitle.toString(),
+              metaTagDescription: values.metaTagDescription.toString(),
+              metaTagKeywords: values.metaTagKeywords,
               title: values.title.toString(),
               thumbnail: values.thumbnail,
               author: userCtx.user._id,
@@ -192,11 +221,51 @@ const BlogForm: React.FC = () => {
           handleSubmit,
           touched,
         }) => {
-          console.log(values);
-
           return (
             <div className="blog-form">
               <Grid container spacing={2} className="blog-form-container">
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <h2>Meta Tags</h2>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <FormikTextInput
+                    name="metaTagTitle"
+                    label="Meta Tag Title"
+                    value={values.metaTagTitle}
+                    variant="filled"
+                    InputLabelProps={{ shrink: !!values.metaTagTitle }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <FormikTextInput
+                    name="metaTagDescription"
+                    label="Meta Tag Description"
+                    value={values.metaTagDescription}
+                    variant="filled"
+                    InputLabelProps={{ shrink: !!values.metaTagDescription }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  {/* <AsyncCreatableSelect
+                    value={values.metaTagKeywords}
+                    name="metaTagKeywords"
+                    onChange={(data: any) => {
+                      console.log("EVENT", data);
+                      const clonedMetaTagKeywords = [...values.metaTagKeywords];
+                      const metaTagKeywordsData = [
+                        ...clonedMetaTagKeywords,
+                        data[values.metaTagKeywords.length],
+                      ];
+                      setFieldValue("metaTagKeywords", metaTagKeywordsData);
+                      setFieldTouched("metaTagKeywords", true);
+                    }}
+                    defaultValue={data}
+                  /> */}
+                  <MultiSelectInput />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <h2>Blog</h2>
+                </Grid>
                 <Grid
                   item
                   xs={12}
@@ -258,7 +327,7 @@ const BlogForm: React.FC = () => {
                   <FormikTextInput
                     name="author"
                     label="Blog Author"
-                    value={userCtx.user.name}
+                    value={userCtx.user?.name}
                     variant="filled"
                     InputLabelProps={{ shrink: !!values.author }}
                   />
@@ -331,6 +400,7 @@ const BlogForm: React.FC = () => {
                   Submit
                 </Button>
               </div>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </div>
           );
         }}
