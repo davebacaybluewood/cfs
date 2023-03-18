@@ -288,3 +288,36 @@ export const blogs = [
     ],
   },
 ];
+//META TAGS
+export interface IMetaTagOption {
+  _id: string;
+  value: string;
+  label: string;
+}
+
+export const metaTagOption: IMetaTagOption[] = [
+  {
+    _id: "1",
+    value: "Sample 1",
+    label: "sample 1",
+  },
+  {
+    _id: "2",
+    value: "Sample 2",
+    label: "sample 2",
+  },
+  {
+    _id: "3",
+    value: "Sample 3",
+    label: "sample 3",
+  },
+];
+export const createOption = (label: string) => ({
+  label,
+  value: label.toLowerCase().replace(/\W/g, ""),
+});
+export const blogMetaTags = [
+  { keyword: createOption("meta tag 1") },
+  { keyword: createOption("meta tag 2") },
+  { keyword: createOption("meta tag 3") },
+];

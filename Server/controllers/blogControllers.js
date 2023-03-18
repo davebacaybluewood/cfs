@@ -72,7 +72,15 @@ const getSingleBlog = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const createBlog = expressAsync(async (req, res) => {
-  const { title, content, tags, author } = req.body;
+  const {
+    metaTagTitle,
+    metaTagDescription,
+    metaTagKeywords,
+    title,
+    content,
+    tags,
+    author,
+  } = req.body;
   try {
     const blogThumbnailResult = await cloudinaryImport.v2.uploader.upload(
       req.file.path,
@@ -82,6 +90,9 @@ const createBlog = expressAsync(async (req, res) => {
       }
     );
     const blog = new Blogs({
+      metaTagTitle,
+      metaTagDescription,
+      metaTagKeywords,
       author,
       title,
       content,
