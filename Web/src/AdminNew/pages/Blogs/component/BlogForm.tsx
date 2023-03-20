@@ -1,14 +1,4 @@
-import {
-  Grid,
-  Button as MUIButton,
-  InputLabel,
-  Select,
-  FormControl,
-  OutlinedInput,
-  Box,
-  Chip,
-  MenuItem,
-} from "@mui/material";
+import { Grid, Button as MUIButton } from "@mui/material";
 import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
 import { CrumbTypes } from "AdminNew/pages/Dashboard/types";
@@ -29,8 +19,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "./BlogForm.scss";
 import { UserContext } from "AdminNew/context/UserProvider";
-import { MenuProps } from "pages/Agents/AgentsLanding/utils";
-import { tagOptions } from "../utils";
 import MultiSelectInput from "library/MultiSelectInput/MultiSelectInput";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import Spinner from "library/Spinner/Spinner";
@@ -42,8 +30,13 @@ const crumbs: CrumbTypes[] = [
     isActive: false,
   },
   {
-    title: "View Blog",
-    url: paths.adminViewBlogs,
+    title: "Blog",
+    url: paths.adminBlogs,
+    isActive: false,
+  },
+  {
+    title: "Manage Blog",
+    url: paths.adminBlogs,
     isActive: true,
   },
 ];
@@ -203,176 +196,184 @@ const BlogForm: React.FC = () => {
         title={isEditMode ? "Edit Blog" : "Add Blog"}
         subtitle="All fields (*) are required."
       ></Title>
-      <Formik
-        {...{ initialValues, validationSchema }}
-        onSubmit={(values) => submitBlogFormHandler(values)}
-        enableReinitialize={true}
-      >
-        {({
-          values,
-          setFieldValue,
-          setFieldTouched,
-          handleSubmit,
-          touched,
-        }) => {
-          return (
-            <div className="blog-form">
-              <Grid container spacing={2} className="blog-form-container">
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <h2>Meta Tags</h2>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <FormikTextInput
-                    name="metaTagTitle"
-                    label="Meta Tag Title"
-                    value={values.metaTagTitle}
-                    variant="filled"
-                    InputLabelProps={{ shrink: !!values.metaTagTitle }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <FormikTextInput
-                    name="metaTagDescription"
-                    label="Meta Tag Description"
-                    value={values.metaTagDescription}
-                    variant="filled"
-                    InputLabelProps={{ shrink: !!values.metaTagDescription }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <MultiSelectInput
-                    value={
-                      values.metaTagKeywords.map((data: any) => {
-                        return {
-                          label: data.keyword,
-                          value: data.keyword,
-                          keyword: data.keyword,
-                        };
-                      }) as any
-                    }
-                    name="metaTagKeywords"
-                    onCreate={(e: any) => {
-                      console.log(e);
-                      setFieldValue("metaTagKeywords", e);
-                    }}
-                    onChange={(e: any) => {
-                      console.log(e);
-                      setFieldValue("metaTagKeywords", e);
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <MultiSelectInput
-                    value={values.tags as any}
-                    name="tags"
-                    onCreate={(e: any) => {
-                      console.log(e);
-                      setFieldValue("tags", e);
-                    }}
-                    onChange={(e: any) => {
-                      setFieldValue("tags", e);
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <h2>Blog</h2>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  lg={12}
-                  className="blog-thumbnail-upload-container"
-                >
-                  <MUIButton
-                    variant="contained"
-                    component="label"
-                    className="blog-thumbnail-button"
-                  >
-                    Upload New Image
-                    <input
-                      type="file"
-                      hidden
-                      name="thumbnail"
-                      onChange={(event) => {
-                        const fileReader = new FileReader();
-                        fileReader.onload = () => {
-                          if (fileReader.readyState === 2) {
-                            setThumbnailPreview(fileReader.result);
-                          }
-                        };
-                        fileReader.readAsDataURL(event.target.files![0]);
-                        setFieldValue(
-                          "thumbnail",
-                          event.currentTarget.files![0]
-                        );
+      <div className="blog-light">
+        <Formik
+          {...{ initialValues, validationSchema }}
+          onSubmit={(values) => submitBlogFormHandler(values)}
+          enableReinitialize={true}
+        >
+          {({ values, setFieldValue, handleSubmit, touched }) => {
+            return (
+              <div className="blog-form">
+                <Grid container spacing={2} className="blog-form-container">
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <h2>Meta Tags</h2>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <FormikTextInput
+                      name="metaTagTitle"
+                      label="Meta Tag Title"
+                      value={values.metaTagTitle}
+                      variant="filled"
+                      InputLabelProps={{ shrink: !!values.metaTagTitle }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <FormikTextInput
+                      name="metaTagDescription"
+                      label="Meta Tag Description"
+                      value={values.metaTagDescription}
+                      variant="filled"
+                      InputLabelProps={{ shrink: !!values.metaTagDescription }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <MultiSelectInput
+                      value={
+                        values.metaTagKeywords.map((data: any) => {
+                          return {
+                            label: data.keyword,
+                            value: data.keyword,
+                            keyword: data.keyword,
+                          };
+                        }) as any
+                      }
+                      name="metaTagKeywords"
+                      onCreate={(e: any) => {
+                        console.log(e);
+                        setFieldValue("metaTagKeywords", e);
+                      }}
+                      onChange={(e: any) => {
+                        console.log(e);
+                        setFieldValue("metaTagKeywords", e);
                       }}
                     />
-                  </MUIButton>
-                  <ComponentValidator showNull={!values.thumbnail}>
-                    <div className="img-container">
-                      <img
-                        src={
-                          isEditMode && thumbnailPreview !== ""
-                            ? thumbnailPreview
-                            : isEditMode
-                            ? values.thumbnail
-                            : !isEditMode
-                            ? thumbnailPreview || defaultThumbnail
-                            : defaultThumbnail
-                        }
-                        alt={isEditMode ? values.thumbnail : thumbnailPreview}
-                      ></img>
-                    </div>
-                  </ComponentValidator>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <FormikTextInput
-                    name="title"
-                    label="Blog Title"
-                    value={values.title}
-                    variant="filled"
-                    InputLabelProps={{ shrink: !!values.title }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <FormikTextInput
-                    name="author"
-                    label="Blog Author"
-                    value={userCtx.user?.name}
-                    variant="filled"
-                    InputLabelProps={{ shrink: !!values.author }}
-                  />
-                </Grid>
+                  </Grid>
 
-                <Grid item sm={12} md={12} lg={12}>
-                  <h5 className="form-label">Blog Content</h5>
-                  <ReactQuill
-                    value={values.content}
-                    modules={realQuillModules}
-                    onChange={(value) => setFieldValue("content", value)}
-                    theme="snow"
-                  />
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <h2>Blog</h2>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    className="blog-thumbnail-upload-container"
+                  >
+                    <MUIButton
+                      variant="contained"
+                      component="label"
+                      className="blog-thumbnail-button"
+                    >
+                      Upload New Image
+                      <input
+                        type="file"
+                        hidden
+                        name="thumbnail"
+                        onChange={(event) => {
+                          const fileReader = new FileReader();
+                          fileReader.onload = () => {
+                            if (fileReader.readyState === 2) {
+                              setThumbnailPreview(fileReader.result);
+                            }
+                          };
+                          fileReader.readAsDataURL(event.target.files![0]);
+                          setFieldValue(
+                            "thumbnail",
+                            event.currentTarget.files![0]
+                          );
+                        }}
+                      />
+                    </MUIButton>
+                    <ComponentValidator showNull={!values.thumbnail}>
+                      <div className="img-container">
+                        <img
+                          src={
+                            isEditMode && thumbnailPreview !== ""
+                              ? thumbnailPreview
+                              : isEditMode
+                              ? values.thumbnail
+                              : !isEditMode
+                              ? thumbnailPreview || defaultThumbnail
+                              : defaultThumbnail
+                          }
+                          alt={isEditMode ? values.thumbnail : thumbnailPreview}
+                        ></img>
+                      </div>
+                    </ComponentValidator>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <FormikTextInput
+                      name="title"
+                      label="Blog Title"
+                      value={values.title}
+                      variant="filled"
+                      InputLabelProps={{ shrink: !!values.title }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    className="tags-grid"
+                  >
+                    <MultiSelectInput
+                      value={values.tags as any}
+                      name="tags"
+                      onCreate={(e: any) => {
+                        console.log(e);
+                        setFieldValue("tags", e);
+                      }}
+                      onChange={(e: any) => {
+                        setFieldValue("tags", e);
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <FormikTextInput
+                      name="author"
+                      label="Blog Author"
+                      value={userCtx.user?.name}
+                      variant="filled"
+                      InputLabelProps={{ shrink: !!values.author }}
+                    />
+                  </Grid>
+
+                  <Grid item sm={12} md={12} lg={12}>
+                    <h5 className="form-label">Blog Content</h5>
+                    <ReactQuill
+                      value={values.content}
+                      modules={realQuillModules}
+                      onChange={(value) => setFieldValue("content", value)}
+                      theme="snow"
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
-              <div className="form-footer">
-                <Button variation="light" onClick={() => backToBlogsHandler()}>
-                  Back
-                </Button>
-                <Button
-                  variation="dark"
-                  type="submit"
-                  onClick={() => handleSubmit()}
-                >
-                  Submit
-                </Button>
+                <div className="form-footer">
+                  <Button
+                    variation="light"
+                    onClick={() => backToBlogsHandler()}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    variation="dark"
+                    type="submit"
+                    onClick={() => handleSubmit()}
+                  >
+                    Submit
+                  </Button>
+                </div>
+                <pre>{JSON.stringify(values, null, 2)}</pre>
               </div>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-            </div>
-          );
-        }}
-      </Formik>
+            );
+          }}
+        </Formik>
+      </div>
     </Wrapper>
   );
 };

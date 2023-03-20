@@ -288,27 +288,34 @@ export const blogs = [
     ],
   },
 ];
-//META TAGS
-export interface IMetaTagOption {
-  _id: string;
-  value: string;
-  label: string;
-}
-
-export const metaTagOption: IMetaTagOption[] = [
+//META TAGS DATA
+export const metaTagsData = [
   {
-    _id: "1",
-    value: "Sample 1",
-    label: "sample 1",
+    label: "Meta Tag Sample 1",
+    value: "meta tag value 1",
+    keyword: "meta tag value 1",
   },
   {
-    _id: "2",
-    value: "Sample 2",
-    label: "sample 2",
+    label: "Meta Tag Sample 2",
+    value: "meta tag value 2",
+    keyword: "meta tag value 2",
   },
   {
-    _id: "3",
-    value: "Sample 3",
-    label: "sample 3",
+    label: "Meta Tag Sample 3",
+    value: "meta tag value 3",
+    keyword: "meta tag value 3",
+  },
+];
+//TAGS DATA
+export const tagsData = [
+  {
+    label: "Tag Sample 1",
+    value: "tag sample 1",
+    keyword: "tag sample 1",
+  },
+  {
+    label: "Tag Sample 2",
+    value: "tag sample 2",
+    keyword: "tag sample 2",
   },
 ];

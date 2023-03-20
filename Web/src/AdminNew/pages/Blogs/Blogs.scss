@@ -4,12 +4,9 @@
   align-items: flex-end;
   button {
     border: none;
-    background-color: transparent;
     margin-left: 1rem;
     cursor: pointer;
-    font-size: 2rem;
     &:hover {
-      opacity: 0.8;
     }
   }
 }

@@ -1,6 +1,7 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import CreatableSelect from "react-select/creatable/dist/react-select-creatable.cjs";
 import "./MultiSelectInput.scss";
+import { metaTagsData, tagsData } from "data/blogs";
 
 export type MultiSelectInputType = {
   label: string;
@@ -13,21 +14,11 @@ interface OptionType {
   value: SetStateAction<MultiSelectInputType | undefined>;
 }
 
-const optionData = [
-  {
-    label: "test0",
-    value: "test value0",
-    keyword: "test",
-  },
-  {
-    label: "test1",
-    value: "test value2",
-    keyword: "test2",
-  },
-];
 const MultiSelectInput: React.FC<OptionType> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState(optionData);
+  const [options, setOptions] = useState(
+    props.name === "metaTagKeywords" ? metaTagsData : tagsData
+  );
   const [value, setValue] = useState<MultiSelectInputType>();
 
   const handleCreate = (inputValue: string) => {

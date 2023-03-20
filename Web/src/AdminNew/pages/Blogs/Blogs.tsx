@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
 import paths from "constants/routes";
@@ -35,11 +35,11 @@ const Blogs: React.FC = () => {
   };
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
-      <Title subtitle="View All Blogs" title="Blogs">
+      <Title subtitle="Manage all available blogs." title="Blogs">
         <div className="add-blogs">
-          <button onClick={addBlogHandler}>
-            <FaPlus />
-          </button>
+          <Button variant="contained" onClick={addBlogHandler}>
+            Add Blog
+          </Button>
         </div>
       </Title>
 
