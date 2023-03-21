@@ -48,8 +48,11 @@ const MultiSelectInput: React.FC<OptionType> = (props) => {
   }, [props.value]);
 
   return (
-    <div>
+    <div className="creatable-select-container">
       <CreatableSelect
+        placeholder={
+          props.name === "metaTagKeywords" ? "Meta Tag Keywords" : "Blog Tags"
+        }
         isClearable
         isMulti
         name={props.name}
@@ -64,6 +67,9 @@ const MultiSelectInput: React.FC<OptionType> = (props) => {
           control: (baseStyles, state) => ({
             ...baseStyles,
             fontSize: "15px",
+            backgroundColor: state.isFocused
+              ? "rgba(0, 0, 0, 0.03)"
+              : "rgba(0, 0, 0, 0.06)",
           }),
         }}
       />

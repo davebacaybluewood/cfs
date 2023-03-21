@@ -5,7 +5,6 @@ import paths from "constants/routes";
 import BlogCard from "library/BlogCard/BlogCard";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import React from "react";
-import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { CrumbTypes } from "../Dashboard/types";
 import useFetchBlogs from "../FileMaintenance/pages/Webinars/hooks/useFetchBlogs";

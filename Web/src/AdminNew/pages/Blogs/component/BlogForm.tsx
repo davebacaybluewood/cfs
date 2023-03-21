@@ -368,7 +368,6 @@ const BlogForm: React.FC = () => {
                     Submit
                   </Button>
                 </div>
-                <pre>{JSON.stringify(values, null, 2)}</pre>
               </div>
             );
           }}
