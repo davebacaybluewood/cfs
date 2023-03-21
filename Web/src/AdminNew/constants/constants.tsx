@@ -40,7 +40,6 @@ import Agents from "../pages/Agents/LandingPages/ActiveAgents/Agents";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import adminPathsNew from "./routes";
 import AdminWebinars from "AdminNew/pages/Webinars/LandingPages/AdminWebinars";
-import ChangePassword from "AdminNew/pages/Login/components/ChangePassword";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",

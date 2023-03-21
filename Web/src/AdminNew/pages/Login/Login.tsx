@@ -1,26 +1,20 @@
-import Spinner from "AdminNew/components/Spinner/Spinner";
 import adminPathsNew from "AdminNew/constants/routes";
 import { IMAGES } from "constants/constants";
-import url_params from "helpers/url_params";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import ChangePassword from "./components/ChangePassword";
 import ForgotPasswordForm from "./components/ForgotPasswordForm";
 import LoginForm from "./components/LoginForm";
 import "./Login.scss";
 
-type LoginValues = {
-  emailAddress: string;
-  password: string;
-};
 const Login = () => {
   const navigate = useNavigate();
   const userLogin = useSelector((state: any) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
   const [checkEmail, setCheckEmail] = useState(false);
-  const [forgotSuccessful, setForgotSuccessful] = useState(false);
   const { change_password_status } = useParams();
 
   useEffect(() => {
@@ -51,8 +45,9 @@ const Login = () => {
             <ForgotPasswordForm />
           </ComponentValidator>
           <ComponentValidator showNull={!change_password_status}>
-            <ChangePassword setForgotSuccessful={setForgotSuccessful} />
+            <ChangePassword />
           </ComponentValidator>
+          <ToastContainer />
         </div>
       </div>
     </div>

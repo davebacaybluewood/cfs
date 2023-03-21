@@ -22,6 +22,7 @@
 
 ## Authors
 
-| Name       | Link                                |
-| ---------- | ----------------------------------- |
-| Dave Bacay | https://github.com/davespencerbacay |
+| Name            | Link                                |
+| --------------- | ----------------------------------- |
+| Dave Bacay      | https://github.com/davespencerbacay |
+| Jonathan Buhain | TBD                                 |

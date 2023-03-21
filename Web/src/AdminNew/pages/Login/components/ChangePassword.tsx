@@ -3,20 +3,17 @@ import Spinner from "AdminNew/components/Spinner/Spinner";
 import adminPathsNew from "AdminNew/constants/routes";
 import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
-import paths from "constants/routes";
 import { Formik } from "formik";
 import url_params from "helpers/url_params";
 import Button from "library/Button/Button";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import FormikTextInput from "library/Formik/FormikInput";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 
-type ChangePassword = {
-  setForgotSuccessful: Dispatch<SetStateAction<any | undefined>>;
-};
-const ChangePassword: React.FC<ChangePassword> = (props) => {
+const ChangePassword: React.FC = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const initialValues = {
@@ -53,6 +50,16 @@ const ChangePassword: React.FC<ChangePassword> = (props) => {
             .then((data) => {
               navigate(adminPathsNew.login);
               setLoading(false);
+              toast.info(`Update Success`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
             })
             .catch((error) => {
               setError(true);
