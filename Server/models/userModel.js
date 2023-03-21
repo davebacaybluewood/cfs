@@ -29,6 +29,9 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    idPassword: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

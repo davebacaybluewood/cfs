@@ -3,11 +3,7 @@ import Webinars from "../models/webinarModel.js";
 import expressAsync from "express-async-handler";
 import cloudinary from "../utils/cloudinary.js";
 import undefinedValidator from "./helpers/undefinedValidator.js";
-import {
-  AGENT_STATUSES,
-  NOTIFICATION_ENUMS,
-  ROLES,
-} from "../constants/constants.js";
+import { AGENT_STATUSES, ROLES } from "../constants/constants.js";
 import User from "../models/userModel.js";
 import { v4 as uuidv4 } from "uuid";
 import agentRegistrationSuccess from "../emailTemplates/agent-registration-success.js";

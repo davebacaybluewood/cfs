@@ -117,4 +117,32 @@ const deleteUser = expressAsync(async (req, res) => {
   }
 });
 
-export { authUser, getUserProfile, registerUser, getAllUsers, deleteUser };
+/**
+ * @desc:  Check Email User
+ * @route: POST /api/users/email-check/account
+ * @acess: Private
+ */
+const checkEmail = expressAsync(async (req, res) => {
+  const emailAddress = req.body.emailAddress;
+
+  const agent = await User.find({
+    email: emailAddress,
+  });
+
+  console.log(agent);
+
+  if (agent.length === 0) {
+    throw new Error("No email address registed.");
+  } else {
+    res.status(200).json(agent);
+  }
+});
+
+export {
+  authUser,
+  getUserProfile,
+  registerUser,
+  getAllUsers,
+  deleteUser,
+  checkEmail,
+};
