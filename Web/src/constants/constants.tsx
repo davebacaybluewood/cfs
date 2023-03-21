@@ -44,7 +44,7 @@ export const IMAGES = {
 };
 
 export const VIDEO_FINANCING = "/assets/video/coming-soon-video.mp4";
-export const COMPANY_NAME = "Comfort Life Financial";
+export const COMPANY_NAME = "Comfort Financial Solutions";
 
 export const REACT_ROUTES: ReactRoutesType[] = [
   ...adminRoutes,

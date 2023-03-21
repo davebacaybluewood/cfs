@@ -207,51 +207,6 @@ const BlogForm: React.FC = () => {
               <div className="blog-form">
                 <Grid container spacing={2} className="blog-form-container">
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <h2>Meta Tags</h2>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <FormikTextInput
-                      name="metaTagTitle"
-                      label="Meta Tag Title"
-                      value={values.metaTagTitle}
-                      variant="filled"
-                      InputLabelProps={{ shrink: !!values.metaTagTitle }}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <FormikTextInput
-                      name="metaTagDescription"
-                      label="Meta Tag Description"
-                      value={values.metaTagDescription}
-                      variant="filled"
-                      InputLabelProps={{ shrink: !!values.metaTagDescription }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <MultiSelectInput
-                      value={
-                        values.metaTagKeywords.map((data: any) => {
-                          return {
-                            label: data.keyword,
-                            value: data.keyword,
-                            keyword: data.keyword,
-                          };
-                        }) as any
-                      }
-                      name="metaTagKeywords"
-                      onCreate={(e: any) => {
-                        console.log(e);
-                        setFieldValue("metaTagKeywords", e);
-                      }}
-                      onChange={(e: any) => {
-                        console.log(e);
-                        setFieldValue("metaTagKeywords", e);
-                      }}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
                     <h2>Blog</h2>
                   </Grid>
                   <Grid
@@ -350,6 +305,50 @@ const BlogForm: React.FC = () => {
                       modules={realQuillModules}
                       onChange={(value) => setFieldValue("content", value)}
                       theme="snow"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <h2>Meta Tags</h2>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <FormikTextInput
+                      name="metaTagTitle"
+                      label="Meta Tag Title"
+                      value={values.metaTagTitle}
+                      variant="filled"
+                      InputLabelProps={{ shrink: !!values.metaTagTitle }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <FormikTextInput
+                      name="metaTagDescription"
+                      label="Meta Tag Description"
+                      value={values.metaTagDescription}
+                      variant="filled"
+                      InputLabelProps={{ shrink: !!values.metaTagDescription }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <MultiSelectInput
+                      value={
+                        values.metaTagKeywords.map((data: any) => {
+                          return {
+                            label: data.keyword,
+                            value: data.keyword,
+                            keyword: data.keyword,
+                          };
+                        }) as any
+                      }
+                      name="metaTagKeywords"
+                      onCreate={(e: any) => {
+                        console.log(e);
+                        setFieldValue("metaTagKeywords", e);
+                      }}
+                      onChange={(e: any) => {
+                        console.log(e);
+                        setFieldValue("metaTagKeywords", e);
+                      }}
                     />
                   </Grid>
                 </Grid>
