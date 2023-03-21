@@ -40,14 +40,17 @@ const SingleBlog: React.FC = () => {
   const metaTagKeywordLists = blog[0]?.metaTagKeywords.map((metaTag: any) => {
     return metaTag.keyword;
   });
+  const metaTagTitleFormat =
+    blog[0]?.metaTagTitle + " | Comfort Financial Solution";
 
   //parse content
   return (
     <Container className="single-blog-container">
       <Helmet>
-        <title>{blog[0]?.metaTagTitle}</title>
+        <title>{metaTagTitleFormat}</title>
         <meta name="description" content={blog[0]?.metaTagDescription} />
         <meta name="keywords" content={`${metaTagKeywordLists}`} />
+        <link rel="canonical" href={`${currentLink}`} />
       </Helmet>
       <Spinner isVisible={loading} />
       <Box className="blog-thumbnail">
