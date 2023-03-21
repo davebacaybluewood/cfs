@@ -1,13 +1,18 @@
+import { Alert } from "@mui/material";
+import Spinner from "AdminNew/components/Spinner/Spinner";
 import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
 import { Formik } from "formik";
 import Button from "library/Button/Button";
+import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import FormikTextInput from "library/Formik/FormikInput";
 import React, { useState } from "react";
 import * as Yup from "yup";
 
 const ForgotPasswordForm: React.FC = () => {
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const initialValues = {
     emailAddress: "",
   };
@@ -23,15 +28,19 @@ const ForgotPasswordForm: React.FC = () => {
       <Formik
         {...{ validationSchema, initialValues }}
         onSubmit={async ({ emailAddress }) => {
+          setLoading(true);
           axios
             .post(ENDPOINTS.CHECK_EMAIL, {
               emailAddress,
             })
             .then((data) => {
               console.log(data);
+              setLoading(false);
+              setSuccess(true);
             })
             .catch((error) => {
               setError(true);
+              setLoading(false);
             });
         }}
       >
@@ -43,6 +52,20 @@ const ForgotPasswordForm: React.FC = () => {
                 Enter the email associated with your account and we'll send an
                 email with instructions to reset your password.
               </p>
+              <ComponentValidator showNull={!error}>
+                <Alert variant="filled" severity="error" className="form-alert">
+                  Invalid Email & Password
+                </Alert>
+              </ComponentValidator>
+              <ComponentValidator showNull={!success}>
+                <Alert
+                  variant="filled"
+                  severity="success"
+                  className="form-alert success"
+                >
+                  Mail has been sent to your email address
+                </Alert>
+              </ComponentValidator>
               <FormikTextInput
                 label="Email Address"
                 variant="filled"
@@ -52,10 +75,15 @@ const ForgotPasswordForm: React.FC = () => {
                 isTextArea={false}
                 type="text"
               />
-              <pre>{JSON.stringify(error)}</pre>
-              <Button variation="dark" onClick={() => handleSubmit()}>
-                Submit
-              </Button>
+              {loading ? (
+                <Spinner />
+              ) : (
+                <ComponentValidator showNull={success}>
+                  <Button variation="dark" onClick={() => handleSubmit()}>
+                    Submit
+                  </Button>
+                </ComponentValidator>
+              )}
             </div>
           );
         }}

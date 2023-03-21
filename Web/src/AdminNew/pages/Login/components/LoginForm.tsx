@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { login } from "redux/actions/userActions";
 import * as Yup from "yup";
 import { Alert, Grid } from "@mui/material";
@@ -18,6 +18,7 @@ type LoginValues = {
 type LoginFormProps = {
   loading: boolean;
   error: boolean;
+  setCheckEmail: Dispatch<SetStateAction<any | undefined>>;
 };
 const LoginForm: React.FC<LoginFormProps> = (props) => {
   const navigate = useNavigate();
@@ -101,7 +102,9 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
               </Grid>
               <Spinner isVisible={isSubmitting || props.loading} />
               <div className="forgot-btn">
-                <button>Forgot Password?</button>
+                <button type="button" onClick={() => props.setCheckEmail(true)}>
+                  Forgot Password?
+                </button>
               </div>
 
               <Button variation="dark" type="submit" className="login-btn">

@@ -3,6 +3,7 @@ const adminCfsRoute = "/cfs-a/";
 const adminPathsNew = {
   index: adminCfsRoute + "",
   login: adminCfsRoute + "login",
+  loginWithParams: adminCfsRoute + "login/:change_password_status",
   agents: adminCfsRoute + "agents",
   dashboard: adminCfsRoute + "dashboard",
   profile: adminCfsRoute + "profile",

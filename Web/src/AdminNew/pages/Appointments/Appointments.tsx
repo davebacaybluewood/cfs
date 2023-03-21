@@ -3,7 +3,6 @@ import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
 import adminPathsNew from "AdminNew/constants/routes";
 import paths from "constants/routes";
-import url_params from "helpers/url_params";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";

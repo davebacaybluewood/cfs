@@ -1,6 +1,10 @@
 import User from "../models/userModel.js";
 import expressAsync from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
+import sendEmail from "../utils/sendNodeMail.js";
+import emailChangePasswordMail from "../emailTemplates/email-change-password.js";
+import { v4 as uuidv4 } from "uuid";
+import emailChangePasswordSuccess from "../emailTemplates/emailChangePasswordSuccess.js";
 
 /**
  * @desc:  Auth the user & get token
@@ -124,17 +128,104 @@ const deleteUser = expressAsync(async (req, res) => {
  */
 const checkEmail = expressAsync(async (req, res) => {
   const emailAddress = req.body.emailAddress;
-
-  const agent = await User.find({
+  const idPassword = uuidv4();
+  const agent = await User.findOne({
     email: emailAddress,
   });
-
-  console.log(agent);
 
   if (agent.length === 0) {
     throw new Error("No email address registed.");
   } else {
-    res.status(200).json(agent);
+    if (agent.length === 0) {
+      throw new Error("No email address registed.");
+    } else {
+      agent.idPassword = idPassword;
+      let sendHTMLEmail;
+      let mailSubject = "Change Password Confirmation";
+      let mailAttachments = [];
+      let mailContent = emailChangePasswordMail(
+        agent?.email,
+        agent?.name,
+        idPassword
+      );
+      try {
+        sendHTMLEmail = sendEmail(
+          agent?.email,
+          mailSubject,
+          mailContent,
+          mailAttachments
+        )
+          .then((request, response) => {
+            agent.save();
+            res.status(201).json("Ok");
+            response?.send(response?.message);
+          })
+          .catch((error) => {
+            res.status(500);
+            console.log(error);
+            throw new Error("Error occured in submission.");
+          });
+      } catch (error) {
+        res.status(500);
+        console.log(error);
+        throw new Error("Error occured in submission.");
+      }
+    }
+  }
+});
+
+/**
+ * @desc:  Change Password
+ * @route: POST /api/users/change-password/account
+ * @acess: Private
+ */
+const changePassword = expressAsync(async (req, res) => {
+  const idPassword = req.body.passwordId;
+  const password = req.body.password;
+  const confirmPassword = req.body.confirmPassword;
+
+  const agent = await User.findOne({
+    idPassword: idPassword,
+  });
+
+  if (password !== confirmPassword) {
+    throw new Error("Invalid Password Registered");
+  } else if (!agent) {
+    throw new Error("Invalid Password Registered");
+  } else {
+    let sendHTMLEmail;
+    let mailSubject = "CFS Password has been updated";
+    let mailAttachments = [];
+    let mailContent = emailChangePasswordSuccess(
+      agent?.email,
+      idPassword,
+      agent?.name
+    );
+    try {
+      agent.password = password;
+      agent.idPassword = undefined;
+
+      sendHTMLEmail = sendEmail(
+        agent?.email,
+        mailSubject,
+        mailContent,
+        mailAttachments
+      )
+        .then((request, response) => {
+          res.status(201).json("Ok");
+          agent.save();
+          response?.send(response.message);
+        })
+        .catch((error) => {
+          res.status(500);
+          console.log(error);
+          throw new Error("Error occured in submission.");
+        });
+    } catch (error) {
+      res.status(500);
+      console.log(error);
+      throw new Error("Error occured in submission.");
+    }
   }
 });
 
@@ -145,4 +236,5 @@ export {
   getAllUsers,
   deleteUser,
   checkEmail,
+  changePassword,
 };
