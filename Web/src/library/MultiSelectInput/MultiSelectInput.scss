@@ -3,6 +3,7 @@
     &:hover {
       background-color: rgba(0, 0, 0, 0.04);
       transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+      outline: none;
     }
   }
 }

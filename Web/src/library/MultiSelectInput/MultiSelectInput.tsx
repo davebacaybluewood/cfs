@@ -67,6 +67,12 @@ const MultiSelectInput: React.FC<OptionType> = (props) => {
           control: (baseStyles, state) => ({
             ...baseStyles,
             fontSize: "15px",
+            border: state.isFocused ? "none" : "none",
+            outline: "none",
+            boxShadow: "none",
+            borderBottom: state.isFocused
+              ? "2px solid #1976d2"
+              : "1px solid gray",
             backgroundColor: state.isFocused
               ? "rgba(0, 0, 0, 0.03)"
               : "rgba(0, 0, 0, 0.06)",
