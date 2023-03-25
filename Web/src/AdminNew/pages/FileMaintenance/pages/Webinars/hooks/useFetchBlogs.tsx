@@ -19,13 +19,16 @@ export type BlogValueType = {
   dateCreated?: Date;
 };
 
-const useFetchBlogs = (id?: string) => {
+const useFetchBlogs = (id?: string, title?: any) => {
   const [blogs, setBlogs] = useState<BlogValueType[]>([]);
   const [loading, setLoading] = useState(false);
+
+  // const endpoint = title ? title : id;
 
   useEffect(() => {
     if (id?.toString() !== "add") {
       setLoading(true);
+      console.log(id, title);
       const endpoint = id
         ? ENDPOINTS.BLOGS_SINGLE.replace(":blogId", id)
         : ENDPOINTS.BLOGS;

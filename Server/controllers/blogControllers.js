@@ -67,6 +67,39 @@ const getSingleBlog = expressAsync(async (req, res) => {
 });
 
 /**
+ * @desc: Fetch single blogs with title
+ * @route: GET /api/blogs/:blogTitle
+ * @acess: Public
+ */
+const getSingleBlogByTitle = expressAsync(async (req, res) => {
+  let title = req.params.title;
+  const singleBlogByTitle = await Blogs.aggregate([
+    {
+      $match: { title: title },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "_id",
+        as: "singleBlogDoc",
+      },
+    },
+    {
+      $set: {
+        singleAuthorName: {
+          $first: "$singleBlogDoc.name",
+        },
+      },
+    },
+    {
+      $unset: "singleBlogDoc",
+    },
+  ]);
+  res.status(200).json(singleBlogByTitle);
+});
+
+/**
  * @desc: Create a blog
  * @route: CREATE /api/blogs
  * @acess: Private

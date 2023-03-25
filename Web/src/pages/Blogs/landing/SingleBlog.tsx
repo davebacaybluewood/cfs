@@ -19,7 +19,8 @@ export type ChipTypes = {
 const SingleBlog: React.FC = () => {
   const params = useParams();
   const blogId = params.id;
-  const { blogs: blog, loading } = useFetchBlogs(blogId);
+  const blogTitle = params.title;
+  const { blogs: blog, loading } = useFetchBlogs(blogId, blogTitle);
 
   // const socialIcon = blogItem.socialLinks.map((social: string) => {
   //   return social;

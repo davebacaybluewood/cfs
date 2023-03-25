@@ -27,14 +27,16 @@ interface IBlogCard {
 }
 
 const BlogCard: React.FC<IBlogCard> = (props) => {
+  const endpointTitle = props.title.split(" ").join("-").toLowerCase();
+  console.log(endpointTitle);
   const navigate = useNavigate();
 
   const blogHandler = (id: string) => {
     window.scrollTo(0, 0);
     navigate(paths.blogsSingle.replace(":id", id));
   };
-  const adminViewBlogHandler = (id: string) => {
-    navigate(paths.adminViewBlogs.replace(":id", id));
+  const adminViewBlogHandler = (endpointTitle: string) => {
+    navigate(paths.adminViewBlogsByTitle.replace(":blogTitle", endpointTitle));
   };
   const adminEditBlogHandler = (id: string) => {
     navigate(paths.adminBlogForm.replace(":id", id));
@@ -89,7 +91,7 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
             <button
               type="button"
               className="view-blog"
-              onClick={() => adminViewBlogHandler(props.id)}
+              onClick={() => adminViewBlogHandler(props.title)}
             >
               View Blog
             </button>

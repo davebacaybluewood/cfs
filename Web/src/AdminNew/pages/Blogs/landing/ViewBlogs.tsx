@@ -22,12 +22,12 @@ import { toast } from "react-toastify";
 const ViewBlogs: React.FC = () => {
   const params = useParams();
   const blogId = params.id;
-
+  const convertedBlogId = blogId?.split("-").join(" ").toLowerCase();
   const [actionLoading, setActionLoading] = useState(false);
   const [actionDialog, setActionDialog] = useState(false);
   const [thumbnail, setThumbnail] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const { blogs: blog, loading } = useFetchBlogs(blogId);
+  const { blogs: blog, loading } = useFetchBlogs(convertedBlogId);
 
   const navigate = useNavigate();
   const breadcrumb = [

@@ -20,6 +20,7 @@ const adminPathsNew = {
   adminBlogs: adminCfsRoute + "blogs",
   adminBlogsFileMaintenance: adminCfsRoute + "blogs/file-maintenance",
   adminViewBlogs: adminCfsRoute + "blogs/view/:id",
+  adminViewBlogsByTitle: adminCfsRoute + "blogs/view/:blogTitle",
   adminBlogForm: adminCfsRoute + "blogs/form/:id",
   adminBlogUsers: adminCfsRoute + "editors",
   faqs: adminCfsRoute + "faqs",
