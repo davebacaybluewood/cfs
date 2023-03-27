@@ -8,6 +8,8 @@ import ReactHtmlParser from "html-react-parser";
 import useFetchBlogs from "AdminNew/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 import Chip from "../components/Chip/Chip";
 import Spinner from "library/Spinner/Spinner";
+import { Helmet } from "react-helmet";
+import { COMPANY_NAME } from "constants/constants";
 
 export type ChipTypes = {
   _id: string;
@@ -36,10 +38,21 @@ const SingleBlog: React.FC = () => {
       link: "/",
     };
   });
+  const metaTagKeywordLists = blog[0]?.metaTagKeywords.map((metaTag: any) => {
+    return metaTag.keyword;
+  });
+  const metaTagTitleFormat = blog[0]?.metaTagTitle
+    ? blog[0]?.metaTagTitle + " | " + COMPANY_NAME
+    : COMPANY_NAME;
 
-  //parse content
   return (
     <Container className="single-blog-container">
+      <Helmet>
+        <title>{metaTagTitleFormat}</title>
+        <meta name="description" content={blog[0]?.metaTagDescription} />
+        <meta name="keywords" content={metaTagKeywordLists?.join(", ")} />
+        <link rel="canonical" href={currentLink} />
+      </Helmet>
       <Spinner isVisible={loading} />
       <Box className="blog-thumbnail">
         <img src={blog[0]?.thumbnail} alt={blog[0]?.thumbnail} />

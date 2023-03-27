@@ -50,6 +50,7 @@
     "nodemon": "^2.0.20",
     "npm": "^9.4.0",
     "react-dom-factories": "^1.0.2",
+    "react-select": "^5.7.0",
     "uuid": "^9.0.0",
     "yup": "^0.32.11"
   }

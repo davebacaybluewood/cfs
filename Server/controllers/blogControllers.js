@@ -72,7 +72,15 @@ const getSingleBlog = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const createBlog = expressAsync(async (req, res) => {
-  const { title, content, tags, author } = req.body;
+  const {
+    metaTagTitle,
+    metaTagDescription,
+    metaTagKeywords,
+    title,
+    content,
+    tags,
+    author,
+  } = req.body;
   try {
     const blogThumbnailResult = await cloudinaryImport.v2.uploader.upload(
       req.file.path,
@@ -82,6 +90,9 @@ const createBlog = expressAsync(async (req, res) => {
       }
     );
     const blog = new Blogs({
+      metaTagTitle,
+      metaTagDescription,
+      metaTagKeywords,
       author,
       title,
       content,
@@ -123,6 +134,18 @@ const updateBlog = expressAsync(async (req, res) => {
       blog.content = undefinedValidator(blog.content, req.body.content);
       blog.tags = undefinedValidator(blog.tags, req.body.tags);
       blog.author = undefinedValidator(blog.author, req.body.author);
+      blog.metaTagTitle = undefinedValidator(
+        blog.metaTagTitle,
+        req.body.metaTagTitle
+      );
+      blog.metaTagDescription = undefinedValidator(
+        blog.metaTagDescription,
+        req.body.metaTagDescription
+      );
+      blog.metaTagKeywords = undefinedValidator(
+        blog.metaTagKeywords,
+        req.body.metaTagKeywords
+      );
       blog.thumbnail =
         blogThumbnailResult.secure_url ?? ""
           ? blogThumbnailResult.secure_url

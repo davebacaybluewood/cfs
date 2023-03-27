@@ -84,6 +84,12 @@ const ViewBlogs: React.FC = () => {
       link: "/",
     };
   });
+  const metaTagLists = blog[0]?.metaTagKeywords?.map((metaTag: any) => {
+    return {
+      description: metaTag.keyword,
+      link: "/",
+    };
+  });
   return (
     <Wrapper
       className="webinar-admin-container"
@@ -138,6 +144,22 @@ const ViewBlogs: React.FC = () => {
         <div className="blog-html">
           <h3 className="blog-label">Blog Content</h3>
           {ReactHtmlParser(blog[0]?.content ?? "")}
+        </div>
+        <div className="blog-html">
+          <h3 className="blog-label">Meta Tag Title</h3>
+          <p className="blog-title">
+            {ReactHtmlParser(blog[0]?.metaTagTitle ?? "")}
+          </p>
+        </div>
+        <div className="blog-html">
+          <h3 className="blog-label">Meta Tag Description</h3>
+          <p className="blog-title">
+            {ReactHtmlParser(blog[0]?.metaTagDescription ?? "")}
+          </p>
+        </div>
+        <div className="blog-html">
+          <h3 className="blog-label">Meta Tag Keywords</h3>
+          <Chip tags={metaTagLists ?? []}></Chip>
         </div>
       </div>
 

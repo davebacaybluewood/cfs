@@ -1,15 +1,15 @@
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import Title from "AdminNew/components/Title/Title";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
 import paths from "constants/routes";
 import BlogCard from "library/BlogCard/BlogCard";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import React from "react";
-import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { CrumbTypes } from "../Dashboard/types";
 import useFetchBlogs from "../FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 import "./Blogs.scss";
+import { ChipTypes } from "./types";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -24,11 +24,6 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
-export type ChipTypes = {
-  _id: string;
-  label: string;
-};
-
 const Blogs: React.FC = () => {
   const { blogs, loading } = useFetchBlogs();
 
@@ -39,18 +34,20 @@ const Blogs: React.FC = () => {
   };
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
-      <Title subtitle="View All Blogs" title="Blogs"></Title>
-      <div className="add-blogs">
-        <button onClick={addBlogHandler}>
-          <FaPlus />
-        </button>
-      </div>
+      <Title subtitle="Manage all available blogs." title="Blogs">
+        <div className="add-blogs">
+          <Button variant="contained" onClick={addBlogHandler}>
+            Add Blog
+          </Button>
+        </div>
+      </Title>
+
       <NoInformationToDisplay
         showNoInfo={blogs.length === 0}
         message="No Blogs Available"
         title="No Information to Display"
       >
-        <Grid container marginBottom={3}>
+        <Grid container marginBottom={3} spacing={1}>
           {blogs?.map((blog: any) => {
             const tags = blog.tags.map((tag: ChipTypes) => {
               return {
@@ -65,6 +62,7 @@ const Blogs: React.FC = () => {
                 sm={6}
                 md={2}
                 lg={2}
+                margin={0}
                 className="admin-blog-grid"
               >
                 <BlogCard
