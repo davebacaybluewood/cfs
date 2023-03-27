@@ -182,7 +182,7 @@ const emailChangePasswordSuccess = (email, id, name) => {
             To login your account, click the button below.
           </p>
           <a
-            href="http://localhost:3000/cfs-a/login"
+            href="https://www.gocfs.pro/cfs-a/login"
             target="_blank"
             style="
               background-color: #333333;
