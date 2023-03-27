@@ -89,7 +89,7 @@ const ChangePassword: React.FC = () => {
                     className="filled-input"
                     name="password"
                     isTextArea={false}
-                    type="text"
+                    type="password"
                   />
                 </Grid>
                 <Grid item sm={12} md={12} lg={12}>
@@ -100,7 +100,7 @@ const ChangePassword: React.FC = () => {
                     className="filled-input"
                     name="confirmPassword"
                     isTextArea={false}
-                    type="text"
+                    type="password"
                   />
                 </Grid>
               </Grid>
