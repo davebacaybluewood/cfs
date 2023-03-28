@@ -42,8 +42,8 @@ const crumbs: CrumbTypes[] = [
 ];
 
 const BlogForm: React.FC = () => {
-  const { id } = useParams();
-  const { blogs } = useFetchBlogs(id);
+  const { title } = useParams();
+  const { blogs } = useFetchBlogs(title);
   const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const userCtx = useContext(UserContext) as any;
@@ -74,7 +74,7 @@ const BlogForm: React.FC = () => {
     content: blogs[0]?.content,
   };
 
-  const isEditMode = id !== "add";
+  const isEditMode = title !== "add";
   const initialValues = !isEditMode ? addInitialValues : editInitialValues;
 
   const validationSchema = Yup.object({
@@ -111,7 +111,10 @@ const BlogForm: React.FC = () => {
       ? axios
           .put(
             isEditMode
-              ? ENDPOINTS.BLOGS_SINGLE.replace(":blogId", id ?? "")
+              ? ENDPOINTS.BLOGS_SINGLE_FETCH_BY_TITLE.replace(
+                  ":blogTitle",
+                  title ?? ""
+                )
               : ENDPOINTS.BLOGS,
             {
               metaTagTitle: values.metaTagTitle.toString(),
@@ -149,7 +152,10 @@ const BlogForm: React.FC = () => {
       : axios
           .post(
             isEditMode
-              ? ENDPOINTS.BLOGS_SINGLE.replace(":blogId", id ?? "")
+              ? ENDPOINTS.BLOGS_SINGLE_FETCH_BY_TITLE.replace(
+                  ":blogTitle",
+                  title ?? ""
+                )
               : ENDPOINTS.BLOGS,
             {
               metaTagTitle: values.metaTagTitle.toString(),

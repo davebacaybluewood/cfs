@@ -18,13 +18,13 @@ export type ChipTypes = {
 
 const SingleBlog: React.FC = () => {
   const params = useParams();
-  const blogId = params.id;
-  const { blogs: blog, loading } = useFetchBlogs(blogId);
+  const blogTitle = params.blogTitle;
+  const originalTitle = blogTitle?.split("-").join(" ").toLowerCase();
+  const { blogs: blog, loading } = useFetchBlogs(originalTitle);
 
   // const socialIcon = blogItem.socialLinks.map((social: string) => {
   //   return social;
   // });
-  console.log(blog);
   const [linkCopied, setLinkCopied] = useState(false);
   const currentLink = window.location.href;
   const copyLinkHandler = () => {

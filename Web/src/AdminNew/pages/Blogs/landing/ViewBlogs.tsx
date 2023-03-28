@@ -21,13 +21,13 @@ import { toast } from "react-toastify";
 
 const ViewBlogs: React.FC = () => {
   const params = useParams();
-  const blogId = params.id;
-
+  const blogTitle = params.blogTitle;
+  const originalTitle = blogTitle?.split("-").join(" ").toLowerCase();
   const [actionLoading, setActionLoading] = useState(false);
   const [actionDialog, setActionDialog] = useState(false);
   const [thumbnail, setThumbnail] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const { blogs: blog, loading } = useFetchBlogs(blogId);
+  const { blogs: blog, loading } = useFetchBlogs(originalTitle);
 
   const navigate = useNavigate();
   const breadcrumb = [
@@ -56,7 +56,10 @@ const ViewBlogs: React.FC = () => {
     const config = {
       Authorization: "Bearer " + getUserToken(),
     };
-    const endpoint = ENDPOINTS.BLOGS_SINGLE.replace(":blogId", blogId ?? "");
+    const endpoint = ENDPOINTS.BLOGS_SINGLE.replace(
+      ":blogId",
+      blog[0]._id ?? ""
+    );
     axios
       .delete(endpoint, { headers: config })
       .then((response) => {
@@ -109,7 +112,7 @@ const ViewBlogs: React.FC = () => {
             </button>
             <button
               onClick={() =>
-                navigate(paths.adminBlogForm.replace(":id", blogId ?? ""))
+                navigate(paths.adminBlogForm.replace(":id", blog[0]._id ?? ""))
               }
             >
               <FaEdit />

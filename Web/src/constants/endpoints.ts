@@ -39,6 +39,7 @@ const ENDPOINTS = {
   APPOINTMENT_SINGLE: "/api/appointments/:appointmentId",
   BLOGS: "/api/blogs",
   BLOGS_SINGLE: "/api/blogs/:blogId",
+  BLOGS_SINGLE_FETCH_BY_TITLE: "/api/blogs/:blogTitle/blog-title",
 };
 
 export default ENDPOINTS;
