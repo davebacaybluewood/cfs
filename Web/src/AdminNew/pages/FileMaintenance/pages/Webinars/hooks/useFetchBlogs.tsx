@@ -19,19 +19,19 @@ export type BlogValueType = {
   dateCreated?: Date;
 };
 
-const useFetchBlogs = (id?: string, title?: any) => {
+const useFetchBlogs = (title?: any) => {
   const [blogs, setBlogs] = useState<BlogValueType[]>([]);
   const [loading, setLoading] = useState(false);
 
   // const endpoint = title ? title : id;
 
   useEffect(() => {
-    if (id?.toString() !== "add") {
+    if (title?.toString() !== "add") {
       setLoading(true);
-      console.log(id, title);
-      const endpoint = id
-        ? ENDPOINTS.BLOGS_SINGLE.replace(":blogId", id)
+      const endpoint = title
+        ? ENDPOINTS.BLOGS_SINGLE_FETCH_BY_TITLE.replace(":blogTitle", title)
         : ENDPOINTS.BLOGS;
+      console.log(endpoint);
       axios
         .get(endpoint)
         .then((response) => {
@@ -42,7 +42,7 @@ const useFetchBlogs = (id?: string, title?: any) => {
           setLoading(false);
         });
     }
-  }, [id]);
+  }, [title]);
 
   return {
     blogs,

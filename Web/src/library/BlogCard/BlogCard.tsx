@@ -27,16 +27,16 @@ interface IBlogCard {
 }
 
 const BlogCard: React.FC<IBlogCard> = (props) => {
-  const endpointTitle = props.title.split(" ").join("-").toLowerCase();
-  console.log(endpointTitle);
   const navigate = useNavigate();
 
-  const blogHandler = (id: string) => {
+  const blogHandler = (title: string) => {
     window.scrollTo(0, 0);
-    navigate(paths.blogsSingle.replace(":id", id));
+    const filteredTitle = title.split(" ").join("-").toLowerCase();
+    navigate(paths.blogsSingle.replace(":blogTitle", filteredTitle));
   };
   const adminViewBlogHandler = (endpointTitle: string) => {
-    navigate(paths.adminViewBlogsByTitle.replace(":blogTitle", endpointTitle));
+    const filteredTitle = endpointTitle.split(" ").join("-").toLowerCase();
+    navigate(paths.adminViewBlogs.replace(":blogTitle", filteredTitle));
   };
   const adminEditBlogHandler = (id: string) => {
     navigate(paths.adminBlogForm.replace(":id", id));
@@ -101,7 +101,7 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
             <button
               type="button"
               className="read-more"
-              onClick={() => blogHandler(props.id)}
+              onClick={() => blogHandler(props.title)}
             >
               Read More
             </button>

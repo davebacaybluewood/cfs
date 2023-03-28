@@ -12,7 +12,7 @@ const paths = {
   invalid: "/invalid",
   events: "/events",
   blogs: "/blogs",
-  blogsSingle: "/blogs/:id",
+  blogsSingle: "/blogs/:blogTitle",
   event_invites: "/events/invites/:id",
   media: "/media",
   media_with_id: "/media/:id",
