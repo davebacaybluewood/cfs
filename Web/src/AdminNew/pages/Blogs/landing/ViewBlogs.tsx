@@ -167,7 +167,7 @@ const ViewBlogs: React.FC = () => {
       </div>
 
       <Dialog onClose={() => setOpenModal(false)} open={openModal}>
-        <img src={thumbnail} alt={thumbnail} />
+        <img src={thumbnail} alt={blog[0]?.title} />
       </Dialog>
       <Dialog open={actionDialog} onClose={() => setActionDialog(false)}>
         <DialogContent>

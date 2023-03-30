@@ -55,7 +55,7 @@ const SingleBlog: React.FC = () => {
       </Helmet>
       <Spinner isVisible={loading} />
       <Box className="blog-thumbnail">
-        <img src={blog[0]?.thumbnail} alt={blog[0]?.thumbnail} />
+        <img src={blog[0]?.thumbnail} alt={blog[0]?.title} />
       </Box>
       <Box className="blog-title">
         <h1>{blog[0]?.title}</h1>
