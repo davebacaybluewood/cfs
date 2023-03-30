@@ -13,6 +13,8 @@ import { useParams } from "react-router-dom";
 import "./AgentWebinar.scss";
 import VideoDescription from "./components/VideoDescription";
 import WebinarForm from "./components/WebinarForm";
+// @ts-ignore: Unreachable code error
+import TimeTracker from "react-time-tracker/lib";
 
 type AgentAppointmentProps = {
   showCalendly?: boolean;
@@ -26,6 +28,34 @@ const AgentAppointment: React.FC<AgentAppointmentProps> = (props) => {
   const [agentWebinarLoading, setAgentWebinarLoading] = useState(false);
 
   const { agent, loading: agentLoading } = useFetchAgent(agentId ?? "");
+
+  const onSaveTimeTracker = (time: any) => {
+    /** Rmove the milliseconds */
+    const filteredTime = Math.trunc(time).toString().slice(0, -3);
+    const parsedFilteredTime = parseInt(filteredTime);
+
+    /** Convert the seconds to minute */
+    const minutes = Math.floor(parsedFilteredTime / 60);
+
+    // if (minutes >= webinars?.introVideoTimeTracker) {
+    const timeSpent = minutes / webinars?.introVideoTimeTracker;
+
+    fetch(
+      ENDPOINTS.WEBINAR_VIEWS.replace(":userGuid", agentId ?? "")
+        .replace(":webinarGuid", webinars?.webinarGuid ?? "")
+        .replace(":timeSpent", timeSpent.toString())
+        .replace(":timeTracker", webinars?.introVideoTimeTracker),
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          page: "LONG_VIDEO",
+        }),
+      }
+    ).then((res) => {
+      console.log(res);
+    });
+  };
 
   useEffect(() => {
     setAgentWebinarLoading(false);
@@ -80,6 +110,7 @@ const AgentAppointment: React.FC<AgentAppointmentProps> = (props) => {
 
   return (
     <div className="agent-webinar">
+      <TimeTracker onSave={onSaveTimeTracker} />
       <PageTitle title="Agent Webinar" />
       <Banner bigTitle="Webinar" title="Learn With Us" hasBorder />
 

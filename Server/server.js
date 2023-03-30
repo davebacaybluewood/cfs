@@ -12,6 +12,8 @@ import webinarRoutes from "./routes/webinarRoutes.js";
 import appointmentRoutes from "./routes/appointmentRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
+import webinarClicksStatisticsRoutes from "./routes/webinarClicksStatisticsRoutes.js";
+import webinarViewRoutes from "./routes/webinarViewRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
 import { ApolloServer, gql } from "apollo-server-express";
@@ -43,6 +45,8 @@ app.use("/api/webinars/", webinarRoutes);
 app.use("/api/appointments/", appointmentRoutes);
 app.use("/api/blogs/", blogRoutes);
 app.use("/api/notifications/", notificationRoutes);
+app.use("/api/webinar-clicks-statistics/", webinarClicksStatisticsRoutes);
+app.use("/api/webinar-view/", webinarViewRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/Web/build")));

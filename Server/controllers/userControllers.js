@@ -191,7 +191,7 @@ const changePassword = expressAsync(async (req, res) => {
   if (password !== confirmPassword) {
     throw new Error("Invalid Password Registered");
   } else if (!agent) {
-    throw new Error("Invalid Password Registered");
+    throw new Error("Invalid Password Registered2");
   } else {
     let sendHTMLEmail;
     let mailSubject = "CFS Password has been updated";

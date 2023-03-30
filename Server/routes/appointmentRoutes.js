@@ -4,6 +4,7 @@ import {
   getAgentAppointments,
   getScheduleAppointments,
   getSingleAppointment,
+  getWebinarNumberOfAppointments,
 } from "../controllers/appointmentControllers.js";
 import { adminAuth, protect } from "../middleware/authMiddleware.js";
 
@@ -15,5 +16,8 @@ router
   .get(protect, getSingleAppointment)
   .put(protect, cancelAppointment);
 router.route("/:webinarGuid/:agentGuid").get(protect, getScheduleAppointments);
+router
+  .route("/webinar-statistics/appointment-count/:webinarGuid")
+  .get(protect, getWebinarNumberOfAppointments);
 
 export default router;

@@ -71,10 +71,8 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
         return (
           <div>
             <div className="form-instructions">
-              <h2>
-                Welcome to CFS Portal <br /> Sign In to continue.
-              </h2>
-              <p>Lorem ipsum dolor sit amet, consectetur.</p>
+              <h2>Welcome to CFS Portal</h2>
+              <p>Sign In to continue.</p>
             </div>
 
             {!!props.error && (

@@ -130,9 +130,25 @@ const cancelAppointment = expressAsync(async (req, res) => {
   }
 });
 
+/**
+ * @desc: Get the number of appointments per webinar
+ * @route: GET /api/webinar-statistics/appointment-count/:webinarGuid
+ * @acess: Private
+ */
+const getWebinarNumberOfAppointments = expressAsync(async (req, res) => {
+  const { webinarGuid } = req.params;
+
+  const webinarAppointments = await AgentAppointment.find({
+    webinarGuid,
+  }).count();
+
+  res.status(200).json(webinarAppointments);
+});
+
 export {
   getAgentAppointments,
   getScheduleAppointments,
   getSingleAppointment,
   cancelAppointment,
+  getWebinarNumberOfAppointments,
 };

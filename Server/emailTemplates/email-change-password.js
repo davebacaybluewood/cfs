@@ -171,7 +171,7 @@ const emailChangePasswordMail = (email, name, id) => {
               padding-bottom: 10px;
             "
           >
-            We received a request to resett the password of your CFS Portal account.
+            We received a request to reset the password of your CFS Portal account.
           </p>
           <p
             style="
@@ -268,9 +268,9 @@ const emailChangePasswordMail = (email, name, id) => {
                       color: #333333;
                       font-style: italic;
                     "
-                    href="https://comfortfinancialsolution.com"
+                    href="https://comfortfinancialsolutions.com"
                   >
-                    www.comfortfinancialsolution.com
+                    www.comfortfinancialsolutions.com
                   </a>
                 </p>
               </td>

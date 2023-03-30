@@ -347,8 +347,8 @@ const eventInvitation = ({
                       font-weight: 400;
                       text-decoration: none;
                       color: #333333;
-                    "> <a target="_blank" style="text-decoration: underline; color: #333333; font-style: italic;" href="https://comfortlifefinancial.com">
-                      www.comfortlifefinancial.com
+                    "> <a target="_blank" style="text-decoration: underline; color: #333333; font-style: italic;" href="https://comfortfinancialsolutions.com">
+                      www.comfortfinancialsolutions.com
                     </a> </p>
               </td>
             </tr>

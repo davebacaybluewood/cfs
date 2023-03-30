@@ -41,6 +41,15 @@ const ENDPOINTS = {
   BLOGS_SINGLE: "/api/blogs/:blogId",
   CHECK_EMAIL: "/api/users/email-check/account",
   CHANGE_PASSWORD: "/api/users/change-password/account",
+
+  /** Webinar Appointments */
+  APPOINTMENT_COUNT_WEBINAR:
+    "/api/appointments/webinar-statistics/appointment-count/:webinarGuid",
+  WEBINAR_CLICK: "/api/webinar-clicks-statistics/:webinarGuid/:userGuid",
+  WEBINAR_VISITS_COUNT_ADMIN: "/api/webinar-clicks-statistics/:webinarGuid",
+  WEBINAR_VIEWS:
+    "/api/webinar-view/:webinarGuid/:userGuid/:timeTracker/:timeSpent",
+  WEBINAR_VIEWS_PER_PAGE: "/api/webinar-view/:webinarGuid/:page",
 };
 
 export default ENDPOINTS;

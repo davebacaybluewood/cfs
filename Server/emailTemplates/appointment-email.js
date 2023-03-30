@@ -420,9 +420,9 @@ const appointmentEmail = (
                             color: #333333;
                             font-style: italic;
                           "
-                          href="https://comfortlifefinancial.com"
+                          href="https://comfortfinancialsolutions.com"
                         >
-                          www.comfortlifefinancial.com
+                          www.comfortfinancialsolutions.com
                         </a>
                       </p>
                     </td>

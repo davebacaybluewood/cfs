@@ -224,10 +224,10 @@ const WebinarForm: React.FC = () => {
                     <FormikTextInput
                       name="introVideoTimeTracker"
                       label="Short Video Time Tracker*"
-                      value={values.fullVideoTimeTracker}
+                      value={values.introVideoTimeTracker}
                       variant="filled"
                       InputLabelProps={{
-                        shrink: !!values.fullVideoTimeTracker,
+                        shrink: !!values.introVideoTimeTracker,
                       }}
                     />
                   </Grid>
@@ -301,7 +301,7 @@ const WebinarForm: React.FC = () => {
                   </Grid>
                 </Grid>
                 <div className="form-footer">
-                  <Button variation="light" onClick={() => console.log("back")}>
+                  <Button variation="light" onClick={() => navigate(-1)}>
                     Back
                   </Button>
                   <Button

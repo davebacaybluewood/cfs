@@ -4,7 +4,6 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  Grid,
 } from "@mui/material";
 import Wrapper from "AdminNew/components/Wrapper/Wrapper";
 import paths from "constants/routes";
@@ -13,18 +12,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./Webinars.scss";
 import ReactHtmlParser from "html-react-parser";
 import useFetchWebinars from "./hooks/useFetchWebinars";
-import {
-  FaEdit,
-  FaEnvelopeOpenText,
-  FaFly,
-  FaSnowman,
-  FaTrashAlt,
-  FaUserShield,
-} from "react-icons/fa";
-import DashboardCard from "AdminNew/pages/Dashboard/components/DashboardCard/DashboardCard";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import ENDPOINTS from "constants/endpoints";
 import axios from "axios";
 import getUserToken from "helpers/getUserToken";
+import WebinarStatistics from "./components/WebinarStatistics";
 
 const WebinarSingle: React.FC = (props) => {
   const { webinarId } = useParams();
@@ -50,32 +42,6 @@ const WebinarSingle: React.FC = (props) => {
       title: webinars.title || "",
       url: paths.webinar,
       isActive: true,
-    },
-  ];
-  const statistics = [
-    {
-      countText: "Short Video View",
-      count: 2,
-      url: paths.login,
-      icon: <FaEnvelopeOpenText />,
-    },
-    {
-      countText: "Long Video View",
-      count: 2,
-      url: paths.login,
-      icon: <FaFly />,
-    },
-    {
-      countText: "Webinar Visits",
-      count: 2,
-      url: paths.login,
-      icon: <FaUserShield />,
-    },
-    {
-      countText: "Scheduled Appointment",
-      count: 2,
-      url: paths.login,
-      icon: <FaSnowman />,
     },
   ];
 
@@ -107,13 +73,7 @@ const WebinarSingle: React.FC = (props) => {
       error={false}
       breadcrumb={breadcrumb}
     >
-      <Grid container spacing={2} marginBottom={2}>
-        {statistics.map((statistic: any, index: number) => (
-          <Grid item xs={12} sm={12} md={6} lg={3} key={index}>
-            <DashboardCard {...statistic} />
-          </Grid>
-        ))}
-      </Grid>
+      <WebinarStatistics webinarGuid={webinars?.webinarGuid ?? ""} />
       <div className="webinar-content">
         <div className="webinar-content-header">
           <h2>{webinars?.title}</h2>

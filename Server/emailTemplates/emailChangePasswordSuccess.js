@@ -267,9 +267,9 @@ const emailChangePasswordSuccess = (email, id, name) => {
                       color: #333333;
                       font-style: italic;
                     "
-                    href="https://comfortlifefinancial.com"
+                    href="https://comfortfinancialsolutions.com"
                   >
-                    www.comfortlifefinancial.com
+                    www.comfortfinancialsolutions.com
                   </a>
                 </p>
               </td>
