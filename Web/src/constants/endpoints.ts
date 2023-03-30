@@ -50,6 +50,7 @@ const ENDPOINTS = {
   WEBINAR_VIEWS:
     "/api/webinar-view/:webinarGuid/:userGuid/:timeTracker/:timeSpent",
   WEBINAR_VIEWS_PER_PAGE: "/api/webinar-view/:webinarGuid/:page",
+  BLOGS_SINGLE_FETCH_BY_TITLE: "/api/blogs/:blogTitle/blog-title",
 };
 
 export default ENDPOINTS;

@@ -10,7 +10,6 @@ import Spinner from "library/Spinner/Spinner";
 
 const Blogs: React.FC = () => {
   const { blogs, loading } = useFetchBlogs();
-  console.log(blogs);
   return (
     <div className="blogs">
       <PageTitle title="Blogs" />

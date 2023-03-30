@@ -4,6 +4,7 @@ import {
   deleteBlog,
   getAllBlogs,
   getSingleBlog,
+  getSingleBlogByTitle,
   updateBlog,
 } from "../controllers/blogControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
@@ -20,5 +21,6 @@ router
   .get(getSingleBlog)
   .put(protect, multerConfig.single("thumbnail"), updateBlog)
   .delete(deleteBlog);
+router.route("/:title/blog-title").get(getSingleBlogByTitle);
 
 export default router;
