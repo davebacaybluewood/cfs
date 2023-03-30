@@ -45,7 +45,7 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
     <div className="blogs-container">
       <div className="centered-content">
         <div className="thumbnail-container">
-          <img src={props.thumbnail} alt={props.thumbnail} />
+          <img src={props.thumbnail} alt={props.title} />
         </div>
 
         <h2>{props.title}</h2>
