@@ -42,7 +42,7 @@ const crumbs: CrumbTypes[] = [
 ];
 
 const BlogForm: React.FC = () => {
-  const { title } = useParams();
+  const { id: title } = useParams();
   const { blogs } = useFetchBlogs(title);
   const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();

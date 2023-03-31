@@ -23,15 +23,12 @@ const useFetchBlogs = (title?: any) => {
   const [blogs, setBlogs] = useState<BlogValueType[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // const endpoint = title ? title : id;
-
   useEffect(() => {
     if (title?.toString() !== "add") {
       setLoading(true);
       const endpoint = title
         ? ENDPOINTS.BLOGS_SINGLE_FETCH_BY_TITLE.replace(":blogTitle", title)
         : ENDPOINTS.BLOGS;
-      console.log(endpoint);
       axios
         .get(endpoint)
         .then((response) => {
@@ -42,6 +39,8 @@ const useFetchBlogs = (title?: any) => {
           setLoading(false);
         });
     }
+
+    return () => setBlogs([]);
   }, [title]);
 
   return {

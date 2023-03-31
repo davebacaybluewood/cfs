@@ -170,10 +170,6 @@ const Home: React.FC = () => {
         <meta name="description" content={metaDatas.metaDescription}></meta>
         <meta name="keywords" content={metaDatas.metaKeywords}></meta>
         <link rel="canonical" href={window.location.href} />
-        <meta
-          name="p:domain_verify"
-          content="49f9c6f0f57aed10d5cee70dda82bda9"
-        />
       </Helmet>
       <div className="home-container">
         {/* <PageTitle title="Home" /> */}
