@@ -20,7 +20,7 @@ const SingleBlog: React.FC = () => {
   const params = useParams();
   const blogTitle = params.blogTitle;
   const originalTitle = blogTitle?.split("-").join(" ").toLowerCase();
-  const { blogs: blog, loading } = useFetchBlogs(originalTitle);
+  const { blogs: blog, loading } = useFetchBlogs(originalTitle ?? "");
 
   // const socialIcon = blogItem.socialLinks.map((social: string) => {
   //   return social;
@@ -60,7 +60,7 @@ const SingleBlog: React.FC = () => {
       <Box className="blog-title">
         <h1>{blog[0]?.title}</h1>
         <Box className="blog-tags-container">
-          <Chip tags={tagLists ?? []}></Chip>
+          <Chip tags={tagLists ?? []} hideOtherChip={true}></Chip>
         </Box>
         <Box className="blog-author-date-container">
           <p>

@@ -27,7 +27,7 @@ const ViewBlogs: React.FC = () => {
   const [actionDialog, setActionDialog] = useState(false);
   const [thumbnail, setThumbnail] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const { blogs: blog, loading } = useFetchBlogs(originalTitle);
+  const { blogs: blog, loading } = useFetchBlogs(originalTitle ?? "");
 
   const navigate = useNavigate();
   const breadcrumb = [
@@ -47,8 +47,9 @@ const ViewBlogs: React.FC = () => {
       isActive: true,
     },
   ];
+
   const visitBlogHandler = (id: string) => {
-    navigate(paths.blogsSingle.replace(":id", id));
+    navigate(paths.blogsSingle.replace(":blogTitle", id));
   };
 
   const deleteBlog = () => {
@@ -106,7 +107,7 @@ const ViewBlogs: React.FC = () => {
           <div className="blog-actions">
             <button
               className="blog-visit-btn"
-              onClick={() => visitBlogHandler(blog[0]?._id!)}
+              onClick={() => visitBlogHandler(blog[0]?.title!)}
             >
               Visit Blog
             </button>
@@ -142,7 +143,7 @@ const ViewBlogs: React.FC = () => {
         </div>
         <div className="blog-html">
           <h3 className="blog-label">Blog Tags</h3>
-          <Chip tags={tagLists ?? []}></Chip>
+          <Chip tags={tagLists ?? []} hideOtherChip={true}></Chip>
         </div>
         <div className="blog-html">
           <h3 className="blog-label">Blog Content</h3>

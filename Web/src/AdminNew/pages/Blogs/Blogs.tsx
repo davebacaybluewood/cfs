@@ -75,6 +75,7 @@ const Blogs: React.FC = () => {
                   numberOfVisits={0}
                   showStatistics={true}
                   isAdmin={true}
+                  tagsLimit={2}
                 />
               </Grid>
             );

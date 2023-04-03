@@ -19,7 +19,7 @@ export type BlogValueType = {
   dateCreated?: Date;
 };
 
-const useFetchBlogs = (title?: any) => {
+const useFetchBlogs = (title?: string) => {
   const [blogs, setBlogs] = useState<BlogValueType[]>([]);
   const [loading, setLoading] = useState(false);
 

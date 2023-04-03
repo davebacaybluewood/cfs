@@ -43,7 +43,7 @@ const crumbs: CrumbTypes[] = [
 
 const BlogForm: React.FC = () => {
   const { id: title } = useParams();
-  const { blogs } = useFetchBlogs(title);
+  const { blogs } = useFetchBlogs(title ?? "");
   const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const userCtx = useContext(UserContext) as any;
@@ -51,7 +51,7 @@ const BlogForm: React.FC = () => {
     "https://res.cloudinary.com/dfm2vczpy/image/upload/v1678487475/blogs/assets/upload-bg_nwys30.jpg";
   const [thumbnailPreview, setThumbnailPreview] = useState<any>("");
 
-  useEffect(() => {}, [thumbnailPreview]);
+  useEffect(() => { }, [thumbnailPreview]);
 
   const addInitialValues: Omit<BlogValueType, "role"> = {
     metaTagTitle: "",
@@ -109,87 +109,87 @@ const BlogForm: React.FC = () => {
 
     isEditMode
       ? axios
-          .put(
-            isEditMode
-              ? ENDPOINTS.BLOGS_SINGLE_FETCH_BY_TITLE.replace(
-                  ":blogTitle",
-                  title ?? ""
-                )
-              : ENDPOINTS.BLOGS,
-            {
-              metaTagTitle: values.metaTagTitle.toString(),
-              metaTagDescription: values.metaTagDescription.toString(),
-              metaTagKeywords: values.metaTagKeywords.map((kw: any) => {
-                return {
-                  keyword: kw.value,
-                };
-              }),
-              title: values.title.toString(),
-              thumbnail: values.thumbnail,
-              author: userCtx.user._id,
-              tags: values.tags,
-              content: values.content.toString(),
-            },
-            config
-          )
-          .then((response) => {
-            toast.info(`Blog Updated`, {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            setIsLoading(true);
-            navigate(paths.adminBlogs);
-          })
-          .then((result) => {
-            setIsLoading(false);
-          })
-      : axios
-          .post(
-            isEditMode
-              ? ENDPOINTS.BLOGS_SINGLE_FETCH_BY_TITLE.replace(
-                  ":blogTitle",
-                  title ?? ""
-                )
-              : ENDPOINTS.BLOGS,
-            {
-              metaTagTitle: values.metaTagTitle.toString(),
-              metaTagDescription: values.metaTagDescription.toString(),
-              metaTagKeywords: values.metaTagKeywords.map((kw: any) => {
-                return {
-                  keyword: kw.value,
-                };
-              }),
-              title: values.title.toString(),
-              thumbnail: values.thumbnail,
-              author: userCtx.user._id,
-              tags: values.tags,
-              content: values.content.toString(),
-            },
-            config
-          )
-          .then((response) => {
-            toast.info(`Blog Added`, {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            setIsLoading(true);
-            navigate(paths.adminBlogs);
-          })
-          .then((result) => {
-            setIsLoading(false);
+        .put(
+          isEditMode
+            ? ENDPOINTS.BLOGS_SINGLE.replace(
+              ":blogId",
+              blogs[0]._id ?? ""
+            )
+            : ENDPOINTS.BLOGS,
+          {
+            metaTagTitle: values.metaTagTitle.toString(),
+            metaTagDescription: values.metaTagDescription.toString(),
+            metaTagKeywords: values.metaTagKeywords.map((kw: any) => {
+              return {
+                keyword: kw.value,
+              };
+            }),
+            title: values.title.toString(),
+            thumbnail: values.thumbnail,
+            author: userCtx.user._id,
+            tags: values.tags,
+            content: values.content.toString(),
+          },
+          config
+        )
+        .then((response) => {
+          toast.info(`Blog Updated`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
           });
+          setIsLoading(true);
+          navigate(paths.adminBlogs);
+        })
+        .then((result) => {
+          setIsLoading(false);
+        })
+      : axios
+        .post(
+          isEditMode
+            ? ENDPOINTS.BLOGS_SINGLE.replace(
+              ":blogId",
+              blogs[0]._id ?? ""
+            )
+            : ENDPOINTS.BLOGS,
+          {
+            metaTagTitle: values.metaTagTitle.toString(),
+            metaTagDescription: values.metaTagDescription.toString(),
+            metaTagKeywords: values.metaTagKeywords.map((kw: any) => {
+              return {
+                keyword: kw.value,
+              };
+            }),
+            title: values.title.toString(),
+            thumbnail: values.thumbnail,
+            author: userCtx.user._id,
+            tags: values.tags,
+            content: values.content.toString(),
+          },
+          config
+        )
+        .then((response) => {
+          toast.info(`Blog Added`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setIsLoading(true);
+          navigate(paths.adminBlogs);
+        })
+        .then((result) => {
+          setIsLoading(false);
+        });
   };
 
   const backToBlogsHandler = () => {
@@ -255,10 +255,10 @@ const BlogForm: React.FC = () => {
                             isEditMode && thumbnailPreview !== ""
                               ? thumbnailPreview
                               : isEditMode
-                              ? values.thumbnail
-                              : !isEditMode
-                              ? thumbnailPreview || defaultThumbnail
-                              : defaultThumbnail
+                                ? values.thumbnail
+                                : !isEditMode
+                                  ? thumbnailPreview || defaultThumbnail
+                                  : defaultThumbnail
                           }
                           alt={isEditMode ? values.thumbnail : thumbnailPreview}
                         ></img>

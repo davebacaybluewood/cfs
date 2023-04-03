@@ -2,7 +2,6 @@ import AboutUs from "pages/AboutUs/AboutUs";
 import Home from "pages/Home/Home";
 import { ReactRoutesType } from "./type";
 import PageWrapper from "../layouts/PageWrapper/PageWrapper";
-import ComingSoon from "pages/ComingSoon/ComingSoon";
 import paths from "./routes";
 import Contact from "pages/Contact/Contact";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
@@ -19,14 +18,11 @@ import { adminRoutesNew } from "AdminNew/constants/constants";
 import Blogs from "pages/Blogs/Blogs";
 import SingleBlog from "pages/Blogs/landing/SingleBlog";
 import Agents from "pages/Agents/Agents";
-import AgentVideos from "pages/Agents/components/AgentVideos";
 import AgentWebinar from "pages/Agents/AgentWebinar";
 import AgentRegistration from "pages/Agents/AgentsLanding/AgentRegistration";
 import AgentAppointment from "pages/Agents/AgentAppointment";
 import AgentRegistrationSuccess from "pages/Agents/AgentsLanding/AgentRegistrationSuccess";
 import AgentCheckStatus from "pages/Agents/AgentsLanding/AgentCheckStatus";
-import Test from "TestAutomate/Test";
-import RootTest from "TestAutomate/RootTest";
 
 export const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
 export const CURRENT_DOMAIN = window.location.origin;
@@ -129,10 +125,6 @@ export const REACT_ROUTES: ReactRoutesType[] = [
   {
     PATH: paths.agent_check_status,
     ELEMENT: <PageWrapper component={<AgentCheckStatus />} />,
-  },
-  {
-    PATH: "/test",
-    ELEMENT: <PageWrapper component={<RootTest />} />,
   },
   {
     PATH: "*",

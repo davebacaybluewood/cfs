@@ -24,6 +24,7 @@ interface IBlogCard {
   numberOfVisits?: number;
   showStatistics?: boolean;
   isAdmin?: boolean;
+  tagsLimit?: number;
 }
 
 const BlogCard: React.FC<IBlogCard> = (props) => {
@@ -49,7 +50,7 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
         </div>
 
         <h2>{props.title}</h2>
-        <Chip tags={props.tags}></Chip>
+        <Chip tags={props.tags} tagsLimit={props.tagsLimit}></Chip>
         <div className="contents">
           <ComponentValidator showNull={!props.showStatistics}>
             <Box className="blog-card-statistics-container">
@@ -81,7 +82,7 @@ const BlogCard: React.FC<IBlogCard> = (props) => {
             <button
               type="button"
               className="read-more"
-              onClick={() => adminEditBlogHandler(props.id)}
+              onClick={() => adminEditBlogHandler(props.title)}
             >
               Edit Blog
             </button>
