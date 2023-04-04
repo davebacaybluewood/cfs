@@ -4,7 +4,7 @@ import Banner from "library/Banner/Banner";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import FormikTextInput from "library/Formik/FormikInput";
 import PageTitle from "library/PageTitle/PageTitle";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Button as MUIButton,
@@ -52,7 +52,7 @@ const AgentRegistration = () => {
     languages: [],
     specialties: [],
   };
-
+  const [thumbnailPreview, setThumbnailPreview] = useState("")
   const validationSchema = agentRegisterValidationSchema();
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -68,6 +68,15 @@ const AgentRegistration = () => {
       );
     }
   }, [success, navigate]);
+
+  const handleFocusBack = () => {
+    setThumbnailPreview("");
+    window.removeEventListener('focus', handleFocusBack);
+  }
+  const clickedFileInput = () => {
+    window.addEventListener('focus', handleFocusBack);
+  }
+
 
   return (
     <div className="agent-registration-wrapper">
@@ -197,9 +206,6 @@ const AgentRegistration = () => {
                           <FormControl
                             variant="outlined"
                             fullWidth
-                            error={Boolean(
-                              values.languages.length === 0 && touched.languages
-                            )}
                           >
                             <InputLabel id="languages-label">
                               Additional Languages (You can choose more than
@@ -235,7 +241,12 @@ const AgentRegistration = () => {
                                   ))}
                                 </Box>
                               )}
-                              MenuProps={MenuProps}
+                              MenuProps={{
+                                autoFocus: false,
+                                disableAutoFocusItem: true,
+                                disableEnforceFocus: true,
+                                disableAutoFocus: true
+                              }}
                             >
                               {langOptions.map((name) => (
                                 <MenuItem
@@ -259,7 +270,7 @@ const AgentRegistration = () => {
                             fullWidth
                             error={Boolean(
                               values.specialties.length === 0 &&
-                                touched.specialties
+                              touched.specialties
                             )}
                           >
                             <InputLabel id="specialties-label">
@@ -298,7 +309,12 @@ const AgentRegistration = () => {
                                   ))}
                                 </Box>
                               )}
-                              MenuProps={MenuProps}
+                              MenuProps={{
+                                autoFocus: false,
+                                disableAutoFocusItem: true,
+                                disableEnforceFocus: true,
+                                disableAutoFocus: true
+                              }}
                             >
                               {AGENT_SPECIALTIES.map((name) => (
                                 <MenuItem
@@ -322,7 +338,7 @@ const AgentRegistration = () => {
                           </p>
                         ) : null}
                         <Grid item xs={12} lg={12}>
-                          <h5 className="form-label">Agent Profile Picture</h5>
+                          <h5 className="form-label">Agent Profile Picture (Optional)</h5>
                           <MUIButton variant="contained" component="label">
                             Upload File
                             <input
@@ -334,9 +350,26 @@ const AgentRegistration = () => {
                                   "avatar",
                                   event.currentTarget.files![0]
                                 );
+                                const fileReader = new FileReader();
+                                fileReader.onload = () => {
+                                  if (fileReader.readyState === 2) {
+                                    setThumbnailPreview(fileReader.result?.toString() ?? "");
+                                  }
+                                };
+                                fileReader.readAsDataURL(event.target.files![0]);
+                                window.removeEventListener('focus', handleFocusBack);
                               }}
+                              onClick={clickedFileInput}
                             />
                           </MUIButton>
+                          <ComponentValidator showNull={!thumbnailPreview}>
+                            <div className="user-img-container">
+                              <img
+                                src={thumbnailPreview}
+                                alt="user-profile-pic"
+                              ></img>
+                            </div>
+                          </ComponentValidator>
                         </Grid>
                       </Grid>
                     </div>
@@ -354,7 +387,7 @@ const AgentRegistration = () => {
                         <Grid item xs={12} sm={12} md={4}>
                           <FormikTextInput
                             name="telNumber"
-                            label="Telephone Number *"
+                            label="Telephone Number (Optional)"
                             value={values.telNumber}
                             variant="outlined"
                           />
@@ -362,7 +395,7 @@ const AgentRegistration = () => {
                         <Grid item xs={12} sm={12} md={4}>
                           <FormikTextInput
                             name="address"
-                            label="Address *"
+                            label="Business Address *"
                             value={values.address}
                             variant="outlined"
                           />
@@ -413,8 +446,8 @@ const AgentRegistration = () => {
                       </div>
                     </div>
 
-                    {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                    <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                    <pre>{JSON.stringify(values, null, 2)}</pre>
+                    <pre>{JSON.stringify(errors, null, 2)}</pre>
                   </React.Fragment>
                 );
               }}

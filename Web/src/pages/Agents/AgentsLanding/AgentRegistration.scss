@@ -5,15 +5,19 @@
     background-repeat: no-repeat;
     padding: 4rem 0;
   }
+
   .banner {
     padding: 10rem 0;
+
     h5,
     h1 {
       color: white;
     }
+
     .divider {
       background-color: white;
     }
+
     &::before {
       content: "";
       position: absolute;
@@ -25,6 +29,7 @@
       z-index: -1;
     }
   }
+
   .spinner-form-container {
     position: fixed;
     left: 0;
@@ -36,21 +41,35 @@
     align-items: center;
     z-index: 999;
   }
+
   .agent-form {
     background-color: #fff;
     box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
     padding: 2rem;
+
     .form-header {
       border-bottom: 1px solid #eee;
       margin-bottom: 1rem;
       padding-bottom: 1rem;
+
       h2 {
         font-weight: 900;
         font-size: 2rem;
       }
+
       p {
         font-weight: 300;
         font-size: 1.2rem;
+      }
+    }
+
+    .user-img-container {
+      img {
+        width: 200px;
+        margin-top: 1rem;
+        border: 1px solid #eee;
+        padding: 5px;
+        border-radius: 6px;
       }
     }
 
@@ -71,12 +90,15 @@
     .MuiFormLabel-root {
       font-size: 1.4rem !important;
     }
+
     .MuiButtonBase-root {
       font-size: 1.4rem;
     }
+
     .MuiChip-root {
       font-size: 1.4rem;
     }
+
     .label-sections {
       margin-top: 3rem;
 

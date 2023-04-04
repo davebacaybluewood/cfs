@@ -259,10 +259,15 @@ const createAgent = expressAsync(async (req, res) => {
     }
 
     /** Upload image to cloudinary */
-    const agentImgResult = await cloudinary.v2.uploader.upload(req.file.path, {
-      folder: "agent-avatars",
-      use_filename: true,
-    });
+    let agentImgResult;
+    try {
+      agentImgResult = await cloudinary.v2.uploader.upload(req.file?.path, {
+        folder: "agent-avatars",
+        use_filename: true,
+      });
+    } catch (error) {
+      agentImgResult = ""
+    }
 
     const agent = new Agents({
       userGuid,

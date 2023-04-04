@@ -49,7 +49,7 @@ const agentSchema = mongoose.Schema(
     },
     avatar: {
       type: String,
-      required: true,
+      // required: true,
     },
     title: {
       type: String,

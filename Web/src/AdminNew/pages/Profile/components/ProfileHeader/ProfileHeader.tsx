@@ -39,7 +39,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
       <div className="profile-banner" />
       <div className="profile-content">
         <div className="profile-info">
-          <img src={props.avatar} alt="profile-thumbnail" />
+          <img src={props.avatar ? props.avatar : "/assets/others/no-image.png"} alt="profile-thumbnail" />
           <div className="profile-captions">
             <h2>{props.name}</h2>
             <ul>

@@ -56,7 +56,7 @@ const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
   const loadMoreHandler = () => {
     setPageLimit((prevState) => prevState + 6);
   };
-  const hideLoadMoreButton = pageLimit < agents.length;
+  const hideLoadMoreButton = pageLimit < agents?.length;
 
   const cardClickHandler = (id: string) => {
     if (props.agentStatus === AgentStatuses.ACTIVATED) {
@@ -127,16 +127,16 @@ const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
       breadcrumb={crumbs}
     >
       <Title
-        title={`${props.title ?? ""} (${agents.length})`}
+        title={`${props.title ?? ""} (${agents?.length})`}
         subtitle={props.subtitle ?? ""}
       ></Title>
       <NoInformationToDisplay
-        showNoInfo={agents.length === 0 && !loading}
+        showNoInfo={agents?.length === 0 && !loading}
         message="There's no agent available."
         title="No information to display."
       >
         <Grid container spacing={3}>
-          {agents.slice(0, pageLimit).map((agent: any) => {
+          {agents.slice(0, pageLimit)?.map((agent: any) => {
             return (
               <Grid item xs={12} sm={6} md={4}>
                 <div
@@ -160,7 +160,7 @@ const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
                     <Grid item xs={12} sm={12} md={5}>
                       <div className="card-image">
                         <img
-                          src="https://images01.nicepage.com/c461c07a441a5d220e8feb1a/32e2eeb2b2605b408e5ebb17/reer-min.jpg"
+                          src={agent.avatar ? agent.avatar : "/assets/others/no-image.png"}
                           className="agent-img"
                         />
                       </div>

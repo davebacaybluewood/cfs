@@ -212,3 +212,7 @@ export const NOTIFICATION_ENUMS = {
     BLOGS_DECLINED: "BLOGS_DECLINED",
   },
 };
+
+const REGEX_VALIDATION = {
+  PASSWORD_VALIDATION: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+}
