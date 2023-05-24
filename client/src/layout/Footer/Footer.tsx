@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
       <div className="footer__main-section">
         <Container>
           <Grid container spacing={2} className="footer__main-section__links">
-            <Grid item xs={12} sm={12} md={12} lg={2}>
+            <Grid item xs={12} sm={4} md={4} lg={2}>
               <GridLinks
                 title="Company Info"
                 links={[
@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={12} md={12} lg={2}>
+            <Grid item xs={12} sm={4} md={4} lg={2}>
               <GridLinks
                 title="Solutions"
                 links={[
@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={12} md={12} lg={2}>
+            <Grid item xs={12} sm={4} md={4} lg={2}>
               <GridLinks
                 title="Features"
                 links={[
@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={12} md={12} lg={2}>
+            <Grid item xs={12} sm={4} md={4} lg={2}>
               <GridLinks
                 title="Resources"
                 links={[
@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={12} md={12} lg={2}>
+            <Grid item xs={12} sm={4} md={4} lg={2}>
               <h5>Get In Touch</h5>
               <ul>
                 <li>

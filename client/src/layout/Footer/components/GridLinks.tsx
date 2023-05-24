@@ -15,7 +15,7 @@ const GridLinks: React.FC<GridLinksProps> = (props) => {
       <ul>
         {props.links.map((data) => {
           return (
-            <li>
+            <li key={data.text?.toString()}>
               <a href={data.link}>{data.text}</a>
             </li>
           );
