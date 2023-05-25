@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import Button from "library/Button/Button";
 import React from "react";
 
 type LinkType = {
@@ -25,9 +26,9 @@ const NavLinksDesktop: React.FC<NavLinksDesktopProps> = (props) => {
           return (
             <li className={linkClassnames} key={data.text?.toString()}>
               {data.isButton === true ? (
-                <div className={buttonClassName}>
-                  <button>Agent Portal</button>
-                </div>
+                <Button className={buttonClassName} variant="danger">
+                  Agent Portal
+                </Button>
               ) : (
                 <a href={data.link}>{data.text}</a>
               )}

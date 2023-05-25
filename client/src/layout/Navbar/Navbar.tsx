@@ -15,11 +15,14 @@ const Navbar: React.FC = () => {
         <Container>
           <div className="navbar__content">
             <div className="navbar__name">
-              <img src="/assets/logos/cfs-logo.png" alt="CFS logo" />
+              <img src="/assets/images/logos/logo-white.png" alt="CFS logo" />
             </div>
             <div className="navbar__links">
               {isMobileMode ? (
-                <button onClick={() => setIsMobileNavbarOpen(true)}>
+                <button
+                  onClick={() => setIsMobileNavbarOpen(true)}
+                  className="navbar-btn"
+                >
                   <FaBars />
                 </button>
               ) : (
@@ -70,7 +73,7 @@ const Navbar: React.FC = () => {
         >
           <div className="navbar__mobile">
             <div className="navbar__name">
-              <img src="/assets/logos/cfs-logo.png" alt="CFS logo" />
+              <img src="\assets\images\logos\cfs-logo.png" alt="CFS logo" />
             </div>
             <ul>
               <li className="mobile-links">

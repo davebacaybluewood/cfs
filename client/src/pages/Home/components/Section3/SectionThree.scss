@@ -1,0 +1,42 @@
+.section-three {
+  margin-top: 2rem;
+  padding: 4rem 0;
+  background: #e0efff;
+  text-align: center;
+  color: #0a0a0a;
+  margin-bottom: 2rem;
+
+  .header__name {
+    text-align: center;
+    margin-top: 0rem;
+    font-weight: 700;
+    padding-bottom: 2rem;
+    font-family: "Montserrat";
+  }
+
+  .content__container {
+    .section__three-content {
+      img {
+        width: 70%;
+        margin-bottom: 1rem;
+      }
+
+      h4 {
+        font-size: 2.3rem;
+        margin-bottom: 1rem;
+        font-family: "Montserrat";
+        font-weight: 600;
+      }
+      p {
+        font-weight: 400;
+        font-family: "roboto", sans-serif;
+        font-size: 1.4rem;
+        width: 170px;
+        margin: auto;
+        text-align: center;
+        line-height: 2rem;
+        font-family: "Montserrat";
+      }
+    }
+  }
+}

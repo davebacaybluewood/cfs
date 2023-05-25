@@ -1,0 +1,63 @@
+.inquiry-card-container {
+  color: white;
+  margin-bottom: 2rem;
+  border-radius: 3rem;
+  padding-left: 8rem;
+
+  /** Background image */
+
+  h3 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 2.7rem;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    font-weight: 300;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-family: "Montserrat", sans-serif;
+  }
+  img {
+    width: 100%;
+  }
+}
+
+.color-navy {
+  background: #00004d;
+}
+
+.color-blue {
+  background: #0854b4;
+}
+
+.color-red {
+  background: #ed3e4b;
+}
+
+@media screen and (max-width: 900px) {
+  .inquiry-card-container {
+    text-align: center;
+    padding-left: 0;
+    padding: 4rem 2rem 4rem 2rem;
+    border-radius: 7px;
+
+    br {
+      display: none;
+    }
+
+    h3 {
+      margin-top: 1rem;
+      font-size: 2rem;
+    }
+
+    p {
+    }
+
+    img {
+      width: 70%;
+      display: none;
+    }
+  }
+}

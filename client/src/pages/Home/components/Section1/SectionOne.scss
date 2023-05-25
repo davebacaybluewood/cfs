@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "Agrandir";
+  src: local("Agrandir"),
+    url(../../../../../public/assets/fonts/Agrandir-GrandHeavy.otf)
+      format("woff");
+}
+
+.section-one {
+  position: relative;
+  background: url("../../../../../public/assets/images/home/header-image.png");
+  background-color: red;
+  height: 100vh;
+  background-size: cover;
+  background-attachment: fixed;
+  margin-bottom: 3rem;
+  .captions {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10rem 0;
+
+    h2 {
+      color: white;
+      font-family: "Agrandir";
+      font-weight: 800;
+      text-align: center;
+      font-size: 8.6rem;
+    }
+
+    .cfs-btn {
+      display: inline-block;
+      margin-right: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .section-one {
+    background-position: center;
+    height: 50vh;
+
+    .captions {
+      h2 {
+        font-size: 5rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .section-one {
+    .captions {
+      h2 {
+        font-size: 4rem;
+      }
+    }
+  }
+}

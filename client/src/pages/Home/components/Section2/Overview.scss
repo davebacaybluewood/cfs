@@ -1,0 +1,91 @@
+.section-two {
+  margin-top: -2rem;
+  .overview__image__container {
+    img {
+      width: 100%;
+      border-radius: 1rem;
+    }
+  }
+
+  .overview__content {
+    .overview__title {
+      h3 {
+        color: #0e1f51;
+        font-size: 3rem;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        margin-bottom: 1.8rem;
+      }
+    }
+    .overview__text {
+      margin-bottom: 2rem;
+      p {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        font-size: 1.5rem;
+      }
+    }
+
+    .ambition__container {
+      .small-card {
+        padding: 1rem 1rem;
+        margin-right: 1rem;
+        width: 180px;
+        margin-bottom: 1rem;
+        background: #e9e8e8;
+        border-radius: 1rem;
+        display: flex;
+        text-align: left;
+        box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+        border: 1px solid #e2e2e2;
+
+        .card-img {
+          border-radius: 1rem;
+          display: flex;
+          align-items: center;
+          padding: 1rem;
+          background: rgba(0, 87, 183, 0.2);
+          img {
+            width: 30px;
+          }
+        }
+        .card-captions {
+          margin-left: 1rem;
+
+          .card-title {
+            h3 {
+              color: #0057b7;
+              font-weight: 700;
+              font-size: 1.5rem;
+              margin-bottom: 5px;
+            }
+          }
+          .card-subtitle {
+            p {
+              font-size: 1.3rem;
+              color: #0e1f51;
+              font-weight: 400;
+              font-family: "Montserrat", sans-serif;
+              font-weight: 400;
+            }
+          }
+        }
+      }
+      button {
+        color: black;
+        border: solid 1px black;
+
+        &:hover {
+          opacity: 0.7;
+          border: 1px solid gray;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 910px) {
+  .section-two {
+    text-align: center;
+  }
+}
