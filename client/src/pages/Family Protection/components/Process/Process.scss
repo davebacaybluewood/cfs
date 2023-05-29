@@ -1,0 +1,80 @@
+.process {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 5rem;
+  background: #ccccf0;
+
+  .dark-card {
+    background: #00004d;
+  }
+
+  .light-card {
+    background: white;
+
+    .card__title {
+      h3 {
+        color: #00004d;
+      }
+    }
+    .subtitle {
+      h4 {
+        color: #00004d;
+      }
+    }
+    p {
+      color: #00004d;
+    }
+    .list {
+      li {
+        color: #00004d;
+      }
+    }
+  }
+
+  .section__title {
+    h3 {
+      font-size: 4rem;
+      padding: 3rem;
+      text-align: center;
+      font-family: "Montserrat", sans-serif;
+      color: black;
+      font-weight: 700;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section__title {
+    h3 {
+      text-align: center;
+    }
+  }
+  .section__text__content {
+    p {
+      text-align: center;
+    }
+  }
+  button {
+    display: block;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .process {
+    .section__title {
+      h3 {
+        font-size: 3rem;
+        margin-top: -5rem;
+      }
+    }
+
+    padding: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .process {
+    padding-bottom: 2rem;
+  }
+}

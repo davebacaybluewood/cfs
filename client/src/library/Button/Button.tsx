@@ -13,8 +13,10 @@ interface ButtonProps
 const Button: React.FC<ButtonProps> = (props) => {
   const buttonClassnames = classNames("cfs-btn", {
     "cfs-btn-danger": props.variant === "danger",
-    "cfs-btn-primary": props.variant === "primary",
-    "cfs-btn-secondary": props.variant === "secondary",
+    "cfs-btn-primary":
+      props.variant === "primary" /** Finish styling in the future */,
+    "cfs-btn-secondary":
+      props.variant === "secondary" /** Finish styling in the future */,
     "cfs-btn-default": props.variant === "default",
   });
 

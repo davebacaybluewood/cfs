@@ -7,33 +7,41 @@ import Subscription from "./components/Section6/Subscription";
 import Overview from "./components/Section2/Overview";
 import QuestionForm from "./components/QuestionForm/QuestionForm";
 import MapSection from "./components/MapSection/MapSection";
+import Navbar from "layout/Navbar/Navbar";
+import Footer from "layout/Footer/Footer";
+
 const Home: React.FC = () => {
   return (
-    <div>
-      <div className="section-one">
-        <SectionOne />
+    <React.Fragment>
+      <Navbar />
+      <div>
+        <div className="section-one">
+          <SectionOne />
+        </div>
+        <div className="section-two">
+          <Overview />
+        </div>
+        <div className="section-three">
+          <SectionThree />
+        </div>
+        <div className="section-four">
+          <SectionFour />
+        </div>
+        <div className="section-six">
+          <Subscription />
+        </div>
+        <div className="map-section">
+          <div className="half-bg" />
+          <MapSection />
+          <QuestionForm />
+        </div>
+        <div className="section-seven">
+          <SectionSeven />
+        </div>
+        <div className="section-seven"></div>
+        <Footer />
       </div>
-      <div className="section-two">
-        <Overview />
-      </div>
-      <div className="section-three">
-        <SectionThree />
-      </div>
-      <div className="section-four">
-        <SectionFour />
-      </div>
-      <div className="section-six">
-        <Subscription />
-      </div>
-      <div className="map-section">
-        <div className="half-bg" />
-        <MapSection />
-        <QuestionForm />
-      </div>
-      <div className="section-seven">
-        <SectionSeven />
-      </div>
-    </div>
+    </React.Fragment>
   );
 };
 

@@ -1,0 +1,17 @@
+.blog-section {
+  padding: 5rem 0;
+  .blog-header {
+    text-align: center;
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 4rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .blog-section {
+    .blog-header {
+      font-size: 3rem;
+    }
+  }
+}

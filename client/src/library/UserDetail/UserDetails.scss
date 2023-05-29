@@ -1,0 +1,16 @@
+.user-details {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  .user-image {
+    img {
+      width: 30px;
+      border-radius: 50%;
+      border: 1px solid #333;
+    }
+  }
+  .user-name {
+    margin-left: 2rem;
+    font-size: 1.4rem;
+  }
+}
