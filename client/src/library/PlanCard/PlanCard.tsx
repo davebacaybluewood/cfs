@@ -36,10 +36,9 @@ const PlanCard: React.FC<PlanCardProps> = (props) => {
       </div>
       <div className="list">
         <ul>
-          {props.lists.map((list) => {
+          {props.lists.map((list, index) => {
             return (
-              <li>
-                {" "}
+              <li key={index}>
                 <AiOutlineCheck /> {list}
               </li>
             );

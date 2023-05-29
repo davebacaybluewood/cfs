@@ -16,7 +16,7 @@ const blogsDummy: BlogType[] = [
       onClick: () => console.log("test"),
     },
     {
-      blogId: "17a46a62-e5d9-42f0-9bf7-0edc33475856",
+      blogId: "17a46a62-e5d9-42f0-9bf7-0edc33475855",
       image: "/assets/images/blogs/blog-2.png",
       date: new Date()?.toString(),
       title: "Time is money: How detention and delays on dack are hurting you 2",
@@ -30,7 +30,7 @@ const blogsDummy: BlogType[] = [
       onClick: () => console.log("test"),
     },
     {
-      blogId: "17a46a62-e5d9-42f0-9bf7-0edc33475856",
+      blogId: "17a46a62-e5d9-42f0-9bf7-0edc33475854",
       image: "/assets/images/blogs/blog-3.png",
       date: new Date()?.toString(),
       title: "Time is money: How detention and delays on dack are hurting you 3",

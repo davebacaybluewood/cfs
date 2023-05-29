@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
 
 import "./SolutionCard.scss";

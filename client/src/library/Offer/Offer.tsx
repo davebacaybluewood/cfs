@@ -27,13 +27,10 @@ const Offer: React.FC<OfferProps> = (props) => {
           </div>
           <div className="offer__list">
             <ul>
-              {props.list.map((list) => {
+              {props.list.map((list, index) => {
                 return (
-                  <li>
-                    <li>
-                      {" "}
-                      <FaCheckCircle /> {list}
-                    </li>
+                  <li key={index}>
+                    <FaCheckCircle /> {list}
                   </li>
                 );
               })}

@@ -1,7 +1,7 @@
 import React from "react";
 import { BlogType } from "./BlogModels";
 import BlogCard from "./BlogCard/BlogCard";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import "./Blogs.scss";
 
 interface BlogsProps {
@@ -14,9 +14,9 @@ const Blogs: React.FC<BlogsProps> = (props) => {
       <h2 className="blog-header">{props.title}</h2>
       <Container>
         <Grid container spacing={2}>
-          {props.blogs?.map((blog) => {
+          {props.blogs?.map((blog, index) => {
             return (
-              <Grid item sm={6} md={6} lg={4}>
+              <Grid item sm={6} md={6} lg={4} key={blog.blogId}>
                 <BlogCard
                   author={blog.author}
                   blogId={blog.blogId}

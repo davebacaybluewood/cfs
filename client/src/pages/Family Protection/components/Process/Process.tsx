@@ -55,20 +55,18 @@ const Process: React.FC = () => {
           <h3>Get started with our simple process</h3>
         </div>
         <Grid container spacing={2}>
-          {processData.map((data) => {
+          {processData.map((data, index) => {
             return (
-              <React.Fragment>
-                <Grid item sm={12} md={6} lg={4}>
-                  <PlanCard
-                    colorVariant={data.colorVariant}
-                    title={data.title}
-                    subtitle={data.subtitle}
-                    description={data.description}
-                    lists={data.lists}
-                    button={data.button}
-                  />
-                </Grid>
-              </React.Fragment>
+              <Grid item sm={12} md={6} lg={4} key={index}>
+                <PlanCard
+                  colorVariant={data.colorVariant}
+                  title={data.title}
+                  subtitle={data.subtitle}
+                  description={data.description}
+                  lists={data.lists}
+                  button={data.button}
+                />
+              </Grid>
             );
           })}
         </Grid>
