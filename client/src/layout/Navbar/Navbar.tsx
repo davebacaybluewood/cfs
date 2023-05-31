@@ -7,6 +7,7 @@ import "./Navbar.scss";
 import useResponsive from "hooks/userResponsive";
 import Home from "pages/Home/Home";
 import { Link } from "react-router-dom";
+import ROUTES from "constants/routes";
 const Navbar: React.FC = () => {
   const isMobileMode = useResponsive("mobile");
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
@@ -31,7 +32,7 @@ const Navbar: React.FC = () => {
                 <NavLinksDesktop
                   links={[
                     {
-                      link: "/",
+                      link: ROUTES.HOME,
                       text: "Home",
                       isActive: true,
                     },

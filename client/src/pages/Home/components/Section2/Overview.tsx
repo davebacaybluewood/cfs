@@ -17,7 +17,7 @@ const Overview: React.FC = () => {
           <div className="overview__content">
             <div className="overview__title">
               <h3>
-                Financial comfort, <br /> now And tomorrow
+                Financial Comfort, <br /> Now and Tomorrow
               </h3>
             </div>
             <div className="overview__text">

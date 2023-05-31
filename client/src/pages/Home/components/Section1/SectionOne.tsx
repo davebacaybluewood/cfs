@@ -9,7 +9,7 @@ const SectionOne: React.FC = () => {
     <div className="first-section">
       <div className="captions">
         <Typography variant="h2">
-          Financial Comfort <br /> now And Tomorrow
+          Financial Comfort <br /> Now and Tomorrow
         </Typography>
         <Button variant="danger">Free Consultation</Button>
         <Button variant="default">Learn More</Button>

@@ -8,7 +8,7 @@ const SectionSeven: React.FC = () => {
   return (
     <Container>
       <Typography variant="h3">
-        Financial Comfort <br /> now And Tomorrow.
+        Financial Comfort <br /> Now and Tomorrow.
       </Typography>
     </Container>
   );

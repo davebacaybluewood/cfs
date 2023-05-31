@@ -29,8 +29,7 @@ const SectionFour: React.FC = () => {
       <InquiryCard
         header={
           <React.Fragment>
-            Financial Comfort,
-            <br /> now And Tomorrow
+            Financial Comfort <br /> Now and Tomorrow
           </React.Fragment>
         }
         description={
@@ -52,8 +51,7 @@ const SectionFour: React.FC = () => {
       <InquiryCard
         header={
           <React.Fragment>
-            Financial Comfort,
-            <br /> now And Tomorrow
+            Financial Comfort <br /> Now and Tomorrow
           </React.Fragment>
         }
         description={
@@ -75,8 +73,7 @@ const SectionFour: React.FC = () => {
       <InquiryCard
         header={
           <React.Fragment>
-            Financial Comfort,
-            <br /> now And Tomorrow
+            Financial Comfort <br /> Now and Tomorrow
           </React.Fragment>
         }
         description={

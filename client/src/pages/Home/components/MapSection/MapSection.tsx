@@ -8,7 +8,7 @@ const MapSection = () => {
       <div className="map-container">
         <div className="map-captions">
           <Typography variant="h3">
-            Financial comfort, <br /> now And tomorrow
+            Financial Comfort, <br /> Now and Tomorrow
           </Typography>
           <Typography>
             CFS helps individuals and families build a comfortable future by{" "}
