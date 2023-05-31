@@ -5,6 +5,8 @@ import { FaBars, FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 
 import "./Navbar.scss";
 import useResponsive from "hooks/userResponsive";
+import Home from "pages/Home/Home";
+import { Link } from "react-router-dom";
 const Navbar: React.FC = () => {
   const isMobileMode = useResponsive("mobile");
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
@@ -77,7 +79,7 @@ const Navbar: React.FC = () => {
             </div>
             <ul>
               <li className="mobile-links">
-                <a href="#">Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li className="mobile-links">
                 <a href="#">About Us</a>

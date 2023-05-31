@@ -1,0 +1,18 @@
+.solution__container {
+  background: linear-gradient(#0057b7 100% #000000 100%) !important;
+  .section__title {
+    h2 {
+      color: #00004d;
+      text-align: center;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      margin: 4rem;
+    }
+  }
+
+  .card-title {
+    h3 {
+      color: #0057b7;
+    }
+  }
+}

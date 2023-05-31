@@ -1,4 +1,4 @@
-.twoColumnSectionContent {
+.consultation {
   margin: 7rem 0;
   .section__title {
     h3 {
@@ -36,7 +36,7 @@
   }
 }
 @media screen and (max-width: 768px) {
-  .twoColumnSectionContent {
+  .two-column-section-content {
     .section__image {
       img {
         width: 100%;
@@ -46,7 +46,7 @@
 }
 
 @media screen and (max-width: 425px) {
-  .twoColumnSectionContent {
+  .two-column-section-content {
     .section__title {
       h3 {
         text-align: center;
@@ -75,7 +75,7 @@
 }
 
 @media screen and (max-width: 320px) {
-  .twoColumnSectionContent {
+  .two-column-section-content {
     .section__text__content {
       p {
         font-size: 1rem;

@@ -8,9 +8,9 @@ import Blogs from "library/Blogs/Blogs";
 import FAQs from "library/FAQs/FAQs";
 import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
-import { blogsDummy } from "./data";
 import { faqs } from "./components/FamilyProtection";
-import Consultation from "library/twoColumnSectionContent/twoColumnSectionContent";
+import Consultation from "library/Consultation/Consultation";
+import { blogsDummy } from "constants/dummyDatas";
 
 const FamilyProtection: React.FC = () => (
   <div className="family-protection__page">
@@ -18,13 +18,9 @@ const FamilyProtection: React.FC = () => (
     <div className="main-page__content">
       <div className="headline">
         <Headline
-          title={
-            <React.Fragment>
-              Sample hook <br /> and headline
-            </React.Fragment>
-          }
+          title="Sample hook and headline"
           description="All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet."
-          image="\assets\images\home\rectangle-image1.png"
+          backgroundImage="/assets/images/headline-images/family-protection-image.png"
         >
           <div className="headline__btn">
             <Button variant="danger" className="danger__btn">
@@ -40,11 +36,11 @@ const FamilyProtection: React.FC = () => (
       <div className="solution">
         <Solution />
       </div>
-      <div className="twoColumnSectionContent">
+      <div className="two-column-section-content">
         <Consultation
           title="Why Choose CFS?"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-          image="\assets\images\home\rectangle-image1.png"
+          image="/assets/images/home/rectangle-image1.png"
           button={{
             text: "Free Consultation",
           }}

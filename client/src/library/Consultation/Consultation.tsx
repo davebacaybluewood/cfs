@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from "@mui/material";
 import Button from "library/Button/Button";
 import React from "react";
-import "./twoColumnSectionContent.scss";
+import "./Consultation.scss";
 
 interface ConsultationProps {
   title: string;
@@ -14,7 +14,7 @@ interface ConsultationProps {
 }
 const Consultation: React.FC<ConsultationProps> = (props) => {
   return (
-    <div className="Consultation">
+    <div className="consultation">
       <Container className="section-five__content">
         <Grid container spacing={2} alignItems={"center"}>
           <Grid item xs={12} sm={12} md={6} lg={6} className="text__content">

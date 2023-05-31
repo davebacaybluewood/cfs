@@ -49,10 +49,6 @@ const Footer: React.FC = () => {
                 links={[
                   {
                     link: "/",
-                    text: "About Us",
-                  },
-                  {
-                    link: "/",
                     text: "For Families",
                   },
                   {

@@ -1,0 +1,44 @@
+.link-card__container {
+  position: relative;
+  border: 1.4px solid #e3e3e3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  .card__title {
+    padding: 2rem 1rem;
+    h4 {
+      width: 500px;
+      text-align: center;
+      color: #323232;
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.7rem;
+      font-weight: 500;
+    }
+  }
+  .card__btn {
+    button {
+      margin-right: 1rem;
+      border: none;
+      background: none;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .link-card__container {
+    .card__title {
+      h4 {
+        font-size: 1.1rem;
+        width: 100%;
+      }
+    }
+  }
+}

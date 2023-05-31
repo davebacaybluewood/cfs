@@ -1,0 +1,30 @@
+.faq-business-container {
+  padding: 3rem 0 5rem 0;
+  background: #f8fafc;
+  .section__title {
+    h2 {
+      text-align: center;
+      font-size: 3rem;
+    }
+  }
+  .section__description {
+    h6 {
+      width: 60%;
+      display: block;
+      text-align: center;
+      font-size: 1.7rem;
+      font-weight: 300;
+      margin: 2rem auto;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .faq-business-container {
+    .section__description {
+      h6 {
+        width: 100%;
+      }
+    }
+  }
+}
