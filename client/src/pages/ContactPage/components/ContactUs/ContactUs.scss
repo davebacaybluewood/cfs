@@ -1,0 +1,50 @@
+.main-container {
+  padding: 5rem 0 8rem 0;
+  background: linear-gradient(
+    180deg,
+    rgba(250, 251, 251, 0.0001) 0%,
+    #f8fbff 100%
+  );
+  .content-title {
+    h2 {
+      font-family: "Montserrat", sans-serif;
+      padding-top: 2rem;
+      font-weight: 700;
+      font-size: 3rem;
+      margin: 5rem;
+      text-align: center;
+    }
+  }
+
+  .contact-image {
+    margin-bottom: 2rem;
+    img {
+      border-radius: 2rem;
+      border: 1px dashed #5a7184;
+      width: 50px;
+      display: block;
+      margin: auto;
+    }
+  }
+
+  .contact-title {
+    font-size: 1.4rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .contact-caption {
+    line-height: 2rem;
+    color: #5a7184;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .contact-contact {
+    color: #1565d8;
+    font-weight: 700;
+    font-size: 1.4rem;
+    text-align: center;
+  }
+}

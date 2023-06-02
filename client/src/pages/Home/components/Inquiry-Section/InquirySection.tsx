@@ -1,6 +1,5 @@
 import { Container } from "@mui/system";
 import React from "react";
-
 import InquiryCard from "../InquiryCard/InquiryCard";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +7,8 @@ type InquiryType =
   | "business-protection"
   | "family-protection"
   | "agent-support";
-const SectionFour: React.FC = () => {
+
+const InquirySection: React.FC = () => {
   const navigate = useNavigate();
 
   const learnMoreHandler = (type: InquiryType) => {
@@ -96,4 +96,4 @@ const SectionFour: React.FC = () => {
   );
 };
 
-export default SectionFour;
+export default InquirySection;

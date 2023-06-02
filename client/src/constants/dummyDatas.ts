@@ -43,6 +43,7 @@ const blogsDummy: BlogType[] = [
       },
       onClick: () => console.log("test"),
     },
+    
   ];
 
   export {

@@ -1,5 +1,3 @@
-import Footer from "layout/Footer/Footer";
-import Navbar from "layout/Navbar/Navbar";
 import React from "react";
 import Process from "./components/Process/Process";
 import Solution from "./components/Solution/Solution";
@@ -14,7 +12,6 @@ import { blogsDummy } from "constants/dummyDatas";
 
 const FamilyProtection: React.FC = () => (
   <div className="family-protection__page">
-    <Navbar />
     <div className="main-page__content">
       <div className="headline">
         <Headline
@@ -55,7 +52,6 @@ const FamilyProtection: React.FC = () => (
 
       <Blogs title="Latest from the blog" blogs={blogsDummy} />
     </div>
-    <Footer />
   </div>
 );
 

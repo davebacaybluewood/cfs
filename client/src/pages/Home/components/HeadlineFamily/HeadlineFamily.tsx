@@ -2,11 +2,11 @@ import Button from "../../../../library/Button/Button";
 import { Typography } from "@mui/material";
 import React from "react";
 
-import "./SectionOne.scss";
+import "./HeadlineFamily.scss";
 
-const SectionOne: React.FC = () => {
+const HeadlineFamily: React.FC = () => {
   return (
-    <div className="first-section">
+    <div className="headline-family">
       <div className="captions">
         <Typography variant="h2">
           Financial Comfort <br /> Now and Tomorrow
@@ -18,4 +18,4 @@ const SectionOne: React.FC = () => {
   );
 };
 
-export default SectionOne;
+export default HeadlineFamily;
