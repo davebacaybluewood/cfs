@@ -3,6 +3,9 @@
   src: local("Agrandir"),
     url(../../public/assets/fonts/Agrandir-GrandHeavy.otf) format("woff");
 }
+@mixin box-shadow {
+  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+}
 
 * {
   padding: 0;
@@ -18,6 +21,10 @@ html {
 .inline-block {
   display: inline-block;
   text-align: center;
+}
+
+.no-padding-top {
+  padding-top: 0 !important;
 }
 
 @media screen and (max-width: 320px) {

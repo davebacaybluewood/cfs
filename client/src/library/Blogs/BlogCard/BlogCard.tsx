@@ -12,11 +12,14 @@ const BlogCard: React.FC<BlogType> = (props) => {
         <div className="blog-date">
           <div className="days">{getDateDays(new Date(props.date))}</div>
           <div className="month">{getDateMonthShort(new Date(props.date))}</div>
+          <div className="year"></div>
         </div>
       </div>
       <div className="blog-captions">
         <h2>{props.title}</h2>
-        <p>{props.description}</p>
+        <div className="blog-content">
+          {props.description.replace(/<[^>]*>/g, "").replace("&quot;", " ")}
+        </div>
       </div>
       <UserDetails
         authorName={props.author.authorName}

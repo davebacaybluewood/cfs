@@ -1,14 +1,19 @@
 import { Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import Button from "../Button/Button";
-import "./BlogProps.scss";
+import "./LargeBlogCard.scss";
+import UserDetails from "library/UserDetail/UserDetails";
+import { AuthorType } from "library/Blogs/BlogModels";
+import { getDateDays, getDateToFullDate } from "helpers/date";
+import { getDateMonthShort } from "helpers/date";
+import moment from "moment";
 
 interface BlogProps {
   align: "left" | "right";
   blogTitle: string;
-  authorImage: string;
+  author: AuthorType;
   date: string;
-  blogCaption: string;
+  content: string;
   button: {
     text: string;
     onClick?: () => void;
@@ -21,29 +26,31 @@ const BlogProps: React.FC<BlogProps> = (props) => {
       <Container>
         <Grid
           container
-          spacing={2}
+          spacing={3}
           direction={props.align === "right" ? "row-reverse" : undefined}
           justifyContent="space-between"
           alignItems="center"
         >
-          <Grid item sm={12} md={12} lg={6}>
+          <Grid item sm={12} md={12} lg={7}>
             <div className="blog-title">
               <h3>{props.blogTitle}</h3>
             </div>
-            <div className="author-details">
-              <div className="author-details__image">
-                <img src={props.authorImage} />
-                <div className="date">{props.date}</div>
-              </div>
-              <div className="captions">
-                <Typography>{props.blogCaption}</Typography>
-              </div>
+            <UserDetails
+              authorName={`${props.author.authorName}, ${moment(
+                props.date
+              ).format("MMMM D, YYYY")}`}
+              image={props.author.image}
+            />
+            <div className="blog-captions">
+              <Typography className="blog-content">
+                {props.content.replace(/<[^>]*>/g, "").replace("&quot;", " ")}
+              </Typography>
               <div className="blog__btn">
                 <Button variant="default">{props.button.text}</Button>
               </div>
             </div>
           </Grid>
-          <Grid item xs={12} md={4} lg={4}>
+          <Grid item xs={12} md={4} lg={5}>
             <div className="blog-image">
               <img src={props.blogImage} alt="" />
             </div>

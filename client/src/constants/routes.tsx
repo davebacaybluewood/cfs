@@ -1,5 +1,7 @@
 import AboutUs from "pages/AboutUs/AboutUs";
+import AgentSupport from "pages/AgentSupport/AgentSupport";
 import BlogPage from "pages/BlogPage/BlogPage";
+import BlogSingle from "pages/BlogPage/BlogSingle";
 import BusinessProtection from "pages/BusinessProtection/BusinessProtection";
 import ContactPage from "pages/ContactPage/ContactPage";
 import FamilyProtection from "pages/FamilyProtection/FamilyProtection";
@@ -19,10 +21,13 @@ const paths = {
   home: "/home",
   family_protection: "/family-protection",
   business_protection: "/business-protection",
+  agent_support: "/agent-support",
   contact_us: "/contact_us",
   about_us: "/about-us",
   solutions: "/solutions",
-  resources: "/blogs_and_resources",
+  resources: "/blogs-resources",
+  singleResource: "/blogs-resources/:blogId",
+  invalid: "/invalid",
 };
 
 const REACT_ROUTES: ReactRoutesType[] = [
@@ -45,8 +50,18 @@ const REACT_ROUTES: ReactRoutesType[] = [
     theme: "SKY",
   },
   {
+    element: <AgentSupport />,
+    path: paths.agent_support,
+    showHeadline: false,
+    theme: "RED",
+  },
+  {
     element: <BlogPage />,
     path: paths.resources,
+  },
+  {
+    element: <BlogSingle />,
+    path: paths.singleResource,
   },
   {
     element: <AboutUs />,
@@ -59,6 +74,10 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <ContactPage />,
     path: paths.contact_us,
+  },
+  {
+    element: <p>Not found</p>,
+    path: paths.invalid,
   },
   {
     element: <p>Not found</p>,

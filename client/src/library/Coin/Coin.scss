@@ -1,0 +1,31 @@
+@mixin center-vertical {
+  display: flex;
+  align-items: center;
+}
+.coin-container {
+  @include center-vertical;
+  margin-bottom: 4rem;
+
+  .coin-captions {
+    margin-left: 2rem;
+    h4 {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.9rem;
+    }
+
+    .coin-description {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.4rem;
+      width: 190px;
+      text-align: left;
+    }
+  }
+
+  .coin-icon {
+    @include center-vertical;
+    font-size: 4rem;
+    path {
+      color: #ed3e4b;
+    }
+  }
+}

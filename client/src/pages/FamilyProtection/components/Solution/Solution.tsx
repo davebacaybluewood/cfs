@@ -35,8 +35,8 @@ const Solution: React.FC = () => {
               }
               description={
                 <React.Fragment>
-                  Excepteur sint occaecat <br /> cupidatat non proident, <br />{" "}
-                  sunt in culpa qui officia
+                  Excepteur sint occaecat cupidatat non proident, <br /> sunt in
+                  culpa qui officia
                 </React.Fragment>
               }
             />
