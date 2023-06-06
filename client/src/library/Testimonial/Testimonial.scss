@@ -1,0 +1,68 @@
+.testimonial-main-container {
+  .testimonial-title {
+    h2 {
+      margin: 6rem 0;
+      text-align: center;
+      font-size: 4rem;
+      color: #092854;
+      font-family: "Montserrat", sans-serif;
+    }
+  }
+  .testimonial-image {
+    img {
+      width: 100%;
+      border-radius: 2rem;
+    }
+  }
+
+  .text-content-testimonial {
+    .testimonial-quote {
+      h5 {
+        font-size: 1.7rem;
+        color: #092854;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+        margin-bottom: 1.7rem;
+      }
+    }
+    .testimonial-author-credentials {
+      h4 {
+        color: #092854;
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.7rem;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 1.3rem;
+        color: #092854;
+        font-weight: 500;
+      }
+    }
+
+    .testimonial__btn {
+      display: flex;
+      button {
+        margin: 2rem 2rem 0 0;
+        padding: 0.5rem;
+        border-radius: 50% !important;
+        border: 2px solid #00004d;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+      .filled {
+        button {
+          background: #00004d !important;
+        }
+      }
+      .unfilled {
+        button {
+          background: transparent !important;
+        }
+      }
+    }
+  }
+}

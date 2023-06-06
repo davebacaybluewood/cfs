@@ -13,7 +13,7 @@ const Subscription: React.FC = () => {
               Get free resources and get the latest <br /> updates. Subscribe to
               our newsletter.
             </Typography>
-            <input type="text" placeholder="Your Email" />
+            <input type="email" placeholder="Your Email" />
             <button>Subscribe</button>
           </div>
           <div className="logo">

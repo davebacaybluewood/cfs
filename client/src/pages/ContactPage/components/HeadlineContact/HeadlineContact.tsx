@@ -1,10 +1,10 @@
 import React from "react";
-import "./Headline.scss";
-import { Container, Grid, TextField } from "@mui/material";
+import Form from "../Form/Form";
+import "./HeadlineContact.scss";
 
-const Headline: React.FC = () => {
+const HeadlineContact: React.FC = () => {
   return (
-    <div className="headline-blogs">
+    <div className="headline-contact">
       <div className="headline-title">
         <h3>Get in touch with us</h3>
       </div>
@@ -15,8 +15,10 @@ const Headline: React.FC = () => {
           hesitate to contact us.
         </p>
       </div>
+
+      <Form />
     </div>
   );
 };
 
-export default Headline;
+export default HeadlineContact;

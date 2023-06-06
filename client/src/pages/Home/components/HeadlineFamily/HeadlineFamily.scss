@@ -8,9 +8,9 @@
 .headline-family {
   position: relative;
   background: url("../../../../../public/assets/images/home/header-image.png");
-  background-color: red;
   height: 100vh;
   background-size: cover;
+  background-position: center;
   background-attachment: fixed;
   margin-bottom: 3rem;
   .captions {
@@ -29,9 +29,11 @@
       font-size: 8.6rem;
     }
 
-    .cfs-btn {
-      display: inline-block;
-      margin-right: 1rem;
+    .headline-home__btn {
+      .cfs-btn {
+        display: inline-block;
+        margin-right: 1rem;
+      }
     }
   }
 }
@@ -54,6 +56,33 @@
     .captions {
       h2 {
         font-size: 4rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .headline-family {
+    .captions {
+      h2 {
+        font-size: 5rem;
+      }
+    }
+
+    .headline-home__btn {
+      button {
+        width: 100% !important;
+        padding: 1rem !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .headline-family {
+    .captions {
+      h2 {
+        font-size: 3rem;
       }
     }
   }

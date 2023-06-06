@@ -11,8 +11,10 @@ const HeadlineFamily: React.FC = () => {
         <Typography variant="h2">
           Financial Comfort <br /> Now and Tomorrow
         </Typography>
-        <Button variant="danger">Free Consultation</Button>
-        <Button variant="default">Learn More</Button>
+        <div className="headline-home__btn">
+          <Button variant="danger">Free Consultation</Button>
+          <Button variant="default">Learn More</Button>
+        </div>
       </div>
     </div>
   );

@@ -54,7 +54,23 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
+  .form {
+    input {
+      width: 100% !important;
+      border-radius: 1rem;
+    }
+
+    button {
+      margin-top: 0 !important;
+      width: 40%;
+      padding: 1rem !important;
+      border-radius: 1rem !important;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
   .subscription__content {
     flex-direction: column-reverse;
 
@@ -65,7 +81,8 @@
     }
 
     input {
-      width: 200px !important;
+      width: 100% !important;
+      border-radius: 1rem !important;
     }
 
     button {
@@ -95,19 +112,23 @@
   }
 }
 
-@media screen and (max-width: 376px) {
+@media screen and (max-width: 500px) {
   .subscription__content {
+    flex-direction: column-reverse;
     h4 {
       font-weight: 300 !important;
     }
     input {
-      width: 190px !important;
       font-size: 1.2rem;
+      width: 100% !important;
+      margin-bottom: 1rem;
+      text-align: center;
+      padding: 1rem 0 !important;
     }
 
     button {
       margin-top: 1rem;
-      width: 50%;
+      width: 50% !important;
       font-size: 1.2rem;
     }
   }

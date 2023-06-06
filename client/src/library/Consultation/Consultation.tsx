@@ -5,7 +5,8 @@ import "./Consultation.scss";
 
 interface ConsultationProps {
   title: string;
-  description: string | JSX.Element;
+  description1: string | JSX.Element;
+  description2: string | JSX.Element;
   image: string;
   button: {
     text: string;
@@ -22,10 +23,10 @@ const Consultation: React.FC<ConsultationProps> = (props) => {
               <Typography variant="h3">{props.title}</Typography>
             </div>
             <div className="section__text__content">
-              <Typography>{props.description}</Typography>
+              <Typography>{props.description1}</Typography>
             </div>
             <div className="section__text__content">
-              <Typography>{props.description}</Typography>
+              <Typography>{props.description2}</Typography>
             </div>
 
             <div className="section__btn">

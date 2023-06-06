@@ -1,8 +1,8 @@
 import React from "react";
-import "./Offer.scss";
 import { Container, Grid, Typography } from "@mui/material";
 import Button from "library/Button/Button";
 import { FaCheckCircle } from "react-icons/fa";
+import "./Offer.scss";
 
 interface OfferProps {
   title: string | JSX.Element;

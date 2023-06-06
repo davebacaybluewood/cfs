@@ -12,8 +12,8 @@ const BlogPage: React.FC = () => {
     <div className="blog-page">
       <div className="headline-blogs">
         <Headline
-          title="Sample hook and headline"
-          description="All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet."
+          title="Explore Our Blog for Expert Insights "
+          description="We believe that knowledge is power, and we are dedicated to empowering you with the information you need to make informed decisions about your insurance coverage. We cover a wide range of topics, from understanding different types of insurance policies and their benefits to providing guidance on navigating the complexities of the insurance industry. "
         >
           <form>
             <input
@@ -42,6 +42,7 @@ const BlogPage: React.FC = () => {
         })}
       </div>
       <Blogs title="Read More Here" blogs={blogsDummy} />
+      <Blogs title=" " blogs={blogsDummy} />
       <Subscription />
     </div>
   );

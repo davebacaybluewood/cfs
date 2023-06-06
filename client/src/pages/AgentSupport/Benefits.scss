@@ -67,3 +67,21 @@
     }
   }
 }
+
+@media screen and (max-width: 390px) {
+  .main-container {
+    .content-container {
+      .section-title {
+        h2 {
+          text-align: center;
+          margin-top: -6rem;
+        }
+      }
+      button {
+        width: 50% !important;
+        margin-top: 2rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+    }
+  }
+}

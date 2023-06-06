@@ -5,6 +5,7 @@ import { REACT_ROUTES } from "constants/routes";
 import Wrapper from "layout/Wrapper/Wrapper";
 import "./styles/main.scss";
 import "./styles/colors.scss";
+import "react-multi-carousel/lib/styles.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

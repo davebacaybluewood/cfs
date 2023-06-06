@@ -1,7 +1,120 @@
 .business__protection {
-  .navbar__business {
-    .navbar {
-      background: #0057b7;
+  .business-headline-title {
+    h2 {
+      font-family: "Agrandir";
+      width: 700px;
+    }
+  }
+
+  .headline__btn {
+    .cfs-btn-default button {
+      border: 1px solid black !important;
+      color: black;
+      font-weight: 700;
+    }
+  }
+  .feature-main-container {
+    margin-top: -22.5rem;
+    .standard-card-container {
+      height: 25vh;
+      align-items: center;
+
+      .cfs-btn {
+        button {
+          display: none;
+        }
+      }
+    }
+
+    .carousel-navigator {
+      text-align: center;
+
+      h2,
+      p {
+        color: #333;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+      }
+
+      p {
+        font-size: 1.4rem;
+        font-weight: 300;
+        margin-bottom: 4rem;
+      }
+
+      button {
+        display: inline-block;
+        width: 56px;
+        height: 56px;
+        background: #0fb583;
+        border-radius: 8px;
+        border: none;
+        margin: 0 0.5rem 1.7rem 0.5rem;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.5;
+        }
+
+        svg {
+          color: #fff;
+        }
+      }
+    }
+    .navbar__business {
+      .navbar {
+        background: #0057b7;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .business__protection {
+    .standard-card-container {
+      margin-top: 25rem;
+    }
+    .carousel-navigator-container {
+      margin-top: -25rem;
+      .carousel-navigator-btn {
+        button {
+          margin-top: -3rem !important;
+          width: 20% !important;
+        }
+      }
+
+      .standard-card-container {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+      }
+      .carousel-navigator {
+        h2 {
+          margin-bottom: 2rem;
+        }
+
+        h2,
+        p {
+          color: white;
+        }
+        button {
+          width: 20% !important;
+          margin-top: -3rem !important;
+          height: 4rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .business__protection {
+    .feature-main-container {
+      .standard-card-container {
+        height: 20vh;
+      }
     }
   }
 }

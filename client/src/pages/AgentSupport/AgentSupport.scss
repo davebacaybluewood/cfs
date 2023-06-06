@@ -1,4 +1,11 @@
 .agent-support-wrapper {
+  .headline__btn {
+    .cfs-btn-default button {
+      border: 1px solid black !important;
+      color: black;
+      font-weight: 700;
+    }
+  }
   .plan-container-agent {
     background: linear-gradient(152.93deg, #ed3e4b 16.91%, #a0000c 185.66%);
     position: relative;
@@ -86,6 +93,52 @@
 
       br {
         display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .agent-support-wrapper {
+    .cfs-application {
+      margin-top: -4rem;
+    }
+
+    .standard-card-container {
+      margin-top: 0;
+    }
+
+    .success-container {
+      h2 {
+        margin-bottom: 5rem;
+        margin-top: 2rem;
+      }
+    }
+    .easy-steps-container {
+      h2 {
+        margin-left: 0;
+      }
+      .description {
+        p {
+          margin-left: 0;
+          text-align: center;
+        }
+      }
+      button {
+        margin-bottom: -3.5rem;
+      }
+    }
+    .agent-container {
+      h4 {
+        text-align: center;
+        font-size: 1.7rem;
+      }
+      .subtitle {
+        text-align: center;
+        font-size: 1.4rem;
+      }
+      img {
+        width: 100%;
       }
     }
   }

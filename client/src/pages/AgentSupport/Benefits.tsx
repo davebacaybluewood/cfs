@@ -12,13 +12,7 @@ const Benefits: React.FC = () => {
             <div className="section-title">
               <h2>What Benefits We Provide</h2>
             </div>
-            <div className="description">
-              <p>
-                The most important of insurance is the payment of losses. An
-                insurance policy is a contract used to indemnify individuals and
-                organizations for covered losses.{" "}
-              </p>
-            </div>
+
             <div className="boxes">
               <div className="box-image">
                 <img
@@ -28,12 +22,12 @@ const Benefits: React.FC = () => {
               </div>
               <div className="box-content">
                 <div className="box-title">
-                  <h3>Regular Trainings</h3>
+                  <h3>Career Growth</h3>
                 </div>
                 <div className="box-description">
                   <p>
-                    Refers to the peace of mind felt when we aren't worried
-                    about money.
+                    We believe in nurturing talent and fostering professional
+                    development.
                   </p>
                 </div>
               </div>
@@ -44,12 +38,12 @@ const Benefits: React.FC = () => {
               </div>
               <div className="box-content">
                 <div className="box-title">
-                  <h3>Regular Trainings</h3>
+                  <h3>Tools and Systems</h3>
                 </div>
                 <div className="box-description">
                   <p>
-                    Refers to the peace of mind felt when we aren't worried
-                    about money.
+                    Success in the insurance industry relies on cutting-edge
+                    technology and streamlined processes.
                   </p>
                 </div>
               </div>
@@ -60,12 +54,12 @@ const Benefits: React.FC = () => {
               </div>
               <div className="box-content">
                 <div className="box-title">
-                  <h3>Regular Trainings</h3>
+                  <h3>Commisions</h3>
                 </div>
                 <div className="box-description">
                   <p>
-                    Refers to the peace of mind felt when we aren't worried
-                    about money.
+                    We value your hard work and dedication, and we believe that
+                    your earnings should reflect that.
                   </p>
                 </div>
               </div>

@@ -17,18 +17,18 @@ const HelpSection: React.FC = () => {
             <Grid item sm={12} md={4} lg={4}>
               <div className="section__three-content">
                 <img
-                  src="\assets\images\home\inquiry-image1.png"
-                  alt="\assets\images\home\inquiry-image1.png"
+                  src="/assets/images/home/inquiry-image1.png"
+                  alt="/assets/images/home/inquiry-image1.png"
                 />
                 <Typography variant="h4">Insurance</Typography>
                 <p>CFS helps individuals and families </p>
               </div>
             </Grid>
             <Grid item sm={12} md={4} lg={4}>
-              <div className="section__three-content">
+              <div className="section__three-content ">
                 <img
-                  src="\assets\images\home\inquiry-image2.png"
-                  alt="\assets\images\home\inquiry-image1.png"
+                  src="/assets/images/home/inquiry-image2.png"
+                  alt="/assets/images/home/inquiry-image2.png"
                 />
                 <Typography variant="h4">Risk Management</Typography>
                 <p>CFS helps individuals and families </p>
@@ -37,8 +37,8 @@ const HelpSection: React.FC = () => {
             <Grid item sm={12} md={4} lg={4}>
               <div className="section__three-content">
                 <img
-                  src="\assets\images\home\inquiry-image2.png"
-                  alt="\assets\images\home\inquiry-image2.png"
+                  src="assets/images/home/inquiry-image3.png"
+                  alt="assets/images/home/inquiry-image3.png"
                 />
                 <Typography variant="h4">Consultation</Typography>
                 <p>CFS helps individuals and families </p>

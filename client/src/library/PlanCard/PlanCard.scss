@@ -24,8 +24,9 @@
     }
   }
   .captions {
+    height: 108px;
     p {
-      width: 200px;
+      width: 100%;
       font-weight: 300;
       font-size: 1.3rem;
       color: white;
@@ -95,6 +96,10 @@
 }
 
 @media screen and (max-width: 425px) {
+  .plan-card-container {
+    margin: 0 0 1rem 0;
+  }
+
   .button__container {
     button {
       width: 70% !important;

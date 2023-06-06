@@ -14,12 +14,12 @@ const Home: React.FC = () => {
       <Overview />
       <HelpSection />
       <InquirySection />
-      <Subscription />
       <div className="map-section">
         <div className="half-bg" />
         <MapSection />
         <QuestionForm />
       </div>
+      <Subscription />
     </React.Fragment>
   );
 };

@@ -36,7 +36,7 @@ const InquiryCard: React.FC<InquiryCardProps> = (props) => {
             <Typography variant="h3">{props.header}</Typography>
             <p>{props.description}</p>
             {props.buttonConfigs?.text ? (
-              <Button onClick={props.buttonConfigs.onClick}>
+              <Button variant="default" onClick={props.buttonConfigs.onClick}>
                 {props.buttonConfigs.text}
               </Button>
             ) : null}

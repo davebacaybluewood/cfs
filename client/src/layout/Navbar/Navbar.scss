@@ -157,3 +157,25 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .navbar__mobile {
+    button {
+      width: 100%;
+    }
+
+    button {
+      width: 100px !important;
+    }
+
+    .navbar__mobile-socials {
+      ul {
+        li {
+          a {
+            padding: 1rem 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}

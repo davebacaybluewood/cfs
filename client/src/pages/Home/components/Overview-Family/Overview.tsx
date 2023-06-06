@@ -7,7 +7,6 @@ import "./Overview.scss";
 const Overview: React.FC = () => {
   return (
     <div className="overview">
-      {/* /// change the classname */}
       <Container className="section-two">
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} sm={12} md={6} lg={6}>

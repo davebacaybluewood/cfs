@@ -16,35 +16,62 @@
     }
   }
 
-  .contact-image {
-    margin-bottom: 2rem;
-    img {
-      border-radius: 2rem;
-      border: 1px dashed #5a7184;
-      width: 50px;
-      display: block;
-      margin: auto;
+  .contact-card {
+    margin-bottom: 4rem;
+    .contact-image {
+      margin-bottom: 2rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+      img {
+        border-radius: 2rem;
+        border: 1px dashed #5a7184;
+        width: 50px;
+        display: block;
+        margin: auto;
+      }
+    }
+
+    .contact-title {
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .contact-caption {
+      line-height: 2rem;
+      color: #5a7184;
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .contact-contact {
+      color: #1565d8;
+      font-weight: 700;
+      font-size: 1.4rem;
+      text-align: center;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
+}
 
-  .contact-title {
-    font-size: 1.4rem;
-    text-align: center;
-    margin-bottom: 2rem;
+@media screen and (max-width: 520px) {
+  .main-container {
+    padding: 5rem 0 5rem 0;
   }
+}
 
-  .contact-caption {
-    line-height: 2rem;
-    color: #5a7184;
-    font-size: 1.2rem;
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .contact-contact {
-    color: #1565d8;
-    font-weight: 700;
-    font-size: 1.4rem;
-    text-align: center;
+@media screen and (max-width: 425px) {
+  .main-container {
+    .contact-title {
+      h2 {
+        margin: 11rem 0;
+      }
+    }
   }
 }

@@ -12,7 +12,8 @@ const ProcessBusiness: React.FC = () => {
       colorVariant: "dark",
       title: "Step 1",
       subtitle: "Get Consultation",
-      description: " Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+      description:
+        " We'll take the time to understand your unique needs, answer any questions you may have, and guide you towards the best life insurance solution for your family.",
       lists: [
         "We are Different",
         "Contrary To Popular Belief",
@@ -26,12 +27,9 @@ const ProcessBusiness: React.FC = () => {
       colorVariant: "light",
       title: "Step 2",
       subtitle: "Make Payment",
-      description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ",
-      lists: [
-        "We are Different",
-        "Contrary To Popular Belief",
-        "Looked Up One Of The More",
-      ],
+      description:
+        "Our streamlined payment options ensure a seamless experience. Simply select the payment method that suits you best ",
+      lists: ["Secure payment channels", "No hassle", "Get real-time updates"],
     },
     {
       button: {
@@ -40,12 +38,9 @@ const ProcessBusiness: React.FC = () => {
       colorVariant: "light",
       title: "Step 3",
       subtitle: "Get Consultation",
-      description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
-      lists: [
-        "We are Different",
-        "Contrary To Popular Belief",
-        "Looked Up One Of The More",
-      ],
+      description:
+        "After completing payment, we'll swiftly process your application and you’ll receive a policy ID, which serves as proof of your comprehensive coverage",
+      lists: ["Online processing", "Easy to update", "No long waiting hours"],
     },
   ];
   return (
@@ -54,7 +49,7 @@ const ProcessBusiness: React.FC = () => {
         <div className="section__title">
           <h3>Get started with our simple process</h3>
         </div>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className="card-business">
           {processData.map((data, index) => {
             return (
               <Grid item sm={12} md={6} lg={4} key={index}>

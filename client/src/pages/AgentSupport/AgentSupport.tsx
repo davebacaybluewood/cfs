@@ -8,14 +8,7 @@ import { blogsDummy } from "constants/dummyDatas";
 import Card from "library/Card/Card";
 import { Container, Grid } from "@mui/material";
 import Coin from "library/Coin/Coin";
-import { MdModelTraining } from "react-icons/md";
-import {
-  FaAccessibleIcon,
-  FaAlipay,
-  FaCanadianMapleLeaf,
-  FaCentercode,
-  FaCodiepie,
-} from "react-icons/fa";
+import { MdHealthAndSafety } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
 import Timelines from "library/Timeline/Timelines";
 import Benefits from "./Benefits";
@@ -23,19 +16,19 @@ import StandardCard from "library/StandardCard/StandardCard";
 
 const timelineData = [
   {
-    title: "Lorem ipsum dolor sit amet, consectetuer?",
+    title: "Submit Your Application",
     description:
-      " Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+      "Complete our simple online application form to express your interest in becoming a CFS Agent.",
   },
   {
-    title: "Lorem ipsum dolor sit amet, consectetuer?",
+    title: "Attend an Interview",
     description:
-      " Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+      " This is an opportunity for us to get to know you better and for you to ask any questions you may have.",
   },
   {
-    title: "Lorem ipsum dolor sit amet, consectetuer?",
+    title: "Complete Training and Onboarding",
     description:
-      " Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+      " Receive in-depth product training, sales techniques, and access to our cutting-edge technology platforms.",
   },
 ];
 
@@ -43,13 +36,15 @@ const AgentSupport: React.FC = () => {
   return (
     <div className="agent-support-wrapper">
       <Headline
-        title="Sample hook and headline"
+        title="Helping agents succeed"
         description="All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet."
         backgroundImage="/assets/images/headline-images/agent-support-image.png"
         children={
           <div className="headline__btn">
             <Button variant="danger">Become an Agent</Button>
-            <Button variant="default">Agent Log In</Button>
+            <Button variant="default" className="default-btn">
+              Agent Log In
+            </Button>
           </div>
         }
       />
@@ -64,17 +59,17 @@ const AgentSupport: React.FC = () => {
                   title="Become a CFS Agent"
                   description="veritatis et quasi architecto beatae vitae dicta sunt explicabo"
                   button={{
-                    text: "Sign up",
+                    text: "Apply",
                   }}
                 />
               </Grid>
               <Grid item xs={12} md={12} lg={4}>
                 <StandardCard
-                  icon={<RiShieldUserLine />}
-                  title="Become a CFS Agent"
+                  icon={<MdHealthAndSafety />}
+                  title="Agent Back Office"
                   description="veritatis et quasi architecto beatae vitae dicta sunt explicabo"
                   button={{
-                    text: "Sign up",
+                    text: "Login",
                   }}
                 />
               </Grid>
@@ -82,14 +77,28 @@ const AgentSupport: React.FC = () => {
           </Container>
         </div>
         <Offer
-          title="Insert heading or engaging hook about the solution"
+          title={
+            <React.Fragment>
+              Unleash Your Potential: <br /> Join CFS and Elevate Your <br />
+              Insurance Career
+            </React.Fragment>
+          }
           image="\assets\images\home\rectangle-image3.png"
           list={[
-            "Track and control spending",
-            "Simple to use mobile app for drivers",
-            "24/7 US-based customer support",
+            "Great commision structure",
+            "Extensive Training and Support",
+            "Access to the newest tools and technology",
           ]}
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          description={
+            <React.Fragment>
+              Don't miss out on this exceptional opportunity to take <br /> your
+              insurance career to new heights. Join CFS and be <br /> part of a
+              company that values your expertise, rewards <br /> your hard work,
+              and provides you with the tools and <br /> support you need to
+              thrive in today's competitive <br /> insurance landscape. With
+              CFS, you’ll get:
+            </React.Fragment>
+          }
           button={{
             text: "Learn More",
           }}
@@ -102,44 +111,38 @@ const AgentSupport: React.FC = () => {
           <Grid container spacing={2}>
             <Grid item sm={12} md={12} lg={4}>
               <Coin
-                icon={<MdModelTraining />}
-                title="Regular Trainings"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+                title="Lead Generation Strategies"
+                description="You'll have access to cutting-edge marketing tools, digital platforms, and targeted campaigns to attract and engage potential clients, giving you a steady stream of high-quality leads."
               />
             </Grid>
             <Grid item sm={12} md={12} lg={4}>
               <Coin
-                icon={<FaAccessibleIcon />}
-                title="Free Access to CRMs"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+                title="Training and Mentorship"
+                description="Our industry experts will guide you through our robust training curriculum, covering everything from product knowledge and sales techniques to advanced marketing strategies."
               />
             </Grid>
             <Grid item sm={12} md={12} lg={4}>
               <Coin
-                icon={<FaAlipay />}
-                title="Unlimited Support"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+                title="Technology and Tools"
+                description="Our digital platform streamlines your operations, making it easier than ever to manage clients, track policies, and access real-time data."
               />
             </Grid>
             <Grid item sm={12} md={12} lg={4}>
               <Coin
-                icon={<FaCanadianMapleLeaf />}
-                title="Agent Benefits "
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+                title="Marketing and Branding Support"
+                description="As a CFS agent, you'll benefit from our marketing and branding support, including professionally designed marketing materials, personalized websites, and social media campaigns"
               />
             </Grid>
             <Grid item sm={12} md={12} lg={4}>
               <Coin
-                icon={<FaCentercode />}
-                title="Agent Benefits "
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+                title="Competitive Compensation and Incentive Programs"
+                description="Our compensation packages are designed to be highly competitive, ensuring that you are fairly rewarded for your efforts."
               />
             </Grid>
             <Grid item sm={12} md={12} lg={4}>
               <Coin
-                icon={<FaCodiepie />}
-                title="Agent Benefits "
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+                title="Exclusive Product Portfolio"
+                description="As a CFS agent, you'll have access to an exclusive product portfolio that is designed to meet the diverse needs of your clients."
               />
             </Grid>
           </Grid>
@@ -165,15 +168,17 @@ const AgentSupport: React.FC = () => {
               <div className="steps-content-container">
                 <div className="title">
                   <h2>
-                    Become A CFS Agent <br /> In 5 Easy Steps
+                    Become A CFS Agent <br /> In 3 Easy Steps
                   </h2>
                 </div>
                 <div className="description">
                   <p>
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                    natoque penatibus et magnis dis parturient montes, nascetur
-                    ridiculus mus.
+                    Are you ready to embark on an exciting and rewarding career
+                    in the insurance industry? Becoming a CFS Agent is your
+                    pathway to success, offering you the opportunity to join a
+                    reputable organization, work with top-rated insurance
+                    providers, and make a positive impact in the lives of
+                    individuals and businesses.
                   </p>
                 </div>
               </div>
@@ -189,8 +194,11 @@ const AgentSupport: React.FC = () => {
         <Container>
           <h2>Our top Agents</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetuer adi <br /> piscing elit.
-            Aenean commodo ligula eget dolor.
+            At CFS, we take pride in our exceptional team of top-performing
+            agents who have achieved remarkable success in the insurance
+            industry. These agents represent the pinnacle of excellence,
+            consistently delivering outstanding results, and setting the bar
+            high for professionalism, expertise, and client satisfaction.
           </p>
           <Grid container spacing={2}>
             <Grid item sm={12} md={12} lg={3}>

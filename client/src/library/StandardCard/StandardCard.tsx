@@ -3,13 +3,14 @@ import React from "react";
 import "./StandardCard.scss";
 
 interface StandardProps {
-  icon: JSX.Element | string;
-  title: string;
-  description: string;
-  button: {
+  icon?: JSX.Element | string;
+  title?: string;
+  description?: string;
+  button?: {
     text: string;
     onClick?: () => void;
   };
+  children?: JSX.Element | React.ReactNode;
 }
 const StandardCard: React.FC<StandardProps> = (props) => {
   return (
@@ -21,9 +22,12 @@ const StandardCard: React.FC<StandardProps> = (props) => {
       <div className="card-description">
         <p>{props.description}</p>
       </div>
-      <div className="card__btn">
-        <Button variant="default">{props.button.text}</Button>
-      </div>
+      {props.button?.text ? (
+        <div className="card__btn">
+          <Button variant="default">{props.button?.text}</Button>
+        </div>
+      ) : null}
+      <div>{props.children}</div>
     </div>
   );
 };

@@ -8,6 +8,14 @@
   }
 }
 
+@media screen and (max-width: 390px) {
+  .blog-section {
+    .blog-header {
+      font-size: 2.8rem !important;
+    }
+  }
+}
+
 @media screen and (max-width: 320px) {
   .blog-section {
     .blog-header {

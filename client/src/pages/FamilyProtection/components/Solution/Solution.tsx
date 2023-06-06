@@ -7,9 +7,7 @@ const Solution: React.FC = () => {
   return (
     <Container className="solution">
       <div className="section__title">
-        <Typography variant="h2">
-          Insert heading or engaging hook <br /> about the solution
-        </Typography>
+        <Typography variant="h2">Here's Why Families Choose Us</Typography>
       </div>
       <div className="solution__card__container">
         <Grid container spacing={2} justifyContent="space-between">
@@ -18,10 +16,7 @@ const Solution: React.FC = () => {
               title="200k"
               subtitle="Signed insurance contracts"
               description={
-                <React.Fragment>
-                  Excepteur sint occaecat <br /> cupidatat non proident, <br />{" "}
-                  sunt in culpa qui officia
-                </React.Fragment>
+                <React.Fragment>Signed insurance contracts</React.Fragment>
               }
             />
           </Grid>
@@ -33,59 +28,45 @@ const Solution: React.FC = () => {
                   Paid <br /> compensation
                 </React.Fragment>
               }
-              description={
-                <React.Fragment>
-                  Excepteur sint occaecat cupidatat non proident, <br /> sunt in
-                  culpa qui officia
-                </React.Fragment>
-              }
+              description={<React.Fragment>Paid compensation</React.Fragment>}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <SolutionCard
-              title="30 years"
+              title="30years"
               subtitle={
                 <React.Fragment>
                   The experience of <br /> our advisers
                 </React.Fragment>
               }
               description={
-                <React.Fragment>
-                  Excepteur sint occaecat <br /> cupidatat non proident, <br />{" "}
-                  sunt in culpa qui officia
-                </React.Fragment>
+                <React.Fragment>The experience of our advisers</React.Fragment>
               }
             />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <SolutionCard
-              title="150"
+              title="30"
               subtitle={
                 <React.Fragment>
                   Experienced <br /> employees
                 </React.Fragment>
               }
               description={
-                <React.Fragment>
-                  Excepteur sint occaecat <br /> cupidatat non proident, <br />{" "}
-                  sunt in culpa qui officia
-                </React.Fragment>
+                <React.Fragment>Experienced employees</React.Fragment>
               }
             />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <SolutionCard
-              title="10"
+              title="3"
               subtitle={
                 <React.Fragment>
                   Offices and <br /> branches
                 </React.Fragment>
               }
               description={
-                <React.Fragment>
-                  Excepteur sint occaecat <br /> cupidatat non proident, <br />{" "}
-                  sunt in culpa qui officia
-                </React.Fragment>
+                <React.Fragment>Offices and branches</React.Fragment>
               }
             />
           </Grid>

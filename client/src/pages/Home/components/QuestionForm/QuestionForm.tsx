@@ -22,7 +22,9 @@ const QuestionForm: React.FC = () => (
             <h6>Email address*</h6>
             <input type="text" placeholder="Name@email.com" />
           </div>
-          <Button variant="danger">Book a Free Consultation</Button>
+          <div className="questionForm-btn">
+            <Button variant="danger">Book a Free Consultation</Button>
+          </div>
         </div>
       </div>
     </div>

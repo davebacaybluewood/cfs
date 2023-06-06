@@ -1,8 +1,10 @@
-.headline-blogs {
-  background: #1565d8;
+.headline-contact {
+  background: url(../../../../../public/assets/images/headline-images/blog-contact-headline);
   position: relative;
   width: 100%;
-  //   height: 70vh;
+  height: 60vh;
+
+  margin-bottom: 25rem;
 
   .headline-title {
     h3 {
@@ -17,12 +19,24 @@
   }
   .headline-captions {
     p {
+      margin-bottom: 5rem;
       line-height: 2.5rem;
       font-weight: 300;
       font-family: "Montserrat", sans-serif;
       text-align: center;
       font-size: 1.7rem;
       color: white;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .headline-contact {
+    .headline-captions {
+      p {
+        padding: 0.5rem 2.5rem 0 2.5rem;
+        font-size: 1.4rem;
+      }
     }
   }
 }

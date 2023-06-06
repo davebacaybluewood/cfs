@@ -1,4 +1,23 @@
 .plan__container {
-  padding: 2rem;
+  margin-top: -19rem;
+  padding: 20rem 0 5rem 0;
   background: linear-gradient(152.93deg, #0057b7 16.91%, #000000 185.66%);
+
+  button {
+    width: 250px !important;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .plan__container {
+    margin-top: -60rem;
+    padding-top: 55rem;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .plan__container {
+    margin-top: -60rem;
+    padding-top: 60rem;
+  }
 }

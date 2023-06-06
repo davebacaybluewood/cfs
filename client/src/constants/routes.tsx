@@ -1,3 +1,4 @@
+import NotFound from "layout/NotFound/NotFound";
 import AboutUs from "pages/AboutUs/AboutUs";
 import AgentSupport from "pages/AgentSupport/AgentSupport";
 import BlogPage from "pages/BlogPage/BlogPage";
@@ -76,12 +77,17 @@ const REACT_ROUTES: ReactRoutesType[] = [
     path: paths.contact_us,
   },
   {
-    element: <p>Not found</p>,
+    element: <NotFound />,
     path: paths.invalid,
+    showHeadline: false,
+    showFooter: false,
   },
   {
-    element: <p>Not found</p>,
+    element: <NotFound />,
     path: "*",
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
   },
 ];
 

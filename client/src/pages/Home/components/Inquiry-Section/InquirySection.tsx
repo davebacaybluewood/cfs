@@ -44,7 +44,7 @@ const InquirySection: React.FC = () => {
         align="right"
         color="navy"
         buttonConfigs={{
-          text: "Learn More 1",
+          text: "Learn More",
           onClick: () => learnMoreHandler("family-protection"),
         }}
       />
@@ -59,14 +59,14 @@ const InquirySection: React.FC = () => {
             CFS helps individuals and families build a <br />
             comfortable future by advocating Financial <br /> Awareness and
             providing Risk Management
-            <br /> Solutions.z
+            <br /> Solutions.
           </React.Fragment>
         }
         image="/assets/images/home/rectangle-image2.png"
         align="left"
         color="blue"
         buttonConfigs={{
-          text: "Learn More 2",
+          text: "Learn More",
           onClick: () => learnMoreHandler("business-protection"),
         }}
       />
@@ -88,7 +88,7 @@ const InquirySection: React.FC = () => {
         align="right"
         color="red"
         buttonConfigs={{
-          text: "Learn More 3",
+          text: "Learn More",
           onClick: () => learnMoreHandler("agent-support"),
         }}
       />

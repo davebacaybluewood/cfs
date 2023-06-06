@@ -1,17 +1,23 @@
 import Subscription from "pages/Home/components/Subscription/Subscription";
 import React from "react";
-import Headline from "./components/HeadlineBlogs/Headline";
-import FAQBusiness from "library/FAQsRedirect/FAQBusiness";
 import ContactUs from "./components/ContactUs/ContactUs";
+import FAQs from "library/FAQs/FAQs";
+import HeadlineContact from "./components/HeadlineContact/HeadlineContact";
+import { faqs } from "pages/FamilyProtection/components/FamilyProtection";
+import "./ContactPage.scss";
 
 const ContactPage: React.FC = () => {
   return (
-    <React.Fragment>
-      <Headline />
+    <div className="contact-page-wrapper">
+      <HeadlineContact />
       <ContactUs />
-      <FAQBusiness />
+      <FAQs
+        faqs={faqs}
+        title="Frequently Asked Questions (FAQ)"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      />
       <Subscription />
-    </React.Fragment>
+    </div>
   );
 };
 
