@@ -22,6 +22,12 @@
   img {
     width: 100%;
   }
+
+  .cfs-btn-default {
+    button {
+      width: 30%;
+    }
+  }
 }
 
 .color-navy {
@@ -58,6 +64,16 @@
     img {
       width: 70%;
       display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .inquiry-card-container {
+    .cfs-btn-default {
+      button {
+        width: 50% !important;
+      }
     }
   }
 }

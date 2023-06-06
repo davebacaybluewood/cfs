@@ -1,6 +1,13 @@
 .process {
   margin-top: 4rem;
   background: #caeaff;
+
+  .card-business {
+    .dark-card {
+      background: #1363df;
+    }
+  }
+
   .section__title {
     h3 {
       font-family: "Montserrat", sans-serif;
@@ -9,10 +16,6 @@
       text-align: center;
       margin-bottom: 2rem;
     }
-  }
-
-  .dark-card {
-    background: #1363df !important;
   }
 
   .light-card {
@@ -41,7 +44,9 @@
     }
   }
 
-  button {
-    background: linear-gradient(96.03deg, #1363df 0%, #47b5ff 100%) !important;
+  .card-business {
+    button {
+      background: linear-gradient(96.03deg, #1363df 0%, #47b5ff 100%);
+    }
   }
 }

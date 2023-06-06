@@ -6,10 +6,12 @@
   background-color: #fff;
   box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
 
-  button {
-    color: white;
-    padding: 1.7rem 3rem;
-    font-size: 1.7rem;
+  .questionForm-btn {
+    button {
+      color: white;
+      padding: 1.7rem 3rem;
+      font-size: 1.7rem;
+    }
   }
 
   .question-img {
@@ -45,7 +47,7 @@
         background: #f9f9f9;
         border: 1.33333px solid #e6e6e6;
         border-radius: 6.66667px;
-        width: 100%;
+        width: 600px;
         font-size: 1.6rem;
         padding: 2rem;
         outline: 0;
@@ -54,6 +56,28 @@
           opacity: 0.5;
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .question-form-container {
+    .question-form {
+      width: 100% !important;
+
+      .form-input {
+        padding: 0 4rem 0 0;
+        input {
+          width: 100% !important;
+        }
+      }
+    }
+  }
+
+  .questionForm-btn {
+    button {
+      width: 50%;
+      padding: 1.7rem 0 !important;
     }
   }
 }
@@ -72,50 +96,30 @@
 }
 
 @media screen and (max-width: 425px) {
-  form {
-    .question-form-container {
-      margin-top: -3rem;
-      width: 100%;
-      display: block;
-
-      .section-title {
-        color: #252b42;
-        font-size: 2.3rem;
-        font-weight: 700;
-      }
-
+  .question-form-container {
+    display: block;
+    padding-bottom: 1.54rem;
+    img {
+      display: none;
+    }
+    .question-form {
       .form {
-        padding: 1rem;
+        padding: 1rem 0 0 4rem !important;
+        width: 80% !important;
 
-        h6 {
-          text-align: center;
+        input {
+          font-size: 1rem !important;
+          width: 100%;
         }
+      }
 
-        .form-input {
-          input {
-            width: 200px;
-            padding: 1rem;
-            &::placeholder {
-              opacity: 0.7;
-            }
-          }
-        }
-
+      .questionForm-btn {
         button {
-          margin-top: -1.7rem;
-          font-size: 1.4rem;
-          padding: 1rem 1rem;
-          text-align: center;
+          margin-top: -2rem !important;
+          margin-bottom: 2rem !important;
+          width: 60% !important;
+          font-size: 1rem;
         }
-      }
-
-      img {
-        display: none;
-      }
-
-      .question-form {
-        padding: 3rem 0;
-        width: 100%;
       }
     }
   }

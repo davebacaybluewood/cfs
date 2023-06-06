@@ -1,0 +1,117 @@
+.family-protection__page {
+  .headline {
+    .cfs-btn-default button {
+      border: 1px solid black !important;
+      color: black;
+      font-weight: 700;
+    }
+    .headline-container {
+      background-position: left center;
+    }
+  }
+
+  .standard-card-container {
+    height: 25vh;
+
+    .cfs-btn {
+      button {
+        display: none;
+      }
+    }
+  }
+
+  .feature-main-container {
+    margin-top: -17rem;
+  }
+
+  .carousel-navigator-container {
+    .carousel-navigator {
+      text-align: center;
+
+      h2,
+      p {
+        color: #333;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+      }
+
+      p {
+        font-size: 1.4rem;
+        font-weight: 300;
+        margin-bottom: 4rem;
+      }
+
+      button {
+        display: inline-block;
+        width: 56px;
+        height: 56px;
+        background: #0fb583;
+        border-radius: 8px;
+        border: none;
+        margin: 0 0.5rem 1.7rem 0.5rem;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.5;
+        }
+
+        svg {
+          color: #fff;
+        }
+      }
+    }
+    .process {
+      .dark-card {
+        background: #00004d !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .carousel-navigator-container {
+    margin-top: -17rem;
+    padding: 0 !important;
+    margin-bottom: -3rem;
+  }
+}
+@media screen and (max-width: 425px) {
+  .family-protection__page {
+    .standard-card-container {
+      height: 20vh !important;
+
+      button {
+        height: 40px !important;
+      }
+    }
+
+    .carousel-navigator-container {
+      .standard-card-container {
+        background: transparent;
+        box-shadow: none;
+        border: none;
+      }
+      .carousel-navigator {
+        h2 {
+          margin-bottom: 2rem;
+        }
+
+        h2,
+        p {
+          text-align: center;
+          color: white !important;
+          width: 100%;
+        }
+      }
+    }
+
+    .carousel-navigator-btn {
+      button {
+        margin-top: -3rem !important;
+        width: 20% !important;
+      }
+    }
+  }
+}

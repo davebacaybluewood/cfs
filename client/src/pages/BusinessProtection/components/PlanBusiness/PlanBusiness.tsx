@@ -6,8 +6,8 @@ const PlanBusiness: React.FC = () => {
   return (
     <div className="plan__container">
       <Offer
-        title="Insert heading or engaging hook about the solution"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        title="Protect Your Business Today"
+        description="Your business is the result of your passion and hard work. Don't leave its future to chance. Choose Comfort Financial Solutions for comprehensive coverage, tailored solutions, and personalized service. Safeguard your business with confidence, navigate challenges, and seize opportunities in today's competitive landscape."
         list={[
           "Track and control spending",
           "Simple to use mobile app for drivers",
@@ -15,7 +15,7 @@ const PlanBusiness: React.FC = () => {
         ]}
         image="/assets/images/home/rectangle-image1.png"
         button={{
-          text: "Learn More",
+          text: "Get Insured Now",
         }}
       />
     </div>

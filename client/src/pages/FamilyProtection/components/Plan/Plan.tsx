@@ -6,13 +6,15 @@ const Plan: React.FC = () => {
   return (
     <div className="plan">
       <Offer
-        title="Insert heading or engaging hook about the solution"
+        title="Protect Your Family's Future with Confidence"
         description={
           <React.Fragment>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br /> sed
-            do eiusmod tempor incididunt ut labore et dolore <br /> magna
-            aliqua. Ut enim ad minim veniam, quis nostrud <br /> exercitation
-            ullamco laboris nisi ut aliquip ex ea <br /> commodo consequat.
+            Our family is everything. The love, laughter, and shared moments
+            create a lifetime of cherished memories. But have you ever stopped
+            to consider what would happen to them if something unexpected were
+            to occur? At CFS, we specialize in family life insurance, providing
+            you with the ultimate peace of mind and ensuring your loved ones'
+            financial security, no matter what life may bring.
           </React.Fragment>
         }
         list={[

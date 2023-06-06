@@ -1,0 +1,54 @@
+.blog-props-container {
+  margin-bottom: 3rem;
+  .blog-title {
+    h3 {
+      color: black;
+      font-weight: 700;
+      font-family: "Montserrat", sans-serif;
+      font-size: 3rem;
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .blog-captions {
+    p {
+      text-align: justify;
+      color: #626262;
+      font-size: 1.7rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .blog__btn {
+      button {
+        border: 1px solid black;
+        color: black;
+      }
+    }
+  }
+
+  .blog-image {
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .blog-props-container {
+    text-align: center;
+    .blog-title {
+      h3 {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}

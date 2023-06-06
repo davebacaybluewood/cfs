@@ -2,23 +2,29 @@
   height: 100vh;
   position: relative;
   width: 100%;
+  background-position: left center;
   background-repeat: no-repeat;
   display: flex;
   align-items: center;
   .headline__content {
     .headline__title {
       h2 {
+        margin-bottom: 2rem;
+        width: 800px;
         color: #092854;
         line-height: 6rem;
-        font-size: 6rem;
+        font-size: 5rem;
         font-weight: 800;
         font-family: "Agrandir";
       }
     }
     .headline__description {
       p {
+        margin: 2rem 0;
+        font-family: "Montserrat", sans-serif;
         font-size: 2rem;
         font-weight: 300;
+        width: 570px;
       }
     }
     .headline__btn {
@@ -27,97 +33,125 @@
 
         button {
           margin-right: 1rem;
-          border: 1px solid gray;
-          color: black;
         }
       }
       .danger__btn {
-        color: white !important;
+        color: white;
       }
     }
   }
 
   /* Meadia screens*/
 
-  @media screen and (max-width: 768px) {
-    .headline__content {
-      .headline__title {
-        h2 {
-          padding: 2rem 0;
-        }
-      }
-      .headline__description {
-        p {
-          margin-bottom: 2rem;
-        }
+  @media screen and (max-width: 1024px) {
+    .headline__btn {
+      .cfs-btn {
+        margin-left: 1rem;
       }
     }
-    .headline__image {
-    }
-  }
 
-  @media screen and (max-width: 425px) {
-    .headline {
-      img {
-        display: none;
-      }
-      position: relative;
-      top: 2rem;
-      background: #fff;
+    @media screen and (max-width: 768px) {
       .headline__content {
         .headline__title {
           h2 {
-            margin: 2rem 0;
-            font-size: 4rem;
-            line-height: 4rem;
+            font-size: 3rem;
+            padding: 2rem 0;
+            width: 100%;
             text-align: center;
           }
         }
         .headline__description {
           p {
             margin-bottom: 2rem;
-            font-weight: 500;
+            text-align: center;
+            width: 100%;
+            font-size: 1.4rem;
           }
         }
+        .headline__btn {
+          width: 39%;
+          margin: auto;
+        }
       }
+    }
+
+    @media screen and (max-width: 425px) {
+      .headline__content {
+        .headline__title {
+          h2 {
+            font-size: 3rem;
+            line-height: 4rem;
+            padding: 2rem 0rem;
+            width: 100%;
+            text-align: center;
+          }
+        }
+        .headline__description {
+          p {
+            margin-bottom: 2rem;
+            text-align: center;
+            width: 100%;
+            font-size: 1.4rem;
+          }
+        }
+        .headline__btn {
+          width: 77%;
+          margin: auto;
+          padding: 1rem !important;
+        }
+      }
+    }
+
+    @media screen and (max-width: 414px) {
+      .headline__content {
+        .headline__title {
+          h2 {
+            text-align: center;
+            font-size: 4rem;
+            line-height: 5rem;
+            margin: 2rem 0;
+          }
+        }
+        .headline__description {
+          p {
+            margin-bottom: 2rem;
+          }
+        }
+
+        p {
+        }
+      }
+
       .headline__image {
         img {
           width: 100%;
         }
       }
     }
-  }
 
-  @media screen and (max-width: 414px) {
-    .headline__content {
+    @media screen and (max-width: 390px) {
       .headline__title {
         h2 {
-          text-align: center;
-          font-size: 4rem;
-          line-height: 5rem;
-          margin: 2rem 0;
+          width: 100% !important;
+          font-size: 3.2rem !important
+          ;
         }
       }
       .headline__description {
         p {
-          margin-bottom: 2rem;
+          width: 100% !important;
+          text-align: center;
         }
       }
-
-      p {
+      .headline__btn {
+        width: 82% !important;
+        margin: auto;
       }
     }
-
-    .headline__image {
-      img {
-        width: 100%;
+    @media screen and (max-width: 320px) {
+      .headline__btn {
+        display: inline-flex;
       }
-    }
-  }
-
-  @media screen and (max-width: 320px) {
-    .headline__btn {
-      display: inline-flex;
     }
   }
 }

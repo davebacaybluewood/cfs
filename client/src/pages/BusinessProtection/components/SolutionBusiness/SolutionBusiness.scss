@@ -1,7 +1,12 @@
 .solution__container {
   background: linear-gradient(#0057b7 100% #000000 100%) !important;
+
+  p {
+    font-size: 1.7rem !important;
+  }
   .section__title {
     h2 {
+      font-size: 4rem;
       color: #00004d;
       text-align: center;
       font-family: "Montserrat", sans-serif;
@@ -12,6 +17,7 @@
 
   .card-title {
     h3 {
+      font-size: 3rem;
       color: #0057b7;
     }
   }

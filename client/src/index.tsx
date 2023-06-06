@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./styles/main.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "pages/Home/Home";
-import BusinessProtection from "pages/BusinessProtection/BusinessProtection";
-import FamilyProtection from "pages/FamilyProtection/FamilyProtection";
-import ROUTES from "constants/routes";
+import { REACT_ROUTES } from "constants/routes";
+import Wrapper from "layout/Wrapper/Wrapper";
+import "./styles/main.scss";
+import "./styles/colors.scss";
+import "react-multi-carousel/lib/styles.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,13 +15,22 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path={ROUTES.INDEX} element={<Home key="index-page" />} />
-        <Route path={ROUTES.HOME} element={<Home key="home-page" />} />
-        <Route path={ROUTES.FAMILY_PROTECTION} element={<FamilyProtection />} />
-        <Route
-          path={ROUTES.BUSINESS_PROTECTION}
-          element={<BusinessProtection />}
-        />
+        {REACT_ROUTES.map((route) => (
+          <Route
+            {...route}
+            path={route.path}
+            element={
+              <Wrapper
+                showHeadline={route.showHeadline}
+                showNavbar={route.showNavbar}
+                showFooter={route.showFooter}
+                theme={route.theme}
+              >
+                {route.element}
+              </Wrapper>
+            }
+          />
+        ))}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

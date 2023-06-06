@@ -1,0 +1,100 @@
+.form-main-container {
+  background: #fff;
+  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+  padding: 7rem;
+  border-radius: 1rem;
+
+  .form-label {
+    color: rgb(36, 135, 228);
+    margin-bottom: 2rem !important;
+  }
+
+  .submission-text {
+    margin: 2rem 0;
+    font-size: 1.7rem;
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+    color: #5a7184;
+  }
+
+  p {
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
+
+  label {
+    font-family: "Montserrat", sans-serif;
+    color: #5a7184;
+    font-size: 1.4rem;
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
+  .form-card-container {
+    input,
+    textarea {
+      font-weight: 500;
+      font-family: "Montserrat", sans-serif;
+      padding: 2rem;
+      border-radius: 1rem;
+      font-size: 1.7rem;
+
+      &::placeholder {
+        font-size: 1.4rem;
+      }
+    }
+
+    textarea {
+      padding: 0rem;
+      border-radius: 0rem;
+    }
+  }
+}
+.modal-box-container {
+  border: none !important;
+  border-radius: 2rem;
+  .modal-title {
+    h2 {
+      text-align: center;
+      color: #01070f;
+      font-size: 4rem;
+      margin-bottom: 1.7rem;
+    }
+  }
+  .modal-image {
+    img {
+      width: 100%;
+    }
+  }
+
+  .modal-text {
+    p {
+      font-weight: 300;
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  button {
+    border: none;
+    border-bottom: 1px dotted #333;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    display: block;
+    margin: auto;
+    margin-top: 2rem;
+  }
+}
+@media screen and (max-width: 520px) {
+  .form-main-container {
+    padding: 2rem;
+    margin-bottom: 12rem;
+
+    .submission-text {
+      font-size: 1.3rem !important;
+      text-align: center;
+    }
+  }
+}

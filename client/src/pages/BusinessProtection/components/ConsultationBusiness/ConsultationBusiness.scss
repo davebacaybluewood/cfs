@@ -8,13 +8,12 @@
     }
   }
 
-  .text__content {
-    p {
+  .consultation__container {
+    .text__content {
       text-align: justify;
-      width: 85%;
       font-size: 1.4rem;
       font-family: "Montserrat", sans-serif;
-      font-weight: 400;
+      font-weight: 500;
       line-height: 2rem;
       margin-bottom: 2rem;
     }

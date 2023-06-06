@@ -1,46 +1,25 @@
 import React from "react";
-import SectionOne from "./components/Section1/SectionOne";
-import SectionThree from "./components/Section3/SectionThree";
-import SectionFour from "./components/Section4/SectionFour";
-import SectionSeven from "./components/Section7/SectionSeven";
-import Subscription from "./components/Section6/Subscription";
-import Overview from "./components/Section2/Overview";
 import QuestionForm from "./components/QuestionForm/QuestionForm";
 import MapSection from "./components/MapSection/MapSection";
-import Navbar from "layout/Navbar/Navbar";
-import Footer from "layout/Footer/Footer";
+import Overview from "./components/Overview-Family/Overview";
+import InquirySection from "./components/Inquiry-Section/InquirySection";
+import Subscription from "./components/Subscription/Subscription";
+import HeadlineFamily from "./components/HeadlineFamily/HeadlineFamily";
+import HelpSection from "./components/HelpSection/HelpSection";
 
 const Home: React.FC = () => {
   return (
     <React.Fragment>
-      <Navbar />
-      <div>
-        <div className="section-one">
-          <SectionOne />
-        </div>
-        <div className="section-two">
-          <Overview />
-        </div>
-        <div className="section-three">
-          <SectionThree />
-        </div>
-        <div className="section-four">
-          <SectionFour />
-        </div>
-        <div className="section-six">
-          <Subscription />
-        </div>
-        <div className="map-section">
-          <div className="half-bg" />
-          <MapSection />
-          <QuestionForm />
-        </div>
-        <div className="section-seven">
-          <SectionSeven />
-        </div>
-        <div className="section-seven"></div>
-        <Footer />
+      <HeadlineFamily />
+      <Overview />
+      <HelpSection />
+      <InquirySection />
+      <div className="map-section">
+        <div className="half-bg" />
+        <MapSection />
+        <QuestionForm />
       </div>
+      <Subscription />
     </React.Fragment>
   );
 };

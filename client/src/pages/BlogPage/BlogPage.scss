@@ -1,0 +1,74 @@
+.blog-page {
+  .headline-blogs {
+    background: url(../../../public/assets/images/headline-images/blog-contact-headline);
+    color: white;
+    margin-bottom: 5rem;
+    h2 {
+      color: white !important;
+      margin-bottom: 2rem;
+    }
+    p {
+      margin-bottom: 3rem;
+    }
+
+    form {
+      input {
+        font-weight: 300;
+        width: 400px;
+        padding: 2rem;
+        border: 1px solid transparent;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        outline: none;
+
+        &::placeholder {
+          font-family: "Roboto", sans-serif;
+          opacity: 0.7;
+        }
+      }
+      button {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        padding: 2rem;
+        background: #ed3e4b;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        font-size: 1.4rem;
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+          background: #00004d;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  input {
+    border-radius: 20px;
+    margin: auto;
+    display: block;
+    width: 50% !important;
+  }
+
+  button {
+    margin-top: 1rem !important;
+    padding: 0.5rem !important;
+    border-radius: 20px !important;
+    width: 20%;
+    margin: auto;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  input {
+    width: 100% !important;
+  }
+  button {
+    width: 60% !important;
+  }
+}

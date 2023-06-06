@@ -1,0 +1,47 @@
+@mixin center-vertical {
+  display: flex;
+  align-items: center;
+}
+.coin-container {
+  @include center-vertical;
+  margin-bottom: 4rem;
+
+  .coin-captions {
+    margin-left: 2rem;
+    h4 {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.9rem;
+      margin-bottom: 1.7rem;
+    }
+
+    .coin-description {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.4rem;
+      text-align: left;
+    }
+  }
+
+  .coin-icon {
+    @include center-vertical;
+    font-size: 4rem;
+    path {
+      color: #ed3e4b;
+    }
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .coin-container {
+    .coin-captions {
+      margin-left: 0;
+
+      h4 {
+        text-align: center;
+      }
+
+      .coin-description {
+        text-align: center;
+      }
+    }
+  }
+}

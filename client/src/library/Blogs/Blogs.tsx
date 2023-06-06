@@ -21,7 +21,9 @@ const Blogs: React.FC<BlogsProps> = (props) => {
                   author={blog.author}
                   blogId={blog.blogId}
                   date={blog.date}
-                  description={blog.description}
+                  description={blog.description
+                    .replace(/<[^>]*>/g, "")
+                    .replace("&quot;", " ")}
                   image={blog.image}
                   title={blog.title}
                   key={blog.blogId}

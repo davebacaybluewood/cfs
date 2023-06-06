@@ -1,6 +1,6 @@
 import React from "react";
-import "./Headline.scss";
 import { Container, Grid } from "@mui/material";
+import "./Headline.scss";
 
 interface HeadlineProps {
   title: string | JSX.Element;

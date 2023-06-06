@@ -11,7 +11,7 @@
     box-shadow: none;
     border: none;
     margin-bottom: 1.7rem;
-    border: 1px solid white;
+    border: 1px solid rgb(124, 120, 120);
     cursor: pointer;
 
     &:hover {
@@ -39,14 +39,42 @@
 .cfs-btn-default {
   button {
     color: white;
-    background-color: transparent;
     border: none;
     margin-bottom: 1.7rem;
-    border: 1px solid #fff;
+    border: 1px solid white;
 
     &:hover {
+      color: white;
       cursor: pointer;
       opacity: 0.8;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .cfs-btn-danger {
+    button {
+      width: 100%;
+    }
+  }
+
+  .cfs-btn-default {
+    button {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .cfs-btn-default {
+    button {
+      width: 100% !important;
+    }
+  }
+
+  .cfs-btn-danger {
+    button {
+      width: 100% !important;
     }
   }
 }

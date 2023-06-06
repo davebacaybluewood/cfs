@@ -17,7 +17,7 @@
       line-height: 2.4rem;
       font-weight: 300;
       color: white;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
     }
   }
   .offer__list {
@@ -25,6 +25,7 @@
       top: 3px;
       position: relative;
       margin-right: 1rem;
+      color: #f7f7f7;
     }
     ul {
       align-items: center;
@@ -46,7 +47,7 @@
       font-size: 2rem;
       border: 1px solid white;
       width: 200px;
-      padding: 2rem 2rem;
+      padding: 1rem 1rem;
 
       &:hover {
         border: solid 1px gray;
@@ -108,5 +109,30 @@
 @media screen and (max-width: 390px) {
   .offer__content {
     padding: 1rem;
+
+    .section__title h2 {
+      text-align: center;
+    }
+    .section__description {
+      p {
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .offer__content {
+    padding-top: 5rem;
+    .section__title h2 {
+      font-size: 2.5rem;
+      line-height: 2.9rem;
+    }
+    .section__description {
+      p {
+        font-size: 1.4em;
+        margin-bottom: 2rem;
+      }
+    }
   }
 }
