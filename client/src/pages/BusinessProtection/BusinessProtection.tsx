@@ -12,9 +12,9 @@ import { Container, Grid } from "@mui/material";
 import StandardCard from "library/StandardCard/StandardCard";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import ReactMultiCarousel from "react-multi-carousel";
-import SolutionBusiness from "./components/SolutionBusiness/SolutionBusiness";
 import featureDataBusiness from "./featureDataBusiness";
 import "./BusinessProtection.scss";
+import SolutionBusiness from "./components/SolutionBusiness/solutionBusiness";
 
 const BusinessProtection: React.FC = () => {
   const carouselRef = useRef<any>();
