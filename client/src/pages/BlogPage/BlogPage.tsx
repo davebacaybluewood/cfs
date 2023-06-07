@@ -6,8 +6,10 @@ import { blogsDummy } from "constants/dummyDatas";
 import Subscription from "pages/Home/components/Subscription/Subscription";
 import { isEven } from "helpers/isEvenOrOdd";
 import "./BlogPage.scss";
+import useScroll from "hooks/useScroll";
 
 const BlogPage: React.FC = () => {
+  useScroll();
   return (
     <div className="blog-page">
       <div className="headline-blogs">

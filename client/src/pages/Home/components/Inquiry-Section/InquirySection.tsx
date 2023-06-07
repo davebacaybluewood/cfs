@@ -29,7 +29,7 @@ const InquirySection: React.FC = () => {
       <InquiryCard
         header={
           <React.Fragment>
-            Financial Comfort <br /> Now and Tomorrow
+            Safeguarding Your <br /> Family's Future
           </React.Fragment>
         }
         description={
@@ -51,7 +51,7 @@ const InquirySection: React.FC = () => {
       <InquiryCard
         header={
           <React.Fragment>
-            Financial Comfort <br /> Now and Tomorrow
+            Ensuring Your Business' <br /> Stability and Resilience
           </React.Fragment>
         }
         description={
@@ -73,7 +73,7 @@ const InquirySection: React.FC = () => {
       <InquiryCard
         header={
           <React.Fragment>
-            Financial Comfort <br /> Now and Tomorrow
+            Where Agents Thrive <br /> and Dreams Take Flight
           </React.Fragment>
         }
         description={

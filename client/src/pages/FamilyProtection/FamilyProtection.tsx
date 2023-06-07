@@ -16,6 +16,7 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import ReactMultiCarousel from "react-multi-carousel";
 import featureDataFamily from "./featureDataFamily";
 import "./FamilyProtection.scss";
+import useScroll from "hooks/useScroll";
 
 const testimonials = [
   {
@@ -58,6 +59,7 @@ const testimonials = [
 
 const FamilyProtection: React.FC = () => {
   const carouselRef = useRef<any>();
+  useScroll();
   return (
     <div className="family-protection__page">
       <div className="main-page__content">

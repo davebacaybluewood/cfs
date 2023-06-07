@@ -6,7 +6,7 @@ import UserDetails from "library/UserDetail/UserDetails";
 
 const BlogCard: React.FC<BlogType> = (props) => {
   return (
-    <div className="blog-card">
+    <div className="blog-card" onClick={props.onClick}>
       <div className="blog-image">
         <img src={props.image} alt="Author image" />
         <div className="blog-date">
