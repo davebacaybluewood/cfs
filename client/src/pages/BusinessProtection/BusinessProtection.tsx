@@ -15,9 +15,11 @@ import ReactMultiCarousel from "react-multi-carousel";
 import featureDataBusiness from "./featureDataBusiness";
 import "./BusinessProtection.scss";
 import SolutionBusiness from "./components/SolutionBusiness/solutionBusiness";
+import useScroll from "hooks/useScroll";
 
 const BusinessProtection: React.FC = () => {
   const carouselRef = useRef<any>();
+  useScroll();
   return (
     <div className="business__protection">
       <Headline

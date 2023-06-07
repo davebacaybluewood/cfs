@@ -8,6 +8,7 @@ import "./Navbar.scss";
 import { paths } from "constants/routes";
 import { MAIN_IMAGES } from "constants/constants";
 import classNames from "classnames";
+import useScroll from "hooks/useScroll";
 
 interface NavbarProps {
   theme?: "SKY" | "RED" | "NAVY";
@@ -15,7 +16,6 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = (props) => {
   const isMobileMode = useResponsive("mobile");
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
-
   const navbarClassnames = classNames("navbar", {
     "color-navy": props.theme === "NAVY",
     "color-red": props.theme === "RED",

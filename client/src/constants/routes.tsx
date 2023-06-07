@@ -7,6 +7,7 @@ import BusinessProtection from "pages/BusinessProtection/BusinessProtection";
 import ContactPage from "pages/ContactPage/ContactPage";
 import FamilyProtection from "pages/FamilyProtection/FamilyProtection";
 import Home from "pages/Home/Home";
+import SingleBlogPage from "pages/SingleBlogPage/SingleBlogPage";
 import Solutions from "pages/Solutions/Solutions";
 import { RouteProps } from "react-router-dom";
 
@@ -27,7 +28,7 @@ const paths = {
   about_us: "/about-us",
   solutions: "/solutions",
   resources: "/blogs-resources",
-  singleResource: "/blogs-resources/:blogId",
+  single_blog: "/blogs-resources/:blogId",
   invalid: "/invalid",
 };
 
@@ -61,10 +62,6 @@ const REACT_ROUTES: ReactRoutesType[] = [
     path: paths.resources,
   },
   {
-    element: <BlogSingle />,
-    path: paths.singleResource,
-  },
-  {
     element: <AboutUs />,
     path: paths.about_us,
   },
@@ -77,15 +74,22 @@ const REACT_ROUTES: ReactRoutesType[] = [
     path: paths.contact_us,
   },
   {
-    element: <NotFound />,
-    path: paths.invalid,
+    element: <SingleBlogPage />,
+    path: paths.single_blog,
+    showNavbar: true,
     showHeadline: false,
-    showFooter: false,
+    showFooter: true,
   },
   {
     element: <NotFound />,
     path: "*",
     showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    element: <NotFound />,
+    path: paths.invalid,
     showHeadline: false,
     showFooter: false,
   },

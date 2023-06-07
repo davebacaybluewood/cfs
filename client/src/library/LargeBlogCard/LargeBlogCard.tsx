@@ -4,8 +4,6 @@ import Button from "../Button/Button";
 import "./LargeBlogCard.scss";
 import UserDetails from "library/UserDetail/UserDetails";
 import { AuthorType } from "library/Blogs/BlogModels";
-import { getDateDays, getDateToFullDate } from "helpers/date";
-import { getDateMonthShort } from "helpers/date";
 import moment from "moment";
 
 interface BlogProps {

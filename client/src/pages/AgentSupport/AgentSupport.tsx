@@ -13,6 +13,7 @@ import { RiShieldUserLine } from "react-icons/ri";
 import Timelines from "library/Timeline/Timelines";
 import Benefits from "./Benefits";
 import StandardCard from "library/StandardCard/StandardCard";
+import useScroll from "hooks/useScroll";
 
 const timelineData = [
   {
@@ -33,6 +34,7 @@ const timelineData = [
 ];
 
 const AgentSupport: React.FC = () => {
+  useScroll();
   return (
     <div className="agent-support-wrapper">
       <Headline

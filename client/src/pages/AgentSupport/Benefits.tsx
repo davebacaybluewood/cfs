@@ -69,7 +69,7 @@ const Benefits: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={12} lg={6}>
           <div className="content-image">
-            <img src="\assets\images\home\Rectangle 77.png" alt="" />
+            <img src="/assets/images/Rectangle 77.png" alt="" />
           </div>
         </Grid>
       </Grid>
