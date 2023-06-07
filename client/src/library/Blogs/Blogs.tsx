@@ -2,9 +2,9 @@ import React from "react";
 import { BlogType } from "./BlogModels";
 import BlogCard from "./BlogCard/BlogCard";
 import { Container, Grid } from "@mui/material";
-import "./Blogs.scss";
-import { useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
+import { useNavigate } from "react-router-dom";
+import "./Blogs.scss";
 
 interface BlogsProps {
   title: string;

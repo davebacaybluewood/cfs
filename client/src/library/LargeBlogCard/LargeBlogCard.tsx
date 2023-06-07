@@ -5,6 +5,8 @@ import "./LargeBlogCard.scss";
 import UserDetails from "library/UserDetail/UserDetails";
 import { AuthorType } from "library/Blogs/BlogModels";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
 
 interface BlogProps {
   align: "left" | "right";
@@ -19,6 +21,7 @@ interface BlogProps {
   blogImage: string;
 }
 const BlogProps: React.FC<BlogProps> = (props) => {
+  const navigate = useNavigate();
   return (
     <div className="blog-props-container">
       <Container>
@@ -44,7 +47,9 @@ const BlogProps: React.FC<BlogProps> = (props) => {
                 {props.content.replace(/<[^>]*>/g, "").replace("&quot;", " ")}
               </Typography>
               <div className="blog__btn">
-                <Button variant="default">{props.button.text}</Button>
+                <Button variant="default" onClick={props.button.onClick}>
+                  {props.button.text}
+                </Button>
               </div>
             </div>
           </Grid>

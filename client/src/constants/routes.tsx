@@ -2,7 +2,6 @@ import NotFound from "layout/NotFound/NotFound";
 import AboutUs from "pages/AboutUs/AboutUs";
 import AgentSupport from "pages/AgentSupport/AgentSupport";
 import BlogPage from "pages/BlogPage/BlogPage";
-import BlogSingle from "pages/BlogPage/BlogSingle";
 import BusinessProtection from "pages/BusinessProtection/BusinessProtection";
 import ContactPage from "pages/ContactPage/ContactPage";
 import FamilyProtection from "pages/FamilyProtection/FamilyProtection";
