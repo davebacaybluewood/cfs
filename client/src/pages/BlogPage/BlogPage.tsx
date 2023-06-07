@@ -5,11 +5,15 @@ import Blogs from "library/Blogs/Blogs";
 import { blogsDummy } from "constants/dummyDatas";
 import Subscription from "pages/Home/components/Subscription/Subscription";
 import { isEven } from "helpers/isEvenOrOdd";
-import "./BlogPage.scss";
 import useScroll from "hooks/useScroll";
+import { useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
+import "./BlogPage.scss";
 
 const BlogPage: React.FC = () => {
   useScroll();
+  const navigate = useNavigate();
+
   return (
     <div className="blog-page">
       <div className="headline-blogs">
@@ -36,6 +40,8 @@ const BlogPage: React.FC = () => {
               content={data.description}
               button={{
                 text: "Read More",
+                onClick: () =>
+                  navigate(paths.single_blog.replace(":blogId", data.blogId)),
               }}
               author={data.author}
               blogImage={data.image}

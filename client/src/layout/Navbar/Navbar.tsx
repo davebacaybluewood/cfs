@@ -8,7 +8,6 @@ import "./Navbar.scss";
 import { paths } from "constants/routes";
 import { MAIN_IMAGES } from "constants/constants";
 import classNames from "classnames";
-import useScroll from "hooks/useScroll";
 
 interface NavbarProps {
   theme?: "SKY" | "RED" | "NAVY";
@@ -21,6 +20,19 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     "color-red": props.theme === "RED",
     "color-sky": props.theme === "SKY",
   });
+
+  const url = window.location.href;
+  const currentPage = url.split("/")[3];
+
+  const setActive = (path: string) => {
+    if (currentPage === path.substring(1)) {
+      return "nav-links nav-links-active";
+    } else if (path === paths.home && currentPage === "") {
+      return "nav-links nav-links-active";
+    }
+
+    return "nav-links";
+  };
 
   return (
     <div className={navbarClassnames}>
@@ -43,27 +55,32 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                   {
                     link: paths.home,
                     text: "Home",
-                    isActive: true,
+                    className: setActive(paths.home),
                   },
                   {
                     link: paths.about_us,
                     text: "About Us",
+                    className: setActive(paths.about_us),
                   },
                   {
                     link: paths.solutions,
                     text: "Solutions",
+                    className: setActive(paths.solutions),
                   },
                   {
                     link: "/",
                     text: "Events",
+                    className: setActive(paths.about_us),
                   },
                   {
                     link: paths.resources,
                     text: "Resources",
+                    className: setActive(paths.resources),
                   },
                   {
                     link: paths.contact_us,
                     text: "Contact Us",
+                    className: setActive(paths.contact_us),
                   },
                   {
                     link: "/",

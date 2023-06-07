@@ -19,6 +19,10 @@
 
     .navbar__links {
       z-index: 999;
+
+      .nav-links-active {
+        font-weight: 700;
+      }
       .navbar-btn {
         background: none;
         border: none;

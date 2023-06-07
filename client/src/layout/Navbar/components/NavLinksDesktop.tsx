@@ -31,7 +31,9 @@ const NavLinksDesktop: React.FC<NavLinksDesktopProps> = (props) => {
                 Agent Portal
               </Button>
             ) : (
-              <Link to={data.link}>{data.text}</Link>
+              <Link to={data.link} className={data.className}>
+                {data.text}
+              </Link>
             )}
           </li>
         );
