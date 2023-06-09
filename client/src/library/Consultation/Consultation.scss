@@ -41,7 +41,7 @@
   .consultation {
     .section__btn {
       button {
-        width: 40%;
+        width: 50% !important;
       }
     }
   }
@@ -73,7 +73,6 @@
 
     .section__btn {
       button {
-        width: 45% !important;
         display: block;
         margin: auto;
       }

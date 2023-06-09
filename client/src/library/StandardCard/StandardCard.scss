@@ -40,6 +40,10 @@
       font-weight: 600;
       border: solid 1px black;
       margin-bottom: 0;
+
+      &:hover {
+        opacity: 0.5;
+      }
     }
   }
 }

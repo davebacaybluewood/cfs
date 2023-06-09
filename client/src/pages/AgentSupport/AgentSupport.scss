@@ -86,19 +86,23 @@
   }
 }
 
-@media screen and (max-width: 425px) {
-  .easy-steps-container {
-    h2 {
-      text-align: center;
+@media screen and (max-width: 1179px) {
+  .agent-support-wrapper {
+    .agent-container {
+      .MuiGrid-root {
+        display: block;
+      }
 
-      br {
-        display: none;
+      img {
+        width: 100%;
+        display: block !important;
+        margin: auto !important;
       }
     }
   }
 }
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 500px) {
   .agent-support-wrapper {
     .cfs-application {
       margin-top: -4rem;
@@ -139,6 +143,18 @@
       }
       img {
         width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .easy-steps-container {
+    h2 {
+      text-align: center;
+
+      br {
+        display: none;
       }
     }
   }

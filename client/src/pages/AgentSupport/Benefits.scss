@@ -68,7 +68,19 @@
   }
 }
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 1023px) {
+  .main-container {
+    .content-container {
+      button {
+        width: 20% !important;
+        margin-top: 2rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
   .main-container {
     .content-container {
       .section-title {
