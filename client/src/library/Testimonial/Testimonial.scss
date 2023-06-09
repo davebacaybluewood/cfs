@@ -66,3 +66,17 @@
     }
   }
 }
+
+@media screen and (max-width: 425px) {
+  .testimonial-main-container {
+    .text-content-testimonial {
+      .testimonial__btn {
+        display: flex;
+        button {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}

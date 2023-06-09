@@ -12,8 +12,12 @@
     font-weight: 300;
   }
 
+  .MuiPaper-root {
+    margin-bottom: 2rem !important;
+  }
+
   .accordion__container {
-    margin-bottom: 0rem;
+    margin-bottom: 1rem;
     padding: 1.5rem 0;
 
     &:hover {
@@ -21,6 +25,9 @@
     }
     .faq__title {
       font-size: 1.5rem !important;
+      align-items: center;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 600;
     }
     h5 {
       font-weight: 300;

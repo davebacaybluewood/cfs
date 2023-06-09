@@ -9,7 +9,7 @@ const HeadlineFamily: React.FC = () => {
     <div className="headline-family">
       <div className="captions">
         <Typography variant="h2">
-          Financial Comfort <br /> Now and Tomorrow
+          Financial Comfort, <br /> Now and Tomorrow
         </Typography>
         <div className="headline-home__btn">
           <Button variant="danger">Free Consultation</Button>
