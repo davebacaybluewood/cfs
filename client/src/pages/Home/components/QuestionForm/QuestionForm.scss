@@ -101,15 +101,28 @@
 
 @media screen and (max-width: 425px) {
   .question-form-container {
+    width: 100%;
     display: block;
     padding-bottom: 1.54rem;
+
+    .questionForm-btn {
+      display: block;
+      margin: 2rem 5rem;
+
+      .cfs-btn-danger {
+        button {
+          padding: 1rem !important;
+          border-radius: 2rem !important;
+          font-size: 1.5rem !important;
+        }
+      }
+    }
     img {
       display: none;
     }
     .question-form {
       .form {
-        padding: 1rem 0 0 4rem !important;
-        width: 80% !important;
+        padding: 1rem 0 0 1.5rem !important;
 
         input {
           font-size: 1rem !important;
@@ -117,12 +130,9 @@
         }
       }
 
-      .questionForm-btn {
-        button {
-          margin-top: -2rem !important;
-          margin-bottom: 2rem !important;
-          width: 60% !important;
-          font-size: 1rem;
+      .form-input {
+        .MuiInputBase-root {
+          width: 330px;
         }
       }
     }
