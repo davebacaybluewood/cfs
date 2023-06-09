@@ -23,7 +23,7 @@ const ContactUs: React.FC = () => {
                   Email us for general queries, including <br /> insurance,
                   updates and opportunities.
                 </div>
-                <div className="contact-contact">admin@gocfs.pro</div>
+                <div className="contact-contact">support@gocfs.pro</div>
               </div>
             </Grid>
             <Grid item sm={12} md={4} lg={4}>

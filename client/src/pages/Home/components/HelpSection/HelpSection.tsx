@@ -21,7 +21,9 @@ const HelpSection: React.FC = () => {
                   alt="/assets/images/home/inquiry-image1.png"
                 />
                 <Typography variant="h4">Insurance</Typography>
-                <p>CFS helps individuals and families </p>
+                <p>
+                  CFS helps individuals <br /> and families{" "}
+                </p>
               </div>
             </Grid>
             <Grid item sm={12} md={4} lg={4}>
@@ -31,7 +33,9 @@ const HelpSection: React.FC = () => {
                   alt="/assets/images/home/inquiry-image2.png"
                 />
                 <Typography variant="h4">Risk Management</Typography>
-                <p>CFS helps individuals and families </p>
+                <p>
+                  CFS helps individuals <br /> and families{" "}
+                </p>
               </div>
             </Grid>
             <Grid item sm={12} md={4} lg={4}>
@@ -41,7 +45,9 @@ const HelpSection: React.FC = () => {
                   alt="assets/images/home/inquiry-image3.png"
                 />
                 <Typography variant="h4">Consultation</Typography>
-                <p>CFS helps individuals and families </p>
+                <p>
+                  CFS helps individuals <br /> and families{" "}
+                </p>
               </div>
             </Grid>
           </Grid>

@@ -70,7 +70,17 @@
   .main-container {
     .contact-title {
       h2 {
-        margin: 11rem 0;
+        margin: 13rem 0 4rem 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .main-container {
+    .content-title {
+      h2 {
+        margin-top: 12rem !important;
       }
     }
   }

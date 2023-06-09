@@ -1,11 +1,13 @@
-import { Box, Container, Grid, Modal, Typography } from "@mui/material";
+import { Box, Container, Grid, Modal } from "@mui/material";
 import { Formik } from "formik";
+import * as Yup from "yup";
 import Button from "library/Button/Button";
 import FormikTextInput from "library/Formik/FormikInput";
 import React, { useState } from "react";
-import * as Yup from "yup";
-import "./Form.scss";
 import Spinner from "library/Spinner/Spinner";
+import Select, { GroupBase, StylesConfig } from "react-select";
+import "./Form.scss";
+import { CFS_STATES } from "constants/constants";
 
 const style = {
   position: "absolute" as "absolute",
@@ -19,13 +21,57 @@ const style = {
   p: 4,
 };
 
+// React Select
+const reactSelectStyle:
+  | StylesConfig<
+      {
+        value: string;
+        label: string;
+      },
+      false,
+      GroupBase<{
+        value: string;
+        label: string;
+      }>
+    >
+  | undefined = {
+  control: (styles) => ({
+    ...styles,
+    backgroundColor: "white",
+    fontWeight: "400",
+    fontFamily: '"Montserrat", sans-serif',
+    padding: "1.3rem",
+    fontSize: "1.7rem",
+  }),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    return {
+      ...styles,
+      backgroundColor: isDisabled ? "red" : "#fff",
+      color: "black",
+      fontWeight: "600",
+      fontSize: "1.4rem",
+      fontFamily: '"Montserrat", sans-serif',
+
+      cursor: isDisabled ? "not-allowed" : "default",
+    };
+  },
+  placeholder: (styles) => ({
+    ...styles,
+    fontSize: "1.5rem",
+    color: "#5a7184",
+    fontWeight: "400",
+    opacity: "0.7",
+    fontFamily: '"Montserrat", sans-serif',
+  }),
+};
+
 const Form: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const initialValues = {
     fullName: "",
     emailAddress: "",
-    address: "",
+    state: "",
     phoneNumber: "",
     message: "",
   };
@@ -36,6 +82,7 @@ const Form: React.FC = () => {
       .email("Invalid Email Address")
       .required("Email address is required."),
     message: Yup.string().required("Please fill this in with your message."),
+    state: Yup.string().required("Please select your state."),
   });
 
   return (
@@ -95,13 +142,22 @@ const Form: React.FC = () => {
                     lg={6}
                     className="form-card-container"
                   >
-                    <label>Address (optional) </label>
-                    <FormikTextInput
-                      placeholder=" "
-                      variant="outlined"
-                      name="address"
-                      value={values.address}
-                    />
+                    <div className="react-select-form-control">
+                      <label>Select State *</label>
+                      <Select
+                        className="basic-single"
+                        classNamePrefix="select"
+                        name="state"
+                        styles={reactSelectStyle}
+                        defaultValue={CFS_STATES[0]}
+                        isDisabled={false}
+                        isLoading={false}
+                        isClearable={true}
+                        isSearchable={true}
+                        options={CFS_STATES}
+                        placeholder="Select a state"
+                      />
+                    </div>
                   </Grid>
                   <Grid
                     item

@@ -6,7 +6,7 @@ import Blogs from "library/Blogs/Blogs";
 import FAQs from "library/FAQs/FAQs";
 import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
-import { faqs } from "./components/FamilyProtection";
+import { faqs, filteredFaqs } from "./components/FamilyProtection";
 import Consultation from "library/Consultation/Consultation";
 import { blogsDummy } from "constants/dummyDatas";
 import Testimonial from "library/Testimonial/Testimonial";
@@ -170,7 +170,7 @@ const FamilyProtection: React.FC = () => {
           <Process />
         </div>
         <div className="faqs">
-          <FAQs title="Frequently Asked Questions (FAQ)" faqs={faqs} />
+          <FAQs title="Frequently Asked Questions (FAQ)" faqs={filteredFaqs} />
         </div>
 
         <Testimonial testimonials={testimonials} />

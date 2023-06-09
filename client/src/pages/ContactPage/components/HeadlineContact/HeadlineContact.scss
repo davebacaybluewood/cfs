@@ -40,3 +40,18 @@
     }
   }
 }
+
+@media screen and (max-width: 390px) {
+  .headline-contact {
+    .headline-title {
+      h3 {
+        font-size: 3rem;
+      }
+    }
+    .headline-captions {
+      p {
+        font-size: 1.7rem;
+      }
+    }
+  }
+}
