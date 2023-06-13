@@ -1,0 +1,60 @@
+$main-color: #021025;
+$main-color-gradient: linear-gradient(
+  90deg,
+  #0057b7 0%,
+  $main-color 30%,
+  $main-color
+) !important;
+
+/* Default Colors */
+$grey-50: #fafafc;
+$grey-100: #f6f6fa;
+$grey-200: #eaeaf2;
+$grey-250: #e1e1e6;
+$grey-300: #c4c4cd;
+$grey-400: #747480;
+$grey-450: #717171;
+$grey-500: #2e2e38;
+$grey-510: #2e2e3c;
+$grey-550: #23232f;
+$grey-600: #1a1a24;
+$grey-800: rgba(0, 0, 0, 0.05);
+
+.social-icons {
+  margin: 2rem 0;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+    transition: 0.5s;
+    cursor: pointer;
+
+    .top-nav-icon {
+      background: $main-color-gradient;
+      padding: 5px 7px;
+      border-radius: 3px;
+      text-align: center;
+      border: 1px solid rgba(238, 238, 238, 0.3);
+    }
+    svg {
+      position: relative;
+      top: 1px;
+      font-size: 3rem;
+      path {
+        color: #fff;
+      }
+    }
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}

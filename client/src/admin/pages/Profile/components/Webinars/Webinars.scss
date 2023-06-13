@@ -1,0 +1,64 @@
+$main-color: #021025;
+$main-color-gradient: linear-gradient(
+  90deg,
+  #0057b7 0%,
+  $main-color 30%,
+  $main-color
+) !important;
+
+/* Default Colors */
+$grey-50: #fafafc;
+$grey-100: #f6f6fa;
+$grey-200: #eaeaf2;
+$grey-250: #e1e1e6;
+$grey-300: #c4c4cd;
+$grey-400: #747480;
+$grey-450: #717171;
+$grey-500: #2e2e38;
+$grey-510: #2e2e3c;
+$grey-550: #23232f;
+$grey-600: #1a1a24;
+$grey-800: rgba(0, 0, 0, 0.05);
+
+.webinar-container {
+  margin-bottom: 1rem;
+  position: relative;
+
+  h2 {
+    font-weight: 300;
+    color: rgba(51, 48, 60, 0.8);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .item {
+    padding: 1rem 0;
+    position: relative;
+    cursor: pointer;
+    background-color: white;
+    box-shadow: 4px 4px 4px #eaeaf2;
+    height: auto;
+    padding: 40px 10px 40px 30px;
+    display: flex;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    flex-direction: column;
+    border-left: 3px solid #333;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.999),
+        rgba(255, 255, 255, 0.95)
+      ),
+      url("https://res.cloudinary.com/dfm2vczpy/image/upload/v1673031487/sample.jpg");
+
+    h2 {
+      font-size: 3rem;
+      margin-bottom: 0;
+    }
+    P {
+      font-size: 1.6rem;
+      font-weight: 300;
+    }
+  }
+}

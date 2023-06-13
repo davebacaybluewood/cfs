@@ -5,8 +5,6 @@ import "./LargeBlogCard.scss";
 import UserDetails from "library/UserDetail/UserDetails";
 import { AuthorType } from "library/Blogs/BlogModels";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import { paths } from "constants/routes";
 
 interface BlogProps {
   align: "left" | "right";
@@ -20,8 +18,7 @@ interface BlogProps {
   };
   blogImage: string;
 }
-const BlogProps: React.FC<BlogProps> = (props) => {
-  const navigate = useNavigate();
+const LargeBlogCard: React.FC<BlogProps> = (props) => {
   return (
     <div className="blog-props-container">
       <Container>
@@ -64,4 +61,4 @@ const BlogProps: React.FC<BlogProps> = (props) => {
   );
 };
 
-export default BlogProps;
+export default LargeBlogCard;

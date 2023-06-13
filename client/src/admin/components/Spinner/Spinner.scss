@@ -1,0 +1,26 @@
+.mid-spinner-container {
+  width: 100%;
+  text-align: center;
+  padding: 4rem 0;
+
+  svg {
+    color: #333;
+    circle {
+      color: #333;
+    }
+  }
+}
+
+
+.conditional-spinner {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  padding: 2rem 0;
+
+  svg {
+    circle {
+      color: #333 !important;
+    }
+  }
+}

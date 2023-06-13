@@ -1,0 +1,66 @@
+$main-color: #021025;
+$main-color-gradient: linear-gradient(
+  90deg,
+  #0057b7 0%,
+  $main-color 30%,
+  $main-color
+) !important;
+
+/* Default Colors */
+$grey-50: #fafafc;
+$grey-100: #f6f6fa;
+$grey-200: #eaeaf2;
+$grey-250: #e1e1e6;
+$grey-300: #c4c4cd;
+$grey-400: #747480;
+$grey-450: #717171;
+$grey-500: #2e2e38;
+$grey-510: #2e2e3c;
+$grey-550: #23232f;
+$grey-600: #1a1a24;
+$grey-800: rgba(0, 0, 0, 0.05);
+
+.no-info-to-display {
+  padding-left: 1%;
+  background-color: $grey-100;
+  border: 1px solid $grey-250;
+
+  .no-info-to-display-content {
+    padding: 1rem;
+    .info-icon {
+      color: $grey-400;
+      position: relative;
+      top: 3px;
+    }
+
+    .no-info-to-display-text {
+      padding-left: 5px;
+      font-size: 12px;
+    }
+  }
+
+  &.secondary {
+    background-color: white;
+    box-shadow: 4px 4px 4px #eaeaf2;
+
+    .info-icon {
+      color: black;
+    }
+  }
+  &.primary {
+    background-color: $grey-100;
+    padding: 0;
+    .info-icon {
+      color: $grey-400;
+    }
+  }
+  &.has-icon {
+    height: auto;
+    padding: 40px 10px 40px 30px;
+    display: flex;
+
+    .paper-svg {
+      margin-right: 40px;
+    }
+  }
+}

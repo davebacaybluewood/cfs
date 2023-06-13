@@ -1,0 +1,76 @@
+.admin-cfs-wrapper {
+  .admin-top-nav {
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 3px 3px 3px #eee;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: center;
+
+    .top-nav-avatar {
+      cursor: pointer;
+    }
+
+    .admin-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+    }
+    .top-nav-menus {
+      display: flex;
+
+      .menu-item {
+        margin-left: 0.5rem;
+      }
+
+      .notification-button {
+        svg {
+          font-size: 2.5rem;
+        }
+      }
+    }
+  }
+  .MuiPaper-elevation {
+    background-color: #fff;
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+    --bs-card-spacer-y: 1rem;
+    --bs-card-spacer-x: 1rem;
+    --bs-card-title-spacer-y: 0.5rem;
+    --bs-card-border-width: 0;
+    --bs-card-border-color: rgba(0, 0, 0, 0.125);
+    --bs-card-border-radius: 0.75rem;
+    --bs-card-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --bs-card-inner-border-radius: 0.75rem;
+    --bs-card-cap-padding-y: 0.5rem;
+    --bs-card-cap-padding-x: 1rem;
+    --bs-card-cap-bg: #fff;
+    --bs-card-bg: #fff;
+    --bs-card-img-overlay-padding: 1rem;
+    --bs-card-group-margin: 0.75rem;
+    word-wrap: break-word;
+    background-color: var(--bs-card-bg);
+    background-clip: border-box;
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    border-radius: var(--bs-card-border-radius);
+    padding: 2rem 2rem 2rem 2rem;
+
+    border-left: none !important;
+  }
+}
+
+.top-nav-menu {
+  .MuiList-root {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .MuiButtonBase-root {
+      font-size: 1.3rem;
+
+      .menu-sublinks {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

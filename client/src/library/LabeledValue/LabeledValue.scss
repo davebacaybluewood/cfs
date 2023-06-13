@@ -1,0 +1,67 @@
+.label-value {
+  h5 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+}
+
+.label-value-bold {
+  h5 {
+    font-weight: 800;
+  }
+}
+.label-value-light {
+  h5 {
+    font-weight: 400;
+  }
+}
+
+.label-value-icon {
+  display: flex;
+  align-items: center;
+
+  .icon {
+    margin-right: 1rem;
+    svg {
+      font-size: 1.5rem;
+    }
+  }
+  .caption {
+    h5 {
+      font-weight: 300;
+      font-size: 1.3rem;
+      margin-bottom: 0;
+      text-transform: capitalize;
+      cursor: auto;
+    }
+    p {
+      font-size: 1.6rem;
+      cursor: auto;
+    }
+  }
+}
+
+.label-value-ellipsis {
+  position: relative;
+
+  .caption {
+    width: 80%;
+  }
+  p {
+    max-width: 100%;
+    /* width: 100%; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+  h5 {
+    cursor: pointer;
+  }
+}

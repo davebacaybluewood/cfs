@@ -5,7 +5,10 @@ import "./NotFound.scss";
 const InvalidRoute = () => {
   return (
     <div className="not-found-container">
-      <img src="\assets\images\logos\cfs-logo.png" />
+      <img
+        src="\assets\images\logos\cfs-logo.png"
+        alt="\assets\images\logos\cfs-logo.png"
+      />
       <h3>Oops! Page not found</h3>
       <h1>
         <span>4</span>

@@ -1,0 +1,79 @@
+$main-color: #021025;
+$main-color-gradient: linear-gradient(
+  90deg,
+  #0057b7 0%,
+  $main-color 30%,
+  $main-color
+) !important;
+
+.testimonials {
+  margin-bottom: 1rem;
+  position: relative;
+
+  h2 {
+    font-weight: 300;
+    color: rgba(51, 48, 60, 0.8);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .item {
+    padding: 1rem 0;
+    position: relative;
+    border-top: 1px dotted #333;
+
+    .abosolute-icon {
+      position: absolute;
+      right: 1%;
+      top: 10%;
+
+      color: rgba(187, 187, 187, 0.15);
+      font-weight: 900;
+      font-size: 6rem;
+    }
+    .testimonial {
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+
+    .client-from {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      h5 {
+        font-size: 1.7rem;
+        font-weight: 900;
+      }
+      p {
+        font-weight: 300;
+        font-size: 1.5rem;
+      }
+
+      button {
+        width: 25px;
+        height: 25px;
+        background: linear-gradient(
+          90deg,
+          #0057b7 0%,
+          $main-color 30%,
+          $main-color
+        ) !important;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+
+        svg {
+          position: relative;
+          top: 2px;
+          color: #fff;
+
+          path {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}

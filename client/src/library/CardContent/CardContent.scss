@@ -1,0 +1,41 @@
+.simple-card-container {
+  border: 1px solid #eee;
+  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+  img {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  .card-captions {
+    padding: 0.5rem 1rem;
+
+    h2 {
+      font-weight: 300;
+      font-size: 3rem;
+    }
+  }
+  .card-content {
+    overflow: hidden;
+    text-align: justify;
+    font-size: 1.3rem;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    line-height: 20px; /* fallback */
+    max-height: 1 * 2; /* fallback */
+    color: rgba(51, 48, 60, 0.48);
+  }
+
+  button {
+    background-color: transparent;
+    color: #333;
+    border: transparent;
+    border-bottom: 1px dotted #333;
+    margin: 1rem 0 2rem 0;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
