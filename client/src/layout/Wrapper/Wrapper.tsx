@@ -1,8 +1,7 @@
-import useScroll from "hooks/useScroll";
 import Footer from "layout/Footer/Footer";
 import Navbar from "layout/Navbar/Navbar";
 import MainHeadline from "pages/Home/components/Main-Headline/MainHeadline";
-import React, { useEffect } from "react";
+import React from "react";
 
 interface WrapperProps {
   showFooter?: boolean;

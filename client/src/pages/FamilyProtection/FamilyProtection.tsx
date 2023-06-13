@@ -6,7 +6,7 @@ import Blogs from "library/Blogs/Blogs";
 import FAQs from "library/FAQs/FAQs";
 import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
-import { faqs, filteredFaqs } from "./components/FamilyProtection";
+import { filteredFaqs } from "./components/FamilyProtection";
 import Consultation from "library/Consultation/Consultation";
 import { blogsDummy } from "constants/dummyDatas";
 import Testimonial from "library/Testimonial/Testimonial";

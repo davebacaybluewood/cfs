@@ -1,0 +1,17 @@
+.badge-container {
+  display: inline-block;
+  margin-right: 3px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  text-transform: uppercase;
+
+  &.secondary {
+    background: #00004d;
+  }
+
+  &.primary {
+    background: #333;
+  }
+}

@@ -1,0 +1,98 @@
+.login-wrapper {
+  background: url("https://res.cloudinary.com/dfm2vczpy/image/upload/v1679350044/other-assets/Gradient_Motivational_Quote_Instagram_Post_mqrsgw.png");
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  overflow: auto;
+
+  .login-container {
+    width: 1020px;
+    background-color: white;
+    margin: auto;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    .img-holder {
+      overflow: hidden;
+      width: 80%;
+      img {
+        width: 100%;
+        margin-bottom: -0.3rem;
+      }
+    }
+
+    .form-wrapper {
+      width: 50%;
+      padding: 8rem;
+
+      img {
+        width: 200px;
+        margin: auto;
+        display: block;
+        margin-bottom: 4rem;
+      }
+
+      .form-instructions {
+        margin-bottom: 1rem;
+        h2 {
+          font-weight: 300;
+          font-size: 2rem;
+          margin-bottom: 1rem;
+        }
+        p {
+          font-size: 1.3rem;
+        }
+      }
+      .forgot-btn {
+        text-align: right;
+        margin-top: 1rem;
+
+        button {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          border-bottom: 1px dotted #333;
+          font-weight: 300;
+        }
+      }
+      .MuiInputBase-root,
+      .MuiInputLabel-root,
+      .MuiFormControlLabel-root span {
+        font-size: 1.3rem;
+      }
+      .login-btn {
+        width: 100%;
+      }
+      .register-btn {
+        width: 100%;
+        text-align: center;
+        button {
+          background-color: transparent;
+          border: none;
+          margin-top: 1rem;
+          cursor: pointer;
+          border-bottom: 1px dotted #333;
+          text-transform: uppercase;
+        }
+      }
+
+      .reset-form {
+        h2 {
+          font-weight: 300;
+          font-size: 2rem;
+          margin-bottom: 1rem;
+        }
+        p {
+          font-size: 1.3rem;
+          margin-bottom: 2rem;
+        }
+      }
+    }
+  }
+}

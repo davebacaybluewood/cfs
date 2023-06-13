@@ -1,0 +1,84 @@
+@font-face {
+  font-family: "Agrandir";
+  src: local("Agrandir"), url(./) format("woff");
+}
+
+.business-card-wrapper {
+  .business-card {
+    width: 336px;
+    height: 192px;
+    position: relative;
+
+    .business-card-logo {
+      width: 70px;
+      height: 100%;
+      display: inline-block;
+
+      img {
+        width: 90%;
+        position: relative;
+        top: 8%;
+      }
+    }
+
+    .business-card-content {
+      width: 256px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      display: inline-block;
+
+      .primary-info {
+        text-align: center;
+        padding: 1.3rem 0 0rem 0;
+
+        h2,
+        p {
+          color: white;
+          font-family: Agrandir;
+          margin-bottom: 0;
+        }
+        h2 {
+          text-transform: uppercase;
+          font-weight: 900;
+        }
+        p {
+          font-family: Agrandir;
+        }
+      }
+      .secondary-info {
+        display: flex;
+        .captions {
+          padding-top: 1rem;
+          h4 {
+            color: white;
+            font-family: "Raleway", sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+          }
+
+          p {
+            color: white;
+            font-family: Agrandir;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+          }
+        }
+
+        .qr-code {
+          text-align: center;
+          img {
+            width: 50%;
+            margin: auto;
+            position: relative;
+            top: -10px;
+          }
+        }
+      }
+    }
+  }
+  .back {
+    background-color: #18144c;
+  }
+}

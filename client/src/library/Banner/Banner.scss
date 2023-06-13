@@ -1,0 +1,34 @@
+.banner {
+  z-index: 999;
+  position: relative;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  //   box-shadow: 3px 3px 3px #eee;
+  margin-bottom: 2rem;
+  padding: 3rem 0;
+
+  background-size: cover;
+  background-position: 50%;
+  background-repeat: no-repeat;
+
+  h5 {
+    letter-spacing: 2px;
+    font-size: 1.6rem;
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-weight: 900;
+    font-size: 3.5rem;
+    max-width: 100%;
+  }
+
+  .divider {
+    width: 100px;
+    height: 5px;
+    background-color: $main-color;
+    margin: auto;
+    margin: 1rem auto 0rem auto;
+  }
+}
