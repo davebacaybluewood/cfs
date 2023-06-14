@@ -18,10 +18,12 @@ import landingPageRoutes from "./routes/landingPageRoutes.js";
 import landingPageRegisteredUsersRoutes from "./routes/landingPageRegisteredUsersRoutes.js";
 import landingPageStatisticsRoutes from "./routes/landingPageStatisticsRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
+import blogAndResourceRoutes from './routes/blogAndResourceRoutes.js'
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
 import { ApolloServer, gql } from "apollo-server-express";
 import cors from "cors";
+
 
 const app = express();
 const __dirname = path.resolve();
@@ -58,6 +60,7 @@ app.use(
   landingPageRegisteredUsersRoutes
 );
 app.use("/api/landing-page-statistics/", landingPageStatisticsRoutes);
+app.use("/api/blog-and-resource/", blogAndResourceRoutes)
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/Web/build")));

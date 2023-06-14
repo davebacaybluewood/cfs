@@ -11,11 +11,12 @@ const paths = {
   about_us: "/about-us",
   solutions: "/solutions",
   resources: "/blogs-resources",
-  single_blog: "/blogs-resources/:blogId",
+  single_blog: "/blogs-resources/:blogTitle",
   invalid: "/invalid",
 
   /** Webinar */
   agent_with_id: "/agents/:id",
+
   agent_check_status: "/agents/status/:id",
   webinarForm: "/webinar/:videoId/:agentId",
   webinarAppointment: "/webinar/:videoId/:agentId/:submissionId",

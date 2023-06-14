@@ -9,10 +9,14 @@ import useScroll from "hooks/useScroll";
 import { useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
 import "./BlogPage.scss";
+import Spinner from "library/Spinner/Spinner";
+import useFetchBlogResource from "./hooks/useFetchBlogResource";
 
 const BlogPage: React.FC = () => {
   useScroll();
   const navigate = useNavigate();
+
+  const { blogs, loading } = useFetchBlogResource();
 
   return (
     <div className="blog-page">
@@ -30,27 +34,41 @@ const BlogPage: React.FC = () => {
           </form>
         </Headline>
       </div>
-      <div className="blogs">
-        {blogsDummy.map((data, index) => {
-          return (
-            <LargeBlogCard
-              align={isEven(index) ? "right" : "left"}
-              blogTitle={`${data.title}`}
-              date={data.date}
-              content={data.description}
-              button={{
-                text: "Read More",
-                onClick: () =>
-                  navigate(paths.single_blog.replace(":blogId", data.blogId)),
-              }}
-              author={data.author}
-              blogImage={data.image}
-            />
-          );
-        })}
-      </div>
-      <Blogs title="Read More Here" blogs={blogsDummy} />
-      <Blogs title=" " blogs={blogsDummy} />
+      {loading ? (
+        <Spinner variant="relative" />
+      ) : (
+        <div className="blogs">
+          {blogs?.map((data, index) => {
+            return (
+              <LargeBlogCard
+                align={isEven(index) ? "right" : "left"}
+                blogTitle={`${data.title}`}
+                date={data.createdAt ?? ""}
+                content={data.content}
+                button={{
+                  text: "Read More",
+                  onClick: () => {
+                    const filteredTitle = data.title
+                      .split(" ")
+                      .join("-")
+                      .toLowerCase();
+                    navigate(
+                      paths.single_blog.replace(":blogTitle", filteredTitle)
+                    );
+                  },
+                }}
+                author={{
+                  authorName: data.authorName ?? "",
+                  image: data.authorThumbnail ?? "",
+                }}
+                blogImage={data.thumbnail}
+              />
+            );
+          })}
+        </div>
+      )}
+
+      <Blogs title="Read More Blogs" isShowAll={false} />
       <Subscription />
     </div>
   );

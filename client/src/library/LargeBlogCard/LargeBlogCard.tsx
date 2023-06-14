@@ -40,7 +40,7 @@ const LargeBlogCard: React.FC<BlogProps> = (props) => {
               image={props.author.image}
             />
             <div className="blog-captions">
-              <Typography className="blog-content">
+              <Typography className="card-blog-content">
                 {props.content.replace(/<[^>]*>/g, "").replace("&quot;", " ")}
               </Typography>
               <div className="blog__btn">

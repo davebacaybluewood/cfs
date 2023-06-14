@@ -1,15 +1,29 @@
 .single-blog-page {
   margin-top: 4rem;
   background: #ffffff;
+  margin-bottom: 4rem;
+
+  .relative-spinner {
+    svg {
+      color: #333 !important;
+      path {
+        color: #333 !important;
+      }
+    }
+  }
 
   .current-blog-image {
     img {
       width: 100%;
       margin-bottom: 2rem;
+      border-radius: 2rem;
     }
   }
 
-  .blog-content {
+  .single-blog-content {
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+    padding: 2rem;
+    border-radius: 2rem;
     h1 {
       font-size: 3rem;
       margin-bottom: 2rem;
@@ -28,6 +42,10 @@
 
     .blog-description {
       margin-bottom: 2rem;
+
+      br {
+        display: none;
+      }
       h1 {
         font-size: 3rem;
         margin: 2.3rem 0;

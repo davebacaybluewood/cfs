@@ -22,7 +22,7 @@
 
 ## Authors
 
-| Name            | Link                                |
-| --------------- | ----------------------------------- |
-| Dave Bacay      | https://github.com/davespencerbacay |
-| Jonathan Buhain | TBD                                 |
+| Name          | Link                                |
+| ------------- | ----------------------------------- | --- |
+| Dave Bacay    | https://github.com/davespencerbacay |
+| Darryle Bacay | https://github.com/darrylebacaycfs  |     |

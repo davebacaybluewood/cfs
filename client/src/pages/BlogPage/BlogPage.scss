@@ -1,4 +1,13 @@
 .blog-page {
+  .relative-spinner {
+    svg {
+      color: #333 !important;
+      path {
+        color: #333 !important;
+      }
+    }
+  }
+
   .headline-blogs {
     background: url(../../../public/assets/images/headline-images/blog-contact-headline);
     color: white;
@@ -9,6 +18,7 @@
     }
     p {
       margin-bottom: 3rem;
+      width: 100% !important;
     }
 
     form {

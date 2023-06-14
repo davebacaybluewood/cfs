@@ -22,6 +22,7 @@ import testimonials from "./components/testimonials";
 const FamilyProtection: React.FC = () => {
   const carouselRef = useRef<any>();
   useScroll();
+
   return (
     <div className="family-protection__page">
       <div className="main-page__content">
@@ -175,7 +176,7 @@ const FamilyProtection: React.FC = () => {
 
         <Testimonial testimonials={testimonials} />
 
-        <Blogs title="Latest from the blog" blogs={blogsDummy} />
+        <Blogs title="Latest from the blog" />
       </div>
     </div>
   );

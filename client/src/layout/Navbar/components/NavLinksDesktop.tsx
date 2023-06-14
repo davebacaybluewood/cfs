@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import Button from "library/Button/Button";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type LinkType = {
   link: string;
@@ -15,6 +15,7 @@ interface NavLinksDesktopProps {
 }
 
 const NavLinksDesktop: React.FC<NavLinksDesktopProps> = (props) => {
+  const navigate = useNavigate();
   return (
     <ul>
       {props.links.map((data) => {
@@ -27,7 +28,11 @@ const NavLinksDesktop: React.FC<NavLinksDesktopProps> = (props) => {
         return (
           <li className={linkClassnames} key={data.text?.toString()}>
             {data.isButton === true ? (
-              <Button className={buttonClassName} variant="danger">
+              <Button
+                className={buttonClassName}
+                variant="danger"
+                onClick={() => navigate(data.link)}
+              >
                 Agent Portal
               </Button>
             ) : (

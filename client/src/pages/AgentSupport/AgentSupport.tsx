@@ -234,7 +234,7 @@ const AgentSupport: React.FC = () => {
           </Grid>
         </Container>
       </div>
-      <Blogs title="Get Our FREE Resources" blogs={blogsDummy} />
+      <Blogs title="Get Our FREE Resources" />
     </div>
   );
 };
