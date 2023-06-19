@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import getUserToken from "helpers/getUserToken";
-import { BlogData } from "pages/BlogPage/models";
+import { BlogData, BlogDataWithLength } from "pages/BlogPage/models";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -35,14 +35,21 @@ const requests = {
 };
 
 const BlogAndResource = {
-  list: (skipItemNumber?: number) =>
-    requests.get<BlogData[] | undefined>(
-      skipItemNumber
-        ? `/api/blog-and-resource/numbered-recent-blogs/${skipItemNumber}`
-        : "/api/blog-and-resource"
+  list: (skipItemNumber?: number, limit?: number) =>
+    requests.get<BlogDataWithLength | undefined>(
+      `/api/blog-and-resource/numbered-recent-blogs/${skipItemNumber}/${
+        limit ? limit : 100
+      }`
     ),
   listSingle: (blogTitle: string) =>
     requests.get<BlogData | undefined>(`/api/blog-and-resource/${blogTitle}`),
+  search: (keyword: string) =>
+    requests.post<BlogDataWithLength | undefined>(
+      "/api/blog-and-resource/search",
+      {
+        title: keyword,
+      }
+    ),
 };
 
 const agent = {

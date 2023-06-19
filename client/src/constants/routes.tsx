@@ -12,6 +12,7 @@ const paths = {
   solutions: "/solutions",
   resources: "/blogs-resources",
   single_blog: "/blogs-resources/:blogTitle",
+  events: "/events",
   invalid: "/invalid",
 
   /** Webinar */

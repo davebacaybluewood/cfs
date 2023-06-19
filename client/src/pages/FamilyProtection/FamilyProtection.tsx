@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Process from "./components/Process/Process";
 import Solution from "./components/Solution/Solution";
 import Plan from "./components/Plan/Plan";
@@ -8,7 +8,6 @@ import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
 import { filteredFaqs } from "./components/FamilyProtection";
 import Consultation from "library/Consultation/Consultation";
-import { blogsDummy } from "constants/dummyDatas";
 import Testimonial from "library/Testimonial/Testimonial";
 import { Container, Grid } from "@mui/material";
 import StandardCard from "library/StandardCard/StandardCard";
@@ -17,7 +16,6 @@ import ReactMultiCarousel from "react-multi-carousel";
 import featureDataFamily from "./featureDataFamily";
 import "./FamilyProtection.scss";
 import useScroll from "hooks/useScroll";
-import testimonials from "./components/testimonials";
 
 const FamilyProtection: React.FC = () => {
   const carouselRef = useRef<any>();
@@ -129,10 +127,6 @@ const FamilyProtection: React.FC = () => {
                   <StandardCard>
                     <div className="carousel-navigator">
                       <h2>Other Features You May be Interested</h2>
-                      <p>
-                        veritatis et quasi architecto beatae vitae dicta sunt
-                        explicabo
-                      </p>
                       <div className="carousel-navigator-btn">
                         <button
                           onClick={(value) => carouselRef?.current?.previous()}
@@ -174,9 +168,15 @@ const FamilyProtection: React.FC = () => {
           <FAQs title="Frequently Asked Questions (FAQ)" faqs={filteredFaqs} />
         </div>
 
-        <Testimonial testimonials={testimonials} />
+        {/* <Testimonial testimonials={testimonials} /> */}
 
-        <Blogs title="Latest from the blog" />
+        <Blogs
+          title="Latest from the blogs"
+          blogsConfig={{
+            limit: 3,
+            skip: 0,
+          }}
+        />
       </div>
     </div>
   );

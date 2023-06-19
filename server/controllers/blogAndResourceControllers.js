@@ -90,6 +90,7 @@ const getSingleBlogByTitle = expressAsync(async (req, res) => {
  */
 const getRecentNumberedBlogs = expressAsync(async (req, res) => {
     const skipItemNumber = req.params.skipItemNumber;
+    const limit = req.params.limit ? parseInt(req.params.limit) : 100;
     const blogs = await BlogsAndResource.aggregate([
         {
             $lookup: {
@@ -112,21 +113,80 @@ const getRecentNumberedBlogs = expressAsync(async (req, res) => {
         {
             $unset: "blogDoc",
         }
-    ]).sort({ _id: -1 }).skip(parseInt(skipItemNumber))
+    ]).sort({ _id: -1 }).skip(parseInt(skipItemNumber)).limit(limit)
 
-    res.json(blogs)
+    const blogLength = await BlogsAndResource.find({}).count()
+
+    res.json({
+        blogLength: blogLength,
+        blogs: blogs
+    })
 });
 
 /**
  * @desc: Create a blog
- * @route: CREATE /api/blogs
+ * @route: CREATE /api/blog-and-resource
  * @acess: Private
  */
 const createBlog = expressAsync(async (req, res) => {
 
 });
 
+
+/**
+ * @desc: Search a blog by title
+ * @route: CREATE /api/blog-and-resource/search
+ * @access: Public
+ */
+
+const searchBlogByTitle = expressAsync(async (req, res) => {
+    const title = req.body.title
+
+    try {
+        const result = await BlogsAndResource.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { title: { $regex: title, $options: 'i' } },
+                        { content: { $regex: title, $options: 'i' } },
+                    ]
+                }
+            },
+            {
+                $lookup: {
+                    from: "agents",
+                    localField: "userGuid",
+                    foreignField: "userGuid",
+                    as: "blogDoc",
+                },
+            },
+            {
+                $set: {
+                    authorName: {
+                        $first: "$blogDoc.name" ? "$blogDoc.name" : "$blogDoc.firstName" + " " + "$blogDoc.lastName",
+                    },
+                    authorThumbnail: {
+                        $first: "$blogDoc.avatar",
+                    },
+                },
+            },
+            {
+                $unset: "blogDoc",
+            }
+        ]);
+        const blogTotalLength = await BlogsAndResource.find({}).count()
+
+        res.json({
+            blogs: result, blogTotalLength
+        });
+    } catch (error) {
+        console.error('Search error', error);
+        res.status(500).json({ error: 'An error occurred during the search' });
+    }
+});
+
 export default {
+    searchBlogByTitle,
     getAllBlogs,
     createBlog,
     getRecentNumberedBlogs,

@@ -8,17 +8,18 @@ import Box from "admin/components/Box/Box";
 import Title from "admin/components/Title/Title";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 // import BlogCard from "library/BlogCard/BlogCard";
-import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 import { ChipTypes } from "admin/pages/Blogs/types";
 import Spinner from "admin/components/Spinner/Spinner";
+import BlogCard from "library/Blogs/BlogCard/BlogCard";
+import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
 
 const EditorBox = () => {
-  const { blogs, loading } = useFetchBlogs();
+  const { blogs, loading } = useFetchBlogResource();
 
   const statistics: StatisticTypes[] = [
     {
       countText: "All Blogs",
-      count: blogs?.length,
+      count: blogs?.length ?? 0,
       url: paths.login,
       icon: <FaRegNewspaper />,
     },
@@ -72,30 +73,19 @@ const EditorBox = () => {
                 >
                   <Grid container spacing={2}>
                     {blogs?.map((data) => {
-                      const tags = data.tags.map((tag: ChipTypes) => {
-                        return {
-                          description: tag.label,
-                          link: "/",
-                        };
-                      });
                       return (
                         <Grid item sm={12} md={6} lg={2}>
-                          {/* <BlogCard
-                            author="Dave"
-                            dateCreated={
-                              new Date(data.createdAt?.toString() ?? "")
-                            }
-                            id={data._id ?? ""}
-                            tags={tags}
-                            thumbnail={data.thumbnail}
+                          <BlogCard
+                            author={{
+                              authorName: data.authorName ?? "",
+                              image: data.authorThumbnail ?? "",
+                            }}
+                            blogId={data._id}
+                            date={data.createdAt ?? ""}
+                            description={data.content}
+                            image={data.thumbnail}
                             title={data.title}
-                            numberOfVisits={0}
-                            showStatistics
-                            isAdmin
-                            tagsLimit={2}
-                            thumbnailCover
-                          /> */}
-                          blog card
+                          />
                         </Grid>
                       );
                     })}

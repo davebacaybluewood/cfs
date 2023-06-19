@@ -20,3 +20,8 @@ export interface BlogData {
   authorName?: string;
   authorThumbnail?: string;
 }
+
+export interface BlogDataWithLength {
+  blogLength: number;
+  blogs: BlogData[] | undefined;
+}

@@ -1,7 +1,10 @@
 import { Container, Grid, Typography } from "@mui/material";
 import Button from "library/Button/Button";
-import React from "react";
+import React, { useState } from "react";
 import "./Consultation.scss";
+import { CALENDLY } from "constants/constants";
+import { PopupModal } from "react-calendly";
+import useMediaQuery from "react-responsive/types/useMediaQuery";
 
 interface ConsultationProps {
   title: string;
@@ -14,6 +17,8 @@ interface ConsultationProps {
   };
 }
 const Consultation: React.FC<ConsultationProps> = (props) => {
+  const [openCalendlyModal, setOpenCalendlyModal] = useState(false);
+
   return (
     <div className="consultation">
       <Container className="section-five__content">
@@ -30,7 +35,12 @@ const Consultation: React.FC<ConsultationProps> = (props) => {
             </div>
 
             <div className="section__btn">
-              <Button variant="danger">{props.button.text}</Button>
+              <Button
+                variant="danger"
+                onClick={() => setOpenCalendlyModal(true)}
+              >
+                {props.button.text}
+              </Button>
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} className="section__image">
@@ -38,6 +48,12 @@ const Consultation: React.FC<ConsultationProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
+      <PopupModal
+        url={CALENDLY.CONSULTATION}
+        onModalClose={() => setOpenCalendlyModal(false)}
+        open={openCalendlyModal}
+        rootElement={document.getElementById("root") as any}
+      />
     </div>
   );
 };

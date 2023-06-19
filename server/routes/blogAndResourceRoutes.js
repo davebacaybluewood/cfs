@@ -6,7 +6,8 @@ import blogAndResourceControllers from '../controllers/blogAndResourceController
 const router = express.Router()
 
 router.route("/").get(blogAndResourceControllers.getAllBlogs).post(protect, multerConfig.single("thumbnail"), blogAndResourceControllers.createBlog);
-router.route("/numbered-recent-blogs/:skipItemNumber").get(blogAndResourceControllers.getRecentNumberedBlogs)
+router.route("/numbered-recent-blogs/:skipItemNumber/:limit").get(blogAndResourceControllers.getRecentNumberedBlogs)
 router.route("/:blogTitle").get(blogAndResourceControllers.getSingleBlogByTitle)
+router.route("/search").post(blogAndResourceControllers.searchBlogByTitle)
 
 export default router

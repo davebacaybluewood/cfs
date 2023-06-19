@@ -30,7 +30,8 @@ import Spinner from "admin/components/Spinner/Spinner";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import { ChipTypes } from "admin/pages/Blogs/types";
 // import BlogCard from "library/BlogCard/BlogCard";
-import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
+import BlogCard from "library/Blogs/BlogCard/BlogCard";
+import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
 
 const contactCols = ["Name", "Email", "Phone Number"];
 const contactRows = [
@@ -135,7 +136,8 @@ const AdminBox = () => {
     ],
   };
 
-  const { blogs, loading } = useFetchBlogs();
+  const { blogs, loading } = useFetchBlogResource(0, 12);
+  console.log(blogs);
   return (
     <React.Fragment>
       <Grid container spacing={2} marginBottom={2}>
@@ -206,7 +208,7 @@ const AdminBox = () => {
               {/* <Calendar /> */}
               <Title
                 title="Blogs"
-                subtitle="List of 5 blogs"
+                subtitle="List of 12 blogs"
                 link={paths.webinar}
               />
 
@@ -220,30 +222,19 @@ const AdminBox = () => {
                 >
                   <Grid container spacing={2}>
                     {blogs?.map((data) => {
-                      const tags = data.tags.map((tag: ChipTypes) => {
-                        return {
-                          description: tag.label,
-                          link: "/",
-                        };
-                      });
                       return (
                         <Grid item sm={12} md={6} lg={2}>
-                          {/* <BlogCard
-                            author="Dave"
-                            dateCreated={
-                              new Date(data.createdAt?.toString() ?? "")
-                            }
-                            id={data._id ?? ""}
-                            tags={tags}
-                            thumbnail={data.thumbnail}
+                          <BlogCard
+                            author={{
+                              authorName: data.authorName ?? "",
+                              image: data.authorThumbnail ?? "",
+                            }}
+                            blogId={data._id}
+                            date={data.createdAt ?? ""}
+                            description={data.content}
+                            image={data.thumbnail}
                             title={data.title}
-                            numberOfVisits={0}
-                            showStatistics
-                            isAdmin
-                            tagsLimit={2}
-                            thumbnailCover
-                          /> */}
-                          blog card
+                          />
                         </Grid>
                       );
                     })}

@@ -87,9 +87,9 @@ const AgentSupport: React.FC = () => {
           }
           image="\assets\images\home\rectangle-image3.png"
           list={[
-            "Great commision structure",
-            "Extensive Training and Support",
-            "Access to the newest tools and technology",
+            "Great commision structure and career growth.",
+            "Extensive Training and Support.",
+            "Access to the newest tools and technology.",
           ]}
           description={
             <React.Fragment>
@@ -98,7 +98,7 @@ const AgentSupport: React.FC = () => {
               company that values your expertise, rewards <br /> your hard work,
               and provides you with the tools and <br /> support you need to
               thrive in today's competitive <br /> insurance landscape. With
-              CFS, you’ll get:
+              CFS, you'll get:
             </React.Fragment>
           }
           button={{
@@ -192,7 +192,7 @@ const AgentSupport: React.FC = () => {
           </Grid>
         </Container>
       </div>
-      <div className="agent-container">
+      {/* <div className="agent-container">
         <Container>
           <h2>Our top Agents</h2>
           <p>
@@ -233,8 +233,14 @@ const AgentSupport: React.FC = () => {
             </Grid>
           </Grid>
         </Container>
-      </div>
-      <Blogs title="Get Our FREE Resources" />
+      </div> */}
+      <Blogs
+        title="Get Our FREE Resources"
+        blogsConfig={{
+          limit: 3,
+          skip: 0,
+        }}
+      />
     </div>
   );
 };

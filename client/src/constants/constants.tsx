@@ -13,6 +13,7 @@ import Solutions from "pages/Solutions/Solutions";
 import { adminRoutes } from "admin/constants/constants";
 import { paths } from "./routes";
 import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
+import Events from "pages/Events/Events";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -118,6 +119,11 @@ const REACT_ROUTES: ReactRoutesType[] = [
     path: paths.solutions,
   },
   {
+    element: <Events />,
+    path: paths.events,
+    showHeadline: true,
+  },
+  {
     element: <ContactPage />,
     path: paths.contact_us,
   },
@@ -138,9 +144,9 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <NotFound />,
     path: "*",
-    showNavbar: false,
+    showNavbar: true,
     showHeadline: false,
-    showFooter: false,
+    showFooter: true,
   },
   {
     element: <NotFound />,
@@ -149,6 +155,11 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showFooter: false,
   },
 ];
+
+const CALENDLY = {
+  CONSULTATION: "https://calendly.com/gocfs/free-30-minute-consultation",
+  WEEKLY: "https://calendly.com/gocfs/one-time-weekly-meeting",
+};
 
 export {
   COMPANY_NAME,
@@ -160,4 +171,5 @@ export {
   NOTIFICATION_ENUMS,
   BLANK_VALUE,
   REACT_ROUTES,
+  CALENDLY,
 };

@@ -34,28 +34,24 @@
         display: inline-block;
         margin-right: 1rem;
       }
+      .cfs-btn-default {
+        button {
+          color: white;
+          border: 1px solid white;
+        }
+      }
     }
   }
 }
 
 @media screen and (max-width: 1024px) {
-  .section-one {
+  .headline-family {
     background-position: center;
     height: 50vh;
 
     .captions {
       h2 {
         font-size: 5rem;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .section-one {
-    .captions {
-      h2 {
-        font-size: 4rem;
       }
     }
   }

@@ -16,7 +16,6 @@ const InvalidRoute = () => {
         <span>4</span>
       </h1>
       <h2>we are sorry, but the page you requested was not found.</h2>
-      <Link to={paths.home}>Back to the Home Page</Link>
     </div>
   );
 };

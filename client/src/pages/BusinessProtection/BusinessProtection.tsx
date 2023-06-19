@@ -128,10 +128,6 @@ const BusinessProtection: React.FC = () => {
                 <StandardCard>
                   <div className="carousel-navigator">
                     <h2>Other features you may be interested</h2>
-                    <p>
-                      veritatis et quasi architecto beatae vitae dicta sunt
-                      explicabo
-                    </p>
                     <button
                       onClick={(value) => carouselRef?.current?.previous()}
                     >
@@ -156,7 +152,13 @@ const BusinessProtection: React.FC = () => {
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         faqs={faqs}
       />
-      <Blogs title="Latest News and Updates" />
+      <Blogs
+        title="Latest News and Updates"
+        blogsConfig={{
+          limit: 3,
+          skip: 0,
+        }}
+      />
     </div>
   );
 };

@@ -3,10 +3,13 @@ import { HiOutlinePhone } from "react-icons/hi";
 import { CiLocationOn } from "react-icons/ci";
 import { MdEmail } from "react-icons/md";
 import { SiFacebook } from "react-icons/si";
-import { BsInstagram } from "react-icons/bs";
+import { BsYoutube } from "react-icons/bs";
 import { AiOutlineTwitter } from "react-icons/ai";
-import "./Footer.scss";
+import { FaPinterest, FaLinkedin, FaTiktok } from "react-icons/fa";
+import { RiInstagramFill } from "react-icons/ri";
 import GridLinks from "./components/GridLinks";
+import "./Footer.scss";
+import { paths } from "constants/routes";
 
 const Footer: React.FC = () => {
   return (
@@ -28,7 +31,7 @@ const Footer: React.FC = () => {
                 title="Company Info"
                 links={[
                   {
-                    link: "/",
+                    link: paths.about_us,
                     text: "About Us",
                   },
                   {
@@ -48,7 +51,7 @@ const Footer: React.FC = () => {
                 title="Solutions"
                 links={[
                   {
-                    link: "/",
+                    link: paths.solutions,
                     text: "For Families",
                   },
                   {
@@ -75,10 +78,6 @@ const Footer: React.FC = () => {
                     link: "/",
                     text: "CFS Advantage",
                   },
-                  {
-                    link: "/",
-                    text: "Live Chat",
-                  },
                 ]}
               />
             </Grid>
@@ -88,17 +87,17 @@ const Footer: React.FC = () => {
                 title="Resources"
                 links={[
                   {
-                    link: "/",
-                    text: "24/7 support",
-                  },
-                  {
-                    link: "/",
+                    link: paths.resources,
                     text: "Free Agent Training",
                   },
                   {
                     link: "/",
                     text: "Blog",
                   },
+                  // {
+                  //   link: "/",
+                  //   text: "24/7 Support",
+                  // },
                 ]}
               />
             </Grid>
@@ -137,8 +136,12 @@ const Footer: React.FC = () => {
           </div>
           <div className="footer__socials">
             <SiFacebook />
-            <BsInstagram />
+            <RiInstagramFill />
             <AiOutlineTwitter />
+            <FaPinterest />
+            <FaLinkedin />
+            <FaTiktok />
+            <BsYoutube />
           </div>
         </Container>
       </div>

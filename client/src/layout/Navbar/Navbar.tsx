@@ -69,9 +69,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                     className: setActive(paths.solutions),
                   },
                   {
-                    link: "/",
+                    link: "/events",
                     text: "Events",
-                    className: setActive(paths.about_us),
+                    className: setActive(paths.events),
                   },
                   {
                     link: paths.resources,
@@ -116,7 +116,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               <Link to={paths.solutions}>Solutions</Link>
             </li>
             <li className="mobile-links">
-              <Link to={paths.home}>Events</Link>
+              <Link to={paths.events}>Events</Link>
             </li>
             <li className="mobile-links">
               <Link to={paths.resources}>Resources</Link>

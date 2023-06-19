@@ -1,7 +1,6 @@
 import { Container, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { blogsDummy } from "constants/dummyDatas";
 import BlogCard from "library/Blogs/BlogCard/BlogCard";
 import { paths } from "constants/routes";
 import UserDetails from "library/UserDetail/UserDetails";
@@ -12,6 +11,7 @@ import useScroll from "hooks/useScroll";
 import { BlogData } from "pages/BlogPage/models";
 import agent from "api/agent";
 import Spinner from "library/Spinner/Spinner";
+import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
 
 const SingleBlogPage: React.FC = () => {
   useScroll();
@@ -29,11 +29,9 @@ const SingleBlogPage: React.FC = () => {
       setLoading(false);
     };
     fetchSingleData();
-  }, []);
+  }, [blogTitle]);
 
-  // if (!blog) {
-  //   navigate(paths.invalid);
-  // }
+  const { blogs: suggestedBlogs } = useFetchBlogResource(0, 4);
 
   return (
     <div className="single-blog-page">
@@ -64,20 +62,28 @@ const SingleBlogPage: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={3}>
             <div className="suggested-blog">
-              {blogsDummy.map((data) => {
+              <h2>Read More Blogs</h2>
+              {suggestedBlogs?.map((data) => {
                 return (
                   <BlogCard
-                    author={data.author}
-                    blogId={data.blogId ?? ""}
-                    date={data?.date ?? ""}
-                    description={data?.description ?? ""}
-                    image={data?.image ?? ""}
+                    blogId={data._id}
+                    author={{
+                      authorName: blog?.authorName ?? " ",
+                      image: blog?.authorThumbnail ?? "",
+                    }}
+                    date={data?.createdAt ?? ""}
+                    description={data?.content ?? ""}
+                    image={data?.thumbnail ?? ""}
                     title={data?.title ?? ""}
-                    onClick={() =>
+                    onClick={() => {
+                      const filteredTitle = data.title
+                        .split(" ")
+                        .join("-")
+                        .toLowerCase();
                       navigate(
-                        paths.single_blog.replace(":blogId", data.blogId)
-                      )
-                    }
+                        paths.single_blog.replace(":blogTitle", filteredTitle)
+                      );
+                    }}
                   />
                 );
               })}

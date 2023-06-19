@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useField } from "formik";
-import { TextField, BaseTextFieldProps } from "@mui/material";
+import { TextField, BaseTextFieldProps, FilledInputProps } from "@mui/material";
 
 interface IFormikTextInput extends BaseTextFieldProps {
   isTextArea?: boolean;
   isDate?: boolean;
+  modifiedInputProps?: any;
 }
 const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
   const [field, meta, helper] = useField<string>(props.name ?? "");
@@ -50,6 +51,7 @@ const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
           props.isDate ? "datetime-local" : !props.type ? "text" : props.type
         }
         placeholder={props.placeholder ?? "Add text here ..."}
+        InputProps={props.modifiedInputProps}
       />
     </React.Fragment>
   );
