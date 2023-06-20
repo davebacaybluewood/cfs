@@ -51,30 +51,26 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .cfs-btn-danger {
-    button {
-      width: 100%;
-    }
-  }
+.cfs-btn-primary {
+  button {
+    color: #fff;
+    border: none;
+    margin-bottom: 1.7rem;
+    border: 1px solid white;
+    background-color: #00004d;
 
-  .cfs-btn-default {
-    button {
-      width: 100%;
+    &:hover {
+      color: white;
+      cursor: pointer;
+      opacity: 0.8;
     }
   }
 }
 
-@media screen and (max-width: 425px) {
-  .cfs-btn-default {
+@media screen and (max-width: 1024px) {
+  .cfs-btn {
     button {
-      width: 100% !important;
-    }
-  }
-
-  .cfs-btn-danger {
-    button {
-      width: 100% !important;
+      width: 100%;
     }
   }
 }

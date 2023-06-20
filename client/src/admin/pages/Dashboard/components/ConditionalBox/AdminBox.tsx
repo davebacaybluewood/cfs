@@ -147,7 +147,7 @@ const AdminBox = () => {
       </Grid>
       <Grid container spacing={2} marginBottom={2}>
         <Grid item xs={12} sm={12} md={4} lg={6}>
-          <Paper elevation={3} sx={{ p: 3, height: "100%" }}>
+          <Paper elevation={3} sx={{ p: 3 }}>
             <Box>
               <Title
                 title="Appointments"
@@ -159,7 +159,7 @@ const AdminBox = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
-          <Paper elevation={3} sx={{ p: 3, height: "100%" }}>
+          <Paper elevation={3} sx={{ p: 3 }}>
             <Title
               title="Contacts"
               subtitle="List of 5 contacts"
