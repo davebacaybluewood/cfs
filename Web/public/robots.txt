@@ -1,5 +1,0 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow: /cfs-a/
-
-Sitemap: https://www.gocfs.pro/sitemap.xml
