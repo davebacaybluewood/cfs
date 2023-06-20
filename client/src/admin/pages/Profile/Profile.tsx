@@ -89,7 +89,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
               licenseNumber={profile?.licenseNumber}
             />
           </Grid>
-          <Grid item sm={12} md={12} lg={4}>
+          <Grid item sm={12} md={12} lg={4} marginBottom={5}>
             <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
               <AboutProfile
                 languages={profile?.languages ?? []}
@@ -121,14 +121,14 @@ const Profile: React.FC<ProfileProps> = (props) => {
               />
             </Paper>
           </Grid>
-          <Grid item sm={12} md={12} lg={8}>
+          <Grid item sm={12} md={12} lg={8} marginBottom={5}>
             <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
               <ComponentValidator showNull={!profile?.userGuid}>
                 <Webinars agentGuid={profile?.userGuid ?? ""} />
               </ComponentValidator>
             </Paper>
           </Grid>
-          <Grid item sm={12} md={12} lg={12}>
+          <Grid item sm={12} md={12} lg={12} marginBottom={5}>
             <Box>
               <Paper>
                 <Testimonials

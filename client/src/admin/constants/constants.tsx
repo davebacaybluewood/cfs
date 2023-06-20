@@ -12,9 +12,6 @@ import AppointmentInformation from "admin/pages/Appointments/LandingPages/Schedu
 import ScheduleAppointment from "admin/pages/Appointments/LandingPages/ScheduledAppointment/ScheduleAppointment";
 import Blogs from "admin/pages/Blogs/Blogs";
 import BlogForm from "admin/pages/Blogs/component/BlogForm";
-import FileMaintenance from "admin/pages/Blogs/FileMaintenance/FileMaintenance";
-import ViewBlogs from "admin/pages/Blogs/landing/ViewBlogs";
-import ManageEditors from "admin/pages/Blogs/ManageEditors/ManageEditors";
 import Calendar from "admin/pages/Calendar/Calendar";
 import ContactAdmin from "admin/pages/ContactAdmin/ContactAdmin";
 import Contacts from "admin/pages/Contacts/Contacts";
@@ -412,34 +409,10 @@ export const adminRoutes = [
     ),
   },
   {
-    path: adminPathsNew.adminBlogsFileMaintenance,
-    element: (
-      <GuardedWrapper>
-        <FileMaintenance />
-      </GuardedWrapper>
-    ),
-  },
-  {
-    path: adminPathsNew.adminViewBlogs,
-    element: (
-      <GuardedWrapper>
-        <ViewBlogs />
-      </GuardedWrapper>
-    ),
-  },
-  {
     path: adminPathsNew.adminBlogForm,
     element: (
       <GuardedWrapper>
         <BlogForm />
-      </GuardedWrapper>
-    ),
-  },
-  {
-    path: adminPathsNew.adminBlogUsers,
-    element: (
-      <GuardedWrapper>
-        <ManageEditors />
       </GuardedWrapper>
     ),
   },

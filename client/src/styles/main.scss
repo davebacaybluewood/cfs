@@ -17,6 +17,14 @@ html {
   font-size: 62.5%;
   overflow-x: hidden;
 }
+body {
+  padding-right: 0 !important;
+}
+
+pre {
+  font-size: 13px;
+  font-family: monospace;
+}
 
 .inline-block {
   display: inline-block;

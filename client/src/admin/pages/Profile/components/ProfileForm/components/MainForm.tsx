@@ -377,7 +377,9 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                 </Grid>
               </Grid>
               <div className="form-actions">
-                <Button onClick={() => resetForm()}>CLEAR</Button>
+                <Button onClick={() => resetForm()} variant="primary">
+                  CLEAR
+                </Button>
                 <Button variant="primary" onClick={() => handleSubmit()}>
                   UPDATE MY PROFILE
                 </Button>

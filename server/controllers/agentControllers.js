@@ -35,16 +35,7 @@ const getAgents = expressAsync(async (req, res) => {
 
   const agents = await Agents.find({
     status: status ? status : undefined,
-    $or: [
-      { "roles.value": AGENT_ROLES[0].value },
-      { "roles.value": AGENT_ROLES[1].value },
-      { "roles.value": AGENT_ROLES[2].value },
-      { "roles.value": AGENT_ROLES[3].value },
-      { "roles.value": AGENT_ROLES[4].value },
-      { "roles.value": AGENT_ROLES[5].value },
-      { "roles.value": AGENT_ROLES[6].value },
-      { "roles.value": AGENT_ROLES[7].value },
-    ],
+    $or: [{ "roles.value": AGENT_ROLES[0].value }],
   });
   res.json(agents);
 });
