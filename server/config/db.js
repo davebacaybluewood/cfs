@@ -7,6 +7,7 @@ const connectDB = async () => {
     * MONGO_URI_LOCAL
   */
 
+
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI_LOCAL, {
       useNewURLParser: true,
