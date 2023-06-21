@@ -5,13 +5,18 @@ import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
+  Avatar,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
+  Divider,
   FormControlLabel,
   Grid,
+  ListItemIcon,
+  Menu,
+  MenuItem,
   Switch,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +29,7 @@ import BusinessCard from "./BusinessCard/BusinessCard";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import { UserContext } from "admin/context/UserProvider";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import { FaEllipsisV } from "react-icons/fa";
 
 export type HeaderButtonConfigs = {
   isProfileView?: boolean;
@@ -185,60 +191,122 @@ const HeaderButtons: React.FC<
   const [showBusinessCard, setShowBusinessCard] = useState(false);
 
   const userCtx = useContext(UserContext) as any;
-  const { profile, loading: profileLoading } = useFetchUserProfile(
-    userCtx?.user?.userGuid ?? ""
-  );
+  const userGuid = props.headerConfigs?.isProfileView
+    ? userCtx?.user?.userGuid ?? ""
+    : props.userGuid;
+
+  const { profile, loading: profileLoading } = useFetchUserProfile(userGuid);
   const USER_ROLES = profile?.roles;
-  const isAdmin = USER_ROLES?.some((f) => {
-    return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
+
+  const isAgent = USER_ROLES?.some((f) => {
+    return (
+      f.value === PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
+    );
   });
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openThreeDotMenu = Boolean(anchorEl);
+  const threeDotMenuHandler = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const editProfileHandler = (isProfileView?: boolean) => {
+    if (isProfileView) {
+      navigate(paths.profileForm);
+    } else {
+      navigate(
+        paths.profileFormWithProfileId.replace(
+          ":userGuid",
+          props.userGuid ?? ""
+        )
+      );
+    }
+  };
+  const declineHandler = () => {
+    setDialogStatus(AgentStatuses.DECLINED);
+    setOpen(true);
+  };
+  const activateHandler = () => {
+    if (isAgent) {
+      setOpenFormDialog(true);
+    } else {
+      setDialogStatus(AgentStatuses.ACTIVATED);
+      setOpen(true);
+    }
+  };
+  const deactivateHandler = () => {
+    setDialogStatus(AgentStatuses.DEACTIVATED);
+    setOpen(true);
+  };
+
   return (
     <div className="profile-actions">
       {loading ? <Spinner variant="fixed" /> : null}
-      <ComponentValidator
-        showNull={props.headerConfigs?.isProfileView === true}
-      >
-        <ActionButtons
-          {...props}
-          setOpen={setOpen}
-          setDialogStatus={setDialogStatus}
-          setFormDialogStatus={setOpenFormDialog}
-        />
-      </ComponentValidator>
 
-      {props.headerConfigs?.isProfileView ? (
-        <button onClick={() => navigate(paths.profileForm)}>
-          Edit Profile
-        </button>
-      ) : null}
-
-      {isAdmin && !props.headerConfigs?.isProfileView ? (
+      <div className="three-dot-menu">
         <button
-          onClick={() =>
-            navigate(
-              paths.profileFormWithProfileId.replace(
-                ":userGuid",
-                props.userGuid ?? ""
-              )
-            )
-          }
+          aria-expanded={open ? "true" : undefined}
+          onClick={threeDotMenuHandler}
+          className="ellipsis-btn"
         >
-          Edit Profile
+          <FaEllipsisV /> Actions
         </button>
-      ) : null}
-
-      {/* <button onClick={() => setShowBusinessCard(true)}>Business Card</button> */}
+        <Menu
+          anchorEl={anchorEl}
+          id="account-menu"
+          open={openThreeDotMenu}
+          onClose={() => setAnchorEl(null)}
+          onClick={() => setAnchorEl(null)}
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          transformOrigin={{ horizontal: "right", vertical: "top" }}
+        >
+          <MenuItem
+            onClick={() =>
+              editProfileHandler(props.headerConfigs?.isProfileView)
+            }
+          >
+            Edit Profile
+          </MenuItem>
+          <MenuItem onClick={() => setShowBusinessCard(true)}>
+            Business Card
+          </MenuItem>
+          <MenuItem onClick={() => setShowBusinessCard(true)}>
+            Profile Settings
+          </MenuItem>
+          {props.headerConfigs?.isProfileView ? null : (
+            <React.Fragment>
+              <Divider />
+              {props.status === AgentStatuses.ACTIVATED ? (
+                <MenuItem onClick={deactivateHandler}>Deactivate</MenuItem>
+              ) : (
+                <React.Fragment>
+                  <MenuItem onClick={activateHandler}>Activate</MenuItem>
+                  <MenuItem onClick={declineHandler}>Decline</MenuItem>
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          )}
+        </Menu>
+      </div>
 
       <ToastContainer />
       <Dialog
         open={showBusinessCard}
         onClose={() => setShowBusinessCard(false)}
       >
-        <DialogContent>
+        <DialogContent style={{ padding: 0 }}>
           <DialogContentText fontSize={15}>
             <BusinessCard
               email={props.userInfo?.email ?? ""}
               name={props.userInfo?.name ?? ""}
+              position={"Marketing Director"}
               licenseNumber={props.userInfo?.licenseNumber ?? ""}
               phoneNumber={props.userInfo?.phoneNumber ?? ""}
               state={props.userInfo?.state ?? ""}

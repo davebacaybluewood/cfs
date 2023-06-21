@@ -4,81 +4,88 @@
 }
 
 .business-card-wrapper {
-  .business-card {
-    width: 336px;
-    height: 192px;
-    position: relative;
-
-    .business-card-logo {
-      width: 70px;
-      height: 100%;
-      display: inline-block;
-
-      img {
-        width: 90%;
-        position: relative;
-        top: 8%;
-      }
-    }
+  .back-page {
+    width: 436px;
+    height: 292px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
     .business-card-content {
-      width: 256px;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      display: inline-block;
-
+      width: calc(436px - 150px);
+      padding: 2rem;
+      text-align: right;
       .primary-info {
-        text-align: center;
-        padding: 1.3rem 0 0rem 0;
-
-        h2,
-        p {
-          color: white;
-          font-family: Agrandir;
-          margin-bottom: 0;
-        }
+        text-align: right;
+        margin-bottom: 1rem;
         h2 {
-          text-transform: uppercase;
           font-weight: 900;
+          font-family: "Agrandir";
+          color: #fff;
+          font-size: 2rem;
+          text-transform: uppercase;
+          margin-bottom: 0;
+          line-height: 2.5rem;
         }
-        p {
-          font-family: Agrandir;
+        h3 {
+          font-weight: 300;
+          font-family: "Agrandir";
+          color: #fff;
+          font-size: 1.5rem;
+          margin-top: 0;
         }
       }
+
       .secondary-info {
+        text-align: left;
         display: flex;
+        align-items: center;
+        justify-content: space-between;
+
         .captions {
-          padding-top: 1rem;
           h4 {
+            font-weight: 300;
             color: white;
-            font-family: "Raleway", sans-serif;
-            font-weight: 500;
-            font-size: 1rem;
-            margin-bottom: 0.2rem;
+            font-size: 1.2rem;
+            font-family: "Montserrat";
+            line-height: 2rem;
           }
 
           p {
+            font-size: 1rem;
+            font-family: "Montserrat";
             color: white;
-            font-family: Agrandir;
-            font-size: 0.9rem;
+            font-weight: 700;
             margin-top: 1rem;
           }
         }
 
         .qr-code {
-          text-align: center;
+          display: inline-block;
+          text-align: right;
+          position: relative;
+          top: 3px;
+
           img {
-            width: 50%;
+            width: 100px;
             margin: auto;
-            position: relative;
-            top: -10px;
+            display: block;
           }
         }
       }
     }
   }
-  .back {
-    background-color: #18144c;
+
+  .business-card-actions {
+    text-align: center;
+    button {
+      background-color: transparent;
+      border: none;
+      margin: 0.5rem 1rem;
+      cursor: pointer;
+      border-bottom: 1px dotted #333;
+    }
   }
 }

@@ -11,17 +11,21 @@ interface BusinessCardProps {
   licenseNumber: string;
   userGuid: string;
   email: string;
+  position: string;
 }
 const BusinessCard: React.FC<BusinessCardProps> = (props) => {
   return (
     <div className="business-card-wrapper">
-      <div className="business-card back">
-        <div className="business-card-logo">
-          <img src="/assets/logos/cfs-side-log.png" alt="side-logo" />
-        </div>
+      <div
+        className="back-page"
+        style={{
+          backgroundImage: `url('/assets/images/templates/business-card-bg.png')`,
+        }}
+      >
         <div className="business-card-content">
           <div className="primary-info">
             <h2>{props.name}</h2>
+            <h3>{props.position}</h3>
           </div>
           <div className="secondary-info">
             <div className="captions">
@@ -34,14 +38,18 @@ const BusinessCard: React.FC<BusinessCardProps> = (props) => {
             <div className="qr-code">
               <QRCode
                 value={`https://gocfs.pro/${props.userGuid}`}
-                size={130}
+                size={80}
                 bgColor="transparent"
                 fgColor="#FFFFFF"
               />
-              <img src={MAIN_IMAGES.MAIN_LOGO} />
+              <img src={MAIN_IMAGES.WHITE_LOGO} />
             </div>
           </div>
         </div>
+      </div>
+      <div className="business-card-actions">
+        <button>Download</button>
+        <button>Send to Email</button>
       </div>
     </div>
   );
