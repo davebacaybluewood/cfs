@@ -2,10 +2,7 @@ import Button from "library/Button/Button";
 import Headline from "library/Headline/Headline";
 import Offer from "library/Offer/Offer";
 import React from "react";
-import "./AgentSupport.scss";
 import Blogs from "library/Blogs/Blogs";
-import { blogsDummy } from "constants/dummyDatas";
-import Card from "library/Card/Card";
 import { Container, Grid } from "@mui/material";
 import Coin from "library/Coin/Coin";
 import { MdHealthAndSafety } from "react-icons/md";
@@ -14,6 +11,7 @@ import Timelines from "library/Timeline/Timelines";
 import Benefits from "./Benefits";
 import StandardCard from "library/StandardCard/StandardCard";
 import useScroll from "hooks/useScroll";
+import "./AgentSupport.scss";
 
 const timelineData = [
   {

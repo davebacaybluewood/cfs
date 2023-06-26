@@ -1,10 +1,9 @@
 import { Container, Grid, Typography } from "@mui/material";
 import Button from "library/Button/Button";
 import React, { useState } from "react";
-import "./Consultation.scss";
 import { CALENDLY } from "constants/constants";
 import { PopupModal } from "react-calendly";
-import useMediaQuery from "react-responsive/types/useMediaQuery";
+import "./Consultation.scss";
 
 interface ConsultationProps {
   title: string;

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import Process from "./components/Process/Process";
 import Solution from "./components/Solution/Solution";
 import Plan from "./components/Plan/Plan";
@@ -8,14 +8,14 @@ import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
 import { filteredFaqs } from "./components/FamilyProtection";
 import Consultation from "library/Consultation/Consultation";
-import Testimonial from "library/Testimonial/Testimonial";
+// import Testimonial from "library/Testimonial/Testimonial"; Commented for future use
 import { Container, Grid } from "@mui/material";
 import StandardCard from "library/StandardCard/StandardCard";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import ReactMultiCarousel from "react-multi-carousel";
 import featureDataFamily from "./featureDataFamily";
-import "./FamilyProtection.scss";
 import useScroll from "hooks/useScroll";
+import "./FamilyProtection.scss";
 
 const FamilyProtection: React.FC = () => {
   const carouselRef = useRef<any>();
@@ -169,6 +169,7 @@ const FamilyProtection: React.FC = () => {
         </div>
 
         {/* <Testimonial testimonials={testimonials} /> */}
+        {/* Commented due for future use */}
 
         <Blogs
           title="Latest from the blogs"

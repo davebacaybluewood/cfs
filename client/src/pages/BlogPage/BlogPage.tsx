@@ -2,7 +2,6 @@ import Headline from "library/Headline/Headline";
 import React, { useEffect, useState } from "react";
 import LargeBlogCard from "library/LargeBlogCard/LargeBlogCard";
 import Blogs from "library/Blogs/Blogs";
-import { blogsDummy } from "constants/dummyDatas";
 import Subscription from "pages/Home/components/Subscription/Subscription";
 import { isEven } from "helpers/isEvenOrOdd";
 import useScroll from "hooks/useScroll";

@@ -69,7 +69,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                     className: setActive(paths.solutions),
                   },
                   {
-                    link: "/events",
+                    link: paths.events,
                     text: "Events",
                     className: setActive(paths.events),
                   },

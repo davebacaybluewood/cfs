@@ -3,7 +3,6 @@ import ConsultationBusiness from "./components/ConsultationBusiness/Consultation
 import ProcessBusiness from "./components/ProcessBusiness/ProcessBusiness";
 import PlanBusiness from "./components/PlanBusiness/PlanBusiness";
 import Blogs from "library/Blogs/Blogs";
-import { blogsDummy } from "constants/dummyDatas";
 import Headline from "library/Headline/Headline";
 import Button from "library/Button/Button";
 import FAQs from "library/FAQs/FAQs";
@@ -13,9 +12,9 @@ import StandardCard from "library/StandardCard/StandardCard";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import ReactMultiCarousel from "react-multi-carousel";
 import featureDataBusiness from "./featureDataBusiness";
-import "./BusinessProtection.scss";
 import SolutionBusiness from "./components/SolutionBusiness/solutionBusiness";
 import useScroll from "hooks/useScroll";
+import "./BusinessProtection.scss";
 
 const BusinessProtection: React.FC = () => {
   const carouselRef = useRef<any>();

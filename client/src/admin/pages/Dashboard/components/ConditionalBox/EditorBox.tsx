@@ -7,8 +7,6 @@ import { StatisticTypes } from "../../types";
 import Box from "admin/components/Box/Box";
 import Title from "admin/components/Title/Title";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
-// import BlogCard from "library/BlogCard/BlogCard";
-import { ChipTypes } from "admin/pages/Blogs/types";
 import Spinner from "admin/components/Spinner/Spinner";
 import BlogCard from "library/Blogs/BlogCard/BlogCard";
 import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";

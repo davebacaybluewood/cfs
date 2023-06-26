@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useField } from "formik";
-import { TextField, BaseTextFieldProps, FilledInputProps } from "@mui/material";
+import { TextField, BaseTextFieldProps } from "@mui/material";
 
 interface IFormikTextInput extends BaseTextFieldProps {
   isTextArea?: boolean;

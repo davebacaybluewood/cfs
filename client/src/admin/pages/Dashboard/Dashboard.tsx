@@ -22,9 +22,7 @@ const crumbs: CrumbTypes[] = [
 
 const Dashboard: React.FC = () => {
   const userCtx = useContext(UserContext) as any;
-  const { profile, loading } = useFetchUserProfile(
-    userCtx?.user?.userGuid ?? ""
-  );
+  const { profile } = useFetchUserProfile(userCtx?.user?.userGuid ?? "");
 
   const USER_POSITION = profile?.position;
   const USER_ROLE = profile?.roles;

@@ -8,8 +8,8 @@ import { AiOutlineTwitter } from "react-icons/ai";
 import { FaPinterest, FaLinkedin, FaTiktok } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import GridLinks from "./components/GridLinks";
-import "./Footer.scss";
 import { paths } from "constants/routes";
+import "./Footer.scss";
 
 const Footer: React.FC = () => {
   return (
@@ -98,6 +98,7 @@ const Footer: React.FC = () => {
                   //   link: "/",
                   //   text: "24/7 Support",
                   // },
+                  // This is commented due to it's just waiting for the page's actual content
                 ]}
               />
             </Grid>

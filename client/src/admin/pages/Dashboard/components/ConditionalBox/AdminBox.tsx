@@ -11,7 +11,6 @@ import {
 import { paths } from "constants/routes";
 import React from "react";
 import {
-  FaEnvelopeOpenText,
   FaFly,
   FaUserShield,
   FaSnowman,
@@ -21,15 +20,13 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import DashboardCard from "../DashboardCard/DashboardCard";
-import { CrumbTypes, StatisticTypes } from "../../types";
+import { StatisticTypes } from "../../types";
 import Box from "admin/components/Box/Box";
 import Title from "admin/components/Title/Title";
 import { formatISODateToDate } from "helpers/dateFormatter";
 import BoxTable from "../BoxTable/BoxTable";
 import Spinner from "admin/components/Spinner/Spinner";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
-import { ChipTypes } from "admin/pages/Blogs/types";
-// import BlogCard from "library/BlogCard/BlogCard";
 import BlogCard from "library/Blogs/BlogCard/BlogCard";
 import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
 

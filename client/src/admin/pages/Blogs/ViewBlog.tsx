@@ -8,7 +8,6 @@ import agent from "api/agent";
 import { paths } from "constants/routes";
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import Button from "library/Button/Button";
 import "./ViewBlog.scss";
 
 const ViewBlog: React.FC = () => {

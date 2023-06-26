@@ -1,5 +1,5 @@
 export interface AuthorType {
-  image: string | " ";
+  image: string;
   authorName: string;
 }
 export interface BlogType {
