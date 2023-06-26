@@ -3,7 +3,7 @@ import NavLinksDesktop from "./components/NavLinksDesktop";
 import { Container, SwipeableDrawer, Typography } from "@mui/material";
 import { FaBars, FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 import useResponsive from "hooks/userResponsive";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
 import { paths } from "constants/routes";
 import { MAIN_IMAGES } from "constants/constants";
@@ -15,6 +15,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = (props) => {
   const isMobileMode = useResponsive("mobile");
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
+  const navigate = useNavigate();
   const navbarClassnames = classNames("navbar", {
     "color-navy": props.theme === "NAVY",
     "color-red": props.theme === "RED",
@@ -68,9 +69,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                     className: setActive(paths.solutions),
                   },
                   {
-                    link: "/",
+                    link: paths.events,
                     text: "Events",
-                    className: setActive(paths.about_us),
+                    className: setActive(paths.events),
                   },
                   {
                     link: paths.resources,
@@ -83,7 +84,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                     className: setActive(paths.contact_us),
                   },
                   {
-                    link: "/",
+                    link: paths.login,
                     text: "Agent Portal",
                     isButton: true,
                     className: "navbar__btn_-desktop",
@@ -115,7 +116,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               <Link to={paths.solutions}>Solutions</Link>
             </li>
             <li className="mobile-links">
-              <Link to={paths.home}>Events</Link>
+              <Link to={paths.events}>Events</Link>
             </li>
             <li className="mobile-links">
               <Link to={paths.resources}>Resources</Link>
@@ -124,7 +125,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               <Link to={paths.contact_us}>Contact Us</Link>
             </li>
             <li>
-              <button>Agent Portal</button>
+              <button onClick={() => navigate(paths.login)}>
+                Agent Portal
+              </button>
             </li>
           </ul>
           <div className="navbar__mobile-socials">

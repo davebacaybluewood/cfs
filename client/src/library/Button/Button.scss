@@ -38,14 +38,13 @@
 
 .cfs-btn-default {
   button {
-    color: white;
-    border: none;
+    border: 1px solid black;
+    color: black;
     margin-bottom: 1.7rem;
-    border: 1px solid white;
 
     &:hover {
-      color: white;
       cursor: pointer;
+      color: black;
       opacity: 0.8;
     }
   }

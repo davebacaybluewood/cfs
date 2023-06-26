@@ -1,4 +1,13 @@
 .blog-page {
+  .relative-spinner {
+    svg {
+      color: #333 !important;
+      path {
+        color: #333 !important;
+      }
+    }
+  }
+
   .headline-blogs {
     background: url(../../../public/assets/images/headline-images/blog-contact-headline);
     color: white;
@@ -9,38 +18,44 @@
     }
     p {
       margin-bottom: 3rem;
+      width: 100% !important;
     }
 
-    form {
-      input {
-        font-weight: 300;
-        width: 400px;
-        padding: 2rem;
-        border: 1px solid transparent;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-        outline: none;
+    .search-form {
+      display: flex;
 
-        &::placeholder {
-          font-family: "Roboto", sans-serif;
-          opacity: 0.7;
+      .css-1wc848c-MuiFormHelperText-root.Mui-error {
+        font-weight: 400;
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.4rem;
+      }
+      .MuiInputBase-root {
+        background-color: #fff;
+        font-size: 1.4rem;
+        padding-right: 0;
+        padding: 2rem;
+        border-radius: 1rem;
+
+        button {
+          position: absolute;
+          right: 0;
+          top: 0;
+          height: 100%;
+          border: 1px solid transparent;
+          border-radius: 1rem;
+          padding: 1.9rem;
+          background: #ed3e4b;
+          font-size: 1.5rem;
+          color: white;
+          cursor: pointer;
+
+          &:hover {
+            background: #00004d;
+          }
         }
       }
-      button {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        border: 1px solid transparent;
-        padding: 2rem;
-        background: #ed3e4b;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        font-size: 1.4rem;
-        color: white;
-        cursor: pointer;
-
-        &:hover {
-          background: #00004d;
-        }
+      .MuiInputBase-input {
+        padding: 0;
       }
     }
   }

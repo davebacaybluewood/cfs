@@ -18,12 +18,12 @@ const Plan: React.FC = () => {
           </React.Fragment>
         }
         list={[
-          "Track and control spending",
-          "Simple to use mobile app for drivers",
-          "24/7 US-based customer support",
+          "Track and control spending.",
+          "Simple to use mobile app for drivers.",
+          "24/7 US-based customer support.",
         ]}
         button={{
-          text: "Learn More",
+          text: "Free Consultation",
         }}
         image="\assets\images\home\rectangle-image1.png"
       />

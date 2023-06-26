@@ -1,0 +1,27 @@
+.calendly-section {
+  margin-top: -3rem;
+  .calendly-section-captions {
+    text-align: center;
+    color: #fff;
+    h2 {
+      font-size: 3rem;
+      font-weight: 600;
+      font-family: "Montserrat", sans-serif;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.7rem;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 797px) {
+  .calendly-section {
+    .calendly-section-captions {
+      margin-bottom: 10rem;
+    }
+  }
+}

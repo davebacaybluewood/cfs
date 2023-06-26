@@ -3,8 +3,15 @@ import Button from "library/Button/Button";
 import React from "react";
 
 import "./Overview.scss";
+import { useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
 
 const Overview: React.FC = () => {
+  const navigate = useNavigate();
+  const learnMoreHandler = () => {
+    navigate(paths.about_us);
+  };
+
   return (
     <div className="overview">
       <Container className="section-two">
@@ -61,7 +68,9 @@ const Overview: React.FC = () => {
                   </div>
                 </div>
 
-                <Button variant="primary">Learn More</Button>
+                <Button variant="primary" onClick={learnMoreHandler}>
+                  Learn More
+                </Button>
               </div>
             </div>
           </Grid>

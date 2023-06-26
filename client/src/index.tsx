@@ -20,12 +20,14 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          {REACT_ROUTES.map((route) => (
+          {REACT_ROUTES.map((route, index) => (
             <Route
+              key={index}
               {...route}
               path={route.path}
               element={
                 <Wrapper
+                  key={index}
                   showHeadline={route.showHeadline}
                   showNavbar={route.showNavbar}
                   showFooter={route.showFooter}

@@ -8,20 +8,19 @@ import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
 import { filteredFaqs } from "./components/FamilyProtection";
 import Consultation from "library/Consultation/Consultation";
-import { blogsDummy } from "constants/dummyDatas";
-import Testimonial from "library/Testimonial/Testimonial";
+// import Testimonial from "library/Testimonial/Testimonial"; Commented for future use
 import { Container, Grid } from "@mui/material";
 import StandardCard from "library/StandardCard/StandardCard";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import ReactMultiCarousel from "react-multi-carousel";
 import featureDataFamily from "./featureDataFamily";
-import "./FamilyProtection.scss";
 import useScroll from "hooks/useScroll";
-import testimonials from "./components/testimonials";
+import "./FamilyProtection.scss";
 
 const FamilyProtection: React.FC = () => {
   const carouselRef = useRef<any>();
   useScroll();
+
   return (
     <div className="family-protection__page">
       <div className="main-page__content">
@@ -128,10 +127,6 @@ const FamilyProtection: React.FC = () => {
                   <StandardCard>
                     <div className="carousel-navigator">
                       <h2>Other Features You May be Interested</h2>
-                      <p>
-                        veritatis et quasi architecto beatae vitae dicta sunt
-                        explicabo
-                      </p>
                       <div className="carousel-navigator-btn">
                         <button
                           onClick={(value) => carouselRef?.current?.previous()}
@@ -173,9 +168,16 @@ const FamilyProtection: React.FC = () => {
           <FAQs title="Frequently Asked Questions (FAQ)" faqs={filteredFaqs} />
         </div>
 
-        <Testimonial testimonials={testimonials} />
+        {/* <Testimonial testimonials={testimonials} /> */}
+        {/* Commented due for future use */}
 
-        <Blogs title="Latest from the blog" blogs={blogsDummy} />
+        <Blogs
+          title="Latest from the blogs"
+          blogsConfig={{
+            limit: 3,
+            skip: 0,
+          }}
+        />
       </div>
     </div>
   );

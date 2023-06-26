@@ -1,50 +1,47 @@
 .question-form-container {
-  display: flex;
   align-items: center;
   margin-top: 3rem;
   text-align: center;
   background-color: #fff;
   box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
 
+  .MuiFormHelperText-root {
+    margin: 0;
+    margin: 0rem 0 0rem 26rem;
+  }
+
   .questionForm-btn {
     button {
+      margin: -4rem 0 3rem 0;
       color: white;
-      padding: 1.7rem 3rem;
       font-size: 1.7rem;
     }
   }
 
-  .question-img {
-    width: 40%;
-    text-align: left;
-
-    img {
-      width: 100%;
-    }
-  }
   .question-form {
-    width: 80%;
+    width: 100%;
   }
   .section-title {
     color: #252b42;
     text-align: center;
     font-weight: 700;
     font-family: "Montserrat", sans-serif;
+    padding-top: 3rem;
   }
 
   .form {
-    padding: 5rem;
     h6 {
+      text-align: left;
       color: #252b42;
       font-family: "Montserrat", sans-serif;
       font-size: 1.6rem;
-      text-align: left;
-      margin-bottom: 1rem;
+      margin: 2rem 0 1rem 26rem;
     }
 
     .form-input {
       margin-bottom: 3rem;
       .MuiInputBase-root {
+        margin: auto;
         background: #f9f9f9;
         border: 1.33333px solid #e6e6e6;
         border-radius: 6.66667px;

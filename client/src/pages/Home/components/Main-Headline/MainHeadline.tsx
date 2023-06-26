@@ -9,7 +9,7 @@ const MainHeadline: React.FC = () => {
     <div className="main-headline">
       <Container>
         <Typography variant="h3">
-          Financial Comfort <br /> Now and Tomorrow.
+          Financial Comfort, <br /> Now and Tomorrow.
         </Typography>
       </Container>
     </div>

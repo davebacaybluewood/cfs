@@ -4,8 +4,6 @@
   border-radius: 3rem;
   padding-left: 8rem;
 
-  /** Background image */
-
   h3 {
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
@@ -27,6 +25,8 @@
   .cfs-btn-default {
     button {
       width: 30%;
+      color: white;
+      border: solid 1px white;
     }
   }
 }

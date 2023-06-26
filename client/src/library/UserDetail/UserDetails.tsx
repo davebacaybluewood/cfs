@@ -6,9 +6,11 @@ const UserDetails: React.FC<AuthorType> = (props) => {
   return (
     <div className="user-details">
       <div className="user-image">
-        <img src={props.image} alt="user-avatar" />
+        {props.image ? <img src={props.image} alt="user-avatar" /> : null}
       </div>
-      <div className="user-name">{props.authorName}</div>
+      <div className="user-name">
+        {props.authorName ? props.authorName : null}
+      </div>
     </div>
   );
 };

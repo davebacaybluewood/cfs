@@ -1,9 +1,10 @@
 .blog-card {
   transition: all 0.5s;
   padding: 0 1rem;
+  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
 
   &:hover {
-    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+    opacity: 0.7;
     cursor: pointer;
   }
   .blog-image {
@@ -42,8 +43,13 @@
       font-size: 1.5rem;
       line-height: 152.19%;
       margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .blog-content {
+    .card-blog-content {
       font-family: "Montserrat";
       font-style: normal;
       font-weight: 400;

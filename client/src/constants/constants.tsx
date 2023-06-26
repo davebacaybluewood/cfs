@@ -1,6 +1,6 @@
 import { RouteProps } from "react-router-dom";
 import US_STATES from "./statesAndLocation";
-import NotFound from "layout/NotFound/NotFound";
+import InvalidRoutePage from "pages/SingleBlogPage/InvalidRoutePage";
 import AboutUs from "pages/AboutUs/AboutUs";
 import AgentSupport from "pages/AgentSupport/AgentSupport";
 import BlogPage from "pages/BlogPage/BlogPage";
@@ -13,6 +13,8 @@ import Solutions from "pages/Solutions/Solutions";
 import { adminRoutes } from "admin/constants/constants";
 import { paths } from "./routes";
 import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
+import Events from "pages/Events/Events";
+import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -24,10 +26,15 @@ type ReactRoutesType = RouteProps & {
 const COMPANY_NAME = "Comfort Financial Solutions";
 
 const SOCIAL_MEDIA_LINKS = {
-  FACEBOOK: "fb.com",
-  TWITTER: "twitter.com",
-  INSTAGRAM: "ig.com",
-  LINKEDIN: "linkedin.com",
+  FACEBOOK: "https://www.facebook.com/gocfspro",
+  TWITTER: "https://twitter.com/goCFSpro",
+  INSTAGRAM: "https://www.instagram.com/gocfspro/",
+  LINKEDIN: "https://www.linkedin.com/company/gocfspro",
+
+  /*These Links are dummy, actual links are to be followed by the marketing team */
+  PINTEREST: "https://www.pinterest.ph/",
+  TIKTOK: "https://www.tiktok.com/en/",
+  YOUTUBE: "https://www.youtube.com/",
 };
 
 const MAIN_IMAGES = {
@@ -118,6 +125,11 @@ const REACT_ROUTES: ReactRoutesType[] = [
     path: paths.solutions,
   },
   {
+    element: <Events />,
+    path: paths.events,
+    showHeadline: true,
+  },
+  {
     element: <ContactPage />,
     path: paths.contact_us,
   },
@@ -136,19 +148,24 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showFooter: false,
   },
   {
-    element: <NotFound />,
+    element: <InvalidRoute />,
     path: "*",
-    showNavbar: false,
+    showNavbar: true,
     showHeadline: false,
-    showFooter: false,
+    showFooter: true,
   },
   {
-    element: <NotFound />,
+    element: <InvalidRoutePage />,
     path: paths.invalid,
     showHeadline: false,
-    showFooter: false,
+    showFooter: true,
   },
 ];
+
+const CALENDLY = {
+  CONSULTATION: "https://calendly.com/gocfs/free-30-minute-consultation",
+  WEEKLY: "https://calendly.com/gocfs/one-time-weekly-meeting",
+};
 
 export {
   COMPANY_NAME,
@@ -160,4 +177,5 @@ export {
   NOTIFICATION_ENUMS,
   BLANK_VALUE,
   REACT_ROUTES,
+  CALENDLY,
 };
