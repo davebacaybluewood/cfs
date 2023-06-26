@@ -35,6 +35,16 @@ pre {
   padding-top: 0 !important;
 }
 
+/** MUI Styles */
+.MuiMenu-paper {
+  .MuiButtonBase-root {
+    font-size: 1.4rem;
+  }
+}
+.MuiFormHelperText-root {
+  font-size: 1.3rem !important;
+}
+
 @media screen and (max-width: 320px) {
   .mobile-view-no-padding {
     padding: 0 !important;
