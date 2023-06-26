@@ -100,7 +100,7 @@ const Footer: React.FC = () => {
                   //   link: "/",
                   //   text: "24/7 Support",
                   // },
-                  // This is commented due to it's just waiting for the page's actual content
+                  // Please disregard, this will be use in future development
                 ]}
               />
             </Grid>
