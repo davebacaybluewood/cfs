@@ -11,7 +11,7 @@ import GridLinks from "./components/GridLinks";
 import { paths } from "constants/routes";
 import { Link } from "react-router-dom";
 import "./Footer.scss";
-import { SOCIAL_MEDIA_LINKS } from "constants/constants";
+import { COMPANY_NAME, SOCIAL_MEDIA_LINKS } from "constants/constants";
 
 const Footer: React.FC = () => {
   return (
@@ -134,7 +134,7 @@ const Footer: React.FC = () => {
         <Container>
           <div className="footer__copyright">
             <Typography variant="h5">
-              Copyright 2023 | Comfort Financial Solutions
+              Copyright {new Date().getFullYear()} | {COMPANY_NAME}
             </Typography>
           </div>
           <div className="footer__socials">
