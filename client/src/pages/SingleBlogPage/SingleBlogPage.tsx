@@ -36,7 +36,7 @@ const SingleBlogPage: React.FC = () => {
 
   return (
     <div className="single-blog-page">
-      {!blog ? (
+      {!blog && !loading ? (
         <InvalidRoutePage />
       ) : (
         <Container>
