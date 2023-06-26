@@ -26,10 +26,10 @@ type ReactRoutesType = RouteProps & {
 const COMPANY_NAME = "Comfort Financial Solutions";
 
 const SOCIAL_MEDIA_LINKS = {
-  FACEBOOK: "fb.com",
-  TWITTER: "twitter.com",
-  INSTAGRAM: "ig.com",
-  LINKEDIN: "linkedin.com",
+  FACEBOOK: "https://www.facebook.com/gocfspro",
+  TWITTER: "https://twitter.com/goCFSpro",
+  INSTAGRAM: "https://www.instagram.com/gocfspro/",
+  LINKEDIN: "https://www.linkedin.com/company/gocfspro",
 };
 
 const MAIN_IMAGES = {

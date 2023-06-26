@@ -9,7 +9,9 @@ import { FaPinterest, FaLinkedin, FaTiktok } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import GridLinks from "./components/GridLinks";
 import { paths } from "constants/routes";
+import { Link } from "react-router-dom";
 import "./Footer.scss";
+import { SOCIAL_MEDIA_LINKS } from "constants/constants";
 
 const Footer: React.FC = () => {
   return (
@@ -136,11 +138,19 @@ const Footer: React.FC = () => {
             </Typography>
           </div>
           <div className="footer__socials">
-            <SiFacebook />
-            <RiInstagramFill />
-            <AiOutlineTwitter />
+            <Link to={SOCIAL_MEDIA_LINKS.FACEBOOK}>
+              <SiFacebook />
+            </Link>
+            <Link to={SOCIAL_MEDIA_LINKS.INSTAGRAM}>
+              <RiInstagramFill />
+            </Link>
+            <Link to={SOCIAL_MEDIA_LINKS.TWITTER}>
+              <AiOutlineTwitter />
+            </Link>
+            <Link to={SOCIAL_MEDIA_LINKS.LINKEDIN}>
+              <FaLinkedin />
+            </Link>
             <FaPinterest />
-            <FaLinkedin />
             <FaTiktok />
             <BsYoutube />
           </div>
