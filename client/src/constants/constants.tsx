@@ -30,6 +30,11 @@ const SOCIAL_MEDIA_LINKS = {
   TWITTER: "https://twitter.com/goCFSpro",
   INSTAGRAM: "https://www.instagram.com/gocfspro/",
   LINKEDIN: "https://www.linkedin.com/company/gocfspro",
+
+  /*These Links are dummy, actual links are to be followed by the marketing team */
+  PINTEREST: "https://www.pinterest.ph/",
+  TIKTOK: "https://www.tiktok.com/en/",
+  YOUTUBE: "https://www.youtube.com/",
 };
 
 const MAIN_IMAGES = {
