@@ -33,9 +33,9 @@ const LargeBlogCard: React.FC<BlogProps> = (props) => {
             <h3>{props.blogTitle}</h3>
           </div>
           <UserDetails
-            authorName={`${props.author.authorName}, ${moment(
-              props.date
-            ).format("MMMM D, YYYY")}`}
+            authorName={`${props.author.authorName} ${moment(props.date).format(
+              "MMMM D, YYYY"
+            )}`}
             image={props.author.image}
           />
           <div className="blog-captions">

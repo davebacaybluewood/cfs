@@ -1,11 +1,13 @@
 import Button from "../../../../library/Button/Button";
-import { Typography } from "@mui/material";
 import React from "react";
 import MovingComponent from "react-moving-text";
 
 import "./HeadlineFamily.scss";
+import useScroll from "hooks/useScroll";
+import { Typography } from "@mui/material";
 
 const HeadlineFamily: React.FC = () => {
+  useScroll();
   return (
     <div className="headline-family">
       <div className="captions">

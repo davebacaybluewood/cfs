@@ -1,0 +1,53 @@
+.blog-admin-container {
+  .viewBlog-content {
+    padding: 2rem;
+    background-color: white;
+
+    span,
+    a {
+      font-size: 1.75rem;
+      font-family: "Montserrat", sans-serif;
+      line-height: 3rem;
+    }
+
+    .viewBlog-content-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+
+      h2 {
+        text-align: left;
+        font-size: 3rem;
+      }
+
+      .viewBlog-actions {
+        align-items: center;
+        display: flex;
+        button {
+          margin-left: 1rem;
+          border: none;
+          background: transparent;
+          font-size: 1.75rem;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .viewBlog-html {
+      .viewBlog-label {
+        font-size: 2rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1.5rem;
+        margin-bottom: 2rem;
+
+        .blog-thumbnail-label {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

@@ -1,10 +1,9 @@
 import React from "react";
 import { BlogType } from "../BlogModels";
-import "./BlogCard.scss";
 import { getDateDays, getDateMonthShort } from "helpers/date";
 import UserDetails from "library/UserDetail/UserDetails";
-import { Tooltip } from "@mui/material";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import "./BlogCard.scss";
 
 const BlogCard: React.FC<BlogType> = (props) => {
   return (
@@ -37,7 +36,7 @@ const BlogCard: React.FC<BlogType> = (props) => {
       </div>
       <UserDetails
         authorName={props.author.authorName}
-        image={props.author.image}
+        image={props.author.image ? props.author.image : ""}
       />
     </div>
   );

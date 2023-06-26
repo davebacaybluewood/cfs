@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
-import { paths } from "constants/routes";
-import "./NotFound.scss";
+import "./InvalidRoute.scss";
 
 const InvalidRoute = () => {
   return (

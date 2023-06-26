@@ -16,13 +16,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "./BlogForm.scss";
 import { UserContext } from "admin/context/UserProvider";
 import MultiSelectInput from "library/MultiSelectInput/MultiSelectInput";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import Spinner from "library/Spinner/Spinner";
 import "react-quill/dist/quill.snow.css";
 import adminPaths from "admin/constants/routes";
+import "./BlogForm.scss";
 
 const crumbs: CrumbTypes[] = [
   {

@@ -1,6 +1,6 @@
 import { RouteProps } from "react-router-dom";
 import US_STATES from "./statesAndLocation";
-import NotFound from "layout/NotFound/NotFound";
+import InvalidRoutePage from "pages/SingleBlogPage/InvalidRoutePage";
 import AboutUs from "pages/AboutUs/AboutUs";
 import AgentSupport from "pages/AgentSupport/AgentSupport";
 import BlogPage from "pages/BlogPage/BlogPage";
@@ -14,6 +14,7 @@ import { adminRoutes } from "admin/constants/constants";
 import { paths } from "./routes";
 import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
 import Events from "pages/Events/Events";
+import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -142,17 +143,17 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showFooter: false,
   },
   {
-    element: <NotFound />,
+    element: <InvalidRoute />,
     path: "*",
     showNavbar: true,
     showHeadline: false,
     showFooter: true,
   },
   {
-    element: <NotFound />,
+    element: <InvalidRoutePage />,
     path: paths.invalid,
     showHeadline: false,
-    showFooter: false,
+    showFooter: true,
   },
 ];
 

@@ -2,11 +2,10 @@ import { paths } from "constants/routes";
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import React, { useContext } from "react";
 import { CrumbTypes } from "./types";
-import "./Dashboard.scss";
 import ConditionalBox from "./components/ConditionalBox/ConditionalBox";
-import "./Dashboard.scss";
 import { UserContext } from "admin/context/UserProvider";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import "./Dashboard.scss";
 
 const crumbs: CrumbTypes[] = [
   {

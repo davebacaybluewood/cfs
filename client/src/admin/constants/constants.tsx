@@ -42,6 +42,7 @@ import ProfileForm from "admin/pages/Profile/components/ProfileForm/ProfileForm"
 import ProfileSettings from "admin/pages/Profile/components/ProfileSettings/ProfileSettings";
 import WebinarForm from "admin/pages/FileMaintenance/pages/Webinars/WebinarForm";
 import Users from "admin/pages/Users/Users";
+import ViewBlog from "admin/pages/Blogs/ViewBlog";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -405,6 +406,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <Blogs />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.adminViewBlogs,
+    element: (
+      <GuardedWrapper>
+        <ViewBlog />
       </GuardedWrapper>
     ),
   },

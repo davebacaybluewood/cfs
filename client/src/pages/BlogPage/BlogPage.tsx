@@ -96,6 +96,7 @@ const BlogPage: React.FC = () => {
               {displayedBlogs?.map((data, index) => {
                 return (
                   <LargeBlogCard
+                    key={index}
                     align={isEven(index) ? "right" : "left"}
                     blogTitle={`${data.title}`}
                     date={data.createdAt ?? ""}
