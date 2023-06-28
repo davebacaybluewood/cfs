@@ -57,7 +57,7 @@ const EditorBox = () => {
               {/* <Calendar /> */}
               <Title
                 title="Blogs"
-                subtitle="List of 5 blogs"
+                subtitle={`List of ${loading ? 0 : blogs?.length} blogs`}
                 link={paths.webinar}
               />
 
