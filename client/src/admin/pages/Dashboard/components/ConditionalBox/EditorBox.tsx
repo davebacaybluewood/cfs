@@ -10,9 +10,11 @@ import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformation
 import Spinner from "admin/components/Spinner/Spinner";
 import BlogCard from "library/Blogs/BlogCard/BlogCard";
 import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
+import { useNavigate } from "react-router-dom";
 
 const EditorBox = () => {
   const { blogs, loading } = useFetchBlogResource();
+  const navigate = useNavigate();
 
   const statistics: StatisticTypes[] = [
     {
@@ -58,7 +60,6 @@ const EditorBox = () => {
               <Title
                 title="Blogs"
                 subtitle={`List of ${loading ? 0 : blogs?.length} blogs`}
-                link={paths.webinar}
               />
 
               {loading ? (
@@ -83,6 +84,14 @@ const EditorBox = () => {
                             description={data.content}
                             image={data.thumbnail ?? ""}
                             title={data.title}
+                            onClick={() =>
+                              navigate(
+                                paths.adminViewBlogs.replace(
+                                  ":blogTitle",
+                                  data?._id
+                                )
+                              )
+                            }
                           />
                         </Grid>
                       );

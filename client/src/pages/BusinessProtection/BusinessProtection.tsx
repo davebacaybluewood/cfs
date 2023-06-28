@@ -14,9 +14,13 @@ import ReactMultiCarousel from "react-multi-carousel";
 import featureDataBusiness from "./featureDataBusiness";
 import SolutionBusiness from "./components/SolutionBusiness/solutionBusiness";
 import useScroll from "hooks/useScroll";
+import { CALENDLY } from "constants/constants";
+import { PopupModal } from "react-calendly";
+
 import "./BusinessProtection.scss";
 
 const BusinessProtection: React.FC = () => {
+  const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
   const carouselRef = useRef<any>();
   useScroll();
   return (
@@ -33,7 +37,11 @@ const BusinessProtection: React.FC = () => {
         backgroundImage="/assets/images/headline-images/business-protection-image.png"
       >
         <div className="headline__btn">
-          <Button variant="danger" className="danger__btn">
+          <Button
+            variant="danger"
+            className="danger__btn"
+            onClick={() => setOpenCalendlyModal(true)}
+          >
             Free Consultation
           </Button>
           <Button variant="default">Learn More</Button>
@@ -154,8 +162,17 @@ const BusinessProtection: React.FC = () => {
           skip: 0,
         }}
       />
+      <PopupModal
+        url={CALENDLY.CONSULTATION}
+        onModalClose={() => setOpenCalendlyModal(false)}
+        open={openCalendlyModal}
+        rootElement={document.getElementById("root") as any}
+      />
     </div>
   );
 };
 
 export default BusinessProtection;
+function useState(arg0: boolean): [any, any] {
+  throw new Error("Function not implemented.");
+}
