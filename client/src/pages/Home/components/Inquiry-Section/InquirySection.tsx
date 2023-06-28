@@ -29,37 +29,20 @@ const InquirySection: React.FC = () => {
       <InquiryCard
         header={
           <React.Fragment>
-            Safeguarding Your <br /> Family's Future
-          </React.Fragment>
-        }
-        description={
-          <React.Fragment>
-            CFS helps individuals and families build a <br />
-            comfortable future by advocating Financial <br /> Awareness and
-            providing Risk Management
-            <br /> Solutions.
-          </React.Fragment>
-        }
-        image="/assets/images/home/rectangle-image1.png"
-        align="right"
-        color="navy"
-        buttonConfigs={{
-          text: "Learn More",
-          onClick: () => learnMoreHandler("family-protection"),
-        }}
-      />
-      <InquiryCard
-        header={
-          <React.Fragment>
             Ensuring Your Business' <br /> Stability and Resilience
           </React.Fragment>
         }
         description={
           <React.Fragment>
-            CFS helps individuals and families build a <br />
+            {/* CFS helps individuals and families build a <br />
             comfortable future by advocating Financial <br /> Awareness and
             providing Risk Management
-            <br /> Solutions.
+            <br /> Solutions. Commented for future dev use*/}
+            CFS solutions for business owners play a pivotal role <br /> in
+            safeguarding the financial stability and continuity of <br />{" "}
+            business owners. By providing a safety net for unforeseen <br />{" "}
+            events,CFS solutions ensure that a business and its people <br />{" "}
+            will continue to prosper.
           </React.Fragment>
         }
         image="/assets/images/home/rectangle-image2.png"
@@ -70,6 +53,7 @@ const InquirySection: React.FC = () => {
           onClick: () => learnMoreHandler("business-protection"),
         }}
       />
+
       <InquiryCard
         header={
           <React.Fragment>
@@ -90,6 +74,35 @@ const InquirySection: React.FC = () => {
         buttonConfigs={{
           text: "Learn More",
           onClick: () => learnMoreHandler("agent-support"),
+        }}
+      />
+      <InquiryCard
+        header={
+          <React.Fragment>
+            Safeguarding Your <br /> Family's Future
+          </React.Fragment>
+        }
+        description={
+          <React.Fragment>
+            {/* CFS helps individuals and families build a <br />
+            comfortable future by advocating Financial <br /> Awareness and
+            providing Risk Management
+            <br /> Solutions. Commented for future dev use*/}
+            Life insurance is essential for families looking to protect their{" "}
+            <br />
+            financial well-being and provide a better future for their loved
+            ones. <br /> In the event of an unexpected death, life insurance can
+            help cover expenses such as funeral costs, outstanding debts, and{" "}
+            <br />
+            ongoing living expenses.
+          </React.Fragment>
+        }
+        image="/assets/images/home/rectangle-image1.png"
+        align="left"
+        color="navy"
+        buttonConfigs={{
+          text: "Learn More",
+          onClick: () => learnMoreHandler("family-protection"),
         }}
       />
     </Container>

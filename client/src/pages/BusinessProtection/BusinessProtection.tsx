@@ -146,11 +146,7 @@ const BusinessProtection: React.FC = () => {
       <SolutionBusiness />
       <ConsultationBusiness />
       <ProcessBusiness />
-      <FAQs
-        title="Frequently Asked Questions (FAQ)"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        faqs={faqs}
-      />
+      <FAQs title="Frequently Asked Questions (FAQ)" faqs={faqs} />
       <Blogs
         title="Latest News and Updates"
         blogsConfig={{

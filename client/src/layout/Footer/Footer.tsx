@@ -93,7 +93,7 @@ const Footer: React.FC = () => {
                     text: "Free Agent Training",
                   },
                   {
-                    link: "/",
+                    link: paths.resources,
                     text: "Blog",
                   },
                   // {
