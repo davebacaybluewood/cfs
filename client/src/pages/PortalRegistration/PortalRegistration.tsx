@@ -196,8 +196,8 @@ const PortalRegistration: React.FC = () => {
           }) => {
             const accountDetailsValidity =
               errors.confirmPassword || errors.password || errors.emailAddress
-                ? true
-                : false;
+                ? false
+                : true;
 
             const personalInfoValidity =
               errors.firstName ||

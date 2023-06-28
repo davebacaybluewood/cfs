@@ -28,6 +28,7 @@
     "react-calendly": "^4.1.1",
     "react-component-export-image": "^1.0.6",
     "react-dom": "^18.2.0",
+    "react-google-recaptcha": "^2.1.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.8.0",
     "react-moving-text": "^0.0.7",
@@ -73,5 +74,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-google-recaptcha": "^2.1.5"
   }
 }
