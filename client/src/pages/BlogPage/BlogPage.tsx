@@ -17,6 +17,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import FormikTextInput from "library/Formik/FormikInput";
 import "./BlogPage.scss";
+import Head from "library/Head/Head";
+import METATAGS from "constants/metatags";
 
 const BlogPage: React.FC = () => {
   useScroll();
@@ -44,6 +46,11 @@ const BlogPage: React.FC = () => {
 
   return (
     <div className="blog-page">
+      <Head
+        title={METATAGS.BLOGS.TITLE}
+        canonical={window.location.href}
+        description={METATAGS.BLOGS.DESCRIPTION}
+      />
       <div className="headline-blogs">
         <Headline
           title="Explore Our Blog for Expert Insights "
@@ -116,7 +123,7 @@ const BlogPage: React.FC = () => {
                       authorName: data.authorName ?? "",
                       image: data.authorThumbnail ?? "",
                     }}
-                    blogImage={data.thumbnail}
+                    blogImage={data.thumbnail ?? ""}
                   />
                 );
               })}

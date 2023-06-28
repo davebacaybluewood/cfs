@@ -1,11 +1,12 @@
 const tagOptions = [
-    {label: "finance"},
-    {label: "money"},
-    {label: "business"},
-    {label: "insurance"},
-    {label: "lifestyle"}
+  { label: "finance" },
+  { label: "money" },
+  { label: "business" },
+  { label: "insurance" },
+  { label: "lifestyle" },
 ];
 
-export {
-    tagOptions
-};
+const metatagKeywords = ["Financial Blog", "Financial Advice"];
+const blogTags = ["Financial Blog", "Financial Advice"];
+
+export { tagOptions, metatagKeywords, blogTags };

@@ -31,7 +31,6 @@ const ADDITIONAL_BLOGS = 6;
 const Blogs: React.FC = () => {
   const [limit, setLimit] = useState(12);
   const { blogs, loading, blogTotalLength } = useFetchBlogResource(0, limit);
-
   const navigate = useNavigate();
 
   const addBlogHandler = () => {
@@ -90,7 +89,7 @@ const Blogs: React.FC = () => {
                     description={blog.content
                       .replace(/<[^>]*>/g, " ")
                       .replace("&quot;", " ")}
-                    image={blog.thumbnail}
+                    image={blog.thumbnail ?? ""}
                     title={blog.title}
                     key={blog._id}
                     onClick={() => {

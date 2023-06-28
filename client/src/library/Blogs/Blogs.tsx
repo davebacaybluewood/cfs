@@ -60,7 +60,7 @@ const Blogs: React.FC<BlogsProps> = (props) => {
                   description={blog.content
                     .replace(/<[^>]*>/g, " ")
                     .replace("&quot;", " ")}
-                  image={blog.thumbnail}
+                  image={blog.thumbnail ?? ""}
                   title={blog.title}
                   key={blog.authorID}
                   onClick={() => {

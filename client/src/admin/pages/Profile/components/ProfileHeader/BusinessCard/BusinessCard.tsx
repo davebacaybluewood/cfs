@@ -1,5 +1,5 @@
-import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from 'react-component-export-image';
-import React, { useRef } from 'react';
+import { exportComponentAsJPEG } from "react-component-export-image";
+import React, { useRef } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { MAIN_IMAGES } from "constants/constants";
 import "./BusinessCard.scss";
@@ -15,11 +15,11 @@ interface BusinessCardProps {
   position: string;
 }
 const BusinessCard: React.FC<BusinessCardProps> = (props) => {
-  const businessCardRef = useRef()
+  const businessCardRef = useRef();
 
-  const emailAddressLength = props.email?.length
+  const emailAddressLength = props.email?.length;
 
-  const textSize = emailAddressLength > 20 ? "1rem" : "1.2rem"
+  const textSize = emailAddressLength > 20 ? "1rem" : "1.2rem";
 
   return (
     <div className="business-card-wrapper" ref={businessCardRef as any}>
@@ -31,15 +31,15 @@ const BusinessCard: React.FC<BusinessCardProps> = (props) => {
       >
         <div className="business-card-content">
           <div className="primary-info">
-            <h2>{props.name} asfasf</h2>
+            <h2>{props.name}</h2>
             <h3>{props.position}</h3>
           </div>
           <div className="secondary-info">
             <div className="captions">
-              <h4 style={{fontSize: textSize}}>{props.email}</h4>
-              <h4 style={{fontSize: textSize}}>{props.phoneNumber}</h4>
-              <h4 style={{fontSize: textSize}}>www.gocfs.pro</h4>
-              <h4 style={{fontSize: textSize}}>{props.state}</h4>
+              <h4 style={{ fontSize: textSize }}>{props.email}</h4>
+              <h4 style={{ fontSize: textSize }}>{props.phoneNumber}</h4>
+              <h4 style={{ fontSize: textSize }}>www.gocfs.pro</h4>
+              <h4 style={{ fontSize: textSize }}>{props.state}</h4>
               <p>LICENSE NO. 0912322</p>
             </div>
             <div className="qr-code">
@@ -55,9 +55,15 @@ const BusinessCard: React.FC<BusinessCardProps> = (props) => {
         </div>
       </div>
       <div className="business-card-actions">
-        <button onClick={() => exportComponentAsJPEG(businessCardRef as any, {
-          fileName: `${props.name} - Business Card`,
-        })}>Download</button>
+        <button
+          onClick={() =>
+            exportComponentAsJPEG(businessCardRef as any, {
+              fileName: `${props.name} - Business Card`,
+            })
+          }
+        >
+          Download
+        </button>
       </div>
     </div>
   );

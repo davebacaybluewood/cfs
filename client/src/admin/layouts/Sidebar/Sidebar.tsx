@@ -61,6 +61,10 @@ const Sidebar: React.FC<SidebarProps> = ({
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
 
+  const profileName = profile?.name
+    ? profile?.name
+    : `${profile?.firstName} ${profile?.lastName}`;
+
   return (
     <ProSidebar
       collapsed={collapsed}
@@ -90,11 +94,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <SidebarContent>
         {loading ? null : (
           <div className="user-sidebar">
-            <h2>
-              {profile?.name
-                ? profile?.name
-                : profile?.firstName + " " + profile?.lastName}
-            </h2>
+            <h2>{profileName}</h2>
             <div>
               {profile?.position?.map((data) => {
                 const isAgent = POSITIONS[0].value === data.value;

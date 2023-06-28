@@ -1,63 +1,50 @@
-.form-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  box-shadow: 3px 3px 3px #eee;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  border-top: 2px solid #eee;
-  background-color: #fff;
+.blog-form-wrapper {
+  .form-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    box-shadow: 3px 3px 3px #eee;
+    border-top: 2px solid #eee;
+    background-color: #fff;
+    display: flex;
+    justify-content: end;
+    align-items: center;
 
-  button {
-    height: 40px;
-    margin-right: 1rem;
-    margin-top: 0;
+    button {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+    .btn-submit {
+      margin-right: 1rem;
+      margin-left: 0.5rem;
+    }
   }
-}
-.blog-light {
-  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
-  background-color: #fff;
-  margin-top: 1rem;
-  padding: 1rem;
-  margin-bottom: 5rem;
-  .blog-form {
+  .blog-light {
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+    background-color: #fff;
+    margin-top: 1rem;
+    padding: 2rem 1rem;
     margin-bottom: 5rem;
 
-    .blog-form-container {
-      .MuiInputBase-root,
-      .MuiFormLabel-root {
-        font-size: 1.4rem !important;
-      }
-      .tags-grid {
-        z-index: 2;
-      }
-      .blog-thumbnail-upload-container {
-        .blog-thumbnail-button {
-          margin-bottom: 1rem;
-        }
-        .img-container {
-          position: relative;
-          padding: 0.5rem;
-          width: 300px;
+    .blog-form {
+      .blog-img-container {
+        width: 300px;
+        margin-top: 0.5rem;
+        img {
+          width: 100%;
           border: 1px solid #ddd;
           border-radius: 5px;
-          img {
-            width: 100%;
-          }
-        }
-        .alt-input {
-          width: 300px;
         }
       }
     }
   }
-}
 
-.css-10botns-MuiInputBase-input-MuiFilledInput-input {
-  margin: 1rem 0;
+  .MuiFormControlLabel-label {
+    font-size: 1.2rem !important;
+  }
+  .MuiInputBase-input {
+    font-size: 13px;
+  }
 }

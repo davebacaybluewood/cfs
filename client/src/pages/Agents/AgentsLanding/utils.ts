@@ -9,7 +9,7 @@ const MenuProps = {
   autoFocus: false,
   disableAutoFocusItem: true,
   disableEnforceFocus: true,
-  disableAutoFocus: true
+  disableAutoFocus: true,
 };
 const langOptions = ["Chinese", "Spanish"];
 const specialtiesOptions = ["Item 1", "Item 2"];

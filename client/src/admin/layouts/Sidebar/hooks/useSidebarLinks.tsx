@@ -107,13 +107,6 @@ const useSidebarLinks = (
     );
   });
 
-  // console.log({
-  //   isAgent,
-  //   isContentCreator,
-  //   isAdmin,
-  //   isEditor,
-  // });
-
   useEffect(() => {
     setData({
       loading: true,

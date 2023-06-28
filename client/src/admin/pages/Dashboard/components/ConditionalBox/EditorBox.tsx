@@ -81,7 +81,7 @@ const EditorBox = () => {
                             blogId={data._id}
                             date={data.createdAt ?? ""}
                             description={data.content}
-                            image={data.thumbnail}
+                            image={data.thumbnail ?? ""}
                             title={data.title}
                           />
                         </Grid>

@@ -13,6 +13,7 @@ import Spinner from "library/Spinner/Spinner";
 import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
 import "./SingleBlogPage.scss";
 import InvalidRoutePage from "./InvalidRoutePage";
+import Head from "library/Head/Head";
 
 const SingleBlogPage: React.FC = () => {
   useScroll();
@@ -36,6 +37,12 @@ const SingleBlogPage: React.FC = () => {
 
   return (
     <div className="single-blog-page">
+      <Head
+        canonical={window.location.href}
+        title={blog?.title ?? ""}
+        description={blog?.metaTagDescription ?? ""}
+        keywords={blog?.metaTagKeywords?.join(", ")}
+      ></Head>
       {!blog && !loading ? (
         <InvalidRoutePage />
       ) : (

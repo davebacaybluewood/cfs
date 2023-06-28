@@ -1,6 +1,7 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import CreatableSelect from "react-select/creatable";
 import "./MultiSelectInput.scss";
+import { GroupBase, StylesConfig } from "react-select";
 
 export type MultiSelectInputType = {
   label: string;
@@ -11,6 +12,10 @@ interface OptionType {
   onChange: (e?: any) => void;
   onCreate: (e?: any) => void;
   value: SetStateAction<MultiSelectInputType | undefined>;
+  styles?:
+    | StylesConfig<MultiSelectInputType, true, GroupBase<MultiSelectInputType>>
+    | undefined;
+  error?: boolean;
 }
 
 const metaTagsData = [
@@ -92,22 +97,18 @@ const MultiSelectInput: React.FC<OptionType> = (props) => {
         options={options}
         value={value}
         className="multi-select-input"
-        styles={{
-          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-          control: (baseStyles, state) => ({
-            ...baseStyles,
-            fontSize: "15px",
-            border: state.isFocused ? "none" : "none",
-            outline: "none",
-            boxShadow: "none",
-            borderBottom: state.isFocused
-              ? "2px solid #1976d2"
-              : "1px solid gray",
-            backgroundColor: state.isFocused
-              ? "rgba(0, 0, 0, 0.03)"
-              : "rgba(0, 0, 0, 0.06)",
-          }),
-        }}
+        styles={
+          props.styles ?? {
+            menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              fontSize: "13px",
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              borderColor: props.error ? "#d32f2f" : "hsl(0, 0%, 80%)",
+            }),
+          }
+        }
       />
     </div>
   );

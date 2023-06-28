@@ -1,6 +1,10 @@
 import axios, { AxiosResponse } from "axios";
 import getUserToken from "helpers/getUserToken";
-import { BlogData, BlogDataWithLength } from "pages/BlogPage/models";
+import {
+  BlogData,
+  BlogDataWithLength,
+  BlogPayload,
+} from "pages/BlogPage/models";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -42,7 +46,11 @@ const BlogAndResource = {
       }`
     ),
   listSingle: (blogTitle: string) =>
-    requests.get<BlogData | undefined>(`/api/blog-and-resource/${blogTitle}`),
+    requests.get<BlogData | undefined>(
+      `/api/blog-and-resource/${blogTitle}/title`
+    ),
+  listSingleById: (blogId: string) =>
+    requests.get<BlogData | undefined>(`/api/blog-and-resource/${blogId}`),
   search: (keyword: string) =>
     requests.post<BlogDataWithLength | undefined>(
       "/api/blog-and-resource/search",
@@ -50,6 +58,69 @@ const BlogAndResource = {
         title: keyword,
       }
     ),
+
+  create: async (values: BlogPayload) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      return config;
+    });
+
+    values.tags = values.tags?.map((data: any) => data.value);
+    values.metaTagKeywords = values.metaTagKeywords?.map(
+      (data: any) => data.value
+    );
+    const res = await requests.post<any>(`/api/blog-and-resource/`, values);
+
+    if (res?.userGuid) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  update: async (values: BlogPayload) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      return config;
+    });
+
+    values.tags = values.tags?.map((data: any) => {
+      return {
+        label: data.value,
+      };
+    }) as any;
+    values.metaTagKeywords = values.metaTagKeywords?.map((data: any) => {
+      return {
+        keyword: data.value,
+      };
+    }) as any;
+    const res = await requests.put<any>(
+      `/api/blog-and-resource/${values._id}`,
+      values
+    );
+
+    if (res?.userGuid) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  delete: async (id: string) => {
+    const res = await requests.del<any>(`/api/blog-and-resource/${id}`);
+
+    if (res) {
+      return true;
+    } else {
+      return false;
+    }
+  },
 };
 
 const agent = {

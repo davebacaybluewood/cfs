@@ -13,6 +13,7 @@ interface MultiSelectInputWithCreateProps {
   placeholder?: string;
   onCreate: (e: any) => void;
   variant?: "filled" | "standard";
+  defaultValue?: OptionTypes[];
 }
 const MultiSelectInputWithCreate: React.FC<MultiSelectInputWithCreateProps> = (
   props

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Dialog, Button as MUIButton } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Button as MUIButton,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactHtmlParser from "html-react-parser";
 import useScroll from "hooks/useScroll";
@@ -9,6 +16,7 @@ import { paths } from "constants/routes";
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import "./ViewBlog.scss";
+import { toast } from "react-toastify";
 
 const ViewBlog: React.FC = () => {
   const [thumbnail, setThumbnail] = useState("");
@@ -52,6 +60,21 @@ const ViewBlog: React.FC = () => {
     },
   ];
 
+  const deleteBlog = () => {
+    agent.BlogAndResource.delete(blog?._id ?? "");
+    toast.info(`Blog has been deleted`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    navigate(paths.adminBlogs);
+  };
+
   return (
     <Wrapper
       className="blog-admin-container"
@@ -65,7 +88,9 @@ const ViewBlog: React.FC = () => {
           <div className="viewBlog-actions">
             <button
               title="Edit Blog"
-              onClick={() => navigate(paths.adminEditBlogs)}
+              onClick={() =>
+                navigate(paths.adminBlogForm.replace(":id", blog?._id ?? ""))
+              }
             >
               <FaEdit />
             </button>
@@ -91,7 +116,29 @@ const ViewBlog: React.FC = () => {
         </div>
       </div>
       <Dialog onClose={() => setOpenModal(false)} open={openModal}>
-        <img className="embed-responsive-item-admin" src={thumbnail}></img>
+        <img className="embed-responsive-item-admin" src={thumbnail} />
+      </Dialog>
+      <Dialog open={actionDialog} onClose={() => setActionDialog(false)}>
+        <DialogContent>
+          <DialogContentText fontSize={15}>
+            Are you sure you want to delete {blog?.title}?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setActionDialog(false)}
+            style={{ fontSize: "13px" }}
+          >
+            No
+          </Button>
+          <Button
+            onClick={() => deleteBlog()}
+            autoFocus
+            style={{ fontSize: "13px" }}
+          >
+            Yes, I want to delete this blog.
+          </Button>
+        </DialogActions>
       </Dialog>
     </Wrapper>
   );
