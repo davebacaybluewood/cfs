@@ -1,3 +1,11 @@
+$main-color: #021025;
+$main-color-gradient: linear-gradient(
+  90deg,
+  #0057b7 0%,
+  $main-color 30%,
+  $main-color
+) !important;
+
 .banner {
   z-index: 999;
   position: relative;
