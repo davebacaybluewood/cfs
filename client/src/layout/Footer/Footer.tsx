@@ -16,14 +16,7 @@ import { COMPANY_NAME, SOCIAL_MEDIA_LINKS } from "constants/constants";
 const Footer: React.FC = () => {
   return (
     <div className="footer">
-      <div className="footer__header">
-        <Container>
-          <Typography variant="h3">Comfort Financial Solutions</Typography>
-          <Typography variant="h5">
-            The quick fox jumps over the lazy dog
-          </Typography>
-        </Container>
-      </div>
+      <div className="footer__header"></div>
 
       <div className="footer__main-section">
         <Container>
@@ -93,7 +86,7 @@ const Footer: React.FC = () => {
                     text: "Free Agent Training",
                   },
                   {
-                    link: "/",
+                    link: paths.resources,
                     text: "Blog",
                   },
                   // {
@@ -111,18 +104,38 @@ const Footer: React.FC = () => {
                 <li>
                   <a href="/">
                     <HiOutlinePhone />
-                    <span>(480)555-0103</span>
+                    <span>+1 (702) 900-5666</span>
                   </a>
                 </li>
                 <li>
                   <a href="/">
-                    <CiLocationOn /> <span>Nevada, Texas</span>
+                    <CiLocationOn /> <span>Las Vegas, NV</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/">
+                    <CiLocationOn
+                      style={{
+                        color: "transparent",
+                      }}
+                    />{" "}
+                    <span>Los Angeles, CA</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/">
+                    <CiLocationOn
+                      style={{
+                        color: "transparent",
+                      }}
+                    />{" "}
+                    <span>New York City, NY</span>
                   </a>
                 </li>
                 <li>
                   <a href="/">
                     <MdEmail />
-                    <span>admin@gocfs.pro</span>
+                    <span>support@gocfs.pro</span>
                   </a>
                 </li>
               </ul>

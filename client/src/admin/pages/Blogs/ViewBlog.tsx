@@ -24,20 +24,19 @@ const ViewBlog: React.FC = () => {
   const [actionDialog, setActionDialog] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
 
-  const { blogTitle } = useParams();
-  const originalTitle = blogTitle?.split("-").join(" ").toLowerCase();
+  const { blogTitle: blogId } = useParams();
   const [loading, setLoading] = useState(false);
   const [blog, setBlog] = useState<BlogData | undefined>();
 
   useEffect(() => {
     setLoading(true);
     const fetchSingleData = async () => {
-      const data = await agent.BlogAndResource.listSingle(originalTitle ?? "");
+      const data = await agent.BlogAndResource.listSingleById(blogId ?? "");
       setBlog(data);
       setLoading(false);
     };
     fetchSingleData();
-  }, [blogTitle]);
+  }, [blogId]);
 
   const navigate = useNavigate();
   useScroll();
