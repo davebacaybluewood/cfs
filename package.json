@@ -31,6 +31,9 @@
     "url": "https://github.com/davebacayvc/comfort-life-financial/issues"
   },
   "homepage": "https://github.com/davebacayvc/comfort-life-financial#readme",
+  "engines": {
+    "node": "18.15.0"
+  },
   "dependencies": {
     "apollo-server-express": "^3.11.1",
     "bcryptjs": "^2.4.3",
