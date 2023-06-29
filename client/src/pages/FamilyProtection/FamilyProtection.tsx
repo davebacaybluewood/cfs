@@ -15,9 +15,12 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import ReactMultiCarousel from "react-multi-carousel";
 import featureDataFamily from "./featureDataFamily";
 import useScroll from "hooks/useScroll";
+import { CALENDLY } from "constants/constants";
+import { PopupModal } from "react-calendly";
 import "./FamilyProtection.scss";
 
 const FamilyProtection: React.FC = () => {
+  const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
   const carouselRef = useRef<any>();
   useScroll();
 
@@ -31,7 +34,11 @@ const FamilyProtection: React.FC = () => {
             backgroundImage="/assets/images/headline-images/family-protection-image.png"
           >
             <div className="headline__btn">
-              <Button variant="danger" className="danger__btn">
+              <Button
+                variant="danger"
+                className="danger__btn"
+                onClick={() => setOpenCalendlyModal(true)}
+              >
                 Free Consultation
               </Button>
               <Button variant="default">Learn More</Button>
@@ -179,6 +186,12 @@ const FamilyProtection: React.FC = () => {
           }}
         />
       </div>
+      <PopupModal
+        url={CALENDLY.CONSULTATION}
+        onModalClose={() => setOpenCalendlyModal(false)}
+        open={openCalendlyModal}
+        rootElement={document.getElementById("root") as any}
+      />
     </div>
   );
 };

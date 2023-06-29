@@ -93,15 +93,8 @@ const Blogs: React.FC = () => {
                     title={blog.title}
                     key={blog._id}
                     onClick={() => {
-                      const filteredTitle = blog.title
-                        .split(" ")
-                        .join("-")
-                        .toLowerCase();
                       navigate(
-                        paths.adminViewBlogs.replace(
-                          ":blogTitle",
-                          filteredTitle
-                        )
+                        paths.adminViewBlogs.replace(":blogTitle", blog?._id)
                       );
                     }}
                   />
