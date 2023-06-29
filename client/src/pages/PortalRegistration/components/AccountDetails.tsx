@@ -70,17 +70,17 @@ const AccountDetails: React.FC<AccountDetailsProps> = (props) => {
             onChange={recaptchaOnChangeHandler}
           />
         </div>
+        {/* <pre>{JSON.stringify(verified)}</pre>
+        <pre>{JSON.stringify(props.isValid)}</pre> */}
         <button
           className="secondary-cfs-btn"
           onClick={() => {
             props.onSubmit(props.email, props.password, props.setFieldValue);
           }}
-          disabled={props.isValid && !verified}
+          disabled={!props.isValid || !verified}
         >
           Continue with your registration
         </button>
-        <pre>{JSON.stringify(props.isValid)}</pre>
-        <pre>{JSON.stringify(verified)}</pre>
         <div className="login-caption">
           <span>Already have an account?</span>
           <Link to={paths.login}>Log in</Link>

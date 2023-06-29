@@ -15,6 +15,7 @@ import { paths } from "./routes";
 import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
 import Events from "pages/Events/Events";
 import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
+import LandingPages from "pages/LandingPages/LandingPages";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -143,6 +144,20 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <PortalRegistration />,
     path: paths.portalRegistration,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    path: paths.cfsPages,
+    element: <LandingPages key="main" />,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    path: paths.cfsPagesWithAgent,
+    element: <LandingPages key="agent" />,
     showNavbar: false,
     showHeadline: false,
     showFooter: false,

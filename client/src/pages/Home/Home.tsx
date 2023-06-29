@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MapSection from "./components/MapSection/MapSection";
 import Overview from "./components/Overview-Family/Overview";
 import InquirySection from "./components/Inquiry-Section/InquirySection";
@@ -8,8 +8,43 @@ import HelpSection from "./components/HelpSection/HelpSection";
 import CalendlySection from "./components/QuestionForm/CalendlySection";
 import Head from "library/Head/Head";
 import METATAGS from "constants/metatags";
+import { PopupModal, useCalendlyEventListener } from "react-calendly";
+import { CALENDLY } from "constants/constants";
+import { useLocation, useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
+import "./Home.scss";
 
 const Home: React.FC = () => {
+  const [calendlyWeekly, setCalendlyWeekly] = useState(false);
+  const [calendlyConsultation, setCalendlyConsultation] = useState(false);
+  const [activeCalendly, setActiveCalendly] = useState("");
+  const navigate = useNavigate();
+
+  useCalendlyEventListener({
+    onEventScheduled: (e) => {
+      setCalendlyConsultation(false);
+      setCalendlyWeekly(false);
+      navigate(paths.pageSuccess.replace(":pageId", activeCalendly));
+    },
+  });
+
+  const search = useLocation().search;
+  const isPopupOpenWeekly = new URLSearchParams(search).get("weeklyOpen");
+  const isPopupOpenConsultation = new URLSearchParams(search).get(
+    "consultationOpen"
+  );
+
+  useEffect(() => {
+    if (isPopupOpenWeekly) {
+      setCalendlyWeekly(true);
+      setActiveCalendly("edge");
+    }
+
+    if (isPopupOpenConsultation) {
+      setCalendlyConsultation(true);
+      setActiveCalendly("consultation");
+    }
+  }, [isPopupOpenWeekly, isPopupOpenConsultation]);
   return (
     <React.Fragment>
       <Head
@@ -34,6 +69,28 @@ const Home: React.FC = () => {
         <CalendlySection />
       </div>
       <Subscription />
+
+      <div className="calendly-modals">
+        <PopupModal
+          url={CALENDLY.CONSULTATION}
+          onModalClose={() => {
+            setCalendlyConsultation(false);
+            setActiveCalendly("");
+          }}
+          open={calendlyConsultation}
+          rootElement={document.getElementById("root") as any}
+        />
+
+        <PopupModal
+          url={CALENDLY.WEEKLY}
+          onModalClose={() => {
+            setCalendlyWeekly(false);
+            setActiveCalendly("");
+          }}
+          open={calendlyWeekly}
+          rootElement={document.getElementById("root") as any}
+        />
+      </div>
     </React.Fragment>
   );
 };

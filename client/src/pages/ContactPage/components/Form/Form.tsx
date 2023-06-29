@@ -8,6 +8,7 @@ import Spinner from "library/Spinner/Spinner";
 import Select, { GroupBase, StylesConfig } from "react-select";
 import "./Form.scss";
 import { CFS_STATES } from "constants/constants";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const style = {
   position: "absolute" as "absolute",
@@ -85,6 +86,11 @@ const Form: React.FC = () => {
     state: Yup.string().required("Please select your state."),
   });
 
+  const [verified, setVerified] = useState(false);
+  const recaptchaOnChangeHandler = (value) => {
+    setVerified(typeof value === "string");
+  };
+
   return (
     <Container>
       {loading ? <Spinner variant="fixed" /> : null}
@@ -101,7 +107,7 @@ const Form: React.FC = () => {
           }}
           validationSchema={validationSchema}
         >
-          {({ values, handleSubmit }) => {
+          {({ values, handleSubmit, errors, setFieldValue }) => {
             return (
               <React.Fragment>
                 <Grid container spacing={2}>
@@ -156,6 +162,9 @@ const Form: React.FC = () => {
                         isSearchable={true}
                         options={CFS_STATES}
                         placeholder="Select a state"
+                        onChange={(value) =>
+                          setFieldValue("state", value?.value)
+                        }
                       />
                     </div>
                   </Grid>
@@ -201,7 +210,17 @@ const Form: React.FC = () => {
                   parties.
                 </p>
 
-                <Button variant="danger" onClick={() => handleSubmit()}>
+                <div className="recaptcha-container">
+                  <ReCAPTCHA
+                    sitekey="6LfeQtsmAAAAAAsHX2QKCI7YOe2_Y9yaSGOfaBlF"
+                    onChange={recaptchaOnChangeHandler}
+                  />
+                </div>
+                <Button
+                  variant="danger"
+                  onClick={() => handleSubmit()}
+                  disabled={!verified || Object.keys(errors).length >= 1}
+                >
                   Send Message
                 </Button>
               </React.Fragment>

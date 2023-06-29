@@ -66,6 +66,14 @@
   }
 }
 
+.cfs-btn-disabled {
+  button {
+    background-color: rgba(239, 239, 239, 0.3) !important;
+    color: rgba(16, 16, 16, 0.3) !important;
+    border-color: rgba(118, 118, 118, 0.3) !important;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .cfs-btn {
     button {

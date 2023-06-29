@@ -1,5 +1,20 @@
 .calendly-section {
   margin-top: -3rem;
+  position: relative;
+
+  .recaptcha-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    top: -5rem;
+    height: 100%;
+    padding: 5rem;
+    left: -5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .calendly-section-captions {
     text-align: center;
     color: #fff;

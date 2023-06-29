@@ -18,6 +18,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     "cfs-btn-secondary":
       props.variant === "secondary" /** Finish styling in the future */,
     "cfs-btn-default": props.variant === "default",
+    "cfs-btn-disabled": props.disabled,
   });
 
   return (
