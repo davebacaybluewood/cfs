@@ -26,6 +26,8 @@ type ReactRoutesType = RouteProps & {
 
 const COMPANY_NAME = "Comfort Financial Solutions";
 
+const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
+
 const SOCIAL_MEDIA_LINKS = {
   FACEBOOK: "https://www.facebook.com/gocfspro",
   TWITTER: "https://twitter.com/goCFSpro",
@@ -85,6 +87,29 @@ const AGENT_SPECIALTIES = [
 ];
 
 const BLANK_VALUE = "—";
+
+const eventSteps = [
+  {
+    title: "01",
+    subTitle: "Pick a Event",
+    description: "",
+  },
+  {
+    title: "02",
+    subTitle: "Submit a form",
+    description: "",
+  },
+  {
+    title: "03",
+    subTitle: "Get the reference ID",
+    description: "",
+  },
+  {
+    title: "04",
+    subTitle: "Mark your calendars!",
+    description: "",
+  },
+];
 
 const filteredAdminRoutes: ReactRoutesType[] = adminRoutes.map((data) => {
   return {
@@ -202,4 +227,6 @@ export {
   REACT_ROUTES,
   CALENDLY,
   COMPANY_CONTACT_INFO,
+  eventSteps,
+  MAIN_LOCALHOST,
 };
