@@ -168,7 +168,7 @@ const Solutions = () => {
           <Container>
             <Grid
               container
-              spacing={0}
+              spacing={6}
               justifyContent="space-between"
               alignItems="center"
             >
@@ -201,7 +201,7 @@ const Solutions = () => {
         </div>
       </Container>
       <WorkingSteps
-        backgroundImage="https://ibb.co/bW0cj7w"
+        backgroundImage="/assets/event-1 (1).png"
         bigTitle={
           <React.Fragment>
             Easy steps to <span>comfortable future!</span>
