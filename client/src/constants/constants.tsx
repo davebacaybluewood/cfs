@@ -37,6 +37,14 @@ const SOCIAL_MEDIA_LINKS = {
   YOUTUBE: "https://www.youtube.com/",
 };
 
+const COMPANY_CONTACT_INFO = {
+  EMAIL: "support@gocfs.pro",
+  PHONE: "+1 (702) 900-5666",
+  STATE_NV: "Las Vegas, NV",
+  STATE_CA: "Los Angeles, CA",
+  STATE_NY: "New York, NY",
+};
+
 const MAIN_IMAGES = {
   WHITE_LOGO: "/assets/images/logos/logo-white.png",
   MAIN_LOGO: "/assets/images/logos/cfs-main-logo.png",
@@ -178,4 +186,5 @@ export {
   BLANK_VALUE,
   REACT_ROUTES,
   CALENDLY,
+  COMPANY_CONTACT_INFO,
 };

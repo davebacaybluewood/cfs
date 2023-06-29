@@ -11,7 +11,11 @@ import GridLinks from "./components/GridLinks";
 import { paths } from "constants/routes";
 import { Link } from "react-router-dom";
 import "./Footer.scss";
-import { COMPANY_NAME, SOCIAL_MEDIA_LINKS } from "constants/constants";
+import {
+  COMPANY_CONTACT_INFO,
+  COMPANY_NAME,
+  SOCIAL_MEDIA_LINKS,
+} from "constants/constants";
 
 const Footer: React.FC = () => {
   return (
@@ -104,22 +108,13 @@ const Footer: React.FC = () => {
                 <li>
                   <a href="/">
                     <HiOutlinePhone />
-                    <span>+1 (702) 900-5666</span>
+                    <span>{COMPANY_CONTACT_INFO.PHONE}</span>
                   </a>
                 </li>
                 <li>
                   <a href="/">
-                    <CiLocationOn /> <span>Las Vegas, NV</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/">
-                    <CiLocationOn
-                      style={{
-                        color: "transparent",
-                      }}
-                    />{" "}
-                    <span>Los Angeles, CA</span>
+                    <CiLocationOn />{" "}
+                    <span>{COMPANY_CONTACT_INFO.STATE_NV}</span>
                   </a>
                 </li>
                 <li>
@@ -129,13 +124,23 @@ const Footer: React.FC = () => {
                         color: "transparent",
                       }}
                     />{" "}
-                    <span>New York City, NY</span>
+                    <span>{COMPANY_CONTACT_INFO.STATE_CA}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/">
+                    <CiLocationOn
+                      style={{
+                        color: "transparent",
+                      }}
+                    />{" "}
+                    <span>{COMPANY_CONTACT_INFO.STATE_NY}</span>
                   </a>
                 </li>
                 <li>
                   <a href="/">
                     <MdEmail />
-                    <span>support@gocfs.pro</span>
+                    <span>{COMPANY_CONTACT_INFO.EMAIL}</span>
                   </a>
                 </li>
               </ul>
