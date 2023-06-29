@@ -13,6 +13,7 @@
     "data:import-admin": "node Server/seeder -a",
     "data:import-landingPage": "node Server/seeders/landingPageSeeder -landingPage",
     "data:destroy": "node Server/seeder -d",
+    "build": "npm install && npm install --prefix client && npm run build --prefix",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
