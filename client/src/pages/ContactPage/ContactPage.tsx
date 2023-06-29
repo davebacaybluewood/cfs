@@ -12,7 +12,7 @@ const ContactPage: React.FC = () => {
   return (
     <div className="contact-page-wrapper">
       <HeadlineContact />
-      <ContactUs />
+      <ContactUs title="Other Ways to Contact Us" />
       <FAQs
         faqs={faqs}
         title="Frequently Asked Questions (FAQ)"

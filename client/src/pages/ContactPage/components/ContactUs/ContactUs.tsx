@@ -2,12 +2,16 @@ import { Container, Grid } from "@mui/material";
 import React from "react";
 import "./ContactUs.scss";
 
-const ContactUs: React.FC = () => {
+interface ContactUsProps {
+  title: string;
+}
+
+const ContactUs: React.FC<ContactUsProps> = (props) => {
   return (
     <div className="main-container">
       <Container>
         <div className="content-title">
-          <h2>Other Ways To Contact Us</h2>
+          <h2>{props.title}</h2>
         </div>
         <div className="section-content">
           <Grid container spacing={2} justifyContent="center">

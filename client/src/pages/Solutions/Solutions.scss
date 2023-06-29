@@ -126,15 +126,49 @@
   }
 
   .contact-us {
-    .main-container {
-      margin-top: -10rem;
-      background: #fff;
+    display: flex;
+    justify-content: space-between;
+    background: #021025;
+    margin: 2rem 0;
+    border-radius: 50px;
+    font-family: "Roboto", sans-serif;
+    color: #fff;
+    padding: 4rem 0;
+
+    .grid-left-captions {
+      h3 {
+        font-weight: 700;
+        font-size: 2rem;
+      }
+      i {
+        font-size: 1.5rem;
+        color: #8ba5cc;
+      }
     }
-    .contact-btn {
-      margin: -5rem 0 5rem 0;
+    .grid-middle {
+      h2 {
+        font-size: 3rem;
+      }
+    }
+    .grid-right-btn {
+      svg {
+        margin-left: 2rem;
+      }
       button {
-        margin: auto;
-        display: block;
+        font-weight: 700;
+        font-size: 2rem;
+        background: transparent;
+        border: none;
+        color: #eee;
+        display: flex;
+        align-items: center;
+        border-bottom: solid 1px #eee;
+        padding: 0 0 1.5rem;
+
+        &:hover {
+          cursor: pointer;
+          opacity: 0.7;
+        }
       }
     }
   }
