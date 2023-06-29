@@ -1,12 +1,15 @@
 import Button from "../../../../library/Button/Button";
 import React from "react";
 import MovingComponent from "react-moving-text";
-
-import "./HeadlineFamily.scss";
+import { PopupModal } from "react-calendly";
 import useScroll from "hooks/useScroll";
 import { Typography } from "@mui/material";
+import { CALENDLY } from "constants/constants";
+import "./HeadlineFamily.scss";
 
 const HeadlineFamily: React.FC = () => {
+  const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
+
   useScroll();
   return (
     <div className="headline-family">
@@ -24,13 +27,24 @@ const HeadlineFamily: React.FC = () => {
             Financial Comfort, <br /> Now and Tomorrow
           </Typography>
           <div className="headline-home__btn">
-            <Button variant="danger">Free Consultation</Button>
+            <Button variant="danger" onClick={() => setOpenCalendlyModal(true)}>
+              Free Consultation
+            </Button>
             <Button variant="default">Learn More</Button>
           </div>
         </MovingComponent>
       </div>
+      <PopupModal
+        url={CALENDLY.CONSULTATION}
+        onModalClose={() => setOpenCalendlyModal(false)}
+        open={openCalendlyModal}
+        rootElement={document.getElementById("root") as any}
+      />
     </div>
   );
 };
 
 export default HeadlineFamily;
+function useState(): [any, any] {
+  throw new Error("Function not implemented.");
+}

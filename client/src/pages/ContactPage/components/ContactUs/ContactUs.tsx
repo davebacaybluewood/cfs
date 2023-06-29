@@ -1,13 +1,18 @@
 import { Container, Grid } from "@mui/material";
 import React from "react";
 import "./ContactUs.scss";
+import { COMPANY_CONTACT_INFO } from "constants/constants";
 
-const ContactUs: React.FC = () => {
+interface ContactUsProps {
+  title: string;
+}
+
+const ContactUs: React.FC<ContactUsProps> = (props) => {
   return (
     <div className="main-container">
       <Container>
         <div className="content-title">
-          <h2>Other Ways To Contact Us</h2>
+          <h2>{props.title}</h2>
         </div>
         <div className="section-content">
           <Grid container spacing={2} justifyContent="center">
@@ -23,7 +28,9 @@ const ContactUs: React.FC = () => {
                   Email us for general queries, including <br /> insurance,
                   updates and opportunities.
                 </div>
-                <div className="contact-contact">support@gocfs.pro</div>
+                <div className="contact-contact">
+                  {COMPANY_CONTACT_INFO.EMAIL}
+                </div>
               </div>
             </Grid>
             <Grid item sm={12} md={4} lg={4}>
@@ -41,7 +48,9 @@ const ContactUs: React.FC = () => {
                   Call us to speak to a member of our team. <br /> We are always
                   happy to help.
                 </div>
-                <div className="contact-contact">+1 (646) 786-5060</div>
+                <div className="contact-contact">
+                  {COMPANY_CONTACT_INFO.PHONE}
+                </div>
               </div>
             </Grid>
             <Grid item sm={12} md={4} lg={4}>

@@ -11,19 +11,16 @@ import GridLinks from "./components/GridLinks";
 import { paths } from "constants/routes";
 import { Link } from "react-router-dom";
 import "./Footer.scss";
-import { COMPANY_NAME, SOCIAL_MEDIA_LINKS } from "constants/constants";
+import {
+  COMPANY_CONTACT_INFO,
+  COMPANY_NAME,
+  SOCIAL_MEDIA_LINKS,
+} from "constants/constants";
 
 const Footer: React.FC = () => {
   return (
     <div className="footer">
-      <div className="footer__header">
-        <Container>
-          <Typography variant="h3">Comfort Financial Solutions</Typography>
-          <Typography variant="h5">
-            The quick fox jumps over the lazy dog
-          </Typography>
-        </Container>
-      </div>
+      <div className="footer__header"></div>
 
       <div className="footer__main-section">
         <Container>
@@ -93,7 +90,7 @@ const Footer: React.FC = () => {
                     text: "Free Agent Training",
                   },
                   {
-                    link: "/",
+                    link: paths.resources,
                     text: "Blog",
                   },
                   // {
@@ -111,18 +108,39 @@ const Footer: React.FC = () => {
                 <li>
                   <a href="/">
                     <HiOutlinePhone />
-                    <span>(480)555-0103</span>
+                    <span>{COMPANY_CONTACT_INFO.PHONE}</span>
                   </a>
                 </li>
                 <li>
                   <a href="/">
-                    <CiLocationOn /> <span>Nevada, Texas</span>
+                    <CiLocationOn />{" "}
+                    <span>{COMPANY_CONTACT_INFO.STATE_NV}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/">
+                    <CiLocationOn
+                      style={{
+                        color: "transparent",
+                      }}
+                    />{" "}
+                    <span>{COMPANY_CONTACT_INFO.STATE_CA}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/">
+                    <CiLocationOn
+                      style={{
+                        color: "transparent",
+                      }}
+                    />{" "}
+                    <span>{COMPANY_CONTACT_INFO.STATE_NY}</span>
                   </a>
                 </li>
                 <li>
                   <a href="/">
                     <MdEmail />
-                    <span>admin@gocfs.pro</span>
+                    <span>{COMPANY_CONTACT_INFO.EMAIL}</span>
                   </a>
                 </li>
               </ul>
