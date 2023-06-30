@@ -44,6 +44,9 @@ pre {
 .MuiFormHelperText-root {
   font-size: 1.3rem !important;
 }
+.Toastify__toast-body {
+  font-size: 2rem;
+}
 
 @media screen and (max-width: 320px) {
   .mobile-view-no-padding {
