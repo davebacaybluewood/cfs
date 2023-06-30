@@ -106,36 +106,17 @@ const Footer: React.FC = () => {
               <h5>Get In Touch</h5>
               <ul>
                 <li>
-                  <a href="/">
-                    <HiOutlinePhone />
-                    <span>{COMPANY_CONTACT_INFO.PHONE}</span>
-                  </a>
+                  <HiOutlinePhone />
+                  <span>{COMPANY_CONTACT_INFO.PHONE}</span>
                 </li>
                 <li>
-                  <a href="/">
-                    <CiLocationOn />{" "}
-                    <span>{COMPANY_CONTACT_INFO.STATE_NV}</span>
-                  </a>
+                  <CiLocationOn /> <span>{COMPANY_CONTACT_INFO.STATE_NV}</span>
                 </li>
                 <li>
-                  <a href="/">
-                    <CiLocationOn
-                      style={{
-                        color: "transparent",
-                      }}
-                    />{" "}
-                    <span>{COMPANY_CONTACT_INFO.STATE_CA}</span>
-                  </a>
+                  <CiLocationOn /> <span>{COMPANY_CONTACT_INFO.STATE_CA}</span>
                 </li>
                 <li>
-                  <a href="/">
-                    <CiLocationOn
-                      style={{
-                        color: "transparent",
-                      }}
-                    />{" "}
-                    <span>{COMPANY_CONTACT_INFO.STATE_NY}</span>
-                  </a>
+                  <CiLocationOn /> <span>{COMPANY_CONTACT_INFO.STATE_NY}</span>
                 </li>
                 <li>
                   <a href="/">

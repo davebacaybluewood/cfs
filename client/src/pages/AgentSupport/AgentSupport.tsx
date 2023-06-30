@@ -12,6 +12,8 @@ import Benefits from "./Benefits";
 import StandardCard from "library/StandardCard/StandardCard";
 import useScroll from "hooks/useScroll";
 import "./AgentSupport.scss";
+import { useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
 
 const timelineData = [
   {
@@ -33,6 +35,7 @@ const timelineData = [
 
 const AgentSupport: React.FC = () => {
   useScroll();
+  const navigate = useNavigate();
   return (
     <div className="agent-support-wrapper">
       <Headline
@@ -185,7 +188,9 @@ const AgentSupport: React.FC = () => {
               <div className="timeline-content">
                 <Timelines data={timelineData} />
               </div>
-              <Button variant="primary">Agent Portal</Button>
+              <Button variant="primary" onClick={() => navigate(paths.login)}>
+                Agent Portal
+              </Button>
             </Grid>
           </Grid>
         </Container>
