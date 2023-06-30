@@ -17,21 +17,19 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import Spinner from "library/Spinner/Spinner";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
+import { TestimonialType } from "admin/hooks/useFetchProfile";
 
 type TestimonialProps = {
-  testimonials: {
-    title: string;
-    name: string;
-    comment: string;
-  }[];
+  testimonials:
+    | {
+        title: string;
+        name: string;
+        comment: string;
+      }[]
+    | undefined;
   agentId: string;
 };
-type TestimonialType = {
-  emailAddress: string;
-  fullName: string;
-  title: string;
-  testimonial: string;
-};
+
 const Testimonials: React.FC<TestimonialProps> = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);

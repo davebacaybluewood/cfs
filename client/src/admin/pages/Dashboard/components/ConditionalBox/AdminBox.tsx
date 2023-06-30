@@ -62,26 +62,26 @@ const AdminBox = () => {
   const statistics: StatisticTypes[] = [
     {
       countText: "User Accounts",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.users,
       icon: <FaUsers />,
     },
     {
       countText: "Appointments",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.appointments,
       icon: <FaFly />,
     },
     {
       countText: "Contacts",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.contacts,
       icon: <FaUserShield />,
     },
     {
       countText: "Webinars",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.cfsWebinars,
       icon: <FaSnowman />,
     },
   ];
@@ -134,7 +134,7 @@ const AdminBox = () => {
   };
 
   const { blogs, loading } = useFetchBlogResource(0, 12);
-  console.log(blogs);
+
   return (
     <React.Fragment>
       <Grid container spacing={2} marginBottom={2}>
@@ -147,14 +147,50 @@ const AdminBox = () => {
       <Grid container spacing={2} marginBottom={2}>
         <Grid item xs={12} sm={12} md={4} lg={6}>
           <Paper elevation={3} sx={{ p: 3 }}>
-            <Box>
-              <Title
-                title="Appointments"
-                subtitle="List of 5 appointments"
-                link={paths.about_us}
-              />
-              <BoxTable columns={tableDefs.columns} rows={tableDefs.rows} />
-            </Box>
+            <Title
+              title="Appointments"
+              subtitle="List of 5 appointments"
+              link={paths.about_us}
+            />
+            <NoInformationToDisplay
+              showNoInfo
+              title="No information to display"
+              message="There's no contact available."
+            >
+              <TableContainer className="table">
+                <Table sx={{ minWidth: 200 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      {contactCols.map((col, index: number) => {
+                        return <TableCell key={index}>{col}</TableCell>;
+                      })}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {contactRows.map((row, index: number) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          <FaUser /> {row.name}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <FaRegEnvelope />
+                          {row.email}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <FaPhone />
+                          {row.phoneNumber}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </NoInformationToDisplay>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -164,39 +200,45 @@ const AdminBox = () => {
               subtitle="List of 5 contacts"
               link={paths.about_us}
             />
-            <TableContainer className="table">
-              <Table sx={{ minWidth: 200 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    {contactCols.map((col, index: number) => {
-                      return <TableCell key={index}>{col}</TableCell>;
-                    })}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {contactRows.map((row, index: number) => (
-                    <TableRow
-                      key={index}
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
-                    >
-                      <TableCell component="th" scope="row">
-                        <FaUser /> {row.name}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        <FaRegEnvelope />
-                        {row.email}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        <FaPhone />
-                        {row.phoneNumber}
-                      </TableCell>
+            <NoInformationToDisplay
+              showNoInfo
+              title="No information to display"
+              message="There's no contact available."
+            >
+              <TableContainer className="table">
+                <Table sx={{ minWidth: 200 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      {contactCols.map((col, index: number) => {
+                        return <TableCell key={index}>{col}</TableCell>;
+                      })}
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {contactRows.map((row, index: number) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          <FaUser /> {row.name}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <FaRegEnvelope />
+                          {row.email}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <FaPhone />
+                          {row.phoneNumber}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </NoInformationToDisplay>
           </Paper>
         </Grid>
         <Grid item xs={12} md={12} lg={12}>

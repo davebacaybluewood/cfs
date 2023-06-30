@@ -41,6 +41,7 @@ type UserInfo = {
   licenseNumber: string;
   phoneNumber: string;
   state: string;
+  position: string;
 };
 type HeaderButtonsProps = {
   status: AgentStatuses;
@@ -56,53 +57,6 @@ type HeaderButtonsProps = {
 type CalendlyInputTypes = {
   personalWebPage: string;
   displayCalendly: boolean;
-};
-
-const ActionButtons: React.FC<HeaderButtonsProps> = (props) => {
-  const navigate = useNavigate();
-  const declineHandler = () => {
-    props.setDialogStatus(AgentStatuses.DECLINED);
-    props.setOpen(true);
-  };
-  const activateHandler = () => {
-    props.setDialogStatus(AgentStatuses.ACTIVATED);
-    props.setOpen(true);
-  };
-  const deactivateHandler = () => {
-    props.setDialogStatus(AgentStatuses.DEACTIVATED);
-    props.setOpen(true);
-  };
-
-  const activateWithFormHandler = () => {
-    props.setFormDialogStatus(true);
-  };
-
-  if (props.status === AgentStatuses.ACTIVATED) {
-    return (
-      <React.Fragment>
-        <button onClick={deactivateHandler}>Deactivate This Profile</button>
-        <button
-          onClick={() =>
-            navigate(paths.profileSettings.replace(":userGuid", props.userGuid))
-          }
-        >
-          Settings
-        </button>
-      </React.Fragment>
-    );
-  } else if (props.status === AgentStatuses.DEACTIVATED) {
-    return <button onClick={activateHandler}>Activate This Profile</button>;
-  } else if (props.status === AgentStatuses.DECLINED) {
-    return <button onClick={activateHandler}>Activate This Profile</button>;
-  } else if (props.status === AgentStatuses.PENDING) {
-    return (
-      <React.Fragment>
-        <button onClick={declineHandler}>Decline This Profile</button>
-        <button onClick={activateWithFormHandler}>Activate This Profile</button>
-      </React.Fragment>
-    );
-  }
-  return <React.Fragment />;
 };
 
 const HeaderButtons: React.FC<
@@ -274,12 +228,16 @@ const HeaderButtons: React.FC<
           >
             Edit Profile
           </MenuItem>
-          <MenuItem onClick={() => setShowBusinessCard(true)}>
-            Business Card
-          </MenuItem>
-          <MenuItem onClick={() => setShowBusinessCard(true)}>
-            Profile Settings
-          </MenuItem>
+          {isAgent ? (
+            <React.Fragment>
+              <MenuItem onClick={() => setShowBusinessCard(true)}>
+                Business Card
+              </MenuItem>
+              <MenuItem onClick={() => setShowBusinessCard(true)}>
+                Profile Settings
+              </MenuItem>
+            </React.Fragment>
+          ) : null}
           {props.headerConfigs?.isProfileView ? null : (
             <React.Fragment>
               <Divider />
@@ -306,7 +264,7 @@ const HeaderButtons: React.FC<
             <BusinessCard
               email={props.userInfo?.email ?? ""}
               name={props.userInfo?.name ?? ""}
-              position={"Marketing Director"}
+              position={props.userInfo?.position ?? ""}
               licenseNumber={props.userInfo?.licenseNumber ?? ""}
               phoneNumber={props.userInfo?.phoneNumber ?? ""}
               state={props.userInfo?.state ?? ""}

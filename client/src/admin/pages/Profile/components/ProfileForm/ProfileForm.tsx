@@ -13,6 +13,7 @@ import classNames from "classnames";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { UserContext } from "admin/context/UserProvider";
 import RolesForm from "./components/RolesForm";
+import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -61,6 +62,19 @@ const ProfileForm: React.FC = () => {
     "roles-form": activeForm.roles,
   });
 
+  const isAgent = profile?.roles.some((f) => {
+    return (
+      f.value === PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
+    );
+  });
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -69,27 +83,29 @@ const ProfileForm: React.FC = () => {
       className="profile-form-wrapper"
     >
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={12} lg={isAdmin ? 4 : 6}>
-          <div className="white-card">
-            <div className="caption-holder">
-              <h2>Profile Settings</h2>
-              <p>Change your personal website settings.</p>
-            </div>
-            <button
-              onClick={() =>
-                navigate(
-                  paths.profileSettings.replace(
-                    ":userGuid",
-                    profile?.userGuid ?? ""
+        {isAgent || isAdmin ? (
+          <Grid item xs={12} sm={12} md={12} lg={isAdmin ? 4 : 6}>
+            <div className="white-card">
+              <div className="caption-holder">
+                <h2>Profile Settings</h2>
+                <p>Change your personal website settings.</p>
+              </div>
+              <button
+                onClick={() =>
+                  navigate(
+                    paths.profileSettings.replace(
+                      ":userGuid",
+                      profile?.userGuid ?? ""
+                    )
                   )
-                )
-              }
-            >
-              <FaAngleDoubleRight />
-            </button>
-          </div>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={isAdmin ? 4 : 6}>
+                }
+              >
+                <FaAngleDoubleRight />
+              </button>
+            </div>
+          </Grid>
+        ) : null}
+        <Grid item xs={12} sm={12} md={12} lg={isAdmin ? 4 : isAgent ? 6 : 12}>
           <div className="white-card">
             <div className="caption-holder">
               <h2>Password</h2>

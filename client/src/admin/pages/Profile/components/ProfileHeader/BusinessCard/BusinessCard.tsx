@@ -22,12 +22,13 @@ const BusinessCard: React.FC<BusinessCardProps> = (props) => {
   const textSize = emailAddressLength > 20 ? "1rem" : "1.2rem";
 
   return (
-    <div className="business-card-wrapper" ref={businessCardRef as any}>
+    <div className="business-card-wrapper">
       <div
         className="back-page"
         style={{
           backgroundImage: `url('/assets/images/templates/business-card-orig-size.png')`,
         }}
+        ref={businessCardRef as any}
       >
         <div className="business-card-content">
           <div className="primary-info">
@@ -40,7 +41,7 @@ const BusinessCard: React.FC<BusinessCardProps> = (props) => {
               <h4 style={{ fontSize: textSize }}>{props.phoneNumber}</h4>
               <h4 style={{ fontSize: textSize }}>www.gocfs.pro</h4>
               <h4 style={{ fontSize: textSize }}>{props.state}</h4>
-              <p>LICENSE NO. 0912322</p>
+              <p>LICENSE NO. {props.licenseNumber}</p>
             </div>
             <div className="qr-code">
               <QRCode

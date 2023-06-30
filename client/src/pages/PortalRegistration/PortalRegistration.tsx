@@ -212,7 +212,7 @@ const PortalRegistration: React.FC = () => {
             const contactInfoValidity = errors.phoneNumber ? true : false;
             return (
               <div className="portal-form">
-                {loading ? <Spinner variant="relative" /> : null}
+                {loading ? <Spinner variant="fixed" /> : null}
                 <div className="form-header">
                   {stage !== 6 && (
                     <React.Fragment>

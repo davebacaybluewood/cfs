@@ -13,7 +13,7 @@ import { PROFILE_POSITIONS } from "../constants/constants.js";
  * @acess: Private
  */
 const listProfile = expressAsync(async (req, res) => {
-  const profiles = await Agents.find({});
+  const profiles = await Agents.find({}).sort({ createdAt: -1 });
   res.json(profiles);
 });
 

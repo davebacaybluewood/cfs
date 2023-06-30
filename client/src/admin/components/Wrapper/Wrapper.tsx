@@ -61,7 +61,7 @@ const Wrapper: React.FC<WrapperProps> = (props) => {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => navigate(paths.profile)}>
               <FaUser />
               <span className="menu-sublinks">Profile</span>
             </MenuItem>

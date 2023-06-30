@@ -40,8 +40,8 @@ const Settings: React.FC = () => {
           </div> */}
           <div className="setting">
             <Title
-              title="Admin Settings"
-              subtitle="Configure your admin settings."
+              title="Portal Settings"
+              subtitle="Configure your portal settings."
             />
             <AdminSettings />
           </div>

@@ -65,26 +65,26 @@ const AgentBox = () => {
   const statistics: StatisticTypes[] = [
     {
       countText: "PAW Appointments",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.typeAppointments.replace(":typeId", "paw"),
       icon: <FaCalendarMinus />,
     },
     {
       countText: "Webinar Appointments",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.typeAppointments.replace(":typeId", "webinar"),
       icon: <FaCalendarMinus />,
     },
     {
       countText: "Contacts",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.contacts,
       icon: <FaUserShield />,
     },
     {
       countText: "Webinars",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.cfsWebinars,
       icon: <FaSnowman />,
     },
   ];
@@ -173,14 +173,18 @@ const AgentBox = () => {
       <Grid container spacing={2} marginBottom={2}>
         <Grid item xs={12} sm={12} md={4} lg={6}>
           <Paper elevation={3} sx={{ p: 3, height: "100%" }}>
-            <Box>
-              <Title
-                title="Appointments"
-                subtitle="List of 5 appointments"
-                link={paths.about_us}
-              />
+            <Title
+              title="Appointments"
+              subtitle="List of 5 appointments"
+              link={paths.about_us}
+            />
+            <NoInformationToDisplay
+              showNoInfo
+              title="No information to display"
+              message="No active appointments available."
+            >
               <BoxTable columns={tableDefs.columns} rows={tableDefs.rows} />
-            </Box>
+            </NoInformationToDisplay>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -190,74 +194,78 @@ const AgentBox = () => {
               subtitle="List of 5 contacts"
               link={paths.about_us}
             />
-            <TableContainer className="table">
-              <Table sx={{ minWidth: 200 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    {contactCols.map((col, index: number) => {
-                      return <TableCell key={index}>{col}</TableCell>;
-                    })}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {contactRows.map((row, index: number) => (
-                    <TableRow
-                      key={index}
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
-                    >
-                      <TableCell component="th" scope="row">
-                        <FaUser /> {row.name}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        <FaRegEnvelope />
-                        {row.email}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        <FaPhone />
-                        {row.phoneNumber}
-                      </TableCell>
+            <NoInformationToDisplay
+              showNoInfo
+              title="No information to display"
+              message="No active contacts available."
+            >
+              <TableContainer className="table">
+                <Table sx={{ minWidth: 200 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      {contactCols.map((col, index: number) => {
+                        return <TableCell key={index}>{col}</TableCell>;
+                      })}
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {contactRows.map((row, index: number) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          <FaUser /> {row.name}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <FaRegEnvelope />
+                          {row.email}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          <FaPhone />
+                          {row.phoneNumber}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </NoInformationToDisplay>
           </Paper>
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
-          <Box>
-            <Paper>
-              {/* <Calendar /> */}
-              <Title
-                title="Activated Webinars"
-                subtitle="List of 5 webinars"
-                link={paths.webinar}
-              />
+          <Paper>
+            {/* <Calendar /> */}
+            <Title
+              title="Activated Webinars"
+              subtitle="List of 5 webinars"
+              link={paths.webinar}
+            />
 
-              <NoInformationToDisplay
-                showNoInfo={filteredWebinars.length === 0 && loading === false}
-                message="No webinars available."
-                title="No Information to display."
-              >
-                <Grid container spacing={2}>
-                  {filteredWebinars?.map((webinar: WebinarValuesType) => {
-                    return (
-                      <Grid item sm={12} md={12} lg={4} key={webinar._id}>
-                        <CardContent
-                          title={webinar.title}
-                          description={webinar.introVideoContent}
-                          thumbnail={webinar.thumbnail}
-                          subtitle="Lorem Ipsum"
-                          onClick={() => learnMoreHandler(webinar._id ?? "")}
-                        ></CardContent>
-                      </Grid>
-                    );
-                  })}
-                </Grid>
-              </NoInformationToDisplay>
-            </Paper>
-          </Box>
+            <NoInformationToDisplay
+              showNoInfo={filteredWebinars.length === 0 && loading === false}
+              message="No webinars available."
+              title="No Information to display."
+            >
+              <Grid container spacing={2}>
+                {filteredWebinars?.map((webinar: WebinarValuesType) => {
+                  return (
+                    <Grid item sm={12} md={12} lg={4} key={webinar._id}>
+                      <CardContent
+                        title={webinar.title}
+                        description={webinar.introVideoContent}
+                        thumbnail={webinar.thumbnail}
+                        subtitle="Lorem Ipsum"
+                        onClick={() => learnMoreHandler(webinar._id ?? "")}
+                      ></CardContent>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </NoInformationToDisplay>
+          </Paper>
         </Grid>
       </Grid>
     </React.Fragment>

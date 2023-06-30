@@ -6,6 +6,18 @@ export type RolesAndPositionType = {
   label: string;
   value: string;
 };
+export type TestimonialType = {
+  emailAddress: string;
+  fullName: string;
+  title: string;
+  testimonial: string;
+};
+export type TestimonialData = {
+  title: string;
+  name: string;
+  comment: string;
+};
+
 export type ProfileData = {
   firstName?: string;
   lastName?: string;
@@ -36,10 +48,17 @@ export type ProfileData = {
   isDeclined: false;
   createdAt: string;
   updatedAt: string;
-  testimonials?: string[];
+  testimonials?:
+    | {
+        title: string;
+        name: string;
+        comment: string;
+      }[]
+    | undefined;
   calendlyLink: string;
   roles: RolesAndPositionType[];
   position: RolesAndPositionType[];
+  displayCalendly?: boolean;
 };
 
 export const profileInitialValues = {

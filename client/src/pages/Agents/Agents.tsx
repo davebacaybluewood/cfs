@@ -20,6 +20,8 @@ import ENDPOINTS from "constants/endpoints";
 import { NOTIFICATION_ENUMS } from "constants/constants";
 import "./Agents.scss";
 import Wrapper from "library/Wrapper/Wrapper";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import ReCAPTCHA from "react-google-recaptcha";
 
 type FilteredContainerProps = {
   noSpacing?: boolean;
@@ -42,18 +44,14 @@ const FilteredContainer: React.FC<FilteredContainerProps> = (props) => {
 
 const Agents: React.FC<AgentsProps> = (props) => {
   const { id } = useParams();
-  const [agentWebinarGuids, setAgentWebinarGuids] = useState([]);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(listSingleAgent(id ?? "") as any);
-  }, [dispatch, id]);
-
-  const agentSelector = useSelector((state: RootState) => state.agentSingle);
-  const { agent: agentData, loading, error } = agentSelector;
-
-  const agent = props.agentProfile ? props.agentProfile : agentData;
+  const [agentWebinarGuids, setAgentWebinarGuids] = useState<any[] | undefined>(
+    []
+  );
+  const { profile: agent, loading } = useFetchUserProfile(id ?? "");
+  const [verified, setVerified] = useState(false);
+  const recaptchaOnChangeHandler = (value) => {
+    setVerified(typeof value === "string");
+  };
 
   useCalendlyEventListener({
     onProfilePageViewed: () => console.log("onProfilePageViewed"),
@@ -101,10 +99,6 @@ const Agents: React.FC<AgentsProps> = (props) => {
   const { webinars, loading: webinarLoading } =
     useFetchAgentWebinars(agentWebinarGuids);
 
-  if (error) {
-    navigate(paths.invalid);
-  }
-
   return (
     <div className="agent-wrapper">
       <PageTitle title="Agents" />
@@ -117,7 +111,7 @@ const Agents: React.FC<AgentsProps> = (props) => {
       </ComponentValidator>
       {loading ? (
         <Spinner />
-      ) : !agent.status ? (
+      ) : !agent?.status ? (
         <Container>
           <AgentPending />
         </Container>
@@ -126,7 +120,7 @@ const Agents: React.FC<AgentsProps> = (props) => {
           <FilteredContainer noSpacing={props.noContainer}>
             <AgentProfile noContainer={props.noContainer} agent={agent} />
             <Testimonials
-              testimonials={agent.testimonials}
+              testimonials={agent?.testimonials}
               agentId={agent._id ?? ""}
             />
             <ComponentValidator
@@ -154,6 +148,14 @@ const Agents: React.FC<AgentsProps> = (props) => {
               className="appoinment-content"
             >
               <React.Fragment>
+                {!verified ? (
+                  <div className="recaptcha-container">
+                    <ReCAPTCHA
+                      sitekey="6LfeQtsmAAAAAAsHX2QKCI7YOe2_Y9yaSGOfaBlF"
+                      onChange={recaptchaOnChangeHandler}
+                    />
+                  </div>
+                ) : null}
                 <Container>
                   <Grid container spacing={2} className="appointment-container">
                     <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -161,6 +163,7 @@ const Agents: React.FC<AgentsProps> = (props) => {
                         title="SCHEDULE AN APPOINTMENT"
                         bigTitle="To Make Requests For The Further Information"
                         description={`Or direct call to ${agent.phoneNumber}`}
+                        hasBorder
                       />
                       <InlineWidget
                         url={agent?.calendlyLink}

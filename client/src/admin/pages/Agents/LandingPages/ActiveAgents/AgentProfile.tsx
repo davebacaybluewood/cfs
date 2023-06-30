@@ -1,23 +1,15 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { listSingleAgent } from "redux/actions/agentActions";
-import { RootState } from "store";
 import { CrumbTypes } from "../../../Dashboard/types";
 import Profile from "../../../Profile/Profile";
 import "../../AgentProfile.scss";
 import { paths } from "constants/routes";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
 
 const AgentProfile: React.FC = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(listSingleAgent(id ?? "", true) as any);
-  }, [dispatch, id]);
-
-  const agentSelector = useSelector((state: RootState) => state.agentSingle);
-  const { agent, loading, error } = agentSelector as any;
+  const { profile, loading } = useFetchUserProfile(id ?? "");
 
   const crumbs: CrumbTypes[] = [
     {
@@ -33,9 +25,9 @@ const AgentProfile: React.FC = () => {
     {
       title: loading
         ? ""
-        : !agent?.name
-        ? agent?.firstName + " " + agent?.lastName
-        : agent?.name,
+        : !profile?.name
+        ? profile?.firstName + " " + profile?.lastName
+        : profile?.name,
       url: paths.adminAgents,
       isActive: true,
     },
@@ -43,9 +35,9 @@ const AgentProfile: React.FC = () => {
 
   return (
     <Profile
-      error={error}
+      error={false}
       loading={loading}
-      profile={agent}
+      profile={profile}
       crumbs={crumbs}
       headerConfigs={{ isProfileView: false }}
     />

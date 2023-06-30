@@ -3,6 +3,7 @@ import React from "react";
 import { FaMapMarked, FaPhone } from "react-icons/fa";
 import HeaderButtons, { HeaderButtonConfigs } from "./HeaderButtons";
 import "./ProfileHeader.scss";
+import { TestimonialData } from "admin/hooks/useFetchProfile";
 
 type ProfileHeaderProps = {
   _id: string;
@@ -20,12 +21,13 @@ type ProfileHeaderProps = {
   instagram: string;
   linkedIn: string;
   facebook: string;
-  testimonials: string[];
+  testimonials: TestimonialData[] | undefined;
   headerConfigs?: HeaderButtonConfigs;
   licenseNumber?: string;
   firstName?: string;
   lastName?: string;
   state?: string;
+  position: string;
 };
 const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
   return (
@@ -70,6 +72,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
             name: props.firstName + " " + props.lastName,
             phoneNumber: props.phoneNumber,
             state: props.state ?? "",
+            position: props.position,
           }}
         />
       </div>

@@ -3,24 +3,11 @@ import React from "react";
 import { FaMapMarkerAlt, FaPhone, FaRegEnvelope } from "react-icons/fa";
 import SocialIcons from "../SocialIcons";
 import { DEFAULT_IMAGE } from "admin/constants/constants";
+import { ProfileData } from "admin/hooks/useFetchProfile";
 
 type AgentProfileProps = {
   noContainer?: boolean;
-  agent: {
-    phoneNumber: string;
-    emailAddress: string;
-    address: string;
-    twitter: string;
-    facebook: string;
-    instagram: string;
-    linkedIn: string;
-    title: string;
-    name: string;
-    firstName?: string;
-    lastName?: string;
-    bio: string;
-    avatar: string;
-  };
+  agent: ProfileData;
 };
 const AgentProfile: React.FC<AgentProfileProps> = (props) => {
   const { agent } = props;
@@ -58,12 +45,14 @@ const AgentProfile: React.FC<AgentProfileProps> = (props) => {
                 </span>
                 {agent.emailAddress}
               </li>
-              <li>
-                <span>
-                  <FaMapMarkerAlt />
-                </span>
-                {agent.address}
-              </li>
+              {agent.address ? (
+                <li>
+                  <span>
+                    <FaMapMarkerAlt />
+                  </span>
+                  {agent.address}
+                </li>
+              ) : null}
             </ul>
 
             <SocialIcons

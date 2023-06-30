@@ -15,6 +15,7 @@ import { paths } from "constants/routes";
 import Roles from "./components/Roles/Roles";
 import { ProfileData } from "admin/hooks/useFetchProfile";
 import Indicator from "admin/components/Indicator/Indicator";
+import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 
 type ProfileProps = {
   crumbs: CrumbTypes[];
@@ -41,6 +42,32 @@ const Profile: React.FC<ProfileProps> = (props) => {
       setPageLoading(false);
     }, 3000);
   }, []);
+
+  const isAgent = profile?.roles.some((f) => {
+    return (
+      f.value === PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
+    );
+  });
+
+  const userPosition = profile?.roles?.find((f) => {
+    return (
+      f.value === PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
+      f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
+    );
+  });
 
   return (
     <Wrapper
@@ -78,7 +105,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
                   : profile?.name
               }
               phoneNumber={profile?.phoneNumber ?? ""}
-              testimonials={profile?.testimonials ?? []}
+              testimonials={profile?.testimonials}
               title={profile?.title ?? ""}
               twitter={profile?.twitter ?? ""}
               status={profile?.status ?? ""}
@@ -87,6 +114,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
               lastName={profile?.lastName}
               state={profile?.state}
               licenseNumber={profile?.licenseNumber}
+              position={userPosition?.label ?? ""}
             />
           </Grid>
           <Grid item sm={12} md={12} lg={4} marginBottom={5}>
@@ -112,33 +140,41 @@ const Profile: React.FC<ProfileProps> = (props) => {
                 weChat={profile?.weChat ?? ""}
               />
               <Roles roles={profile?.roles} position={profile?.position} />
-              <Overview
-                numberOfAppointments={0}
-                numberOfContacts={0}
-                numberOfLeads={0}
-                numberOfTestimonials={0}
-                numberOfVisits={0}
-              />
+              {isAgent ? (
+                <Overview
+                  numberOfAppointments={0}
+                  numberOfContacts={0}
+                  numberOfLeads={0}
+                  numberOfTestimonials={0}
+                  numberOfVisits={0}
+                />
+              ) : null}
             </Paper>
           </Grid>
           <Grid item sm={12} md={12} lg={8} marginBottom={5}>
             <Paper elevation={3} sx={{ p: 0, height: "100%" }}>
-              <ComponentValidator showNull={!profile?.userGuid}>
-                <Webinars agentGuid={profile?.userGuid ?? ""} />
-              </ComponentValidator>
+              {isAgent ? (
+                <ComponentValidator showNull={!profile?.userGuid}>
+                  <Webinars agentGuid={profile?.userGuid ?? ""} />
+                </ComponentValidator>
+              ) : (
+                <Indicator />
+              )}
             </Paper>
           </Grid>
-          <Grid item sm={12} md={12} lg={12} marginBottom={5}>
-            <Box>
-              <Paper>
-                <Testimonials
-                  testimonials={profile?.testimonials as any}
-                  setPageLoading={setPageLoading}
-                  agentId={profile?.userGuid ?? ""}
-                />
-              </Paper>
-            </Box>
-          </Grid>
+          {isAgent ? (
+            <Grid item sm={12} md={12} lg={12} marginBottom={5}>
+              <Box>
+                <Paper>
+                  <Testimonials
+                    testimonials={profile?.testimonials as any}
+                    setPageLoading={setPageLoading}
+                    agentId={profile?.userGuid ?? ""}
+                  />
+                </Paper>
+              </Box>
+            </Grid>
+          ) : null}
           {/* <Grid item sm={12} md={12} lg={12}>
         <Box>
           <Paper>

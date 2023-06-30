@@ -215,7 +215,7 @@ const useSidebarLinks = (
         PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
         PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
       ],
-      isSubMenu: false,
+      isSubMenu: true,
       // isSubMenu: isAdmin || role === ROLES.ROLE_AGENT,
       subLinks: [
         {
@@ -313,7 +313,7 @@ const useSidebarLinks = (
       ],
     },
     {
-      linkText: "Blogs - Editor",
+      linkText: "Blogs & Resources",
       isActive:
         currentPage === adminPathsNew.adminBlogs.split("/")[2] ||
         currentPage === adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
@@ -325,23 +325,23 @@ const useSidebarLinks = (
       isSubMenu: true,
       subLinks: [
         {
-          linkText: "All Blogs",
+          linkText: "Blogs",
           icon: <FaFileAlt />,
           link: paths.adminBlogs,
           isActive: currentPage === adminPathsNew.adminBlogs.split("/")[2],
         },
-        {
-          linkText: "File Maintenance",
-          icon: <FaFileAlt />,
-          link: paths.adminBlogsFileMaintenance,
-          isActive:
-            currentPage ===
-            adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
-        },
+        // {
+        //   linkText: "File Maintenance",
+        //   icon: <FaFileAlt />,
+        //   link: paths.adminBlogsFileMaintenance,
+        //   isActive:
+        //     currentPage ===
+        //     adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
+        // },
       ],
     },
     {
-      linkText: "Blogs - Content Creator",
+      linkText: "Blogs & Resources",
       isActive:
         currentPage === adminPathsNew.adminBlogs.split("/")[2] ||
         currentPage === adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
@@ -354,19 +354,19 @@ const useSidebarLinks = (
       isSubMenu: true,
       subLinks: [
         {
-          linkText: "All Blogs",
+          linkText: "Blogs",
           icon: <FaFileAlt />,
           link: paths.adminBlogs,
           isActive: currentPage === adminPathsNew.adminBlogs.split("/")[2],
         },
-        {
-          linkText: "File Maintenance",
-          icon: <FaFileAlt />,
-          link: paths.adminBlogsFileMaintenance,
-          isActive:
-            currentPage ===
-            adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
-        },
+        // {
+        //   linkText: "File Maintenance",
+        //   icon: <FaFileAlt />,
+        //   link: paths.adminBlogsFileMaintenance,
+        //   isActive:
+        //     currentPage ===
+        //     adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
+        // },
       ],
     },
     {
@@ -527,15 +527,15 @@ const useSidebarLinks = (
       ],
     },
     {
-      linkText: "Blog Resources",
+      linkText: "Blogs & Resources",
       icon: <FaNewspaper />,
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
       isSubMenu: true,
       subLinks: [
-        {
-          linkText: "Manage Editors",
-          link: paths.adminBlogUsers,
-        },
+        // {
+        //   linkText: "Manage Editors",
+        //   link: paths.adminBlogUsers,
+        // },
         {
           linkText: "Blogs",
           link: paths.adminBlogs,

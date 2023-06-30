@@ -20,25 +20,25 @@ const EditorBox = () => {
     {
       countText: "All Blogs",
       count: blogs?.length ?? 0,
-      url: paths.login,
+      url: paths.adminBlogs,
       icon: <FaRegNewspaper />,
     },
     {
       countText: "Published Blogs",
-      count: 2,
-      url: paths.login,
+      count: blogs?.length ?? 0,
+      url: paths.adminBlogs,
       icon: <FaNewspaper />,
     },
     {
       countText: "Draft Blogs",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.adminBlogs,
       icon: <FaRegNewspaper />,
     },
     {
       countText: "Declined Blogs",
-      count: 2,
-      url: paths.login,
+      count: 0,
+      url: paths.adminBlogs,
       icon: <FaNewspaper />,
     },
   ];

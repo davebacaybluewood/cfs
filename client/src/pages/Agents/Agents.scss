@@ -1,3 +1,25 @@
+$main-color: #021025;
+$main-color-gradient: linear-gradient(
+  90deg,
+  #0057b7 0%,
+  $main-color 30%,
+  $main-color
+) !important;
+
+/* Default Colors */
+$grey-50: #fafafc;
+$grey-100: #f6f6fa;
+$grey-200: #eaeaf2;
+$grey-250: #e1e1e6;
+$grey-300: #c4c4cd;
+$grey-400: #747480;
+$grey-450: #717171;
+$grey-500: #2e2e38;
+$grey-510: #2e2e3c;
+$grey-550: #23232f;
+$grey-600: #1a1a24;
+$grey-800: rgba(0, 0, 0, 0.05);
+
 .agent-wrapper {
   .banner {
     background-color: white;
@@ -129,12 +151,33 @@
     .title {
       background-color: white;
       background: white;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-family: "Agrandir";
+    }
+    p {
+      font-weight: 300;
+      font-size: 2rem;
     }
   }
 
   .appoinment-content {
     background-attachment: fixed;
     background-size: cover;
+    position: relative;
+
+    .recaptcha-container {
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      width: 100%;
+      top: 0;
+      height: 100%;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .agent-videos {

@@ -23,12 +23,6 @@ const ConditionalBox: React.FC<ConditionalBoxProps> = (props) => {
     (e) => e.value === "POSITION_CONTENT_CREATOR"
   );
 
-  console.log({
-    isAdmin,
-    isEditor,
-    isContentCreator,
-    isAgent,
-  });
   return (
     <div>
       {isAdmin && <AdminBox />}

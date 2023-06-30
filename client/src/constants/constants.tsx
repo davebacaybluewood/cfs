@@ -16,6 +16,7 @@ import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
 import Events from "pages/Events/Events";
 import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
 import LandingPages from "pages/LandingPages/LandingPages";
+import Agents from "pages/Agents/Agents";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -194,6 +195,10 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showNavbar: false,
     showHeadline: false,
     showFooter: false,
+  },
+  {
+    path: paths.agent_with_id,
+    element: <Agents />,
   },
   {
     element: <InvalidRoute />,
