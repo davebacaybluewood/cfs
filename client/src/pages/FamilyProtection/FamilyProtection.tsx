@@ -29,8 +29,12 @@ const FamilyProtection: React.FC = () => {
       <div className="main-page__content">
         <div className="headline">
           <Headline
-            title="Protecting What Matters Most"
-            description="At Comfort Financial Solutions, we understand the deep love and commitment you have for your family. That's why we've created a comprehensive family life insurance plan that ensures their future remains secure, no matter what twists and turns life may bring."
+            title="Safeguarding Your
+            Family's Future"
+            description="Life insurance is essential for families looking to protect their
+            financial well-being and provide a better future for their loved ones.
+            In the event of an unexpected death, life insurance can help cover expenses such as funeral costs, outstanding debts, and
+            ongoing living expenses."
             backgroundImage="/assets/images/headline-images/family-protection-image.png"
           >
             <div className="headline__btn">

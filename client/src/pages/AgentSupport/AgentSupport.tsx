@@ -39,8 +39,9 @@ const AgentSupport: React.FC = () => {
   return (
     <div className="agent-support-wrapper">
       <Headline
-        title="Helping agents succeed"
-        description="All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet."
+        title="Where Agents Thrive
+        and Dreams Take Flight"
+        description="Get the edge you need to be a successful life insurance agent. CFS provides competitive compensation, proven financial solutions, and career advancement opportunities."
         backgroundImage="/assets/images/headline-images/agent-support-image.png"
         children={
           <div className="headline__btn">
