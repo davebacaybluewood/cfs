@@ -16,7 +16,6 @@ import SolutionBusiness from "./components/SolutionBusiness/solutionBusiness";
 import useScroll from "hooks/useScroll";
 import { CALENDLY } from "constants/constants";
 import { PopupModal } from "react-calendly";
-
 import "./BusinessProtection.scss";
 
 const BusinessProtection: React.FC = () => {
@@ -29,11 +28,16 @@ const BusinessProtection: React.FC = () => {
         title={
           <React.Fragment>
             <div className="business-headline-title">
-              <h2> Securing your business’ growth</h2>
+              <h2>
+                {" "}
+                Ensuring Personal Financial Stability <br /> and Resilience
+              </h2>
             </div>
           </React.Fragment>
         }
-        description="Your business is not just a source of income; it's a symbol of your passion and aspirations. At Comfort Financial Solutions, we specialize in business insurance solutions designed to safeguard your enterprise and empower you to navigate the challenges of today's dynamic marketplace."
+        description="Take advantage of CFS's strategic financial products. As an individual,
+        life insurance is a crucial component of financial planning. Regardless
+        of age, providing a safety net for unexpected events could impact their financial future."
         backgroundImage="/assets/images/headline-images/business-protection-image.png"
       >
         <div className="headline__btn">
