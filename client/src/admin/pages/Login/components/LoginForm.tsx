@@ -9,6 +9,7 @@ import Spinner from "library/Spinner/Spinner";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ILabeledInput } from "constants/models";
+import { paths } from "constants/routes";
 
 type LoginValues = {
   emailAddress: string;
@@ -111,7 +112,12 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 LOGIN
               </Button>
               <div className="register-btn">
-                <button type="button">Create an Account</button>
+                <button
+                  type="button"
+                  onClick={() => navigate(paths.agentRegistration)}
+                >
+                  Create an Account
+                </button>
               </div>
             </form>
           </div>

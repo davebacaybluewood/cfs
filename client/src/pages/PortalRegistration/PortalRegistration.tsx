@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./PortalRegistration.scss";
 import { Formik } from "formik";
 import AccountDetails from "./components/AccountDetails";
 import PersonalInfo from "./components/PersonalInfo";
@@ -13,6 +12,7 @@ import { Alert } from "@mui/material";
 import SuccessPage from "./components/SuccessPage";
 import { ValuesType } from "./models";
 import validationSchema from "./helpers/validationSchema";
+import "./PortalRegistration.scss";
 
 const PortalRegistration: React.FC = () => {
   const [stage, setStage] = useState(1);
