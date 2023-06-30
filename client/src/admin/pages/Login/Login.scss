@@ -18,6 +18,11 @@
     flex-grow: 0;
     flex-shrink: 0;
 
+    .MuiPaper-root {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
     .img-holder {
       overflow: hidden;
       width: 80%;
