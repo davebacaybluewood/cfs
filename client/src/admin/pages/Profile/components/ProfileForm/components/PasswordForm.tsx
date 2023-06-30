@@ -129,7 +129,14 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                 </Grid>
               </Grid>
               <div className="form-actions">
-                <Button onClick={() => resetForm()}>CLEAR</Button>
+                <Button
+                  onClick={() => resetForm()}
+                  style={{
+                    color: "black",
+                  }}
+                >
+                  CLEAR
+                </Button>
                 <Button variant="primary" onClick={() => handleSubmit()}>
                   UPDATE MY PASSWORD
                 </Button>
