@@ -28,7 +28,9 @@ const BlogCard: React.FC<BlogType> = (props) => {
             </div>
           }
         >
-          <h2>{props.title}</h2>
+          <div className="blog-title">
+            <h2>{props.title}</h2>
+          </div>
         </HtmlTooltip>
         <div className="card-blog-content">
           {props.description.replace(/<[^>]*>/g, "").replace("&quot;", " ")}
