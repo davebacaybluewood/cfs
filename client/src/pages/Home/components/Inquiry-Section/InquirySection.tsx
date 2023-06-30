@@ -29,6 +29,28 @@ const InquirySection: React.FC = () => {
       <InquiryCard
         header={
           <React.Fragment>
+            Ensuring Personal Financial <br /> Stability and Resilience
+          </React.Fragment>
+        }
+        description={
+          <React.Fragment>
+            Take advantage of CFS's strategic financial products. As an
+            individual, <br /> life insurance is a crucial component of
+            financial planning. Regardless <br /> of age, providing a safety net
+            for unexpected events could impact their financial future.
+          </React.Fragment>
+        }
+        image="/assets/images/home/rectangle-image2.png"
+        align="right"
+        color="blue"
+        buttonConfigs={{
+          text: "Learn More",
+          onClick: () => learnMoreHandler("business-protection"),
+        }}
+      />
+      <InquiryCard
+        header={
+          <React.Fragment>
             Safeguarding Your <br /> Family's Future
           </React.Fragment>
         }
@@ -38,50 +60,24 @@ const InquirySection: React.FC = () => {
             comfortable future by advocating Financial <br /> Awareness and
             providing Risk Management
             <br /> Solutions. Commented for future dev use*/}
-            Life insurance is essential for families looking to protect their{" "}
+            Life insurance is essential for families looking to protect their
             <br />
             financial well-being and provide a better future for their loved
             ones. <br /> In the event of an unexpected death, life insurance can
-            help cover expenses such as funeral costs, outstanding debts, and{" "}
+            help cover expenses such as funeral costs, outstanding debts, and
             <br />
             ongoing living expenses.
           </React.Fragment>
         }
         image="/assets/images/home/rectangle-image1.png"
-        align="right"
+        align="left"
         color="navy"
         buttonConfigs={{
           text: "Learn More",
           onClick: () => learnMoreHandler("family-protection"),
         }}
       />
-      <InquiryCard
-        header={
-          <React.Fragment>
-            Ensuring Your Business' <br /> Stability and Resilience
-          </React.Fragment>
-        }
-        description={
-          <React.Fragment>
-            {/* CFS helps individuals and families build a <br />
-              comfortable future by advocating Financial <br /> Awareness and
-              providing Risk Management
-              <br /> Solutions. Commented for future dev use*/}
-            CFS solutions for business owners play a pivotal role <br /> in
-            safeguarding the financial stability and continuity of <br />{" "}
-            business owners. By providing a safety net for unforeseen <br />{" "}
-            events,CFS solutions ensure that a business and its people <br />{" "}
-            will continue to prosper.
-          </React.Fragment>
-        }
-        image="/assets/images/home/rectangle-image2.png"
-        align="left"
-        color="blue"
-        buttonConfigs={{
-          text: "Learn More",
-          onClick: () => learnMoreHandler("business-protection"),
-        }}
-      />
+
       <InquiryCard
         header={
           <React.Fragment>
