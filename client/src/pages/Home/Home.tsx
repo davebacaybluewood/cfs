@@ -12,7 +12,6 @@ import { PopupModal, useCalendlyEventListener } from "react-calendly";
 import { CALENDLY } from "constants/constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
-import "./Home.scss";
 
 const Home: React.FC = () => {
   const [calendlyWeekly, setCalendlyWeekly] = useState(false);

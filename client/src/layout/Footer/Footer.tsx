@@ -34,11 +34,11 @@ const Footer: React.FC = () => {
                     text: "About Us",
                   },
                   {
-                    link: "/",
+                    link: paths.about_us,
                     text: "Our Mission",
                   },
                   {
-                    link: "/",
+                    link: paths.about_us,
                     text: "Our Vision",
                   },
                 ]}
@@ -50,15 +50,15 @@ const Footer: React.FC = () => {
                 title="Solutions"
                 links={[
                   {
-                    link: paths.solutions,
+                    link: paths.family_protection,
                     text: "For Families",
                   },
                   {
-                    link: "/",
+                    link: paths.business_protection,
                     text: "For Individuals",
                   },
                   {
-                    link: "/",
+                    link: paths.agent_support,
                     text: "For Agents",
                   },
                 ]}
@@ -70,11 +70,11 @@ const Footer: React.FC = () => {
                 title="Features"
                 links={[
                   {
-                    link: "/",
+                    link: paths.cfsPages.replace(":pageId", "cfs-edge"),
                     text: "CFS Edge",
                   },
                   {
-                    link: "/",
+                    link: paths.cfsPages.replace(":pageId", "cfs-advantage"),
                     text: "CFS Advantage",
                   },
                 ]}
@@ -106,36 +106,17 @@ const Footer: React.FC = () => {
               <h5>Get In Touch</h5>
               <ul>
                 <li>
-                  <a href="/">
-                    <HiOutlinePhone />
-                    <span>{COMPANY_CONTACT_INFO.PHONE}</span>
-                  </a>
+                  <HiOutlinePhone />
+                  <span>{COMPANY_CONTACT_INFO.PHONE}</span>
                 </li>
                 <li>
-                  <a href="/">
-                    <CiLocationOn />{" "}
-                    <span>{COMPANY_CONTACT_INFO.STATE_NV}</span>
-                  </a>
+                  <CiLocationOn /> <span>{COMPANY_CONTACT_INFO.STATE_NV}</span>
                 </li>
                 <li>
-                  <a href="/">
-                    <CiLocationOn
-                      style={{
-                        color: "transparent",
-                      }}
-                    />{" "}
-                    <span>{COMPANY_CONTACT_INFO.STATE_CA}</span>
-                  </a>
+                  <CiLocationOn /> <span>{COMPANY_CONTACT_INFO.STATE_CA}</span>
                 </li>
                 <li>
-                  <a href="/">
-                    <CiLocationOn
-                      style={{
-                        color: "transparent",
-                      }}
-                    />{" "}
-                    <span>{COMPANY_CONTACT_INFO.STATE_NY}</span>
-                  </a>
+                  <CiLocationOn /> <span>{COMPANY_CONTACT_INFO.STATE_NY}</span>
                 </li>
                 <li>
                   <a href="/">

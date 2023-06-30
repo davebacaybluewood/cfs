@@ -29,6 +29,7 @@ import Spinner from "admin/components/Spinner/Spinner";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import BlogCard from "library/Blogs/BlogCard/BlogCard";
 import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
+import { useNavigate } from "react-router-dom";
 
 const contactCols = ["Name", "Email", "Phone Number"];
 const contactRows = [
@@ -59,6 +60,7 @@ const contactRows = [
   },
 ];
 const AdminBox = () => {
+  const navigate = useNavigate();
   const statistics: StatisticTypes[] = [
     {
       countText: "User Accounts",
@@ -273,6 +275,14 @@ const AdminBox = () => {
                             description={data.content}
                             image={data.thumbnail ?? ""}
                             title={data.title}
+                            onClick={() =>
+                              navigate(
+                                paths.adminViewBlogs.replace(
+                                  ":blogTitle",
+                                  data?._id
+                                )
+                              )
+                            }
                           />
                         </Grid>
                       );

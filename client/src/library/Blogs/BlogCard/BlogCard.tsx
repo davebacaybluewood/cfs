@@ -9,7 +9,7 @@ const BlogCard: React.FC<BlogType> = (props) => {
   return (
     <div className="blog-card" onClick={props.onClick}>
       <div className="blog-image">
-        <img src={props.image} alt={props.image} />
+        <img src={props.image} alt="Blog Photo" />
         <div className="blog-date">
           <div className="days">{getDateDays(new Date(props.date))}</div>
           <div className="month">{getDateMonthShort(new Date(props.date))}</div>

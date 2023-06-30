@@ -40,7 +40,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       <Container>
         <div className="navbar__content">
           <div className="navbar__name">
-            <img src={MAIN_IMAGES.WHITE_LOGO} alt="CFS logo" />
+            <Link to={paths.home}>
+              <img src={MAIN_IMAGES.WHITE_LOGO} alt="CFS logo" />
+            </Link>
           </div>
           <div className="navbar__links">
             {isMobileMode ? (
