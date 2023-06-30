@@ -1,9 +1,12 @@
 import { Container, Grid } from "@mui/material";
 import Button from "library/Button/Button";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Benefits.scss";
+import { paths } from "constants/routes";
 
 const Benefits: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <Container className="main-container">
       <Grid container spacing={2}>
@@ -64,7 +67,12 @@ const Benefits: React.FC = () => {
                 </div>
               </div>
             </div>
-            <Button variant="danger">Become an Agent</Button>
+            <Button
+              variant="danger"
+              onClick={() => navigate(paths.portalRegistration)}
+            >
+              Become an Agent
+            </Button>
           </div>
         </Grid>
         <Grid item xs={12} md={12} lg={6}>

@@ -33,6 +33,18 @@
 
       li {
         padding-bottom: 1rem;
+        color: #ffffff;
+        align-items: center;
+        font-family: "roboto", sans-serif;
+        font-size: 1.2rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+
+        svg {
+          margin-right: 0.5rem;
+          font-size: 2rem;
+        }
       }
       a {
         text-decoration: none;
