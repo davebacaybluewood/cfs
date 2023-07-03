@@ -72,7 +72,10 @@ const Form: React.FC = () => {
   const initialValues = {
     fullName: "",
     emailAddress: "",
-    state: "",
+    state: {
+      name: "Alabama",
+      abbreviation: "AL",
+    },
     phoneNumber: "",
     message: "",
   };
@@ -133,7 +136,7 @@ const Form: React.FC = () => {
                     lg={6}
                     className="form-card-container"
                   >
-                    <label>Contact Email Address *</label>
+                    <label>Email Address *</label>
                     <FormikTextInput
                       placeholder="Enter your email address here"
                       variant="outlined"

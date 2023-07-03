@@ -137,7 +137,7 @@ const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     element: <BusinessProtection />,
-    path: paths.business_protection,
+    path: paths.individual_protection,
     showHeadline: false,
     theme: "SKY",
   },

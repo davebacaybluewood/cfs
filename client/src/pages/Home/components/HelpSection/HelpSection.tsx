@@ -22,7 +22,7 @@ const HelpSection: React.FC = () => {
                 />
                 <Typography variant="h4">Insurance</Typography>
                 <p>
-                  CFS insurers individuals <br /> and families
+                  CFS insures individuals <br /> and families
                 </p>
               </div>
             </Grid>

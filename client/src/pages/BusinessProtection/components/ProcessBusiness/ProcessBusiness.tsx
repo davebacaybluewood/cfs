@@ -47,7 +47,7 @@ const ProcessBusiness: React.FC = () => {
     <div className="process">
       <Container className="mobile-view-no-padding">
         <div className="section__title">
-          <h3>Get started with our simple process</h3>
+          <h3>Get the protection you need with our simple process.</h3>
         </div>
         <Grid container spacing={2} className="card-business">
           {processData.map((data, index) => {
