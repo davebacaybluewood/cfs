@@ -99,11 +99,15 @@
 @media screen and (max-width: 425px) {
   .plan-card-container {
     margin: 0 0 1rem 0;
-  }
 
-  .button__container {
-    button {
-      width: 70% !important;
+    .captions {
+      height: auto;
+    }
+
+    .button__container {
+      button {
+        width: 70% !important;
+      }
     }
   }
 }
@@ -112,11 +116,11 @@
   .plan-card-container {
     padding: 2rem;
     margin-bottom: -1rem;
-  }
 
-  .button__container {
-    button {
-      width: 100% !important;
+    .button__container {
+      button {
+        width: 100% !important;
+      }
     }
   }
 }
