@@ -177,6 +177,3 @@ const BusinessProtection: React.FC = () => {
 };
 
 export default BusinessProtection;
-function useState(arg0: boolean): [any, any] {
-  throw new Error("Function not implemented.");
-}

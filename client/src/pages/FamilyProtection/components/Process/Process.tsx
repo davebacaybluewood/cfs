@@ -13,12 +13,9 @@ const processData: PlanCardProps[] = [
     subtitle: "Get Consultation",
     description:
       "We'll take the time to understand your unique needs, answer any questions you may have, and guide you towards the best life insurance solution for your family.",
-    lists: [
-      "We are Different",
-      "Contrary To Popular Belief",
-      "Looked Up One Of The More",
-    ],
+    lists: ["Qualified agents", "Solution oriented", "Collaborative"],
   },
+
   {
     button: {
       text: "Make Payment",
@@ -28,8 +25,13 @@ const processData: PlanCardProps[] = [
     subtitle: "Make Payment",
     description:
       "Our streamlined payment options ensure a seamless experience. Simply select the payment method that suits you best",
-    lists: ["Secure payment channels", "No hassle", "Get real-time updates"],
+    lists: [
+      "Comprehensive evaluation",
+      "Effective financial solutions",
+      "Quick update",
+    ],
   },
+
   {
     button: {
       text: "Make an ID Policy",
@@ -39,7 +41,7 @@ const processData: PlanCardProps[] = [
     subtitle: "Get Consultation",
     description:
       "After completing payment, we'll swiftly process your application and you’ll receive a policy ID, which serves as proof of your comprehensive coverage",
-    lists: ["Online processing", "Easy to update", "No long waiting hours"],
+    lists: ["Faster processing", "Easy payment process", "Safe and secure"],
   },
 ];
 const Process: React.FC = () => {
@@ -47,7 +49,7 @@ const Process: React.FC = () => {
     <div className="process">
       <Container className="mobile-view-no-padding">
         <div className="section__title">
-          <h3>Get started with our simple process</h3>
+          <h3>Get the protection your family needs with our simple process.</h3>
         </div>
         <Grid container spacing={2}>
           {processData.map((data, index) => {

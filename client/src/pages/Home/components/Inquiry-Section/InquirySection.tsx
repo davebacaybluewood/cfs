@@ -4,9 +4,9 @@ import InquiryCard from "../InquiryCard/InquiryCard";
 import { useNavigate } from "react-router-dom";
 
 type InquiryType =
-  | "business-protection"
+  | "individual-protection"
   | "family-protection"
-  | "agent-support";
+  | "become-a-cfs-agent";
 
 const InquirySection: React.FC = () => {
   const navigate = useNavigate();
@@ -14,10 +14,10 @@ const InquirySection: React.FC = () => {
   const learnMoreHandler = (type: InquiryType) => {
     let btnLink: string;
 
-    if (type === "agent-support") {
-      btnLink = "/agent-support";
-    } else if (type === "business-protection") {
-      btnLink = "/business-protection";
+    if (type === "become-a-cfs-agent") {
+      btnLink = "/become-a-cfs-agent";
+    } else if (type === "individual-protection") {
+      btnLink = "/individual-protection";
     } else {
       btnLink = "/family-protection";
     }
@@ -45,7 +45,7 @@ const InquirySection: React.FC = () => {
         color="blue"
         buttonConfigs={{
           text: "Learn More",
-          onClick: () => learnMoreHandler("business-protection"),
+          onClick: () => learnMoreHandler("individual-protection"),
         }}
       />
       <InquiryCard
@@ -96,7 +96,7 @@ const InquirySection: React.FC = () => {
         color="red"
         buttonConfigs={{
           text: "Learn More",
-          onClick: () => learnMoreHandler("agent-support"),
+          onClick: () => learnMoreHandler("become-a-cfs-agent"),
         }}
       />
     </Container>
