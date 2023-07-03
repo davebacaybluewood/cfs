@@ -11,9 +11,9 @@ import Timelines from "library/Timeline/Timelines";
 import Benefits from "./Benefits";
 import StandardCard from "library/StandardCard/StandardCard";
 import useScroll from "hooks/useScroll";
-import "./AgentSupport.scss";
 import { useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
+import "./AgentSupport.scss";
 
 const timelineData = [
   {
@@ -61,7 +61,7 @@ const AgentSupport: React.FC = () => {
                 <StandardCard
                   icon={<RiShieldUserLine />}
                   title="Become a CFS Agent"
-                  description="veritatis et quasi architecto beatae vitae dicta sunt explicabo"
+                  description="Take the first step in becoming a successful agent"
                   button={{
                     text: "Apply",
                   }}
@@ -71,7 +71,7 @@ const AgentSupport: React.FC = () => {
                 <StandardCard
                   icon={<MdHealthAndSafety />}
                   title="Agent Back Office"
-                  description="veritatis et quasi architecto beatae vitae dicta sunt explicabo"
+                  description="Explore the cfs agent's dashboard and other sales and marketing tools"
                   button={{
                     text: "Login",
                   }}
@@ -104,6 +104,8 @@ const AgentSupport: React.FC = () => {
             </React.Fragment>
           }
           button={{
+            onClick: () =>
+              navigate(paths.cfsPages.replace(":pageId", "cfs-edge")),
             text: "Learn More",
           }}
         />
@@ -189,7 +191,7 @@ const AgentSupport: React.FC = () => {
               <div className="timeline-content">
                 <Timelines data={timelineData} />
               </div>
-              <Button variant="primary" onClick={() => navigate(paths.login)}>
+              <Button variant="default" onClick={() => navigate(paths.login)}>
                 Agent Portal
               </Button>
             </Grid>

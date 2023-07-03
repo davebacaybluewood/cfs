@@ -3,7 +3,7 @@ import Button from "library/Button/Button";
 import React from "react";
 
 import "./Overview.scss";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
 
 const Overview: React.FC = () => {
@@ -37,40 +37,40 @@ const Overview: React.FC = () => {
                 <p>CFS offers Life Insurance and Annuities.</p>
               </div>
               <div className="ambition__container">
-                <div className="inline-block">
-                  <div className="small-card">
-                    <div className="card-img">
-                      <img src="\assets\images\home\Light_Bulb.png" alt="" />
-                    </div>
-                    <div className="card-captions">
-                      <div className="card-title">
-                        <h3>Our Mission</h3>
+                <Link to={paths.about_us}>
+                  <div className="inline-block">
+                    <div className="small-card">
+                      <div className="card-img">
+                        <img src="\assets\images\home\Light_Bulb.png" alt="" />
                       </div>
-                      <div className="card-subtitle">
-                        <p>Learn about our mission</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="inline-block">
-                  <div className="small-card">
-                    <div className="card-img">
-                      <img src="\assets\images\home\Star.png" alt="" />
-                    </div>
-                    <div className="card-captions">
-                      <div className="card-title">
-                        <h3>Our Vision</h3>
-                      </div>
-                      <div className="card-subtitle">
-                        <p>Learn about our vision</p>
+                      <div className="card-captions">
+                        <div className="card-title">
+                          <h3>Our Mission</h3>
+                        </div>
+                        <div className="card-subtitle">
+                          <p>Learn about our mission</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <Button variant="primary" onClick={learnMoreHandler}>
-                  Learn More
-                </Button>
+                </Link>
+                <Link to={paths.about_us}>
+                  <div className="inline-block">
+                    <div className="small-card">
+                      <div className="card-img">
+                        <img src="\assets\images\home\Star.png" alt="" />
+                      </div>
+                      <div className="card-captions">
+                        <div className="card-title">
+                          <h3>Our Vision</h3>
+                        </div>
+                        <div className="card-subtitle">
+                          <p>Learn about our vision</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
               </div>
             </div>
           </Grid>

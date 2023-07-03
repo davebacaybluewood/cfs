@@ -8,9 +8,12 @@ import useResponsive from "hooks/useResponsive";
 import Banner from "library/Banner/Banner";
 import ContentCard from "library/ContentCard/ContentCard";
 import ReactHelmet from "react-helmet";
+import useScroll from "hooks/useScroll";
 import "./AboutUs.scss";
 
 const AboutUs = () => {
+  useScroll();
+
   const isMobileMode = useResponsive("mobile");
 
   const metaKeywords = [

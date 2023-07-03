@@ -2,6 +2,8 @@ import adminPaths from "admin/constants/routes";
 
 const paths = {
   ...adminPaths,
+
+  /*Pages*/
   index: "/",
   home: "/home",
   family_protection: "/family-protection",
@@ -17,7 +19,6 @@ const paths = {
 
   /** Webinar */
   agent_with_id: "/agents/:id",
-
   agent_check_status: "/agents/status/:id",
   webinarForm: "/webinar/:videoId/:agentId",
   webinarAppointment: "/webinar/:videoId/:agentId/:submissionId",
