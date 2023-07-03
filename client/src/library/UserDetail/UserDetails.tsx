@@ -1,5 +1,5 @@
-import { AuthorType } from "library/Blogs/BlogModels";
 import React from "react";
+import { AuthorType } from "library/Blogs/BlogModels";
 import "./UserDetails.scss";
 
 const UserDetails: React.FC<AuthorType> = (props) => {

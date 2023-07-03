@@ -21,7 +21,7 @@ import "./BusinessProtection.scss";
 const BusinessProtection: React.FC = () => {
   const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
   const carouselRef = useRef<any>();
-  // useScroll();
+  useScroll();
   return (
     <div className="business__protection">
       <Headline
