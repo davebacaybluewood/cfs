@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
                     text: "For Families",
                   },
                   {
-                    link: paths.business_protection,
+                    link: paths.individual_protection,
                     text: "For Individuals",
                   },
                   {

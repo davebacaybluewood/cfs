@@ -45,8 +45,17 @@ const AgentSupport: React.FC = () => {
         backgroundImage="/assets/images/headline-images/agent-support-image.png"
         children={
           <div className="headline__btn">
-            <Button variant="danger">Become an Agent</Button>
-            <Button variant="default" className="default-btn">
+            <Button
+              variant="danger"
+              onClick={() => navigate(paths.portalRegistration)}
+            >
+              Become an Agent
+            </Button>
+            <Button
+              variant="default"
+              className="default-btn"
+              onClick={() => navigate(paths.login)}
+            >
               Agent Log In
             </Button>
           </div>
