@@ -8,6 +8,12 @@
       font-size: 3rem;
       text-align: left;
       margin-bottom: 1rem;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -55,6 +61,16 @@
       h3 {
         width: 100%;
         text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .blog-props-container {
+    .blog-title {
+      h3 {
+        font-size: 2rem;
       }
     }
   }

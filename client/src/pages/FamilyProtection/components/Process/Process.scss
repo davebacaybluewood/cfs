@@ -44,19 +44,21 @@
 }
 
 @media screen and (max-width: 768px) {
-  .section__title {
-    h3 {
-      text-align: center;
+  .process {
+    .section__title {
+      h3 {
+        text-align: center;
+      }
     }
-  }
-  .section__text__content {
-    p {
-      text-align: center;
+    .section__text__content {
+      p {
+        text-align: center;
+      }
     }
-  }
-  button {
-    display: block;
-    margin: auto;
+    button {
+      display: block;
+      margin: auto;
+    }
   }
 }
 

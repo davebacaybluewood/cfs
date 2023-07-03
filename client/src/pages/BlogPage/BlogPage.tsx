@@ -19,11 +19,13 @@ import FormikTextInput from "library/Formik/FormikInput";
 import "./BlogPage.scss";
 import Head from "library/Head/Head";
 import METATAGS from "constants/metatags";
+import useResponsive from "hooks/useResponsive";
 
 const BlogPage: React.FC = () => {
   useScroll();
   const navigate = useNavigate();
   const [limit, setLimit] = useState(3);
+  const isMobileMode = useResponsive("mobile");
   const [loading, setLoading] = useState(false);
   const { blogs, loading: blogLoading } = useFetchBlogResource(0, limit);
   const [isSearched, setIsSearched] = useState(false);
@@ -103,7 +105,10 @@ const BlogPage: React.FC = () => {
                 return (
                   <LargeBlogCard
                     key={index}
-                    align={isEven(index) ? "right" : "left"}
+                    isMobileMode={isMobileMode}
+                    align={
+                      isEven(index) ? "left" : isMobileMode ? "right" : "right"
+                    }
                     blogTitle={`${data.title}`}
                     date={data.createdAt ?? ""}
                     content={data.content}

@@ -163,20 +163,25 @@
 }
 
 @media screen and (max-width: 768px) {
+  .navbar {
+    .navbar__name {
+      img {
+        width: 100px !important;
+      }
+    }
+  }
   .navbar__mobile {
     button {
       width: 100%;
     }
 
-    button {
-      width: 100px !important;
-    }
-
     .navbar__mobile-socials {
       ul {
+        list-style: none !important;
         li {
+          list-style: none !important;
           a {
-            padding: 1rem 0.5rem;
+            padding: 1rem 1rem;
           }
         }
       }

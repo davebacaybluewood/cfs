@@ -46,6 +46,7 @@
     .recaptcha-container {
       padding: 0;
       left: 0;
+      height: calc(100% + 100px) !important;
     }
   }
 }

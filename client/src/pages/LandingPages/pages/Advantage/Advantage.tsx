@@ -54,7 +54,7 @@ const Advantage: React.FC = () => {
   };
 
   return (
-    <div className="page-wrapper page-dark">
+    <div className="page-wrapper page-dark landing-page-main-wrapper">
       <Helmet>
         {`
                 !function(f,b,e,v,n,t,s)
