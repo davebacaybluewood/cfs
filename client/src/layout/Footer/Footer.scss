@@ -101,9 +101,6 @@
   }
 }
 
-@media screen and (max-width: 1024) {
-}
-
 @media screen and (max-width: 600px) {
   .footer .sub-footer .footer__socials {
     text-align: right;
@@ -124,8 +121,27 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 425px) {
   .footer {
     text-align: center;
+    .footer__main-section__links {
+      li {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .footer {
+    .footer__main-section__links {
+      li {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+    }
   }
 }

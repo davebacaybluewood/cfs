@@ -52,7 +52,7 @@ const FamilyProtection: React.FC = () => {
         <div className="plan">
           <Container className="feature-main-container">
             <Grid container>
-              <Grid item xs={12} sm={12} md={12} lg={9}>
+              {/* <Grid item xs={12} sm={12} md={12} lg={9}>
                 <ReactMultiCarousel
                   ref={carouselRef}
                   additionalTransfrom={0}
@@ -127,8 +127,8 @@ const FamilyProtection: React.FC = () => {
                     );
                   })}
                 </ReactMultiCarousel>
-              </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={3}>
+              </Grid> */}
+              {/* <Grid item xs={12} sm={12} md={12} lg={3}>
                 <div
                   className="carousel-navigator-container"
                   style={{
@@ -153,7 +153,28 @@ const FamilyProtection: React.FC = () => {
                     </div>
                   </StandardCard>
                 </div>
-              </Grid>
+              </Grid> Future use*/}
+              {featureDataFamily?.map((data, index) => {
+                return (
+                  <Grid sm={12} md={4} lg={4}>
+                    <div
+                      style={{
+                        padding: "1rem",
+                      }}
+                    >
+                      <StandardCard
+                        key={index}
+                        icon={data.icon}
+                        title={data.title}
+                        description={data.description}
+                        button={{
+                          text: data.button.text,
+                        }}
+                      />
+                    </div>
+                  </Grid>
+                );
+              })}
             </Grid>
           </Container>
           <Plan />

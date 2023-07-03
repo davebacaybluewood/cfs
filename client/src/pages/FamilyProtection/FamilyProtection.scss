@@ -68,10 +68,25 @@
     margin-bottom: -3rem;
   }
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 900px) {
   .family-protection__page {
     .standard-card-container {
-      height: 20vh !important;
+      text-align: center;
+      height: auto !important;
+      margin-top: 1rem;
+
+      .card-title {
+        text-align: center;
+        h3 {
+          font-size: 2rem !important;
+        }
+      }
+      .card-description {
+        p {
+          height: auto !important;
+          font-size: 1.6rem !important;
+        }
+      }
 
       button {
         height: 40px !important;
@@ -94,6 +109,7 @@
           text-align: center;
           color: white !important;
           width: 100%;
+          margin-bottom: 5rem !important;
         }
       }
     }
