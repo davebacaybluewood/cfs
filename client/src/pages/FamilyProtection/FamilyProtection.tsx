@@ -6,7 +6,7 @@ import Blogs from "library/Blogs/Blogs";
 import FAQs from "library/FAQs/FAQs";
 import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
-import { filteredFaqs } from "./components/FamilyProtection";
+import { filteredFaqs } from "./components/FamilyProtectionFAQs";
 import Consultation from "library/Consultation/Consultation";
 // import Testimonial from "library/Testimonial/Testimonial"; Commented for future use
 import { Container, Grid } from "@mui/material";
