@@ -22,7 +22,7 @@ const HelpSection: React.FC = () => {
                 />
                 <Typography variant="h4">Insurance</Typography>
                 <p>
-                  CFS helps individuals <br /> and families{" "}
+                  CFS insurers individuals <br /> and families
                 </p>
               </div>
             </Grid>
@@ -34,7 +34,7 @@ const HelpSection: React.FC = () => {
                 />
                 <Typography variant="h4">Risk Management</Typography>
                 <p>
-                  CFS helps individuals <br /> and families{" "}
+                  CFS ensures coverage during <br /> unexpected death
                 </p>
               </div>
             </Grid>
@@ -46,7 +46,7 @@ const HelpSection: React.FC = () => {
                 />
                 <Typography variant="h4">Consultation</Typography>
                 <p>
-                  CFS helps individuals <br /> and families{" "}
+                  CFS agents are ready to find <br /> the perfect solution
                 </p>
               </div>
             </Grid>

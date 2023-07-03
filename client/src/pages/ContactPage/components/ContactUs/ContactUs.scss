@@ -21,9 +21,6 @@
     .contact-image {
       margin-bottom: 2rem;
 
-      &:hover {
-        cursor: pointer;
-      }
       img {
         border-radius: 2rem;
         border: 1px dashed #5a7184;
@@ -52,10 +49,6 @@
       font-weight: 700;
       font-size: 1.4rem;
       text-align: center;
-
-      &:hover {
-        cursor: pointer;
-      }
     }
   }
 }

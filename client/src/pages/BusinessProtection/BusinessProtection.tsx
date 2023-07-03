@@ -48,7 +48,7 @@ const BusinessProtection: React.FC = () => {
           >
             Free Consultation
           </Button>
-          <Button variant="default">Learn More</Button>
+          {/* <Button variant="default">Learn More</Button> Please disregard, commented for future dev use */}
         </div>
       </Headline>
       <Container className="feature-main-container">

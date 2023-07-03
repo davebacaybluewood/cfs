@@ -50,7 +50,9 @@ const SingleBlogPage: React.FC = () => {
           <Grid container spacing={5}>
             <Grid item xs={12} sm={12} md={12} lg={9}>
               {loading ? (
-                <Spinner variant="relative" />
+                <div className="loading">
+                  <Spinner variant="relative" />
+                </div>
               ) : (
                 <React.Fragment>
                   <div className="current-blog-image">

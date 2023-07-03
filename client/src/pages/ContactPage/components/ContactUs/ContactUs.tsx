@@ -29,7 +29,12 @@ const ContactUs: React.FC<ContactUsProps> = (props) => {
                   updates and opportunities.
                 </div>
                 <div className="contact-contact">
-                  {COMPANY_CONTACT_INFO.EMAIL}
+                  <a
+                    href="mailto:support@gocfs.pro"
+                    style={{ textDecoration: "none" }}
+                  >
+                    {COMPANY_CONTACT_INFO.EMAIL}
+                  </a>
                 </div>
               </div>
             </Grid>
