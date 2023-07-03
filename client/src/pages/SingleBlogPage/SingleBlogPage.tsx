@@ -5,7 +5,7 @@ import BlogCard from "library/Blogs/BlogCard/BlogCard";
 import { paths } from "constants/routes";
 import UserDetails from "library/UserDetail/UserDetails";
 import ReactHtmlParser from "html-react-parser";
-import { formatISODateToDate } from "helpers/date";
+import { formatISODateOnly, formatISODateToDate } from "helpers/date";
 import useScroll from "hooks/useScroll";
 import { BlogData } from "pages/BlogPage/models";
 import agent from "api/agent";
@@ -61,7 +61,7 @@ const SingleBlogPage: React.FC = () => {
                   <div className="single-blog-content">
                     <h1>{blog?.title}</h1>
                     <UserDetails
-                      authorName={`${blog?.authorName}  ${formatISODateToDate(
+                      authorName={`${blog?.authorName},  ${formatISODateOnly(
                         blog?.createdAt ?? ""
                       )}`}
                       image={blog?.authorThumbnail ?? " "}
