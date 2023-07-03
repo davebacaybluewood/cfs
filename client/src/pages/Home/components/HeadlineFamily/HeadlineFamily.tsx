@@ -30,7 +30,7 @@ const HeadlineFamily: React.FC = () => {
             <Button variant="danger" onClick={() => setOpenCalendlyModal(true)}>
               Free Consultation
             </Button>
-            <Button variant="default">Learn More</Button>
+            {/* <Button variant="default">Learn More</Button> Please disregard, commented for future dev use */}
           </div>
         </MovingComponent>
       </div>
