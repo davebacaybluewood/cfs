@@ -28,7 +28,7 @@ const FAQs: React.FC<FAQsProps> = (props) => {
         </div>
         <Grid container spacing={2}>
           <Grid item sm={12} md={12} lg={6}>
-            {props.faqs.slice(0, sliceFaqData + 1).map((faq) => {
+            {props.faqs.slice(0, sliceFaqData).map((faq) => {
               return (
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={6} lg={12}>

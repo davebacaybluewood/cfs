@@ -6,7 +6,7 @@ import Blogs from "library/Blogs/Blogs";
 import FAQs from "library/FAQs/FAQs";
 import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
-import { filteredFaqs } from "./components/FamilyProtection";
+import { filteredFaqs } from "./components/FamilyProtectionFAQs";
 import Consultation from "library/Consultation/Consultation";
 // import Testimonial from "library/Testimonial/Testimonial"; Commented for future use
 import { Container, Grid } from "@mui/material";
@@ -45,7 +45,7 @@ const FamilyProtection: React.FC = () => {
               >
                 Free Consultation
               </Button>
-              <Button variant="default">Learn More</Button>
+              {/* <Button variant="default">Learn More</Button> Please disregard, commented for future dev use */}
             </div>
           </Headline>
         </div>

@@ -5,7 +5,7 @@ import BlogCard from "library/Blogs/BlogCard/BlogCard";
 import { paths } from "constants/routes";
 import UserDetails from "library/UserDetail/UserDetails";
 import ReactHtmlParser from "html-react-parser";
-import { formatISODateToDate } from "helpers/date";
+import { formatISODateOnly, formatISODateToDate } from "helpers/date";
 import useScroll from "hooks/useScroll";
 import { BlogData } from "pages/BlogPage/models";
 import agent from "api/agent";
@@ -50,7 +50,9 @@ const SingleBlogPage: React.FC = () => {
           <Grid container spacing={5}>
             <Grid item xs={12} sm={12} md={12} lg={9}>
               {loading ? (
-                <Spinner variant="relative" />
+                <div className="loading">
+                  <Spinner variant="relative" />
+                </div>
               ) : (
                 <React.Fragment>
                   <div className="current-blog-image">
@@ -59,7 +61,7 @@ const SingleBlogPage: React.FC = () => {
                   <div className="single-blog-content">
                     <h1>{blog?.title}</h1>
                     <UserDetails
-                      authorName={`${blog?.authorName}  ${formatISODateToDate(
+                      authorName={`${blog?.authorName},  ${formatISODateOnly(
                         blog?.createdAt ?? ""
                       )}`}
                       image={blog?.authorThumbnail ?? " "}
