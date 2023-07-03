@@ -8,7 +8,7 @@ const connectDB = async () => {
   */
 
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI_LOCAL, {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
       useNewURLParser: true,
     });
 
