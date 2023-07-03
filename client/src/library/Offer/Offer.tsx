@@ -36,7 +36,9 @@ const Offer: React.FC<OfferProps> = (props) => {
               })}
             </ul>
             <div className="section__button">
-              <Button variant="primary">{props.button.text}</Button>
+              <Button variant="primary" onClick={props.button.onClick}>
+                {props.button.text}
+              </Button>
             </div>
           </div>
         </Grid>
