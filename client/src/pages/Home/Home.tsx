@@ -11,7 +11,6 @@ import METATAGS from "constants/metatags";
 import { PopupModal, useCalendlyEventListener } from "react-calendly";
 import { CALENDLY } from "constants/constants";
 import { useLocation, useNavigate } from "react-router-dom";
-import { paths } from "constants/routes";
 
 const Home: React.FC = () => {
   const [calendlyWeekly, setCalendlyWeekly] = useState(false);
@@ -23,7 +22,7 @@ const Home: React.FC = () => {
     onEventScheduled: (e) => {
       setCalendlyConsultation(false);
       setCalendlyWeekly(false);
-      navigate(paths.pageSuccess.replace(":pageId", activeCalendly));
+      // navigate(paths.pageSuccess.replace(":pageId", activeCalendly));
     },
   });
 

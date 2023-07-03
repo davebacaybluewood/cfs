@@ -1,3 +1,6 @@
+import React from "react";
+import { AiFillCheckCircle } from "react-icons/ai";
+
 /**
  * ** All Portal Profile Positions
  * This is the main constant for profile positions
@@ -174,22 +177,52 @@ const ADMIN_ROLES = [
 
 const USER_FAQ = [
   {
-    title: "FAQ Title 1",
+    title: "What is CFS Portal?",
     id: "panel1",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.",
+    description: (
+      <React.Fragment>
+        <h3>
+          The CFS Portal is a one-stop dashboard with all the tools needed to
+          increase your sales and productivity.
+        </h3>
+        <p>
+          Currently, the CFS Portal offers access to, but is not limited to, the
+          following CFS systems:
+        </p>
+        <ul>
+          <li>
+            <AiFillCheckCircle /> CFS Appointment System
+          </li>
+          <li>
+            <AiFillCheckCircle /> CFS Webpage Builder
+          </li>
+          <li>
+            <AiFillCheckCircle /> CFS Webinar
+          </li>
+          <li>
+            <AiFillCheckCircle /> CFS Blog Editor
+          </li>
+          <li>
+            <AiFillCheckCircle /> CFS Social Media Content
+          </li>
+        </ul>
+      </React.Fragment>
+    ),
   },
   {
-    title: "FAQ Title 2",
+    title: "How long is the approval process for newly registered accounts?",
     id: "panel2",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.",
+      "The approval process takes 3-5 working days for newly registered accounts.",
   },
   {
-    title: "FAQ Title 3",
+    title: "How can I login to the CFS Portal?",
     id: "panel3",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.",
+    description: `You may access the login portal using this ${(
+      <a target="_blank" href="gocfs.pro/portal-login">
+        Link
+      </a>
+    )} or copy and paste gocfs.pro/portal-login into your browser.`,
   },
 ];
 

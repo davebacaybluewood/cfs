@@ -251,6 +251,28 @@
       margin-top: 2rem;
 
       text-align: left;
+
+      .success-image {
+        width: 100%;
+      }
+
+      h3 {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+      }
+
+      ul {
+        li {
+          list-style: none;
+          display: flex;
+          align-items: center;
+
+          svg {
+            color: #4caf50;
+            margin-right: 1rem;
+          }
+        }
+      }
     }
   }
 

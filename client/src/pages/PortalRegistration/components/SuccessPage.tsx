@@ -15,7 +15,11 @@ const SuccessPage: React.FC = () => {
   };
   return (
     <div className="success-page">
-      <img src="/assets/icons/success.svg" alt="success-indicator" />
+      <img
+        src="/assets/icons/success.svg"
+        alt="success-indicator"
+        className="success-image"
+      />
       <h2>Agent Registration Success</h2>
       <p>
         Thank you for registering with Comfort Financial Solutions. <br /> It

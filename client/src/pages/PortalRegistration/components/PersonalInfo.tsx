@@ -87,6 +87,10 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
     setRoleValue(props.values.roles);
   }, [props.values.roles]);
 
+  const filteredPosition = POSITIONS.filter(
+    (data) => data.value !== PROFILE_POSITIONS.MASTER_ADMIN.value
+  );
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={12} md={12} lg={6}>
@@ -121,7 +125,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
           isSearchable={true}
           name="position"
           placeholder="Choose a position"
-          options={POSITIONS.map((st: any) => {
+          options={filteredPosition.map((st: any) => {
             return {
               label: st.label,
               value: st.value,
