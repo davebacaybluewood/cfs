@@ -3,11 +3,14 @@
   background: #ffffff;
   margin-bottom: 4rem;
 
-  .relative-spinner {
-    svg {
-      color: #333 !important;
-      path {
+  .loading {
+    .relative-spinner {
+      height: 30vh;
+      svg {
         color: #333 !important;
+        path {
+          color: #333 !important;
+        }
       }
     }
   }
