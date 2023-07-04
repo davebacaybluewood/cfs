@@ -1,6 +1,5 @@
 import React from "react";
 import { FAQstype } from "library/FAQs/FAQsModel";
-import "./FamilyProtectionFAQs.scss";
 import { paths } from "constants/routes";
 
 // FAQs Data

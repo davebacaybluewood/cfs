@@ -105,6 +105,13 @@
           font-weight: 300;
         }
       }
+
+      a {
+        text-decoration: none !important;
+        font-weight: 400 !important;
+        color: #1976d2 !important;
+        border-bottom: 1px dotted #1976d2;
+      }
     }
   }
 }
