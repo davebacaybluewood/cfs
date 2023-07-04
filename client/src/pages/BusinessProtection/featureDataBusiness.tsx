@@ -4,9 +4,9 @@ import { BiAnalyse, BiArch, BiArchiveIn } from "react-icons/bi";
 
 const fetureDataBusiness = [
   {
-    title: "Business Asset Coverage",
+    title: "Comprehensive Coverage",
     description:
-      "With CFS, you can confidently focus on growing your business, knowing that your investments are safeguarded.",
+      "Our life insurance policies for individuals offer extensive coverage, ensuring financial protection for your loved ones. We understand the importance of safeguarding their future and providing peace of mind policies.",
     button: {
       text: "4 categories",
       onClick: () => console.log("triggered"),
@@ -14,9 +14,9 @@ const fetureDataBusiness = [
     icon: <RiShieldUserLine />,
   },
   {
-    title: "Business Continuity",
+    title: "Customized Solutions",
     description:
-      "Get protected from lost income and essential expenses during unforeseen events like natural disasters, equipment breakdowns, or supply chain disruptions.",
+      "We believe in tailoring life insurance to fit your specific needs and circumstances. Our agents work closely with you to understand your financial goals and design a policy aligning with your requirements.",
     button: {
       text: "2 categories",
       onClick: () => console.log("triggered"),
@@ -24,9 +24,9 @@ const fetureDataBusiness = [
     icon: <FaCodiepie />,
   },
   {
-    title: "Liability Protection",
+    title: "Flexible Premiums and Benefits",
     description:
-      "We offer robust liability insurance options, including general liability, professional liability, and product liability coverage.",
+      "We offer flexible premium options that fit within your budget while providing the desired level of coverage. Additionally, our policies come with a range of benefits such as cash value accumulation, the ability to access funds when needed, and the option to customize beneficiaries. We prioritize your financial well-being and provide flexibility to adapt to your changing needs.",
     button: {
       text: "3 categories",
       onClick: () => console.log("triggered"),
