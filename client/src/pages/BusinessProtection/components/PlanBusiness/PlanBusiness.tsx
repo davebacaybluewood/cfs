@@ -16,7 +16,7 @@ const PlanBusiness: React.FC = () => {
           "Simple to use mobile app for drivers.",
           "24/7 US-based customer support.",
         ]}
-        image="/assets/others/choose-business.jpg"
+        image="/assets/others/Business_1.png"
         button={{
           text: "Get Insured Now",
           onClick: () => setOpenCalendlyModal(true),
