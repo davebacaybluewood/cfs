@@ -54,6 +54,13 @@
     margin-top: 17rem;
   }
 }
+@media screen and (max-width: 500px) {
+  .standard-card-container {
+    .card__btn {
+      text-align: center;
+    }
+  }
+}
 
 @media screen and (max-width: 425px) {
   .standard-card-container {
@@ -68,6 +75,7 @@
     .card__btn {
       button {
         width: 40% !important;
+        padding: 1rem;
       }
     }
   }
