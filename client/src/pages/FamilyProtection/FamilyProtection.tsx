@@ -187,7 +187,7 @@ const FamilyProtection: React.FC = () => {
             title="Why Choose CFS?"
             description1="We believe that securing your family's future should not break the bank. Our family life insurance policies offer competitive premiums that fit within your budget while still providing extensive coverage."
             description2="We also offer rewards and loyalty programs, giving you the opportunity to earn valuable benefits over time and further enhance your family's financial security. Not sure where to start? Get a free consultation with us today."
-            image="/assets/images/home/rectangle-image1.png"
+            image="/assets/others/choose-family.jpg"
             button={{
               text: "Free Consultation",
             }}

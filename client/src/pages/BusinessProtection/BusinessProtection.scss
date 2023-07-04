@@ -62,10 +62,18 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .business__protection {
+    .standard-card-container {
+      margin-top: 0;
+    }
+  }
+}
+
 @media screen and (max-width: 425px) {
   .business__protection {
     .standard-card-container {
-      margin-top: 25rem;
+      margin-top: 0;
     }
     .carousel-navigator-container {
       margin-top: -25rem;
