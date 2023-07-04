@@ -45,6 +45,3 @@ const HeadlineFamily: React.FC = () => {
 };
 
 export default HeadlineFamily;
-function useState(): [any, any] {
-  throw new Error("Function not implemented.");
-}

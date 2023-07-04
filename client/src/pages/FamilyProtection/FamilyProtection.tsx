@@ -6,7 +6,7 @@ import Blogs from "library/Blogs/Blogs";
 import FAQs from "library/FAQs/FAQs";
 import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
-import { filteredFaqs } from "./components/FamilyProtectionFAQs";
+import { faqs, filteredFaqs } from "./components/FamilyProtectionFAQs";
 import Consultation from "library/Consultation/Consultation";
 // import Testimonial from "library/Testimonial/Testimonial"; Commented for future use
 import { Container, Grid } from "@mui/material";
@@ -18,6 +18,8 @@ import useScroll from "hooks/useScroll";
 import { CALENDLY } from "constants/constants";
 import { PopupModal } from "react-calendly";
 import "./FamilyProtection.scss";
+import { paths } from "constants/routes";
+import { useSearchParams } from "react-router-dom";
 
 const FamilyProtection: React.FC = () => {
   const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
@@ -197,7 +199,11 @@ const FamilyProtection: React.FC = () => {
           <Process />
         </div>
         <div className="faqs">
-          <FAQs title="Frequently Asked Questions (FAQ)" faqs={filteredFaqs} />
+          <FAQs
+            title="Frequently Asked Questions (FAQ)"
+            faqs={faqs(paths.family_protection)}
+            url={paths.family_protection}
+          />
         </div>
 
         {/* <Testimonial testimonials={testimonials} /> */}

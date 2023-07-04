@@ -17,6 +17,7 @@ import useScroll from "hooks/useScroll";
 import { CALENDLY } from "constants/constants";
 import { PopupModal } from "react-calendly";
 import "./BusinessProtection.scss";
+import { paths } from "constants/routes";
 
 const BusinessProtection: React.FC = () => {
   const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
@@ -184,7 +185,11 @@ const BusinessProtection: React.FC = () => {
       <SolutionBusiness />
       <ConsultationBusiness />
       <ProcessBusiness />
-      <FAQs title="Frequently Asked Questions (FAQ)" faqs={faqs} />
+      <FAQs
+        title="Frequently Asked Questions (FAQ)"
+        faqs={faqs(paths.individual_protection)}
+        url={paths.individual_protection}
+      />
       <Blogs
         title="Latest News and Updates"
         blogsConfig={{
