@@ -22,7 +22,7 @@ const ConsultationBusiness: React.FC = () => {
         button={{
           text: "Free Consultation",
         }}
-        image="/assets/others/insured-business.jpg"
+        image="/assets/others/Business_2.png"
       />
     </div>
   );

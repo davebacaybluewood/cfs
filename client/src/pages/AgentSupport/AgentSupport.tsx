@@ -160,7 +160,7 @@ const AgentSupport: React.FC = () => {
           >
             <Grid item sm={12} md={6} lg={6} className="no-padding-top">
               <div className="easy-steps-image">
-                <img src="/assets/others/sucess.jpg" alt="" />
+                <img src="/assets/others/Agent_2.png" alt="happy photo" />
               </div>
             </Grid>
             <Grid item sm={12} md={6} lg={6} className="no-padding-top">

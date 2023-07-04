@@ -30,7 +30,7 @@ const Plan: React.FC = () => {
           text: "Free Consultation",
           onClick: () => setOpenCalendlyModal(true),
         }}
-        image="/assets/others/family-consult.jpg"
+        image="/assets/others/Family_1.png"
       />
       <PopupModal
         url={CALENDLY.CONSULTATION}

@@ -16,8 +16,8 @@ import SolutionBusiness from "./components/SolutionBusiness/solutionBusiness";
 import useScroll from "hooks/useScroll";
 import { CALENDLY } from "constants/constants";
 import { PopupModal } from "react-calendly";
-import "./BusinessProtection.scss";
 import { paths } from "constants/routes";
+import "./BusinessProtection.scss";
 
 const BusinessProtection: React.FC = () => {
   const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
