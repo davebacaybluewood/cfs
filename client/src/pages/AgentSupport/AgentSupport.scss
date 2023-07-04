@@ -63,6 +63,8 @@
   padding: 8rem 0 7rem 0;
   .easy-steps-image {
     img {
+      height: 600px;
+      object-fit: cover;
       width: 100%;
       border-radius: 2rem;
     }

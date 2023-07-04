@@ -100,7 +100,7 @@ const AgentSupport: React.FC = () => {
               Insurance Career
             </React.Fragment>
           }
-          image="\assets\images\home\rectangle-image3.png"
+          image="/assets/others/unleash-agents.jpg"
           list={[
             "Great commision structure and career growth.",
             "Extensive Training and Support.",
@@ -180,7 +180,7 @@ const AgentSupport: React.FC = () => {
           >
             <Grid item sm={12} md={6} lg={6} className="no-padding-top">
               <div className="easy-steps-image">
-                <img src="/assets/images/home/overview.png" alt="" />
+                <img src="/assets/others/sucess.jpg" alt="" />
               </div>
             </Grid>
             <Grid item sm={12} md={6} lg={6} className="no-padding-top">
