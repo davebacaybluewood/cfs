@@ -12,7 +12,7 @@ const ConsultationBusiness: React.FC = () => {
         button={{
           text: "Free Consultation",
         }}
-        image="\assets\images\home\rectangle-image1.png"
+        image="/assets/others/insured-business.jpg"
       />
     </div>
   );

@@ -13,7 +13,7 @@ const PlanBusiness: React.FC = () => {
           "Simple to use mobile app for drivers.",
           "24/7 US-based customer support.",
         ]}
-        image="/assets/images/home/rectangle-image1.png"
+        image="/assets/others/choose-business.jpg"
         button={{
           text: "Get Insured Now",
         }}

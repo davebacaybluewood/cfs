@@ -32,7 +32,7 @@ const Plan: React.FC = () => {
               )
               ?.focus(),
         }}
-        image="\assets\images\home\rectangle-image1.png"
+        image="/assets/others/family-consult.jpg"
       />
     </div>
   );
