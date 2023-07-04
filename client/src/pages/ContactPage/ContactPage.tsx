@@ -6,6 +6,7 @@ import HeadlineContact from "./components/HeadlineContact/HeadlineContact";
 import { faqs } from "pages/FamilyProtection/components/FamilyProtectionFAQs";
 import useScroll from "hooks/useScroll";
 import "./ContactPage.scss";
+import { paths } from "constants/routes";
 
 const ContactPage: React.FC = () => {
   useScroll();
@@ -13,7 +14,11 @@ const ContactPage: React.FC = () => {
     <div className="contact-page-wrapper">
       <HeadlineContact />
       <ContactUs title="Other Ways to Contact Us" />
-      <FAQs faqs={faqs} title="Frequently Asked Questions (FAQ)" />
+      <FAQs
+        title="Frequently Asked Questions (FAQ)"
+        faqs={faqs(paths.contact_us)}
+        url={paths.contact_us}
+      />
       <Subscription />
     </div>
   );

@@ -2,19 +2,17 @@ import { Container, Grid } from "@mui/material";
 import PlanCard, { PlanCardProps } from "library/PlanCard/PlanCard";
 import React from "react";
 import "./ProcessBusiness.scss";
+import { CALENDLY } from "constants/constants";
+import { PopupModal } from "react-calendly";
 
 const ProcessBusiness: React.FC = () => {
+  const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
+
   const processData: PlanCardProps[] = [
     {
       button: {
         text: "Talk to an Agent",
-        onClick: () =>
-          window
-            .open(
-              "https://calendly.com/gocfs/free-30-minute-consultation",
-              "_blank"
-            )
-            ?.focus(),
+        onClick: () => setOpenCalendlyModal(true),
       },
       colorVariant: "dark",
       title: "Step 1",
@@ -67,6 +65,12 @@ const ProcessBusiness: React.FC = () => {
           })}
         </Grid>
       </Container>
+      <PopupModal
+        url={CALENDLY.CONSULTATION}
+        onModalClose={() => setOpenCalendlyModal(false)}
+        open={openCalendlyModal}
+        rootElement={document.getElementById("root") as any}
+      />
     </div>
   );
 };
