@@ -16,6 +16,13 @@ const PlanBusiness: React.FC = () => {
         image="/assets/images/home/rectangle-image1.png"
         button={{
           text: "Get Insured Now",
+          onClick: () =>
+            window
+              .open(
+                "https://calendly.com/gocfs/free-30-minute-consultation",
+                "_blank"
+              )
+              ?.focus(),
         }}
       />
     </div>
