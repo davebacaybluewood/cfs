@@ -8,39 +8,40 @@ const ProcessBusiness: React.FC = () => {
     {
       button: {
         text: "Talk to an Agent",
+        onClick: () =>
+          window
+            .open(
+              "https://calendly.com/gocfs/free-30-minute-consultation",
+              "_blank"
+            )
+            ?.focus(),
       },
       colorVariant: "dark",
       title: "Step 1",
-      subtitle: "Get Consultation",
+      subtitle: "Consultation",
       description:
-        " We'll take the time to understand your unique needs, answer any questions you may have, and guide you towards the best life insurance solution for your family.",
-      lists: [
-        "We are Different",
-        "Contrary To Popular Belief",
-        "Looked Up One Of The More",
-      ],
+        "Talk to qualifed CFS life insurance agents for use to bettter understand your need. ",
+      lists: ["Qualified agents", "Solution oriented", "Collaborative"],
     },
     {
-      button: {
-        text: "Make Payment",
-      },
       colorVariant: "light",
       title: "Step 2",
       subtitle: "Make Payment",
       description:
-        "Our streamlined payment options ensure a seamless experience. Simply select the payment method that suits you best ",
-      lists: ["Secure payment channels", "No hassle", "Get real-time updates"],
+        "CFS will evaluate the infromation and craft the best solution. Your CFS agent will deliver the proposed policy for your review.",
+      lists: [
+        "Comprehensive evaluation",
+        "Effective financial solutions",
+        "Quick update",
+      ],
     },
     {
-      button: {
-        text: "Make an ID Policy",
-      },
       colorVariant: "light",
       title: "Step 3",
-      subtitle: "Get Consultation",
+      subtitle: "Acceptance and  Processing",
       description:
-        "After completing payment, we'll swiftly process your application and you’ll receive a policy ID, which serves as proof of your comprehensive coverage",
-      lists: ["Online processing", "Easy to update", "No long waiting hours"],
+        "Once the proposed policy is accepted, your CFS agent will guide you to the processing and payment process.",
+      lists: ["Faster processing", "Easy payment process", "Safe and secure"],
     },
   ];
   return (

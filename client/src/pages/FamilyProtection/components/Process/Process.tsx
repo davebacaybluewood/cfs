@@ -7,6 +7,13 @@ const processData: PlanCardProps[] = [
   {
     button: {
       text: "Talk to an Agent",
+      onClick: () =>
+        window
+          .open(
+            "https://calendly.com/gocfs/free-30-minute-consultation",
+            "_blank"
+          )
+          ?.focus(),
     },
     colorVariant: "dark",
     title: "Step 1",
@@ -17,9 +24,6 @@ const processData: PlanCardProps[] = [
   },
 
   {
-    button: {
-      text: "Make Payment",
-    },
     colorVariant: "light",
     title: "Step 2",
     subtitle: "Make Payment",
@@ -33,9 +37,6 @@ const processData: PlanCardProps[] = [
   },
 
   {
-    button: {
-      text: "Make an ID Policy",
-    },
     colorVariant: "light",
     title: "Step 3",
     subtitle: "Get Consultation",

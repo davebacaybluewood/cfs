@@ -24,7 +24,9 @@ const StandardCard: React.FC<StandardProps> = (props) => {
       </div>
       {props.button?.text ? (
         <div className="card__btn">
-          <Button variant="default">{props.button?.text}</Button>
+          <Button variant="default" onClick={props.button.onClick}>
+            {props.button?.text}
+          </Button>
         </div>
       ) : null}
       <div>{props.children}</div>

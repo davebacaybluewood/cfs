@@ -73,6 +73,9 @@ const AgentSupport: React.FC = () => {
                   description="Take the first step in becoming a successful agent"
                   button={{
                     text: "Apply",
+                    onClick: () =>
+                      (window.location.href =
+                        "https://agent.comfortfinancialsolutions.com/signup"),
                   }}
                 />
               </Grid>
@@ -80,9 +83,10 @@ const AgentSupport: React.FC = () => {
                 <StandardCard
                   icon={<MdHealthAndSafety />}
                   title="Agent Back Office"
-                  description="Explore the cfs agent's dashboard and other sales and marketing tools"
+                  description="Explore the CFS agent's dashboard and other sales and marketing tools"
                   button={{
-                    text: "Login",
+                    text: "Portal Login",
+                    onClick: () => navigate(paths.login),
                   }}
                 />
               </Grid>
