@@ -19,6 +19,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { CALENDLY } from "constants/constants";
 import { PopupModal } from "react-calendly";
 import "./Solutions.scss";
+import useResponsive from "hooks/useResponsive";
 
 const workingSteps = [
   {
@@ -72,6 +73,8 @@ const Solutions = () => {
       "Comfort Financial Solutions offers annuity, insurance, and financial security solutions to help you meet your goals and secure your financial future. Contact us today!",
   };
 
+  const isMobileMode = useResponsive("mobile");
+
   return (
     <div className="services-content">
       <ReactHelmet>
@@ -83,10 +86,12 @@ const Solutions = () => {
         <meta name="keywords" content={metaDatas.metaKeywords} />
       </ReactHelmet>
       <div className="welcome-section">
-        <img
-          src="https://demo.casethemes.net/itfirm/wp-content/uploads/2021/12/h5-bg-slider1.jpg"
-          alt="welcome-bg"
-        />
+        {!isMobileMode ? (
+          <img
+            src="https://demo.casethemes.net/itfirm/wp-content/uploads/2021/12/h5-bg-slider1.jpg"
+            alt="welcome-bg"
+          />
+        ) : null}
         <div className="captions">
           <h2>Get the best solution in building a comfortable future.</h2>
         </div>
