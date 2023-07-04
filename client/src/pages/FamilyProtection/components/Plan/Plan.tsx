@@ -24,6 +24,13 @@ const Plan: React.FC = () => {
         ]}
         button={{
           text: "Free Consultation",
+          onClick: () =>
+            window
+              .open(
+                "https://calendly.com/gocfs/free-30-minute-consultation",
+                "_blank"
+              )
+              ?.focus(),
         }}
         image="\assets\images\home\rectangle-image1.png"
       />

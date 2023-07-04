@@ -11,7 +11,7 @@ export interface PlanCardProps {
   subtitle: string;
   description: string;
   lists: string[];
-  button: {
+  button?: {
     text: string;
     onClick?: () => void;
   };
@@ -45,9 +45,13 @@ const PlanCard: React.FC<PlanCardProps> = (props) => {
           })}
         </ul>
       </div>
-      <div className="button__container">
-        <Button variant="default">{props.button.text}</Button>
-      </div>
+      {props.button?.text ? (
+        <div className="button__container">
+          <Button variant="default" onClick={props.button?.onClick}>
+            {props.button?.text}
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 };
