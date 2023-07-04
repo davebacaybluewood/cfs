@@ -21,7 +21,7 @@ const Consultation: React.FC<ConsultationProps> = (props) => {
   return (
     <div className="consultation">
       <Container className="section-five__content">
-        <Grid container spacing={2} alignItems={"center"}>
+        <Grid container spacing={5} alignItems={"center"}>
           <Grid item xs={12} sm={12} md={6} lg={6} className="text__content">
             <div className="section__title">
               <Typography variant="h3">{props.title}</Typography>
