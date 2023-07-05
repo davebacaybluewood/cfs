@@ -7,12 +7,22 @@ const ConsultationBusiness: React.FC = () => {
     <div className="consultation__container">
       <Consultation
         title="Why choose CFS?"
-        description1="We specialize in business insurance, bringing deep knowledge and experience in understanding the unique risks faced by businesses across various industries. Our expertise allows us to provide tailored insurance solutions that address your specific needs, ensuring comprehensive coverage."
-        description2="We take the time to understand your business, industry, and risk profile to design customized insurance plans. Our dedicated advisors offer personalized guidance, crafting policies that align with your objectives and provide the right coverage for your business."
+        description1="Secure your financial future with our end-to-end solutions. From debt management to capital growth and retirement planning, we provide personalized strategies to fit your needs. Earn valuable benefits with our financial solutions. Get a free consultation today to start your journey toward financial security.
+        Ensuring Personal Financial
+        Stability and Resilience
+        Take advantage of CFS's strategic financial products. As an individual,
+        life insurance is a crucial component of financial planning. Regardless
+        of age, providing a safety net for unexpected events could impact their financial future.
+        ito ung sa middle"
+        description2="Ensuring Personal Financial
+        Stability and Resilience
+        Take advantage of CFS's strategic financial products. As an individual,
+        life insurance is a crucial component of financial planning. Regardless
+        of age, providing a safety net for unexpected events could impact their financial future."
         button={{
           text: "Free Consultation",
         }}
-        image="/assets/others/insured-business.jpg"
+        image="/assets/others/Business_2.png"
       />
     </div>
   );

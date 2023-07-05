@@ -16,6 +16,7 @@
 html {
   font-size: 62.5%;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 body {
   padding-right: 0 !important;
@@ -51,5 +52,11 @@ pre {
 @media screen and (max-width: 320px) {
   .mobile-view-no-padding {
     padding: 0 !important;
+  }
+}
+
+.calendly-popup-content {
+  iframe {
+    height: 700px !important;
   }
 }

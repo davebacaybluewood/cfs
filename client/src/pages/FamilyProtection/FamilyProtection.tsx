@@ -6,7 +6,7 @@ import Blogs from "library/Blogs/Blogs";
 import FAQs from "library/FAQs/FAQs";
 import Headline from "../../library/Headline/Headline";
 import Button from "library/Button/Button";
-import { filteredFaqs } from "./components/FamilyProtectionFAQs";
+import { faqs, filteredFaqs } from "./components/FamilyProtectionFAQs";
 import Consultation from "library/Consultation/Consultation";
 // import Testimonial from "library/Testimonial/Testimonial"; Commented for future use
 import { Container, Grid } from "@mui/material";
@@ -18,6 +18,8 @@ import useScroll from "hooks/useScroll";
 import { CALENDLY } from "constants/constants";
 import { PopupModal } from "react-calendly";
 import "./FamilyProtection.scss";
+import { paths } from "constants/routes";
+import { useSearchParams } from "react-router-dom";
 
 const FamilyProtection: React.FC = () => {
   const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
@@ -186,8 +188,8 @@ const FamilyProtection: React.FC = () => {
           <Consultation
             title="Why Choose CFS?"
             description1="We believe that securing your family's future should not break the bank. Our family life insurance policies offer competitive premiums that fit within your budget while still providing extensive coverage."
-            description2="We also offer rewards and loyalty programs, giving you the opportunity to earn valuable benefits over time and further enhance your family's financial security. Not sure where to start? Get a free consultation with us today."
-            image="/assets/others/choose-family.jpg"
+            description2="Earn valuable benefits with our financial solutions. Get a free consultation today to start your familiy's  journey toward financial security."
+            image="/assets/others/Family_2.png"
             button={{
               text: "Free Consultation",
             }}
@@ -197,7 +199,11 @@ const FamilyProtection: React.FC = () => {
           <Process />
         </div>
         <div className="faqs">
-          <FAQs title="Frequently Asked Questions (FAQ)" faqs={filteredFaqs} />
+          <FAQs
+            title="Frequently Asked Questions (FAQ)"
+            faqs={faqs(paths.family_protection)}
+            url={paths.family_protection}
+          />
         </div>
 
         {/* <Testimonial testimonials={testimonials} /> */}

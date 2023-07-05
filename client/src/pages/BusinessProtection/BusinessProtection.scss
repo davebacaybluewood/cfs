@@ -16,8 +16,12 @@
   .feature-main-container {
     margin-top: -22.5rem;
     .standard-card-container {
-      height: 25vh;
+      height: 270px;
       align-items: center;
+      p {
+        font-size: 1.3rem;
+        line-height: 2rem;
+      }
 
       .cfs-btn {
         button {

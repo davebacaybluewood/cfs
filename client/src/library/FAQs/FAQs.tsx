@@ -6,18 +6,34 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { FAQstype } from "./FAQsModel";
 import "./FAQs.scss";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CALENDLY } from "constants/constants";
+import { PopupModal } from "react-calendly";
 
 interface FAQsProps {
   title: string;
   description?: string;
   faqs: FAQstype[];
+  url: string;
 }
 const FAQs: React.FC<FAQsProps> = (props) => {
   const sliceFaqData = props.faqs.length / 2;
+  const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
+
+  const search = useLocation().search;
+  const isOpenConsultation1 = new URLSearchParams(search).get("consultation1");
+  const isOpenConsultation2 = new URLSearchParams(search).get("consultation2");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isOpenConsultation1 || isOpenConsultation2) {
+      setOpenCalendlyModal(true);
+    }
+  }, [isOpenConsultation1, isOpenConsultation2]);
 
   return (
     <div className="faqs">
@@ -82,6 +98,15 @@ const FAQs: React.FC<FAQsProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
+      <PopupModal
+        url={CALENDLY.CONSULTATION}
+        onModalClose={() => {
+          navigate(props.url);
+          setOpenCalendlyModal(false);
+        }}
+        open={openCalendlyModal}
+        rootElement={document.getElementById("root") as any}
+      />
     </div>
   );
 };

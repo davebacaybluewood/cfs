@@ -1,8 +1,11 @@
 import Offer from "library/Offer/Offer";
 import React from "react";
 import "./PlanBusiness.scss";
+import { CALENDLY } from "constants/constants";
+import { PopupModal } from "react-calendly";
 
 const PlanBusiness: React.FC = () => {
+  const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
   return (
     <div className="plan__container">
       <Offer
@@ -13,17 +16,17 @@ const PlanBusiness: React.FC = () => {
           "Simple to use mobile app for drivers.",
           "24/7 US-based customer support.",
         ]}
-        image="/assets/others/choose-business.jpg"
+        image="/assets/others/Business_1.png"
         button={{
           text: "Get Insured Now",
-          onClick: () =>
-            window
-              .open(
-                "https://calendly.com/gocfs/free-30-minute-consultation",
-                "_blank"
-              )
-              ?.focus(),
+          onClick: () => setOpenCalendlyModal(true),
         }}
+      />
+      <PopupModal
+        url={CALENDLY.CONSULTATION}
+        onModalClose={() => setOpenCalendlyModal(false)}
+        open={openCalendlyModal}
+        rootElement={document.getElementById("root") as any}
       />
     </div>
   );

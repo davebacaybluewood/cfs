@@ -2,18 +2,13 @@ import React from "react";
 import { Container, Grid } from "@mui/material";
 import PlanCard, { PlanCardProps } from "library/PlanCard/PlanCard";
 import "./Process.scss";
+import { CALENDLY } from "constants/constants";
+import { PopupModal } from "react-calendly";
 
 const processData: PlanCardProps[] = [
   {
     button: {
-      text: "Talk to an Agent",
-      onClick: () =>
-        window
-          .open(
-            "https://calendly.com/gocfs/free-30-minute-consultation",
-            "_blank"
-          )
-          ?.focus(),
+      text: "Talk to an agent",
     },
     colorVariant: "dark",
     title: "Step 1",
@@ -46,6 +41,8 @@ const processData: PlanCardProps[] = [
   },
 ];
 const Process: React.FC = () => {
+  const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
+
   return (
     <div className="process">
       <Container className="mobile-view-no-padding">
@@ -54,6 +51,9 @@ const Process: React.FC = () => {
         </div>
         <Grid container spacing={2}>
           {processData.map((data, index) => {
+            if (data.button) {
+              data.button.onClick = () => setOpenCalendlyModal(true);
+            }
             return (
               <Grid item sm={12} md={6} lg={4} key={index}>
                 <PlanCard
@@ -69,6 +69,12 @@ const Process: React.FC = () => {
           })}
         </Grid>
       </Container>
+      <PopupModal
+        url={CALENDLY.CONSULTATION}
+        onModalClose={() => setOpenCalendlyModal(false)}
+        open={openCalendlyModal}
+        rootElement={document.getElementById("root") as any}
+      />
     </div>
   );
 };

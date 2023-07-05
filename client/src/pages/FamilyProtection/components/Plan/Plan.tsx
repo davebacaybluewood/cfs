@@ -1,8 +1,12 @@
 import Offer from "library/Offer/Offer";
 import React from "react";
 import "./Plan.scss";
+import { CALENDLY } from "constants/constants";
+import { PopupModal } from "react-calendly";
 
 const Plan: React.FC = () => {
+  const [openCalendlyModal, setOpenCalendlyModal] = React.useState(false);
+
   return (
     <div className="plan">
       <Offer
@@ -24,15 +28,15 @@ const Plan: React.FC = () => {
         ]}
         button={{
           text: "Free Consultation",
-          onClick: () =>
-            window
-              .open(
-                "https://calendly.com/gocfs/free-30-minute-consultation",
-                "_blank"
-              )
-              ?.focus(),
+          onClick: () => setOpenCalendlyModal(true),
         }}
-        image="/assets/others/family-consult.jpg"
+        image="/assets/others/Family_1.png"
+      />
+      <PopupModal
+        url={CALENDLY.CONSULTATION}
+        onModalClose={() => setOpenCalendlyModal(false)}
+        open={openCalendlyModal}
+        rootElement={document.getElementById("root") as any}
       />
     </div>
   );

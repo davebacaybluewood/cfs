@@ -1,0 +1,17 @@
+a {
+  text-decoration: none;
+  font-weight: 400;
+  color: rgb(40, 40, 207);
+}
+
+button {
+  text-decoration: none;
+  font-weight: 400;
+  color: rgb(40, 40, 207);
+  background: none;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
