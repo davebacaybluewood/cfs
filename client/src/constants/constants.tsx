@@ -143,7 +143,7 @@ const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     element: <AgentSupport />,
-    path: paths.agent_support,
+    path: paths.join_our_team,
     showHeadline: false,
     theme: "RED",
   },

@@ -1,9 +1,54 @@
 .navlinks {
-  .nav-links-active {
-    ul {
-      li {
-        color: black;
-      }
+  li {
+    color: black;
+    border-radius: 2rem;
+
+    .dropdown {
+      float: left;
+      overflow: hidden;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .dropdown .dropbtn {
+      font-weight: 300;
+      font-size: 1.3rem;
+      border: none;
+      outline: none;
+      color: white;
+      background-color: inherit;
+    }
+
+    .navbar a:hover,
+    .dropdown:hover .dropbtn {
+      opacity: 0.5;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      min-width: 160px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      z-index: 1;
+      border: 1px solid #8d7a7a;
+    }
+
+    .dropdown-content a {
+      border-bottom: 1px solid #6a5c5c;
+      float: none;
+      color: black;
+      padding: 01rem 0;
+      text-decoration: none;
+      display: block;
+      background-color: #00004d;
+      text-align: center;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ed3e4b;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
     }
   }
 }

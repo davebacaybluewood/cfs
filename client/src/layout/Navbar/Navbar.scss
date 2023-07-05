@@ -35,6 +35,8 @@
       }
       ul {
         list-style: none;
+        display: flex;
+        align-items: center;
 
         a {
           font-family: "Roboto", sans-serif;
@@ -64,6 +66,23 @@
 
 .navbar__mobile {
   border-left: 2px solid white;
+
+  .dropdown-btn {
+    margin-left: 1rem;
+  }
+
+  .dropdown-content-link {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    padding: 1.3rem 0;
+    margin: 0;
+    border: 1px solid #eee;
+
+    &:hover {
+      background-color: #ed3e4b;
+    }
+  }
+
   .navbar__name {
     img {
       margin: auto;
@@ -92,9 +111,11 @@
         font-size: 1.4rem;
         width: 100%;
         font-weight: 300;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-
-      button {
+      .portal-btn {
         margin-top: 0.7rem;
         padding: 1.3rem 3rem;
         color: white;
@@ -144,8 +165,10 @@
         margin: 0.5rem;
 
         a {
+          display: block;
+          margin: auto;
+          width: 30%;
           background: #0e1f51;
-          padding: 1.4rem 1.4rem;
           border-radius: 10px;
 
           svg {
@@ -176,6 +199,8 @@
     }
 
     .navbar__mobile-socials {
+      position: relative;
+      margin-top: 3rem;
       ul {
         list-style: none !important;
         li {
