@@ -1,5 +1,8 @@
 import Inquiries from "../models/inquiryModel.js";
 import expressAsync from "express-async-handler";
+import agentRegistrationSuccess from "../emailTemplates/agent-registration-success.js";
+import sendEmail from "../utils/sendNodeMail.js";
+import inquiryEmail from "../emailTemplates/inquiry-email.js";
 
 /**
  * @desc: Fetch all inquiries
@@ -49,36 +52,23 @@ const deleteInquiry = expressAsync(async (req, res) => {
 // @route   POST /api/inquiries/
 // @access  Public
 const submitInquiry = expressAsync(async (req, res) => {
-  const {
-    fullName,
-    mobileNumber,
-    emailAddress,
-    subject,
-    message,
-    inquiryType,
-  } = req.body;
+  const { fullName, phoneNumber, emailAddress, state, message } = req.body;
 
-  const inquirySave = await Inquiries.create({
-    fullName: fullName.toString(),
-    mobileNumber: mobileNumber.toString(),
-    emailAddress: emailAddress.toString(),
-    subject: subject.toString(),
-    message: message.toString(),
-    inquiryType: inquiryType.toString(),
+  const mailSubject = "Customer Inquiry";
+  const mailContent = inquiryEmail({
+    fullName,
+    phoneNumber,
+    emailAddress,
+    state,
+    message,
   });
 
-  if (inquirySave) {
-    res.status(201).json({
-      _id: inquirySave._id,
-      fullName: inquirySave.fullName,
-      mobileNumber: inquirySave.mobileNumber,
-      emailAddress: inquirySave.emailAddress,
-      subject: inquirySave.subject,
-      message: inquirySave.message,
-      inquiryType: inquirySave.inquiryType,
-    });
-  } else {
-    res.status(400);
+  try {
+    await sendEmail(emailAddress, mailSubject, mailContent, []);
+    res.json("Email sent.");
+  } catch (error) {
+    res.status(500);
+    console.log(error);
     throw new Error("Error occured in submission.");
   }
 });

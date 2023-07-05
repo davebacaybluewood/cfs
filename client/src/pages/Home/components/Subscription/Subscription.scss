@@ -45,6 +45,13 @@
         opacity: 0.8;
       }
     }
+
+    .form-error {
+      margin: 0;
+      padding: 0;
+      margin-left: 0 !important;
+      margin-bottom: 1rem;
+    }
   }
 
   .logo {
@@ -89,6 +96,14 @@
 
     button {
       width: 100px;
+    }
+
+    .form-error {
+      margin: 0;
+      padding: 0;
+      margin-left: 0 !important;
+      margin-bottom: 1rem;
+      text-align: center;
     }
 
     img {
