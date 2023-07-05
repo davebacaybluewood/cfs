@@ -64,7 +64,7 @@ const submitInquiry = expressAsync(async (req, res) => {
   });
 
   try {
-    await sendEmail(emailAddress, mailSubject, mailContent, []);
+    await sendEmail("dave.bacay@gocfs.pro", mailSubject, mailContent, []);
     res.json("Email sent.");
   } catch (error) {
     res.status(500);
