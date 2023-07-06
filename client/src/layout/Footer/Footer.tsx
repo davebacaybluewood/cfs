@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
                     text: "For Individuals",
                   },
                   {
-                    link: paths.agent_support,
+                    link: paths.join_our_team,
                     text: "For Agents",
                   },
                 ]}

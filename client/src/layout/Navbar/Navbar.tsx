@@ -4,15 +4,16 @@ import { Container, SwipeableDrawer, Typography } from "@mui/material";
 import { FaBars, FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 import useResponsive from "hooks/userResponsive";
 import { Link, useNavigate } from "react-router-dom";
-import "./Navbar.scss";
 import { paths } from "constants/routes";
-import { MAIN_IMAGES } from "constants/constants";
+import { MAIN_IMAGES, SOCIAL_MEDIA_LINKS } from "constants/constants";
 import classNames from "classnames";
+import "./Navbar.scss";
 
 interface NavbarProps {
   theme?: "SKY" | "RED" | "NAVY";
 }
 const Navbar: React.FC<NavbarProps> = (props) => {
+  const [openDropdown, setOpenDropDown] = useState(false);
   const isMobileMode = useResponsive("mobile");
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
   const navigate = useNavigate();
@@ -69,6 +70,14 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                     link: paths.solutions,
                     text: "Solutions",
                     className: setActive(paths.solutions),
+                    hasSublinks: true,
+                    sublinks: [
+                      {
+                        link: paths.solutions,
+                        text: "Test",
+                        className: setActive(paths.solutions),
+                      },
+                    ],
                   },
                   {
                     link: paths.events,
@@ -118,6 +127,17 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               <Link to={paths.solutions}>Solutions</Link>
             </li>
             <li className="mobile-links">
+              <Link to={paths.family_protection}>Family Protection</Link>
+            </li>
+            <li className="mobile-links">
+              <Link to={paths.individual_protection}>
+                Inidividual Protection
+              </Link>
+            </li>
+            <li className="mobile-links">
+              <Link to={paths.join_our_team}>Join our team</Link>
+            </li>
+            <li className="mobile-links">
               <Link to={paths.events}>Events</Link>
             </li>
             <li className="mobile-links">
@@ -127,7 +147,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               <Link to={paths.contact_us}>Contact Us</Link>
             </li>
             <li>
-              <button onClick={() => navigate(paths.login)}>
+              <button
+                onClick={() => navigate(paths.login)}
+                className="portal-btn"
+              >
                 Agent Portal
               </button>
             </li>
@@ -136,17 +159,17 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             <Typography variant="h6">Follow Our Socials</Typography>
             <ul>
               <li>
-                <a href="fb.com" target="_blank">
+                <a href={SOCIAL_MEDIA_LINKS.FACEBOOK} target="_blank">
                   <FaFacebook />
                 </a>
               </li>
               <li>
-                <a href="fb.com" target="_blank">
+                <a href={SOCIAL_MEDIA_LINKS.INSTAGRAM} target="_blank">
                   <FaInstagram />
                 </a>
               </li>
               <li>
-                <a href="fb.com" target="_blank">
+                <a href={SOCIAL_MEDIA_LINKS.TWITTER} target="_blank">
                   <FaTwitter />
                 </a>
               </li>

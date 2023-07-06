@@ -86,12 +86,10 @@ const Solutions = () => {
         <meta name="keywords" content={metaDatas.metaKeywords} />
       </ReactHelmet>
       <div className="welcome-section">
-        {!isMobileMode ? (
-          <img
-            src="https://demo.casethemes.net/itfirm/wp-content/uploads/2021/12/h5-bg-slider1.jpg"
-            alt="welcome-bg"
-          />
-        ) : null}
+        <img
+          src="https://demo.casethemes.net/itfirm/wp-content/uploads/2021/12/h5-bg-slider1.jpg"
+          alt="welcome-bg"
+        />
         <div className="captions">
           <h2>Get the best solution in building a comfortable future.</h2>
         </div>
