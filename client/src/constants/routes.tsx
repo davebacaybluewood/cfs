@@ -8,7 +8,7 @@ const paths = {
   home: "/home",
   family_protection: "/family-protection",
   individual_protection: "/individual-protection",
-  agent_support: "/become-a-cfs-agent",
+  join_our_team: "/join-our-team",
   contact_us: "/contact_us",
   about_us: "/about-us",
   solutions: "/solutions",
