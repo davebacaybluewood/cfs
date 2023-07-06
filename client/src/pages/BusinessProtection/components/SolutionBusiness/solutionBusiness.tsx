@@ -8,20 +8,12 @@ const SolutionBusiness: React.FC = () => {
   return (
     <Container className="solution__container">
       <div className="section__title">
-        <Typography variant="h2">
-          Here's Why Business Owners Trust Us
-        </Typography>
+        <Typography variant="h2">Here's why people trust us</Typography>
       </div>
       <div className="solution__card__container">
         <Grid container spacing={2} justifyContent="space-between">
           <Grid item xs={12} sm={12} md={2} lg={2}>
-            <SolutionCard
-              title="200k"
-              subtitle="Signed insurance contracts"
-              description={
-                <React.Fragment>Signed insurance contracts</React.Fragment>
-              }
-            />
+            <SolutionCard title="200k" subtitle="Signed insurance contracts" />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <SolutionCard
@@ -31,7 +23,6 @@ const SolutionBusiness: React.FC = () => {
                   Paid <br /> compensation
                 </React.Fragment>
               }
-              description={<React.Fragment>Paid Compensation</React.Fragment>}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
@@ -42,18 +33,12 @@ const SolutionBusiness: React.FC = () => {
                   The experience of <br /> our advisers
                 </React.Fragment>
               }
-              description={
-                <React.Fragment>The experience of our advisers</React.Fragment>
-              }
             />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <SolutionCard
               title="150"
               subtitle={<React.Fragment>Experienced employees</React.Fragment>}
-              description={
-                <React.Fragment>Experienced employees</React.Fragment>
-              }
             />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
@@ -63,9 +48,6 @@ const SolutionBusiness: React.FC = () => {
                 <React.Fragment>
                   Offices and <br /> branches
                 </React.Fragment>
-              }
-              description={
-                <React.Fragment>Offices and branches</React.Fragment>
               }
             />
           </Grid>
