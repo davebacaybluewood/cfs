@@ -9,8 +9,10 @@ const PlanBusiness: React.FC = () => {
   return (
     <div className="plan__container">
       <Offer
-        title="Protect Your Business Today"
-        description="Your business is the result of your passion and hard work. Don't leave its future to chance. Choose Comfort Financial Solutions for comprehensive coverage, tailored solutions, and personalized service. Safeguard your business with confidence, navigate challenges, and seize opportunities in today's competitive landscape."
+        title="Stability and Resilience"
+        description="Take advantage of CFS's strategic financial products. As an individual,
+        life insurance is a crucial component of financial planning. Regardless
+        of age, providing a safety net for unexpected events could impact their financial future."
         list={[
           "Track and control spending.",
           "Simple to use mobile app for drivers.",

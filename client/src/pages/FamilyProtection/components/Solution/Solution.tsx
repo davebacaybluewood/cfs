@@ -12,13 +12,7 @@ const Solution: React.FC = () => {
       <div className="solution__card__container">
         <Grid container spacing={2} justifyContent="space-between">
           <Grid item xs={12} sm={12} md={2} lg={2}>
-            <SolutionCard
-              title="200k"
-              subtitle="Signed insurance contracts"
-              description={
-                <React.Fragment>Signed insurance contracts</React.Fragment>
-              }
-            />
+            <SolutionCard title="200k" subtitle="Signed insurance contracts" />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <SolutionCard
@@ -28,7 +22,6 @@ const Solution: React.FC = () => {
                   Paid <br /> compensation
                 </React.Fragment>
               }
-              description={<React.Fragment>Paid compensation</React.Fragment>}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
@@ -38,9 +31,6 @@ const Solution: React.FC = () => {
                 <React.Fragment>
                   The experience of <br /> our advisers
                 </React.Fragment>
-              }
-              description={
-                <React.Fragment>The experience of our advisers</React.Fragment>
               }
             />
           </Grid>
@@ -52,9 +42,6 @@ const Solution: React.FC = () => {
                   Experienced <br /> employees
                 </React.Fragment>
               }
-              description={
-                <React.Fragment>Experienced employees</React.Fragment>
-              }
             />
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
@@ -64,9 +51,6 @@ const Solution: React.FC = () => {
                 <React.Fragment>
                   Offices and <br /> branches
                 </React.Fragment>
-              }
-              description={
-                <React.Fragment>Offices and branches</React.Fragment>
               }
             />
           </Grid>

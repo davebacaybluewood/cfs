@@ -24,23 +24,25 @@
     }
 
     .dropdown-content {
+      padding-top: 1rem;
       display: none;
       position: absolute;
-      min-width: 160px;
+      min-width: 50px;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
       z-index: 1;
-      border: 1px solid #8d7a7a;
     }
 
     .dropdown-content a {
+      border-radius: 5px;
       border-bottom: 1px solid #6a5c5c;
       float: none;
       color: black;
-      padding: 01rem 0;
+      padding: 1rem 2rem;
       text-decoration: none;
       display: block;
       background-color: #00004d;
       text-align: center;
+      margin-left: -5rem;
     }
 
     .dropdown-content a:hover {

@@ -216,7 +216,7 @@ const REACT_ROUTES: ReactRoutesType[] = [
 ];
 
 const CALENDLY = {
-  CONSULTATION: "https://calendly.com/gocfs/free-30-minute-consultation",
+  CONSULTATION: "https://calendly.com/gocfs/cfs-consultation",
   WEEKLY: "https://calendly.com/gocfs/one-time-weekly-meeting",
 };
 

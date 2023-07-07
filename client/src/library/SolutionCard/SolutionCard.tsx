@@ -6,7 +6,7 @@ import "./SolutionCard.scss";
 interface SolutionCardProps {
   title: string;
   subtitle: string | JSX.Element;
-  description: string | JSX.Element;
+  description?: string | JSX.Element;
 }
 const SolutionCard: React.FC<SolutionCardProps> = (props) => {
   return (
