@@ -1,0 +1,64 @@
+.form-card {
+  background: #d9d9d9;
+  margin-top: 2rem;
+  padding: 2rem;
+
+  .card-captions-top {
+    line-height: 2rem;
+    h3 {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+    p {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+  }
+  .form-fields {
+    font-family: "Montserrat", sans-serif;
+    .single-field {
+      h3 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.7rem;
+        font-weight: 400;
+        margin: 0.5rem 0;
+      }
+      .four-input {
+        input {
+          width: 357px;
+          border: none;
+          outline: none;
+          padding: 1rem 0.7rem;
+        }
+      }
+
+      .six-first-input {
+        input {
+          width: 230px;
+          border: none;
+          outline: none;
+          padding: 1rem 0.7rem;
+        }
+      }
+      .six-two-input {
+        input {
+          width: 295px;
+          border: none;
+          outline: none;
+          padding: 1rem 0.7rem;
+        }
+      }
+      .six-three-input {
+        input {
+          width: 170px;
+          border: none;
+          outline: none;
+          padding: 1rem 0.7rem;
+        }
+      }
+    }
+  }
+}

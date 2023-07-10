@@ -43,6 +43,7 @@ import ProfileSettings from "admin/pages/Profile/components/ProfileSettings/Prof
 import WebinarForm from "admin/pages/FileMaintenance/pages/Webinars/WebinarForm";
 import Users from "admin/pages/Users/Users";
 import ViewBlog from "admin/pages/Blogs/ViewBlog";
+import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
 import MailingList from "admin/pages/MailingList/MailingList";
 
 export const ROLES = {
@@ -519,6 +520,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <Users />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.commissionSimulation,
+    element: (
+      <GuardedWrapper>
+        <CommissionSimulation heading="Total Earnings" numMembers={10} />
       </GuardedWrapper>
     ),
   },

@@ -489,7 +489,7 @@ const useSidebarLinks = (
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
     },
     {
-      linkText: "Webinar Resources",
+      linkText: "Resources",
       isActive: currentPage === adminPathsNew.webinar.split("/")[2],
       icon: <FaPhotoVideo />,
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
@@ -501,22 +501,10 @@ const useSidebarLinks = (
           isActive: currentPage === adminPathsNew.webinar.split("/")[2],
         },
         {
-          linkText: "Agent Webinars",
-          link: paths.allAgentWebinars.replace(
-            ":status",
-            NOTIFICATION_ENUMS.WEBINARS.WEBINAR_APPROVED.toLowerCase()
-          ),
+          linkText: "Commission Simulation",
+          link: paths.commissionSimulation,
           isActive:
-            currentPage === adminPathsNew.allAgentWebinars.split("/")[2],
-        },
-        {
-          linkText: "Webinar Requests",
-          link: paths.allAgentWebinars.replace(
-            ":status",
-            NOTIFICATION_ENUMS.WEBINARS.WEBINAR_REQUEST.toLowerCase()
-          ),
-          isActive:
-            currentPage === adminPathsNew.requestedWebinars.split("/")[2],
+            currentPage === adminPathsNew.commissionSimulation.split("/")[2],
         },
       ],
     },
