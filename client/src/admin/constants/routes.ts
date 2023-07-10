@@ -55,6 +55,7 @@ const adminPaths = {
   landingPageInfo: adminCfsRoute + "landing-page/accounts/:pageId",
   users: adminCfsRoute + "users",
   commissionSimulation: adminCfsRoute + "commission-simulation",
+  mailingList: adminCfsRoute + "mailing-list",
 } as const;
 
 export default adminPaths;

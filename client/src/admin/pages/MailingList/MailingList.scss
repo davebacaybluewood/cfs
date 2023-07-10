@@ -1,0 +1,11 @@
+.ellipsis-btn {
+  background-color: transparent;
+  border: none;
+  position: relative;
+  top: 3px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

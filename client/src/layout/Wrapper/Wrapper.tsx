@@ -2,6 +2,7 @@ import Footer from "layout/Footer/Footer";
 import Navbar from "layout/Navbar/Navbar";
 import MainHeadline from "pages/Home/components/Main-Headline/MainHeadline";
 import React from "react";
+import { ToastContainer } from "react-toastify";
 
 interface WrapperProps {
   showFooter?: boolean;
@@ -22,6 +23,7 @@ const Wrapper: React.FC<WrapperProps> = (props) => {
         {props.showHeadline ? <MainHeadline /> : null}
         {props.showFooter ? <Footer /> : null}
       </div>
+      <ToastContainer />
     </React.Fragment>
   );
 };

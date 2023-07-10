@@ -5,6 +5,7 @@ import {
   BlogDataWithLength,
   BlogPayload,
 } from "pages/BlogPage/models";
+import { SubscriptionsData } from "./models/Subscriptions";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -123,8 +124,64 @@ const BlogAndResource = {
   },
 };
 
+const Subscription = {
+  create: async (emailAddress: string) => {
+    const res = await requests.post<any>(`/api/subscriptions/`, {
+      emailAddress,
+    });
+    return res;
+  },
+  get: async () => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    });
+    const res = await requests.get<SubscriptionsData[] | undefined>(
+      `/api/subscriptions/`
+    );
+
+    return res;
+  },
+  delete: async (id: string) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    });
+    const res = await requests.del<any>(`/api/subscriptions/${id}`);
+
+    return res;
+  },
+};
+
+const Inquiry = {
+  submit: async (
+    emailAddress: string,
+    phoneNumber: string,
+    state: string,
+    fullName: string,
+    message: string
+  ) => {
+    const res = await requests.post<any>(`/api/inquiries/`, {
+      emailAddress,
+      fullName,
+      phoneNumber,
+      message,
+      state,
+    });
+    return res;
+  },
+};
+
 const agent = {
   BlogAndResource,
+  Subscription,
+  Inquiry,
 };
 
 export default agent;

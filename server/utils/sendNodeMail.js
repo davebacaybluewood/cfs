@@ -10,8 +10,9 @@ function sendEmail(email, subject, content, attachments) {
       },
     });
 
+    let from = `Comfort Financial Solutions <${process.env.MAIL_CONFIGS_EMAIL}>`;
     const mailConfigs = {
-      from: process.env.MAIL_CONFIGS_EMAIL,
+      from: from,
       to: email,
       subject: subject,
       html: content,
