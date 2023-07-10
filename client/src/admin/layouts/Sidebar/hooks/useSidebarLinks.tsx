@@ -263,21 +263,36 @@ const useSidebarLinks = (
         PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
       ],
     },
+    // {
+    //   linkText: "Contacts",
+    //   link: paths.contacts,
+    //   isActive: currentPage === adminPathsNew.contacts.split("/")[2],
+    //   icon: <FaBookReader />,
+    //   role: [
+    //     PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
+    //     PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
+    //     PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
+    //     PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
+    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
+    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
+    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
+    //     PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
+    //     PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+    //   ],
+    // },
     {
       linkText: "Contacts",
-      link: paths.contacts,
-      isActive: currentPage === adminPathsNew.contacts.split("/")[2],
+      isActive: currentPage === adminPathsNew.mailingList.split("/")[2],
       icon: <FaBookReader />,
-      role: [
-        PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
-        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
-        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
-        PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
-        PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
-        PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
-        PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
-        PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
-        PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+      role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "Mailing List",
+          icon: <FaFileAlt />,
+          link: paths.mailingList,
+          isActive: currentPage === adminPathsNew.mailingList.split("/")[2],
+        },
       ],
     },
     {
@@ -424,8 +439,22 @@ const useSidebarLinks = (
         PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
         PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
         PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
-        PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
       ],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "Landing Pages",
+          icon: <FaSwatchbook />,
+          link: paths.landingPage,
+          isActive: currentPage === adminPathsNew.landingPage.split("/")[2],
+        },
+      ],
+    },
+    {
+      linkText: "Marketing Materials",
+      isActive: currentPage === adminPathsNew.landingPage.split("/")[2],
+      icon: <FaSwatchbook />,
+      role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
       isSubMenu: true,
       subLinks: [
         {

@@ -9,6 +9,8 @@ import Select, { GroupBase, StylesConfig } from "react-select";
 import "./Form.scss";
 import { CFS_STATES } from "constants/constants";
 import ReCAPTCHA from "react-google-recaptcha";
+import { toast } from "react-toastify";
+import agent from "api/agent";
 
 const style = {
   position: "absolute" as "absolute",
@@ -100,13 +102,33 @@ const Form: React.FC = () => {
       <div className="form-main-container">
         <Formik
           initialValues={initialValues}
-          onSubmit={(values, { resetForm }) => {
+          onSubmit={async (values, { resetForm }) => {
             setLoading(true);
-            setTimeout(() => {
+            try {
+              await agent.Inquiry.submit(
+                values.emailAddress,
+                values.phoneNumber,
+                values.state.name,
+                values.fullName,
+                values.message
+              );
               setLoading(false);
               setOpenModal(true);
               resetForm();
-            }, 3000);
+            } catch (error) {
+              toast.error(`Error encountered.`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+              setLoading(false);
+              resetForm();
+            }
           }}
           validationSchema={validationSchema}
         >

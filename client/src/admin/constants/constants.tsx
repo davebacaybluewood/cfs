@@ -43,6 +43,7 @@ import ProfileSettings from "admin/pages/Profile/components/ProfileSettings/Prof
 import WebinarForm from "admin/pages/FileMaintenance/pages/Webinars/WebinarForm";
 import Users from "admin/pages/Users/Users";
 import ViewBlog from "admin/pages/Blogs/ViewBlog";
+import MailingList from "admin/pages/MailingList/MailingList";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -518,6 +519,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <Users />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.mailingList,
+    element: (
+      <GuardedWrapper>
+        <MailingList />
       </GuardedWrapper>
     ),
   },

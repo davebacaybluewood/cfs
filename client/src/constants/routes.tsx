@@ -12,8 +12,8 @@ const paths = {
   contact_us: "/contact_us",
   about_us: "/about-us",
   solutions: "/solutions",
-  resources: "/blogs-resources",
-  single_blog: "/blogs-resources/:blogTitle",
+  resources: "/blogs",
+  single_blog: "/blogs/:blogTitle",
   events: "/events",
   invalid: "/invalid",
 
