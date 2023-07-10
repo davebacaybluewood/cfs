@@ -149,9 +149,9 @@ const Footer: React.FC = () => {
             <Link to={SOCIAL_MEDIA_LINKS.LINKEDIN}>
               <FaLinkedin />
             </Link>
-            <FaPinterest />
+            {/* <FaPinterest />
             <FaTiktok />
-            <BsYoutube />
+            <BsYoutube /> Pleasse disregard for future use*/}
           </div>
         </Container>
       </div>
