@@ -13,6 +13,11 @@
   .standard-card-container {
     height: 25vh;
 
+    h3,
+    p {
+      font-size: 1.7rem;
+    }
+
     .cfs-btn {
       button {
         display: none;
