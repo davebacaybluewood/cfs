@@ -4,6 +4,7 @@ import { InlineWidget } from "react-calendly";
 import "./CalendlySection.scss";
 import { useMediaQuery } from "react-responsive";
 import ReCAPTCHA from "react-google-recaptcha";
+import { CALENDLY } from "constants/constants";
 
 const CalendlySection: React.FC = () => {
   const isCalendlyBreak = useMediaQuery({
@@ -30,7 +31,7 @@ const CalendlySection: React.FC = () => {
           <p>OR DIRECT CALL TO +1 (702) 900-5666</p>
         </div>
         <InlineWidget
-          url="https://calendly.com/gocfs/30min"
+          url={CALENDLY.CONSULTATION}
           styles={{
             height: isCalendlyBreak ? "1000px" : "800px",
             marginTop: "-6rem",
