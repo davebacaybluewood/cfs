@@ -34,7 +34,7 @@ const HelpSection: React.FC = () => {
                 />
                 <Typography variant="h4">Risk Management</Typography>
                 <p>
-                  CFS ensures coverage during <br /> unexpected death
+                  CFS ensure coverage during <br /> challenging circumstances
                 </p>
               </div>
             </Grid>

@@ -1,4 +1,4 @@
-.admin-calculator {
+.commision-simulation-container {
   .total-block {
     background: #0057b7;
     color: #fff;
@@ -17,8 +17,18 @@
       display: flex;
       justify-content: space-evenly;
       font-family: "Montserrat", sans-serif;
-      font-size: 2rem;
       font-weight: 400;
+
+      h2 {
+        font-weight: 700;
+        font-size: 2rem;
+        font-family: "Montserrat", sans-serif;
+      }
+      .result-title {
+        text-align: center;
+        font-weight: 900;
+        font-size: 4rem;
+      }
     }
   }
   .number-members {
@@ -30,5 +40,59 @@
       font-family: "Montserrat", sans-serif;
       border-bottom: 1px solid #0057b7;
     }
+  }
+
+  .form-card {
+    background: #eee;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    padding: 2rem;
+
+    .Mui-disabled {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 500;
+      color: #000;
+    }
+
+    input {
+      border: none;
+      font-size: 13px;
+      background-color: white;
+    }
+
+    .card-captions-top {
+      line-height: 2rem;
+      h3 {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+      }
+      p {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.7rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+      }
+    }
+
+    h3 {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.7rem;
+      font-weight: 400;
+      margin: 0.5rem 0;
+    }
+
+    label {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.7rem;
+      font-weight: 400;
+      margin: 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
   }
 }

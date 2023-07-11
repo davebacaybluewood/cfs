@@ -7,14 +7,9 @@ const MapSection = () => {
     <Container>
       <div className="map-container">
         <div className="map-captions">
-          <Typography variant="h3">
-            Financial Comfort, <br /> Now and Tomorrow
-          </Typography>
           <Typography>
-            CFS helps individuals and families build a comfortable future by{" "}
-            <br />
-            advocating Financial Awareness and providing Risk Management
-            Solutions.
+            CFS is dedicated to helping individuals and families <br /> across
+            the United States build a comfortable future.
           </Typography>
         </div>
         <div className="map-image">
