@@ -24,7 +24,7 @@ const HeadlineFamily: React.FC = () => {
           fillMode="none"
         >
           <Typography variant="h2">
-            Financial Comfort, <br /> Now and Tomorrow
+            Financial Comfort, <br /> Now and Tomorrow.
           </Typography>
           <div className="headline-home__btn">
             <Button variant="danger" onClick={() => setOpenCalendlyModal(true)}>

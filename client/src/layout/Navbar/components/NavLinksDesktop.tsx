@@ -68,7 +68,7 @@ const NavLinksDesktop: React.FC<NavLinksDesktopProps> = (props) => {
                       Individual Protection
                     </Link>
                     <Link to={paths.family_protection}>Family Protection</Link>
-                    <Link to={paths.join_our_team}>Join our team</Link>
+                    <Link to={paths.join_our_team}>Join CFS</Link>
                   </div>
                 </div>
               </li>
