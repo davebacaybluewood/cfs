@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
@@ -35,37 +35,37 @@ const AGENT_ROLES = [
   {
     value: PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
     label: PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.label,
-    numberValue: 0,
+    numberValue: 0.35,
   },
   {
     value: PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
     label: PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.label,
-    numberValue: 0,
+    numberValue: 0.5,
   },
   {
     value: PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
     label: PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.label,
-    numberValue: 0,
+    numberValue: 0.65,
   },
   {
     value: PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
     label: PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.label,
-    numberValue: 0,
+    numberValue: 0.81,
   },
   {
     value: PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
     label: PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.label,
-    numberValue: 0,
+    numberValue: 0.83,
   },
   {
     value: PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
     label: PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.label,
-    numberValue: 0,
+    numberValue: 0.85,
   },
   {
     value: PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
     label: PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.label,
-    numberValue: 0,
+    numberValue: 0.86,
   },
 ];
 
@@ -73,24 +73,15 @@ const standardInputStyles = {
   fontSize: "16px",
 };
 const CommissionSimulation: React.FC = () => {
-  // Sample data
-  const data = [
-    { name: "Personal Earnings", revenue: 500 },
-    { name: "Spread Earnings", revenue: 500 },
-    { name: "Override Earnings", revenue: 500 },
-  ];
+  const onChangePositionHandler = (value: any, setFieldValue: any) => {
+    console.log(value);
 
-  const onChangePositionHandler = (event: any) => {
-    console.log("test");
+    setFieldValue("personal.position", [value]);
   };
 
   const initialValues = {
     personal: {
-      position: {
-        label: "",
-        value: "",
-        numberValue: 0,
-      },
+      position: [],
       monthlyTargetPremium: 0,
     },
     generation: {
@@ -168,77 +159,110 @@ const CommissionSimulation: React.FC = () => {
   };
 
   const validationSchema = Yup.object({
-    personal: Yup.object().shape({
-      position: Yup.object().shape({
-        value: Yup.string().required("Position field is required."),
-      }),
-      monthlyTargetPremium: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-    }),
-    spread: Yup.object().shape({
-      position1: Yup.string().required("Position field is required."),
-      monthlyTargetPremium1: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      position2: Yup.string().required("Position field is required."),
-      monthlyTargetPremium2: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      position3: Yup.string().required("Position field is required."),
-      monthlyTargetPremium3: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      position4: Yup.string().required("Position field is required."),
-      monthlyTargetPremium4: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      position5: Yup.string().required("Position field is required."),
-      monthlyTargetPremium5: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      position6: Yup.string().required("Position field is required."),
-      monthlyTargetPremium6: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      position7: Yup.string().required("Position field is required."),
-      monthlyTargetPremium7: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      position8: Yup.string().required("Position field is required."),
-      monthlyTargetPremium8: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-    }),
-    generation: Yup.object().shape({
-      monthlyTargetPremium1: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      numberOfMembers1: Yup.number()
-        .required("Number of members field is required.")
-        .typeError("A number is required."),
-      monthlyTargetPremium2: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      numberOfMembers2: Yup.number()
-        .required("Number of members field is required.")
-        .typeError("A number is required."),
-      monthlyTargetPremium3: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      numberOfMembers3: Yup.number()
-        .required("Number of members field is required.")
-        .typeError("A number is required."),
-      monthlyTargetPremium4: Yup.number()
-        .required("Monthly Target field is required.")
-        .typeError("A number is required."),
-      numberOfMembers4: Yup.number()
-        .required("Number of members field is required.")
-        .typeError("A number is required."),
-    }),
+    // personal: Yup.object().shape({
+    //   position: Yup.object().shape({
+    //     value: Yup.string().required("Position field is required."),
+    //   }),
+    //   monthlyTargetPremium: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    // }),
+    // spread: Yup.object().shape({
+    //   position1: Yup.string().required("Position field is required."),
+    //   monthlyTargetPremium1: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   position2: Yup.string().required("Position field is required."),
+    //   monthlyTargetPremium2: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   position3: Yup.string().required("Position field is required."),
+    //   monthlyTargetPremium3: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   position4: Yup.string().required("Position field is required."),
+    //   monthlyTargetPremium4: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   position5: Yup.string().required("Position field is required."),
+    //   monthlyTargetPremium5: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   position6: Yup.string().required("Position field is required."),
+    //   monthlyTargetPremium6: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   position7: Yup.string().required("Position field is required."),
+    //   monthlyTargetPremium7: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   position8: Yup.string().required("Position field is required."),
+    //   monthlyTargetPremium8: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    // }),
+    // generation: Yup.object().shape({
+    //   monthlyTargetPremium1: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   numberOfMembers1: Yup.number()
+    //     .required("Number of members field is required.")
+    //     .typeError("A number is required."),
+    //   monthlyTargetPremium2: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   numberOfMembers2: Yup.number()
+    //     .required("Number of members field is required.")
+    //     .typeError("A number is required."),
+    //   monthlyTargetPremium3: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   numberOfMembers3: Yup.number()
+    //     .required("Number of members field is required.")
+    //     .typeError("A number is required."),
+    //   monthlyTargetPremium4: Yup.number()
+    //     .required("Monthly Target field is required.")
+    //     .typeError("A number is required."),
+    //   numberOfMembers4: Yup.number()
+    //     .required("Number of members field is required.")
+    //     .typeError("A number is required."),
+    // }),
   });
 
   const genNum = ["1st", "2nd", "3rd", "4th"];
+
+  const [totalEarnings, setTotalEarnings] = useState([
+    {
+      personal: 0,
+      spread: 0,
+      generationOverride: 0,
+    },
+  ]);
+
+  const submitHandler = (data: any) => {
+    /** Personal */
+    const numberValue = data.personal.position[0].numberValue;
+    const monthlyTargetPremium = data.personal.monthlyTargetPremium;
+
+    const total = monthlyTargetPremium * numberValue;
+
+    setTotalEarnings((prevState) => {
+      const filteredPrevState = prevState.map((data) => {
+        return {
+          ...data,
+          personal: total,
+        };
+      });
+      return filteredPrevState;
+    });
+  };
+
+  const earningsData = [
+    ["Task", "Hours per Day"],
+    ["Personal Earnings", totalEarnings[0].personal],
+    ["Spread Earnings", 2],
+    ["Generation Override", 2],
+  ];
 
   return (
     <Wrapper
@@ -276,8 +300,9 @@ const CommissionSimulation: React.FC = () => {
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
+                enableReinitialize={true}
                 onSubmit={(data) => {
-                  console.log(data);
+                  submitHandler(data);
                 }}
               >
                 {({
@@ -287,6 +312,7 @@ const CommissionSimulation: React.FC = () => {
                   touched,
                   setFieldValue,
                   resetForm,
+                  handleSubmit,
                 }) => {
                   return (
                     <React.Fragment>
@@ -300,17 +326,21 @@ const CommissionSimulation: React.FC = () => {
                             <label>Position</label>
                             <Select
                               classNamePrefix="select"
-                              onChange={onChangePositionHandler}
+                              onChange={(e) =>
+                                onChangePositionHandler(e, setFieldValue)
+                              }
                               isSearchable={true}
                               name="position"
                               placeholder="Choose a position"
-                              options={AGENT_ROLES.map((st) => {
-                                return {
-                                  label: st.label,
-                                  value: st.value,
-                                  numberValue: st.numberValue,
-                                };
-                              })}
+                              options={
+                                AGENT_ROLES.map((st) => {
+                                  return {
+                                    label: st.label,
+                                    value: st.value,
+                                    numberValue: st.numberValue,
+                                  };
+                                }) as any
+                              }
                               styles={{
                                 control: (baseStyles, state) => ({
                                   ...baseStyles,
@@ -333,6 +363,8 @@ const CommissionSimulation: React.FC = () => {
                               }
                               text="Position field is required."
                             />
+                            <pre>{JSON.stringify(values, null, 2)}</pre>
+                            <pre>{JSON.stringify(errors, null, 2)}</pre>
                           </Grid>
                           <Grid item sm={12} md={9} lg={4}>
                             <div className="calcu-form-control">
@@ -358,12 +390,9 @@ const CommissionSimulation: React.FC = () => {
                         <Grid container spacing={2}>
                           {AGENT_ROLES.map((data, index) => {
                             const sumIndex = index + 1;
-                            console.log(
-                              values.spread[`monthlyTargetPremium${sumIndex}`]
-                            );
                             return (
                               <React.Fragment>
-                                <Grid item sm={12} md={9} lg={8}>
+                                <Grid item sm={12} md={9} lg={4}>
                                   <label>Position</label>
                                   <FormikTextInput
                                     name={`spread.position${sumIndex}`}
@@ -380,6 +409,21 @@ const CommissionSimulation: React.FC = () => {
                                       value={
                                         values.spread[
                                           `monthlyTargetPremium${sumIndex}`
+                                        ]
+                                      }
+                                      variant="outlined"
+                                      label=""
+                                    />
+                                  </div>
+                                </Grid>
+                                <Grid item sm={12} md={9} lg={4}>
+                                  <div className="calcu-form-control">
+                                    <label># of members</label>
+                                    <FormikTextInput
+                                      name={`spread.numberOfMembers${sumIndex}`}
+                                      value={
+                                        values.spread[
+                                          `numberOfMembers${sumIndex}`
                                         ]
                                       }
                                       variant="outlined"
@@ -450,10 +494,16 @@ const CommissionSimulation: React.FC = () => {
                         </Grid>
                       </div>
                       <div className="form-actions">
-                        <Button variant="primary">Calculate</Button>
+                        <Button
+                          variant="primary"
+                          onClick={() => handleSubmit()}
+                          type="submit"
+                        >
+                          Calculate
+                        </Button>
                       </div>
-                      {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                      <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                      <pre>{JSON.stringify(values, null, 2)}</pre>
+                      <pre>{JSON.stringify(errors, null, 2)}</pre>
                     </React.Fragment>
                   );
                 }}
@@ -462,7 +512,7 @@ const CommissionSimulation: React.FC = () => {
           </div>
         </Grid>
         <Grid item sm={12} md={12} lg={6}>
-          <Graph />
+          <Graph data={earningsData} />
         </Grid>
       </Grid>
     </Wrapper>

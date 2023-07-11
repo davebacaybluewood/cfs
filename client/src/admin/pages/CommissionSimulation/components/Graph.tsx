@@ -3,14 +3,10 @@ import BigBadge from "admin/components/BigBadge/BigBadge";
 import React from "react";
 import { Chart } from "react-google-charts";
 
-const Graph: React.FC = () => {
-  const data = [
-    ["Task", "Hours per Day"],
-    ["Personal Earnings", 11],
-    ["Spread Earnings", 2],
-    ["Generation Override", 2],
-  ];
-
+interface GraphProps {
+  data: any;
+}
+const Graph: React.FC<GraphProps> = (props) => {
   const options = {
     legend: { position: "none" },
     chartArea: {
@@ -32,7 +28,7 @@ const Graph: React.FC = () => {
     <React.Fragment>
       <Chart
         chartType="PieChart"
-        data={data}
+        data={props.data}
         options={options as any}
         width={"100%"}
         height={"400px"}
