@@ -8,6 +8,7 @@ import FormFourField from "./components/FormFourField";
 import FormSixField from "./components/FormSixField";
 import { PieChart, Pie } from "recharts";
 import "./CommissionSimulation.scss";
+import Graph from "./components/Graph";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -101,11 +102,7 @@ const CommissionSimulation: React.FC<CommissionSimulation> = (props) => {
           </div>
         </Grid>
         <Grid item sm={12} md={12} lg={6}>
-          <PieChart width={800} height={500}>
-            <Pie data={data} dataKey="revenue" outerRadius={250} fill="green" />
-          </PieChart>
-          {/* This is where the actual total values should Display */}
-          <div style={{ textAlign: "center" }}>Values</div> {/*Remove  */}
+          <Graph />
         </Grid>
       </Grid>
     </Wrapper>
