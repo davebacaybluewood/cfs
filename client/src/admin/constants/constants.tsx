@@ -527,7 +527,7 @@ export const adminRoutes = [
     path: adminPathsNew.commissionSimulation,
     element: (
       <GuardedWrapper>
-        <CommissionSimulation heading="Total Earnings" numMembers={10} />
+        <CommissionSimulation />
       </GuardedWrapper>
     ),
   },
