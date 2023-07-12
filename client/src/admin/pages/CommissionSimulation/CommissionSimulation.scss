@@ -48,6 +48,28 @@
     margin-top: 2rem;
     padding: 2rem;
 
+    .alert-message {
+      font-size: 1.4rem;
+      font-family: "Montserrat", sans-serif;
+      color: #f86f03;
+      margin-top: -1rem;
+    }
+
+    .position-label {
+      display: flex;
+      align-items: center;
+
+      svg {
+        display: flex;
+        margin-left: 1rem;
+        align-items: center;
+        font-size: 2rem;
+        position: relative;
+        top: 0.4rem;
+        color: #ed3e4b;
+      }
+    }
+
     .Mui-disabled {
       font-family: "Montserrat", sans-serif;
       font-weight: 500;
@@ -77,7 +99,7 @@
 
     h3 {
       font-family: "Montserrat", sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 400;
       margin: 1rem 0 0 0;
     }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import "./CommissionSimulation.scss";
 import Graph from "./components/Graph";
@@ -14,6 +14,10 @@ import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import Button from "library/Button/Button";
 import { BigBadgeProps } from "admin/components/BigBadge/BigBadge";
+import formatter from "helpers/currencyFormatter";
+import { FaAmilia } from "react-icons/fa";
+import { AiOutlineWarning } from "react-icons/ai";
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -82,7 +86,13 @@ const CommissionSimulation: React.FC = () => {
 
   const initialValues = {
     personal: {
-      position: [],
+      position: [
+        {
+          label: "",
+          value: "",
+          numberValue: 0,
+        },
+      ],
       monthlyTargetPremium: 0,
     },
     generation: {
@@ -107,56 +117,56 @@ const CommissionSimulation: React.FC = () => {
       position1: {
         label: AGENT_ROLES[0].label,
         value: AGENT_ROLES[0].value,
-        numberValue: 0,
+        numberValue: AGENT_ROLES[0].numberValue,
       },
       monthlyTargetPremium1: 0,
       numberOfMembers1: 0,
       position2: {
         label: AGENT_ROLES[1].label,
         value: AGENT_ROLES[1].value,
-        numberValue: 0,
+        numberValue: AGENT_ROLES[1].numberValue,
       },
       monthlyTargetPremium2: 0,
       numberOfMembers2: 0,
       position3: {
         label: AGENT_ROLES[2].label,
         value: AGENT_ROLES[2].value,
-        numberValue: 0,
+        numberValue: AGENT_ROLES[2].numberValue,
       },
       monthlyTargetPremium3: 0,
       numberOfMembers3: 0,
       position4: {
         label: AGENT_ROLES[3].label,
         value: AGENT_ROLES[3].value,
-        numberValue: 0,
+        numberValue: AGENT_ROLES[3].numberValue,
       },
       monthlyTargetPremium4: 0,
       numberOfMembers4: 0,
       position5: {
         label: AGENT_ROLES[4].label,
         value: AGENT_ROLES[4].value,
-        numberValue: 0,
+        numberValue: AGENT_ROLES[4].numberValue,
       },
       monthlyTargetPremium5: 0,
       numberOfMembers5: 0,
       position6: {
         label: AGENT_ROLES[5].label,
         value: AGENT_ROLES[5].value,
-        numberValue: 0,
+        numberValue: AGENT_ROLES[5].numberValue,
       },
       monthlyTargetPremium6: 0,
       numberOfMembers6: 0,
       position7: {
         label: AGENT_ROLES[6].label,
         value: AGENT_ROLES[6].value,
-        numberValue: 0,
+        numberValue: AGENT_ROLES[6].numberValue,
       },
       monthlyTargetPremium7: 0,
       numberOfMembers7: 0,
       position8: {
         label: AGENT_ROLES[7].label,
         value: AGENT_ROLES[7].value,
-        numberValue: 0,
+        numberValue: AGENT_ROLES[7].numberValue,
       },
       monthlyTargetPremium8: 0,
       numberOfMembers8: 0,
@@ -244,11 +254,113 @@ const CommissionSimulation: React.FC = () => {
     },
   ]);
 
+  const [members, setMembers] = useState(0);
+
   const submitHandler = (data: any) => {
     /** Personal */
     const personalNumberValue = data.personal.position[0]?.numberValue;
     const personalMonthlyTargetPremium = data.personal.monthlyTargetPremium;
     const personalTotal = personalMonthlyTargetPremium * personalNumberValue;
+
+    /* Spread */
+    /* Position 1 */
+    const spreadNumberValue1 = data.spread.position1.numberValue;
+    const spreadMonthlyTargetPremium1 = parseInt(
+      data.spread.monthlyTargetPremium1
+    );
+    const spreadNumberOfMembers1 = parseInt(data.spread.numberOfMembers1);
+    const spread1Total =
+      (personalNumberValue - spreadNumberValue1) *
+      spreadMonthlyTargetPremium1 *
+      spreadNumberOfMembers1;
+
+    /* Position 2 */
+    const spreadNumberValue2 = data.spread.position2.numberValue;
+    const spreadMonthlyTargetPremium2 = parseInt(
+      data.spread.monthlyTargetPremium2
+    );
+    const spreadNumberOfMembers2 = parseInt(data.spread.numberOfMembers2);
+    const spread2Total =
+      (personalNumberValue - spreadNumberValue2) *
+      spreadMonthlyTargetPremium2 *
+      spreadNumberOfMembers2;
+
+    /* Position 3 */
+    const spreadNumberValue3 = data.spread.position3.numberValue;
+    const spreadMonthlyTargetPremium3 = parseInt(
+      data.spread.monthlyTargetPremium3
+    );
+    const spreadNumberOfMembers3 = parseInt(data.spread.numberOfMembers3);
+    const spread3Total =
+      (personalNumberValue - spreadNumberValue3) *
+      spreadMonthlyTargetPremium3 *
+      spreadNumberOfMembers3;
+
+    /* Position 4 */
+    const spreadNumberValue4 = data.spread.position4.numberValue;
+    const spreadMonthlyTargetPremium4 = parseInt(
+      data.spread.monthlyTargetPremium4
+    );
+    const spreadNumberOfMembers4 = parseInt(data.spread.numberOfMembers4);
+    const spread4Total =
+      (personalNumberValue - spreadNumberValue4) *
+      spreadMonthlyTargetPremium4 *
+      spreadNumberOfMembers4;
+
+    /* Position 5 */
+    const spreadNumberValue5 = data.spread.position5.numberValue;
+    const spreadMonthlyTargetPremium5 = parseInt(
+      data.spread.monthlyTargetPremium5
+    );
+    const spreadNumberOfMembers5 = parseInt(data.spread.numberOfMembers5);
+    const spread5Total =
+      (personalNumberValue - spreadNumberValue5) *
+      spreadMonthlyTargetPremium5 *
+      spreadNumberOfMembers5;
+
+    /* Position 6 */
+    const spreadNumberValue6 = data.spread.position6.numberValue;
+    const spreadMonthlyTargetPremium6 = parseInt(
+      data.spread.monthlyTargetPremium6
+    );
+    const spreadNumberOfMembers6 = parseInt(data.spread.numberOfMembers6);
+    const spread6Total =
+      (personalNumberValue - spreadNumberValue6) *
+      spreadMonthlyTargetPremium6 *
+      spreadNumberOfMembers6;
+
+    /* Position 7 */
+    const spreadNumberValue7 = data.spread.position7.numberValue;
+    const spreadMonthlyTargetPremium7 = parseInt(
+      data.spread.monthlyTargetPremium7
+    );
+    const spreadNumberOfMembers7 = parseInt(data.spread.numberOfMembers7);
+    const spread7Total =
+      (personalNumberValue - spreadNumberValue7) *
+      spreadMonthlyTargetPremium7 *
+      spreadNumberOfMembers7;
+
+    /* Position 8 */
+    const spreadNumberValue8 = data.spread.position8.numberValue;
+    const spreadMonthlyTargetPremium8 = parseInt(
+      data.spread.monthlyTargetPremium8
+    );
+    const spreadNumberOfMembers8 = parseInt(data.spread.numberOfMembers8);
+    const spread8Total =
+      (personalNumberValue - spreadNumberValue8) *
+      spreadMonthlyTargetPremium8 *
+      spreadNumberOfMembers8;
+
+    /* Spread Total Earnings */
+    const spreadTotal =
+      spread8Total +
+      spread7Total +
+      spread6Total +
+      spread5Total +
+      spread4Total +
+      spread3Total +
+      spread2Total +
+      spread1Total;
 
     /** Generation Overrride */
     /*Gen 1 */
@@ -284,14 +396,34 @@ const CommissionSimulation: React.FC = () => {
     const gen4Total =
       monthlyTargetPremium4 * numberOfMembers4 * gen4NumberValue;
 
+    /* Override Total */
     const generationTotal = gen1Total + gen2Total + gen3Total + gen4Total;
     const formattedGenerationTotal = parseInt(generationTotal.toFixed(2));
+
+    /* Spread  Total Members*/
+    const spreadMembersTotal =
+      spreadNumberOfMembers8 +
+      spreadNumberOfMembers7 +
+      spreadNumberOfMembers6 +
+      spreadNumberOfMembers5 +
+      spreadNumberOfMembers4 +
+      spreadNumberOfMembers3 +
+      spreadNumberOfMembers2 +
+      spreadNumberOfMembers1;
+
+    /* Override Total Members */
+    const overrideMembersTotal =
+      numberOfMembers4 + numberOfMembers3 + numberOfMembers2 + numberOfMembers1;
+
+    /*Total Members  */
+    const totalMembersOverall = overrideMembersTotal + spreadMembersTotal;
+    setMembers(totalMembersOverall);
 
     setTotalEarnings((prevState) => {
       const filteredPrevState = prevState.map((data) => {
         return {
           personal: personalTotal,
-          spread: 0,
+          spread: spreadTotal,
           generationOverride: formattedGenerationTotal,
         };
       });
@@ -325,7 +457,7 @@ const CommissionSimulation: React.FC = () => {
     },
     {
       color: "#3f7ec0",
-      title: "Generation Override",
+      title: "Override Earnings",
       label1: "MONTHLY",
       value1: totalEarnings[0].generationOverride,
       label2: "ANNUALY",
@@ -339,6 +471,11 @@ const CommissionSimulation: React.FC = () => {
     totalEarnings[0].generationOverride;
 
   const totalEarningAnually = totalEarningMonthly * 12;
+
+  const formattedearnings = {
+    totalEarningAnually: formatter.format(totalEarningAnually || 0),
+    totalEarningMonthly: formatter.format(totalEarningMonthly || 0),
+  };
 
   return (
     <Wrapper
@@ -361,16 +498,16 @@ const CommissionSimulation: React.FC = () => {
               <div className="total-block-result">
                 <div className="result-title">
                   <h2>MONTHLY</h2>
-                  <p>${totalEarningMonthly}</p>
+                  <p>{formattedearnings.totalEarningMonthly}</p>
                 </div>
                 <div className="result-title">
                   <h2>ANNUALY</h2>
-                  <p>${totalEarningAnually}</p>
+                  <p>{formattedearnings.totalEarningAnually}</p>
                 </div>
               </div>
             </div>
             <div className="number-members">
-              <h5>{`0 members`}</h5>
+              <h5>{`${members} members`}</h5>
             </div>
             <div className="form-calculator">
               <Formik
@@ -390,6 +527,9 @@ const CommissionSimulation: React.FC = () => {
                   resetForm,
                   handleSubmit,
                 }) => {
+                  const inputValidity =
+                    !values.personal.position.length ||
+                    !values.personal.monthlyTargetPremium;
                   return (
                     <React.Fragment>
                       <div className="form-card">
@@ -447,6 +587,7 @@ const CommissionSimulation: React.FC = () => {
                               <label>Monthly Target Premium</label>
                               <FormikTextInput
                                 name="personal.monthlyTargetPremium"
+                                type="number"
                                 value={values.personal.monthlyTargetPremium}
                                 style={standardInputStyles}
                                 variant="outlined"
@@ -466,11 +607,32 @@ const CommissionSimulation: React.FC = () => {
                         <Grid container spacing={2} alignItems="center">
                           {AGENT_ROLES.map((data, index) => {
                             const sumIndex = index + 1;
+
                             return (
                               <React.Fragment>
                                 <Grid item sm={12} md={9} lg={4}>
                                   <div className="position-label">
                                     <h3>{data.label}</h3>
+                                    {values.personal.position[0]!.numberValue <
+                                    data.numberValue ? (
+                                      <HtmlTooltip
+                                        title={
+                                          <div
+                                            style={{
+                                              fontSize: "1.3rem",
+                                              color: "#ed3e4b",
+                                            }}
+                                          >
+                                            This position can only be lower than
+                                            your own position!
+                                          </div>
+                                        }
+                                      >
+                                        <span>
+                                          <AiOutlineWarning />
+                                        </span>
+                                      </HtmlTooltip>
+                                    ) : null}
                                   </div>
                                 </Grid>
                                 <Grid item sm={12} md={9} lg={4}>
@@ -478,6 +640,7 @@ const CommissionSimulation: React.FC = () => {
                                     <label>Monthly Target Premium</label>
                                     <FormikTextInput
                                       name={`spread.monthlyTargetPremium${sumIndex}`}
+                                      type="number"
                                       value={
                                         values.spread[
                                           `monthlyTargetPremium${sumIndex}`
@@ -485,6 +648,11 @@ const CommissionSimulation: React.FC = () => {
                                       }
                                       variant="outlined"
                                       label=""
+                                      disabled={
+                                        values.personal.position[0]
+                                          .numberValue < data.numberValue ||
+                                        !values.personal.monthlyTargetPremium
+                                      }
                                     />
                                   </div>
                                 </Grid>
@@ -492,6 +660,7 @@ const CommissionSimulation: React.FC = () => {
                                   <div className="calcu-form-control">
                                     <label># of members</label>
                                     <FormikTextInput
+                                      type="number"
                                       name={`spread.numberOfMembers${sumIndex}`}
                                       value={
                                         values.spread[
@@ -500,6 +669,11 @@ const CommissionSimulation: React.FC = () => {
                                       }
                                       variant="outlined"
                                       label=""
+                                      disabled={
+                                        values.personal.position[0]
+                                          .numberValue < data.numberValue ||
+                                        !values.personal.monthlyTargetPremium
+                                      }
                                     />
                                   </div>
                                 </Grid>
@@ -513,10 +687,18 @@ const CommissionSimulation: React.FC = () => {
                         <div className="card-captions-top">
                           <h3>Generation Override</h3>
                           <p>Lorem ipsum dolor sit.</p>
+
+                          {values.personal.position[0].numberValue < 0.81 ? (
+                            <div className="alert-message">
+                              Only Senior Marketing Director and above can earn
+                              override.
+                            </div>
+                          ) : null}
                         </div>
                         <Grid container spacing={2} alignItems="center">
                           {genNum.map((data, index) => {
                             const sumIndex = index + 1;
+
                             return (
                               <React.Fragment>
                                 <Grid item sm={12} md={9} lg={2}>
@@ -535,6 +717,7 @@ const CommissionSimulation: React.FC = () => {
                                       }
                                       variant="outlined"
                                       label=""
+                                      disabled={inputValidity}
                                     />
                                   </div>
                                 </Grid>
@@ -543,6 +726,7 @@ const CommissionSimulation: React.FC = () => {
                                     <label># of members</label>
                                     <FormikTextInput
                                       name={`generation.numberOfMembers${sumIndex}`}
+                                      type="number"
                                       value={
                                         values.generation[
                                           `numberOfMembers${sumIndex}`
@@ -550,6 +734,7 @@ const CommissionSimulation: React.FC = () => {
                                       }
                                       variant="outlined"
                                       label=""
+                                      disabled={inputValidity}
                                     />
                                   </div>
                                 </Grid>
@@ -567,8 +752,6 @@ const CommissionSimulation: React.FC = () => {
                           Calculate
                         </Button>
                       </div>
-                      {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                      <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                     </React.Fragment>
                   );
                 }}

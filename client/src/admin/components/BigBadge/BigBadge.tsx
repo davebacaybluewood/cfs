@@ -1,4 +1,5 @@
 import React from "react";
+import formatter from "helpers/currencyFormatter";
 import "./BigBadge.scss";
 
 export interface BigBadgeProps {
@@ -28,14 +29,14 @@ const BigBadge: React.FC<BigBadgeProps> = (props) => {
           <h3>{props.label1}</h3>
         </div>
         <div className="badle-value">
-          <h4>${props.value1}</h4>
+          <h4>{formatter.format(props.value1 || 0)}</h4>
         </div>
         <React.Fragment>
           <div className="badge-label">
             <h3>{props.label2}</h3>
           </div>
           <div className="badle-value">
-            <h4>${props.value2}</h4>
+            <h4>{formatter.format(props.value2 || 0)}</h4>
           </div>
         </React.Fragment>
       </div>
