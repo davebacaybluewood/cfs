@@ -429,19 +429,15 @@ const CommissionSimulation: React.FC = () => {
                           <h3>Spread</h3>
                           <p>Lorem ipsum dolor sit.</p>
                         </div>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={2} alignItems="center">
                           {AGENT_ROLES.map((data, index) => {
                             const sumIndex = index + 1;
                             return (
                               <React.Fragment>
                                 <Grid item sm={12} md={9} lg={4}>
-                                  <label>Position</label>
-                                  <FormikTextInput
-                                    name={`spread.position${sumIndex}`}
-                                    value={data.label}
-                                    disabled
-                                    variant="outlined"
-                                  />
+                                  <div className="position-label">
+                                    <h3>{data.label}</h3>
+                                  </div>
                                 </Grid>
                                 <Grid item sm={12} md={9} lg={4}>
                                   <div className="calcu-form-control">
@@ -484,22 +480,15 @@ const CommissionSimulation: React.FC = () => {
                           <h3>Generation Override</h3>
                           <p>Lorem ipsum dolor sit.</p>
                         </div>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={2} alignItems="center">
                           {genNum.map((data, index) => {
                             const sumIndex = index + 1;
                             return (
                               <React.Fragment>
-                                <Grid item sm={12} md={9} lg={4}>
-                                  <label>Gen#</label>
-                                  <FormikTextInput
-                                    disabled
-                                    name={`generation.gen${sumIndex}`}
-                                    value={data}
-                                    variant="outlined"
-                                    label=""
-                                  />
+                                <Grid item sm={12} md={9} lg={2}>
+                                  <h3>{data}</h3>
                                 </Grid>
-                                <Grid item sm={12} md={9} lg={4}>
+                                <Grid item sm={12} md={9} lg={5}>
                                   <div className="calcu-form-control">
                                     <label>Monthly Target Premium</label>
                                     <FormikTextInput
@@ -515,7 +504,7 @@ const CommissionSimulation: React.FC = () => {
                                     />
                                   </div>
                                 </Grid>
-                                <Grid item sm={12} md={9} lg={4}>
+                                <Grid item sm={12} md={9} lg={5}>
                                   <div className="calcu-form-control">
                                     <label># of members</label>
                                     <FormikTextInput
