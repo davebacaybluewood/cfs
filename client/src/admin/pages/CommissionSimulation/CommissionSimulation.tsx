@@ -88,15 +88,19 @@ const CommissionSimulation: React.FC = () => {
       gen1: "",
       monthlyTargetPremium1: 0,
       numberOfMembers1: 0,
+      gen1NumberValue: 0.1,
       gen2: "",
       monthlyTargetPremium2: 0,
       numberOfMembers2: 0,
+      gen2NumberValue: 0.05,
       gen3: "",
       monthlyTargetPremium3: 0,
       numberOfMembers3: 0,
+      gen3NumberValue: 0.04,
       gen4: "",
       monthlyTargetPremium4: 0,
       numberOfMembers4: 0,
+      gen4NumberValue: 0.03,
     },
     spread: {
       position1: {
@@ -241,16 +245,54 @@ const CommissionSimulation: React.FC = () => {
 
   const submitHandler = (data: any) => {
     /** Personal */
-    const numberValue = data.personal.position[0].numberValue;
-    const monthlyTargetPremium = data.personal.monthlyTargetPremium;
+    const personalNumberValue = data.personal.position[0]?.numberValue;
+    const personalMonthlyTargetPremium = data.personal.monthlyTargetPremium;
+    const personalTotal = personalMonthlyTargetPremium * personalNumberValue;
 
-    const total = monthlyTargetPremium * numberValue;
+    /** Generation Overrride */
+    /*Gen 1 */
+    const gen1NumberValue = data.generation.gen1NumberValue;
+    const numberOfMembers1 = parseInt(data.generation.numberOfMembers1);
+    const monthlyTargetPremium1 = parseInt(
+      data.generation.monthlyTargetPremium1
+    );
+    const gen1Total =
+      monthlyTargetPremium1 * numberOfMembers1 * gen1NumberValue;
+    /*Gen 2 */
+    const gen2NumberValue = data.generation.gen2NumberValue;
+    const numberOfMembers2 = parseInt(data.generation.numberOfMembers2);
+    const monthlyTargetPremium2 = parseInt(
+      data.generation.monthlyTargetPremium2
+    );
+    const gen2Total =
+      monthlyTargetPremium2 * numberOfMembers2 * gen2NumberValue;
+    /*Gen 3 */
+    const gen3NumberValue = data.generation.gen3NumberValue;
+    const numberOfMembers3 = parseInt(data.generation.numberOfMembers3);
+    const monthlyTargetPremium3 = parseInt(
+      data.generation.monthlyTargetPremium3
+    );
+    const gen3Total =
+      monthlyTargetPremium3 * numberOfMembers3 * gen3NumberValue;
+    /*Gen 4 */
+    const gen4NumberValue = data.generation.gen4NumberValue;
+    const numberOfMembers4 = parseInt(data.generation.numberOfMembers4);
+    const monthlyTargetPremium4 = parseInt(
+      data.generation.monthlyTargetPremium4
+    );
+    const gen4Total =
+      monthlyTargetPremium4 * numberOfMembers4 * gen4NumberValue;
+
+    const generationTotal = gen1Total + gen2Total + gen3Total + gen4Total;
+    const formattedGenerationTotal = parseInt(generationTotal.toFixed(2));
+    console.log(formattedGenerationTotal);
 
     setTotalEarnings((prevState) => {
       const filteredPrevState = prevState.map((data) => {
         return {
-          ...data,
-          personal: total,
+          personal: personalTotal,
+          spread: 0,
+          generationOverride: formattedGenerationTotal,
         };
       });
       return filteredPrevState;
@@ -260,8 +302,8 @@ const CommissionSimulation: React.FC = () => {
   const earningsData = [
     ["Task", "Hours per Day"],
     ["Personal Earnings", totalEarnings[0].personal],
-    ["Spread Earnings", 2],
-    ["Generation Override", 2],
+    ["Spread Earnings", totalEarnings[0].spread],
+    ["Generation Override", totalEarnings[0].generationOverride],
   ];
 
   return (
@@ -363,8 +405,8 @@ const CommissionSimulation: React.FC = () => {
                               }
                               text="Position field is required."
                             />
-                            <pre>{JSON.stringify(values, null, 2)}</pre>
-                            <pre>{JSON.stringify(errors, null, 2)}</pre>
+                            {/* <pre>{JSON.stringify(values, null, 2)}</pre>
+                            <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                           </Grid>
                           <Grid item sm={12} md={9} lg={4}>
                             <div className="calcu-form-control">
@@ -451,7 +493,7 @@ const CommissionSimulation: React.FC = () => {
                                   <label>Gen#</label>
                                   <FormikTextInput
                                     disabled
-                                    name={`generation.position${sumIndex}`}
+                                    name={`generation.gen${sumIndex}`}
                                     value={data}
                                     variant="outlined"
                                     label=""
@@ -502,8 +544,8 @@ const CommissionSimulation: React.FC = () => {
                           Calculate
                         </Button>
                       </div>
-                      <pre>{JSON.stringify(values, null, 2)}</pre>
-                      <pre>{JSON.stringify(errors, null, 2)}</pre>
+                      {/* <pre>{JSON.stringify(values, null, 2)}</pre>
+                      <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                     </React.Fragment>
                   );
                 }}
