@@ -13,6 +13,7 @@ import Select from "react-select";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import Button from "library/Button/Button";
+import { BigBadgeProps } from "admin/components/BigBadge/BigBadge";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -285,7 +286,6 @@ const CommissionSimulation: React.FC = () => {
 
     const generationTotal = gen1Total + gen2Total + gen3Total + gen4Total;
     const formattedGenerationTotal = parseInt(generationTotal.toFixed(2));
-    console.log(formattedGenerationTotal);
 
     setTotalEarnings((prevState) => {
       const filteredPrevState = prevState.map((data) => {
@@ -305,6 +305,40 @@ const CommissionSimulation: React.FC = () => {
     ["Spread Earnings", totalEarnings[0].spread],
     ["Generation Override", totalEarnings[0].generationOverride],
   ];
+
+  const badgeData: BigBadgeProps[] = [
+    {
+      color: "#45bf94",
+      title: "Personal Earnings",
+      label1: "MONTHLY",
+      value1: totalEarnings[0].personal,
+      label2: "ANNUALY",
+      value2: totalEarnings[0].personal * 12,
+    },
+    {
+      color: "#ecc10c",
+      title: "Spread Earnings",
+      label1: "MONTHLY",
+      value1: totalEarnings[0].spread,
+      label2: "ANNUALY",
+      value2: totalEarnings[0].spread * 12,
+    },
+    {
+      color: "#3f7ec0",
+      title: "Generation Override",
+      label1: "MONTHLY",
+      value1: totalEarnings[0].generationOverride,
+      label2: "ANNUALY",
+      value2: totalEarnings[0].generationOverride * 12,
+    },
+  ];
+
+  const totalEarningMonthly =
+    totalEarnings[0].personal +
+    totalEarnings[0].spread +
+    totalEarnings[0].generationOverride;
+
+  const totalEarningAnually = totalEarningMonthly * 12;
 
   return (
     <Wrapper
@@ -327,11 +361,11 @@ const CommissionSimulation: React.FC = () => {
               <div className="total-block-result">
                 <div className="result-title">
                   <h2>MONTHLY</h2>
-                  <p>$0</p>
+                  <p>${totalEarningMonthly}</p>
                 </div>
                 <div className="result-title">
                   <h2>ANNUALY</h2>
-                  <p>$0</p>
+                  <p>${totalEarningAnually}</p>
                 </div>
               </div>
             </div>
@@ -543,7 +577,7 @@ const CommissionSimulation: React.FC = () => {
           </div>
         </Grid>
         <Grid item sm={12} md={12} lg={6}>
-          <Graph data={earningsData} />
+          <Graph data={earningsData} badgeData={badgeData} />
         </Grid>
       </Grid>
     </Wrapper>

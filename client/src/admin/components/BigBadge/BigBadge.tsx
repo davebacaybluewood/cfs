@@ -1,12 +1,12 @@
 import React from "react";
 import "./BigBadge.scss";
 
-interface BigBadgeProps {
+export interface BigBadgeProps {
   title: string;
-  color: string;
-  value1: string;
+  color?: string;
+  value1: number;
   label1: string;
-  value2?: string;
+  value2?: number;
   label2?: string;
 }
 const BigBadge: React.FC<BigBadgeProps> = (props) => {
@@ -28,18 +28,16 @@ const BigBadge: React.FC<BigBadgeProps> = (props) => {
           <h3>{props.label1}</h3>
         </div>
         <div className="badle-value">
-          <h4>{props.value1}</h4>
+          <h4>${props.value1}</h4>
         </div>
-        {props.label2 && props.value2 ? (
-          <React.Fragment>
-            <div className="badge-label">
-              <h3>{props.label2}</h3>
-            </div>
-            <div className="badle-value">
-              <h4>{props.value2}</h4>
-            </div>
-          </React.Fragment>
-        ) : null}
+        <React.Fragment>
+          <div className="badge-label">
+            <h3>{props.label2}</h3>
+          </div>
+          <div className="badle-value">
+            <h4>${props.value2}</h4>
+          </div>
+        </React.Fragment>
       </div>
     </div>
   );
