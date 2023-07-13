@@ -444,16 +444,6 @@ const CommissionSimulation: React.FC = () => {
       PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value;
 
     const earningsSetter = () => {
-      console.log(data.personal.position[0].numberValue);
-      console.log(AGENT_ROLES[4].numberValue.toString());
-      if (
-        parseInt(data.personal.position[0].numberValue) >=
-        parseInt(AGENT_ROLES[4].numberValue.toString())
-      ) {
-        setIsPositionValid(true);
-      } else {
-        setIsPositionValid(false);
-      }
       setTotalEarnings((prevState) => {
         const filteredPrevState = prevState.map((data) => {
           return {
@@ -464,6 +454,12 @@ const CommissionSimulation: React.FC = () => {
         });
         return filteredPrevState;
       });
+
+      if (data.personal.position[0].numberValue > AGENT_ROLES[3].numberValue) {
+        setIsPositionValid(true);
+      } else {
+        setIsPositionValid(false);
+      }
     };
 
     if (isSeniorAssociate && spreadNumberOfMembers2 < 3) {
@@ -566,10 +562,8 @@ const CommissionSimulation: React.FC = () => {
       });
       return filteredPrevState;
     });
-    if (
-      parseInt(data.personal.position[0].numberValue) >=
-      parseInt(AGENT_ROLES[4].numberValue.toString())
-    ) {
+
+    if (data.personal.position[0].numberValue > AGENT_ROLES[3].numberValue) {
       setIsPositionValid(true);
     } else {
       setIsPositionValid(false);
