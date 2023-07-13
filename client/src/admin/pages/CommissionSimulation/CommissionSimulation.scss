@@ -1,5 +1,20 @@
 .commision-simulation-container {
   margin-bottom: 8rem;
+
+  .disclaimer {
+    margin-bottom: 1rem;
+    .MuiTypography-root {
+      font-size: 2rem;
+      margin-top: -0.75rem;
+    }
+
+    .MuiPaper-elevation {
+      background-color: rgba(0, 87, 183, 0.2);
+      font-size: 1.7rem;
+      border: 1px solid #0057b7 !important;
+    }
+  }
+
   .total-block {
     background: #0057b7;
     color: #fff;

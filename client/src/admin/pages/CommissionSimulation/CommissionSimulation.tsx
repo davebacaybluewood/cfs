@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import { Grid } from "@mui/material";
+import { Alert, AlertTitle, Grid } from "@mui/material";
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import "./CommissionSimulation.scss";
 import Graph from "./components/Graph";
@@ -630,8 +630,30 @@ const CommissionSimulation: React.FC = () => {
         title="Commission Simulation"
         subtitle="Compute your commission."
       />
+
       <Grid container spacing={2}>
         <Grid item sm={12} md={12} lg={6}>
+          <div className="disclaimer">
+            <Alert severity="info">
+              <AlertTitle
+                style={{
+                  fontWeight: "1000",
+                }}
+              >
+                Disclaimer
+              </AlertTitle>
+              <div
+                className="strong"
+                style={{
+                  marginTop: "-1.3rem",
+                  fontWeight: "400",
+                  fontSize: "1.4rem",
+                }}
+              >
+                Simulation Only. — <strong>Results may vary.</strong>
+              </div>
+            </Alert>
+          </div>
           <div className="admin-calculator">
             <div className="total-block">
               <div className="total-block-heading">
