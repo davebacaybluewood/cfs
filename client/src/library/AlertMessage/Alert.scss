@@ -1,0 +1,26 @@
+.alert-wrapper {
+  font-family: "Montserrat", sans-serif;
+
+  .message {
+    display: flex;
+    align-items: center;
+    color: #df0505;
+    margin: 1.3rem 0;
+
+    h3 {
+      font-weight: 500 !important;
+      font-size: 1.3rem !important;
+    }
+
+    .message-icon {
+      svg {
+        display: flex;
+        align-items: center;
+        color: #df0505;
+        font-size: 1.3rem;
+        margin-right: 1rem;
+        margin-top: 1rem;
+      }
+    }
+  }
+}
