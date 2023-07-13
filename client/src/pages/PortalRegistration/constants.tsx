@@ -56,7 +56,7 @@ export const PROFILE_ROLES = {
     },
     ROLE_SENIOR_EXECUTIVE_MARKETING: {
       value: "ROLE_SENIOR_EXECUTIVE_MARKETING",
-      label: "Senior Executive Marketing",
+      label: "Senior Executive Marketing Director",
     },
     ROLE_EXECUTIVE_VICE_PRESIDENT: {
       value: "ROLE_EXECUTIVE_VICE_PRESIDENT",

@@ -1,16 +1,15 @@
+import { ShowChart } from "@mui/icons-material";
 import { Grid } from "@mui/material";
-import BigBadge from "admin/components/BigBadge/BigBadge";
+import BigBadge, { BigBadgeProps } from "admin/components/BigBadge/BigBadge";
 import React from "react";
 import { Chart } from "react-google-charts";
 
-const Graph: React.FC = () => {
-  const data = [
-    ["Task", "Hours per Day"],
-    ["Personal Earnings", 11],
-    ["Spread Earnings", 2],
-    ["Generation Override", 2],
-  ];
-
+interface GraphProps {
+  data: any;
+  showChart?: boolean;
+  badgeData: BigBadgeProps[];
+}
+const Graph: React.FC<GraphProps> = (props) => {
   const options = {
     legend: { position: "none" },
     chartArea: {
@@ -25,49 +24,38 @@ const Graph: React.FC = () => {
     width: "100%",
     backgroundColor: "transparent",
     is3D: true,
-    colors: ["#45bf94", "#3f7ec0", "#ecc10c"],
+    colors: ["#45bf94", "#EF6262", "#3f7ec0"],
   };
 
   return (
     <React.Fragment>
-      <Chart
-        chartType="PieChart"
-        data={data}
-        options={options as any}
-        width={"100%"}
-        height={"400px"}
-      />
+      {props.showChart ? (
+        <Chart
+          chartType="PieChart"
+          data={props.data}
+          options={options as any}
+          width={"100%"}
+          height={"400px"}
+          style={{
+            marginBottom: "30rem",
+          }}
+        />
+      ) : null}
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={4} lg={4}>
-          <BigBadge
-            color="#45bf94"
-            title="Personal Earnings"
-            label1="MONTHLY"
-            value1={`$100.00`}
-            label2="ANNUALY"
-            value2={`$500.00`}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={4} lg={4}>
-          <BigBadge
-            color="#ecc10c"
-            title="Spread Earnings"
-            label1="MONTHLY"
-            value1={`$100.00`}
-            label2="ANNUALY"
-            value2={`$500.00`}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={4} lg={4}>
-          <BigBadge
-            color="#3f7ec0"
-            title="Generation Override"
-            label1="MONTHLY"
-            value1={`$100.00`}
-            label2="ANNUALY"
-            value2={`$500.00`}
-          />
-        </Grid>
+        {props.badgeData.map((data) => {
+          return (
+            <Grid item xs={12} sm={12} md={4} lg={4}>
+              <BigBadge
+                color={data.color}
+                title={data.title}
+                label1={data.label1}
+                value1={data.value1}
+                label2={data.label2}
+                value2={data.value2}
+              />
+            </Grid>
+          );
+        })}
       </Grid>
     </React.Fragment>
   );
