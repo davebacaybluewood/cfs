@@ -486,8 +486,12 @@ const CommissionSimulation: React.FC = () => {
       earningsSetter();
       return;
     } else if (
-      (isSeniorMarketingDirector && spreadNumberOfMembers4 < 2) ||
-      (isSeniorMarketingDirector && spreadNumberOfMembers3 < 5)
+      (isSeniorMarketingDirector &&
+        spreadNumberOfMembers4 < 2 &&
+        spreadNumberOfMembers3 < 5) ||
+      (isSeniorMarketingDirector &&
+        spreadNumberOfMembers3 < 5 &&
+        spreadNumberOfMembers4 < 2)
     ) {
       setErrorMessage(
         "Minimum requirement for Senior Marketing Director not met : 2 Marketing Director or 5 Senior Associates"
@@ -498,8 +502,12 @@ const CommissionSimulation: React.FC = () => {
 
       return;
     } else if (
-      (isExecutiveMarketingDirector && spreadNumberOfMembers5 < 2) ||
-      (isExecutiveMarketingDirector && spreadNumberOfMembers4 < 3)
+      (isExecutiveMarketingDirector &&
+        spreadNumberOfMembers5 < 2 &&
+        spreadNumberOfMembers4 < 3) ||
+      (isExecutiveMarketingDirector &&
+        spreadNumberOfMembers4 < 3 &&
+        spreadNumberOfMembers5 < 2)
     ) {
       setErrorMessage(
         "Minimum requirement for Executive Marketing Director not met : 2 Senior Marketing Director or 3 Marketing Director"
@@ -510,8 +518,12 @@ const CommissionSimulation: React.FC = () => {
 
       return;
     } else if (
-      (isSeniorExecutiveMarketingDirector && spreadNumberOfMembers6 < 2) ||
-      (isSeniorExecutiveMarketingDirector && spreadNumberOfMembers5 < 4)
+      (isSeniorExecutiveMarketingDirector &&
+        spreadNumberOfMembers6 < 2 &&
+        spreadNumberOfMembers5 < 2) ||
+      (isSeniorExecutiveMarketingDirector &&
+        spreadNumberOfMembers5 < 4 &&
+        spreadNumberOfMembers6 < 2)
     ) {
       setErrorMessage(
         "Minimum requirement for Senior Executive Marketing Director not met : 2 Executive Marketing Director or 4 Senior Marketing Director"
@@ -522,8 +534,12 @@ const CommissionSimulation: React.FC = () => {
 
       return;
     } else if (
-      (isVicePresident && spreadNumberOfMembers7 < 2) ||
-      (isVicePresident && spreadNumberOfMembers5 < 6)
+      (isVicePresident &&
+        spreadNumberOfMembers7 < 2 &&
+        spreadNumberOfMembers5 < 6) ||
+      (isVicePresident &&
+        spreadNumberOfMembers5 < 6 &&
+        spreadNumberOfMembers7 < 2)
     ) {
       setErrorMessage(
         "Minimum requirement for Executive Vice President not met : 2 Senior Executive Marketing Director or 6 Senior Marketing Director"
@@ -577,7 +593,7 @@ const CommissionSimulation: React.FC = () => {
       value2: totalEarnings[0].personal * 12,
     },
     {
-      color: "#ecc10c",
+      color: "#EF6262",
       title: "Spread Earnings",
       label1: "MONTHLY",
       value1: totalEarnings[0].spread,
@@ -898,8 +914,8 @@ const CommissionSimulation: React.FC = () => {
                           })}
                         </Grid>
                       </div>
-                      <pre>{JSON.stringify(values, null, 2)}</pre>
-                      <pre>{JSON.stringify(errors, null, 2)}</pre>
+                      {/* <pre>{JSON.stringify(values, null, 2)}</pre>
+                      <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                       <div className="form-actions">
                         <Button variant="default" onClick={() => resetForm()}>
                           Reset

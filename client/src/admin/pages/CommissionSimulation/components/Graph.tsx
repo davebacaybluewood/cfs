@@ -24,7 +24,7 @@ const Graph: React.FC<GraphProps> = (props) => {
     width: "100%",
     backgroundColor: "transparent",
     is3D: true,
-    colors: ["#45bf94", "#3f7ec0", "#ecc10c"],
+    colors: ["#45bf94", "#EF6262", "#3f7ec0"],
   };
 
   return (
