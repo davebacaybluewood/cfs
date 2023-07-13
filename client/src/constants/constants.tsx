@@ -18,6 +18,8 @@ import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
 import LandingPages from "pages/LandingPages/LandingPages";
 import Agents from "pages/Agents/Agents";
 import { ToastOptions } from "react-toastify";
+import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
+import Calculator from "admin/pages/CommissionSimulation/Calculator";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -211,6 +213,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     path: paths.agent_with_id,
     element: <Agents />,
+  },
+  {
+    element: <Calculator />,
+    path: "/calculator",
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
   },
   {
     element: <InvalidRoute />,
