@@ -1,3 +1,4 @@
+import { ShowChart } from "@mui/icons-material";
 import { Grid } from "@mui/material";
 import BigBadge, { BigBadgeProps } from "admin/components/BigBadge/BigBadge";
 import React from "react";
@@ -5,7 +6,7 @@ import { Chart } from "react-google-charts";
 
 interface GraphProps {
   data: any;
-  isShow?: boolean;
+  showChart?: boolean;
   badgeData: BigBadgeProps[];
 }
 const Graph: React.FC<GraphProps> = (props) => {
@@ -28,13 +29,18 @@ const Graph: React.FC<GraphProps> = (props) => {
 
   return (
     <React.Fragment>
-      <Chart
-        chartType="PieChart"
-        data={props.data}
-        options={options as any}
-        width={"100%"}
-        height={"400px"}
-      />
+      {props.showChart ? (
+        <Chart
+          chartType="PieChart"
+          data={props.data}
+          options={options as any}
+          width={"100%"}
+          height={"400px"}
+          style={{
+            marginBottom: "30rem",
+          }}
+        />
+      ) : null}
       <Grid container spacing={2}>
         {props.badgeData.map((data) => {
           return (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import { Alert, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import "./CommissionSimulation.scss";
 import Graph from "./components/Graph";
@@ -15,9 +15,11 @@ import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import Button from "library/Button/Button";
 import { BigBadgeProps } from "admin/components/BigBadge/BigBadge";
 import formatter from "helpers/currencyFormatter";
-import { FaAmilia } from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
 import { AiOutlineWarning } from "react-icons/ai";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import AlertMessage from "library/AlertMessage/Alert";
+import classNames from "classnames";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -255,6 +257,7 @@ const CommissionSimulation: React.FC = () => {
   ]);
 
   const [members, setMembers] = useState(0);
+  const [showGraph, setShowGraph] = useState(false);
 
   const submitHandler = (data: any) => {
     /** Personal */
@@ -429,6 +432,7 @@ const CommissionSimulation: React.FC = () => {
       });
       return filteredPrevState;
     });
+    setShowGraph(true);
   };
 
   const earningsData = [
@@ -629,7 +633,7 @@ const CommissionSimulation: React.FC = () => {
                                         }
                                       >
                                         <span>
-                                          <AiOutlineWarning />
+                                          <FaExclamationCircle />
                                         </span>
                                       </HtmlTooltip>
                                     ) : null}
@@ -690,8 +694,10 @@ const CommissionSimulation: React.FC = () => {
 
                           {values.personal.position[0].numberValue < 0.81 ? (
                             <div className="alert-message">
-                              Only Senior Marketing Director and above can earn
-                              override.
+                              <AlertMessage
+                                message="Only Senior Marketing Director and above can earn override."
+                                icon={<AiOutlineWarning />}
+                              />
                             </div>
                           ) : null}
                         </div>
@@ -760,7 +766,11 @@ const CommissionSimulation: React.FC = () => {
           </div>
         </Grid>
         <Grid item sm={12} md={12} lg={6}>
-          <Graph data={earningsData} badgeData={badgeData} />
+          <Graph
+            data={earningsData}
+            badgeData={badgeData}
+            showChart={showGraph}
+          />
         </Grid>
       </Grid>
     </Wrapper>
