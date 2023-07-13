@@ -83,6 +83,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-google-recaptcha": "^2.1.5"
+    "@types/react-google-recaptcha": "^2.1.5",
+    "react-google-charts": "^4.0.0"
   }
 }
