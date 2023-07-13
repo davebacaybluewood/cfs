@@ -17,6 +17,7 @@ import Events from "pages/Events/Events";
 import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
 import LandingPages from "pages/LandingPages/LandingPages";
 import Agents from "pages/Agents/Agents";
+import { ToastOptions } from "react-toastify";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -111,6 +112,17 @@ const eventSteps = [
     description: "",
   },
 ];
+
+export const toastConfigs: ToastOptions<{}> | undefined = {
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 
 const filteredAdminRoutes: ReactRoutesType[] = adminRoutes.map((data) => {
   return {

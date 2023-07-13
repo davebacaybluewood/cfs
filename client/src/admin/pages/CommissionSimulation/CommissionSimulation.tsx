@@ -19,7 +19,6 @@ import { FaExclamationCircle } from "react-icons/fa";
 import { AiOutlineWarning } from "react-icons/ai";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import AlertMessage from "library/AlertMessage/Alert";
-import classNames from "classnames";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -81,10 +80,10 @@ const standardInputStyles = {
 };
 const CommissionSimulation: React.FC = () => {
   const onChangePositionHandler = (value: any, setFieldValue: any) => {
-    console.log(value);
-
     setFieldValue("personal.position", [value]);
   };
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const initialValues = {
     personal: {
@@ -247,14 +246,14 @@ const CommissionSimulation: React.FC = () => {
   });
 
   const genNum = ["1st", "2nd", "3rd", "4th"];
-
-  const [totalEarnings, setTotalEarnings] = useState([
+  const earningsInitialValue = [
     {
       personal: 0,
       spread: 0,
       generationOverride: 0,
     },
-  ]);
+  ];
+  const [totalEarnings, setTotalEarnings] = useState(earningsInitialValue);
 
   const [members, setMembers] = useState(0);
   const [showGraph, setShowGraph] = useState(false);
@@ -418,10 +417,129 @@ const CommissionSimulation: React.FC = () => {
     const overrideMembersTotal =
       numberOfMembers4 + numberOfMembers3 + numberOfMembers2 + numberOfMembers1;
 
+    /** Validation */
+
+    const isSeniorAssociate =
+      data.personal.position[0].value ===
+      PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value;
+
+    const isMarketingDirector =
+      data.personal.position[0].value ===
+      PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value;
+
+    const isSeniorMarketingDirector =
+      data.personal.position[0].value ===
+      PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value;
+
+    const isExecutiveMarketingDirector =
+      data.personal.position[0].value ===
+      PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value;
+
+    const isSeniorExecutiveMarketingDirector =
+      data.personal.position[0].value ===
+      PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value;
+
+    const isVicePresident =
+      data.personal.position[0].value ===
+      PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value;
+
+    const earningsSetter = () => {
+      console.log(data.personal.position[0].numberValue);
+      console.log(AGENT_ROLES[4].numberValue.toString());
+      if (
+        parseInt(data.personal.position[0].numberValue) >=
+        parseInt(AGENT_ROLES[4].numberValue.toString())
+      ) {
+        setIsPositionValid(true);
+      } else {
+        setIsPositionValid(false);
+      }
+      setTotalEarnings((prevState) => {
+        const filteredPrevState = prevState.map((data) => {
+          return {
+            personal: personalTotal,
+            spread: 0,
+            generationOverride: formattedGenerationTotal,
+          };
+        });
+        return filteredPrevState;
+      });
+    };
+
+    if (isSeniorAssociate && spreadNumberOfMembers2 < 3) {
+      setErrorMessage(
+        "Minimum requirement for Senior Associate not met : 3 Associates."
+      );
+      setTotalEarnings(earningsInitialValue);
+      setShowGraph(false);
+      earningsSetter();
+      return;
+    } else if (
+      isMarketingDirector &&
+      (spreadNumberOfMembers3 < 2 || spreadNumberOfMembers2 < 5)
+    ) {
+      setErrorMessage(
+        "Minimum requirement for Marketing Director not met : 2 Senior Associates and 5 Associates."
+      );
+      setTotalEarnings(earningsInitialValue);
+      setShowGraph(false);
+      earningsSetter();
+      return;
+    } else if (
+      (isSeniorMarketingDirector && spreadNumberOfMembers4 < 2) ||
+      (isSeniorMarketingDirector && spreadNumberOfMembers3 < 5)
+    ) {
+      setErrorMessage(
+        "Minimum requirement for Senior Marketing Director not met : 2 Marketing Director or 5 Senior Associates"
+      );
+      setTotalEarnings(earningsInitialValue);
+      setShowGraph(false);
+      earningsSetter();
+
+      return;
+    } else if (
+      (isExecutiveMarketingDirector && spreadNumberOfMembers5 < 2) ||
+      (isExecutiveMarketingDirector && spreadNumberOfMembers4 < 3)
+    ) {
+      setErrorMessage(
+        "Minimum requirement for Executive Marketing Director not met : 2 Senior Marketing Director or 3 Marketing Director"
+      );
+      setTotalEarnings(earningsInitialValue);
+      setShowGraph(false);
+      earningsSetter();
+
+      return;
+    } else if (
+      (isSeniorExecutiveMarketingDirector && spreadNumberOfMembers6 < 2) ||
+      (isSeniorExecutiveMarketingDirector && spreadNumberOfMembers5 < 4)
+    ) {
+      setErrorMessage(
+        "Minimum requirement for Senior Executive Marketing Director not met : 2 Executive Marketing Director or 4 Senior Marketing Director"
+      );
+      setTotalEarnings(earningsInitialValue);
+      setShowGraph(false);
+      earningsSetter();
+
+      return;
+    } else if (
+      (isVicePresident && spreadNumberOfMembers7 < 2) ||
+      (isVicePresident && spreadNumberOfMembers5 < 6)
+    ) {
+      setErrorMessage(
+        "Minimum requirement for Executive Vice President not met : 2 Senior Executive Marketing Director or 6 Senior Marketing Director"
+      );
+      setTotalEarnings(earningsInitialValue);
+      setShowGraph(false);
+      earningsSetter();
+
+      return;
+    }
+
     /*Total Members  */
     const totalMembersOverall = overrideMembersTotal + spreadMembersTotal;
     setMembers(totalMembersOverall);
-
+    setErrorMessage("");
+    setShowGraph(true);
     setTotalEarnings((prevState) => {
       const filteredPrevState = prevState.map((data) => {
         return {
@@ -432,7 +550,14 @@ const CommissionSimulation: React.FC = () => {
       });
       return filteredPrevState;
     });
-    setShowGraph(true);
+    if (
+      parseInt(data.personal.position[0].numberValue) >=
+      parseInt(AGENT_ROLES[4].numberValue.toString())
+    ) {
+      setIsPositionValid(true);
+    } else {
+      setIsPositionValid(false);
+    }
   };
 
   const earningsData = [
@@ -469,10 +594,11 @@ const CommissionSimulation: React.FC = () => {
     },
   ];
 
+  const [isPositionValid, setIsPositionValid] = useState(false);
   const totalEarningMonthly =
     totalEarnings[0].personal +
     totalEarnings[0].spread +
-    totalEarnings[0].generationOverride;
+    (isPositionValid ? totalEarnings[0].generationOverride : 0);
 
   const totalEarningAnually = totalEarningMonthly * 12;
 
@@ -480,6 +606,8 @@ const CommissionSimulation: React.FC = () => {
     totalEarningAnually: formatter.format(totalEarningAnually || 0),
     totalEarningMonthly: formatter.format(totalEarningMonthly || 0),
   };
+
+  console.log(isPositionValid);
 
   return (
     <Wrapper
@@ -511,7 +639,7 @@ const CommissionSimulation: React.FC = () => {
               </div>
             </div>
             <div className="number-members">
-              <h5>{`${members} members`}</h5>
+              <h5>{`${members.toLocaleString()} members`}</h5>
             </div>
             <div className="form-calculator">
               <Formik
@@ -546,9 +674,16 @@ const CommissionSimulation: React.FC = () => {
                             <label>Position</label>
                             <Select
                               classNamePrefix="select"
-                              onChange={(e) =>
-                                onChangePositionHandler(e, setFieldValue)
-                              }
+                              onChange={(e) => {
+                                if (values.personal.position[0].value) {
+                                  resetForm();
+                                  setIsPositionValid(false);
+                                  setErrorMessage("");
+                                  setShowGraph(false);
+                                  setTotalEarnings(earningsInitialValue);
+                                }
+                                onChangePositionHandler(e, setFieldValue);
+                              }}
                               isSearchable={true}
                               name="position"
                               placeholder="Choose a position"
@@ -607,6 +742,14 @@ const CommissionSimulation: React.FC = () => {
                         <div className="card-captions-top">
                           <h3>Spread</h3>
                           <p>Lorem ipsum dolor sit.</p>
+                          {errorMessage ? (
+                            <div className="alert-message">
+                              <AlertMessage
+                                message={errorMessage}
+                                icon={<AiOutlineWarning />}
+                              />
+                            </div>
+                          ) : null}
                         </div>
                         <Grid container spacing={2} alignItems="center">
                           {AGENT_ROLES.map((data, index) => {
@@ -617,18 +760,24 @@ const CommissionSimulation: React.FC = () => {
                                 <Grid item sm={12} md={9} lg={4}>
                                   <div className="position-label">
                                     <h3>{data.label}</h3>
-                                    {values.personal.position[0]!.numberValue <
-                                    data.numberValue ? (
+                                    {values.personal.position[0]!.numberValue <=
+                                      data.numberValue ||
+                                    !values.personal.position[0].value ? (
                                       <HtmlTooltip
                                         title={
                                           <div
                                             style={{
                                               fontSize: "1.3rem",
                                               color: "#ed3e4b",
+                                              textAlign: "center",
                                             }}
                                           >
-                                            This position can only be lower than
-                                            your own position!
+                                            <span>
+                                              {!values.personal.position[0]
+                                                .value
+                                                ? "You must choose a position"
+                                                : "This position can only be lower than your own position."}
+                                            </span>
                                           </div>
                                         }
                                       >
@@ -654,7 +803,7 @@ const CommissionSimulation: React.FC = () => {
                                       label=""
                                       disabled={
                                         values.personal.position[0]
-                                          .numberValue < data.numberValue ||
+                                          .numberValue <= data.numberValue ||
                                         !values.personal.monthlyTargetPremium
                                       }
                                     />
@@ -675,7 +824,7 @@ const CommissionSimulation: React.FC = () => {
                                       label=""
                                       disabled={
                                         values.personal.position[0]
-                                          .numberValue < data.numberValue ||
+                                          .numberValue <= data.numberValue ||
                                         !values.personal.monthlyTargetPremium
                                       }
                                     />
@@ -749,7 +898,12 @@ const CommissionSimulation: React.FC = () => {
                           })}
                         </Grid>
                       </div>
+                      <pre>{JSON.stringify(values, null, 2)}</pre>
+                      <pre>{JSON.stringify(errors, null, 2)}</pre>
                       <div className="form-actions">
+                        <Button variant="default" onClick={() => resetForm()}>
+                          Reset
+                        </Button>
                         <Button
                           variant="primary"
                           onClick={() => handleSubmit()}
