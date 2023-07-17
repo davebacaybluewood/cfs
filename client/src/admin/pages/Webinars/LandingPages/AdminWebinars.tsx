@@ -89,6 +89,8 @@ const AdminWebinars: React.FC = () => {
       _id: data._id,
       date: data.createdAt,
       name: data.name,
+      firstName: data.firstName,
+      lastName: data.lastName,
       onClick: () => {
         setDialogData({
           webinarGuid: data.webinarGuid,

@@ -78,6 +78,7 @@ const editProfile = expressAsync(async (req, res) => {
       agent.twitter = req.body.twitter ?? "";
       agent.instagram = req.body.instagram ?? "";
       agent.facebook = req.body.facebook ?? "";
+      agent.calendlyLink = req.body.calendlyLink ?? "";
       agent.linkedIn = req.body.linkedIn ?? "";
       agent.discordId = req.body.discordId ?? "";
       agent.weChat = req.body.weChat ?? "";
@@ -253,7 +254,7 @@ const savePreProfile = expressAsync(async (req, res) => {
     /** Upload avatar to cloudinary */
     let profileImgResult;
     try {
-      profileImgResult = await cloudinary.v2.uploader.upload(req.file.path, {
+      profileImgResult = await cloudinary.v2.uploader.upload(req.file?.path, {
         folder: "user-avatars",
         use_filename: true,
       });

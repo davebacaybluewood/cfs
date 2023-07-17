@@ -461,7 +461,9 @@ const getAgentFilteredWebinars = expressAsync(async (req, res) => {
             _id: webinar._id,
             thumbnail: webinar?.thumbnail,
             name: data?.name,
-            createdAt: webinar.createdAt,
+            firstName: data?.firstName,
+            lastName: data?.lastName,
+            createdAt: data?.createdAt,
           };
         });
 
@@ -486,8 +488,10 @@ const getAgentFilteredWebinars = expressAsync(async (req, res) => {
           calendlyLink: webinarData.calendlyLink,
           userGuid: data.userGuid,
           name: data.name,
+          firstName: data.firstName,
+          lastName: data.lastName,
           thumbnail: webinarData.thumbnail,
-          createdAt: webinarData.createdAt,
+          createdAt: data.createdAt,
         };
       });
   });

@@ -198,7 +198,11 @@ const AppointmentInformation: React.FC = () => {
     <Wrapper breadcrumb={crumbs} error={false} loading={false}>
       <Header
         title={appointmentInfo?.name ?? ""}
-        agent={agent?.name}
+        agent={
+          !agent?.firstName
+            ? agent?.name
+            : agent?.firstName + " " + agent?.lastName
+        }
         appointmentId={appointmentInfo?._id}
         createdAt={new Date(appointmentInfo?.createdAt ?? "")}
         typeOfAppointment={{

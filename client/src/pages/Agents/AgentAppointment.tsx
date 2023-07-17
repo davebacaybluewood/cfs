@@ -81,7 +81,6 @@ const AgentAppointment: React.FC<AgentAppointmentProps> = (props) => {
     onEventTypeViewed: () => console.log("onEventTypeViewed"),
     onEventScheduled: (e) => {
       const inviteLink = e.data.payload.invitee.uri;
-      console.log(inviteLink);
       const getActiveWebinars = async () => {
         const req = await fetch(
           ENDPOINTS.APPOINTMENT_AGENT_CALENDLY.replace(
@@ -148,6 +147,9 @@ const AgentAppointment: React.FC<AgentAppointmentProps> = (props) => {
                     width: "100%",
                     boxShadow: "0 4px 6px -1px #eee, 0 2px 4px -1px #eee",
                     borderRadius: "4px",
+                  }}
+                  prefill={{
+                    guests: [agent?.emailAddress],
                   }}
                 />
               </ComponentValidator>

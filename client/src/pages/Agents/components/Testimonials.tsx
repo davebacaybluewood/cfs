@@ -25,6 +25,7 @@ type TestimonialProps = {
         title: string;
         name: string;
         comment: string;
+        isDisplayed: boolean;
       }[]
     | undefined;
   agentId: string;
@@ -60,20 +61,22 @@ const Testimonials: React.FC<TestimonialProps> = (props) => {
 
       <ComponentValidator showNull={props.testimonials?.length === 0}>
         <Grid container spacing={3}>
-          {props.testimonials?.map((t: any, index: number) => (
-            <Grid item md={6} key={index}>
-              <div className="item">
-                {/* <div className="abosolute-icon">
+          {props.testimonials
+            ?.filter((data) => data.isDisplayed)
+            ?.map((t: any, index: number) => (
+              <Grid item md={6} key={index}>
+                <div className="item">
+                  {/* <div className="abosolute-icon">
                 <FaQuoteRight />
               </div> */}
-                <p className="testimonial">{t.comment}</p>
-                <div className="client-from">
-                  <h5>{t.name}</h5>
-                  <p>{t.title}</p>
+                  <p className="testimonial">{t.comment}</p>
+                  <div className="client-from">
+                    <h5>{t.name}</h5>
+                    <p>{t.title}</p>
+                  </div>
                 </div>
-              </div>
-            </Grid>
-          ))}
+              </Grid>
+            ))}
         </Grid>
       </ComponentValidator>
 
@@ -143,8 +146,9 @@ const Testimonials: React.FC<TestimonialProps> = (props) => {
               <DialogContent>
                 <DialogContentText className="dialog-description">
                   To submit a testimonial to this agent, please enter your
-                  details. We will send updates if the testimonial approves.
+                  details.
                 </DialogContentText>
+                {/* We will send updates if the testimonial approves. */}
                 <Grid container spacing={1}>
                   <Grid item xs={12} lg={12}>
                     <FormikTextInput

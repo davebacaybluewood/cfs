@@ -142,6 +142,7 @@ const getSingleAgent = expressAsync(async (req, res) => {
             password: 1,
             languages: 1,
             role: 1,
+            roles: 1,
             status: 1,
             telNumber: 1,
             webinars: 1,

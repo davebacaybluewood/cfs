@@ -8,9 +8,12 @@ export const formatDate = (
     day: "numeric",
   };
 
-  return type === "dashFormat"
-    ? new Date(fullDate).toISOString().slice(0, 10)
-    : new Date(fullDate).toLocaleDateString("en-US", options as any);
+  const finalDate =
+    type === "dashFormat"
+      ? new Date(fullDate).toISOString().slice(0, 10)
+      : new Date(fullDate).toLocaleDateString("en-US", options as any);
+
+  return finalDate === "Invalid Date" ? "" : finalDate;
 };
 
 export function formatAMPM(date: Date) {
@@ -38,11 +41,12 @@ export const formatISODateToDate = (date: string) => {
     month = "0" + month;
   }
 
-  return (
+  const finalDate =
     formatDate(new Date(year + "-" + month + "-" + dt), "fullFormat") +
     " " +
-    formatAMPM(formattedDate)
-  );
+    formatAMPM(formattedDate);
+
+  return finalDate === "Invalid Date" ? "" : finalDate;
 };
 
 //DATE ONLY
@@ -59,5 +63,10 @@ export const formatISODateOnly = (date: string) => {
     month = "0" + month;
   }
 
-  return formatDate(new Date(year + "-" + month + "-" + dt), "fullFormat");
+  const finalDate = formatDate(
+    new Date(year + "-" + month + "-" + dt),
+    "fullFormat"
+  );
+
+  return finalDate === "Invalid Date" ? "" : finalDate;
 };

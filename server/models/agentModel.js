@@ -52,11 +52,9 @@ const agentSchema = mongoose.Schema(
     },
     state: {
       type: String,
-      required: true,
     },
     licenseNumber: {
       type: String,
-      required: true,
     },
     userGuid: {
       type: String,
@@ -76,7 +74,6 @@ const agentSchema = mongoose.Schema(
     },
     phoneNumber: {
       type: String,
-      required: true,
     },
     emailAddress: {
       type: String,

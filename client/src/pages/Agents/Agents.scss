@@ -81,15 +81,13 @@ $grey-800: rgba(0, 0, 0, 0.05);
       margin-top: 3rem;
       button {
         border: none;
-        background: $main-color-gradient;
         cursor: pointer;
         text-transform: uppercase;
-        padding: 2rem 4rem;
         font-size: 2rem;
-        color: #fff;
-        border-radius: 28px;
+        color: #333;
         font-weight: 300;
         transition: all 0.5;
+        border-bottom: 1px dotted #333;
 
         &:hover {
           opacity: 0.8;
@@ -292,5 +290,9 @@ $grey-800: rgba(0, 0, 0, 0.05);
   .MuiInputBase-input,
   .MuiFormLabel-root {
     font-size: 1.3rem;
+  }
+
+  .dialog-description {
+    margin-bottom: 1rem;
   }
 }

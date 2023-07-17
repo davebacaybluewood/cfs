@@ -21,22 +21,34 @@ const AgentAppointments: React.FC = () => {
   const { agentId, typeId } = useParams();
   const { agent } = useFetchAgent(agentId ?? "");
 
+  // console.log(agent?.roles![0]?.label);
+
+  // let role;
+
+  // if (agent?.roles![0].label) {
+  //   role = agent?.roles![0].label;
+  // } else {
+  //   role = "";
+  // }
+
   const headerCols: HeaderLabeledValueProps[] = [
     {
       label: "Agent ID",
       value: agent?.userGuid ?? "",
     },
-    {
-      label: "Title",
-      value: agent?.title ?? "",
-    },
+    // {
+    //   label: "Title",
+    //   value: agent?.roles![0]?.label,
+    // },
     {
       label: "Account Created",
       value: formatISODateOnly(agent?.createdAt ?? "") ?? "",
     },
     {
       label: "Agent Name",
-      value: agent?.name ?? "",
+      value: !agent?.firstName
+        ? agent?.name
+        : agent?.firstName + " " + agent?.lastName,
     },
     {
       label: "Phone Number",
@@ -75,7 +87,14 @@ const AgentAppointments: React.FC = () => {
 
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={false}>
-      <Header title={agent?.name?.toString() ?? ""} cols={headerCols} />
+      <Header
+        title={
+          !agent?.firstName
+            ? agent?.name
+            : agent?.firstName + " " + agent?.lastName
+        }
+        cols={headerCols}
+      />
       <Grid container spacing={2}>
         <Grid item sm={12} md={12} lg={9}>
           {typeId === SCHEDULE_TYPES.WEBINAR.toLowerCase() ? (
