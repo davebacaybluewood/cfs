@@ -1,103 +1,236 @@
-.login-wrapper {
-  background: url("https://res.cloudinary.com/dfm2vczpy/image/upload/v1679350044/other-assets/Gradient_Motivational_Quote_Instagram_Post_mqrsgw.png");
-  height: 100vh;
-  width: 100%;
+.right-col-login {
+  width: 50%;
+  height: 120vh;
+  position: absolute;
+  left: 50%;
   display: flex;
   align-items: center;
-  background-size: cover;
-  overflow: auto;
 
-  .login-container {
-    width: 1020px;
-    background-color: white;
+  .social-grids {
+    label {
+      svg {
+        position: relative;
+        top: 1.2px;
+        margin-right: 0.3rem;
+      }
+    }
+  }
+
+  .form-header {
+    margin-bottom: 2rem;
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .error-alert {
+    margin-top: 1rem;
+    background-color: #d32f2f !important;
+    color: #fff !important;
+
+    .MuiAlert-message {
+      color: #fff !important;
+      font-size: 1.4rem;
+      position: relative;
+      top: 1px;
+    }
+
+    svg {
+      color: #fff;
+      path {
+        color: #fff;
+      }
+    }
+  }
+
+  .form-label {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 2rem;
+  }
+  .default-image {
+    img {
+      width: 300px !important;
+    }
+  }
+
+  .portal-form {
+    width: 50%;
     margin: auto;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    flex-grow: 0;
-    flex-shrink: 0;
+    position: relative;
+  }
+  button {
+    margin-bottom: 1rem;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    font-size: 1.3rem;
+  }
+  button:disabled,
+  button[disabled] {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+  }
+  .primary-cfs-btn {
+    background: #007dfa;
+    color: #fff;
 
-    .MuiPaper-root {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .recaptcha {
+    margin-bottom: 1rem;
+  }
+
+  .secondary-cfs-btn {
+    background: #e0effe;
+    color: #007dfa;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .login-caption {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+
+    span {
+      margin-right: 0.5rem;
+      color: #bebebf;
+      font-weight: 300;
     }
 
-    .img-holder {
-      overflow: hidden;
-      width: 80%;
-      img {
-        width: 100%;
-        margin-bottom: -0.3rem;
+    a {
+      color: #007dfa;
+      font-weight: 400;
+    }
+  }
+  .MuiInputBase-root,
+  .MuiFormLabel-root {
+    font-size: 1.3rem !important;
+  }
+  .input-file-btn {
+    width: 50%;
+  }
+  .profile-pic {
+    h5 {
+      font-weight: 300;
+      font-size: 1.4rem;
+      margin-bottom: -1rem;
+
+      span {
+        position: relative;
+        margin-left: 0.5rem;
+        top: -2px;
       }
     }
+  }
+  img {
+    display: block;
+    width: 200px;
+    margin: auto;
+    margin-bottom: 2rem !important;
+  }
+}
 
-    .form-wrapper {
-      width: 50%;
-      padding: 8rem;
-
-      img {
-        width: 200px;
-        margin: auto;
-        display: block;
-        margin-bottom: 4rem;
+@media screen and (max-width: 1024px) {
+  .left-col {
+    width: 50% !important;
+    .captions {
+      h1 {
+        font-size: 5.7rem !important;
+        margin-bottom: 2rem !important;
       }
 
-      .form-instructions {
-        margin-bottom: 1rem;
-        h2 {
-          font-weight: 300;
-          font-size: 2rem;
-          margin-bottom: 1rem;
-        }
-        p {
-          font-size: 1.3rem;
-        }
+      p {
+        font-size: 2rem !important;
       }
-      .forgot-btn {
-        text-align: right;
-        margin-top: 1rem;
+    }
+  }
+  .right-col-login {
+    width: 50% !important;
+    left: 0 !important;
+    margin: auto !important;
+    position: relative !important;
+    padding-top: 5rem;
+  }
+}
 
-        button {
-          background-color: transparent;
-          border: none;
-          cursor: pointer;
-          border-bottom: 1px dotted #333;
-          font-weight: 300;
-        }
+@media screen and (max-width: 900px) {
+  .right-col-login {
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .left-col {
+    .captions {
+      h1 {
+        font-size: 5rem !important;
+        margin-bottom: 2rem !important;
       }
-      .MuiInputBase-root,
-      .MuiInputLabel-root,
-      .MuiFormControlLabel-root span {
-        font-size: 1.3rem;
+
+      p {
+        font-size: 2rem !important;
       }
-      .login-btn {
-        width: 100%;
-      }
-      .register-btn {
-        width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .right-col-login {
+    width: 100% !important;
+    margin: auto !important;
+    position: relative !important;
+
+    .portal-form {
+      width: 100%;
+    }
+
+    .MuiGrid-root {
+      width: 100% !important;
+      padding: 1rem 2rem;
+      margin-left: 1rem;
+    }
+
+    .form-header {
+      h2 {
         text-align: center;
-        button {
-          background-color: transparent;
-          border: none;
-          margin-top: 1rem;
-          cursor: pointer;
-          border-bottom: 1px dotted #333;
-          text-transform: uppercase;
-        }
-      }
-
-      .reset-form {
-        h2 {
-          font-weight: 300;
-          font-size: 2rem;
-          margin-bottom: 1rem;
-        }
-        p {
-          font-size: 1.3rem;
-          margin-bottom: 2rem;
-        }
       }
     }
+
+    .MuiGrid-item {
+      padding-left: 0 !important;
+    }
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .left-col {
+    .captions {
+      h1 {
+        font-size: 4rem !important;
+      }
+
+      p {
+        font-size: 2rem !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .right-col-login {
+    padding-bottom: 10rem;
   }
 }
