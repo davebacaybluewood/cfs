@@ -57,6 +57,7 @@
     "nodemon": "^2.0.20",
     "npm": "^9.4.0",
     "react-dom-factories": "^1.0.2",
+    "react-google-charts": "^4.0.0",
     "react-select": "^5.7.0",
     "react-time-tracker": "^1.0.0",
     "recharts": "^2.7.2",

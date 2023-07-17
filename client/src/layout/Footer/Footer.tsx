@@ -119,7 +119,7 @@ const Footer: React.FC = () => {
                   <CiLocationOn /> <span>{COMPANY_CONTACT_INFO.STATE_NY}</span>
                 </li>
                 <li>
-                  <a href="/">
+                  <a href="mailto:support@gocfs.pro">
                     <MdEmail />
                     <span>{COMPANY_CONTACT_INFO.EMAIL}</span>
                   </a>
