@@ -20,6 +20,8 @@ import Agents from "pages/Agents/Agents";
 import { ToastOptions } from "react-toastify";
 import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
 import Calculator from "admin/pages/CommissionSimulation/Calculator";
+import AgentWebinar from "pages/Agents/AgentWebinar";
+import AgentAppointment from "pages/Agents/AgentAppointment";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -213,6 +215,14 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     path: paths.agent_with_id,
     element: <Agents />,
+  },
+  {
+    path: paths.webinarAppointment,
+    element: <AgentAppointment showForm={false} />,
+  },
+  {
+    path: paths.webinarForm,
+    element: <AgentWebinar showCalendly={false} />,
   },
   {
     element: <Calculator />,

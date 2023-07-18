@@ -8,6 +8,9 @@ type AppointmentTypes = {
   agentGuid: string;
   avatar: string;
   name: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string;
   emailAddress: string;
   numberOfAppointments: number;
   title: string;

@@ -233,7 +233,7 @@ const MainForm: React.FC<MainFormProps> = (props) => {
             <div className="label-sections">
               <h2>Contact Information</h2>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={4}>
+                <Grid item xs={12} sm={12} md={3}>
                   <FormikTextInput
                     name="phoneNumber"
                     label="Phone Number *"
@@ -241,7 +241,7 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                     variant="filled"
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4}>
+                <Grid item xs={12} sm={12} md={3}>
                   <FormikTextInput
                     name="address"
                     label="Business Address (Optional)"
@@ -249,7 +249,15 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                     variant="filled"
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4}>
+                <Grid item xs={12} sm={12} md={3}>
+                  <FormikTextInput
+                    name="calendlyLink"
+                    label="PAW Calendly Link (Optional)"
+                    value={values.calendlyLink}
+                    variant="filled"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={3}>
                   {/* <FormikTextInput
                     name="state"
                     label="State *"

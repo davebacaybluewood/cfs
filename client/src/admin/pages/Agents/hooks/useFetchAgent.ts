@@ -23,6 +23,7 @@ export type AgentData = {
   password: string;
   languages?: string[];
   role: string;
+  roles: any;
   status: string;
   telNumber: string;
   webinars: string[];
@@ -49,6 +50,8 @@ const useFetchAgent = (userGuid: string) => {
         setLoading(false);
       });
   }, [userGuid]);
+
+  console.log(agent);
 
   return {
     agent: agent,

@@ -488,26 +488,26 @@ const useSidebarLinks = (
       icon: <FaThumbsUp />,
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
     },
-    {
-      linkText: "Resources",
-      isActive: currentPage === adminPathsNew.webinar.split("/")[2],
-      icon: <FaPhotoVideo />,
-      role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
-      isSubMenu: true,
-      subLinks: [
-        {
-          linkText: "Webinars",
-          link: paths.webinar,
-          isActive: currentPage === adminPathsNew.webinar.split("/")[2],
-        },
-        {
-          linkText: "Commission Simulation",
-          link: paths.commissionSimulation,
-          isActive:
-            currentPage === adminPathsNew.commissionSimulation.split("/")[2],
-        },
-      ],
-    },
+    // {
+    //   linkText: "Resources",
+    //   isActive: currentPage === adminPathsNew.webinar.split("/")[2],
+    //   icon: <FaPhotoVideo />,
+    //   role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
+    //   isSubMenu: true,
+    //   subLinks: [
+    //     {
+    //       linkText: "Webinars",
+    //       link: paths.webinar,
+    //       isActive: currentPage === adminPathsNew.webinar.split("/")[2],
+    //     },
+    //     {
+    //       linkText: "Commission Simulation",
+    //       link: paths.commissionSimulation,
+    //       isActive:
+    //         currentPage === adminPathsNew.commissionSimulation.split("/")[2],
+    //     },
+    //   ],
+    // },
     {
       linkText: "My Webinars",
       isActive: currentPage === adminPathsNew.cfsWebinars.split("/")[2],
@@ -556,6 +556,38 @@ const useSidebarLinks = (
         {
           linkText: "Blogs",
           link: paths.adminBlogs,
+        },
+      ],
+    },
+    {
+      linkText: "Webinar Resources",
+      isActive: currentPage === adminPathsNew.webinar.split("/")[2],
+      icon: <FaPhotoVideo />,
+      role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "Webinars",
+          link: paths.webinar,
+          isActive: currentPage === adminPathsNew.webinar.split("/")[2],
+        },
+        {
+          linkText: "Agent Webinars",
+          link: paths.allAgentWebinars.replace(
+            ":status",
+            NOTIFICATION_ENUMS.WEBINARS.WEBINAR_APPROVED.toLowerCase()
+          ),
+          isActive:
+            currentPage === adminPathsNew.allAgentWebinars.split("/")[2],
+        },
+        {
+          linkText: "Webinar Requests",
+          link: paths.allAgentWebinars.replace(
+            ":status",
+            NOTIFICATION_ENUMS.WEBINARS.WEBINAR_REQUEST.toLowerCase()
+          ),
+          isActive:
+            currentPage === adminPathsNew.requestedWebinars.split("/")[2],
         },
       ],
     },

@@ -108,25 +108,25 @@ const DynamicWebinarInformation: React.FC = (props) => {
   const statistics = [
     {
       countText: "Short Video View",
-      count: 2,
+      count: 0,
       url: paths.login,
       icon: <FaPhotoVideo />,
     },
     {
       countText: "Long Video View",
-      count: 2,
+      count: 0,
       url: paths.login,
       icon: <FaPhotoVideo />,
     },
     {
       countText: "Webinar Visits",
-      count: 2,
+      count: 0,
       url: paths.login,
       icon: <FaUsers />,
     },
     {
       countText: "Scheduled Appointment",
-      count: 2,
+      count: 0,
       url: paths.login,
       icon: <FaRegCalendarCheck />,
     },

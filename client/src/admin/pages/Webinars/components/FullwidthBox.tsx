@@ -11,6 +11,8 @@ export type FullwidthBoxData = {
   name: string;
   date: string;
   status: string;
+  firstName?: string;
+  lastName?: string;
 };
 
 type FullwidthBoxProps = {
@@ -27,7 +29,10 @@ const FullwidthBox: React.FC<FullwidthBoxProps> = (props) => {
             <div className="captions">
               <h2>{data.title}</h2>
               <p>
-                <FaUserAlt /> {data.name}
+                <FaUserAlt />{" "}
+                {data.firstName && data.lastName
+                  ? data.firstName + " " + data.lastName
+                  : data.name}
               </p>
               <p>
                 <FaRegCalendarAlt /> {formatISODateOnly(data.date)}

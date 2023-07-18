@@ -53,6 +53,7 @@ export type ProfileData = {
         title: string;
         name: string;
         comment: string;
+        isDisplayed: boolean;
       }[]
     | undefined;
   calendlyLink: string;

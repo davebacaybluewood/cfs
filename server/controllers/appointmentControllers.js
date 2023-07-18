@@ -55,11 +55,14 @@ const getAgentAppointments = expressAsync(async (req, res) => {
       return {
         _id: agent._id,
         agentGuid: agent.userGuid,
-        avatar: agent.avatar,
-        name: agent.name,
+        avatar: agent.avatar ? agent.avatar : "/assets/others/no-image.png",
+        name:
+          !agent.firstName && !agent.lastName
+            ? agent?.name
+            : agent?.firstName + " " + agent?.lastName,
         emailAddress: agent.emailAddress,
         numberOfAppointments: noOfAppointments(),
-        title: agent.title,
+        title: agent.roles[0],
       };
     })
     .filter((data) => data.numberOfAppointments !== 0);

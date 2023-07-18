@@ -10,9 +10,9 @@ import { useParams } from "react-router-dom";
 import Spinner from "admin/components/Spinner/Spinner";
 import useGetScheduleAppointment from "../../hooks/useGetScheduleAppointment";
 import useFetchWebinars from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchWebinars";
-import useFetchAgent from "admin/pages/Agents/hooks/useFetchAgent";
 import { formatISODateOnly } from "helpers/dateFormatter";
 import DashboardCard from "admin/pages/Dashboard/components/DashboardCard/DashboardCard";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
 
 const ScheduleAppointment: React.FC = () => {
   const { agentGuid, webinarGuid } = useParams();
@@ -21,7 +21,7 @@ const ScheduleAppointment: React.FC = () => {
     agentGuid ?? "",
     webinarGuid ?? ""
   );
-  const { agent } = useFetchAgent(agentGuid ?? "");
+  const { profile: agent } = useFetchUserProfile(agentGuid ?? "");
 
   const filteredAppointmentList = appointmentList?.map((appointment) => {
     return {
@@ -71,7 +71,9 @@ const ScheduleAppointment: React.FC = () => {
     },
     {
       label: "Agent",
-      value: agent?.name,
+      value: !agent?.firstName
+        ? agent?.name
+        : agent?.firstName + " " + agent?.lastName,
     },
     {
       label: "Agent ID",
@@ -106,7 +108,7 @@ const ScheduleAppointment: React.FC = () => {
           <Grid spacing={2} container>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <DashboardCard
-                count={2}
+                count={0}
                 countText="Schedule Appointments"
                 url={paths.adminEventInvites}
                 icon={<FaEnvelopeOpenText />}
@@ -114,7 +116,7 @@ const ScheduleAppointment: React.FC = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <DashboardCard
-                count={2}
+                count={0}
                 countText="Today Appointments"
                 url={paths.adminEventInvites}
                 icon={<FaEnvelopeOpenText />}
@@ -122,7 +124,7 @@ const ScheduleAppointment: React.FC = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <DashboardCard
-                count={2}
+                count={0}
                 countText="Ongoing Appointments"
                 url={paths.adminEventInvites}
                 icon={<FaEnvelopeOpenText />}
@@ -130,7 +132,7 @@ const ScheduleAppointment: React.FC = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <DashboardCard
-                count={2}
+                count={0}
                 countText="Active Appointments"
                 url={paths.adminEventInvites}
                 icon={<FaEnvelopeOpenText />}
@@ -138,7 +140,7 @@ const ScheduleAppointment: React.FC = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <DashboardCard
-                count={2}
+                count={0}
                 countText="Pending Appointments"
                 url={paths.adminEventInvites}
                 icon={<FaEnvelopeOpenText />}

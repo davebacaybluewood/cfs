@@ -173,6 +173,9 @@ const Agents: React.FC<AgentsProps> = (props) => {
                           marginBottom: "-6rem",
                           marginTop: "-6rem",
                         }}
+                        prefill={{
+                          guests: [agent?.emailAddress],
+                        }}
                       />
                     </Grid>
                   </Grid>
