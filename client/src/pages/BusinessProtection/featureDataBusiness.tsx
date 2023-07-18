@@ -26,7 +26,7 @@ const fetureDataBusiness = [
   {
     title: "Flexible Premiums and Benefits",
     description:
-      "We offer flexible premium options that fit within your budget while providing the desired level of coverage. Additionally, our policies come with a range of benefits such as cash value accumulation, the ability to access funds when needed, and the option to customize beneficiaries. We prioritize your financial well-being and provide flexibility to adapt to your changing needs.",
+      "We offer flexible premium options that fit within your budget while providing the desired level of coverage. Additionally, our policies come with a range of benefits such as cash value accumulation, the ability to access funds when needed, and the option to customize beneficiaries. ",
     button: {
       text: "3 categories",
       onClick: () => console.log("triggered"),
