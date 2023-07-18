@@ -54,8 +54,7 @@ export const ROLES = {
 
 export const OUTSOURCE_LINKS = {
   AGENCY_ROCKET: "https://agencyrocket.com/",
-  BACK_OFFICE:
-    "https://agent.comfortfinancialsolutions.com/Users/Account/AccessDenied?ReturnUrl=%2f",
+  BACK_OFFICE: "https://agent.comfortfinancialsolutions.com",
 };
 
 export const MAIN_WEBSITE_LINK = [
