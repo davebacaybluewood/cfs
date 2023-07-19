@@ -40,7 +40,7 @@ const AboutUs = () => {
           />
         </ReactHelmet>
         <Banner
-          bigTitle="Solutions"
+          bigTitle="About Us"
           title="Learn more about Comfort Financial"
           hasBorder={true}
         />
