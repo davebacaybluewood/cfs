@@ -29,6 +29,7 @@ type TestimonialProps = {
         isDisplayed: boolean;
       }[]
     | undefined;
+  userGuid: string;
   agentId: string;
 };
 
@@ -53,7 +54,10 @@ const Testimonials: React.FC<TestimonialProps> = (props) => {
   });
 
   const copyToClip = async () => {
-    await navigator.clipboard.writeText(window.location.href);
+    const origin = window.location.origin;
+    await navigator.clipboard.writeText(
+      `${origin}/testimonial-form/${props.userGuid}`
+    );
     toast.info(`URL Copied`, {
       position: "top-right",
       autoClose: 5000,

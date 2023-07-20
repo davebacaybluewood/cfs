@@ -54,6 +54,8 @@ const editProfile = expressAsync(async (req, res) => {
     }
 
     const agentModel = await Agents.find({ userGuid });
+    const userModel = await User.find({ userGuid });
+    const user = await userModel[0];
     const agent = agentModel[0];
 
     if (agent) {
@@ -61,6 +63,10 @@ const editProfile = expressAsync(async (req, res) => {
       agent.lastName = undefinedValidator(agent.lastName, req.body.lastName);
       agent.bio = undefinedValidator(agent.bio, req.body.bio);
       agent.emailAddress = undefinedValidator(
+        agent.emailAddress,
+        req.body.emailAddress
+      );
+      user.email = undefinedValidator(
         agent.emailAddress,
         req.body.emailAddress
       );
@@ -97,6 +103,7 @@ const editProfile = expressAsync(async (req, res) => {
         : agent.avatar_cloudinary_id;
 
       const updatedAgent = await agent.save();
+      const updatedUser = await user.save();
       res.json(updatedAgent);
     } else {
       res.status(404);

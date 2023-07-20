@@ -122,6 +122,7 @@ const Agents: React.FC<AgentsProps> = (props) => {
             <Testimonials
               testimonials={agent?.testimonials}
               agentId={agent._id ?? ""}
+              userGuid={agent.userGuid ?? ""}
             />
             <ComponentValidator
               showNull={
