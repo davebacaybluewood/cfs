@@ -6,18 +6,18 @@ import { Alert, AlertTitle, Grid, Container } from "@mui/material";
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import Graph from "./components/Graph";
 import FormikTextInput from "library/Formik/FormikInput";
-import { Formik } from "formik";
+import { Formik, validateYupSchema } from "formik";
 import * as Yup from "yup";
 import Select from "react-select";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
-import Button from "library/Button/Button";
 import { BigBadgeProps } from "admin/components/BigBadge/BigBadge";
 import formatter from "helpers/currencyFormatter";
 import { FaExclamationCircle } from "react-icons/fa";
 import { AiOutlineWarning } from "react-icons/ai";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import AlertMessage from "library/AlertMessage/Alert";
+import Button from "library/Button/Button";
 import "./CommissionSimulation.scss";
 
 const AGENT_ROLES = [
@@ -81,18 +81,22 @@ const initialValues = {
     gen1: "",
     monthlyTargetPremium1: 0,
     numberOfMembers1: 0,
+    numberOfPremMembers1: 0,
     gen1NumberValue: 0.1,
     gen2: "",
     monthlyTargetPremium2: 0,
     numberOfMembers2: 0,
+    numberOfPremMembers2: 0,
     gen2NumberValue: 0.05,
     gen3: "",
     monthlyTargetPremium3: 0,
     numberOfMembers3: 0,
+    numberOfPremMembers3: 0,
     gen3NumberValue: 0.04,
     gen4: "",
     monthlyTargetPremium4: 0,
     numberOfMembers4: 0,
+    numberOfPremMembers4: 0,
     gen4NumberValue: 0.03,
   },
   spread: {
@@ -102,6 +106,7 @@ const initialValues = {
       numberValue: AGENT_ROLES[0].numberValue,
     },
     monthlyTargetPremium1: 0,
+    numberOfPremiumMembers1: 0,
     numberOfMembers1: 0,
     position2: {
       label: AGENT_ROLES[1].label,
@@ -109,6 +114,7 @@ const initialValues = {
       numberValue: AGENT_ROLES[1].numberValue,
     },
     monthlyTargetPremium2: 0,
+    numberOfPremiumMembers2: 0,
     numberOfMembers2: 0,
     position3: {
       label: AGENT_ROLES[2].label,
@@ -116,6 +122,7 @@ const initialValues = {
       numberValue: AGENT_ROLES[2].numberValue,
     },
     monthlyTargetPremium3: 0,
+    numberOfPremiumMembers3: 0,
     numberOfMembers3: 0,
     position4: {
       label: AGENT_ROLES[3].label,
@@ -123,6 +130,7 @@ const initialValues = {
       numberValue: AGENT_ROLES[3].numberValue,
     },
     monthlyTargetPremium4: 0,
+    numberOfPremiumMembers4: 0,
     numberOfMembers4: 0,
     position5: {
       label: AGENT_ROLES[4].label,
@@ -130,6 +138,7 @@ const initialValues = {
       numberValue: AGENT_ROLES[4].numberValue,
     },
     monthlyTargetPremium5: 0,
+    numberOfPremiumMembers5: 0,
     numberOfMembers5: 0,
     position6: {
       label: AGENT_ROLES[5].label,
@@ -137,6 +146,7 @@ const initialValues = {
       numberValue: AGENT_ROLES[5].numberValue,
     },
     monthlyTargetPremium6: 0,
+    numberOfPremiumMembers6: 0,
     numberOfMembers6: 0,
     position7: {
       label: AGENT_ROLES[6].label,
@@ -144,6 +154,7 @@ const initialValues = {
       numberValue: AGENT_ROLES[6].numberValue,
     },
     monthlyTargetPremium7: 0,
+    numberOfPremiumMembers7: 0,
     numberOfMembers7: 0,
     position8: {
       label: AGENT_ROLES[7].label,
@@ -151,85 +162,24 @@ const initialValues = {
       numberValue: AGENT_ROLES[7].numberValue,
     },
     monthlyTargetPremium8: 0,
+    numberOfPremiumMembers8: 0,
     numberOfMembers8: 0,
   },
 };
-const Calculator = () => {
+
+const Calculator: React.FC = () => {
+  // Mock Date
+  const current = new Date();
+  const date = `${
+    current.getMonth() + 1
+  }/${current.getDate()}/${current.getFullYear()}`;
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const onChangePositionHandler = (value: any, setFieldValue: any) => {
     setFieldValue("personal.position", [value]);
   };
-  const validationSchema = Yup.object({
-    // personal: Yup.object().shape({
-    //   position: Yup.object().shape({
-    //     value: Yup.string().required("Position field is required."),
-    //   }),
-    //   monthlyTargetPremium: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    // }),
-    // spread: Yup.object().shape({
-    //   position1: Yup.string().required("Position field is required."),
-    //   monthlyTargetPremium1: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   position2: Yup.string().required("Position field is required."),
-    //   monthlyTargetPremium2: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   position3: Yup.string().required("Position field is required."),
-    //   monthlyTargetPremium3: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   position4: Yup.string().required("Position field is required."),
-    //   monthlyTargetPremium4: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   position5: Yup.string().required("Position field is required."),
-    //   monthlyTargetPremium5: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   position6: Yup.string().required("Position field is required."),
-    //   monthlyTargetPremium6: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   position7: Yup.string().required("Position field is required."),
-    //   monthlyTargetPremium7: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   position8: Yup.string().required("Position field is required."),
-    //   monthlyTargetPremium8: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    // }),
-    // generation: Yup.object().shape({
-    //   monthlyTargetPremium1: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   numberOfMembers1: Yup.number()
-    //     .required("Number of members field is required.")
-    //     .typeError("A number is required."),
-    //   monthlyTargetPremium2: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   numberOfMembers2: Yup.number()
-    //     .required("Number of members field is required.")
-    //     .typeError("A number is required."),
-    //   monthlyTargetPremium3: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   numberOfMembers3: Yup.number()
-    //     .required("Number of members field is required.")
-    //     .typeError("A number is required."),
-    //   monthlyTargetPremium4: Yup.number()
-    //     .required("Monthly Target field is required.")
-    //     .typeError("A number is required."),
-    //   numberOfMembers4: Yup.number()
-    //     .required("Number of members field is required.")
-    //     .typeError("A number is required."),
-    // }),
-  });
+  const [isPositionValid, setIsPositionValid] = useState(false);
 
   const genNum = ["1st", "2nd", "3rd", "4th"];
   const earningsInitialValue = [
@@ -243,7 +193,6 @@ const Calculator = () => {
 
   const [members, setMembers] = useState(0);
   const [showGraph, setShowGraph] = useState(false);
-
   const submitHandler = (data: any) => {
     /** Personal */
     const personalNumberValue = data.personal.position[0]?.numberValue;
@@ -256,18 +205,22 @@ const Calculator = () => {
     const spreadMonthlyTargetPremium1 = parseInt(
       data.spread.monthlyTargetPremium1
     );
+    const spreadPremiumMember1 = data.spread.numberOfPremiumMembers1;
     const spreadNumberOfMembers1 = parseInt(data.spread.numberOfMembers1);
+
     const spread1Total =
       (personalNumberValue - spreadNumberValue1) *
       spreadMonthlyTargetPremium1 *
       spreadNumberOfMembers1;
 
     /* Position 2 */
+    const spreadPremiumMember2 = data.spread.numberOfPremiumMembers2;
     const spreadNumberValue2 = data.spread.position2.numberValue;
     const spreadMonthlyTargetPremium2 = parseInt(
       data.spread.monthlyTargetPremium2
     );
     const spreadNumberOfMembers2 = parseInt(data.spread.numberOfMembers2);
+
     const spread2Total =
       (personalNumberValue - spreadNumberValue2) *
       spreadMonthlyTargetPremium2 *
@@ -275,10 +228,12 @@ const Calculator = () => {
 
     /* Position 3 */
     const spreadNumberValue3 = data.spread.position3.numberValue;
+    const spreadPremiumMember3 = data.spread.numberOfPremiumMembers3;
     const spreadMonthlyTargetPremium3 = parseInt(
       data.spread.monthlyTargetPremium3
     );
     const spreadNumberOfMembers3 = parseInt(data.spread.numberOfMembers3);
+
     const spread3Total =
       (personalNumberValue - spreadNumberValue3) *
       spreadMonthlyTargetPremium3 *
@@ -290,6 +245,8 @@ const Calculator = () => {
       data.spread.monthlyTargetPremium4
     );
     const spreadNumberOfMembers4 = parseInt(data.spread.numberOfMembers4);
+    const spreadPremiumMember4 = data.spread.numberOfPremiumMembers4;
+
     const spread4Total =
       (personalNumberValue - spreadNumberValue4) *
       spreadMonthlyTargetPremium4 *
@@ -301,6 +258,8 @@ const Calculator = () => {
       data.spread.monthlyTargetPremium5
     );
     const spreadNumberOfMembers5 = parseInt(data.spread.numberOfMembers5);
+    const spreadPremiumMember5 = data.spread.numberOfPremiumMembers5;
+
     const spread5Total =
       (personalNumberValue - spreadNumberValue5) *
       spreadMonthlyTargetPremium5 *
@@ -312,6 +271,8 @@ const Calculator = () => {
       data.spread.monthlyTargetPremium6
     );
     const spreadNumberOfMembers6 = parseInt(data.spread.numberOfMembers6);
+    const spreadPremiumMember6 = data.spread.numberOfPremiumMembers6;
+
     const spread6Total =
       (personalNumberValue - spreadNumberValue6) *
       spreadMonthlyTargetPremium6 *
@@ -323,6 +284,8 @@ const Calculator = () => {
       data.spread.monthlyTargetPremium7
     );
     const spreadNumberOfMembers7 = parseInt(data.spread.numberOfMembers7);
+    const spreadPremiumMember7 = data.spread.numberOfPremiumMembers7;
+
     const spread7Total =
       (personalNumberValue - spreadNumberValue7) *
       spreadMonthlyTargetPremium7 *
@@ -334,10 +297,24 @@ const Calculator = () => {
       data.spread.monthlyTargetPremium8
     );
     const spreadNumberOfMembers8 = parseInt(data.spread.numberOfMembers8);
+    const spreadPremiumMember8 = data.spread.numberOfPremiumMembers8;
+
     const spread8Total =
       (personalNumberValue - spreadNumberValue8) *
       spreadMonthlyTargetPremium8 *
       spreadNumberOfMembers8;
+
+    // /* Spread  Total Members*/
+    // const spreadMembersTotal =
+    //   spreadNumberOfMembers8 +
+    //   spreadNumberOfMembers7 +
+    //   spreadNumberOfMembers6 +
+    //   spreadNumberOfMembers5 +
+    //   spreadNumberOfMembers4 +
+    //   spreadNumberOfMembers3 +
+    //   spreadNumberOfMembers2 +
+    //   spreadNumberOfMembers1;
+    /* Hidden for future use */
 
     /* Spread Total Earnings */
     const spreadTotal =
@@ -387,17 +364,6 @@ const Calculator = () => {
     /* Override Total */
     const generationTotal = gen1Total + gen2Total + gen3Total + gen4Total;
     const formattedGenerationTotal = parseInt(generationTotal.toFixed(2));
-
-    /* Spread  Total Members*/
-    const spreadMembersTotal =
-      spreadNumberOfMembers8 +
-      spreadNumberOfMembers7 +
-      spreadNumberOfMembers6 +
-      spreadNumberOfMembers5 +
-      spreadNumberOfMembers4 +
-      spreadNumberOfMembers3 +
-      spreadNumberOfMembers2 +
-      spreadNumberOfMembers1;
 
     /* Override Total Members */
     const overrideMembersTotal =
@@ -533,11 +499,10 @@ const Calculator = () => {
       return;
     }
 
-    /*Total Members  */
-    const totalMembersOverall = overrideMembersTotal + spreadMembersTotal;
-    setMembers(totalMembersOverall);
+    // /*Total Members  */
+    // const totalMembersOverall = overrideMembersTotal + spreadMembersTotal;
+    // setMembers(totalMembersOverall); /* Hidden for future use */
     setErrorMessage("");
-    setShowGraph(true);
     setTotalEarnings((prevState) => {
       const filteredPrevState = prevState.map((data) => {
         return {
@@ -556,41 +521,6 @@ const Calculator = () => {
     }
   };
 
-  const earningsData = [
-    ["Task", "Hours per Day"],
-    ["Personal Earnings", totalEarnings[0].personal],
-    ["Spread Earnings", totalEarnings[0].spread],
-    ["Generation Override", totalEarnings[0].generationOverride],
-  ];
-
-  const badgeData: BigBadgeProps[] = [
-    {
-      color: "#45bf94",
-      title: "Personal Earnings",
-      label1: "MONTHLY",
-      value1: totalEarnings[0].personal,
-      label2: "ANNUALY",
-      value2: totalEarnings[0].personal * 12,
-    },
-    {
-      color: "#EF6262",
-      title: "Spread Earnings",
-      label1: "MONTHLY",
-      value1: totalEarnings[0].spread,
-      label2: "ANNUALY",
-      value2: totalEarnings[0].spread * 12,
-    },
-    {
-      color: "#3f7ec0",
-      title: "Override Earnings",
-      label1: "MONTHLY",
-      value1: totalEarnings[0].generationOverride,
-      label2: "ANNUALY",
-      value2: totalEarnings[0].generationOverride * 12,
-    },
-  ];
-
-  const [isPositionValid, setIsPositionValid] = useState(false);
   const totalEarningMonthly =
     totalEarnings[0].personal +
     totalEarnings[0].spread +
@@ -604,149 +534,126 @@ const Calculator = () => {
   };
 
   return (
-    <Grid container spacing={2} className="commision-simulation-container">
-      <Grid item sm={12} md={12} lg={6}>
-        <div className="disclaimer">
-          <Alert severity="info">
-            <AlertTitle
-              style={{
-                fontWeight: "1000",
-              }}
-            >
-              Disclaimer
-            </AlertTitle>
-            <div
-              className="strong"
-              style={{
-                marginTop: "-1.3rem",
-                fontWeight: "400",
-                fontSize: "1.4rem",
-              }}
-            >
-              Simulation Only. — <strong>Results may vary.</strong>
-            </div>
-          </Alert>
-        </div>
-        <div className="admin-calculator">
-          <div className="total-block">
-            <div className="total-block-heading">
-              <h3>Total Earnings</h3>
-            </div>
-            <div className="total-block-result">
-              <div className="result-title">
-                <h2>MONTHLY</h2>
-                <p>{formattedearnings.totalEarningMonthly}</p>
-              </div>
-              <div className="result-title">
-                <h2>ANNUALY</h2>
-                <p>{formattedearnings.totalEarningAnually}</p>
-              </div>
-            </div>
-          </div>
-          <div className="number-members">
-            <h5>{`${members.toLocaleString()} members`}</h5>
-          </div>
-          <div className="form-calculator">
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              enableReinitialize={true}
-              onSubmit={(data) => {
-                submitHandler(data);
-              }}
-            >
-              {({
-                values,
-                errors,
-                setTouched,
-                touched,
-                setFieldValue,
-                resetForm,
-                handleSubmit,
-              }) => {
-                const inputValidity =
-                  !values.personal.position.length ||
-                  !values.personal.monthlyTargetPremium;
-                return (
-                  <React.Fragment>
-                    <div className="form-card">
-                      <div className="card-captions-top">
-                        <h3>Personal</h3>
-                        <p>Lorem ipsum dolor sit.</p>
-                      </div>
-                      <Grid container spacing={2}>
-                        <Grid item sm={12} md={9} lg={8}>
-                          <label>Position</label>
-                          <Select
-                            classNamePrefix="select"
-                            onChange={(e) => {
-                              if (values.personal.position[0].value) {
-                                resetForm();
-                                setIsPositionValid(false);
-                                setErrorMessage("");
-                                setShowGraph(false);
-                                setTotalEarnings(earningsInitialValue);
-                              }
-                              onChangePositionHandler(e, setFieldValue);
-                            }}
-                            isSearchable={true}
-                            name="position"
-                            placeholder="Choose a position"
-                            options={
-                              AGENT_ROLES.map((st) => {
-                                return {
-                                  label: st.label,
-                                  value: st.value,
-                                  numberValue: st.numberValue,
-                                };
-                              }) as any
-                            }
-                            styles={{
-                              control: (baseStyles, state) => ({
-                                ...baseStyles,
-                                fontSize: "13px",
-                                paddingTop: "5px",
-                                paddingBottom: "5px",
-                              }),
-
-                              placeholder: (baseStyles) => ({
-                                ...baseStyles,
-                                color: "rgba(0, 0, 0, 0.3)",
-                              }),
-                            }}
-                            value={values.personal.position![0]}
-                          />
-                          <ErrorText
-                            isError={
-                              !values.personal.position &&
-                              !!touched.personal?.position
-                            }
-                            text="Position field is required."
-                          />
-                          {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                        <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+    <div className="admin-calculator">
+      <Formik
+        initialValues={initialValues}
+        // validationSchema={validateYupSchema}
+        onSubmit={(data) => submitHandler(data)}
+      >
+        {({
+          values,
+          errors,
+          handleSubmit,
+          setFieldValue,
+          resetForm,
+          touched,
+        }) => {
+          return (
+            <div className="two-col">
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={12} lg={6}>
+                  <div className="left-col-calculator">
+                    <div className="overall-earnings-container">
+                      <Grid container spacing={0} alignItems="center">
+                        <Grid item xs={12} md={12} lg={7}>
+                          <div className="left-col-total">
+                            <div className="overall-earnings-captions">
+                              <h2>Total Earnings</h2>
+                              <h1>{formattedearnings.totalEarningMonthly}</h1>
+                              <h3>Month to Date</h3>
+                            </div>
+                            <div className="top-left-col-btn">
+                              <button>{date}</button>
+                              <button className="download-btn">
+                                Download Report
+                              </button>
+                            </div>
+                          </div>
                         </Grid>
-                        <Grid item sm={12} md={9} lg={4}>
-                          <div className="calcu-form-control">
-                            <label>Monthly Target Premium</label>
-                            <FormikTextInput
-                              name="personal.monthlyTargetPremium"
-                              type="number"
-                              value={values.personal.monthlyTargetPremium}
-                              style={standardInputStyles}
-                              variant="outlined"
-                              label=""
-                              error={!!errors.personal?.monthlyTargetPremium}
-                            />
+                        <Grid item xs={12} md={12} lg={5}>
+                          <div className="right-col-total">
+                            <h2>{formattedearnings.totalEarningAnually}</h2>
+                            <p>Potential Annual Earning</p>
                           </div>
                         </Grid>
                       </Grid>
                     </div>
+                    <div className="form-calculator-wrapper">
+                      <div className="calculator-input-container-personal">
+                        <Grid container spacing={2}>
+                          <Grid item xs={12} md={12} lg={6}>
+                            <div className="form-left-col-personal">
+                              <label className="personal-label">
+                                Personal Position
+                              </label>
+                              <Select
+                                classNamePrefix="select"
+                                onChange={(e) => {
+                                  if (values.personal.position[0].value) {
+                                    resetForm();
+                                    setIsPositionValid(false);
+                                    setErrorMessage("");
+                                    setShowGraph(false);
+                                    setTotalEarnings(earningsInitialValue);
+                                  }
+                                  onChangePositionHandler(e, setFieldValue);
+                                }}
+                                isSearchable={true}
+                                name="position"
+                                placeholder="Choose a position"
+                                options={
+                                  AGENT_ROLES.map((st) => {
+                                    return {
+                                      label: st.label,
+                                      value: st.value,
+                                      numberValue: st.numberValue,
+                                    };
+                                  }) as any
+                                }
+                                styles={{
+                                  control: (baseStyles, state) => ({
+                                    ...baseStyles,
+                                    fontSize: "13px",
+                                    paddingTop: "5px",
+                                    paddingBottom: "5px",
+                                  }),
 
-                    <div className="form-card">
-                      <div className="card-captions-top">
-                        <h3>Spread</h3>
-                        <p>Lorem ipsum dolor sit.</p>
+                                  placeholder: (baseStyles) => ({
+                                    ...baseStyles,
+                                    color: "rgba(0, 0, 0, 0.3)",
+                                  }),
+                                }}
+                                value={values.personal.position![0]}
+                              />
+                              <ErrorText
+                                isError={
+                                  !values.personal.position &&
+                                  !!touched.personal?.position
+                                }
+                                text="Position field is required."
+                              />
+                            </div>
+                          </Grid>
+                          <Grid item xs={12} md={12} lg={6}>
+                            <div className="form-right-col-personal">
+                              <label className="personal-label">
+                                Personal Monthly Target Premium
+                              </label>
+                              <FormikTextInput
+                                name="personal.monthlyTargetPremium"
+                                type="number"
+                                value={values.personal.monthlyTargetPremium}
+                                style={standardInputStyles}
+                                variant="outlined"
+                                label=""
+                                error={!!errors.personal?.monthlyTargetPremium}
+                              />
+                            </div>
+                          </Grid>
+                        </Grid>
+                      </div>
+                      <div className="calculator-input-container-spread">
+                        <h2>Spread</h2>
                         {errorMessage ? (
                           <div className="alert-message">
                             <AlertMessage
@@ -754,47 +661,77 @@ const Calculator = () => {
                               icon={<AiOutlineWarning />}
                             />
                           </div>
-                        ) : null}
-                      </div>
-                      <Grid container spacing={2} alignItems="center">
-                        {AGENT_ROLES.map((data, index) => {
-                          const sumIndex = index + 1;
-
-                          return (
-                            <React.Fragment>
-                              <Grid item sm={12} md={9} lg={4}>
-                                <div className="position-label">
-                                  <h3>{data.label}</h3>
-                                  {values.personal.position[0]!.numberValue <=
-                                    data.numberValue ||
-                                  !values.personal.position[0].value ? (
-                                    <HtmlTooltip
-                                      title={
-                                        <div
-                                          style={{
-                                            fontSize: "1.3rem",
-                                            color: "#ed3e4b",
-                                            textAlign: "center",
-                                          }}
-                                        >
-                                          <span>
-                                            {!values.personal.position[0].value
-                                              ? "You must choose a position"
-                                              : "This position can only be lower than your own position."}
-                                          </span>
-                                        </div>
-                                      }
+                        ) : (
+                          <div style={{ height: "4.2vh" }}></div>
+                        )}
+                        <Grid container spacing={2} alignItems="center">
+                          <Grid item xs={12} md={12} lg={3}>
+                            <label>Position</label>
+                          </Grid>
+                          <Grid item xs={12} md={12} lg={3}>
+                            <label>Monthly Target Premium per Policy</label>
+                          </Grid>
+                          <Grid item xs={12} md={12} lg={3}>
+                            <label>
+                              No.of <br /> Members
+                            </label>
+                          </Grid>
+                          <Grid item xs={12} md={12} lg={3}>
+                            <label>
+                              No. of Premium <br /> per Member
+                            </label>
+                          </Grid>
+                        </Grid>
+                        <Grid container spacing={2} alignItems="center">
+                          {AGENT_ROLES.map((data, index) => {
+                            const sumIndex = index + 1;
+                            return (
+                              <React.Fragment>
+                                <Grid item xs={12} md={12} lg={3}>
+                                  <div className="perosonal-tooltip">
+                                    <Grid
+                                      container
+                                      spacing={0}
+                                      alignItems="center"
+                                      justifyContent="space-between"
                                     >
-                                      <span>
-                                        <FaExclamationCircle />
-                                      </span>
-                                    </HtmlTooltip>
-                                  ) : null}
-                                </div>
-                              </Grid>
-                              <Grid item sm={12} md={9} lg={4}>
-                                <div className="calcu-form-control">
-                                  <label>Monthly Target Premium</label>
+                                      <Grid item xs={12} md={12} lg={9}>
+                                        <label style={{ textAlign: "left" }}>
+                                          {data.label}
+                                        </label>
+                                      </Grid>
+                                      <Grid item xs={12} md={12} lg={3}>
+                                        {values.personal.position[0]!
+                                          .numberValue <= data.numberValue ||
+                                        !values.personal.position[0].value ? (
+                                          <HtmlTooltip
+                                            title={
+                                              <div
+                                                style={{
+                                                  fontSize: "1.3rem",
+                                                  color: "#ed3e4b",
+                                                  textAlign: "center",
+                                                }}
+                                              >
+                                                <span>
+                                                  {!values.personal.position[0]
+                                                    .value
+                                                    ? "You must choose a position"
+                                                    : "This position can only be lower than your own position."}
+                                                </span>
+                                              </div>
+                                            }
+                                          >
+                                            <span>
+                                              <FaExclamationCircle />
+                                            </span>
+                                          </HtmlTooltip>
+                                        ) : null}
+                                      </Grid>
+                                    </Grid>
+                                  </div>
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={3}>
                                   <FormikTextInput
                                     name={`spread.monthlyTargetPremium${sumIndex}`}
                                     type="number"
@@ -811,11 +748,8 @@ const Calculator = () => {
                                       !values.personal.monthlyTargetPremium
                                     }
                                   />
-                                </div>
-                              </Grid>
-                              <Grid item sm={12} md={9} lg={4}>
-                                <div className="calcu-form-control">
-                                  <label># of members</label>
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={3}>
                                   <FormikTextInput
                                     type="number"
                                     name={`spread.numberOfMembers${sumIndex}`}
@@ -832,40 +766,182 @@ const Calculator = () => {
                                       !values.personal.monthlyTargetPremium
                                     }
                                   />
-                                </div>
-                              </Grid>
-                            </React.Fragment>
-                          );
-                        })}
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={3}>
+                                  <FormikTextInput
+                                    type="number"
+                                    name={`spread.numberOfPremiumMembers${sumIndex}`}
+                                    value={0}
+                                    variant="outlined"
+                                    label=""
+                                    disabled={
+                                      values.personal.position[0].numberValue <=
+                                        data.numberValue ||
+                                      !values.personal.monthlyTargetPremium
+                                    }
+                                  />
+                                </Grid>
+                              </React.Fragment>
+                            );
+                          })}
+                        </Grid>
+                      </div>
+                    </div>
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={12} lg={6}>
+                  <div className="right-col-calculator">
+                    <div className="top-section">
+                      <Grid
+                        container
+                        spacing={12}
+                        justifyContent="space-between"
+                      >
+                        <Grid item xs={12} md={12} lg={8}></Grid>
+                        <Grid item xs={12} md={12} lg={4}>
+                          <div className="top-section-captions">
+                            <span>Hello, </span>
+                            <h2 style={{ display: "inline-block" }}>
+                              {" "}
+                              First Name!
+                            </h2>
+                            <h4>Welcome to your CFS Calculator</h4>
+                          </div>
+                        </Grid>
                       </Grid>
                     </div>
-
-                    <div className="form-card">
-                      <div className="card-captions-top">
-                        <h3>Generation Override</h3>
-                        <p>Lorem ipsum dolor sit.</p>
-
-                        {values.personal.position[0].numberValue < 0.81 ? (
-                          <div className="alert-message">
-                            <AlertMessage
-                              message="Only Senior Marketing Director and above can earn override."
-                              icon={<AiOutlineWarning />}
-                            />
+                    <div className="disclaimer-container">
+                      <h2>Disclaimer: </h2>
+                      <div className="disclaimer-description">
+                        The Insurance Earnings Calculator is designed for
+                        projection purposes only. The results provided are based
+                        on user-inputted data and assumptions and should not be
+                        considered as definitive results. Actual earnings may
+                        vary.
+                      </div>
+                      <div className="disclaimer-description">
+                        To use this calculator, enter details such as position,
+                        monthly premium target and details in the Spread and
+                        Generation Override section. Click the 'Generate' button
+                        to get results and 'Reset' button to start over.
+                      </div>
+                    </div>
+                    <div className="tri-col-container">
+                      <Grid
+                        container
+                        spacing={12}
+                        justifyContent="space-between"
+                      >
+                        <Grid item xs={12} md={12} lg={4}>
+                          <div className="tri-col-section-captions">
+                            <div className="earnings-title">
+                              <h2>Personal Earnings</h2>
+                            </div>
+                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-value1-block">
+                              <h2>
+                                {formatter.format(
+                                  totalEarnings[0].personal * 12
+                                )}
+                              </h2>
+                            </div>
+                            <div className="earnings-label">Monthly</div>
+                            <div className="earnings-value2-block">
+                              <h2 className="sky">
+                                {formatter.format(totalEarnings[0].personal)}
+                              </h2>
+                            </div>
                           </div>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={4}>
+                          <div className="tri-col-section-captions">
+                            <div className="earnings-title">
+                              <h2>Spread Earnings</h2>
+                            </div>
+                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-value1-block">
+                              <h2>
+                                {formatter.format(totalEarnings[0].spread * 12)}
+                              </h2>
+                            </div>
+                            <div className="earnings-label">Monthly</div>
+                            <div className="earnings-value2-block">
+                              <h2 className="navy">
+                                {formatter.format(totalEarnings[0].spread)}
+                              </h2>
+                            </div>
+                          </div>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={4}>
+                          <div className="tri-col-section-captions">
+                            <div className="earnings-title">
+                              <h2>Override Earnings</h2>
+                            </div>
+                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-value1-block">
+                              <h2>
+                                {formatter.format(
+                                  totalEarnings[0].generationOverride * 12
+                                )}
+                              </h2>
+                            </div>
+                            <div className="earnings-label">Monthly</div>
+                            <div className="earnings-value2-block">
+                              <h2 className="light">
+                                {formatter.format(
+                                  totalEarnings[0].generationOverride
+                                )}
+                              </h2>
+                            </div>
+                          </div>
+                        </Grid>
+                      </Grid>
+                    </div>
+                    <div className="calculator-input-container-override">
+                      <h2>Generation Override</h2>
+
+                      <div className="alert-message">
+                        {values.personal.position[0].numberValue < 0.81 ? (
+                          <AlertMessage
+                            message="Only Senior Marketing Director and above can earn override."
+                            icon={<AiOutlineWarning />}
+                          />
                         ) : null}
                       </div>
                       <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} md={12} lg={3}>
+                          <label>Tier</label>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={3}>
+                          <label>Monthly Target Premium per Policy</label>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={3}>
+                          <label>
+                            No.of <br /> Members
+                          </label>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={3}>
+                          <label>
+                            No. of Premium <br /> per Member
+                          </label>
+                        </Grid>
+                      </Grid>
+                      <Grid container spacing={2} alignItems="center">
                         {genNum.map((data, index) => {
                           const sumIndex = index + 1;
+                          const inputValidity =
+                            !values.personal.position.length ||
+                            !values.personal.monthlyTargetPremium;
 
                           return (
                             <React.Fragment>
-                              <Grid item sm={12} md={9} lg={2}>
-                                <h3>{data}</h3>
-                              </Grid>
-                              <Grid item sm={12} md={9} lg={5}>
+                              <Grid item sm={12} md={9} lg={3}>
                                 <div className="calcu-form-control">
-                                  <label>Monthly Target Premium</label>
+                                  <h3>{data} Generation</h3>
+                                </div>
+                              </Grid>
+                              <Grid item sm={12} md={9} lg={3}>
+                                <div className="calcu-form-control">
                                   <FormikTextInput
                                     type="number"
                                     name={`generation.monthlyTargetPremium${sumIndex}`}
@@ -880,9 +956,8 @@ const Calculator = () => {
                                   />
                                 </div>
                               </Grid>
-                              <Grid item sm={12} md={9} lg={5}>
+                              <Grid item sm={12} md={9} lg={3}>
                                 <div className="calcu-form-control">
-                                  <label># of members</label>
                                   <FormikTextInput
                                     name={`generation.numberOfMembers${sumIndex}`}
                                     type="number"
@@ -897,17 +972,28 @@ const Calculator = () => {
                                   />
                                 </div>
                               </Grid>
+                              <Grid item sm={12} md={9} lg={3}>
+                                <div className="calcu-form-control">
+                                  <FormikTextInput
+                                    name={`generation.numberOfPremMembers${sumIndex}`}
+                                    type="number"
+                                    value={
+                                      values.generation[
+                                        `numberOfPremMembers${sumIndex}`
+                                      ]
+                                    }
+                                    variant="outlined"
+                                    label=""
+                                    disabled={inputValidity}
+                                  />
+                                </div>
+                              </Grid>
                             </React.Fragment>
                           );
                         })}
                       </Grid>
                     </div>
-                    {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
-                    <div className="form-actions">
-                      <Button variant="default" onClick={() => resetForm()}>
-                        Reset
-                      </Button>
+                    <div className="calculator-buttons">
                       <Button
                         variant="primary"
                         onClick={() => handleSubmit()}
@@ -915,22 +1001,18 @@ const Calculator = () => {
                       >
                         Calculate
                       </Button>
+                      <Button variant="danger" onClick={() => resetForm()}>
+                        Reset
+                      </Button>
                     </div>
-                  </React.Fragment>
-                );
-              }}
-            </Formik>
-          </div>
-        </div>
-      </Grid>
-      <Grid item sm={12} md={12} lg={6}>
-        <Graph
-          data={earningsData}
-          badgeData={badgeData}
-          showChart={showGraph}
-        />
-      </Grid>
-    </Grid>
+                  </div>
+                </Grid>
+              </Grid>
+            </div>
+          );
+        }}
+      </Formik>
+    </div>
   );
 };
 
