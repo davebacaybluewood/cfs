@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import Spinner from "library/Spinner/Spinner";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import { TestimonialType } from "admin/hooks/useFetchProfile";
+import { AiOutlineLink } from "react-icons/ai";
 
 type TestimonialProps = {
   testimonials:
@@ -50,6 +51,20 @@ const Testimonials: React.FC<TestimonialProps> = (props) => {
     emailAddress: Yup.string().required("Email Address field is required."),
     title: Yup.string().required("Title field is required."),
   });
+
+  const copyToClip = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    toast.info(`URL Copied`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
   return (
     <div className="testimonials">
       {loading ? <Spinner variant="fixed" /> : null}
@@ -82,6 +97,10 @@ const Testimonials: React.FC<TestimonialProps> = (props) => {
 
       <div className="testimonial-actions">
         <button onClick={handleOpen}>Add Testimonials</button>
+        <button onClick={() => copyToClip()} className="share-btn">
+          <AiOutlineLink />
+          <span>Share Testimonial Link</span>
+        </button>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}

@@ -70,13 +70,13 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
   };
   const initialValues = {
     personalWebPage: "",
-    displayCalendly: false,
+    displayCalendly: true,
   };
   const [dialogStatus, setDialogStatus] = useState<AgentStatuses>(
     AgentStatuses.ACTIVATED
   );
   const [openFormDialog, setOpenFormDialog] = useState(false);
-  const [displayCalendlyToggle, setDisplayCalendlyToggle] = useState(false);
+  const [displayCalendlyToggle, setDisplayCalendlyToggle] = useState(true);
 
   const dialogMessageStatus =
     dialogStatus === AgentStatuses.ACTIVATED

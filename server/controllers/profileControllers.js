@@ -60,6 +60,10 @@ const editProfile = expressAsync(async (req, res) => {
       agent.firstName = undefinedValidator(agent.firstName, req.body.firstName);
       agent.lastName = undefinedValidator(agent.lastName, req.body.lastName);
       agent.bio = undefinedValidator(agent.bio, req.body.bio);
+      agent.emailAddress = undefinedValidator(
+        agent.emailAddress,
+        req.body.emailAddress
+      );
       agent.languages = undefinedValidator(agent.languages, req.body.languages);
       agent.specialties = undefinedValidator(
         agent.specialties,

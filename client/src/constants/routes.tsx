@@ -15,6 +15,8 @@ const paths = {
   resources: "/blogs",
   single_blog: "/blogs/:blogTitle",
   events: "/events",
+  portal: "/portal",
+  testimonialForm: "/testimonial-form/:userGuid",
   invalid: "/invalid",
 
   /** Webinar */

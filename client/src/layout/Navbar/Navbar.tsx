@@ -95,7 +95,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                     className: setActive(paths.contact_us),
                   },
                   {
-                    link: paths.login,
+                    link: paths.portal,
                     text: "Agent Portal",
                     isButton: true,
                     className: "navbar__btn_-desktop",
@@ -148,7 +148,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             </li>
             <li>
               <button
-                onClick={() => navigate(paths.login)}
+                onClick={() => navigate(paths.portal)}
                 className="portal-btn"
               >
                 Agent Portal

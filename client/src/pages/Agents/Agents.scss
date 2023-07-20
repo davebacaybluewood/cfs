@@ -79,6 +79,7 @@ $grey-800: rgba(0, 0, 0, 0.05);
     .testimonial-actions {
       text-align: center;
       margin-top: 3rem;
+      text-align: center;
       button {
         border: none;
         cursor: pointer;
@@ -91,6 +92,20 @@ $grey-800: rgba(0, 0, 0, 0.05);
 
         &:hover {
           opacity: 0.8;
+        }
+      }
+      .share-btn {
+        display: block;
+        margin: auto;
+        border: none;
+        text-transform: capitalize;
+        font-size: 1.3rem;
+        margin-top: 1rem;
+        color: #1976d2;
+        svg {
+          position: relative;
+          top: 2px;
+          margin-right: 0.4rem;
         }
       }
     }

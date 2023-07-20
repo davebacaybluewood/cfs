@@ -22,6 +22,8 @@ import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSim
 import Calculator from "admin/pages/CommissionSimulation/Calculator";
 import AgentWebinar from "pages/Agents/AgentWebinar";
 import AgentAppointment from "pages/Agents/AgentAppointment";
+import Portal from "pages/Portal/Portal";
+import TestimonialForm from "pages/TestimonialForm/TestimonialForm";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -227,6 +229,17 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <Calculator />,
     path: "/calculator",
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <Portal />,
+    path: paths.portal,
+  },
+  {
+    element: <TestimonialForm />,
+    path: paths.testimonialForm,
     showHeadline: false,
     showFooter: false,
     showNavbar: false,

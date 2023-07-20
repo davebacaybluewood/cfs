@@ -1,0 +1,58 @@
+.simple-navbar {
+  position: relative;
+  z-index: 10;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 15px 0 rgb(0 0 0/10%);
+
+  ul {
+    list-style: none;
+    text-align: right;
+    margin-bottom: 0;
+    li {
+      display: inline-block;
+      button {
+        position: relative;
+        display: inline-flex;
+        vertical-align: middle;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        min-height: 44px;
+        padding: 8px 16px;
+        border: 1px solid transparent;
+        border-radius: 40px;
+        font-size: 14px;
+        line-height: 20px;
+        border: 1px solid #333;
+
+        span,
+        svg,
+        svg path {
+          color: #333;
+        }
+        transition: all 0.5s;
+        &:hover {
+          opacity: 0.8;
+        }
+
+        svg {
+          margin-right: 0.7rem;
+        }
+      }
+
+      a {
+        font-size: 1.3rem;
+        color: #333;
+        font-family: "Roboto", sans-serif;
+        border-bottom: 1px dotted #333;
+        margin-right: 2rem;
+
+        transition: all 0.5s;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}

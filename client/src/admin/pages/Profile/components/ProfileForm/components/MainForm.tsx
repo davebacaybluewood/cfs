@@ -18,6 +18,8 @@ import Select from "react-select";
 import { ProfileData, profileInitialValues } from "admin/hooks/useFetchProfile";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import Spinner from "library/Spinner/Spinner";
+import AlertMessage from "library/AlertMessage/Alert";
+import { AiOutlineWarning } from "react-icons/ai";
 
 interface MainFormProps {
   profile: ProfileData | undefined;
@@ -145,11 +147,19 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                     variant="filled"
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={12}>
+                <Grid item xs={12} sm={12} md={6}>
                   <FormikTextInput
                     name="licenseNumber"
                     label="License Number *"
                     value={values.licenseNumber}
+                    variant="filled"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={6}>
+                  <FormikTextInput
+                    name="emailAddress"
+                    label="Email Address *"
+                    value={values.emailAddress}
                     variant="filled"
                   />
                 </Grid>
@@ -256,6 +266,12 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                     value={values.calendlyLink}
                     variant="filled"
                   />
+                  <div className="info-message">
+                    <AlertMessage
+                      message="This link will be provided by the admin."
+                      icon={<AiOutlineWarning />}
+                    />
+                  </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
                   {/* <FormikTextInput
