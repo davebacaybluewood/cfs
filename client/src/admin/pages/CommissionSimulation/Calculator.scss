@@ -1,7 +1,7 @@
 .admin-calculator {
   background: #b6cee8;
   position: relative;
-  padding: 5rem;
+  padding: 1rem 5rem;
 
   .two-col {
     padding: 3rem 0;
@@ -13,12 +13,12 @@
           margin-left: 5rem;
           .overall-earnings-captions {
             h2 {
-              font-family: "Montserrat", sans-serif;
+              font-family: "Muli", sans-serif;
               font-size: 2rem;
               margin-bottom: 1rem;
             }
             h1 {
-              font-family: "Montserrat", sans-serif;
+              font-family: "Muli", sans-serif;
               color: #28b769;
               font-size: 2.5rem;
             }
@@ -78,12 +78,12 @@
           text-overflow: ellipsis;
 
           h2 {
-            font-family: "Montserrat", sans-serif;
+            font-family: "Muli", sans-serif;
             font-size: 5rem;
             font-weight: 800;
           }
           p {
-            font-family: "Montserrat", sans-serif;
+            font-family: "Muli", sans-serif;
             font-size: 1.5rem;
           }
         }
@@ -117,7 +117,7 @@
             border-radius: 20px;
             label {
               color: #fff;
-              font-family: "Montserrat", sans-serif;
+              font-family: "Muli", sans-serif;
             }
           }
           .form-right-col-personal {
@@ -128,13 +128,13 @@
 
             label {
               color: #000;
-              font-family: "Montserrat", sans-serif;
+              font-family: "Muli", sans-serif;
             }
           }
         }
         .calculator-input-container-spread {
           background: #fff;
-          padding: 2rem 2rem;
+          padding: 2rem;
           border-radius: 20px;
 
           .perosonal-tooltip {
@@ -157,19 +157,19 @@
             border-radius: 20px;
           }
           h2 {
-            font-family: "Montserrat", sans-serif;
+            font-family: "Muli", sans-serif;
             font-weight: 800;
             font-size: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
           }
           label {
-            color: #5a5a5a;
+            color: #000;
             font-family: "Roboto";
             display: block;
             text-align: center;
             line-height: 150%;
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
           }
         }
       }
@@ -184,20 +184,28 @@
         color: #fff;
         line-height: 1.7rem;
         margin-bottom: 2rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding-right: 5rem;
+        .top-section-captions {
+          background-image: url("../../../../public/assets/images/Ellipse94.png");
+          border-radius: 552px;
 
-        h2 {
-          font-family: "Montserrat", sans-serif;
-          font-size: 2rem;
-        }
-        span {
-          font-family: "Montserrat", sans-serif;
-          font-size: 2rem;
-          font-weight: 300;
-        }
-        h4 {
-          font-family: "Montserrat", sans-serif;
-          font-size: 1.1rem;
-          font-weight: 300;
+          h2 {
+            font-family: "Muli", sans-serif;
+            font-size: 2rem;
+          }
+          span {
+            font-family: "Muli", sans-serif;
+            font-size: 2rem;
+            font-weight: 300;
+          }
+          h4 {
+            font-family: "Muli", sans-serif;
+            font-size: 1.1rem;
+            font-weight: 300;
+          }
         }
       }
       .disclaimer-container {
@@ -208,11 +216,11 @@
 
         h2 {
           color: #000;
-          font-family: "Montserrat", sans-serif;
+          font-family: "Muli", sans-serif;
           font-weight: 800;
         }
         .disclaimer-description {
-          font-family: "Montserrat", sans-serif;
+          font-family: "Muli", sans-serif;
           font-size: 1.5rem;
           font-weight: 500;
           margin-bottom: 1.5rem;
@@ -229,26 +237,26 @@
             h2 {
               color: #5a5a5a;
               font-size: 1.5rem;
-              font-family: "Montserrat", sans-serif;
+              font-family: "Muli", sans-serif;
             }
           }
           .earnings-label {
             font-size: 1.5rem;
-            font-family: "Montserrat", sans-serif;
+            font-family: "Muli", sans-serif;
             font-weight: 500;
             margin: 1rem 0;
             color: #9d9d9d;
           }
           .earnings-value1-block {
             h2 {
-              font-family: "Montserrat", sans-serif;
+              font-family: "Muli", sans-serif;
               font-weight: 1000;
               font-size: 2.5rem;
             }
           }
           .earnings-value2-block {
             h2 {
-              font-family: "Montserrat", sans-serif;
+              font-family: "Muli", sans-serif;
               font-weight: 300;
               font-size: 2rem;
               border-radius: 20px;
@@ -274,7 +282,7 @@
     }
 
     .calculator-input-container-override {
-      padding: 4.8rem 2rem;
+      padding: 5.8rem 2rem;
       background: #fff;
       border-radius: 20px;
       margin-top: 2rem;
@@ -284,17 +292,17 @@
       }
 
       h2 {
-        font-family: "Montserrat", sans-serif;
-        font-weight: 800;
+        font-family: "Muli", sans-serif;
+        font-weight: 900;
         font-size: 2rem;
       }
 
       h3 {
         text-align: center;
         font-size: 1.7rem;
-        font-family: "Montserrat", sans-serif;
-        font-weight: 600;
-        color: #5a5a5a;
+        font-family: "Muli", sans-serif;
+        font-weight: 800;
+        color: #000;
       }
 
       .alert-message {
@@ -332,6 +340,42 @@
         margin-left: 2rem;
         border: none;
         width: 150px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .admin-calculator {
+    .two-col {
+      .left-col-calculator {
+        .overall-earnings-container {
+          .left-col-total {
+            text-align: center;
+            margin: 0;
+            .overall-earnings-captions {
+              padding: 2rem 0;
+            }
+          }
+          .right-col-total {
+            border-radius: 0 !important;
+          }
+        }
+        .MuiGrid-root {
+          label {
+            text-align: center;
+          }
+        }
+      }
+      .right-col-calculator {
+        .top-section {
+          padding-right: 0;
+          display: flex;
+          justify-content: center;
+        }
+        .tri-col-container {
+          text-align: center;
+        }
       }
     }
   }
