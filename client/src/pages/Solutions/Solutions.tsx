@@ -203,7 +203,7 @@ const Solutions = () => {
           </Container>
         </div>
       </Container>
-      <WorkingSteps
+      {/* <WorkingSteps
         backgroundImage="/assets/event-1 (1).png"
         bigTitle={
           <React.Fragment>
@@ -212,7 +212,7 @@ const Solutions = () => {
         }
         title="WORKING STEPS"
         steps={workingSteps}
-      />
+      /> hidden for future use*/}
     </div>
   );
 };
