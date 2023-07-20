@@ -202,11 +202,12 @@ const Calculator: React.FC = () => {
     const spreadNumberOfMembers1 = parseInt(data.spread.numberOfMembers1);
 
     /* Formula 1 */
+    /* Training Associate */
     const spread1Total =
-      (personalNumberValue - spreadNumberValue1) *
       spreadMonthlyTargetPremium1 *
       spreadNumberOfMembers1 *
-      spreadPremiumMember1;
+      spreadPremiumMember1 *
+      (personalNumberValue - spreadNumberValue1);
 
     /* Position 2 */
     /* Associate */
@@ -219,10 +220,10 @@ const Calculator: React.FC = () => {
 
     /* Formula 2 */
     const spread2Total =
-      (personalNumberValue - spreadNumberValue2) *
       spreadMonthlyTargetPremium2 *
       spreadNumberOfMembers2 *
-      spreadPremiumMember2;
+      spreadPremiumMember2 *
+      (personalNumberValue - spreadNumberValue2);
 
     /* Position 3 */
     /* Senior Associate */
@@ -235,10 +236,10 @@ const Calculator: React.FC = () => {
 
     /* Formula 3 */
     const spread3Total =
-      (personalNumberValue - spreadNumberValue3) *
       spreadMonthlyTargetPremium3 *
       spreadNumberOfMembers3 *
-      spreadPremiumMember3;
+      spreadPremiumMember3 *
+      (personalNumberValue - spreadNumberValue3);
 
     /* Position 4 */
     /* Marketing Director */
@@ -251,10 +252,10 @@ const Calculator: React.FC = () => {
 
     /* Formula 4 */
     const spread4Total =
-      (personalNumberValue - spreadNumberValue4) *
       spreadMonthlyTargetPremium4 *
       spreadNumberOfMembers4 *
-      spreadPremiumMember4;
+      spreadPremiumMember4 *
+      (personalNumberValue - spreadNumberValue4);
 
     /* Position 5 */
     /*Senior Marketing Director */
@@ -268,9 +269,10 @@ const Calculator: React.FC = () => {
     /* Formula 5 */
     const spread5Total =
       (personalNumberValue - spreadNumberValue5) *
-      spreadMonthlyTargetPremium5 *
-      spreadNumberOfMembers5 *
-      spreadPremiumMember5;
+      (spreadMonthlyTargetPremium5 *
+        spreadNumberOfMembers5 *
+        spreadPremiumMember5) *
+      (personalNumberValue - spreadNumberValue5);
 
     /* Position 6 */
     /* Executive Marketing Director */
@@ -283,10 +285,10 @@ const Calculator: React.FC = () => {
 
     /* Formula 6 */
     const spread6Total =
-      (personalNumberValue - spreadNumberValue6) *
       spreadMonthlyTargetPremium6 *
       spreadNumberOfMembers6 *
-      spreadPremiumMember6;
+      spreadPremiumMember6 *
+      (personalNumberValue - spreadNumberValue6);
 
     /* Position 7 */
     /*Senior Executive Marketing Director */
@@ -299,10 +301,10 @@ const Calculator: React.FC = () => {
 
     /* Formula 7 */
     const spread7Total =
-      (personalNumberValue - spreadNumberValue7) *
       spreadMonthlyTargetPremium7 *
       spreadNumberOfMembers7 *
-      spreadPremiumMember7;
+      spreadPremiumMember7 *
+      (personalNumberValue - spreadNumberValue7);
 
     /* Position 8 */
     /* Executive Vice President */
@@ -315,10 +317,10 @@ const Calculator: React.FC = () => {
 
     /* Formula 8 */
     const spread8Total =
-      (personalNumberValue - spreadNumberValue8) *
       spreadMonthlyTargetPremium8 *
       spreadNumberOfMembers8 *
-      spreadPremiumMember8;
+      spreadPremiumMember8 *
+      (personalNumberValue - spreadNumberValue8);
     /* Spread Total Earnings */
     const spreadTotal =
       spread8Total +
@@ -882,18 +884,18 @@ const Calculator: React.FC = () => {
                             <div className="earnings-title">
                               <h2>Personal Earnings</h2>
                             </div>
-                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-label">Monthly</div>
                             <div className="earnings-value1-block">
                               <h2>
+                                {formatter.format(totalEarnings[0].personal)}
+                              </h2>
+                            </div>
+                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-value2-block">
+                              <h2 className="sky">
                                 {formatter.format(
                                   totalEarnings[0].personal * 12
                                 )}
-                              </h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="sky">
-                                {formatter.format(totalEarnings[0].personal)}
                               </h2>
                             </div>
                           </div>
@@ -903,16 +905,16 @@ const Calculator: React.FC = () => {
                             <div className="earnings-title">
                               <h2>Spread Earnings</h2>
                             </div>
-                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-label">Monthly</div>
                             <div className="earnings-value1-block">
                               <h2>
-                                {formatter.format(totalEarnings[0].spread * 12)}
+                                {formatter.format(totalEarnings[0].spread)}
                               </h2>
                             </div>
-                            <div className="earnings-label">Monthly</div>
+                            <div className="earnings-label">Annual</div>
                             <div className="earnings-value2-block">
                               <h2 className="navy">
-                                {formatter.format(totalEarnings[0].spread)}
+                                {formatter.format(totalEarnings[0].spread * 12)}
                               </h2>
                             </div>
                           </div>
@@ -922,19 +924,19 @@ const Calculator: React.FC = () => {
                             <div className="earnings-title">
                               <h2>Override Earnings</h2>
                             </div>
-                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-label">Monthly</div>
                             <div className="earnings-value1-block">
                               <h2>
                                 {formatter.format(
-                                  totalEarnings[0].generationOverride * 12
+                                  totalEarnings[0].generationOverride
                                 )}
                               </h2>
                             </div>
-                            <div className="earnings-label">Monthly</div>
+                            <div className="earnings-label">Annual</div>
                             <div className="earnings-value2-block">
                               <h2 className="light">
                                 {formatter.format(
-                                  totalEarnings[0].generationOverride
+                                  totalEarnings[0].generationOverride * 12
                                 )}
                               </h2>
                             </div>
