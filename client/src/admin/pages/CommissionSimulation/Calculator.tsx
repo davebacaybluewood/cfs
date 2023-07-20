@@ -708,7 +708,9 @@ const Calculator: React.FC = () => {
                             </label>
                           </Grid>
                           <Grid item xs={12} md={12} lg={3}>
-                            <label>Monthly Target Premium per Policy</label>
+                            <label>
+                              Monthly Target Premium <br /> per Policy
+                            </label>
                           </Grid>
                           <Grid item xs={12} md={12} lg={3}>
                             <label>
@@ -964,7 +966,9 @@ const Calculator: React.FC = () => {
                           </label>
                         </Grid>
                         <Grid item xs={12} md={12} lg={3}>
-                          <label>Monthly Target Premium per Policy</label>
+                          <label>
+                            Monthly Target Premium <br /> per Policy
+                          </label>
                         </Grid>
                         <Grid item xs={12} md={12} lg={3}>
                           <label>
