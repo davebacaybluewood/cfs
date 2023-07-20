@@ -150,7 +150,7 @@
             }
           }
 
-          .css-ofrcno-MuiGrid-root > .MuiGrid-item {
+          .MuiGrid-root > .MuiGrid-item {
             padding-top: 2.25rem;
           }
           .MuiTextField-root {
@@ -286,6 +286,9 @@
       background: #fff;
       border-radius: 20px;
       margin-top: 2rem;
+      .MuiGrid-root > .MuiGrid-item {
+        padding-top: 2.25rem;
+      }
 
       input {
         font-size: 2rem;
