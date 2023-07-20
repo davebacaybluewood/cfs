@@ -662,7 +662,7 @@ const Calculator: React.FC = () => {
                             />
                           </div>
                         ) : (
-                          <div style={{ height: "4.2vh" }}></div>
+                          <div style={{ height: "3.9vh" }}></div>
                         )}
                         <Grid container spacing={2} alignItems="center">
                           <Grid item xs={12} md={12} lg={3}>
