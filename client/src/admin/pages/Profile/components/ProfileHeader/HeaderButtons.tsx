@@ -141,7 +141,7 @@ const HeaderButtons: React.FC<
     displayCalendly: false,
   };
 
-  const [displayCalendlyToggle, setDisplayCalendlyToggle] = useState(false);
+  const [displayCalendlyToggle, setDisplayCalendlyToggle] = useState(true);
   const [showBusinessCard, setShowBusinessCard] = useState(false);
 
   const userCtx = useContext(UserContext) as any;

@@ -75,7 +75,7 @@ const Events: React.FC = () => {
         <link rel="canonical" href={window.location.href} />
       </ReactHelmet>
       <Banner bigTitle="Events" title="See Upcoming Events" hasBorder />
-      <WorkingSteps
+      {/* <WorkingSteps
         bigTitle={
           <React.Fragment>
             Some <span>easy steps</span> to attend an event.
@@ -84,9 +84,9 @@ const Events: React.FC = () => {
         title="WORKING STEPS"
         topTitle="Join Us!"
         steps={eventSteps}
-      />
+      /> */}
 
-      <NoResultsFound title="Events" />
+      <NoResultsFound text="No current active Events." />
 
       {/* {events.map((event: EventsType, i: number) => (
         <React.Fragment key={i}>

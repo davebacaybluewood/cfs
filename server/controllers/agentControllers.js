@@ -208,6 +208,7 @@ const updateAgent = expressAsync(async (req, res) => {
     }
 
     const agent = await Agents.findById(req.body.id);
+    const user = await User.findById(agent?.userGuid);
 
     if (agent) {
       agent.name = undefinedValidator(agent.name, req.body.name);
@@ -241,7 +242,14 @@ const updateAgent = expressAsync(async (req, res) => {
         ? agentImgResult.public_id
         : agent.avatar_cloudinary_id;
 
+      console.log({
+        req: req.body.emailAddress,
+        agent: agent?.emailAddress,
+      });
+      user.email = req.body.emailAddress;
+
       const updatedAgent = await agent.save();
+      const createdUser = await user.save();
       res.status(201).json(updatedAgent);
     } else {
       res.status(404);

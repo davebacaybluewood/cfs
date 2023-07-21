@@ -68,6 +68,24 @@
       }
     }
 
+    .info-message {
+      h3 {
+        color: #1976d2;
+      }
+      .message {
+        margin-bottom: 0;
+      }
+      svg {
+        position: relative;
+        top: -5px;
+        margin-right: 0.5rem;
+        color: #1976d2;
+        path {
+          color: #1976d2;
+        }
+      }
+    }
+
     .form-error {
       margin-left: 3rem;
       font-size: 1.4rem !important;

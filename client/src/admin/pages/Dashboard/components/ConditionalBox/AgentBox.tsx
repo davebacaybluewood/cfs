@@ -62,6 +62,30 @@ const contactRows = [
   },
 ];
 const AgentBox = () => {
+  const navigate = useNavigate();
+
+  const learnMoreHandler = (id: string) => {
+    navigate(paths.viewSingleDynamicWebinar.replace(":webinarId", id));
+  };
+
+  const { loading, webinars } = useFetchWebinars();
+
+  const agentStorage = localStorage.getItem("userInfo");
+  const { userGuid } = JSON.parse(agentStorage ?? "");
+  const agentInfo = useFetchAgent(userGuid?.toString());
+
+  const agentWebinars = agentInfo.agent?.webinars
+    ?.filter(
+      (data: any) =>
+        data.status === NOTIFICATION_ENUMS.WEBINARS.WEBINAR_APPROVED
+    )
+    ?.map((data: any) => {
+      return data.webinarGuid;
+    });
+
+  const filteredWebinars = webinars?.filter((data: any) =>
+    agentWebinars?.includes(data.webinarGuid)
+  );
   const statistics: StatisticTypes[] = [
     {
       countText: "PAW Appointments",
@@ -83,7 +107,7 @@ const AgentBox = () => {
     },
     {
       countText: "Webinars",
-      count: 0,
+      count: filteredWebinars?.length,
       url: paths.cfsWebinars,
       icon: <FaSnowman />,
     },
@@ -135,31 +159,6 @@ const AgentBox = () => {
       },
     ],
   };
-
-  const navigate = useNavigate();
-
-  const learnMoreHandler = (id: string) => {
-    navigate(paths.viewSingleDynamicWebinar.replace(":webinarId", id));
-  };
-
-  const { loading, webinars } = useFetchWebinars();
-
-  const agentStorage = localStorage.getItem("userInfo");
-  const { userGuid } = JSON.parse(agentStorage ?? "");
-  const agentInfo = useFetchAgent(userGuid?.toString());
-
-  const agentWebinars = agentInfo.agent?.webinars
-    ?.filter(
-      (data: any) =>
-        data.status === NOTIFICATION_ENUMS.WEBINARS.WEBINAR_APPROVED
-    )
-    ?.map((data: any) => {
-      return data.webinarGuid;
-    });
-
-  const filteredWebinars = webinars?.filter((data: any) =>
-    agentWebinars?.includes(data.webinarGuid)
-  );
 
   return (
     <React.Fragment>

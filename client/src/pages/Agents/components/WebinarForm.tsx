@@ -1,5 +1,4 @@
 import {
-  Button,
   FormControl,
   Grid,
   InputLabel,
@@ -11,10 +10,13 @@ import ENDPOINTS from "constants/endpoints";
 import { paths } from "constants/routes";
 import US_STATES from "constants/statesAndLocation";
 import { Formik } from "formik";
+import Button from "library/Button/Button";
 import FormikTextInput from "library/Formik/FormikInput";
 import Spinner from "library/Spinner/Spinner";
 import React, { useState } from "react";
+import { AiOutlineLink } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 const WebinarForm: React.FC = () => {
@@ -36,7 +38,19 @@ const WebinarForm: React.FC = () => {
   });
 
   const [state, setState] = React.useState("");
-  // const handleChange =;
+  const copyToClip = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    toast.info(`URL Copied`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   return (
     <div className="submission-form">
@@ -82,8 +96,8 @@ const WebinarForm: React.FC = () => {
           return (
             <React.Fragment>
               <div className="form-instructions">
-                <h2>WEBINAR FORM</h2>
-                <p>Fill out the form below to view the free webinar.</p>
+                <h2>Learn More</h2>
+                <p>Schedule with a consultant.</p>
               </div>
 
               <form onSubmit={handleSubmit} className="form">
@@ -131,9 +145,22 @@ const WebinarForm: React.FC = () => {
                     </FormControl>
                   </Grid>
                 </Grid>
-                <Button variant="contained" type="submit">
-                  VIEW WEBINER
-                </Button>
+                <div className="webinar-btns-container">
+                  <button type="submit" className="submit-btn">
+                    Complete Webinar
+                  </button>
+                  <button type="submit" className="submit-btn">
+                    Submit
+                  </button>
+                  <button
+                    className="share-btn"
+                    type="button"
+                    onClick={() => copyToClip()}
+                  >
+                    <AiOutlineLink />
+                    <span>Share Webinar</span>
+                  </button>
+                </div>
               </form>
               {loading ? <Spinner variant="relative" /> : null}
             </React.Fragment>

@@ -14,6 +14,7 @@ import useScroll from "hooks/useScroll";
 import { useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
 import "./AgentSupport.scss";
+import { OUTSOURCE_LINKS } from "admin/constants/constants";
 
 const timelineData = [
   {
@@ -47,7 +48,9 @@ const AgentSupport: React.FC = () => {
           <div className="headline__btn">
             <Button
               variant="danger"
-              onClick={() => navigate(paths.portalRegistration)}
+              onClick={() =>
+                window.open(OUTSOURCE_LINKS.BACK_OFFICE, "_blank")!.focus()
+              }
             >
               Become an Agent
             </Button>
