@@ -736,12 +736,12 @@ const Calculator: React.FC = () => {
                                       alignItems="center"
                                       justifyContent="space-between"
                                     >
-                                      <Grid item xs={12} md={12} lg={9}>
-                                        <label style={{ textAlign: "left" }}>
+                                      <Grid item xs={12} md={12} lg={10}>
+                                        <h3 style={{ textAlign: "left" }}>
                                           {data.label}
-                                        </label>
+                                        </h3>
                                       </Grid>
-                                      <Grid item xs={12} md={12} lg={3}>
+                                      <Grid item xs={12} md={12} lg={2}>
                                         {values.personal.position[0]!
                                           .numberValue <= data.numberValue ||
                                         !values.personal.position[0].value ? (
@@ -785,8 +785,7 @@ const Calculator: React.FC = () => {
                                     label=""
                                     disabled={
                                       values.personal.position[0].numberValue <=
-                                        data.numberValue ||
-                                      !values.personal.monthlyTargetPremium
+                                      data.numberValue
                                     }
                                   />
                                 </Grid>
@@ -803,8 +802,7 @@ const Calculator: React.FC = () => {
                                     label=""
                                     disabled={
                                       values.personal.position[0].numberValue <=
-                                        data.numberValue ||
-                                      !values.personal.monthlyTargetPremium
+                                      data.numberValue
                                     }
                                   />
                                 </Grid>
@@ -817,8 +815,7 @@ const Calculator: React.FC = () => {
                                     label=""
                                     disabled={
                                       values.personal.position[0].numberValue <=
-                                        data.numberValue ||
-                                      !values.personal.monthlyTargetPremium
+                                      data.numberValue
                                     }
                                   />
                                 </Grid>
@@ -861,7 +858,7 @@ const Calculator: React.FC = () => {
                             fontWeight: "700",
                           }}
                         >
-                          'Calculate'
+                          Calculate
                         </span>{" "}
                         button to get results and{" "}
                         <span
@@ -870,7 +867,7 @@ const Calculator: React.FC = () => {
                             fontWeight: "700",
                           }}
                         >
-                          'Reset'
+                          Reset
                         </span>{" "}
                         button to start over.
                       </div>
@@ -985,8 +982,7 @@ const Calculator: React.FC = () => {
                         {genNum.map((data, index) => {
                           const sumIndex = index + 1;
                           const inputValidity =
-                            !values.personal.position.length ||
-                            !values.personal.monthlyTargetPremium;
+                            !values.personal.position.length;
 
                           return (
                             <React.Fragment>

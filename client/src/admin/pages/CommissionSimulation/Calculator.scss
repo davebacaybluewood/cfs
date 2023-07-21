@@ -13,12 +13,12 @@
           margin-left: 5rem;
           .overall-earnings-captions {
             h2 {
-              font-family: "Muli", sans-serif;
+              font-family: "Montserrrat", sans-serif;
               font-size: 2rem;
               margin-bottom: 1rem;
             }
             h1 {
-              font-family: "Muli", sans-serif;
+              font-family: "Montserrrat", sans-serif;
               color: #28b769;
               font-size: 2.5rem;
             }
@@ -78,12 +78,12 @@
           text-overflow: ellipsis;
 
           h2 {
-            font-family: "Muli", sans-serif;
+            font-family: "Montserrrat", sans-serif;
             font-size: 5rem;
             font-weight: 800;
           }
           p {
-            font-family: "Muli", sans-serif;
+            font-family: "Montserrrat", sans-serif;
             font-size: 1.5rem;
           }
         }
@@ -95,6 +95,7 @@
 
           input {
             font-size: 1.5rem;
+            font-family: "Montserrat", sans-serif;
           }
         }
         .calculator-input-container-personal {
@@ -117,18 +118,24 @@
             border-radius: 20px;
             label {
               color: #fff;
-              font-family: "Muli", sans-serif;
+              font-family: "Montserrrat", sans-serif;
+              font-weight: 700;
             }
           }
           .form-right-col-personal {
             font-size: 1.5rem;
-            padding: 14px 30px 13px 27px;
+            padding: 14px 30px 22px 27px;
             background: #fff;
             border-radius: 20px;
 
+            .MuiOutlinedInput-input {
+              padding: 1.2rem;
+            }
+
             label {
-              color: #000;
-              font-family: "Muli", sans-serif;
+              color: #5a5a5a;
+              font-family: "Montserrrat", sans-serif;
+              font-weight: 700;
             }
           }
         }
@@ -157,18 +164,25 @@
             border-radius: 20px;
           }
           h2 {
-            font-family: "Muli", sans-serif;
+            font-family: "Montserrrat", sans-serif;
             font-weight: 800;
             font-size: 2rem;
             margin-bottom: 1rem;
           }
+          h3 {
+            font-family: "Montserrat", sans-serif;
+            line-height: 150%;
+            font-size: 1.5rem;
+            font-weight: 900;
+          }
+
           label {
-            color: #000;
+            color: #5a5a5a;
             font-family: "Roboto";
             display: block;
             text-align: center;
             line-height: 150%;
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             font-weight: 800;
           }
         }
@@ -193,16 +207,16 @@
           border-radius: 552px;
 
           h2 {
-            font-family: "Muli", sans-serif;
+            font-family: "Montserrrat", sans-serif;
             font-size: 2rem;
           }
           span {
-            font-family: "Muli", sans-serif;
+            font-family: "Montserrrat", sans-serif;
             font-size: 2rem;
             font-weight: 300;
           }
           h4 {
-            font-family: "Muli", sans-serif;
+            font-family: "Montserrrat", sans-serif;
             font-size: 1.1rem;
             font-weight: 300;
           }
@@ -216,14 +230,17 @@
 
         h2 {
           color: #000;
-          font-family: "Muli", sans-serif;
-          font-weight: 800;
+          font-family: "Montserrrat", sans-serif;
+          font-weight: 900;
+          font-size: 2rem;
+          margin-bottom: 1rem;
         }
         .disclaimer-description {
-          font-family: "Muli", sans-serif;
+          font-family: "Montserrrat", sans-serif;
           font-size: 1.5rem;
-          font-weight: 500;
+          font-weight: 700;
           margin-bottom: 1.5rem;
+          color: #5a5a5a;
         }
       }
       .tri-col-container {
@@ -231,32 +248,38 @@
         border-radius: 20px;
         padding: 5rem;
 
+        .MuiGrid-root {
+          padding-top: 3.2rem;
+          padding-bottom: 0;
+        }
+
         .tri-col-section-captions {
           .earnings-title {
-            margin-bottom: 2rem;
+            padding-top: 0;
+            margin-bottom: 4rem;
             h2 {
               color: #5a5a5a;
-              font-size: 1.5rem;
-              font-family: "Muli", sans-serif;
+              font-size: 2rem;
+              font-family: "Montserrrat", sans-serif;
             }
           }
           .earnings-label {
             font-size: 1.5rem;
-            font-family: "Muli", sans-serif;
-            font-weight: 500;
+            font-family: "Montserrrat", sans-serif;
+            font-weight: 600;
             margin: 1rem 0;
             color: #9d9d9d;
           }
           .earnings-value1-block {
             h2 {
-              font-family: "Muli", sans-serif;
+              font-family: "Montserrrat", sans-serif;
               font-weight: 1000;
-              font-size: 2.5rem;
+              font-size: 3rem;
             }
           }
           .earnings-value2-block {
             h2 {
-              font-family: "Muli", sans-serif;
+              font-family: "Montserrrat", sans-serif;
               font-weight: 300;
               font-size: 2rem;
               border-radius: 20px;
@@ -282,7 +305,7 @@
     }
 
     .calculator-input-container-override {
-      padding: 5.8rem 2rem;
+      padding: 5.2rem 4rem;
       background: #fff;
       border-radius: 20px;
       margin-top: 2rem;
@@ -295,15 +318,15 @@
       }
 
       h2 {
-        font-family: "Muli", sans-serif;
+        font-family: "Montserrrat", sans-serif;
         font-weight: 900;
         font-size: 2rem;
       }
 
       h3 {
         text-align: center;
-        font-size: 1.7rem;
-        font-family: "Muli", sans-serif;
+        font-size: 2rem;
+        font-family: "Montserrrat", sans-serif;
         font-weight: 800;
         color: #000;
       }
