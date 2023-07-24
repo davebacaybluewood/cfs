@@ -49,11 +49,10 @@ const Portal: React.FC = () => {
           >
             <div style={{ height: 1000 }}>
               <PortalContent
-                title="Agent
-                  Back Office"
+                title="CFS Agent Portal"
                 description=""
                 linkProps={{
-                  link: "https://agent.comfortfinancialsolutions.com/",
+                  link: `${window.location.origin}/portal/login`,
                   text: "Login",
                 }}
                 bgFadedPosition="left"
