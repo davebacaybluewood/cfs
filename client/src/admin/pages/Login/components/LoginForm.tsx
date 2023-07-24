@@ -69,7 +69,7 @@ const LoginForm: React.FC<AccountDetailsProps> = (props) => {
         >
           Login
         </button>
-        <div className="login-caption">
+        {/* <div className="login-caption">
           <Link
             to={paths.portalRegistration}
             style={{
@@ -78,7 +78,7 @@ const LoginForm: React.FC<AccountDetailsProps> = (props) => {
           >
             Create an account
           </Link>
-        </div>
+        </div> */}
       </Grid>
     </Grid>
   );

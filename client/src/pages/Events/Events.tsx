@@ -86,7 +86,7 @@ const Events: React.FC = () => {
         steps={eventSteps}
       /> */}
 
-      <NoResultsFound text="No current active Events." />
+      <NoResultsFound text="No future Events." />
 
       {/* {events.map((event: EventsType, i: number) => (
         <React.Fragment key={i}>
