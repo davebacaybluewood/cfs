@@ -200,7 +200,7 @@ const useSidebarLinks = (
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
     },
     {
-      linkText: "Appointments",
+      linkText: "Calendars",
       link: paths.appointments,
       isActive: currentPage === adminPathsNew.appointments.split("/")[2],
       icon: <FaRegCalendarCheck />,
@@ -219,7 +219,7 @@ const useSidebarLinks = (
       // isSubMenu: isAdmin || role === ROLES.ROLE_AGENT,
       subLinks: [
         {
-          linkText: "Webinar Appointments",
+          linkText: "Webinar Calendars",
           icon: <FaUserSecret />,
           link:
             // role === ROLES.ROLE_MASTER_ADMIN
@@ -232,7 +232,7 @@ const useSidebarLinks = (
             currentPage === adminPathsNew.typeAppointments.split("/")[2],
         },
         {
-          linkText: "PAW Appointments",
+          linkText: "PAW Calendars",
           icon: <FaUserSecret />,
           link:
             // role === ROLES.ROLE_MASTER_ADMIN
@@ -246,23 +246,23 @@ const useSidebarLinks = (
         },
       ],
     },
-    {
-      linkText: "Calendar",
-      link: paths.calendar,
-      isActive: currentPage === adminPathsNew.calendar.split("/")[2],
-      icon: <FaRegCalendarAlt />,
-      role: [
-        PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
-        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
-        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
-        PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
-        PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
-        PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
-        PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
-        PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
-        PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
-      ],
-    },
+    // {
+    //   linkText: "Calendar",
+    //   link: paths.calendar,
+    //   isActive: currentPage === adminPathsNew.calendar.split("/")[2],
+    //   icon: <FaRegCalendarAlt />,
+    //   role: [
+    //     PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
+    //     PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
+    //     PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
+    //     PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
+    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
+    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
+    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
+    //     PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
+    //     PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+    //   ],
+    // },
     // {
     //   linkText: "Contacts",
     //   link: paths.contacts,
