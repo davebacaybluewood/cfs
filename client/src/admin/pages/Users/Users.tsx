@@ -240,7 +240,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
                   progress: undefined,
                   theme: "light",
                 });
-                navigate(paths.agents);
+                window.location.reload();
               })
               .then((result) => {
                 console.log(result);
