@@ -54,7 +54,7 @@ const adminPaths = {
   landingPage: adminCfsRoute + "landing-page",
   landingPageInfo: adminCfsRoute + "landing-page/accounts/:pageId",
   users: adminCfsRoute + "users",
-  commissionSimulation: adminCfsRoute + "commission-simulation",
+  // commissionSimulation: adminCfsRoute + "commission-simulation",
   mailingList: adminCfsRoute + "mailing-list",
 } as const;
 

@@ -4,12 +4,12 @@
   .message {
     display: flex;
     align-items: center;
-    color: #df0505;
-    margin: 1.3rem 0;
 
     h3 {
+      margin: 1rem 0;
       font-weight: 500 !important;
-      font-size: 1.3rem !important;
+      font-size: 1.1rem !important;
+      color: #df0505 !important;
     }
 
     .message-icon {
@@ -19,7 +19,6 @@
         color: #df0505;
         font-size: 1.3rem;
         margin-right: 1rem;
-        margin-top: 1rem;
       }
     }
   }
