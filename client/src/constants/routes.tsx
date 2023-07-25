@@ -19,6 +19,10 @@ const paths = {
   testimonialForm: "/testimonial-form/:userGuid",
   invalid: "/invalid",
 
+  /* Contract */
+  preLicensing: "/pre-licensing",
+  anunity: "/annuity",
+
   /** Webinar */
   agent_with_id: "/agents/:id",
   agent_check_status: "/agents/status/:id",

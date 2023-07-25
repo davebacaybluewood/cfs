@@ -24,6 +24,8 @@ import AgentWebinar from "pages/Agents/AgentWebinar";
 import AgentAppointment from "pages/Agents/AgentAppointment";
 import Portal from "pages/Portal/Portal";
 import TestimonialForm from "pages/TestimonialForm/TestimonialForm";
+import PreLicensing from "pages/Contract/components/PreLicensing";
+import Annuity from "pages/Contract/components/Annuity";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -229,6 +231,20 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <Calculator />,
     path: "/calculator",
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <PreLicensing />,
+    path: "/pre-licensing",
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <Annuity />,
+    path: "/annuity",
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
