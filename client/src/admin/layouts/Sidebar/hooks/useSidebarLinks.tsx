@@ -8,6 +8,7 @@ import { paths } from "constants/routes";
 import getUserToken from "helpers/getUserToken";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import React, { useContext, useEffect, useState } from "react";
+import { BsTools } from "react-icons/bs";
 import {
   FaTachometerAlt,
   FaBookReader,
@@ -540,6 +541,27 @@ const useSidebarLinks = (
           link: paths.requestedWebinars,
           isActive:
             currentPage === adminPathsNew.requestedWebinars.split("/")[2],
+        },
+      ],
+    },
+    {
+      linkText: "Resources",
+      icon: <BsTools />,
+      role: [
+        PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
+        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
+        PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
+      ],
+      isSubMenu: true,
+      subLinks: [
+        {
+          linkText: "Calculator",
+          link: "/calculator",
         },
       ],
     },
