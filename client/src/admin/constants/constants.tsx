@@ -522,14 +522,14 @@ export const adminRoutes = [
       </GuardedWrapper>
     ),
   },
-  {
-    path: adminPathsNew.commissionSimulation,
-    element: (
-      <GuardedWrapper>
-        <CommissionSimulation />
-      </GuardedWrapper>
-    ),
-  },
+  // {
+  //   path: adminPathsNew.commissionSimulation,
+  //   element: (
+  //     <GuardedWrapper>
+  //       <CommissionSimulation />
+  //     </GuardedWrapper>
+  //   ),
+  // },
   {
     path: adminPathsNew.mailingList,
     element: (
