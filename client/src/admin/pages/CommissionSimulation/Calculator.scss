@@ -382,8 +382,126 @@
   }
 }
 
+@media screen and (max-width: 2560px) {
+  .admin-calculator {
+    .two-col {
+      .calculator-input-container-override {
+        padding: 6.7rem 4rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 2438px) {
+  .admin-calculator {
+    .two-col {
+      .calculator-input-container-override {
+        padding: 5.7rem 4rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 2366px) {
+  .admin-calculator {
+    .two-col {
+      .calculator-input-container-override {
+        padding: 4.8rem 4rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 2236px) {
+  .admin-calculator {
+    .two-col {
+      .calculator-input-container-override {
+        padding: 5.3rem 4rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 2189px) {
+  .admin-calculator {
+    .two-col {
+      .calculator-input-container-override {
+        padding: 4rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 2006px) {
+  .admin-calculator {
+    .two-col {
+      .calculator-input-container-spread {
+        padding: 5.2rem 2rem;
+      }
+
+      .calculator-input-container-override {
+        padding: 5rem 4rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1880px) {
+  .admin-calculator {
+    .two-col {
+      .calculator-input-container-override {
+        padding: 5.3rem 4rem !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .admin-calculator {
+    .two-col {
+      .left-col-calculator {
+        .overall-earnings-container {
+          .left-col-total {
+            text-align: center;
+            margin-top: 2rem;
+          }
+          .right-col-total {
+            border-radius: 0;
+          }
+        }
+        .form-left-col-personal {
+          text-align: center;
+        }
+        .form-right-col-personal {
+          text-align: center;
+        }
+
+        .form-calculator-wrapper {
+          .calculator-input-container-spread {
+            h3 {
+              text-align: center !important;
+            }
+          }
+        }
+      }
+      .right-col-calculator {
+        .top-section {
+          display: flex;
+          justify-content: center;
+          padding-right: 0;
+        }
+        .tri-col-container {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 425px) {
   .admin-calculator {
+    padding: 1rem 2rem;
+
     .two-col {
       .left-col-calculator {
         .overall-earnings-container {
@@ -395,7 +513,7 @@
             }
           }
           .right-col-total {
-            border-radius: 0 !important;
+            border-radius: 0;
           }
         }
         .MuiGrid-root {
@@ -412,6 +530,11 @@
         }
         .tri-col-container {
           text-align: center;
+        }
+        .calculator-input-container-override {
+          .MuiGrid-root {
+            display: block;
+          }
         }
       }
     }
