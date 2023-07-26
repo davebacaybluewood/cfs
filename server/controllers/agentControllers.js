@@ -266,7 +266,7 @@ const updateAgent = expressAsync(async (req, res) => {
 });
 
 // @desc    Edit the status of the agent
-// @route   PUT /api/agent-status
+// @route   PUT /api/agent-status/:userGuid
 // @access  Private/Admin
 const updateAgentStatus = expressAsync(async (req, res) => {
   const agent = await Agents.findById(req.params.id);
@@ -298,25 +298,25 @@ const updateAgentStatus = expressAsync(async (req, res) => {
     }
 
     if (req.body.status === AGENT_STATUSES.ACTIVATED) {
-      // const mailSubject = "CFS Portal Activation";
-      // const mailContent = agentApproved();
+      const mailSubject = "CFS Portal Activation";
+      const mailContent = agentApproved(agent.emailAddress, agent.password);
 
       let sendHTMLEmail;
       try {
-        // sendHTMLEmail = sendEmail(
-        //   agent?.emailAddress,
-        //   mailSubject,
-        //   mailContent,
-        //   []
-        // )
-        //   .then((request, response) => {
-        //     response.send(response.message);
-        //   })
-        //   .catch((error) => {
-        //     res.status(500);
-        //     console.log(error);
-        //     throw new Error("Error occured in submission.");
-        //   });
+        sendHTMLEmail = sendEmail(
+          agent?.emailAddress,
+          mailSubject,
+          mailContent,
+          []
+        )
+          .then((request, response) => {
+            response?.send(response.message);
+          })
+          .catch((error) => {
+            res.status(500);
+            console.log(error);
+            throw new Error("Error occured in submission.");
+          });
       } catch (error) {
         res.status(500);
         console.log(error);

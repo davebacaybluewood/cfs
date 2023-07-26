@@ -1,4 +1,4 @@
-const agentApproved = () => {
+const agentApproved = (emailAddress, password) => {
   return `<!DOCTYPE html>
   <html>
     <head>
@@ -96,24 +96,7 @@ const agentApproved = () => {
       </style>
     </head>
     <body style="background-color: #e9ecef">
-      <!-- start preheader -->
-      <div
-        class="preheader"
-        style="
-          display: none;
-          max-width: 0;
-          max-height: 0;
-          overflow: hidden;
-          font-size: 1px;
-          line-height: 1px;
-          color: #fff;
-          opacity: 0;
-        "
-      >
-        A preheader is the short summary text that follows the subject line when
-        an email is viewed in the inbox.
-      </div>
-      <!-- end preheader -->
+      
   
       <!-- start body -->
       <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -196,6 +179,7 @@ const agentApproved = () => {
                       font-weight: 700;
                       letter-spacing: -1px;
                       line-height: 48px;
+                      color: #333;
                     "
                   >
                     Your CFS Account has been Activated
@@ -239,7 +223,7 @@ const agentApproved = () => {
                     line-height: 24px;
                   "
                 >
-                  <p style="margin: 0">
+                  <p style="margin: 0; color: #333;">
                     Thank you for registring in Comfort Financial Solutions Portal.
                   </p>
                 </td>
@@ -258,7 +242,10 @@ const agentApproved = () => {
                     line-height: 24px;
                   "
                 >
-                  <p style="margin: 0">
+                  <h3 style="margin-top: 0; color: #333;">Account Credentials</h3>
+                  <p style="margin-bottom: 0; font-size: 12px; color: #333;"}><b>Email Address:</b> ${emailAddress}</p>
+                  <p style="margin-top: 0; font-size: 12px; color: #333;"}><b>Password:</b> ${password}</p>
+                  <p style="margin: 0; color: #333;">
                     You can login using the button below.
                     <br />
                     <br />

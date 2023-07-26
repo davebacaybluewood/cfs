@@ -1,0 +1,66 @@
+.annuity-wrapper {
+  .left-col {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(0deg, #0057b7 0%, #0057b7 100%), #d9d9d9;
+
+    .col-content {
+      line-height: 3rem;
+
+      h2 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 5rem;
+        color: #fff;
+        font-weight: 600;
+        margin-bottom: 2rem;
+      }
+      p {
+        font-size: 2rem;
+        color: #fff;
+        font-weight: 300;
+        text-align: left;
+      }
+      .left-btn {
+        button {
+          margin-top: 5rem;
+          display: flex;
+        }
+      }
+    }
+  }
+  .right-col {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+    .col-content {
+      line-height: 3rem;
+      h2 {
+        font-size: 5rem;
+        color: #0057b7;
+        font-weight: 600;
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 2rem;
+      }
+      p {
+        font-size: 2rem;
+        color: #0057b7;
+        font-weight: 300;
+        text-align: left;
+      }
+
+      .right-btn {
+        button {
+          margin-top: 5rem;
+          display: flex;
+          border: 2px solid #0057b7;
+          color: #0057b7;
+        }
+      }
+    }
+  }
+}

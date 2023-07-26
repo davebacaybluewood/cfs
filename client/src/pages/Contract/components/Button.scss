@@ -1,0 +1,17 @@
+.button-contract-container {
+  button {
+    border: 2px solid #fff;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    color: #fff;
+    font-weight: 700;
+    font-family: "Montserrat", sans-serif;
+
+    svg {
+      margin-left: 1rem;
+    }
+  }
+}
