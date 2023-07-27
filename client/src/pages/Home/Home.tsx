@@ -11,6 +11,7 @@ import METATAGS from "constants/metatags";
 import { PopupModal, useCalendlyEventListener } from "react-calendly";
 import { CALENDLY } from "constants/constants";
 import { useLocation, useNavigate } from "react-router-dom";
+import Blogs from "library/Blogs/Blogs";
 
 const Home: React.FC = () => {
   const [calendlyWeekly, setCalendlyWeekly] = useState(false);
@@ -67,6 +68,13 @@ const Home: React.FC = () => {
         <CalendlySection />
       </div>
       <Subscription />
+      <Blogs
+        title="Latest Blogs"
+        blogsConfig={{
+          limit: 3,
+          skip: 0,
+        }}
+      />
 
       <div className="calendly-modals">
         <PopupModal
