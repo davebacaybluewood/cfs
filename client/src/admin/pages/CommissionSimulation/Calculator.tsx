@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Box, Grid, Modal, Typography } from "@mui/material";
 import FormikTextInput from "library/Formik/FormikInput";
 import { Formik } from "formik";
 import Select from "react-select";
@@ -11,9 +11,10 @@ import { AiOutlineWarning } from "react-icons/ai";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import AlertMessage from "library/AlertMessage/Alert";
 import Button from "library/Button/Button";
-import "./Calculator.scss";
+import { Button as MuiButton } from "@mui/material";
 import useAccountValidation from "admin/hooks/useAccountValidation";
 import nameFallback from "helpers/nameFallback";
+import "./Calculator.scss";
 
 const AGENT_ROLES = [
   {
@@ -179,6 +180,23 @@ const formInitialValues = {
 };
 
 const Calculator: React.FC = () => {
+  /* Modal styles */
+  const style = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "1px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const account: any = useAccountValidation();
   // Mock Date
   const current = new Date();
@@ -594,9 +612,7 @@ const Calculator: React.FC = () => {
     onCalculate(initialValues);
   }, [initialValues]);
 
-  const submitHandler = (data) => {
-    console.log("test");
-  };
+  const submitHandler = (data) => {};
 
   const totalEarningMonthly =
     totalEarnings[0].personal +
@@ -610,7 +626,6 @@ const Calculator: React.FC = () => {
     totalEarningMonthly: formatter.format(totalEarningMonthly || 0),
   };
 
-  console.log(typeof totalEarnings[0].personal);
   return (
     <div className="admin-calculator">
       <Formik
@@ -1031,31 +1046,6 @@ const Calculator: React.FC = () => {
                         <h4>Welcome to your CFS Calculator</h4>
                       </div>
                     </div>
-                    <div className="disclaimer-container">
-                      <h2>Disclaimer: </h2>
-                      <div className="disclaimer-description">
-                        The Insurance Earnings Calculator is designed for
-                        projection purposes only. The results provided are based
-                        on user-inputted data and assumptions and should not be
-                        considered as definitive results. Actual earnings may
-                        vary.
-                      </div>
-                      <div className="disclaimer-description">
-                        To use this calculator, enter details such as Personal
-                        position, Personal monthly target premium,and details in
-                        the Spread and Generation Override section. Click
-                        anywhere outside the field to get results and{" "}
-                        <span
-                          style={{
-                            color: "#ED3E4B",
-                            fontWeight: "700",
-                          }}
-                        >
-                          Reset
-                        </span>{" "}
-                        button to start over.
-                      </div>
-                    </div>
                     <div className="tri-col-container">
                       <Grid
                         container
@@ -1282,13 +1272,6 @@ const Calculator: React.FC = () => {
                       </Grid>
                     </div>
                     <div className="calculator-buttons">
-                      {/* <Button
-                        variant="primary"
-                        onClick={() => handleSubmit()}
-                        type="submit"
-                      >
-                        Calculate
-                      </Button> For future purposes*/}
                       <Button
                         variant="danger"
                         onClick={() => {
@@ -1298,8 +1281,69 @@ const Calculator: React.FC = () => {
                       >
                         Reset
                       </Button>
+                      <MuiButton
+                        className="disclaimer-btn"
+                        onClick={() => setOpen(true)}
+                      >
+                        Disclaimer
+                      </MuiButton>
                     </div>
                   </div>
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <div
+                        className="disclaimer-container"
+                        style={{
+                          borderRadius: "10px",
+                          fontSize: "1.5rem",
+                          textAlign: "center",
+                        }}
+                      >
+                        <h2 style={{ marginBottom: "1.5rem" }}>Disclaimer </h2>
+                        <div
+                          className="disclaimer-description"
+                          style={{
+                            marginBottom: "1.5rem",
+                            lineHeight: "2rem",
+                            fontWeight: "300",
+                          }}
+                        >
+                          The Insurance Earnings Calculator is designed for
+                          projection purposes only. The results provided are
+                          based on user-inputted data and assumptions and should
+                          not be considered as definitive results. Actual
+                          earnings may vary.
+                        </div>
+                        <div
+                          className="disclaimer-description"
+                          style={{
+                            marginBottom: "1.5rem",
+                            lineHeight: "2rem",
+                            fontWeight: "300",
+                          }}
+                        >
+                          To use this calculator, enter details such as Personal
+                          position, Personal monthly target premium,and details
+                          in the Spread and Generation Override section. Click
+                          anywhere outside the field to get results and{" "}
+                          <span
+                            style={{
+                              color: "#ED3E4B",
+                              fontWeight: "700",
+                            }}
+                          >
+                            Reset
+                          </span>{" "}
+                          button to start over.
+                        </div>
+                      </div>
+                    </Box>
+                  </Modal>
                 </Grid>
               </Grid>
             </div>
