@@ -25,6 +25,7 @@ interface AccountDetailsProps {
     value: any,
     shouldValidate?: boolean | undefined
   ) => void;
+  isAdmin?: boolean;
 }
 const AccountDetails: React.FC<AccountDetailsProps> = (props) => {
   const [verified, setVerified] = useState(false);
@@ -64,12 +65,14 @@ const AccountDetails: React.FC<AccountDetailsProps> = (props) => {
         />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        <div className="recaptcha">
-          <ReCAPTCHA
-            sitekey="6LfeQtsmAAAAAAsHX2QKCI7YOe2_Y9yaSGOfaBlF"
-            onChange={recaptchaOnChangeHandler}
-          />
-        </div>
+        {props.isAdmin ? (
+          <div className="recaptcha">
+            <ReCAPTCHA
+              sitekey="6LfeQtsmAAAAAAsHX2QKCI7YOe2_Y9yaSGOfaBlF"
+              onChange={recaptchaOnChangeHandler}
+            />
+          </div>
+        ) : null}
         {/* <pre>{JSON.stringify(verified)}</pre>
         <pre>{JSON.stringify(props.isValid)}</pre> */}
         <button
@@ -77,7 +80,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = (props) => {
           onClick={() => {
             props.onSubmit(props.email, props.password, props.setFieldValue);
           }}
-          disabled={!props.isValid || !verified}
+          disabled={!props.isValid || (!props.isAdmin && !verified)}
         >
           Continue with your registration
         </button>

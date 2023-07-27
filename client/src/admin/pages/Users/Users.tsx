@@ -453,6 +453,8 @@ const Users: React.FC = () => {
     }),
   };
 
+  const navigate = useNavigate();
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -460,7 +462,14 @@ const Users: React.FC = () => {
       loading={loading}
       className="users-container"
     >
-      <Title title="Users" subtitle="List of all users." />
+      <Title title="Users" subtitle="List of all users.">
+        <Button
+          variant="contained"
+          onClick={() => navigate(paths.profileFormAdd)}
+        >
+          Add Users
+        </Button>
+      </Title>
       <Grid container spacing={2}>
         <Grid item sm={12} md={12} lg={12}>
           <Table
