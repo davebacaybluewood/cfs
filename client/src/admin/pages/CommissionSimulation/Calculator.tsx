@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Grid, Modal } from "@mui/material";
 import FormikTextInput from "library/Formik/FormikInput";
 import { Formik } from "formik";
@@ -624,6 +624,18 @@ const Calculator: React.FC = () => {
   const formattedearnings = {
     totalEarningAnually: formatter.format(totalEarningAnually || 0),
     totalEarningMonthly: formatter.format(totalEarningMonthly || 0),
+  };
+
+  useEffect(() => {
+    const isAcknowledged = localStorage.getItem("isAcknowledged");
+    if (!isAcknowledged) {
+      setOpen(true);
+    }
+  }, []);
+
+  const acknowledgeHandler = () => {
+    localStorage.setItem("isAcknowledged", "true");
+    setOpen(false);
   };
 
   return (
@@ -1302,12 +1314,6 @@ const Calculator: React.FC = () => {
                       >
                         Reset
                       </Button>
-                      <MuiButton
-                        className="disclaimer-btn"
-                        onClick={() => setOpen(true)}
-                      >
-                        Disclaimer
-                      </MuiButton>
                     </div>
                   </div>
                   <Modal
@@ -1361,6 +1367,23 @@ const Calculator: React.FC = () => {
                             Reset
                           </span>{" "}
                           button to start over.
+                          <div
+                            className="check-box-container"
+                            style={{
+                              marginTop: "1rem",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              onChange={() => acknowledgeHandler()}
+                            />
+                            <span style={{ marginLeft: "1rem" }}>
+                              I acknowledge this tool.
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </Box>

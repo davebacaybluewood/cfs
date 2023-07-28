@@ -51,6 +51,7 @@ export const login =
 
 export const logout = () => (dispatch: any) => {
   localStorage.removeItem("userInfo");
+  localStorage.removeItem("isAcknowledged");
   dispatch({
     type: USER_LOGIN_ACTION_TYPES.USER_LOGOUT,
   });
