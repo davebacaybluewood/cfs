@@ -13,11 +13,18 @@ import SuccessPage from "./components/SuccessPage";
 import { ValuesType } from "./models";
 import validationSchema from "./helpers/validationSchema";
 import "./PortalRegistration.scss";
+import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
 
-const PortalRegistration: React.FC = () => {
+interface PortalRegistrationProps {
+  isAdmin?: boolean;
+}
+const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
   const [stage, setStage] = useState(1);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState<ValuesType>({
     emailAddress: "",
     password: "",
@@ -118,20 +125,46 @@ const PortalRegistration: React.FC = () => {
           {stage === 6 ? (
             <h1 style={{ fontSize: "6rem" }}>Congratulations!</h1>
           ) : (
-            <h1>
-              Welcome <br /> to CFS
+            <h1 className={classNames({ "left-header": props.isAdmin })}>
+              {props.isAdmin ? (
+                <React.Fragment>
+                  CFS <br /> Registration
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  Welcome <br /> to CFS
+                </React.Fragment>
+              )}
             </h1>
           )}
-          {stage === 1 ? (
-            <p>
-              Start your journey <br /> with us today.
-            </p>
-          ) : stage === 6 ? (
-            <p>Registration Completed</p>
+          {!props.isAdmin ? (
+            <React.Fragment>
+              {stage === 1 ? (
+                <p>
+                  Start your journey <br /> with us today.
+                </p>
+              ) : stage === 6 ? (
+                <p>Registration Completed</p>
+              ) : (
+                <p>
+                  Please provide your <br /> personal information.
+                </p>
+              )}
+            </React.Fragment>
           ) : (
-            <p>
-              Please provide your <br /> personal information.
-            </p>
+            <React.Fragment>
+              {stage === 1 ? (
+                <p>
+                  Please provide the agent <br /> information.
+                </p>
+              ) : stage === 6 ? (
+                <p>Registration Completed</p>
+              ) : (
+                <p>
+                  Please provide the agent <br /> information.
+                </p>
+              )}
+            </React.Fragment>
           )}
         </div>
       </div>
@@ -178,6 +211,10 @@ const PortalRegistration: React.FC = () => {
 
               setLoading(false);
               setStage(6);
+
+              if (props.isAdmin) {
+                navigate(paths.users);
+              }
             } catch (error) {
               setLoading(false);
             }
@@ -240,6 +277,7 @@ const PortalRegistration: React.FC = () => {
                     isValid={accountDetailsValidity}
                     onSubmit={createPreProfileHandler}
                     setFieldValue={setFieldValue}
+                    isAdmin={props.isAdmin}
                   />
                 )}
                 {stage === 2 && (
