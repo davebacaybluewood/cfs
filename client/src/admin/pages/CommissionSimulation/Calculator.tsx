@@ -1066,78 +1066,7 @@ const Calculator: React.FC = () => {
                         <h4>Welcome to your CFS Calculator</h4>
                       </div>
                     </div>
-                    <div className="tri-col-container">
-                      <Grid
-                        container
-                        spacing={12}
-                        justifyContent="space-between"
-                      >
-                        <Grid item xs={12} md={12} lg={4}>
-                          <div className="tri-col-section-captions">
-                            <div className="earnings-title">
-                              <h2>Personal Earnings</h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value1-block">
-                              <h2>
-                                {formatter.format(totalEarnings[0].personal)}
-                                {/*  */}
-                              </h2>
-                            </div>
-                            <div className="earnings-label">Annual</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="sky">
-                                {formatter.format(
-                                  totalEarnings[0].personal * 12
-                                )}
-                              </h2>
-                            </div>
-                          </div>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={4}>
-                          <div className="tri-col-section-captions">
-                            <div className="earnings-title">
-                              <h2>Spread Earnings</h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value1-block">
-                              <h2>
-                                {formatter.format(totalEarnings[0].spread)}
-                              </h2>
-                            </div>
-                            <div className="earnings-label">Annual</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="navy">
-                                {formatter.format(totalEarnings[0].spread * 12)}
-                              </h2>
-                            </div>
-                          </div>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={4}>
-                          <div className="tri-col-section-captions">
-                            <div className="earnings-title">
-                              <h2>Override Earnings</h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value1-block">
-                              <h2>
-                                {formatter.format(
-                                  totalEarnings[0].generationOverride
-                                )}
-                              </h2>
-                            </div>
-                            <div className="earnings-label">Annual</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="light">
-                                {formatter.format(
-                                  totalEarnings[0].generationOverride * 12
-                                )}
-                              </h2>
-                            </div>
-                          </div>
-                        </Grid>
-                      </Grid>
-                    </div>
+
                     <div className="calculator-input-container-override">
                       <h2>Generation Override</h2>
 
@@ -1289,6 +1218,78 @@ const Calculator: React.FC = () => {
                             </React.Fragment>
                           );
                         })}
+                      </Grid>
+                    </div>
+                    <div className="tri-col-container">
+                      <Grid
+                        container
+                        spacing={12}
+                        justifyContent="space-between"
+                      >
+                        <Grid item xs={12} md={12} lg={4}>
+                          <div className="tri-col-section-captions">
+                            <div className="earnings-title">
+                              <h2>Personal Earnings</h2>
+                            </div>
+                            <div className="earnings-label">Monthly</div>
+                            <div className="earnings-value1-block">
+                              <h2>
+                                {formatter.format(totalEarnings[0].personal)}
+                                {/*  */}
+                              </h2>
+                            </div>
+                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-value2-block">
+                              <h2 className="sky">
+                                {formatter.format(
+                                  totalEarnings[0].personal * 12
+                                )}
+                              </h2>
+                            </div>
+                          </div>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={4}>
+                          <div className="tri-col-section-captions">
+                            <div className="earnings-title">
+                              <h2>Spread Earnings</h2>
+                            </div>
+                            <div className="earnings-label">Monthly</div>
+                            <div className="earnings-value1-block">
+                              <h2>
+                                {formatter.format(totalEarnings[0].spread)}
+                              </h2>
+                            </div>
+                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-value2-block">
+                              <h2 className="navy">
+                                {formatter.format(totalEarnings[0].spread * 12)}
+                              </h2>
+                            </div>
+                          </div>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={4}>
+                          <div className="tri-col-section-captions">
+                            <div className="earnings-title">
+                              <h2>Override Earnings</h2>
+                            </div>
+                            <div className="earnings-label">Monthly</div>
+                            <div className="earnings-value1-block">
+                              <h2>
+                                {formatter.format(
+                                  totalEarnings[0].generationOverride
+                                )}
+                              </h2>
+                            </div>
+                            <div className="earnings-label">Annual</div>
+                            <div className="earnings-value2-block">
+                              <h2 className="light">
+                                {formatter.format(
+                                  totalEarnings[0].generationOverride * 12
+                                )}
+                              </h2>
+                            </div>
+                          </div>
+                        </Grid>
                       </Grid>
                     </div>
                     <div className="calculator-buttons">
