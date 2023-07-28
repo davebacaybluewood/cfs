@@ -9,6 +9,7 @@ const adminPaths = {
   profile: adminCfsRoute + "profile",
   profileForm: adminCfsRoute + "profile/form",
   profileFormWithProfileId: adminCfsRoute + "profile/form/:userGuid",
+  profileFormAdd: adminCfsRoute + "form/add-user",
   appointments: adminCfsRoute + "appointments/",
   typeAppointments: adminCfsRoute + "appointments/:typeId",
   agentAppointments: adminCfsRoute + "appointments/:agentId/:typeId",

@@ -45,6 +45,7 @@ import Users from "admin/pages/Users/Users";
 import ViewBlog from "admin/pages/Blogs/ViewBlog";
 import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
 import MailingList from "admin/pages/MailingList/MailingList";
+import ProfileFormAdd from "admin/pages/Profile/components/ProfileForm/ProfileFormAdd";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -215,6 +216,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <ProfileForm key="form" />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.profileFormAdd,
+    element: (
+      <GuardedWrapper>
+        <ProfileFormAdd />
       </GuardedWrapper>
     ),
   },
