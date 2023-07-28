@@ -803,36 +803,56 @@ const Calculator: React.FC = () => {
                         ) : (
                           <div style={{ height: "3.9vh" }}></div>
                         )}
-                        <Grid container spacing={2} alignItems="center">
-                          <Grid item xs={12} md={12} lg={3}>
-                            <label style={{ textAlign: "left" }}>
-                              Position
-                            </label>
+                        {values.personal.position[0].numberValue ===
+                        AGENT_ROLES[7].numberValue ? (
+                          <h2
+                            style={{
+                              color: "#000",
+                              fontWeight: "300",
+                              textAlign: "center",
+                            }}
+                          >
+                            No Spread data availabe for Traning Associate.
+                          </h2>
+                        ) : (
+                          <Grid container spacing={2} alignItems="center">
+                            <Grid item xs={12} md={12} lg={3}>
+                              <label style={{ textAlign: "left" }}>
+                                Position
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={3}>
+                              <label>
+                                Monthly Target Premium <br /> per Policy
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label>
+                                No.of <br /> Total Members
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label style={{ textAlign: "center" }}>
+                                No. of <br /> Direct Members
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label>
+                                No. of Premium <br /> per Member
+                              </label>
+                            </Grid>
                           </Grid>
-                          <Grid item xs={12} md={12} lg={3}>
-                            <label>
-                              Monthly Target Premium <br /> per Policy
-                            </label>
-                          </Grid>
-                          <Grid item xs={12} md={12} lg={2}>
-                            <label>
-                              No.of <br /> Total Members
-                            </label>
-                          </Grid>
-                          <Grid item xs={12} md={12} lg={2}>
-                            <label style={{ textAlign: "center" }}>
-                              No. of <br /> Direct Members
-                            </label>
-                          </Grid>
-                          <Grid item xs={12} md={12} lg={2}>
-                            <label>
-                              No. of Premium <br /> per Member
-                            </label>
-                          </Grid>
-                        </Grid>
+                        )}
                         <Grid container spacing={2} alignItems="center">
                           {AGENT_ROLES.map((data, index) => {
                             const sumIndex = index + 1;
+
+                            if (
+                              values.personal.position[0].numberValue <=
+                              data.numberValue
+                            ) {
+                              return <React.Fragment />;
+                            }
                             return (
                               <React.Fragment>
                                 <Grid item xs={12} md={12} lg={3}>
