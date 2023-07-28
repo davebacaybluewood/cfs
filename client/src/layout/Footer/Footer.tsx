@@ -3,9 +3,7 @@ import { HiOutlinePhone } from "react-icons/hi";
 import { CiLocationOn } from "react-icons/ci";
 import { MdEmail } from "react-icons/md";
 import { SiFacebook } from "react-icons/si";
-import { BsYoutube } from "react-icons/bs";
-import { AiOutlineTwitter } from "react-icons/ai";
-import { FaPinterest, FaLinkedin, FaTiktok } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import GridLinks from "./components/GridLinks";
 import { paths } from "constants/routes";
@@ -144,7 +142,11 @@ const Footer: React.FC = () => {
               <RiInstagramFill />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.TWITTER}>
-              <AiOutlineTwitter />
+              <img
+                src="/assets/icons/TwitterX.svg"
+                alt="/assets/icons/TwitterX.svg"
+                className="footer__socials"
+              />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.LINKEDIN}>
               <FaLinkedin />
