@@ -84,6 +84,7 @@ const formInitialValues = {
     numberOfPremiumMembers1: 0,
     numberOfMembers1: 0,
     numberOfDirectMembers1: 0,
+    numberOfPromotedMembers1: 0,
 
     position2: {
       label: AGENT_ROLES[1].label,
@@ -94,6 +95,7 @@ const formInitialValues = {
     numberOfPremiumMembers2: 0,
     numberOfMembers2: 0,
     numberOfDirectMembers2: 0,
+    numberOfPromotedMembers2: 0,
 
     position3: {
       label: AGENT_ROLES[2].label,
@@ -104,6 +106,7 @@ const formInitialValues = {
     numberOfPremiumMembers3: 0,
     numberOfMembers3: 0,
     numberOfDirectMembers3: 0,
+    numberOfPromotedMembers3: 0,
 
     position4: {
       label: AGENT_ROLES[3].label,
@@ -114,6 +117,7 @@ const formInitialValues = {
     numberOfPremiumMembers4: 0,
     numberOfMembers4: 0,
     numberOfDirectMembers4: 0,
+    numberOfPromotedMembers4: 0,
 
     position5: {
       label: AGENT_ROLES[4].label,
@@ -124,6 +128,7 @@ const formInitialValues = {
     numberOfPremiumMembers5: 0,
     numberOfMembers5: 0,
     numberOfDirectMembers5: 0,
+    numberOfPromotedMembers5: 0,
 
     position6: {
       label: AGENT_ROLES[5].label,
@@ -134,6 +139,7 @@ const formInitialValues = {
     numberOfPremiumMembers6: 0,
     numberOfMembers6: 0,
     numberOfDirectMembers6: 0,
+    numberOfPromotedMembers6: 0,
 
     position7: {
       label: AGENT_ROLES[6].label,
@@ -144,6 +150,7 @@ const formInitialValues = {
     numberOfPremiumMembers7: 0,
     numberOfMembers7: 0,
     numberOfDirectMembers7: 0,
+    numberOfPromotedMembers7: 0,
 
     position8: {
       label: AGENT_ROLES[7].label,
@@ -154,6 +161,7 @@ const formInitialValues = {
     numberOfPremiumMembers8: 0,
     numberOfMembers8: 0,
     numberOfDirectMembers8: 0,
+    numberOfPromotedMembers8: 0,
   },
   generation: {
     gen1: "",
@@ -375,6 +383,14 @@ const Calculator: React.FC = () => {
         (personalNumberValue - spreadNumberValue2);
 
       const spread2Total = spread2Direct + spread2Indirect;
+
+      /* Position 1 */
+      /* Executive Vice President */
+      const spreadNumberValue1 = data.spread.position1.numberValue;
+      const spreadMonthlyTargetPremium1 = data.spread.monthlyTargetPremium1;
+      const spreadNumberOfMembers1 = data.spread.numberOfMembers1;
+      const spreadPremiumMember1 = data.spread.numberOfPremiumMembers1;
+      const numberOfDirectMembers1 = data.spread.numberOfDirectMembers1;
 
       /* Spread Total Earnings */
       const spreadTotal =
@@ -828,14 +844,14 @@ const Calculator: React.FC = () => {
                           </h2>
                         ) : (
                           <Grid container spacing={2} alignItems="center">
-                            <Grid item xs={12} md={12} lg={3}>
+                            <Grid item xs={12} md={12} lg={2}>
                               <label style={{ textAlign: "left" }}>
                                 Position
                               </label>
                             </Grid>
-                            <Grid item xs={12} md={12} lg={3}>
+                            <Grid item xs={12} md={12} lg={2}>
                               <label>
-                                Monthly Target Premium <br /> per Policy
+                                Monthly Target <br /> Premium per Policy
                               </label>
                             </Grid>
                             <Grid item xs={12} md={12} lg={2}>
@@ -846,6 +862,11 @@ const Calculator: React.FC = () => {
                             <Grid item xs={12} md={12} lg={2}>
                               <label style={{ textAlign: "center" }}>
                                 No. of <br /> Direct Members
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label style={{ textAlign: "center" }}>
+                                No. of <br /> Promoted Members
                               </label>
                             </Grid>
                             <Grid item xs={12} md={12} lg={2}>
@@ -860,14 +881,16 @@ const Calculator: React.FC = () => {
                             const sumIndex = index + 1;
 
                             if (
-                              values.personal.position[0].numberValue <=
-                              data.numberValue
+                              values.personal.position[0].numberValue <
+                                data.numberValue ||
+                              values.personal.position[0].numberValue ===
+                                AGENT_ROLES[7].numberValue
                             ) {
                               return <React.Fragment />;
                             }
                             return (
                               <React.Fragment>
-                                <Grid item xs={12} md={12} lg={3}>
+                                <Grid item xs={12} md={12} lg={2}>
                                   <div className="perosonal-tooltip">
                                     <Grid
                                       container
@@ -880,47 +903,16 @@ const Calculator: React.FC = () => {
                                           {data.label}
                                         </h3>
                                       </Grid>
-                                      <Grid item xs={12} md={12} lg={2}>
-                                        {values.personal.position[0]!
-                                          .numberValue <= data.numberValue ||
-                                        !values.personal.position[0].value ? (
-                                          <HtmlTooltip
-                                            title={
-                                              <div
-                                                style={{
-                                                  fontSize: "1.3rem",
-                                                  color: "#ed3e4b",
-                                                  textAlign: "center",
-                                                }}
-                                              >
-                                                <span>
-                                                  {!values.personal.position[0]
-                                                    .value
-                                                    ? "You must choose a personal position first."
-                                                    : "This position can only be lower than your own position."}
-                                                </span>
-                                              </div>
-                                            }
-                                          >
-                                            <span>
-                                              <FaExclamationCircle />
-                                            </span>
-                                          </HtmlTooltip>
-                                        ) : null}
-                                      </Grid>
                                     </Grid>
                                   </div>
                                 </Grid>
-                                <Grid item xs={12} md={12} lg={3}>
+                                <Grid item xs={12} md={12} lg={2}>
                                   <FormikTextInput
                                     name={`spread.monthlyTargetPremium${sumIndex}`}
                                     value={
-                                      values.personal.position[0].numberValue <=
-                                      data.numberValue
-                                        ? 0
-                                        : values.spread[
-                                            `monthlyTargetPremium${sumIndex}`
-                                          ] === 0 || ""
+                                      values.spread[
+                                        `monthlyTargetPremium${sumIndex}`
+                                      ] === 0 || ""
                                         ? ""
                                         : values.spread[
                                             `monthlyTargetPremium${sumIndex}`
@@ -930,7 +922,7 @@ const Calculator: React.FC = () => {
                                     placeholder={formatter.format(0)}
                                     label=""
                                     disabled={
-                                      values.personal.position[0].numberValue <=
+                                      values.personal.position[0].numberValue <
                                       data.numberValue
                                     }
                                     onBlur={(e) => {
@@ -952,12 +944,9 @@ const Calculator: React.FC = () => {
                                     type="number"
                                     name={`spread.numberOfMembers${sumIndex}`}
                                     value={
-                                      values.personal.position[0].numberValue <=
-                                      data.numberValue
-                                        ? 0
-                                        : values.spread[
-                                            `numberOfMembers${sumIndex}`
-                                          ] === 0
+                                      values.spread[
+                                        `numberOfMembers${sumIndex}`
+                                      ] === 0
                                         ? ""
                                         : values.spread[
                                             `numberOfMembers${sumIndex}`
@@ -967,7 +956,7 @@ const Calculator: React.FC = () => {
                                     variant="outlined"
                                     label=""
                                     disabled={
-                                      values.personal.position[0].numberValue <=
+                                      values.personal.position[0].numberValue <
                                       data.numberValue
                                     }
                                     onBlur={(e) => {
@@ -989,12 +978,9 @@ const Calculator: React.FC = () => {
                                     type="number"
                                     name={`spread.numberOfDirectMembers${sumIndex}`}
                                     value={
-                                      values.personal.position[0].numberValue <=
-                                      data.numberValue
-                                        ? 0
-                                        : values.spread[
-                                            `spread.numberOfDirectMembers${sumIndex}`
-                                          ] === 0
+                                      values.spread[
+                                        `spread.numberOfDirectMembers${sumIndex}`
+                                      ] === 0
                                         ? ""
                                         : values.spread[
                                             `spread.numberOfDirectMembers${sumIndex}`
@@ -1004,7 +990,41 @@ const Calculator: React.FC = () => {
                                     variant="outlined"
                                     label=""
                                     disabled={
-                                      values.personal.position[0].numberValue <=
+                                      values.personal.position[0].numberValue <
+                                      data.numberValue
+                                    }
+                                    onBlur={(e) => {
+                                      setInitialValues((prevState) => {
+                                        return {
+                                          ...initialValues,
+                                          spread: {
+                                            ...prevState.spread,
+                                            [`numberOfDirectMembers${sumIndex}`]:
+                                              e.target?.value,
+                                          },
+                                        };
+                                      });
+                                    }}
+                                  />
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={2}>
+                                  <FormikTextInput
+                                    type="number"
+                                    name={`spread.numberOfPromotedMembers${sumIndex}`}
+                                    value={
+                                      values.spread[
+                                        `spread.numberOfPromotedMembers${sumIndex}`
+                                      ] === 0
+                                        ? ""
+                                        : values.spread[
+                                            `spread.numberOfPromotedMembers${sumIndex}`
+                                          ]
+                                    }
+                                    placeholder="0"
+                                    variant="outlined"
+                                    label=""
+                                    disabled={
+                                      values.personal.position[0].numberValue <
                                       data.numberValue
                                     }
                                     onBlur={(e) => {
@@ -1026,12 +1046,9 @@ const Calculator: React.FC = () => {
                                     type="number"
                                     name={`spread.numberOfPremiumMembers${sumIndex}`}
                                     value={
-                                      values.personal.position[0].numberValue <=
-                                      data.numberValue
-                                        ? 0
-                                        : values.spread[
-                                            `spread.numberOfPremiumMembers${sumIndex}`
-                                          ] === 0
+                                      values.spread[
+                                        `spread.numberOfPremiumMembers${sumIndex}`
+                                      ] === 0
                                         ? ""
                                         : values.spread[
                                             `spread.numberOfPremiumMembers${sumIndex}`
@@ -1041,7 +1058,7 @@ const Calculator: React.FC = () => {
                                     variant="outlined"
                                     label=""
                                     disabled={
-                                      values.personal.position[0].numberValue <=
+                                      values.personal.position[0].numberValue <
                                       data.numberValue
                                     }
                                     onBlur={(e) => {
