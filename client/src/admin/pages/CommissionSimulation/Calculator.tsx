@@ -164,26 +164,14 @@ const formInitialValues = {
     numberOfPromotedMembers8: 0,
   },
   generation: {
-    gen1: "",
-    monthlyTargetPremium1: 0,
-    numberOfMembers1: 0,
-    numberOfPremMembers1: 0,
-    gen1NumberValue: 0.1,
-    gen2: "",
-    monthlyTargetPremium2: 0,
-    numberOfMembers2: 0,
-    numberOfPremMembers2: 0,
-    gen2NumberValue: 0.05,
-    gen3: "",
-    monthlyTargetPremium3: 0,
-    numberOfMembers3: 0,
-    numberOfPremMembers3: 0,
-    gen3NumberValue: 0.04,
-    gen4: "",
-    monthlyTargetPremium4: 0,
-    numberOfMembers4: 0,
-    numberOfPremMembers4: 0,
-    gen4NumberValue: 0.03,
+    gen1: 0,
+    numberValue1: 0.1,
+    gen2: 0,
+    numberValue2: 0.05,
+    gen3: 0,
+    numberValue3: 0.04,
+    gen4: 0,
+    numberValue4: 0.03,
   },
 };
 
@@ -221,6 +209,20 @@ const Calculator: React.FC = () => {
   const [isPositionValid, setIsPositionValid] = useState(false);
 
   const genNum = ["1st", "2nd", "3rd", "4th"];
+
+  const generationInitialValue = [
+    {
+      gen1: 0,
+      gen2: 0,
+      gen3: 0,
+      gen4: 0,
+    },
+  ];
+
+  const [generationTotal, setGenerationTotal] = useState(
+    generationInitialValue
+  );
+
   const earningsInitialValue = [
     {
       personal: 0,
@@ -248,8 +250,12 @@ const Calculator: React.FC = () => {
       const spreadNumberOfMembers7 = data.spread.numberOfMembers7;
       const spreadPremiumMember7 = data.spread.numberOfPremiumMembers7;
       const numberOfDirectMembers7 = data.spread.numberOfDirectMembers7;
+      const numberOfPromotedMembers7 = data.spread.numberOfPromotedMembers7;
 
       /* Formula 7 */
+
+      const spread7LessDirectMem7 =
+        spreadNumberOfMembers7 - numberOfDirectMembers7;
 
       const spread7Indirect =
         spreadMonthlyTargetPremium7 *
@@ -272,8 +278,12 @@ const Calculator: React.FC = () => {
       const spreadNumberOfMembers6 = data.spread.numberOfMembers6;
       const spreadPremiumMember6 = data.spread.numberOfPremiumMembers6;
       const numberOfDirectMembers6 = data.spread.numberOfDirectMembers6;
+      const numberOfPromotedMembers6 = data.spread.numberOfPromotedMembers6;
 
       /* Formula 6 */
+
+      const spread6LessDirectMem6 =
+        spreadNumberOfMembers6 - numberOfDirectMembers6;
 
       const spread6Indirect =
         spreadMonthlyTargetPremium6 *
@@ -296,8 +306,12 @@ const Calculator: React.FC = () => {
       const spreadNumberOfMembers5 = data.spread.numberOfMembers5;
       const spreadPremiumMember5 = data.spread.numberOfPremiumMembers5;
       const numberOfDirectMembers5 = data.spread.numberOfDirectMembers5;
+      const numberOfPromotedMembers5 = data.spread.numberOfPromotedMembers5;
 
       /* Formula 5 */
+
+      const spread5LessDirectMem5 =
+        spreadNumberOfMembers5 - numberOfDirectMembers5;
 
       const spread5Indirect =
         spreadMonthlyTargetPremium5 *
@@ -320,8 +334,12 @@ const Calculator: React.FC = () => {
       const spreadNumberOfMembers4 = data.spread.numberOfMembers4;
       const spreadPremiumMember4 = data.spread.numberOfPremiumMembers4;
       const numberOfDirectMembers4 = data.spread.numberOfDirectMembers4;
+      const numberOfPromotedMembers4 = data.spread.numberOfPromotedMembers4;
 
       /* Formula 4 */
+
+      const spread4LessDirectMem4 =
+        spreadNumberOfMembers4 - numberOfDirectMembers4;
 
       const spread4Indirect =
         spreadMonthlyTargetPremium4 *
@@ -344,8 +362,12 @@ const Calculator: React.FC = () => {
       const spreadNumberOfMembers3 = data.spread.numberOfMembers3;
       const spreadPremiumMember3 = data.spread.numberOfPremiumMembers3;
       const numberOfDirectMembers3 = data.spread.numberOfDirectMembers3;
+      const numberOfPromotedMembers3 = data.spread.numberOfPromotedMembers3;
 
       /* Formula 3 */
+
+      const spread3LessDirectMem3 =
+        spreadNumberOfMembers3 - numberOfDirectMembers3;
 
       const spread3Indirect =
         spreadMonthlyTargetPremium3 *
@@ -368,7 +390,11 @@ const Calculator: React.FC = () => {
       const spreadNumberOfMembers2 = data.spread.numberOfMembers2;
       const spreadPremiumMember2 = data.spread.numberOfPremiumMembers2;
       const numberOfDirectMembers2 = data.spread.numberOfDirectMembers2;
+      const numberOfPromotedMembers2 = data.spread.numberOfPromotedMembers2;
       /* Formula 2 */
+
+      const spread2LessDirectMem2 =
+        spreadNumberOfMembers2 - numberOfDirectMembers2;
 
       const spread2Indirect =
         spreadMonthlyTargetPremium2 *
@@ -391,6 +417,11 @@ const Calculator: React.FC = () => {
       const spreadNumberOfMembers1 = data.spread.numberOfMembers1;
       const spreadPremiumMember1 = data.spread.numberOfPremiumMembers1;
       const numberOfDirectMembers1 = data.spread.numberOfDirectMembers1;
+      const numberOfPromotedMembers1 = data.spread.numberOfPromotedMembers1;
+
+      /* Formula 1 */
+      const spread1LessDirectMem1 =
+        spreadNumberOfMembers1 - numberOfDirectMembers1;
 
       /* Spread Total Earnings */
       const spreadTotal =
@@ -401,82 +432,75 @@ const Calculator: React.FC = () => {
         spread6Total +
         spread7Total;
 
-      // /* Spread  Total Members*/
-      // const spreadMembersTotal =
-      //   spreadNumberOfMembers8 +
-      //   spreadNumberOfMembers7 +
-      //   spreadNumberOfMembers6 +
-      //   spreadNumberOfMembers5 +
-      //   spreadNumberOfMembers4 +
-      //   spreadNumberOfMembers3 +
-      //   spreadNumberOfMembers2 +
-      //   spreadNumberOfMembers1;
-      /* Hidden for future use */
-
       /** Generation Overrride */
-      /*Gen 1 */
-      const gen1NumberValue = data.generation.gen1NumberValue;
-      const numberOfMembers1 = data.generation.numberOfMembers1;
-      const numberOfPremiumMembers1 = data.generation.numberOfPremMembers1;
-      const monthlyTargetPremium1 = data.generation.monthlyTargetPremium1;
+      /* Generation 1 Formula*/
+      const genValue1 = data.generation.numberValue1;
+      const genTotal1 =
+        (spreadNumberOfMembers1 +
+          numberOfDirectMembers1 +
+          numberOfPromotedMembers1) *
+          genValue1 +
+        (spreadNumberOfMembers2 +
+          numberOfDirectMembers2 +
+          numberOfPromotedMembers2) *
+          genValue1 +
+        (spreadNumberOfMembers3 +
+          numberOfDirectMembers3 +
+          numberOfPromotedMembers3) *
+          genValue1 +
+        (spreadNumberOfMembers4 +
+          numberOfDirectMembers4 +
+          numberOfPromotedMembers4) *
+          genValue1 +
+        (spreadNumberOfMembers5 +
+          numberOfDirectMembers5 +
+          numberOfPromotedMembers5) *
+          genValue1 +
+        (spreadNumberOfMembers6 +
+          numberOfDirectMembers6 +
+          numberOfPromotedMembers6) *
+          genValue1 +
+        (spreadNumberOfMembers7 +
+          numberOfDirectMembers7 +
+          numberOfPromotedMembers7) *
+          genValue1;
 
-      /* Gen Total 1 */
-      const gen1Total =
-        monthlyTargetPremium1 *
-        numberOfMembers1 *
-        gen1NumberValue *
-        numberOfPremiumMembers1;
+      /* Generation 2 Formula*/
+      const genValue2 = data.generation.numberValue2;
+      const genTotal2 =
+        (spreadNumberOfMembers1 - spread1LessDirectMem1) * genValue2 +
+        (spreadNumberOfMembers2 - spread2LessDirectMem2) * genValue2 +
+        (spreadNumberOfMembers3 - spread3LessDirectMem3) * genValue2 +
+        (spreadNumberOfMembers4 - spread4LessDirectMem4) * genValue2 +
+        (spreadNumberOfMembers5 - spread5LessDirectMem5) * genValue2 +
+        (spreadNumberOfMembers6 - spread6LessDirectMem6) * genValue2 +
+        (spreadNumberOfMembers7 - spread7LessDirectMem7) * genValue2;
 
-      /*Gen 2 */
-      const gen2NumberValue = data.generation.gen2NumberValue;
-      const numberOfMembers2 = data.generation.numberOfMembers2;
-      const numberOfPremiumMembers2 = data.generation.numberOfPremMembers2;
-      const monthlyTargetPremium2 = data.generation.monthlyTargetPremium2;
+      /* Generation 3 Formula*/
+      const genValue3 = data.generation.numberValue3;
+      const genTotal3 =
+        (spreadNumberOfMembers1 - spread1LessDirectMem1) * genValue3 +
+        (spreadNumberOfMembers2 - spread2LessDirectMem2) * genValue3 +
+        (spreadNumberOfMembers3 - spread3LessDirectMem3) * genValue3 +
+        (spreadNumberOfMembers4 - spread4LessDirectMem4) * genValue3 +
+        (spreadNumberOfMembers5 - spread5LessDirectMem5) * genValue3 +
+        (spreadNumberOfMembers6 - spread6LessDirectMem6) * genValue3 +
+        (spreadNumberOfMembers7 - spread7LessDirectMem7) * genValue3;
 
-      /* Gen Total 2 */
-      const gen2Total =
-        monthlyTargetPremium2 *
-        numberOfMembers2 *
-        gen2NumberValue *
-        numberOfPremiumMembers2;
+      /* Generation 4 Formula*/
+      const genValue4 = data.generation.numberValue4;
+      const genTotal4 =
+        (spreadNumberOfMembers1 - spread1LessDirectMem1) * genValue4 +
+        (spreadNumberOfMembers2 - spread2LessDirectMem2) * genValue4 +
+        (spreadNumberOfMembers3 - spread3LessDirectMem3) * genValue4 +
+        (spreadNumberOfMembers4 - spread4LessDirectMem4) * genValue4 +
+        (spreadNumberOfMembers5 - spread5LessDirectMem5) * genValue4 +
+        (spreadNumberOfMembers6 - spread6LessDirectMem6) * genValue4 +
+        (spreadNumberOfMembers7 - spread7LessDirectMem7) * genValue4;
 
-      /*Gen 3 */
-      const gen3NumberValue = data.generation.gen3NumberValue;
-      const numberOfMembers3 = data.generation.numberOfMembers3;
-      const numberOfPremiumMembers3 = data.generation.numberOfPremMembers3;
-      const monthlyTargetPremium3 = data.generation.monthlyTargetPremium3;
+      /* Generation Total Formula*/
 
-      /* Gen Total 3 */
-      const gen3Total =
-        monthlyTargetPremium3 *
-        numberOfMembers3 *
-        gen3NumberValue *
-        numberOfPremiumMembers3;
-
-      /*Gen 4 */
-      const gen4NumberValue = data.generation.gen4NumberValue;
-      const numberOfMembers4 = data.generation.numberOfMembers4;
-      const numberOfPremiumMembers4 = data.generation.numberOfPremMembers4;
-      const monthlyTargetPremium4 = data.generation.monthlyTargetPremium4;
-
-      /* Gen Total 4 */
-      const gen4Total =
-        monthlyTargetPremium4 *
-        numberOfMembers4 *
-        gen4NumberValue *
-        numberOfPremiumMembers4;
-
-      /* Override Total */
-      const generationTotal = gen1Total + gen2Total + gen3Total + gen4Total;
-      const formattedGenerationTotal = parseInt(generationTotal.toFixed(2));
-
-      /* Override Total Members */
-      const overrideMembersTotal =
-        numberOfMembers4 +
-        numberOfMembers3 +
-        numberOfMembers2 +
-        numberOfMembers1;
-
+      const generationTotal = genTotal4 + genTotal3 + genTotal2 + genTotal1;
       /** Validation */
 
       const isSeniorAssociate =
@@ -509,7 +533,29 @@ const Calculator: React.FC = () => {
             return {
               personal: personalTotal,
               spread: 0,
-              generationOverride: formattedGenerationTotal,
+              generationOverride: 0,
+            };
+          });
+          return filteredPrevState;
+        });
+
+        if (
+          data.personal.position[0].numberValue > AGENT_ROLES[3].numberValue
+        ) {
+          setIsPositionValid(true);
+        } else {
+          setIsPositionValid(false);
+        }
+      };
+
+      const genEarningsSetter = () => {
+        setGenerationTotal((prevState) => {
+          const filteredPrevState = prevState.map((data) => {
+            return {
+              gen1: 0,
+              gen2: 0,
+              gen3: 0,
+              gen4: 0,
             };
           });
           return filteredPrevState;
@@ -612,7 +658,7 @@ const Calculator: React.FC = () => {
           return {
             personal: personalTotal,
             spread: spreadTotal,
-            generationOverride: formattedGenerationTotal,
+            generationOverride: 0,
           };
         });
         return filteredPrevState;
@@ -672,7 +718,7 @@ const Calculator: React.FC = () => {
           return (
             <div className="two-col">
               <Grid container spacing={2}>
-                <Grid item xs={12} md={12} lg={7}>
+                <Grid item xs={12} md={12} lg={5}>
                   <div className="left-col-calculator">
                     <div className="overall-earnings-container">
                       <Grid container spacing={0} alignItems="center">
@@ -838,6 +884,8 @@ const Calculator: React.FC = () => {
                               color: "#000",
                               fontWeight: "300",
                               textAlign: "center",
+                              marginTop: "2rem",
+                              paddingBottom: "7rem",
                             }}
                           >
                             No Spread data availabe for Traning Associate.
@@ -856,12 +904,12 @@ const Calculator: React.FC = () => {
                             </Grid>
                             <Grid item xs={12} md={12} lg={2}>
                               <label>
-                                No.of <br /> Total Members
+                                No. of <br /> Total <br /> Members
                               </label>
                             </Grid>
                             <Grid item xs={12} md={12} lg={2}>
                               <label style={{ textAlign: "center" }}>
-                                No. of <br /> Direct Members
+                                No. of <br /> Direct <br /> Members
                               </label>
                             </Grid>
                             <Grid item xs={12} md={12} lg={2}>
@@ -871,7 +919,7 @@ const Calculator: React.FC = () => {
                             </Grid>
                             <Grid item xs={12} md={12} lg={2}>
                               <label>
-                                No. of Premium <br /> per Member
+                                No. of <br /> Premium per Member
                               </label>
                             </Grid>
                           </Grid>
@@ -1083,7 +1131,7 @@ const Calculator: React.FC = () => {
                     </div>
                   </div>
                 </Grid>
-                <Grid item xs={12} md={12} lg={5}>
+                <Grid item xs={12} md={12} lg={7}>
                   <div className="right-col-calculator">
                     <div className="top-section">
                       <div className="top-section-captions">
@@ -1107,220 +1155,140 @@ const Calculator: React.FC = () => {
                           />
                         ) : null}
                       </div>
-                      <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={12} md={12} lg={3}>
-                          <label
-                            style={{ textAlign: "left", marginLeft: "3rem" }}
-                          >
-                            Tier
-                          </label>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={3}>
-                          <label>
-                            Monthly Target <br /> Premium per Policy
-                          </label>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={3}>
-                          <label>
-                            No.of <br /> Members
-                          </label>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={3}>
-                          <label>
-                            No. of Premium <br /> per Member
-                          </label>
-                        </Grid>
-                      </Grid>
-                      <Grid container spacing={2} alignItems="center">
-                        {genNum.map((data, index) => {
-                          const sumIndex = index + 1;
-                          const inputValidity =
-                            !values.personal.position.length;
-
-                          return (
-                            <React.Fragment>
-                              <Grid item sm={12} md={9} lg={3}>
-                                <div className="calcu-form-control">
-                                  <h3>{data} Generation</h3>
-                                </div>
-                              </Grid>
-                              <Grid item sm={12} md={9} lg={3}>
-                                <div className="calcu-form-control">
-                                  <p></p>
-                                  <FormikTextInput
-                                    type="number"
-                                    name={`generation.monthlyTargetPremium${sumIndex}`}
-                                    value={
-                                      values.generation[
-                                        `monthlyTargetPremium${sumIndex}`
-                                      ] === 0
-                                        ? ""
-                                        : values.generation[
-                                            `monthlyTargetPremium${sumIndex}`
-                                          ]
-                                    }
-                                    placeholder={formatter.format(0)}
-                                    variant="outlined"
-                                    label=""
-                                    disabled={inputValidity}
-                                    onBlur={(e) => {
-                                      setInitialValues((prevState) => {
-                                        return {
-                                          ...initialValues,
-                                          generation: {
-                                            ...prevState.generation,
-                                            [`monthlyTargetPremium${sumIndex}`]:
-                                              e.target?.value,
-                                          },
-                                        };
-                                      });
-                                    }}
-                                  />
-                                </div>
-                              </Grid>
-                              <Grid item sm={12} md={9} lg={3}>
-                                <div className="calcu-form-control">
-                                  <FormikTextInput
-                                    name={`generation.numberOfMembers${sumIndex}`}
-                                    type="number"
-                                    value={
-                                      values.generation[
-                                        `numberOfMembers${sumIndex}`
-                                      ] === 0
-                                        ? ""
-                                        : values.generation[
-                                            `numberOfMembers${sumIndex}`
-                                          ]
-                                    }
-                                    placeholder="0"
-                                    variant="outlined"
-                                    label=""
-                                    disabled={inputValidity}
-                                    onBlur={(e) => {
-                                      setInitialValues((prevState) => {
-                                        return {
-                                          ...initialValues,
-                                          generation: {
-                                            ...prevState.generation,
-                                            [`numberOfMembers${sumIndex}`]:
-                                              e.target?.value,
-                                          },
-                                        };
-                                      });
-                                    }}
-                                  />
-                                </div>
-                              </Grid>
-                              <Grid item sm={12} md={9} lg={3}>
-                                <div className="calcu-form-control">
-                                  <FormikTextInput
-                                    name={`generation.numberOfPremMembers${sumIndex}`}
-                                    type="number"
-                                    value={
-                                      values.generation[
-                                        `numberOfPremMembers${sumIndex}`
-                                      ] === 0
-                                        ? ""
-                                        : values.generation[
-                                            `numberOfPremMembers${sumIndex}`
-                                          ]
-                                    }
-                                    placeholder="0"
-                                    variant="outlined"
-                                    label=""
-                                    disabled={inputValidity}
-                                    onBlur={(e) => {
-                                      setInitialValues((prevState) => {
-                                        return {
-                                          ...initialValues,
-                                          generation: {
-                                            ...prevState.generation,
-                                            [`numberOfPremMembers${sumIndex}`]:
-                                              e.target?.value,
-                                          },
-                                        };
-                                      });
-                                    }}
-                                  />
-                                </div>
-                              </Grid>
-                            </React.Fragment>
-                          );
-                        })}
-                      </Grid>
-                    </div>
-                    <div className="tri-col-container">
                       <Grid
                         container
-                        spacing={12}
-                        justifyContent="space-between"
+                        spacing={2}
+                        className="override-breakdown-wrapper"
                       >
                         <Grid item xs={12} md={12} lg={4}>
-                          <div className="tri-col-section-captions">
-                            <div className="earnings-title">
-                              <h2>Personal Earnings</h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value1-block">
-                              <h2>
-                                {formatter.format(totalEarnings[0].personal)}
-                                {/*  */}
+                          <Grid
+                            container
+                            spacing={2}
+                            className="override-earnings-label"
+                          >
+                            <Grid item xs={12} md={12} lg={6}>
+                              <h2>Tier</h2>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={6}>
+                              <h2 style={{ textAlign: "center" }}>
+                                Override Earnings <br /> per Generation
                               </h2>
-                            </div>
-                            <div className="earnings-label">Annual</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="sky">
-                                {formatter.format(
-                                  totalEarnings[0].personal * 12
-                                )}
-                              </h2>
-                            </div>
-                          </div>
+                            </Grid>
+                          </Grid>
+                          {genNum.map((data, index) => {
+                            const sumIndex = index + 1;
+                            return (
+                              <Grid
+                                container
+                                spacing={2}
+                                className="override-earnings-content-container"
+                              >
+                                <Grid item xs={12} md={12} lg={6}>
+                                  <h2>{data} generation</h2>
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={6}>
+                                  <h3 style={{ textAlign: "center" }}>
+                                    {formatter.format(0)}
+                                  </h3>
+                                </Grid>
+                              </Grid>
+                            );
+                          })}
                         </Grid>
-                        <Grid item xs={12} md={12} lg={4}>
-                          <div className="tri-col-section-captions">
-                            <div className="earnings-title">
-                              <h2>Spread Earnings</h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value1-block">
-                              <h2>
-                                {formatter.format(totalEarnings[0].spread)}
-                              </h2>
-                            </div>
-                            <div className="earnings-label">Annual</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="navy">
-                                {formatter.format(totalEarnings[0].spread * 12)}
-                              </h2>
-                            </div>
-                          </div>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={4}>
-                          <div className="tri-col-section-captions">
-                            <div className="earnings-title">
-                              <h2>Override Earnings</h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value1-block">
-                              <h2>
-                                {formatter.format(
-                                  totalEarnings[0].generationOverride
-                                )}
-                              </h2>
-                            </div>
-                            <div className="earnings-label">Annual</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="light">
-                                {formatter.format(
-                                  totalEarnings[0].generationOverride * 12
-                                )}
-                              </h2>
-                            </div>
+                        <Grid item xs={12} md={12} lg={8}>
+                          <div className="tri-col-container">
+                            <Grid
+                              container
+                              spacing={12}
+                              justifyContent="space-between"
+                            >
+                              <Grid item xs={12} md={12} lg={4}>
+                                <div className="tri-col-section-captions">
+                                  <div className="earnings-title">
+                                    <h2>Personal Earnings</h2>
+                                  </div>
+                                  <div className="earnings-label">Monthly</div>
+                                  <div className="earnings-value1-block">
+                                    <h2>
+                                      {formatter.format(
+                                        totalEarnings[0].personal
+                                      )}
+                                    </h2>
+                                  </div>
+                                  <div className="earnings-label">Annual</div>
+                                  <div className="earnings-value2-block">
+                                    <h2 className="sky">
+                                      {formatter.format(
+                                        totalEarnings[0].personal * 12
+                                      )}
+                                    </h2>
+                                  </div>
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} md={12} lg={4}>
+                                <div className="tri-col-section-captions">
+                                  <div className="earnings-title">
+                                    <h2>Spread Earnings</h2>
+                                  </div>
+                                  <div className="earnings-label">Monthly</div>
+                                  <div className="earnings-value1-block">
+                                    <h2>
+                                      {formatter.format(
+                                        totalEarnings[0].spread
+                                      )}
+                                    </h2>
+                                  </div>
+                                  <div className="earnings-label">Annual</div>
+                                  <div className="earnings-value2-block">
+                                    <h2 className="navy">
+                                      {formatter.format(
+                                        totalEarnings[0].spread * 12
+                                      )}
+                                    </h2>
+                                  </div>
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} md={12} lg={4}>
+                                <div className="tri-col-section-captions">
+                                  <div className="earnings-title">
+                                    <h2>Override Earnings</h2>
+                                  </div>
+                                  <div className="earnings-label">Monthly</div>
+                                  <div className="earnings-value1-block">
+                                    <h2>
+                                      {formatter.format(
+                                        generationTotal[0].gen1
+                                      )}
+                                    </h2>
+                                  </div>
+                                  <div className="earnings-label">Annual</div>
+                                  <div className="earnings-value2-block">
+                                    <h2 className="light">
+                                      {formatter.format(
+                                        generationTotal[0].gen1 * 12
+                                      )}
+                                    </h2>
+                                  </div>
+                                </div>
+                              </Grid>
+                            </Grid>
                           </div>
                         </Grid>
                       </Grid>
+                      {totalEarnings[0].spread !== 0 ? (
+                        <div className="generational-tree">
+                          <h2>Generational Tree</h2>
+                          <div className="generational-tree-diagram">
+                            <img
+                              style={{ borderRadius: "20px" }}
+                              src="/assets/others/generation-tree-dummy.jpg"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
+
                     <div className="calculator-buttons">
                       <Button
                         variant="danger"
