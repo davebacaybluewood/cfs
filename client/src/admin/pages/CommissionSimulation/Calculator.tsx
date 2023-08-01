@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Grid, Modal } from "@mui/material";
 import FormikTextInput from "library/Formik/FormikInput";
 import { Formik } from "formik";
@@ -6,12 +6,9 @@ import Select from "react-select";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import formatter from "helpers/currencyFormatter";
-import { FaExclamationCircle } from "react-icons/fa";
 import { AiOutlineWarning } from "react-icons/ai";
-import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import AlertMessage from "library/AlertMessage/Alert";
 import Button from "library/Button/Button";
-import { Button as MuiButton } from "@mui/material";
 import useAccountValidation from "admin/hooks/useAccountValidation";
 import nameFallback from "helpers/nameFallback";
 import "./Calculator.scss";
@@ -658,7 +655,19 @@ const Calculator: React.FC = () => {
           return {
             personal: personalTotal,
             spread: spreadTotal,
-            generationOverride: 0,
+            generationOverride: generationTotal,
+          };
+        });
+        return filteredPrevState;
+      });
+
+      setGenerationTotal((prevState) => {
+        const filteredPrevState = prevState.map((data) => {
+          return {
+            gen1: genTotal1,
+            gen2: genTotal2,
+            gen3: genTotal3,
+            gen4: genTotal4,
           };
         });
         return filteredPrevState;
@@ -885,7 +894,7 @@ const Calculator: React.FC = () => {
                               fontWeight: "300",
                               textAlign: "center",
                               marginTop: "2rem",
-                              paddingBottom: "7rem",
+                              paddingBottom: "7.8rem",
                             }}
                           >
                             No Spread data availabe for Traning Associate.
@@ -1145,7 +1154,15 @@ const Calculator: React.FC = () => {
                     </div>
 
                     <div className="calculator-input-container-override">
-                      <h2>Generation Override</h2>
+                      <h2
+                        style={{
+                          fontSize: "2rem",
+                          fontWeight: "900",
+                          fontFamily: "sans-serif",
+                        }}
+                      >
+                        Generation Override
+                      </h2>
 
                       <div className="alert-message">
                         {values.personal.position[0].numberValue < 0.81 ? (
@@ -1176,7 +1193,8 @@ const Calculator: React.FC = () => {
                             </Grid>
                           </Grid>
                           {genNum.map((data, index) => {
-                            const sumIndex = index + 1;
+                            const genIndex = index + 1;
+
                             return (
                               <Grid
                                 container
@@ -1188,7 +1206,9 @@ const Calculator: React.FC = () => {
                                 </Grid>
                                 <Grid item xs={12} md={12} lg={6}>
                                   <h3 style={{ textAlign: "center" }}>
-                                    {formatter.format(0)}
+                                    {formatter.format(
+                                      generationTotal[0][`gen${genIndex}`]
+                                    )}
                                   </h3>
                                 </Grid>
                               </Grid>
@@ -1257,7 +1277,7 @@ const Calculator: React.FC = () => {
                                   <div className="earnings-value1-block">
                                     <h2>
                                       {formatter.format(
-                                        generationTotal[0].gen1
+                                        totalEarnings[0].generationOverride
                                       )}
                                     </h2>
                                   </div>
@@ -1265,7 +1285,7 @@ const Calculator: React.FC = () => {
                                   <div className="earnings-value2-block">
                                     <h2 className="light">
                                       {formatter.format(
-                                        generationTotal[0].gen1 * 12
+                                        totalEarnings[0].generationOverride * 12
                                       )}
                                     </h2>
                                   </div>
