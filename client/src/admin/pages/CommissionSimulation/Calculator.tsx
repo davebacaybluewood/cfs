@@ -567,80 +567,78 @@ const Calculator: React.FC = () => {
         }
       };
 
-      if (isSeniorAssociate && spreadNumberOfMembers7 < 3) {
+      /* Validation */
+      const SAvalidity =
+        Number(spreadNumberOfMembers7) + Number(numberOfDirectMembers7);
+      const MDvalidity =
+        Number(spreadNumberOfMembers6) + Number(numberOfDirectMembers6) < 2 ||
+        Number(spreadNumberOfMembers7) + Number(numberOfDirectMembers7) < 5;
+
+      const SMDvalidity =
+        Number(spreadNumberOfMembers5) + Number(numberOfDirectMembers5) < 2 &&
+        Number(spreadNumberOfMembers6) + Number(numberOfDirectMembers6) < 5;
+
+      const EMDvalidity =
+        Number(spreadNumberOfMembers4) + Number(numberOfDirectMembers4) < 2 &&
+        Number(spreadNumberOfMembers5) + Number(numberOfDirectMembers5) < 3;
+
+      const SEMDvalidity =
+        Number(spreadNumberOfMembers3) + Number(numberOfDirectMembers3) < 2 &&
+        Number(spreadNumberOfMembers4) + Number(numberOfDirectMembers4) < 4;
+
+      const EVPvalidity =
+        Number(spreadNumberOfMembers2) + Number(numberOfDirectMembers2) < 2 &&
+        Number(spreadNumberOfMembers4) + Number(numberOfDirectMembers4) < 6;
+
+      if (isSeniorAssociate && SAvalidity < 3) {
         setErrorMessage(
           "Minimum requirement for Senior Associate not met : 3 Associates."
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
         return;
-      } else if (
-        isMarketingDirector &&
-        (spreadNumberOfMembers6 < 2 || spreadNumberOfMembers7 < 5)
-      ) {
+      } else if (isMarketingDirector && MDvalidity) {
         setErrorMessage(
           "Minimum requirement for Marketing Director not met : 2 Senior Associates and 5 Associates."
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
         return;
-      } else if (
-        (isSeniorMarketingDirector &&
-          spreadNumberOfMembers5 < 2 &&
-          spreadNumberOfMembers6 < 5) ||
-        (isSeniorMarketingDirector &&
-          spreadNumberOfMembers6 < 5 &&
-          spreadNumberOfMembers5 < 2)
-      ) {
+      } else if (isSeniorMarketingDirector && SMDvalidity) {
         setErrorMessage(
           "Minimum requirement for Senior Marketing Director not met : 2 Marketing Director or 5 Senior Associates"
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
 
         return;
-      } else if (
-        (isExecutiveMarketingDirector &&
-          spreadNumberOfMembers6 < 2 &&
-          spreadNumberOfMembers5 < 3) ||
-        (isExecutiveMarketingDirector &&
-          spreadNumberOfMembers5 < 3 &&
-          spreadNumberOfMembers4 < 2)
-      ) {
+      } else if (isExecutiveMarketingDirector && EMDvalidity) {
         setErrorMessage(
           "Minimum requirement for Executive Marketing Director not met : 2 Senior Marketing Director or 3 Marketing Director"
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
 
         return;
-      } else if (
-        (isSeniorExecutiveMarketingDirector &&
-          spreadNumberOfMembers3 < 2 &&
-          spreadNumberOfMembers4 < 2) ||
-        (isSeniorExecutiveMarketingDirector &&
-          spreadNumberOfMembers4 < 4 &&
-          spreadNumberOfMembers3 < 2)
-      ) {
+      } else if (isSeniorExecutiveMarketingDirector && SEMDvalidity) {
         setErrorMessage(
           "Minimum requirement for Senior Executive Marketing Director not met : 2 Executive Marketing Director or 4 Senior Marketing Director"
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
 
         return;
-      } else if (
-        (isVicePresident &&
-          spreadNumberOfMembers2 < 2 &&
-          spreadNumberOfMembers4 < 6) ||
-        (isVicePresident &&
-          spreadNumberOfMembers4 < 6 &&
-          spreadNumberOfMembers2 < 2)
-      ) {
+      } else if (isVicePresident && EVPvalidity) {
         setErrorMessage(
           "Minimum requirement for Executive Vice President not met : 2 Senior Executive Marketing Director or 6 Senior Marketing Director"
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
 
         return;
@@ -1159,6 +1157,7 @@ const Calculator: React.FC = () => {
                           fontSize: "2rem",
                           fontWeight: "900",
                           fontFamily: "sans-serif",
+                          marginTop: "-1.5rem",
                         }}
                       >
                         Generation Override
@@ -1314,6 +1313,7 @@ const Calculator: React.FC = () => {
                         variant="danger"
                         onClick={() => {
                           resetForm();
+                          setGenerationTotal(generationInitialValue);
                           setTotalEarnings(earningsInitialValue);
                         }}
                       >
