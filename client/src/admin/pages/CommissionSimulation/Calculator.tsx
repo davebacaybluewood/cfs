@@ -914,7 +914,7 @@ const Calculator: React.FC = () => {
           return (
             <div className="two-col">
               <Grid container spacing={2}>
-                <Grid item xs={12} md={12} lg={5}>
+                <Grid item xs={12} md={12} lg={6}>
                   <div className="left-col-calculator">
                     <div className="overall-earnings-container">
                       <Grid container spacing={0} alignItems="center">
@@ -1071,7 +1071,7 @@ const Calculator: React.FC = () => {
                             />
                           </div>
                         ) : (
-                          <div style={{ height: "3.9vh" }}></div>
+                          <div style={{ height: "1.5vh" }}></div>
                         )}
                         {values.personal.position[0].numberValue ===
                         AGENT_ROLES[7].numberValue ? (
@@ -1081,7 +1081,7 @@ const Calculator: React.FC = () => {
                               fontWeight: "300",
                               textAlign: "center",
                               marginTop: "2rem",
-                              paddingBottom: "6.8rem",
+                              paddingBottom: "5.6rem",
                             }}
                           >
                             No Spread data availabe for Traning Associate.
@@ -1096,12 +1096,12 @@ const Calculator: React.FC = () => {
 
                             <Grid item xs={12} md={12} lg={2}>
                               <label>
-                                No. of <br /> Total <br /> Members
+                                No. of <br /> Total Members
                               </label>
                             </Grid>
                             <Grid item xs={12} md={12} lg={2}>
                               <label style={{ textAlign: "center" }}>
-                                No. of <br /> Direct <br /> Members
+                                No. of <br /> Direct Members
                               </label>
                             </Grid>
                             <Grid item xs={12} md={12} lg={2}>
@@ -1329,7 +1329,7 @@ const Calculator: React.FC = () => {
                     </div>
                   </div>
                 </Grid>
-                <Grid item xs={12} md={12} lg={7}>
+                <Grid item xs={12} md={12} lg={6}>
                   <div className="right-col-calculator">
                     <div className="top-section">
                       <div className="top-section-captions">
@@ -1349,6 +1349,7 @@ const Calculator: React.FC = () => {
                           fontWeight: "900",
                           fontFamily: "sans-serif",
                           marginTop: "-1.5rem",
+                          marginBottom: "1rem",
                         }}
                       >
                         Generation Override
@@ -1377,8 +1378,13 @@ const Calculator: React.FC = () => {
                               <h2>Tier</h2>
                             </Grid>
                             <Grid item xs={12} md={12} lg={6}>
-                              <h2 style={{ textAlign: "center" }}>
-                                Override Earnings <br /> per Generation
+                              <h2
+                                style={{
+                                  textAlign: "center",
+                                  fontSize: "1.2rem",
+                                }}
+                              >
+                                Override Earnings per Generation
                               </h2>
                             </Grid>
                           </Grid>
@@ -1409,7 +1415,7 @@ const Calculator: React.FC = () => {
                           <div className="tri-col-container">
                             <Grid
                               container
-                              spacing={12}
+                              spacing={6}
                               justifyContent="space-between"
                             >
                               <Grid item xs={12} md={12} lg={4}>
