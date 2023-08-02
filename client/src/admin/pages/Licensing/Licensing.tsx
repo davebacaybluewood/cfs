@@ -48,6 +48,7 @@ const Licensing: React.FC = () => {
                   <li>
                     <Badge>
                       Promo Code: <span className="promo-code">#2248046</span>
+                      <span> (All State)</span>
                     </Badge>
                     <Link
                       to="https://www.adbanker.com/default.aspx"
@@ -61,6 +62,7 @@ const Licensing: React.FC = () => {
                     <Badge>
                       Discount Code:{" "}
                       <span className="promo-code">#STUDY2023</span>
+                      <span> (CA Only)</span>
                     </Badge>
                     <Link
                       to="https://prelicensetraining.com/prelicense-training"
@@ -204,6 +206,7 @@ const Licensing: React.FC = () => {
                   <li>
                     <Badge>
                       Promo Code: <span className="promo-code">#2248046</span>
+                      <span> (All State)</span>
                     </Badge>
                     <Link
                       to="https://www.adbanker.com/default.aspx"
@@ -217,6 +220,7 @@ const Licensing: React.FC = () => {
                     <Badge>
                       Discount Code:{" "}
                       <span className="promo-code">#STUDY2023</span>
+                      <span> (CA Only)</span>
                     </Badge>
                     <Link
                       to="https://prelicensetraining.com/prelicense-training"
