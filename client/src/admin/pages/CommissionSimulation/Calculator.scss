@@ -1,9 +1,10 @@
 .admin-calculator {
   background: #b6cee8;
   position: relative;
-  padding: 0rem 5rem;
+  padding: 1rem 2rem;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
   height: 100vh;
 
   fieldset {
@@ -76,6 +77,8 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
 
           h2 {
             font-family: "Montserrat", sans-serif;
@@ -175,6 +178,7 @@
             font-family: "Montserrat", sans-serif;
             font-weight: 800;
             font-size: 2rem;
+            margin-bottom: 1rem;
           }
           h3 {
             font-family: "Montserrat", sans-serif;
@@ -188,7 +192,7 @@
             display: block;
             text-align: center;
             font-size: 1rem;
-            margin-bottom: 0.3rem;
+            margin: 1rem 0;
             font-weight: 800;
           }
         }
@@ -233,11 +237,13 @@
         margin-top: 1.5rem;
         background: #fff;
         border-radius: 20px;
-        padding: 5rem 4rem 1rem 4rem;
+        padding: 0 1rem;
+        border: 3px dotted #008000;
+        text-align: center;
 
         .MuiGrid-root {
-          padding-top: 3.2rem;
-          padding-bottom: 0;
+          padding-bottom: 1rem;
+          padding-top: 3.5rem;
         }
 
         .tri-col-section-captions {
@@ -245,7 +251,7 @@
             margin-bottom: 1rem;
             h2 {
               color: #5a5a5a;
-              font-size: 2rem;
+              font-size: 1.5rem;
               font-family: "Montserrat", sans-serif;
             }
           }
@@ -296,12 +302,11 @@
 
       .override-breakdown-wrapper {
         .override-earnings-label {
-          margin-bottom: 2rem;
           display: flex;
           align-items: center;
           h2 {
             font-family: "Montserrat", sans-serif;
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 800;
             color: #5a5a5a;
           }
@@ -316,6 +321,7 @@
             font-family: "Montserrat", sans-serif;
             font-weight: 800;
             color: #5a5a5a;
+            font-size: 1.2rem;
           }
 
           h3 {
@@ -327,10 +333,6 @@
             padding: 1rem;
           }
         }
-      }
-
-      .MuiGrid-root > .MuiGrid-item {
-        padding-top: 0.5rem;
       }
 
       .alert-message {
@@ -360,7 +362,7 @@
           justify-content: center;
           justify-items: center;
           img {
-            width: 800px;
+            width: 710px;
           }
         }
       }
@@ -454,7 +456,7 @@
       }
 
       .calculator-input-container-override {
-        padding: 2rem;
+        padding: 2.5rem;
       }
     }
   }
@@ -462,7 +464,7 @@
 
 @media screen and (max-width: 1880px) {
   .admin-calculator {
-    padding: 7rem 2rem;
+    height: 110vh;
     .two-col {
       .calculator-input-container-override {
         padding: 5.3rem 4rem !important;
