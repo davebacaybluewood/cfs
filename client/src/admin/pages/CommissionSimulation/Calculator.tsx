@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Box, Grid, Modal } from "@mui/material";
 import FormikTextInput from "library/Formik/FormikInput";
 import { Formik } from "formik";
 import Select from "react-select";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import formatter from "helpers/currencyFormatter";
-import { FaExclamationCircle } from "react-icons/fa";
 import { AiOutlineWarning } from "react-icons/ai";
-import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import AlertMessage from "library/AlertMessage/Alert";
 import Button from "library/Button/Button";
-import "./Calculator.scss";
 import useAccountValidation from "admin/hooks/useAccountValidation";
 import nameFallback from "helpers/nameFallback";
+import "./Calculator.scss";
 
 const AGENT_ROLES = [
   {
@@ -83,6 +81,7 @@ const formInitialValues = {
     numberOfPremiumMembers1: 0,
     numberOfMembers1: 0,
     numberOfDirectMembers1: 0,
+    numberOfPromotedMembers1: 0,
 
     position2: {
       label: AGENT_ROLES[1].label,
@@ -93,6 +92,7 @@ const formInitialValues = {
     numberOfPremiumMembers2: 0,
     numberOfMembers2: 0,
     numberOfDirectMembers2: 0,
+    numberOfPromotedMembers2: 0,
 
     position3: {
       label: AGENT_ROLES[2].label,
@@ -103,6 +103,7 @@ const formInitialValues = {
     numberOfPremiumMembers3: 0,
     numberOfMembers3: 0,
     numberOfDirectMembers3: 0,
+    numberOfPromotedMembers3: 0,
 
     position4: {
       label: AGENT_ROLES[3].label,
@@ -113,6 +114,7 @@ const formInitialValues = {
     numberOfPremiumMembers4: 0,
     numberOfMembers4: 0,
     numberOfDirectMembers4: 0,
+    numberOfPromotedMembers4: 0,
 
     position5: {
       label: AGENT_ROLES[4].label,
@@ -123,6 +125,7 @@ const formInitialValues = {
     numberOfPremiumMembers5: 0,
     numberOfMembers5: 0,
     numberOfDirectMembers5: 0,
+    numberOfPromotedMembers5: 0,
 
     position6: {
       label: AGENT_ROLES[5].label,
@@ -133,6 +136,7 @@ const formInitialValues = {
     numberOfPremiumMembers6: 0,
     numberOfMembers6: 0,
     numberOfDirectMembers6: 0,
+    numberOfPromotedMembers6: 0,
 
     position7: {
       label: AGENT_ROLES[6].label,
@@ -143,6 +147,7 @@ const formInitialValues = {
     numberOfPremiumMembers7: 0,
     numberOfMembers7: 0,
     numberOfDirectMembers7: 0,
+    numberOfPromotedMembers7: 0,
 
     position8: {
       label: AGENT_ROLES[7].label,
@@ -153,32 +158,38 @@ const formInitialValues = {
     numberOfPremiumMembers8: 0,
     numberOfMembers8: 0,
     numberOfDirectMembers8: 0,
+    numberOfPromotedMembers8: 0,
   },
   generation: {
-    gen1: "",
-    monthlyTargetPremium1: 0,
-    numberOfMembers1: 0,
-    numberOfPremMembers1: 0,
-    gen1NumberValue: 0.1,
-    gen2: "",
-    monthlyTargetPremium2: 0,
-    numberOfMembers2: 0,
-    numberOfPremMembers2: 0,
-    gen2NumberValue: 0.05,
-    gen3: "",
-    monthlyTargetPremium3: 0,
-    numberOfMembers3: 0,
-    numberOfPremMembers3: 0,
-    gen3NumberValue: 0.04,
-    gen4: "",
-    monthlyTargetPremium4: 0,
-    numberOfMembers4: 0,
-    numberOfPremMembers4: 0,
-    gen4NumberValue: 0.03,
+    gen1: 0,
+    numberValue1: 0.1,
+    gen2: 0,
+    numberValue2: 0.05,
+    gen3: 0,
+    numberValue3: 0.04,
+    gen4: 0,
+    numberValue4: 0.03,
   },
 };
 
 const Calculator: React.FC = () => {
+  /* Modal styles */
+  const style = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "1px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const account: any = useAccountValidation();
   // Mock Date
   const current = new Date();
@@ -195,6 +206,20 @@ const Calculator: React.FC = () => {
   const [isPositionValid, setIsPositionValid] = useState(false);
 
   const genNum = ["1st", "2nd", "3rd", "4th"];
+
+  const generationInitialValue = [
+    {
+      gen1: 0,
+      gen2: 0,
+      gen3: 0,
+      gen4: 0,
+    },
+  ];
+
+  const [generationTotal, setGenerationTotal] = useState(
+    generationInitialValue
+  );
+
   const earningsInitialValue = [
     {
       personal: 0,
@@ -203,6 +228,8 @@ const Calculator: React.FC = () => {
     },
   ];
   const [totalEarnings, setTotalEarnings] = useState(earningsInitialValue);
+
+  console.log(totalEarnings[0].generationOverride);
 
   useEffect(() => {
     const onCalculate = (data = initialValues) => {
@@ -217,13 +244,22 @@ const Calculator: React.FC = () => {
 
       /* Position 7 */
       /* Associate */
-      const spreadNumberValue7 = data.spread.position7.numberValue;
-      const spreadMonthlyTargetPremium7 = data.spread.monthlyTargetPremium7;
-      const spreadNumberOfMembers7 = data.spread.numberOfMembers7;
-      const spreadPremiumMember7 = data.spread.numberOfPremiumMembers7;
-      const numberOfDirectMembers7 = data.spread.numberOfDirectMembers7;
+      const spreadNumberValue7 = Number(data.spread.position7.numberValue);
+      const spreadMonthlyTargetPremium7 = Number(
+        data.spread.monthlyTargetPremium7
+      );
+      const spreadNumberOfMembers7 = Number(data.spread.numberOfMembers7);
+      const spreadPremiumMember7 = Number(data.spread.numberOfPremiumMembers7);
+      const numberOfDirectMembers7 = Number(data.spread.numberOfDirectMembers7);
+      const numberOfPromotedMembers7 = Number(
+        data.spread.numberOfPromotedMembers7
+      );
 
       /* Formula 7 */
+      /* Associate */
+
+      const spread7LessDirectMem7 =
+        spreadNumberOfMembers7 - numberOfDirectMembers7;
 
       const spread7Indirect =
         spreadMonthlyTargetPremium7 *
@@ -241,13 +277,21 @@ const Calculator: React.FC = () => {
 
       /* Position 6 */
       /* Senior Associate */
-      const spreadNumberValue6 = data.spread.position6.numberValue;
-      const spreadMonthlyTargetPremium6 = data.spread.monthlyTargetPremium6;
-      const spreadNumberOfMembers6 = data.spread.numberOfMembers6;
-      const spreadPremiumMember6 = data.spread.numberOfPremiumMembers6;
-      const numberOfDirectMembers6 = data.spread.numberOfDirectMembers6;
+      const spreadNumberValue6 = Number(data.spread.position6.numberValue);
+      const spreadMonthlyTargetPremium6 = Number(
+        data.spread.monthlyTargetPremium6
+      );
+      const spreadNumberOfMembers6 = Number(data.spread.numberOfMembers6);
+      const spreadPremiumMember6 = Number(data.spread.numberOfPremiumMembers6);
+      const numberOfDirectMembers6 = Number(data.spread.numberOfDirectMembers6);
+      const numberOfPromotedMembers6 = Number(
+        data.spread.numberOfPromotedMembers6
+      );
 
       /* Formula 6 */
+
+      const spread6LessDirectMem6 =
+        spreadNumberOfMembers6 - numberOfDirectMembers6;
 
       const spread6Indirect =
         spreadMonthlyTargetPremium6 *
@@ -265,13 +309,21 @@ const Calculator: React.FC = () => {
 
       /* Position 5 */
       /* Marketing Director */
-      const spreadNumberValue5 = data.spread.position5.numberValue;
-      const spreadMonthlyTargetPremium5 = data.spread.monthlyTargetPremium5;
-      const spreadNumberOfMembers5 = data.spread.numberOfMembers5;
-      const spreadPremiumMember5 = data.spread.numberOfPremiumMembers5;
-      const numberOfDirectMembers5 = data.spread.numberOfDirectMembers5;
+      const spreadNumberValue5 = Number(data.spread.position5.numberValue);
+      const spreadMonthlyTargetPremium5 = Number(
+        data.spread.monthlyTargetPremium5
+      );
+      const spreadNumberOfMembers5 = Number(data.spread.numberOfMembers5);
+      const spreadPremiumMember5 = Number(data.spread.numberOfPremiumMembers5);
+      const numberOfDirectMembers5 = Number(data.spread.numberOfDirectMembers5);
+      const numberOfPromotedMembers5 = Number(
+        data.spread.numberOfPromotedMembers5
+      );
 
       /* Formula 5 */
+
+      const spread5LessDirectMem5 =
+        spreadNumberOfMembers5 - numberOfDirectMembers5;
 
       const spread5Indirect =
         spreadMonthlyTargetPremium5 *
@@ -289,13 +341,21 @@ const Calculator: React.FC = () => {
 
       /* Position 4 */
       /*Senior Marketing Director */
-      const spreadNumberValue4 = data.spread.position4.numberValue;
-      const spreadMonthlyTargetPremium4 = data.spread.monthlyTargetPremium4;
-      const spreadNumberOfMembers4 = data.spread.numberOfMembers4;
-      const spreadPremiumMember4 = data.spread.numberOfPremiumMembers4;
-      const numberOfDirectMembers4 = data.spread.numberOfDirectMembers4;
+      const spreadNumberValue4 = Number(data.spread.position4.numberValue);
+      const spreadMonthlyTargetPremium4 = Number(
+        data.spread.monthlyTargetPremium4
+      );
+      const spreadNumberOfMembers4 = Number(data.spread.numberOfMembers4);
+      const spreadPremiumMember4 = Number(data.spread.numberOfPremiumMembers4);
+      const numberOfDirectMembers4 = Number(data.spread.numberOfDirectMembers4);
+      const numberOfPromotedMembers4 = Number(
+        data.spread.numberOfPromotedMembers4
+      );
 
       /* Formula 4 */
+
+      const spread4LessDirectMem4 =
+        spreadNumberOfMembers4 - numberOfDirectMembers4;
 
       const spread4Indirect =
         spreadMonthlyTargetPremium4 *
@@ -313,13 +373,21 @@ const Calculator: React.FC = () => {
 
       /* Position 3 */
       /* Executive Marketing Director */
-      const spreadNumberValue3 = data.spread.position3.numberValue;
-      const spreadMonthlyTargetPremium3 = data.spread.monthlyTargetPremium3;
-      const spreadNumberOfMembers3 = data.spread.numberOfMembers3;
-      const spreadPremiumMember3 = data.spread.numberOfPremiumMembers3;
-      const numberOfDirectMembers3 = data.spread.numberOfDirectMembers3;
+      const spreadNumberValue3 = Number(data.spread.position3.numberValue);
+      const spreadMonthlyTargetPremium3 = Number(
+        data.spread.monthlyTargetPremium3
+      );
+      const spreadNumberOfMembers3 = Number(data.spread.numberOfMembers3);
+      const spreadPremiumMember3 = Number(data.spread.numberOfPremiumMembers3);
+      const numberOfDirectMembers3 = Number(data.spread.numberOfDirectMembers3);
+      const numberOfPromotedMembers3 = Number(
+        data.spread.numberOfPromotedMembers3
+      );
 
       /* Formula 3 */
+
+      const spread3LessDirectMem3 =
+        spreadNumberOfMembers3 - numberOfDirectMembers3;
 
       const spread3Indirect =
         spreadMonthlyTargetPremium3 *
@@ -337,12 +405,20 @@ const Calculator: React.FC = () => {
 
       /* Position 2 */
       /*Senior Executive Marketing Director */
-      const spreadNumberValue2 = data.spread.position2.numberValue;
-      const spreadMonthlyTargetPremium2 = data.spread.monthlyTargetPremium2;
-      const spreadNumberOfMembers2 = data.spread.numberOfMembers2;
-      const spreadPremiumMember2 = data.spread.numberOfPremiumMembers2;
-      const numberOfDirectMembers2 = data.spread.numberOfDirectMembers2;
+      const spreadNumberValue2 = Number(data.spread.position2.numberValue);
+      const spreadMonthlyTargetPremium2 = Number(
+        data.spread.monthlyTargetPremium2
+      );
+      const spreadNumberOfMembers2 = Number(data.spread.numberOfMembers2);
+      const spreadPremiumMember2 = Number(data.spread.numberOfPremiumMembers2);
+      const numberOfDirectMembers2 = Number(data.spread.numberOfDirectMembers2);
+      const numberOfPromotedMembers2 = Number(
+        data.spread.numberOfPromotedMembers2
+      );
       /* Formula 2 */
+
+      const spread2LessDirectMem2 =
+        spreadNumberOfMembers2 - numberOfDirectMembers2;
 
       const spread2Indirect =
         spreadMonthlyTargetPremium2 *
@@ -358,6 +434,23 @@ const Calculator: React.FC = () => {
 
       const spread2Total = spread2Direct + spread2Indirect;
 
+      /* Position 1 */
+      /* Executive Vice President */
+      const spreadNumberValue1 = Number(data.spread.position1.numberValue);
+      const spreadMonthlyTargetPremium1 = Number(
+        data.spread.monthlyTargetPremium1
+      );
+      const spreadNumberOfMembers1 = Number(data.spread.numberOfMembers1);
+      const spreadPremiumMember1 = Number(data.spread.numberOfPremiumMembers1);
+      const numberOfDirectMembers1 = Number(data.spread.numberOfDirectMembers1);
+      const numberOfPromotedMembers1 = Number(
+        data.spread.numberOfPromotedMembers1
+      );
+
+      /* Formula 1 */
+      const spread1LessDirectMem1 =
+        spreadNumberOfMembers1 - numberOfDirectMembers1;
+
       /* Spread Total Earnings */
       const spreadTotal =
         spread2Total +
@@ -367,83 +460,10 @@ const Calculator: React.FC = () => {
         spread6Total +
         spread7Total;
 
-      // /* Spread  Total Members*/
-      // const spreadMembersTotal =
-      //   spreadNumberOfMembers8 +
-      //   spreadNumberOfMembers7 +
-      //   spreadNumberOfMembers6 +
-      //   spreadNumberOfMembers5 +
-      //   spreadNumberOfMembers4 +
-      //   spreadNumberOfMembers3 +
-      //   spreadNumberOfMembers2 +
-      //   spreadNumberOfMembers1;
-      /* Hidden for future use */
-
-      /** Generation Overrride */
-      /*Gen 1 */
-      const gen1NumberValue = data.generation.gen1NumberValue;
-      const numberOfMembers1 = data.generation.numberOfMembers1;
-      const numberOfPremiumMembers1 = data.generation.numberOfPremMembers1;
-      const monthlyTargetPremium1 = data.generation.monthlyTargetPremium1;
-
-      /* Gen Total 1 */
-      const gen1Total =
-        monthlyTargetPremium1 *
-        numberOfMembers1 *
-        gen1NumberValue *
-        numberOfPremiumMembers1;
-
-      /*Gen 2 */
-      const gen2NumberValue = data.generation.gen2NumberValue;
-      const numberOfMembers2 = data.generation.numberOfMembers2;
-      const numberOfPremiumMembers2 = data.generation.numberOfPremMembers2;
-      const monthlyTargetPremium2 = data.generation.monthlyTargetPremium2;
-
-      /* Gen Total 2 */
-      const gen2Total =
-        monthlyTargetPremium2 *
-        numberOfMembers2 *
-        gen2NumberValue *
-        numberOfPremiumMembers2;
-
-      /*Gen 3 */
-      const gen3NumberValue = data.generation.gen3NumberValue;
-      const numberOfMembers3 = data.generation.numberOfMembers3;
-      const numberOfPremiumMembers3 = data.generation.numberOfPremMembers3;
-      const monthlyTargetPremium3 = data.generation.monthlyTargetPremium3;
-
-      /* Gen Total 3 */
-      const gen3Total =
-        monthlyTargetPremium3 *
-        numberOfMembers3 *
-        gen3NumberValue *
-        numberOfPremiumMembers3;
-
-      /*Gen 4 */
-      const gen4NumberValue = data.generation.gen4NumberValue;
-      const numberOfMembers4 = data.generation.numberOfMembers4;
-      const numberOfPremiumMembers4 = data.generation.numberOfPremMembers4;
-      const monthlyTargetPremium4 = data.generation.monthlyTargetPremium4;
-
-      /* Gen Total 4 */
-      const gen4Total =
-        monthlyTargetPremium4 *
-        numberOfMembers4 *
-        gen4NumberValue *
-        numberOfPremiumMembers4;
-
-      /* Override Total */
-      const generationTotal = gen1Total + gen2Total + gen3Total + gen4Total;
-      const formattedGenerationTotal = parseInt(generationTotal.toFixed(2));
-
-      /* Override Total Members */
-      const overrideMembersTotal =
-        numberOfMembers4 +
-        numberOfMembers3 +
-        numberOfMembers2 +
-        numberOfMembers1;
-
       /** Validation */
+      const isAssociate =
+        data.personal.position[0].value ===
+        PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value;
 
       const isSeniorAssociate =
         data.personal.position[0].value ===
@@ -475,14 +495,14 @@ const Calculator: React.FC = () => {
             return {
               personal: personalTotal,
               spread: 0,
-              generationOverride: formattedGenerationTotal,
+              generationOverride: 0,
             };
           });
           return filteredPrevState;
         });
 
         if (
-          data.personal.position[0].numberValue > AGENT_ROLES[3].numberValue
+          data.personal.position[0].numberValue >= AGENT_ROLES[3].numberValue
         ) {
           setIsPositionValid(true);
         } else {
@@ -490,80 +510,321 @@ const Calculator: React.FC = () => {
         }
       };
 
-      if (isSeniorAssociate && spreadNumberOfMembers7 < 3) {
+      const genEarningsSetter = () => {
+        setGenerationTotal((prevState) => {
+          const filteredPrevState = prevState.map((data) => {
+            return {
+              gen1: 0,
+              gen2: 0,
+              gen3: 0,
+              gen4: 0,
+            };
+          });
+          return filteredPrevState;
+        });
+
+        if (
+          data.personal.position[0].numberValue >= AGENT_ROLES[3].numberValue
+        ) {
+          setIsPositionValid(true);
+        } else {
+          setIsPositionValid(false);
+        }
+      };
+
+      /* Validation */
+      const SAvalidity =
+        Number(spreadNumberOfMembers7) + Number(numberOfDirectMembers7);
+      const MDvalidity =
+        Number(spreadNumberOfMembers6) + Number(numberOfDirectMembers6) < 2 ||
+        Number(spreadNumberOfMembers7) + Number(numberOfDirectMembers7) < 5;
+
+      const SMDvalidity =
+        Number(spreadNumberOfMembers5) + Number(numberOfDirectMembers5) < 2 &&
+        Number(spreadNumberOfMembers6) + Number(numberOfDirectMembers6) < 5;
+
+      const EMDvalidity =
+        Number(spreadNumberOfMembers4) + Number(numberOfDirectMembers4) < 2 &&
+        Number(spreadNumberOfMembers5) + Number(numberOfDirectMembers5) < 3;
+
+      const SEMDvalidity =
+        Number(spreadNumberOfMembers3) + Number(numberOfDirectMembers3) < 2 &&
+        Number(spreadNumberOfMembers4) + Number(numberOfDirectMembers4) < 4;
+
+      const EVPvalidity =
+        Number(spreadNumberOfMembers2) + Number(numberOfDirectMembers2) < 2 &&
+        Number(spreadNumberOfMembers4) + Number(numberOfDirectMembers4) < 6;
+
+      /** Generation Overrride */
+
+      /* Generation 1 Formula*/
+      const genValue1 = data.generation.numberValue1;
+      const genTotalVol1 =
+        // Formula Associate
+        isAssociate
+          ? (spreadNumberOfMembers7 +
+              numberOfDirectMembers7 +
+              numberOfPromotedMembers7) *
+            spreadMonthlyTargetPremium7 *
+            spreadPremiumMember7
+          : // Formula SA
+          isSeniorAssociate
+          ? (spreadNumberOfMembers6 +
+              numberOfDirectMembers6 +
+              numberOfPromotedMembers6) *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula MD
+          isMarketingDirector
+          ? (spreadNumberOfMembers5 +
+              numberOfDirectMembers5 +
+              numberOfPromotedMembers5) *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula SMD
+          isSeniorMarketingDirector
+          ? (spreadNumberOfMembers4 +
+              numberOfDirectMembers4 +
+              numberOfPromotedMembers4) *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfDirectMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula EMD
+          isMarketingDirector
+          ? (spreadNumberOfMembers3 +
+              numberOfDirectMembers3 +
+              numberOfPromotedMembers3) *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3 +
+            numberOfDirectMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfDirectMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula SEMD
+          isSeniorExecutiveMarketingDirector
+          ? (spreadNumberOfMembers2 +
+              numberOfDirectMembers2 +
+              numberOfPromotedMembers2) *
+              spreadMonthlyTargetPremium2 *
+              spreadPremiumMember2 +
+            numberOfDirectMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3 +
+            numberOfDirectMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfDirectMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula EVP
+          isVicePresident
+          ? (spreadNumberOfMembers1 +
+              numberOfDirectMembers1 +
+              numberOfPromotedMembers1) *
+              spreadMonthlyTargetPremium1 *
+              spreadPremiumMember1 +
+            numberOfDirectMembers2 *
+              spreadMonthlyTargetPremium2 *
+              spreadPremiumMember2 +
+            numberOfDirectMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3 +
+            numberOfDirectMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfDirectMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : 0;
+
+      const genTotal1 = genTotalVol1 * genValue1;
+
+      /* Generation 2 Formula*/
+      const genValue2 = data.generation.numberValue2;
+      const genTotalVol2 =
+        // Formula 2 MD
+        isSeniorAssociate
+          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+            spreadMonthlyTargetPremium7 *
+            spreadPremiumMember7
+          : // Formula 2 MD
+          isMarketingDirector
+          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+            spreadMonthlyTargetPremium6 *
+            spreadPremiumMember6
+          : // Formula 2 SMD
+          isSeniorMarketingDirector
+          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
+            spreadMonthlyTargetPremium5 *
+            spreadPremiumMember5
+          : // Formula 2 EMD
+          isExecutiveMarketingDirector
+          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
+            spreadMonthlyTargetPremium4 *
+            spreadPremiumMember4
+          : // Formula SEMD
+          isSeniorExecutiveMarketingDirector
+          ? (spreadNumberOfMembers3 + numberOfPromotedMembers3) *
+            spreadMonthlyTargetPremium3 *
+            spreadPremiumMember3
+          : // Formula EVP
+          isVicePresident
+          ? (spreadNumberOfMembers2 + numberOfPromotedMembers2) *
+            spreadMonthlyTargetPremium2 *
+            spreadPremiumMember2
+          : 0;
+
+      const genTotal2 = genTotalVol2 * genValue2;
+
+      /* Generation 3 Formula*/
+      const genValue3 = data.generation.numberValue3;
+      const genTotalVol3 =
+        // Formula 3 MD
+        isMarketingDirector
+          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+            spreadMonthlyTargetPremium7 *
+            spreadPremiumMember7
+          : // Formula SMD
+          isSeniorMarketingDirector
+          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+            spreadMonthlyTargetPremium6 *
+            spreadPremiumMember6
+          : // Formula EMD
+          isExecutiveMarketingDirector
+          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
+            spreadMonthlyTargetPremium5 *
+            spreadPremiumMember5
+          : // Formula SEMD
+          isSeniorExecutiveMarketingDirector
+          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
+            spreadMonthlyTargetPremium4 *
+            spreadPremiumMember4
+          : // Formula EVP
+          isVicePresident
+          ? (spreadNumberOfMembers3 + numberOfPromotedMembers3) *
+            spreadMonthlyTargetPremium3 *
+            spreadPremiumMember3
+          : 0;
+
+      const genTotal3 = genTotalVol3 * genValue3;
+
+      /* Generation 4 Formula*/
+      const genValue4 = data.generation.numberValue4;
+      const genTotalVol4 =
+        // Formula 4 SMD
+        isSeniorMarketingDirector
+          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+            spreadMonthlyTargetPremium7 *
+            spreadPremiumMember7
+          : // Formula 4 EMD
+          isExecutiveMarketingDirector
+          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+            spreadMonthlyTargetPremium6 *
+            spreadPremiumMember6
+          : // Formula 4 SEMD
+          isSeniorExecutiveMarketingDirector
+          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
+            spreadMonthlyTargetPremium5 *
+            spreadPremiumMember5
+          : // Formula 4 EVP
+          isVicePresident
+          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
+            spreadMonthlyTargetPremium4 *
+            spreadPremiumMember4
+          : 0;
+
+      const genTotal4 = genTotalVol4 * genValue4;
+
+      /* Generation Total Formula*/
+
+      const generationTotal = genTotal4 + genTotal3 + genTotal2 + genTotal1;
+
+      if (isSeniorAssociate && SAvalidity < 3) {
         setErrorMessage(
           "Minimum requirement for Senior Associate not met : 3 Associates."
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
         return;
-      } else if (
-        isMarketingDirector &&
-        (spreadNumberOfMembers6 < 2 || spreadNumberOfMembers7 < 5)
-      ) {
+      } else if (isMarketingDirector && MDvalidity) {
         setErrorMessage(
           "Minimum requirement for Marketing Director not met : 2 Senior Associates and 5 Associates."
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
         return;
-      } else if (
-        (isSeniorMarketingDirector &&
-          spreadNumberOfMembers5 < 2 &&
-          spreadNumberOfMembers6 < 5) ||
-        (isSeniorMarketingDirector &&
-          spreadNumberOfMembers6 < 5 &&
-          spreadNumberOfMembers5 < 2)
-      ) {
+      } else if (isSeniorMarketingDirector && SMDvalidity) {
         setErrorMessage(
           "Minimum requirement for Senior Marketing Director not met : 2 Marketing Director or 5 Senior Associates"
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
 
         return;
-      } else if (
-        (isExecutiveMarketingDirector &&
-          spreadNumberOfMembers6 < 2 &&
-          spreadNumberOfMembers5 < 3) ||
-        (isExecutiveMarketingDirector &&
-          spreadNumberOfMembers5 < 3 &&
-          spreadNumberOfMembers4 < 2)
-      ) {
+      } else if (isExecutiveMarketingDirector && EMDvalidity) {
         setErrorMessage(
           "Minimum requirement for Executive Marketing Director not met : 2 Senior Marketing Director or 3 Marketing Director"
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
 
         return;
-      } else if (
-        (isSeniorExecutiveMarketingDirector &&
-          spreadNumberOfMembers3 < 2 &&
-          spreadNumberOfMembers4 < 2) ||
-        (isSeniorExecutiveMarketingDirector &&
-          spreadNumberOfMembers4 < 4 &&
-          spreadNumberOfMembers3 < 2)
-      ) {
+      } else if (isSeniorExecutiveMarketingDirector && SEMDvalidity) {
         setErrorMessage(
           "Minimum requirement for Senior Executive Marketing Director not met : 2 Executive Marketing Director or 4 Senior Marketing Director"
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
 
         return;
-      } else if (
-        (isVicePresident &&
-          spreadNumberOfMembers2 < 2 &&
-          spreadNumberOfMembers4 < 6) ||
-        (isVicePresident &&
-          spreadNumberOfMembers4 < 6 &&
-          spreadNumberOfMembers2 < 2)
-      ) {
+      } else if (isVicePresident && EVPvalidity) {
         setErrorMessage(
           "Minimum requirement for Executive Vice President not met : 2 Senior Executive Marketing Director or 6 Senior Marketing Director"
         );
         setTotalEarnings(earningsInitialValue);
+        setGenerationTotal(generationInitialValue);
         earningsSetter();
 
         return;
@@ -578,13 +839,26 @@ const Calculator: React.FC = () => {
           return {
             personal: personalTotal,
             spread: spreadTotal,
-            generationOverride: formattedGenerationTotal,
+            generationOverride: generationTotal,
+          };
+        });
+        console.log(generationTotal);
+        return filteredPrevState;
+      });
+
+      setGenerationTotal((prevState) => {
+        const filteredPrevState = prevState.map((data) => {
+          return {
+            gen1: genTotal1,
+            gen2: genTotal2,
+            gen3: genTotal3,
+            gen4: genTotal4,
           };
         });
         return filteredPrevState;
       });
 
-      if (data.personal.position[0].numberValue > AGENT_ROLES[3].numberValue) {
+      if (data.personal.position[0].numberValue >= AGENT_ROLES[3].numberValue) {
         setIsPositionValid(true);
       } else {
         setIsPositionValid(false);
@@ -594,14 +868,14 @@ const Calculator: React.FC = () => {
     onCalculate(initialValues);
   }, [initialValues]);
 
-  const submitHandler = (data) => {
-    console.log("test");
-  };
+  const submitHandler = (data) => {};
 
   const totalEarningMonthly =
     totalEarnings[0].personal +
     totalEarnings[0].spread +
     (isPositionValid ? totalEarnings[0].generationOverride : 0);
+
+  console.log(isPositionValid);
 
   const totalEarningAnually = totalEarningMonthly * 12;
 
@@ -610,7 +884,18 @@ const Calculator: React.FC = () => {
     totalEarningMonthly: formatter.format(totalEarningMonthly || 0),
   };
 
-  console.log(typeof totalEarnings[0].personal);
+  useEffect(() => {
+    const isAcknowledged = localStorage.getItem("isAcknowledged");
+    if (!isAcknowledged) {
+      setOpen(true);
+    }
+  }, []);
+
+  const acknowledgeHandler = () => {
+    localStorage.setItem("isAcknowledged", "true");
+    setOpen(false);
+  };
+
   return (
     <div className="admin-calculator">
       <Formik
@@ -629,7 +914,7 @@ const Calculator: React.FC = () => {
           return (
             <div className="two-col">
               <Grid container spacing={2}>
-                <Grid item xs={12} md={12} lg={7}>
+                <Grid item xs={12} md={12} lg={5}>
                   <div className="left-col-calculator">
                     <div className="overall-earnings-container">
                       <Grid container spacing={0} alignItems="center">
@@ -788,39 +1073,69 @@ const Calculator: React.FC = () => {
                         ) : (
                           <div style={{ height: "3.9vh" }}></div>
                         )}
-                        <Grid container spacing={2} alignItems="center">
-                          <Grid item xs={12} md={12} lg={3}>
-                            <label style={{ textAlign: "left" }}>
-                              Position
-                            </label>
+                        {values.personal.position[0].numberValue ===
+                        AGENT_ROLES[7].numberValue ? (
+                          <h2
+                            style={{
+                              color: "#000",
+                              fontWeight: "300",
+                              textAlign: "center",
+                              marginTop: "2rem",
+                              paddingBottom: "6.8rem",
+                            }}
+                          >
+                            No Spread data availabe for Traning Associate.
+                          </h2>
+                        ) : (
+                          <Grid container spacing={2} alignItems="center">
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label style={{ textAlign: "left" }}>
+                                Position
+                              </label>
+                            </Grid>
+
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label>
+                                No. of <br /> Total <br /> Members
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label style={{ textAlign: "center" }}>
+                                No. of <br /> Direct <br /> Members
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label style={{ textAlign: "center" }}>
+                                No. of <br /> Promoted Members
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label>
+                                No. of <br /> Premium per Member
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label>
+                                Monthly Target <br /> Premium per Policy
+                              </label>
+                            </Grid>
                           </Grid>
-                          <Grid item xs={12} md={12} lg={3}>
-                            <label>
-                              Monthly Target Premium <br /> per Policy
-                            </label>
-                          </Grid>
-                          <Grid item xs={12} md={12} lg={2}>
-                            <label>
-                              No.of <br /> Total Members
-                            </label>
-                          </Grid>
-                          <Grid item xs={12} md={12} lg={2}>
-                            <label style={{ textAlign: "center" }}>
-                              No. of <br /> Direct Members
-                            </label>
-                          </Grid>
-                          <Grid item xs={12} md={12} lg={2}>
-                            <label>
-                              No. of Premium <br /> per Member
-                            </label>
-                          </Grid>
-                        </Grid>
+                        )}
                         <Grid container spacing={2} alignItems="center">
                           {AGENT_ROLES.map((data, index) => {
                             const sumIndex = index + 1;
+
+                            if (
+                              values.personal.position[0].numberValue <
+                                data.numberValue ||
+                              values.personal.position[0].numberValue ===
+                                AGENT_ROLES[7].numberValue
+                            ) {
+                              return <React.Fragment />;
+                            }
                             return (
                               <React.Fragment>
-                                <Grid item xs={12} md={12} lg={3}>
+                                <Grid item xs={12} md={12} lg={2}>
                                   <div className="perosonal-tooltip">
                                     <Grid
                                       container
@@ -833,84 +1148,18 @@ const Calculator: React.FC = () => {
                                           {data.label}
                                         </h3>
                                       </Grid>
-                                      <Grid item xs={12} md={12} lg={2}>
-                                        {values.personal.position[0]!
-                                          .numberValue <= data.numberValue ||
-                                        !values.personal.position[0].value ? (
-                                          <HtmlTooltip
-                                            title={
-                                              <div
-                                                style={{
-                                                  fontSize: "1.3rem",
-                                                  color: "#ed3e4b",
-                                                  textAlign: "center",
-                                                }}
-                                              >
-                                                <span>
-                                                  {!values.personal.position[0]
-                                                    .value
-                                                    ? "You must choose a personal position first."
-                                                    : "This position can only be lower than your own position."}
-                                                </span>
-                                              </div>
-                                            }
-                                          >
-                                            <span>
-                                              <FaExclamationCircle />
-                                            </span>
-                                          </HtmlTooltip>
-                                        ) : null}
-                                      </Grid>
                                     </Grid>
                                   </div>
                                 </Grid>
-                                <Grid item xs={12} md={12} lg={3}>
-                                  <FormikTextInput
-                                    name={`spread.monthlyTargetPremium${sumIndex}`}
-                                    value={
-                                      values.personal.position[0].numberValue <=
-                                      data.numberValue
-                                        ? 0
-                                        : values.spread[
-                                            `monthlyTargetPremium${sumIndex}`
-                                          ] === 0 || ""
-                                        ? ""
-                                        : values.spread[
-                                            `monthlyTargetPremium${sumIndex}`
-                                          ]
-                                    }
-                                    variant="outlined"
-                                    placeholder={formatter.format(0)}
-                                    label=""
-                                    disabled={
-                                      values.personal.position[0].numberValue <=
-                                      data.numberValue
-                                    }
-                                    onBlur={(e) => {
-                                      setInitialValues((prevState) => {
-                                        return {
-                                          ...initialValues,
-                                          spread: {
-                                            ...prevState.spread,
-                                            [`monthlyTargetPremium${sumIndex}`]:
-                                              e.target?.value,
-                                          },
-                                        };
-                                      });
-                                    }}
-                                  />
-                                </Grid>
+
                                 <Grid item xs={12} md={12} lg={2}>
                                   <FormikTextInput
                                     type="number"
                                     name={`spread.numberOfMembers${sumIndex}`}
                                     value={
-                                      values.personal.position[0].numberValue <=
-                                      data.numberValue
-                                        ? 0
-                                        : values.spread[
-                                            `numberOfMembers${sumIndex}`
-                                          ] === 0
+                                      values.spread[
+                                        `numberOfMembers${sumIndex}`
+                                      ] === 0
                                         ? ""
                                         : values.spread[
                                             `numberOfMembers${sumIndex}`
@@ -920,7 +1169,7 @@ const Calculator: React.FC = () => {
                                     variant="outlined"
                                     label=""
                                     disabled={
-                                      values.personal.position[0].numberValue <=
+                                      values.personal.position[0].numberValue <
                                       data.numberValue
                                     }
                                     onBlur={(e) => {
@@ -942,12 +1191,9 @@ const Calculator: React.FC = () => {
                                     type="number"
                                     name={`spread.numberOfDirectMembers${sumIndex}`}
                                     value={
-                                      values.personal.position[0].numberValue <=
-                                      data.numberValue
-                                        ? 0
-                                        : values.spread[
-                                            `spread.numberOfDirectMembers${sumIndex}`
-                                          ] === 0
+                                      values.spread[
+                                        `spread.numberOfDirectMembers${sumIndex}`
+                                      ] === 0
                                         ? ""
                                         : values.spread[
                                             `spread.numberOfDirectMembers${sumIndex}`
@@ -957,7 +1203,7 @@ const Calculator: React.FC = () => {
                                     variant="outlined"
                                     label=""
                                     disabled={
-                                      values.personal.position[0].numberValue <=
+                                      values.personal.position[0].numberValue <
                                       data.numberValue
                                     }
                                     onBlur={(e) => {
@@ -977,14 +1223,45 @@ const Calculator: React.FC = () => {
                                 <Grid item xs={12} md={12} lg={2}>
                                   <FormikTextInput
                                     type="number"
+                                    name={`spread.numberOfPromotedMembers${sumIndex}`}
+                                    value={
+                                      values.spread[
+                                        `spread.numberOfPromotedMembers${sumIndex}`
+                                      ] === 0
+                                        ? ""
+                                        : values.spread[
+                                            `spread.numberOfPromotedMembers${sumIndex}`
+                                          ]
+                                    }
+                                    placeholder="0"
+                                    variant="outlined"
+                                    label=""
+                                    disabled={
+                                      values.personal.position[0].numberValue <
+                                      data.numberValue
+                                    }
+                                    onBlur={(e) => {
+                                      setInitialValues((prevState) => {
+                                        return {
+                                          ...initialValues,
+                                          spread: {
+                                            ...prevState.spread,
+                                            [`numberOfPromotedMembers${sumIndex}`]:
+                                              e.target?.value,
+                                          },
+                                        };
+                                      });
+                                    }}
+                                  />
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={2}>
+                                  <FormikTextInput
+                                    type="number"
                                     name={`spread.numberOfPremiumMembers${sumIndex}`}
                                     value={
-                                      values.personal.position[0].numberValue <=
-                                      data.numberValue
-                                        ? 0
-                                        : values.spread[
-                                            `spread.numberOfPremiumMembers${sumIndex}`
-                                          ] === 0
+                                      values.spread[
+                                        `spread.numberOfPremiumMembers${sumIndex}`
+                                      ] === 0
                                         ? ""
                                         : values.spread[
                                             `spread.numberOfPremiumMembers${sumIndex}`
@@ -994,7 +1271,7 @@ const Calculator: React.FC = () => {
                                     variant="outlined"
                                     label=""
                                     disabled={
-                                      values.personal.position[0].numberValue <=
+                                      values.personal.position[0].numberValue <
                                       data.numberValue
                                     }
                                     onBlur={(e) => {
@@ -1011,6 +1288,39 @@ const Calculator: React.FC = () => {
                                     }}
                                   />
                                 </Grid>
+                                <Grid item xs={12} md={12} lg={2}>
+                                  <FormikTextInput
+                                    name={`spread.monthlyTargetPremium${sumIndex}`}
+                                    value={
+                                      values.spread[
+                                        `monthlyTargetPremium${sumIndex}`
+                                      ] === 0 || ""
+                                        ? ""
+                                        : values.spread[
+                                            `monthlyTargetPremium${sumIndex}`
+                                          ]
+                                    }
+                                    variant="outlined"
+                                    placeholder={formatter.format(0)}
+                                    label=""
+                                    disabled={
+                                      values.personal.position[0].numberValue <
+                                      data.numberValue
+                                    }
+                                    onBlur={(e) => {
+                                      setInitialValues((prevState) => {
+                                        return {
+                                          ...initialValues,
+                                          spread: {
+                                            ...prevState.spread,
+                                            [`monthlyTargetPremium${sumIndex}`]:
+                                              e.target?.value,
+                                          },
+                                        };
+                                      });
+                                    }}
+                                  />
+                                </Grid>
                               </React.Fragment>
                             );
                           })}
@@ -1019,7 +1329,7 @@ const Calculator: React.FC = () => {
                     </div>
                   </div>
                 </Grid>
-                <Grid item xs={12} md={12} lg={5}>
+                <Grid item xs={12} md={12} lg={7}>
                   <div className="right-col-calculator">
                     <div className="top-section">
                       <div className="top-section-captions">
@@ -1031,105 +1341,18 @@ const Calculator: React.FC = () => {
                         <h4>Welcome to your CFS Calculator</h4>
                       </div>
                     </div>
-                    <div className="disclaimer-container">
-                      <h2>Disclaimer: </h2>
-                      <div className="disclaimer-description">
-                        The Insurance Earnings Calculator is designed for
-                        projection purposes only. The results provided are based
-                        on user-inputted data and assumptions and should not be
-                        considered as definitive results. Actual earnings may
-                        vary.
-                      </div>
-                      <div className="disclaimer-description">
-                        To use this calculator, enter details such as Personal
-                        position, Personal monthly target premium,and details in
-                        the Spread and Generation Override section. Click
-                        anywhere outside the field to get results and{" "}
-                        <span
-                          style={{
-                            color: "#ED3E4B",
-                            fontWeight: "700",
-                          }}
-                        >
-                          Reset
-                        </span>{" "}
-                        button to start over.
-                      </div>
-                    </div>
-                    <div className="tri-col-container">
-                      <Grid
-                        container
-                        spacing={12}
-                        justifyContent="space-between"
-                      >
-                        <Grid item xs={12} md={12} lg={4}>
-                          <div className="tri-col-section-captions">
-                            <div className="earnings-title">
-                              <h2>Personal Earnings</h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value1-block">
-                              <h2>
-                                {formatter.format(totalEarnings[0].personal)}
-                                {/*  */}
-                              </h2>
-                            </div>
-                            <div className="earnings-label">Annual</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="sky">
-                                {formatter.format(
-                                  totalEarnings[0].personal * 12
-                                )}
-                              </h2>
-                            </div>
-                          </div>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={4}>
-                          <div className="tri-col-section-captions">
-                            <div className="earnings-title">
-                              <h2>Spread Earnings</h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value1-block">
-                              <h2>
-                                {formatter.format(totalEarnings[0].spread)}
-                              </h2>
-                            </div>
-                            <div className="earnings-label">Annual</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="navy">
-                                {formatter.format(totalEarnings[0].spread * 12)}
-                              </h2>
-                            </div>
-                          </div>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={4}>
-                          <div className="tri-col-section-captions">
-                            <div className="earnings-title">
-                              <h2>Override Earnings</h2>
-                            </div>
-                            <div className="earnings-label">Monthly</div>
-                            <div className="earnings-value1-block">
-                              <h2>
-                                {formatter.format(
-                                  totalEarnings[0].generationOverride
-                                )}
-                              </h2>
-                            </div>
-                            <div className="earnings-label">Annual</div>
-                            <div className="earnings-value2-block">
-                              <h2 className="light">
-                                {formatter.format(
-                                  totalEarnings[0].generationOverride * 12
-                                )}
-                              </h2>
-                            </div>
-                          </div>
-                        </Grid>
-                      </Grid>
-                    </div>
+
                     <div className="calculator-input-container-override">
-                      <h2>Generation Override</h2>
+                      <h2
+                        style={{
+                          fontSize: "2rem",
+                          fontWeight: "900",
+                          fontFamily: "sans-serif",
+                          marginTop: "-1.5rem",
+                        }}
+                      >
+                        Generation Override
+                      </h2>
 
                       <div className="alert-message">
                         {values.personal.position[0].numberValue < 0.81 ? (
@@ -1139,160 +1362,149 @@ const Calculator: React.FC = () => {
                           />
                         ) : null}
                       </div>
-                      <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={12} md={12} lg={3}>
-                          <label
-                            style={{ textAlign: "left", marginLeft: "3rem" }}
-                          >
-                            Tier
-                          </label>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={3}>
-                          <label>
-                            Monthly Target <br /> Premium per Policy
-                          </label>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={3}>
-                          <label>
-                            No.of <br /> Members
-                          </label>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={3}>
-                          <label>
-                            No. of Premium <br /> per Member
-                          </label>
-                        </Grid>
-                      </Grid>
-                      <Grid container spacing={2} alignItems="center">
-                        {genNum.map((data, index) => {
-                          const sumIndex = index + 1;
-                          const inputValidity =
-                            !values.personal.position.length;
-
-                          return (
-                            <React.Fragment>
-                              <Grid item sm={12} md={9} lg={3}>
-                                <div className="calcu-form-control">
-                                  <h3>{data} Generation</h3>
-                                </div>
-                              </Grid>
-                              <Grid item sm={12} md={9} lg={3}>
-                                <div className="calcu-form-control">
-                                  <p></p>
-                                  <FormikTextInput
-                                    type="number"
-                                    name={`generation.monthlyTargetPremium${sumIndex}`}
-                                    value={
-                                      values.generation[
-                                        `monthlyTargetPremium${sumIndex}`
-                                      ] === 0
-                                        ? ""
-                                        : values.generation[
-                                            `monthlyTargetPremium${sumIndex}`
-                                          ]
-                                    }
-                                    placeholder={formatter.format(0)}
-                                    variant="outlined"
-                                    label=""
-                                    disabled={inputValidity}
-                                    onBlur={(e) => {
-                                      setInitialValues((prevState) => {
-                                        return {
-                                          ...initialValues,
-                                          generation: {
-                                            ...prevState.generation,
-                                            [`monthlyTargetPremium${sumIndex}`]:
-                                              e.target?.value,
-                                          },
-                                        };
-                                      });
-                                    }}
-                                  />
-                                </div>
-                              </Grid>
-                              <Grid item sm={12} md={9} lg={3}>
-                                <div className="calcu-form-control">
-                                  <FormikTextInput
-                                    name={`generation.numberOfMembers${sumIndex}`}
-                                    type="number"
-                                    value={
-                                      values.generation[
-                                        `numberOfMembers${sumIndex}`
-                                      ] === 0
-                                        ? ""
-                                        : values.generation[
-                                            `numberOfMembers${sumIndex}`
-                                          ]
-                                    }
-                                    placeholder="0"
-                                    variant="outlined"
-                                    label=""
-                                    disabled={inputValidity}
-                                    onBlur={(e) => {
-                                      setInitialValues((prevState) => {
-                                        return {
-                                          ...initialValues,
-                                          generation: {
-                                            ...prevState.generation,
-                                            [`numberOfMembers${sumIndex}`]:
-                                              e.target?.value,
-                                          },
-                                        };
-                                      });
-                                    }}
-                                  />
-                                </div>
-                              </Grid>
-                              <Grid item sm={12} md={9} lg={3}>
-                                <div className="calcu-form-control">
-                                  <FormikTextInput
-                                    name={`generation.numberOfPremMembers${sumIndex}`}
-                                    type="number"
-                                    value={
-                                      values.generation[
-                                        `numberOfPremMembers${sumIndex}`
-                                      ] === 0
-                                        ? ""
-                                        : values.generation[
-                                            `numberOfPremMembers${sumIndex}`
-                                          ]
-                                    }
-                                    placeholder="0"
-                                    variant="outlined"
-                                    label=""
-                                    disabled={inputValidity}
-                                    onBlur={(e) => {
-                                      setInitialValues((prevState) => {
-                                        return {
-                                          ...initialValues,
-                                          generation: {
-                                            ...prevState.generation,
-                                            [`numberOfPremMembers${sumIndex}`]:
-                                              e.target?.value,
-                                          },
-                                        };
-                                      });
-                                    }}
-                                  />
-                                </div>
-                              </Grid>
-                            </React.Fragment>
-                          );
-                        })}
-                      </Grid>
-                    </div>
-                    <div className="calculator-buttons">
-                      {/* <Button
-                        variant="primary"
-                        onClick={() => handleSubmit()}
-                        type="submit"
+                      <Grid
+                        container
+                        spacing={2}
+                        className="override-breakdown-wrapper"
                       >
-                        Calculate
-                      </Button> For future purposes*/}
+                        <Grid item xs={12} md={12} lg={4}>
+                          <Grid
+                            container
+                            spacing={2}
+                            className="override-earnings-label"
+                          >
+                            <Grid item xs={12} md={12} lg={6}>
+                              <h2>Tier</h2>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={6}>
+                              <h2 style={{ textAlign: "center" }}>
+                                Override Earnings <br /> per Generation
+                              </h2>
+                            </Grid>
+                          </Grid>
+                          {genNum.map((data, index) => {
+                            const genIndex = index + 1;
+
+                            return (
+                              <Grid
+                                container
+                                spacing={2}
+                                className="override-earnings-content-container"
+                              >
+                                <Grid item xs={12} md={12} lg={6}>
+                                  <h2>{data} generation</h2>
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={6}>
+                                  <h3 style={{ textAlign: "center" }}>
+                                    {formatter.format(
+                                      generationTotal[0][`gen${genIndex}`]
+                                    )}
+                                  </h3>
+                                </Grid>
+                              </Grid>
+                            );
+                          })}
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={8}>
+                          <div className="tri-col-container">
+                            <Grid
+                              container
+                              spacing={12}
+                              justifyContent="space-between"
+                            >
+                              <Grid item xs={12} md={12} lg={4}>
+                                <div className="tri-col-section-captions">
+                                  <div className="earnings-title">
+                                    <h2>Personal Earnings</h2>
+                                  </div>
+                                  <div className="earnings-label">Monthly</div>
+                                  <div className="earnings-value1-block">
+                                    <h2>
+                                      {formatter.format(
+                                        totalEarnings[0].personal
+                                      )}
+                                    </h2>
+                                  </div>
+                                  <div className="earnings-label">Annual</div>
+                                  <div className="earnings-value2-block">
+                                    <h2 className="sky">
+                                      {formatter.format(
+                                        totalEarnings[0].personal * 12
+                                      )}
+                                    </h2>
+                                  </div>
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} md={12} lg={4}>
+                                <div className="tri-col-section-captions">
+                                  <div className="earnings-title">
+                                    <h2>Spread Earnings</h2>
+                                  </div>
+                                  <div className="earnings-label">Monthly</div>
+                                  <div className="earnings-value1-block">
+                                    <h2>
+                                      {formatter.format(
+                                        totalEarnings[0].spread
+                                      )}
+                                    </h2>
+                                  </div>
+                                  <div className="earnings-label">Annual</div>
+                                  <div className="earnings-value2-block">
+                                    <h2 className="navy">
+                                      {formatter.format(
+                                        totalEarnings[0].spread * 12
+                                      )}
+                                    </h2>
+                                  </div>
+                                </div>
+                              </Grid>
+                              <Grid item xs={12} md={12} lg={4}>
+                                <div className="tri-col-section-captions">
+                                  <div className="earnings-title">
+                                    <h2>Override Earnings</h2>
+                                  </div>
+                                  <div className="earnings-label">Monthly</div>
+                                  <div className="earnings-value1-block">
+                                    <h2>
+                                      {formatter.format(
+                                        totalEarnings[0].generationOverride
+                                      )}
+                                    </h2>
+                                  </div>
+                                  <div className="earnings-label">Annual</div>
+                                  <div className="earnings-value2-block">
+                                    <h2 className="light">
+                                      {formatter.format(
+                                        totalEarnings[0].generationOverride * 12
+                                      )}
+                                    </h2>
+                                  </div>
+                                </div>
+                              </Grid>
+                            </Grid>
+                          </div>
+                        </Grid>
+                      </Grid>
+                      {totalEarnings[0].spread !== 0 ? (
+                        <div className="generational-tree">
+                          <h2>Generational Tree</h2>
+                          <div className="generational-tree-diagram">
+                            <img
+                              style={{ borderRadius: "20px" }}
+                              src="/assets/others/generation-tree-dummy.png"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
+
+                    <div className="calculator-buttons">
                       <Button
                         variant="danger"
                         onClick={() => {
                           resetForm();
+                          setGenerationTotal(generationInitialValue);
                           setTotalEarnings(earningsInitialValue);
                         }}
                       >
@@ -1300,6 +1512,78 @@ const Calculator: React.FC = () => {
                       </Button>
                     </div>
                   </div>
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <div
+                        className="disclaimer-container"
+                        style={{
+                          borderRadius: "10px",
+                          fontSize: "1.5rem",
+                          textAlign: "center",
+                        }}
+                      >
+                        <h2 style={{ marginBottom: "1.5rem" }}>Disclaimer </h2>
+                        <div
+                          className="disclaimer-description"
+                          style={{
+                            marginBottom: "1.5rem",
+                            lineHeight: "2rem",
+                            fontWeight: "300",
+                          }}
+                        >
+                          The Insurance Earnings Calculator is designed for
+                          projection purposes only. The results provided are
+                          based on user-inputted data and assumptions and should
+                          not be considered as definitive results. Actual
+                          earnings may vary.
+                        </div>
+                        <div
+                          className="disclaimer-description"
+                          style={{
+                            marginBottom: "1.5rem",
+                            lineHeight: "2rem",
+                            fontWeight: "300",
+                          }}
+                        >
+                          To use this calculator, enter details such as Personal
+                          position, Personal monthly target premium,and details
+                          in the Spread and Generation Override section. Click
+                          anywhere outside the field to get results and{" "}
+                          <span
+                            style={{
+                              color: "#ED3E4B",
+                              fontWeight: "700",
+                            }}
+                          >
+                            Reset
+                          </span>{" "}
+                          button to start over.
+                          <div
+                            className="check-box-container"
+                            style={{
+                              marginTop: "1rem",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              onChange={() => acknowledgeHandler()}
+                            />
+                            <span style={{ marginLeft: "1rem" }}>
+                              I acknowledge this tool.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Box>
+                  </Modal>
                 </Grid>
               </Grid>
             </div>
