@@ -1,16 +1,16 @@
 .admin-calculator {
-  overflow-y: hidden;
   background: #b6cee8;
   position: relative;
-  padding: 2rem 5rem;
+  padding: 0rem 5rem;
+  display: flex;
+  align-items: center;
+  height: 100vh;
 
   fieldset {
     border: none;
   }
 
   .two-col {
-    padding: 0.5rem 0 100rem 0;
-
     .left-col-calculator {
       .overall-earnings-container {
         background: #fff;
@@ -70,10 +70,6 @@
         }
         .right-col-total {
           background: #0057b7;
-          border-top-left-radius: 50%;
-          border-bottom-left-radius: 50%;
-          border-top-right-radius: 20px;
-          border-bottom-right-radius: 20px;
           color: #fff;
           text-align: center;
           padding: 2rem 0;
@@ -125,7 +121,7 @@
           .form-left-col-personal {
             font-size: 1.5rem;
             background: #0057b7;
-            padding: 4px 30px 7px 27px;
+            padding: 1rem 2rem;
             border-radius: 20px;
 
             label {
@@ -136,12 +132,12 @@
           }
           .form-right-col-personal {
             font-size: 1.5rem;
-            padding: 4px 30px 7px 27px;
+            padding: 1rem 2rem;
             background: #fff;
             border-radius: 20px;
 
             .MuiOutlinedInput-input {
-              padding: 1rem;
+              padding: 1.1rem;
             }
 
             label {
@@ -153,7 +149,7 @@
         }
         .calculator-input-container-spread {
           background: #fff;
-          padding: 1rem 2rem;
+          padding: 2rem 2rem;
           border-radius: 20px;
 
           .perosonal-tooltip {
@@ -182,7 +178,7 @@
           }
           h3 {
             font-family: "Montserrat", sans-serif;
-            font-size: 1rem;
+            font-size: 1.29rem;
             font-weight: 900;
           }
 
@@ -204,7 +200,7 @@
       .top-section {
         background: #0057b7;
         border-radius: 20px;
-        padding: 0.5rem 0;
+        padding: 1rem 0;
         color: #fff;
         line-height: 1.7rem;
         margin-bottom: 2rem;
@@ -364,7 +360,7 @@
           justify-content: center;
           justify-items: center;
           img {
-            width: 600px;
+            width: 800px;
           }
         }
       }
@@ -466,9 +462,41 @@
 
 @media screen and (max-width: 1880px) {
   .admin-calculator {
+    padding: 7rem 2rem;
     .two-col {
       .calculator-input-container-override {
         padding: 5.3rem 4rem !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .admin-calculator {
+    height: max-content;
+    .two-col {
+      .earnings-label,
+      h2 {
+        text-align: center;
+      }
+
+      .calculator-input-container-spread {
+        label {
+          margin-top: 2rem;
+        }
+      }
+
+      .calculator-input-container-override {
+        padding: 5.3rem 4rem !important;
+
+        .override-earnings-content-container {
+          text-align: center;
+
+          h3 {
+            width: 20%;
+            margin: auto;
+          }
+        }
       }
     }
   }

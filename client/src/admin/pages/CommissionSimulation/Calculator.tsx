@@ -461,6 +461,9 @@ const Calculator: React.FC = () => {
         spread7Total;
 
       /** Validation */
+      const isAssociate =
+        data.personal.position[0].value ===
+        PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value;
 
       const isSeniorAssociate =
         data.personal.position[0].value ===
@@ -557,8 +560,15 @@ const Calculator: React.FC = () => {
       /* Generation 1 Formula*/
       const genValue1 = data.generation.numberValue1;
       const genTotalVol1 =
-        // Formula SA
-        isSeniorAssociate
+        // Formula Associate
+        isAssociate
+          ? (spreadNumberOfMembers7 +
+              numberOfDirectMembers7 +
+              numberOfPromotedMembers7) *
+            spreadMonthlyTargetPremium7 *
+            spreadPremiumMember7
+          : // Formula SA
+          isSeniorAssociate
           ? (spreadNumberOfMembers6 +
               numberOfDirectMembers6 +
               numberOfPromotedMembers6) *
@@ -670,7 +680,12 @@ const Calculator: React.FC = () => {
       const genValue2 = data.generation.numberValue2;
       const genTotalVol2 =
         // Formula 2 MD
-        isMarketingDirector
+        isSeniorAssociate
+          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+            spreadMonthlyTargetPremium7 *
+            spreadPremiumMember7
+          : // Formula 2 MD
+          isMarketingDirector
           ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
             spreadMonthlyTargetPremium6 *
             spreadPremiumMember6
@@ -1066,7 +1081,7 @@ const Calculator: React.FC = () => {
                               fontWeight: "300",
                               textAlign: "center",
                               marginTop: "2rem",
-                              paddingBottom: "7.8rem",
+                              paddingBottom: "6.8rem",
                             }}
                           >
                             No Spread data availabe for Traning Associate.
@@ -1474,7 +1489,7 @@ const Calculator: React.FC = () => {
                           <div className="generational-tree-diagram">
                             <img
                               style={{ borderRadius: "20px" }}
-                              src="/assets/others/generation-tree-dummy.jpg"
+                              src="/assets/others/generation-tree-dummy.png"
                               alt=""
                             />
                           </div>
