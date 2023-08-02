@@ -229,6 +229,8 @@ const Calculator: React.FC = () => {
   ];
   const [totalEarnings, setTotalEarnings] = useState(earningsInitialValue);
 
+  console.log(totalEarnings[0].generationOverride);
+
   useEffect(() => {
     const onCalculate = (data = initialValues) => {
       /** Personal */
@@ -242,14 +244,19 @@ const Calculator: React.FC = () => {
 
       /* Position 7 */
       /* Associate */
-      const spreadNumberValue7 = data.spread.position7.numberValue;
-      const spreadMonthlyTargetPremium7 = data.spread.monthlyTargetPremium7;
-      const spreadNumberOfMembers7 = data.spread.numberOfMembers7;
-      const spreadPremiumMember7 = data.spread.numberOfPremiumMembers7;
-      const numberOfDirectMembers7 = data.spread.numberOfDirectMembers7;
-      const numberOfPromotedMembers7 = data.spread.numberOfPromotedMembers7;
+      const spreadNumberValue7 = Number(data.spread.position7.numberValue);
+      const spreadMonthlyTargetPremium7 = Number(
+        data.spread.monthlyTargetPremium7
+      );
+      const spreadNumberOfMembers7 = Number(data.spread.numberOfMembers7);
+      const spreadPremiumMember7 = Number(data.spread.numberOfPremiumMembers7);
+      const numberOfDirectMembers7 = Number(data.spread.numberOfDirectMembers7);
+      const numberOfPromotedMembers7 = Number(
+        data.spread.numberOfPromotedMembers7
+      );
 
       /* Formula 7 */
+      /* Associate */
 
       const spread7LessDirectMem7 =
         spreadNumberOfMembers7 - numberOfDirectMembers7;
@@ -270,12 +277,16 @@ const Calculator: React.FC = () => {
 
       /* Position 6 */
       /* Senior Associate */
-      const spreadNumberValue6 = data.spread.position6.numberValue;
-      const spreadMonthlyTargetPremium6 = data.spread.monthlyTargetPremium6;
-      const spreadNumberOfMembers6 = data.spread.numberOfMembers6;
-      const spreadPremiumMember6 = data.spread.numberOfPremiumMembers6;
-      const numberOfDirectMembers6 = data.spread.numberOfDirectMembers6;
-      const numberOfPromotedMembers6 = data.spread.numberOfPromotedMembers6;
+      const spreadNumberValue6 = Number(data.spread.position6.numberValue);
+      const spreadMonthlyTargetPremium6 = Number(
+        data.spread.monthlyTargetPremium6
+      );
+      const spreadNumberOfMembers6 = Number(data.spread.numberOfMembers6);
+      const spreadPremiumMember6 = Number(data.spread.numberOfPremiumMembers6);
+      const numberOfDirectMembers6 = Number(data.spread.numberOfDirectMembers6);
+      const numberOfPromotedMembers6 = Number(
+        data.spread.numberOfPromotedMembers6
+      );
 
       /* Formula 6 */
 
@@ -298,12 +309,16 @@ const Calculator: React.FC = () => {
 
       /* Position 5 */
       /* Marketing Director */
-      const spreadNumberValue5 = data.spread.position5.numberValue;
-      const spreadMonthlyTargetPremium5 = data.spread.monthlyTargetPremium5;
-      const spreadNumberOfMembers5 = data.spread.numberOfMembers5;
-      const spreadPremiumMember5 = data.spread.numberOfPremiumMembers5;
-      const numberOfDirectMembers5 = data.spread.numberOfDirectMembers5;
-      const numberOfPromotedMembers5 = data.spread.numberOfPromotedMembers5;
+      const spreadNumberValue5 = Number(data.spread.position5.numberValue);
+      const spreadMonthlyTargetPremium5 = Number(
+        data.spread.monthlyTargetPremium5
+      );
+      const spreadNumberOfMembers5 = Number(data.spread.numberOfMembers5);
+      const spreadPremiumMember5 = Number(data.spread.numberOfPremiumMembers5);
+      const numberOfDirectMembers5 = Number(data.spread.numberOfDirectMembers5);
+      const numberOfPromotedMembers5 = Number(
+        data.spread.numberOfPromotedMembers5
+      );
 
       /* Formula 5 */
 
@@ -326,12 +341,16 @@ const Calculator: React.FC = () => {
 
       /* Position 4 */
       /*Senior Marketing Director */
-      const spreadNumberValue4 = data.spread.position4.numberValue;
-      const spreadMonthlyTargetPremium4 = data.spread.monthlyTargetPremium4;
-      const spreadNumberOfMembers4 = data.spread.numberOfMembers4;
-      const spreadPremiumMember4 = data.spread.numberOfPremiumMembers4;
-      const numberOfDirectMembers4 = data.spread.numberOfDirectMembers4;
-      const numberOfPromotedMembers4 = data.spread.numberOfPromotedMembers4;
+      const spreadNumberValue4 = Number(data.spread.position4.numberValue);
+      const spreadMonthlyTargetPremium4 = Number(
+        data.spread.monthlyTargetPremium4
+      );
+      const spreadNumberOfMembers4 = Number(data.spread.numberOfMembers4);
+      const spreadPremiumMember4 = Number(data.spread.numberOfPremiumMembers4);
+      const numberOfDirectMembers4 = Number(data.spread.numberOfDirectMembers4);
+      const numberOfPromotedMembers4 = Number(
+        data.spread.numberOfPromotedMembers4
+      );
 
       /* Formula 4 */
 
@@ -354,12 +373,16 @@ const Calculator: React.FC = () => {
 
       /* Position 3 */
       /* Executive Marketing Director */
-      const spreadNumberValue3 = data.spread.position3.numberValue;
-      const spreadMonthlyTargetPremium3 = data.spread.monthlyTargetPremium3;
-      const spreadNumberOfMembers3 = data.spread.numberOfMembers3;
-      const spreadPremiumMember3 = data.spread.numberOfPremiumMembers3;
-      const numberOfDirectMembers3 = data.spread.numberOfDirectMembers3;
-      const numberOfPromotedMembers3 = data.spread.numberOfPromotedMembers3;
+      const spreadNumberValue3 = Number(data.spread.position3.numberValue);
+      const spreadMonthlyTargetPremium3 = Number(
+        data.spread.monthlyTargetPremium3
+      );
+      const spreadNumberOfMembers3 = Number(data.spread.numberOfMembers3);
+      const spreadPremiumMember3 = Number(data.spread.numberOfPremiumMembers3);
+      const numberOfDirectMembers3 = Number(data.spread.numberOfDirectMembers3);
+      const numberOfPromotedMembers3 = Number(
+        data.spread.numberOfPromotedMembers3
+      );
 
       /* Formula 3 */
 
@@ -382,12 +405,16 @@ const Calculator: React.FC = () => {
 
       /* Position 2 */
       /*Senior Executive Marketing Director */
-      const spreadNumberValue2 = data.spread.position2.numberValue;
-      const spreadMonthlyTargetPremium2 = data.spread.monthlyTargetPremium2;
-      const spreadNumberOfMembers2 = data.spread.numberOfMembers2;
-      const spreadPremiumMember2 = data.spread.numberOfPremiumMembers2;
-      const numberOfDirectMembers2 = data.spread.numberOfDirectMembers2;
-      const numberOfPromotedMembers2 = data.spread.numberOfPromotedMembers2;
+      const spreadNumberValue2 = Number(data.spread.position2.numberValue);
+      const spreadMonthlyTargetPremium2 = Number(
+        data.spread.monthlyTargetPremium2
+      );
+      const spreadNumberOfMembers2 = Number(data.spread.numberOfMembers2);
+      const spreadPremiumMember2 = Number(data.spread.numberOfPremiumMembers2);
+      const numberOfDirectMembers2 = Number(data.spread.numberOfDirectMembers2);
+      const numberOfPromotedMembers2 = Number(
+        data.spread.numberOfPromotedMembers2
+      );
       /* Formula 2 */
 
       const spread2LessDirectMem2 =
@@ -409,12 +436,16 @@ const Calculator: React.FC = () => {
 
       /* Position 1 */
       /* Executive Vice President */
-      const spreadNumberValue1 = data.spread.position1.numberValue;
-      const spreadMonthlyTargetPremium1 = data.spread.monthlyTargetPremium1;
-      const spreadNumberOfMembers1 = data.spread.numberOfMembers1;
-      const spreadPremiumMember1 = data.spread.numberOfPremiumMembers1;
-      const numberOfDirectMembers1 = data.spread.numberOfDirectMembers1;
-      const numberOfPromotedMembers1 = data.spread.numberOfPromotedMembers1;
+      const spreadNumberValue1 = Number(data.spread.position1.numberValue);
+      const spreadMonthlyTargetPremium1 = Number(
+        data.spread.monthlyTargetPremium1
+      );
+      const spreadNumberOfMembers1 = Number(data.spread.numberOfMembers1);
+      const spreadPremiumMember1 = Number(data.spread.numberOfPremiumMembers1);
+      const numberOfDirectMembers1 = Number(data.spread.numberOfDirectMembers1);
+      const numberOfPromotedMembers1 = Number(
+        data.spread.numberOfPromotedMembers1
+      );
 
       /* Formula 1 */
       const spread1LessDirectMem1 =
@@ -429,75 +460,6 @@ const Calculator: React.FC = () => {
         spread6Total +
         spread7Total;
 
-      /** Generation Overrride */
-      /* Generation 1 Formula*/
-      const genValue1 = data.generation.numberValue1;
-      const genTotal1 =
-        (spreadNumberOfMembers1 +
-          numberOfDirectMembers1 +
-          numberOfPromotedMembers1) *
-          genValue1 +
-        (spreadNumberOfMembers2 +
-          numberOfDirectMembers2 +
-          numberOfPromotedMembers2) *
-          genValue1 +
-        (spreadNumberOfMembers3 +
-          numberOfDirectMembers3 +
-          numberOfPromotedMembers3) *
-          genValue1 +
-        (spreadNumberOfMembers4 +
-          numberOfDirectMembers4 +
-          numberOfPromotedMembers4) *
-          genValue1 +
-        (spreadNumberOfMembers5 +
-          numberOfDirectMembers5 +
-          numberOfPromotedMembers5) *
-          genValue1 +
-        (spreadNumberOfMembers6 +
-          numberOfDirectMembers6 +
-          numberOfPromotedMembers6) *
-          genValue1 +
-        (spreadNumberOfMembers7 +
-          numberOfDirectMembers7 +
-          numberOfPromotedMembers7) *
-          genValue1;
-
-      /* Generation 2 Formula*/
-      const genValue2 = data.generation.numberValue2;
-      const genTotal2 =
-        (spreadNumberOfMembers1 - spread1LessDirectMem1) * genValue2 +
-        (spreadNumberOfMembers2 - spread2LessDirectMem2) * genValue2 +
-        (spreadNumberOfMembers3 - spread3LessDirectMem3) * genValue2 +
-        (spreadNumberOfMembers4 - spread4LessDirectMem4) * genValue2 +
-        (spreadNumberOfMembers5 - spread5LessDirectMem5) * genValue2 +
-        (spreadNumberOfMembers6 - spread6LessDirectMem6) * genValue2 +
-        (spreadNumberOfMembers7 - spread7LessDirectMem7) * genValue2;
-
-      /* Generation 3 Formula*/
-      const genValue3 = data.generation.numberValue3;
-      const genTotal3 =
-        (spreadNumberOfMembers1 - spread1LessDirectMem1) * genValue3 +
-        (spreadNumberOfMembers2 - spread2LessDirectMem2) * genValue3 +
-        (spreadNumberOfMembers3 - spread3LessDirectMem3) * genValue3 +
-        (spreadNumberOfMembers4 - spread4LessDirectMem4) * genValue3 +
-        (spreadNumberOfMembers5 - spread5LessDirectMem5) * genValue3 +
-        (spreadNumberOfMembers6 - spread6LessDirectMem6) * genValue3 +
-        (spreadNumberOfMembers7 - spread7LessDirectMem7) * genValue3;
-
-      /* Generation 4 Formula*/
-      const genValue4 = data.generation.numberValue4;
-      const genTotal4 =
-        (spreadNumberOfMembers1 - spread1LessDirectMem1) * genValue4 +
-        (spreadNumberOfMembers2 - spread2LessDirectMem2) * genValue4 +
-        (spreadNumberOfMembers3 - spread3LessDirectMem3) * genValue4 +
-        (spreadNumberOfMembers4 - spread4LessDirectMem4) * genValue4 +
-        (spreadNumberOfMembers5 - spread5LessDirectMem5) * genValue4 +
-        (spreadNumberOfMembers6 - spread6LessDirectMem6) * genValue4 +
-        (spreadNumberOfMembers7 - spread7LessDirectMem7) * genValue4;
-
-      /* Generation Total Formula*/
-
-      const generationTotal = genTotal4 + genTotal3 + genTotal2 + genTotal1;
       /** Validation */
 
       const isSeniorAssociate =
@@ -537,7 +499,7 @@ const Calculator: React.FC = () => {
         });
 
         if (
-          data.personal.position[0].numberValue > AGENT_ROLES[3].numberValue
+          data.personal.position[0].numberValue >= AGENT_ROLES[3].numberValue
         ) {
           setIsPositionValid(true);
         } else {
@@ -559,7 +521,7 @@ const Calculator: React.FC = () => {
         });
 
         if (
-          data.personal.position[0].numberValue > AGENT_ROLES[3].numberValue
+          data.personal.position[0].numberValue >= AGENT_ROLES[3].numberValue
         ) {
           setIsPositionValid(true);
         } else {
@@ -589,6 +551,215 @@ const Calculator: React.FC = () => {
       const EVPvalidity =
         Number(spreadNumberOfMembers2) + Number(numberOfDirectMembers2) < 2 &&
         Number(spreadNumberOfMembers4) + Number(numberOfDirectMembers4) < 6;
+
+      /** Generation Overrride */
+
+      /* Generation 1 Formula*/
+      const genValue1 = data.generation.numberValue1;
+      const genTotalVol1 =
+        // Formula SA
+        isSeniorAssociate
+          ? (spreadNumberOfMembers6 +
+              numberOfDirectMembers6 +
+              numberOfPromotedMembers6) *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula MD
+          isMarketingDirector
+          ? (spreadNumberOfMembers5 +
+              numberOfDirectMembers5 +
+              numberOfPromotedMembers5) *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula SMD
+          isSeniorMarketingDirector
+          ? (spreadNumberOfMembers4 +
+              numberOfDirectMembers4 +
+              numberOfPromotedMembers4) *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfDirectMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula EMD
+          isMarketingDirector
+          ? (spreadNumberOfMembers3 +
+              numberOfDirectMembers3 +
+              numberOfPromotedMembers3) *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3 +
+            numberOfDirectMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfDirectMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula SEMD
+          isSeniorExecutiveMarketingDirector
+          ? (spreadNumberOfMembers2 +
+              numberOfDirectMembers2 +
+              numberOfPromotedMembers2) *
+              spreadMonthlyTargetPremium2 *
+              spreadPremiumMember2 +
+            numberOfDirectMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3 +
+            numberOfDirectMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfDirectMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula EVP
+          isVicePresident
+          ? (spreadNumberOfMembers1 +
+              numberOfDirectMembers1 +
+              numberOfPromotedMembers1) *
+              spreadMonthlyTargetPremium1 *
+              spreadPremiumMember1 +
+            numberOfDirectMembers2 *
+              spreadMonthlyTargetPremium2 *
+              spreadPremiumMember2 +
+            numberOfDirectMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3 +
+            numberOfDirectMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfDirectMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfDirectMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfDirectMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : 0;
+
+      const genTotal1 = genTotalVol1 * genValue1;
+
+      /* Generation 2 Formula*/
+      const genValue2 = data.generation.numberValue2;
+      const genTotalVol2 =
+        // Formula 2 MD
+        isMarketingDirector
+          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+            spreadMonthlyTargetPremium6 *
+            spreadPremiumMember6
+          : // Formula 2 SMD
+          isSeniorMarketingDirector
+          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
+            spreadMonthlyTargetPremium5 *
+            spreadPremiumMember5
+          : // Formula 2 EMD
+          isExecutiveMarketingDirector
+          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
+            spreadMonthlyTargetPremium4 *
+            spreadPremiumMember4
+          : // Formula SEMD
+          isSeniorExecutiveMarketingDirector
+          ? (spreadNumberOfMembers3 + numberOfPromotedMembers3) *
+            spreadMonthlyTargetPremium3 *
+            spreadPremiumMember3
+          : // Formula EVP
+          isVicePresident
+          ? (spreadNumberOfMembers2 + numberOfPromotedMembers2) *
+            spreadMonthlyTargetPremium2 *
+            spreadPremiumMember2
+          : 0;
+
+      const genTotal2 = genTotalVol2 * genValue2;
+
+      /* Generation 3 Formula*/
+      const genValue3 = data.generation.numberValue3;
+      const genTotalVol3 =
+        // Formula 3 MD
+        isMarketingDirector
+          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+            spreadMonthlyTargetPremium7 *
+            spreadPremiumMember7
+          : // Formula SMD
+          isSeniorMarketingDirector
+          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+            spreadMonthlyTargetPremium6 *
+            spreadPremiumMember6
+          : // Formula EMD
+          isExecutiveMarketingDirector
+          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
+            spreadMonthlyTargetPremium5 *
+            spreadPremiumMember5
+          : // Formula SEMD
+          isSeniorExecutiveMarketingDirector
+          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
+            spreadMonthlyTargetPremium4 *
+            spreadPremiumMember4
+          : // Formula EVP
+          isVicePresident
+          ? (spreadNumberOfMembers3 + numberOfPromotedMembers3) *
+            spreadMonthlyTargetPremium3 *
+            spreadPremiumMember3
+          : 0;
+
+      const genTotal3 = genTotalVol3 * genValue3;
+
+      /* Generation 4 Formula*/
+      const genValue4 = data.generation.numberValue4;
+      const genTotalVol4 =
+        // Formula 4 SMD
+        isSeniorMarketingDirector
+          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+            spreadMonthlyTargetPremium7 *
+            spreadPremiumMember7
+          : // Formula 4 EMD
+          isExecutiveMarketingDirector
+          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+            spreadMonthlyTargetPremium6 *
+            spreadPremiumMember6
+          : // Formula 4 SEMD
+          isSeniorExecutiveMarketingDirector
+          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
+            spreadMonthlyTargetPremium5 *
+            spreadPremiumMember5
+          : // Formula 4 EVP
+          isVicePresident
+          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
+            spreadMonthlyTargetPremium4 *
+            spreadPremiumMember4
+          : 0;
+
+      const genTotal4 = genTotalVol4 * genValue4;
+
+      /* Generation Total Formula*/
+
+      const generationTotal = genTotal4 + genTotal3 + genTotal2 + genTotal1;
 
       if (isSeniorAssociate && SAvalidity < 3) {
         setErrorMessage(
@@ -656,6 +827,7 @@ const Calculator: React.FC = () => {
             generationOverride: generationTotal,
           };
         });
+        console.log(generationTotal);
         return filteredPrevState;
       });
 
@@ -671,7 +843,7 @@ const Calculator: React.FC = () => {
         return filteredPrevState;
       });
 
-      if (data.personal.position[0].numberValue > AGENT_ROLES[3].numberValue) {
+      if (data.personal.position[0].numberValue >= AGENT_ROLES[3].numberValue) {
         setIsPositionValid(true);
       } else {
         setIsPositionValid(false);
@@ -687,6 +859,8 @@ const Calculator: React.FC = () => {
     totalEarnings[0].personal +
     totalEarnings[0].spread +
     (isPositionValid ? totalEarnings[0].generationOverride : 0);
+
+  console.log(isPositionValid);
 
   const totalEarningAnually = totalEarningMonthly * 12;
 
@@ -1088,7 +1262,7 @@ const Calculator: React.FC = () => {
                                           ...initialValues,
                                           spread: {
                                             ...prevState.spread,
-                                            [`numberOfDirectMembers${sumIndex}`]:
+                                            [`numberOfPromotedMembers${sumIndex}`]:
                                               e.target?.value,
                                           },
                                         };
