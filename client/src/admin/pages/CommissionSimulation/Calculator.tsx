@@ -1093,11 +1093,7 @@ const Calculator: React.FC = () => {
                                 Position
                               </label>
                             </Grid>
-                            <Grid item xs={12} md={12} lg={2}>
-                              <label>
-                                Monthly Target <br /> Premium per Policy
-                              </label>
-                            </Grid>
+
                             <Grid item xs={12} md={12} lg={2}>
                               <label>
                                 No. of <br /> Total <br /> Members
@@ -1116,6 +1112,11 @@ const Calculator: React.FC = () => {
                             <Grid item xs={12} md={12} lg={2}>
                               <label>
                                 No. of <br /> Premium per Member
+                              </label>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2}>
+                              <label>
+                                Monthly Target <br /> Premium per Policy
                               </label>
                             </Grid>
                           </Grid>
@@ -1150,39 +1151,7 @@ const Calculator: React.FC = () => {
                                     </Grid>
                                   </div>
                                 </Grid>
-                                <Grid item xs={12} md={12} lg={2}>
-                                  <FormikTextInput
-                                    name={`spread.monthlyTargetPremium${sumIndex}`}
-                                    value={
-                                      values.spread[
-                                        `monthlyTargetPremium${sumIndex}`
-                                      ] === 0 || ""
-                                        ? ""
-                                        : values.spread[
-                                            `monthlyTargetPremium${sumIndex}`
-                                          ]
-                                    }
-                                    variant="outlined"
-                                    placeholder={formatter.format(0)}
-                                    label=""
-                                    disabled={
-                                      values.personal.position[0].numberValue <
-                                      data.numberValue
-                                    }
-                                    onBlur={(e) => {
-                                      setInitialValues((prevState) => {
-                                        return {
-                                          ...initialValues,
-                                          spread: {
-                                            ...prevState.spread,
-                                            [`monthlyTargetPremium${sumIndex}`]:
-                                              e.target?.value,
-                                          },
-                                        };
-                                      });
-                                    }}
-                                  />
-                                </Grid>
+
                                 <Grid item xs={12} md={12} lg={2}>
                                   <FormikTextInput
                                     type="number"
@@ -1312,6 +1281,39 @@ const Calculator: React.FC = () => {
                                           spread: {
                                             ...prevState.spread,
                                             [`numberOfPremiumMembers${sumIndex}`]:
+                                              e.target?.value,
+                                          },
+                                        };
+                                      });
+                                    }}
+                                  />
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={2}>
+                                  <FormikTextInput
+                                    name={`spread.monthlyTargetPremium${sumIndex}`}
+                                    value={
+                                      values.spread[
+                                        `monthlyTargetPremium${sumIndex}`
+                                      ] === 0 || ""
+                                        ? ""
+                                        : values.spread[
+                                            `monthlyTargetPremium${sumIndex}`
+                                          ]
+                                    }
+                                    variant="outlined"
+                                    placeholder={formatter.format(0)}
+                                    label=""
+                                    disabled={
+                                      values.personal.position[0].numberValue <
+                                      data.numberValue
+                                    }
+                                    onBlur={(e) => {
+                                      setInitialValues((prevState) => {
+                                        return {
+                                          ...initialValues,
+                                          spread: {
+                                            ...prevState.spread,
+                                            [`monthlyTargetPremium${sumIndex}`]:
                                               e.target?.value,
                                           },
                                         };
