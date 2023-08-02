@@ -115,7 +115,7 @@ const Licensing: React.FC = () => {
                 <div className="license-option-header">
                   <h2>AML (Anti-Money Laundering)</h2>
                   <p>
-                    <span>Links of the Anti Money Laundering.</span>
+                    <span>Links of the Anti-Money Laundering.</span>
                   </p>
                 </div>
                 <ul>
