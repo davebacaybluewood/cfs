@@ -1,0 +1,96 @@
+.license-container {
+  margin-bottom: 3rem;
+
+  .title-captions h2 {
+    font-family: "Agrandir";
+  }
+  .license-option {
+    border-radius: 4px;
+    padding: 1rem;
+    background-color: #fff;
+    margin-bottom: 1rem;
+
+    .license-option-header {
+      border-bottom: 1px dotted #333;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+
+      h2 {
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      p {
+        font-weight: 300;
+        font-size: 1.2rem;
+      }
+    }
+
+    ul {
+      list-style: none;
+
+      .divider {
+        text-align: center;
+
+        h2 {
+          width: 100%;
+          text-align: center;
+          border-bottom: 1px solid #ddd;
+          line-height: 0.1rem;
+          font-size: 1rem;
+          margin: 10px 0;
+        }
+
+        h2 span {
+          background: #fff;
+          padding: 0 10px;
+          position: relative;
+          top: 0.5rem;
+          font-size: 1.3rem;
+          font-weight: 400;
+          color: #7c7c7c;
+        }
+      }
+      li {
+        margin-bottom: 0.1rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        h5 {
+          font-size: 1.3rem;
+          font-weight: 300;
+        }
+        .cfs-badge {
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+
+          span {
+            .promo-code {
+              font-weight: 900 !important;
+            }
+          }
+        }
+        a {
+          color: #0072e5;
+          list-style: none;
+          width: auto;
+          position: relative;
+          span {
+            margin-right: 0.5rem;
+            font-size: 1.4rem;
+            font-weight: 300;
+            position: relative;
+            top: 3px;
+          }
+
+          svg {
+            position: relative;
+            top: 1px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -46,6 +46,7 @@ import ViewBlog from "admin/pages/Blogs/ViewBlog";
 import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
 import MailingList from "admin/pages/MailingList/MailingList";
 import ProfileFormAdd from "admin/pages/Profile/components/ProfileForm/ProfileFormAdd";
+import Licensing from "admin/pages/Licensing/Licensing";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -528,6 +529,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <Users />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.licensing,
+    element: (
+      <GuardedWrapper>
+        <Licensing />
       </GuardedWrapper>
     ),
   },
