@@ -107,13 +107,13 @@ const Licensing: React.FC = () => {
       </div>
 
       <div className="license-container">
-        <Title title="Anti Money Laundering Resources" subtitle="" />
+        <Title title="Anti-Money Laundering Resources" subtitle="" />
         <Grid container spacing={2}>
           <Grid item sm={12} md={6} lg={4}>
             <Paper elevation={0} sx={{ p: 0, height: "70%" }}>
               <div className="license-option">
                 <div className="license-option-header">
-                  <h2>AML- Anti-Money-Laundering</h2>
+                  <h2>AML- Anti-Money Laundering</h2>
                   <p>
                     <span>Links of the Anti Money Laundering.</span>
                   </p>
