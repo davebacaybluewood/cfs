@@ -20,6 +20,7 @@ import landingPageStatisticsRoutes from "./routes/landingPageStatisticsRoutes.js
 import profileRoutes from "./routes/profileRoutes.js";
 import blogAndResourceRoutes from "./routes/blogAndResourceRoutes.js";
 import subscriptionRoutes from "./routes/subscriptionRoutes.js";
+import contractingRoutes from './routes/contractingRoutes.js'
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
 import { ApolloServer, gql } from "apollo-server-express";
@@ -62,6 +63,7 @@ app.use(
 app.use("/api/landing-page-statistics/", landingPageStatisticsRoutes);
 app.use("/api/blog-and-resource/", blogAndResourceRoutes);
 app.use("/api/subscriptions/", subscriptionRoutes);
+app.use("/api/contracting/", contractingRoutes)
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
