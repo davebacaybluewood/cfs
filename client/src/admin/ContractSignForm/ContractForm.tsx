@@ -14,21 +14,11 @@ import Button from "library/Button/Button";
 import agent from "admin/api/agent";
 
 const ContractForm: React.FC = () => {
-  const initialValues = {
-    fullName: "",
-    emailAddress: "",
-    state: {
-      name: "",
-      abbreviation: "",
-    },
-    remarks: "",
-  };
-
   const [loading, setLoading] = useState(false);
 
   const validationSchema = Yup.object({
-    fullName: Yup.string().required("Full name is required."),
-    emailAddress: Yup.string()
+    name: Yup.string().required("Full name is required."),
+    email: Yup.string()
       .email("Invalid Email Address")
       .required("Email address is required."),
     remarks: Yup.string().required("This field is required."),
@@ -130,6 +120,7 @@ const ContractForm: React.FC = () => {
 
               console.log(response);
             }}
+            validationSchema={validationSchema}
           >
             {({ values, errors, handleSubmit, setFieldValue }) => {
               return (
@@ -160,7 +151,7 @@ const ContractForm: React.FC = () => {
                         classNamePrefix="select"
                         name="state"
                         styles={reactSelectStyle}
-                        value={CFS_STATES[0]}
+                        value={CFS_STATES[1]}
                         isDisabled={false}
                         isLoading={false}
                         isClearable={true}
@@ -193,8 +184,8 @@ const ContractForm: React.FC = () => {
                   <Button variant="danger" onClick={() => handleSubmit()}>
                     Submit
                   </Button>
-                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre>
                 </React.Fragment>
               );
             }}
