@@ -68,7 +68,7 @@ const ContractForm: React.FC = () => {
       fontWeight: "400",
       fontFamily: '"Montserrat", sans-serif',
       padding: "1.3rem",
-      fontSize: "1.7rem",
+      fontSize: "1.5rem",
     }),
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
       return {
@@ -102,6 +102,21 @@ const ContractForm: React.FC = () => {
       <div className="contract-form-container">
         {loading ? <Spinner variant="fixed" /> : null}
         <h2>Contracting</h2>
+        <p
+          style={{
+            fontSize: "2rem",
+            textAlign: "center",
+            color: "#fff",
+            lineHeight: "2rem",
+            marginTop: "2rem",
+          }}
+        >
+          {" "}
+          {/* Please Remove, still developing  */}
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid,
+          quibusdam. Laborum minima id, <br /> accusamus eum ipsum placeat quod
+          saepe? Consectetur.
+        </p>
         <div className="contract-form">
           <Formik
             initialValues={{
@@ -124,6 +139,7 @@ const ContractForm: React.FC = () => {
                       <label htmlFor="">Your Name *</label>
                       <FormikTextInput
                         placeholder="Enter your Name"
+                        variant="outlined"
                         name="name"
                         value={values.name}
                       />
@@ -132,6 +148,7 @@ const ContractForm: React.FC = () => {
                       <label htmlFor="">Email *</label>
                       <FormikTextInput
                         placeholder="Enter your Email"
+                        variant="outlined"
                         name="email"
                         value={values.email}
                       />
