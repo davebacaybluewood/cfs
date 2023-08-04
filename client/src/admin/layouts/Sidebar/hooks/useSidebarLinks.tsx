@@ -217,7 +217,7 @@ const useSidebarLinks = (
       ],
     },
     {
-      linkText: "Contracting",
+      linkText: "Contracting & Appointments",
       link: paths.contracting,
       isActive: currentPage === adminPathsNew.contracting.split("/")[2],
       icon: <FaFileContract />,
