@@ -3,6 +3,7 @@ import { LandingPageData } from "admin/models/landingPageModels";
 import getUserToken from "helpers/getUserToken";
 import { RegisteredUserData } from "admin/pages/LandingPage/LandingPageInfo";
 import { AgentData } from "admin/models/agentModels";
+import { ContractingData } from "admin/models/contractingModel";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -70,10 +71,27 @@ const Agents = {
     requests.get<AgentData | undefined>(`/api/agents/${userGuid}`),
 };
 
+const Contracting = {
+  requestContract: (body: ContractingData) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      return config;
+    });
+    const res = requests.post<string>("/api/contracting/", body);
+
+    return res;
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
   Agents,
+  Contracting,
 };
 
 export default agent;

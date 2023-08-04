@@ -47,6 +47,9 @@ pre {
 .Toastify__toast-body {
   font-size: 1.6rem;
 }
+.Toastify__toast-container {
+  width: 400px;
+}
 
 @media screen and (max-width: 320px) {
   .mobile-view-no-padding {
