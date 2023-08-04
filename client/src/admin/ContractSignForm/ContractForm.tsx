@@ -20,7 +20,6 @@ import MultiSelectInputV2 from "library/MultiSelectInput/MultiSelectInputV2";
 
 const CARRIERS = [
   "Foresters",
-  "Lafayette",
   "Mutual of Omaha",
   "Nationwide",
   "North American",
