@@ -17,6 +17,7 @@ import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { UserContext } from "admin/context/UserProvider";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import MultiSelectInputV2 from "library/MultiSelectInput/MultiSelectInputV2";
+import moment from "moment";
 
 const CARRIERS = [
   "Foresters",
@@ -30,6 +31,7 @@ const CARRIERS = [
 ];
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const today = moment();
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First name is required."),
@@ -44,6 +46,17 @@ const ContractForm: React.FC = () => {
     carrier: Yup.array()
       .min(1, "Pick at least 1 Insurance Carrier")
       .required("Insurance Carrier is required."),
+    dateOfBirth: Yup.date()
+      .nullable()
+      .notRequired()
+      .test(
+        "Is date greater",
+        "DOB cannot be greater than today's date",
+        (value) => {
+          if (!value) return true;
+          return moment(today).diff(value) > 0;
+        }
+      ),
   });
 
   const crumbs: CrumbTypes[] = [
@@ -149,6 +162,10 @@ const ContractForm: React.FC = () => {
   const clickedFileInput = () => {
     window.addEventListener("focus", handleFocusBack);
   };
+
+  const curr = new Date();
+  curr.setDate(curr.getDate() + 3);
+  const currentDate = curr.toISOString().substring(0, 10);
 
   return (
     <Wrapper
@@ -260,12 +277,13 @@ const ContractForm: React.FC = () => {
                       />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                      <label htmlFor="">Date of Birth (Optional)</label>
+                      <label htmlFor="">Date of Birth (Required)</label>
                       <FormikTextInput
                         placeholder="Enter your Date of birth"
                         variant="outlined"
                         name="dateOfBirth"
                         value={values.dateOfBirth}
+                        defaultValue={currentDate}
                         type="date"
                       />
                     </Grid>
