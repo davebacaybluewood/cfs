@@ -171,9 +171,9 @@ const ContractForm: React.FC = () => {
             fontWeight: 300,
           }}
         >
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid,
+          {/* Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid,
           quibusdam. Laborum minima id, <br /> accusamus eum ipsum placeat quod
-          saepe? Consectetur.
+          saepe? Consectetur. */}
         </p>
         <div className="contract-form">
           <Formik
@@ -422,8 +422,8 @@ const ContractForm: React.FC = () => {
                   <Button variant="danger" onClick={() => handleSubmit()}>
                     Submit
                   </Button>
-                  <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre>
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}

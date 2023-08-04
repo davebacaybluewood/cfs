@@ -2,12 +2,12 @@ const contractingEmail = ({
   name,
   state,
   email,
-  remarks,
+  remarks = "-",
   phoneNumber,
   licenseNumber,
   ssnNumber,
   licensePic,
-  dateOfBirth,
+  dateOfBirth = "-",
   carrier,
 }) => {
   return `<!-- Free to use, HTML email template designed & built by FullSphere. Learn more about us at www.fullsphere.co.uk -->

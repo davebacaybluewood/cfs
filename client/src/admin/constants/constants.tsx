@@ -47,6 +47,7 @@ import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSim
 import MailingList from "admin/pages/MailingList/MailingList";
 import ProfileFormAdd from "admin/pages/Profile/components/ProfileForm/ProfileFormAdd";
 import Licensing from "admin/pages/Licensing/Licensing";
+import ContractForm from "admin/ContractSignForm/ContractForm";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -537,6 +538,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <Licensing />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.contracting,
+    element: (
+      <GuardedWrapper>
+        <ContractForm />
       </GuardedWrapper>
     ),
   },
