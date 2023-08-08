@@ -240,7 +240,7 @@ const useSidebarLinks = (
     },
     {
       linkText: "Users",
-      link: paths.contracting,
+      link: paths.users,
       isActive: currentPage === adminPathsNew.users.split("/")[2],
       icon: <FaUsers />,
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
