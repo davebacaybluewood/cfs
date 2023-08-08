@@ -14,11 +14,14 @@ import {
   COMPANY_NAME,
   SOCIAL_MEDIA_LINKS,
 } from "constants/constants";
+import Partners from "library/Partners/Partners";
 
 const Footer: React.FC = () => {
   return (
     <div className="footer">
-      <div className="footer__header"></div>
+      <div className="footer__header">
+        <Partners />
+      </div>
 
       <div className="footer__main-section">
         <Container>
