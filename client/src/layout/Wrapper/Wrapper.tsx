@@ -10,6 +10,7 @@ interface WrapperProps {
   showHeadline?: boolean;
   children: React.ReactNode | JSX.Element;
   theme?: "SKY" | "RED" | "NAVY";
+  showPartners?: boolean;
 }
 
 const Wrapper: React.FC<WrapperProps> = (props) => {
@@ -21,7 +22,7 @@ const Wrapper: React.FC<WrapperProps> = (props) => {
         <main>{props.children}</main>
 
         {props.showHeadline ? <MainHeadline /> : null}
-        {props.showFooter ? <Footer /> : null}
+        {props.showFooter ? <Footer showPartners={props.showPartners} /> : null}
       </div>
       <ToastContainer />
     </React.Fragment>

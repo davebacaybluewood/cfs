@@ -16,11 +16,14 @@ import {
 } from "constants/constants";
 import Partners from "library/Partners/Partners";
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  showPartners?: boolean;
+}
+const Footer: React.FC<FooterProps> = (props) => {
   return (
     <div className="footer">
       <div className="footer__header">
-        <Partners />
+        {props.showPartners ? <Partners /> : null}
       </div>
 
       <div className="footer__main-section">
@@ -164,4 +167,7 @@ const Footer: React.FC = () => {
   );
 };
 
+Footer.defaultProps = {
+  showPartners: false,
+};
 export default Footer;

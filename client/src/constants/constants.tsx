@@ -32,6 +32,7 @@ type ReactRoutesType = RouteProps & {
   showNavbar?: boolean;
   showHeadline?: boolean;
   theme?: "SKY" | "RED" | "NAVY";
+  showPartners?: boolean;
 };
 
 const COMPANY_NAME = "Comfort Financial Solutions";
@@ -146,10 +147,12 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <Home key="main-index" />,
     path: paths.index,
+    showPartners: true,
   },
   {
     element: <Home key="index" />,
     path: paths.home,
+    showPartners: true,
   },
   {
     element: <FamilyProtection />,

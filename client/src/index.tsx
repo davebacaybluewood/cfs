@@ -32,6 +32,7 @@ root.render(
                   showNavbar={route.showNavbar}
                   showFooter={route.showFooter}
                   theme={route.theme}
+                  showPartners={route.showPartners}
                 >
                   {route.element}
                 </Wrapper>
