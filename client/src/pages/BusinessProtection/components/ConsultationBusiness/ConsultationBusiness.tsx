@@ -12,8 +12,7 @@ const ConsultationBusiness: React.FC = () => {
         Stability and Resilience
         Take advantage of CFS's strategic financial products. As an individual,
         life insurance is a crucial component of financial planning. Regardless
-        of age, providing a safety net for unexpected events could impact their financial future.
-        ito ung sa middle"
+        of age, providing a safety net for unexpected events could impact their financial future."
         description2="Ensuring Personal Financial
         Stability and Resilience
         Take advantage of CFS's strategic financial products. As an individual,
