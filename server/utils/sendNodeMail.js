@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-function sendEmail(email, subject, content, attachments) {
+function sendEmail(email, subject, content, attachments, bcc) {
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -17,6 +17,7 @@ function sendEmail(email, subject, content, attachments) {
       subject: subject,
       html: content,
       attachments: attachments,
+      bcc: bcc,
     };
 
     transporter.sendMail(mailConfigs, function (error, info) {

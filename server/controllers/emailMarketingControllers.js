@@ -80,8 +80,16 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
     blogEmail: blogEmail.join(""),
   });
 
+  const bcc = contractEmail;
+
   try {
-    sendHTMLEmail = sendEmail(contractEmail, mailSubject, mailContent, [])
+    sendHTMLEmail = sendEmail(
+      agentInfo.emailAddress,
+      mailSubject,
+      mailContent,
+      [],
+      bcc
+    )
       .then((request, response) => {
         response?.send("[Email Marketing] has been successfully submitted.") ??
           "";
