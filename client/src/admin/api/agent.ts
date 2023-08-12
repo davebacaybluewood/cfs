@@ -4,6 +4,7 @@ import getUserToken from "helpers/getUserToken";
 import { RegisteredUserData } from "admin/pages/LandingPage/LandingPageInfo";
 import { AgentData } from "admin/models/agentModels";
 import { ContractingData } from "admin/models/contractingModel";
+import { EmailMarketingData } from "admin/models/emailMarketing";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -87,11 +88,20 @@ const Contracting = {
   },
 };
 
+const EmailMarketing = {
+  sendEmail: (body: EmailMarketingData) => {
+    const res = requests.post<string>("/api/email-marketing/", body);
+
+    return res;
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
   Agents,
   Contracting,
+  EmailMarketing,
 };
 
 export default agent;

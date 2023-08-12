@@ -26,9 +26,9 @@ const AgentProfile: React.FC<AgentProfileProps> = (props) => {
               <span>{agent.title}</span>
             </h1> */}
             <h5>
-              {!agent?.name
+              {agent?.firstName
                 ? agent.firstName + " " + agent?.lastName
-                : !agent?.name}
+                : agent?.name}
             </h5>
             <p>{agent.bio}</p>
 

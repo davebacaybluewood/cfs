@@ -48,7 +48,7 @@ import MailingList from "admin/pages/MailingList/MailingList";
 import ProfileFormAdd from "admin/pages/Profile/components/ProfileForm/ProfileFormAdd";
 import Licensing from "admin/pages/Licensing/Licensing";
 import ContractForm from "admin/ContractSignForm/ContractForm";
-import EmailMarketing from "pages/EmailMarketing/EmailMarketing";
+import EmailMarketing from "admin/pages/EmailMarketing/EmailMarketing";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",

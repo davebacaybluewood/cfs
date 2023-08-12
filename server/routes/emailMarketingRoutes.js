@@ -1,10 +1,9 @@
 import express from "express";
 import { protect } from "../middleware/authMiddleware.js";
-import multerConfig from "../utils/multer.js";
-import { getEmail } from "../controllers/helpers/emailMarketingController.js";
+import { sendEmailMarketing } from "../controllers/emailMarketingControllers.js";
 
 const router = express.Router();
 
-router.route("/").post(protect, multerConfig.single(""), getEmail);
+router.route("/").post(protect, sendEmailMarketing);
 
 export default router;
