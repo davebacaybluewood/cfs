@@ -3,6 +3,9 @@ import emailMarketingEmail from "../emailTemplates/emailMarketingEmail.js";
 import sendEmail from "../utils/sendNodeMail.js";
 import BlogsAndResource from "../models/blogAndResourceModel.js";
 import Agents from "../models/agentModel.js";
+import EmailTemplate from "../models/emailTemplate.js";
+import mongoose, { mongo } from "mongoose";
+import undefinedValidator from "./helpers/undefinedValidator.js";
 
 /**
  * @desc: Send an email marketing
@@ -108,4 +111,222 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
   }
 });
 
-export { sendEmailMarketing };
+/**
+ * @desc: add email template
+ * @route: POST /api/email-marketing/template
+ * @access: Private
+ */
+const saveEmailTemplate = expressAsync(async (req, res, next) => {
+  const { templateName, templateBody, templateStatus, isAddedByMarketing } =
+    req.body;
+  const { userGuid } = req.params;
+  const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
+
+  if (
+    !templateName ||
+    !templateBody ||
+    !userGuid ||
+    !templateStatus ||
+    !isAddedByMarketing ||
+    !validStatuses.includes(templateStatus)
+  ) {
+    throw new Error("Error occured in submission.");
+  }
+
+  const newTemplate = {
+    templateName,
+    templateBody,
+    userGuid,
+    status: templateStatus,
+    isAddedByMarketing,
+  };
+
+  const emailTemplate = new EmailTemplate(newTemplate);
+
+  await emailTemplate.save();
+  res.status(201).json("[Email Template] succcessfully added.");
+});
+
+/**
+ * @desc: get all available email template
+ * @route: POST /api/email-marketing/template/:userGuid
+ * @access: Private
+ */
+const getEmailTemplates = expressAsync(async (req, res, next) => {
+  const { userGuid } = req.params;
+  const { status } = req.query;
+
+  if (!userGuid) {
+    throw new Error("Error occured in fetching.");
+  }
+
+  const statusCondition = status
+    ? {
+        $match: {
+          $or: [
+            {
+              $and: [
+                { userGuid: { $eq: userGuid } },
+                { status: { $eq: status } },
+              ],
+            },
+            { isAddedByMarketing: true, status: "ACTIVATED" },
+          ],
+        },
+      }
+    : {
+        $match: {
+          $or: [
+            {
+              status: {
+                $in: ["ACTIVATED", "DRAFT"],
+              },
+            },
+          ],
+        },
+      };
+  const filteredAggregate = [
+    {
+      $lookup: {
+        from: "agents",
+        localField: "userGuid",
+        foreignField: "userGuid",
+        as: "templateDoc",
+      },
+    },
+    {
+      $set: {
+        authorName: {
+          $first: "$templateDoc.name",
+        },
+        authorThumbnail: {
+          $first: "$templateDoc.avatar",
+        },
+        authorFirstname: {
+          $first: "$templateDoc.firstName",
+        },
+        authorLastname: {
+          $first: "$templateDoc.lastName",
+        },
+      },
+    },
+    statusCondition,
+    {
+      $unset: "templateDoc",
+    },
+  ];
+
+  const emailTemplates = await EmailTemplate.aggregate(filteredAggregate)
+    .sort({ _id: -1 })
+    .limit(3);
+
+  res.json(emailTemplates);
+});
+
+/**
+ * @desc: get single email template
+ * @route: POST /api/email-marketing/template/:userGuid
+ * @access: Private
+ */
+const getSingleEmailTemplate = expressAsync(async (req, res, next) => {
+  const { userGuid, templateId } = req.params;
+
+  if (!userGuid || !templateId) {
+    throw new Error("Error occured in fetching.");
+  }
+
+  const emailTemplate = await EmailTemplate.aggregate([
+    {
+      $match: { _id: mongoose.Types.ObjectId(templateId), userGuid: userGuid },
+    },
+    {
+      $lookup: {
+        from: "agents",
+        localField: "userGuid",
+        foreignField: "userGuid",
+        as: "templateDoc",
+      },
+    },
+    {
+      $set: {
+        authorName: {
+          $first: "$templateDoc.name",
+        },
+        authorThumbnail: {
+          $first: "$templateDoc.avatar",
+        },
+        authorFirstname: {
+          $first: "$templateDoc.firstName",
+        },
+        authorLastname: {
+          $first: "$templateDoc.lastName",
+        },
+      },
+    },
+    {
+      $unset: "templateDoc",
+    },
+  ]);
+
+  if (!emailTemplate.length) {
+    throw new Error("No data available.");
+  } else {
+    res.json(emailTemplate[0]);
+  }
+});
+
+/**
+ * @desc: Send an email marketing
+ * @route: PUT /api/email-marketing/template/:userGuid
+ * @access: Private
+ */
+const updateEmailTemplate = expressAsync(async (req, res, next) => {
+  const { userGuid, templateId } = req.params;
+  const { templateName, templateBody, templateStatus } = req.body;
+  const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
+
+  if (
+    !userGuid ||
+    !templateId ||
+    !templateStatus ||
+    !templateBody ||
+    !templateName ||
+    !validStatuses.includes(templateStatus)
+  ) {
+    throw new Error("Error occured in updating.");
+  }
+
+  const emailTemplateData = await EmailTemplate.find({
+    _id: mongoose.Types.ObjectId(templateId),
+    userGuid: userGuid,
+  });
+
+  const emailTemplate = emailTemplateData[0];
+
+  if (emailTemplateData.length) {
+    emailTemplate.templateName = undefinedValidator(
+      emailTemplate.templateName,
+      templateName
+    );
+    emailTemplate.templateBody = undefinedValidator(
+      emailTemplate.templateBody,
+      templateBody
+    );
+    emailTemplate.status = undefinedValidator(
+      emailTemplate.status,
+      templateStatus
+    );
+    await emailTemplate.save();
+    res.json("[Email Template] has been successfuly updated.");
+  } else {
+    throw new Error("Error occured in updating.");
+  }
+});
+
+export {
+  sendEmailMarketing,
+  saveEmailTemplate,
+  getEmailTemplates,
+  getSingleEmailTemplate,
+  updateEmailTemplate,
+};

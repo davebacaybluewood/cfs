@@ -60,6 +60,8 @@ const adminPaths = {
   users: adminCfsRoute + "users",
   // commissionSimulation: adminCfsRoute + "commission-simulation",
   mailingList: adminCfsRoute + "mailing-list",
+  mailLibrary: adminCfsRoute + "email-library",
+  mailLibraryForm: adminCfsRoute + "email-library-form",
 } as const;
 
 export default adminPaths;

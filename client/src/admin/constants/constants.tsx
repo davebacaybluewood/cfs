@@ -49,6 +49,8 @@ import ProfileFormAdd from "admin/pages/Profile/components/ProfileForm/ProfileFo
 import Licensing from "admin/pages/Licensing/Licensing";
 import ContractForm from "admin/ContractSignForm/ContractForm";
 import EmailMarketing from "admin/pages/EmailMarketing/EmailMarketing";
+import MailLibrary from "admin/pages/MailingLibrary/MailLibrary";
+import MailLibraryForm from "admin/pages/MailingLibrary/MailLibraryForm";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -571,6 +573,22 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <MailingList />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.mailLibrary,
+    element: (
+      <GuardedWrapper>
+        <MailLibrary />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.mailLibraryForm,
+    element: (
+      <GuardedWrapper>
+        <MailLibraryForm />
       </GuardedWrapper>
     ),
   },

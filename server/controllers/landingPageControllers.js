@@ -23,8 +23,6 @@ const getAllLandingPages = expressAsync(async (req, res) => {
     },
   ]);
 
-  console.log(landingPageViews);
-
   const filteredData = landingPages.map((landingPage) => {
     const noOfRegistered = () => {
       const registeredUsers = landingPageRegisteredUsers

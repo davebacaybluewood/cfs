@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import Spinner from "library/Spinner/Spinner";
 import * as Yup from "yup";
 import React, { useContext, useState } from "react";
-import "./EmailMarketing.scss";
+import "../EmailMarketing/EmailMarketing.scss";
 import FormikTextInput from "library/Formik/FormikInput";
 import Button from "library/Button/Button";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
@@ -18,12 +18,7 @@ import useQuillModules from "../Blogs/useQuillModules";
 import CreatableSelect from "react-select/creatable";
 import { toast } from "react-toastify";
 import DrawerBase, { Anchor } from "library/Drawer/Drawer";
-import {
-  DataGrid,
-  GridColDef,
-  GridRowsProp,
-  GridToolbar,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { BsPlusCircle } from "react-icons/bs";
 
 export const emailOptions = [
@@ -31,7 +26,7 @@ export const emailOptions = [
   { value: "dave.bacay@gocfs.pro", label: "dave.bacay@gocfs.pro" },
 ];
 
-const ContractForm: React.FC = () => {
+const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -175,55 +170,6 @@ const ContractForm: React.FC = () => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} md={12} lg={12}>
-                      <label htmlFor="">Recipients (Required)</label>
-
-                      <CreatableSelect
-                        isMulti
-                        options={emailOptions as any}
-                        placeholder="Select a recipient item to add"
-                        onChange={(e) => {
-                          const modifiedValue = e?.map((val) => val.label);
-                          setFieldValue("recipients", modifiedValue);
-                        }}
-                        onBlur={(e) => {
-                          if (values.recipients.length === 0) {
-                            setTouched({
-                              ...touched,
-                              recipients: [],
-                            });
-                          }
-                        }}
-                        styles={{
-                          clearIndicator: ClearIndicatorStyles,
-                          placeholder: (defaultStyles) => {
-                            return {
-                              ...defaultStyles,
-                              color: "rgba(0, 0, 0, 0.3)",
-                              zIndex: 9,
-                            };
-                          },
-
-                          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                          control: (baseStyles, state) => {
-                            return {
-                              ...baseStyles,
-                              fontSize: "13px",
-                              paddingTop: "5px",
-                              paddingBottom: "5px",
-                              borderColor: "hsl(0, 0%, 80%)",
-                            };
-                          },
-                        }}
-                      />
-
-                      <ErrorText
-                        isError={
-                          values.recipients.length === 0 && !!touched.recipients
-                        }
-                        text="Recipients field is required."
-                      />
-                    </Grid>
                     <Grid
                       item
                       sm={12}
@@ -257,20 +203,12 @@ const ContractForm: React.FC = () => {
                     </Grid>
                   </Grid>
                   <div className="form-actions">
-                    <div className="template-library-btn">
-                      <button onClick={() => setOpenDrawer(true)}>
-                        Template Library
-                      </button>
-                    </div>
                     <div className="actions">
                       <Button variant="default" onClick={() => handleSubmit()}>
                         Save as draft
                       </Button>
-                      <Button variant="default" onClick={() => handleSubmit()}>
-                        Save as template
-                      </Button>
                       <Button variant="danger" onClick={() => handleSubmit()}>
-                        Send
+                        Save as template
                       </Button>
                     </div>
                   </div>
@@ -302,4 +240,4 @@ const ContractForm: React.FC = () => {
   );
 };
 
-export default ContractForm;
+export default MailLibraryForm;
