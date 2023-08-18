@@ -4,7 +4,11 @@ import getUserToken from "helpers/getUserToken";
 import { RegisteredUserData } from "admin/pages/LandingPage/LandingPageInfo";
 import { AgentData } from "admin/models/agentModels";
 import { ContractingData } from "admin/models/contractingModel";
-import { EmailMarketingData } from "admin/models/emailMarketing";
+import {
+  EmailMarketingData,
+  EmailTemplateData,
+  EmailTemplateParameter,
+} from "admin/models/emailMarketing";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -91,6 +95,52 @@ const Contracting = {
 const EmailMarketing = {
   sendEmail: (body: EmailMarketingData) => {
     const res = requests.post<string>("/api/email-marketing/", body);
+
+    return res;
+  },
+  getEmailTemplates: (userGuid: string) => {
+    const res = requests.get<EmailTemplateData[] | undefined>(
+      `/api/email-marketing/template/${userGuid}`
+    );
+
+    return res;
+  },
+  updateEmailTemplate: (
+    userGuid: string,
+    templateId: string,
+    params: EmailTemplateParameter
+  ) => {
+    const res = requests.put<string>(
+      `/api/email-marketing/template/${userGuid}/${templateId}`,
+      {
+        templateName: params.templateName,
+        templateBody: params.templateBody,
+        templateStatus: params.templateStatus,
+        isAddedByMarketing: params.isAddedByMarketing,
+        subject: params.subject,
+      }
+    );
+
+    return res;
+  },
+  createEmailTemplate: (userGuid: string, params: EmailTemplateParameter) => {
+    const res = requests.post<string>(
+      `/api/email-marketing/template/${userGuid}/`,
+      {
+        templateName: params.templateName,
+        templateBody: params.templateBody,
+        templateStatus: params.templateStatus,
+        isAddedByMarketing: params.isAddedByMarketing,
+        subject: params.subject,
+      }
+    );
+
+    return res;
+  },
+  getSingleTemplate: (userGuid: string, templateId: string) => {
+    const res = requests.get<EmailTemplateData>(
+      `/api/email-marketing/template/${userGuid}/${templateId}`
+    );
 
     return res;
   },

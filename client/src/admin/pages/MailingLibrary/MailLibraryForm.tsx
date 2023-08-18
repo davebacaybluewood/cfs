@@ -5,37 +5,27 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { Formik } from "formik";
 import Spinner from "library/Spinner/Spinner";
 import * as Yup from "yup";
-import React, { useContext, useState } from "react";
-import "../EmailMarketing/EmailMarketing.scss";
+import React, { useContext, useEffect, useState } from "react";
 import FormikTextInput from "library/Formik/FormikInput";
 import Button from "library/Button/Button";
-import ErrorText from "pages/PortalRegistration/components/ErrorText";
-import { ClearIndicatorStyles } from "library/MultiSelectInput/MultiSelectInputV2";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
 import ReactQuill from "react-quill";
 import useQuillModules from "../Blogs/useQuillModules";
-import CreatableSelect from "react-select/creatable";
 import { toast } from "react-toastify";
-import DrawerBase, { Anchor } from "library/Drawer/Drawer";
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import { BsPlusCircle } from "react-icons/bs";
-
-export const emailOptions = [
-  { value: "dave.bacay.vc@gmail.com", label: "dave.bacay.vc@gmail.com" },
-  { value: "dave.bacay@gocfs.pro", label: "dave.bacay@gocfs.pro" },
-];
+import "./MailLibraryForm.scss";
+import { EmailTemplateParameter } from "admin/models/emailMarketing";
+import { useLocation } from "react-router-dom";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 
 const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [openDrawer, setOpenDrawer] = useState(false);
 
   const validationSchema = Yup.object({
     emailBody: Yup.string().required("Email body is required."),
     subject: Yup.string().required("Subject is required."),
-    recipients: Yup.array()
-      .min(1, "Pick at least 1 recipients")
-      .required("Recipients is required."),
+    templateName: Yup.string().required("Template name is required."),
   });
 
   const crumbs: CrumbTypes[] = [
@@ -45,74 +35,120 @@ const MailLibraryForm: React.FC = () => {
       isActive: false,
     },
     {
-      title: "Email Marketing",
-      url: paths.emailMarketing,
+      title: "Email Library",
+      url: paths.mailLibrary,
+      isActive: false,
+    },
+    {
+      title: "Email Library Form",
+      url: paths.mailLibraryForm,
       isActive: true,
     },
   ];
 
   const [initialValues, setInitialValues] = useState({
-    recipients: [],
     emailBody: "",
     subject: "",
+    templateName: "",
   });
 
   const userCtx = useContext(UserContext) as any;
+  const userGuid = userCtx?.user?.userGuid;
   const realQuillModules = useQuillModules();
 
-  const populateForm = (emailBody: string, subject: string) => {
-    setInitialValues((prevState) => ({
-      recipients: prevState.recipients,
-      emailBody: emailBody,
-      subject: subject,
-    }));
+  const search = useLocation().search;
+  const action = new URLSearchParams(search).get("action");
+  const templateId = new URLSearchParams(search).get("templateId");
 
-    setOpenDrawer(false);
+  useEffect(() => {
+    const fetchTemplateInfo = async () => {
+      setLoading(true);
+      const data = await agent.EmailMarketing.getSingleTemplate(
+        userGuid,
+        templateId || ""
+      );
+      setInitialValues({
+        emailBody: data.templateBody,
+        subject: data.subject,
+        templateName: data.templateName,
+      });
+    };
+
+    if (userGuid) {
+      fetchTemplateInfo();
+      setLoading(false);
+    }
+  }, [action, templateId, userGuid]);
+
+  const saveTemplateHandler = async (data: EmailTemplateParameter) => {
+    if (action === "edit") {
+      setLoading(true);
+      const body = {
+        templateName: data.templateName,
+        templateBody: data.templateBody,
+        templateStatus: data.templateStatus,
+        isAddedByMarketing: data.isAddedByMarketing,
+        subject: data.subject,
+      };
+      const response = await agent.EmailMarketing.updateEmailTemplate(
+        userGuid,
+        templateId ?? "",
+        body
+      );
+
+      if (response) {
+        toast.info(`Email Template has been updated.`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setLoading(false);
+      }
+    } else {
+      setLoading(true);
+      const response = await agent.EmailMarketing.createEmailTemplate(
+        userGuid,
+        data
+      );
+
+      if (response) {
+        toast.info(`Email Template has been added.`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setLoading(false);
+      }
+    }
   };
 
-  const rows: GridRowsProp = [
-    {
-      id: 1,
-      createdBy: "Hello",
-      createdAt: "World",
-      templateName: "Template 1",
-      body: "test",
-      actions: (
-        <React.Fragment>
-          <button
-            className="select-btn"
-            onClick={() => populateForm("test", "test")}
-          >
-            <span>Select This Template</span> <BsPlusCircle />
-          </button>
-        </React.Fragment>
-      ),
-    },
-  ];
-
-  const columns: GridColDef[] = [
-    { field: "templateName", headerName: "Template Name", width: 300 },
-    { field: "createdBy", headerName: "Created By", width: 150 },
-    { field: "createdAt", headerName: "Date Created", width: 150 },
-    {
-      field: "actions",
-      headerName: "",
-      width: 250,
-      align: "right",
-      renderCell: (params) => params.value,
-    },
-  ];
+  const { profile, loading: profileLoading } = useFetchUserProfile(
+    userCtx?.user?.userGuid ?? ""
+  );
+  const isAdmin = profile?.roles?.some((f) => {
+    return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
+  });
 
   return (
     <Wrapper
       breadcrumb={crumbs}
       error={false}
       loading={false}
-      className="email-marketing-container"
+      className="email-template-container"
     >
-      <div className="email-marketing-form-container">
+      <div className="email-template-form-container">
         {loading ? <Spinner variant="fixed" /> : null}
-        <h2>Email Marketing</h2>
+        <h2>Email Template Form</h2>
         <p
           style={{
             fontSize: "1.4rem",
@@ -127,35 +163,19 @@ const MailLibraryForm: React.FC = () => {
           quibusdam. Laborum minima id, <br /> accusamus eum ipsum placeat quod
           saepe? Consectetur.
         </p>
-        <div className="email-marketing-form">
+        <div className="email-template-form">
           <Formik
             initialValues={initialValues}
             enableReinitialize
             onSubmit={async (data, actions) => {
               const finalData = {
-                ...data,
-                userGuid: userCtx?.user?.userGuid,
+                templateName: data.templateName,
+                templateBody: data.emailBody,
+                templateStatus: "ACTIVATED",
+                isAddedByMarketing: !!isAdmin,
+                subject: data.subject,
               };
-              setLoading(true);
-              const response = await agent.EmailMarketing.sendEmail(finalData);
-
-              if (response) {
-                setLoading(false);
-                toast.info(`Email has been submitted.`, {
-                  position: "top-right",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                });
-
-                console.log(response);
-              } else {
-                setLoading(false);
-              }
+              saveTemplateHandler(finalData);
             }}
             validationSchema={validationSchema}
           >
@@ -170,6 +190,21 @@ const MailLibraryForm: React.FC = () => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
+                    <Grid
+                      item
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      className="form-card-container"
+                    >
+                      <label>Template Name (Required)</label>
+                      <FormikTextInput
+                        placeholder="Enter your template name here"
+                        variant="outlined"
+                        name="templateName"
+                        value={values.templateName}
+                      />
+                    </Grid>
                     <Grid
                       item
                       sm={12}
@@ -204,12 +239,39 @@ const MailLibraryForm: React.FC = () => {
                   </Grid>
                   <div className="form-actions">
                     <div className="actions">
-                      <Button variant="default" onClick={() => handleSubmit()}>
-                        Save as draft
-                      </Button>
-                      <Button variant="danger" onClick={() => handleSubmit()}>
-                        Save as template
-                      </Button>
+                      {action === "edit" ? (
+                        <React.Fragment>
+                          <Button
+                            variant="danger"
+                            onClick={() => handleSubmit()}
+                          >
+                            Edit Template
+                          </Button>
+                        </React.Fragment>
+                      ) : (
+                        <React.Fragment>
+                          <Button
+                            variant="default"
+                            onClick={async () =>
+                              saveTemplateHandler({
+                                templateName: values.templateName,
+                                templateBody: values.emailBody,
+                                templateStatus: "DRAFT",
+                                isAddedByMarketing: !!isAdmin,
+                                subject: values.subject,
+                              })
+                            }
+                          >
+                            Save as draft
+                          </Button>
+                          <Button
+                            variant="danger"
+                            onClick={() => handleSubmit()}
+                          >
+                            Save Template
+                          </Button>
+                        </React.Fragment>
+                      )}
                     </div>
                   </div>
                   {/* <pre>{JSON.stringify(values, null, 2)}</pre>
@@ -221,21 +283,6 @@ const MailLibraryForm: React.FC = () => {
         </div>
       </div>
       {loading ? <Spinner variant="fixed" /> : null}
-
-      <DrawerBase
-        open={openDrawer}
-        onClose={() => setOpenDrawer(false)}
-        anchor={Anchor.Right}
-        title="Email Library"
-        className="drawer-email-library"
-        footer={
-          <React.Fragment>
-            <Button variant="default">Close</Button>
-          </React.Fragment>
-        }
-      >
-        <DataGrid rows={rows} columns={columns} />
-      </DrawerBase>
     </Wrapper>
   );
 };

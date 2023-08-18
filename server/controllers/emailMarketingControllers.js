@@ -117,8 +117,13 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
  * @access: Private
  */
 const saveEmailTemplate = expressAsync(async (req, res, next) => {
-  const { templateName, templateBody, templateStatus, isAddedByMarketing } =
-    req.body;
+  const {
+    templateName,
+    templateBody,
+    templateStatus,
+    isAddedByMarketing,
+    subject,
+  } = req.body;
   const { userGuid } = req.params;
   const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
 
@@ -128,7 +133,8 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     !userGuid ||
     !templateStatus ||
     !isAddedByMarketing ||
-    !validStatuses.includes(templateStatus)
+    !validStatuses.includes(templateStatus) ||
+    !subject
   ) {
     throw new Error("Error occured in submission.");
   }
@@ -139,6 +145,7 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     userGuid,
     status: templateStatus,
     isAddedByMarketing,
+    subject,
   };
 
   const emailTemplate = new EmailTemplate(newTemplate);
@@ -179,7 +186,7 @@ const getEmailTemplates = expressAsync(async (req, res, next) => {
           $or: [
             {
               status: {
-                $in: ["ACTIVATED", "DRAFT"],
+                $in: ["ACTIVATED", "DRAFT", "DEACTIVATED"],
               },
             },
           ],
@@ -216,9 +223,9 @@ const getEmailTemplates = expressAsync(async (req, res, next) => {
     },
   ];
 
-  const emailTemplates = await EmailTemplate.aggregate(filteredAggregate)
-    .sort({ _id: -1 })
-    .limit(3);
+  const emailTemplates = await EmailTemplate.aggregate(filteredAggregate).sort({
+    _id: -1,
+  });
 
   res.json(emailTemplates);
 });
@@ -237,7 +244,7 @@ const getSingleEmailTemplate = expressAsync(async (req, res, next) => {
 
   const emailTemplate = await EmailTemplate.aggregate([
     {
-      $match: { _id: mongoose.Types.ObjectId(templateId), userGuid: userGuid },
+      $match: { _id: mongoose.Types.ObjectId(templateId) },
     },
     {
       $lookup: {
@@ -282,7 +289,7 @@ const getSingleEmailTemplate = expressAsync(async (req, res, next) => {
  */
 const updateEmailTemplate = expressAsync(async (req, res, next) => {
   const { userGuid, templateId } = req.params;
-  const { templateName, templateBody, templateStatus } = req.body;
+  const { templateName, templateBody, templateStatus, subject } = req.body;
   const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
 
   if (
@@ -291,7 +298,8 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
     !templateStatus ||
     !templateBody ||
     !templateName ||
-    !validStatuses.includes(templateStatus)
+    !validStatuses.includes(templateStatus) ||
+    !subject
   ) {
     throw new Error("Error occured in updating.");
   }
@@ -316,6 +324,7 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
       emailTemplate.status,
       templateStatus
     );
+    emailTemplate.subject = undefinedValidator(emailTemplate.subject, subject);
     await emailTemplate.save();
     res.json("[Email Template] has been successfuly updated.");
   } else {

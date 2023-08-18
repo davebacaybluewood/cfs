@@ -1,5 +1,5 @@
-.email-marketing-container {
-  .email-marketing-form-container {
+.email-template-container {
+  .email-template-form-container {
     background: #1565d8;
     height: 40vh;
     padding: 4rem 2rem;
@@ -11,7 +11,7 @@
       color: #fff;
     }
 
-    .email-marketing-form {
+    .email-template-form {
       background: #fff;
       margin-top: 4rem;
       padding: 5rem 4rem;
@@ -81,22 +81,6 @@
       div,
       label {
         font-size: 1.2rem;
-      }
-    }
-    .datagrid-content {
-      margin-bottom: 9rem;
-    }
-    .template-name-header {
-      display: flex;
-      align-items: center;
-
-      span {
-        margin-right: 0.5rem;
-      }
-
-      svg {
-        color: #4caf50;
-        font-size: 1.5rem;
       }
     }
 

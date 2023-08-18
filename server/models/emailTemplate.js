@@ -18,6 +18,10 @@ const emailTemplateModel = mongoose.Schema(
       type: String,
       enum: ["DRAFT", "ACTIVATED", "DEACTIVATED"],
     },
+    subject: {
+      type: String,
+      required: true,
+    },
     isAddedByMarketing: {
       type: Boolean,
     },
