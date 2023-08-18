@@ -6,6 +6,7 @@ import Agents from "../models/agentModel.js";
 import EmailTemplate from "../models/emailTemplate.js";
 import mongoose, { mongo } from "mongoose";
 import undefinedValidator from "./helpers/undefinedValidator.js";
+import Agent from "../models/agentModel.js";
 
 /**
  * @desc: Send an email marketing
@@ -132,7 +133,6 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     !templateBody ||
     !userGuid ||
     !templateStatus ||
-    !isAddedByMarketing ||
     !validStatuses.includes(templateStatus) ||
     !subject
   ) {
@@ -227,7 +227,25 @@ const getEmailTemplates = expressAsync(async (req, res, next) => {
     _id: -1,
   });
 
-  res.json(emailTemplates);
+  const agent = await Agent.find({ userGuid });
+  const agentInfo = agent[0];
+
+  const isAdmin = agentInfo?.roles?.some((f) => {
+    return f.value === "ROLE_MASTER_ADMIN";
+  });
+
+  const filteredEmailTemplates = emailTemplates.filter((data) => {
+    const personalEmailTempaltes =
+      data.isAddedByMarketing || data.userGuid === agentInfo.userGuid;
+
+    if (isAdmin) {
+      return data;
+    } else {
+      return personalEmailTempaltes;
+    }
+  });
+
+  res.json(filteredEmailTemplates);
 });
 
 /**

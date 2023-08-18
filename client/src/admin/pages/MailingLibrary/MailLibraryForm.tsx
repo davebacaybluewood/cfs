@@ -55,6 +55,7 @@ const MailLibraryForm: React.FC = () => {
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
   const realQuillModules = useQuillModules();
+  const [editButtonVisibility, setEditButtonVisibility] = useState(false);
 
   const search = useLocation().search;
   const action = new URLSearchParams(search).get("action");
@@ -72,6 +73,7 @@ const MailLibraryForm: React.FC = () => {
         subject: data.subject,
         templateName: data.templateName,
       });
+      setEditButtonVisibility(data.userGuid === userGuid);
     };
 
     if (userGuid) {
@@ -240,14 +242,14 @@ const MailLibraryForm: React.FC = () => {
                   <div className="form-actions">
                     <div className="actions">
                       {action === "edit" ? (
-                        <React.Fragment>
+                        editButtonVisibility ? (
                           <Button
                             variant="danger"
                             onClick={() => handleSubmit()}
                           >
                             Edit Template
                           </Button>
-                        </React.Fragment>
+                        ) : null
                       ) : (
                         <React.Fragment>
                           <Button
@@ -267,6 +269,7 @@ const MailLibraryForm: React.FC = () => {
                           <Button
                             variant="danger"
                             onClick={() => handleSubmit()}
+                            disabled={true}
                           >
                             Save Template
                           </Button>

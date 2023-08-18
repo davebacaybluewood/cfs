@@ -6,8 +6,12 @@ import Title from "admin/components/Title/Title";
 import {
   DataGrid,
   GridColDef,
+  GridFilterPanel,
   GridRowsProp,
   GridToolbar,
+  GridToolbarContainer,
+  GridToolbarDensitySelector,
+  GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import { BsPlusCircle } from "react-icons/bs";
 import { createSearchParams, useNavigate } from "react-router-dom";
@@ -37,6 +41,15 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarFilterButton />
+      <GridToolbarDensitySelector />
+    </GridToolbarContainer>
+  );
+}
+
 const MailLibrary: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -64,7 +77,7 @@ const MailLibrary: React.FC = () => {
     {
       field: "actions",
       headerName: "",
-      width: 600,
+      width: 580,
       align: "right",
       renderCell: (params) => params.value,
     },
