@@ -15,7 +15,7 @@ import {
 } from "@mui/x-data-grid";
 import { BsPlusCircle } from "react-icons/bs";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { Button, Tooltip } from "@mui/material";
+import { Button, Menu, MenuItem, Tooltip } from "@mui/material";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
 import "./MailingLibrary.scss";
@@ -27,6 +27,7 @@ import classNames from "classnames";
 import { HiOutlineTrash } from "react-icons/hi";
 import { RiExternalLinkFill } from "react-icons/ri";
 import Spinner from "library/Spinner/Spinner";
+import { BiFilterAlt } from "react-icons/bi";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -41,13 +42,8 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
-    </GridToolbarContainer>
-  );
+interface FilteredGridToolbarProps {
+  setter: React.Dispatch<any>;
 }
 
 const MailLibrary: React.FC = () => {
@@ -57,6 +53,7 @@ const MailLibrary: React.FC = () => {
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
   const [templates, setTemplates] = useState<any>([]);
+  const [originalTemplates, setOriginalTemplates] = useState<any>([]);
 
   const columns: GridColDef[] = [
     {
@@ -140,6 +137,7 @@ const MailLibrary: React.FC = () => {
       const data = await agent.EmailMarketing.getEmailTemplates(userGuid);
 
       setTemplates(data);
+      setOriginalTemplates(data);
     };
 
     if (userGuid) {
@@ -251,10 +249,50 @@ const MailLibrary: React.FC = () => {
     };
   });
 
+  // This will be refactor september
+  const FilteredGridToolbar = () => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const filterHandler = (status: string) => {
+      setTemplates((prevState) => {
+        const filteredData = originalTemplates?.filter(
+          (data) => data.status === status
+        );
+        return status === "ALL" ? originalTemplates : filteredData;
+      });
+      setAnchorEl(null);
+    };
+    return (
+      <GridToolbarContainer className="custom-toolbar">
+        <GridToolbar />
+        <Button onClick={handleClick} className="filter-status-btn">
+          <BiFilterAlt />
+          Filter by Status
+        </Button>
+        <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
+          <MenuItem onClick={() => filterHandler("ALL")}>All Status</MenuItem>
+          <MenuItem onClick={() => filterHandler("ACTIVATED")}>
+            Activated
+          </MenuItem>
+          <MenuItem onClick={() => filterHandler("DRAFT")}>Draft</MenuItem>
+          <MenuItem onClick={() => filterHandler("DEACTIVATED")}>
+            Deactivated
+          </MenuItem>
+        </Menu>
+      </GridToolbarContainer>
+    );
+  };
+
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <div className="mailing-library-container">
-        <Title title="Email Library" subtitle="lorem ipsum dolor sit amet">
+        <Title
+          title="Email Library"
+          subtitle="List of all available email libraries."
+        >
           <Button
             onClick={() => navigate(paths.mailLibraryForm)}
             variant="contained"
@@ -266,7 +304,7 @@ const MailLibrary: React.FC = () => {
           <DataGrid
             rows={filteredRows}
             columns={columns}
-            slots={{ toolbar: GridToolbar }}
+            slots={{ toolbar: FilteredGridToolbar }}
           />
         </div>
       </div>

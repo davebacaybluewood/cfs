@@ -205,20 +205,6 @@ const ContractForm: React.FC = () => {
       <div className="email-marketing-form-container">
         {loading ? <Spinner variant="fixed" /> : null}
         <h2>Email Marketing</h2>
-        <p
-          style={{
-            fontSize: "1.4rem",
-            textAlign: "center",
-            color: "#fff",
-            lineHeight: "2rem",
-            marginTop: "2rem",
-            fontWeight: 300,
-          }}
-        >
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid,
-          quibusdam. Laborum minima id, <br /> accusamus eum ipsum placeat quod
-          saepe? Consectetur.
-        </p>
         <div className="email-marketing-form">
           <Formik
             initialValues={initialValues}

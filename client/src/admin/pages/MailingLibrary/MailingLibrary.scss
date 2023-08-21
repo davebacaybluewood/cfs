@@ -74,3 +74,16 @@
 .capitalize-first::first-letter {
   text-transform: uppercase;
 }
+.custom-toolbar {
+  .filter-status-btn {
+    align-items: center;
+    display: flex;
+    position: relative;
+    top: 1px;
+    left: -15px;
+    svg {
+      margin-right: 1rem;
+      font-size: 1.6rem;
+    }
+  }
+}
