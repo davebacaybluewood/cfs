@@ -39,7 +39,7 @@ const requestContractController = expressAsync((req, res, next) => {
     },
   ];
 
-  const contractEmail = "dave.bacay@gocfs.pro";
+  const contractEmail = "contracting@gocfs.pro";
   try {
     sendHTMLEmail = sendEmail(
       contractEmail,
