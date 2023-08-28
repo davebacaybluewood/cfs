@@ -582,7 +582,10 @@ const Calculator: React.FC = () => {
               spreadPremiumMember6 +
             numberOfDirectMembers7 *
               spreadMonthlyTargetPremium7 *
-              spreadPremiumMember7
+              spreadPremiumMember7 +
+            numberOfDirectMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8
           : // Formula SMD
           isSeniorMarketingDirector
           ? numberOfPromotedMembers4 *

@@ -79,7 +79,7 @@ const MultiSelectInput: React.FC<MultiSelectInputProps> = (props) => {
           return {
             ...defaultStyles,
             color: "rgba(0, 0, 0, 0.3)",
-            zIndex: 9,
+            zIndex: 0,
           };
         },
 
