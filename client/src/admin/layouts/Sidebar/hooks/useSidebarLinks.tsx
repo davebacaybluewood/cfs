@@ -65,89 +65,6 @@ const useSidebarLinks = (
   position?: PositionAndRoleType[] | undefined,
   roles?: PositionAndRoleType[] | undefined
 ) => {
-  const [data, setData] = useState<AgentStatistics>({
-    loading: false,
-    error: null,
-    agentCount: {
-      activeAgents: 0,
-      deactivatedAgents: 0,
-      declinedAgents: 0,
-      pendingAgents: 0,
-    },
-  });
-
-  const isAdmin = roles?.some((f) => {
-    return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
-  });
-
-  const isEditor = roles?.some((f) => {
-    return (
-      f.value === PROFILE_ROLES.EDITOR_ROLES.ROLE_EDITOR_BLOGS.value ||
-      f.value === PROFILE_ROLES.EDITOR_ROLES.ROLE_EDITOR_EMAIL_TEMPLATES.value
-    );
-  });
-
-  const isContentCreator = roles?.some((f) => {
-    return (
-      f.value ===
-        PROFILE_ROLES.CONTENT_CREATOR_ROLES.ROLE_CONTENT_CREATOR_BLOGS.value ||
-      f.value ===
-        PROFILE_ROLES.CONTENT_CREATOR_ROLES.ROLE_CONTENT_CREATOR_EMAIL_TEMPLATES
-          .value
-    );
-  });
-
-  const isAgent = roles?.some((f) => {
-    return (
-      f.value === PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value ||
-      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value ||
-      f.value === PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value ||
-      f.value === PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value ||
-      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value ||
-      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
-      f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value ||
-      f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
-    );
-  });
-
-  useEffect(() => {
-    setData({
-      loading: true,
-      error: null,
-      agentCount: {
-        activeAgents: 0,
-        deactivatedAgents: 0,
-        declinedAgents: 0,
-        pendingAgents: 0,
-      },
-    });
-    if (isAdmin) {
-      fetch(ENDPOINTS.AGENT_COUNTS, {
-        headers: {
-          Authorization: `Bearer ${getUserToken()}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setData({ loading: false, error: null, agentCount: data });
-        })
-        .catch((error) => {
-          setData({
-            loading: false,
-            error,
-            agentCount: {
-              activeAgents: 0,
-              deactivatedAgents: 0,
-              declinedAgents: 0,
-              pendingAgents: 0,
-            },
-          });
-        });
-    }
-  }, [isAdmin]);
-
-  const { agentCount } = data;
-
   const currentPage = document.location.href.split("/")[4];
   const userContext = useContext(UserContext);
   const sidebarLinks: ISidebarLinks[] = [
@@ -307,18 +224,15 @@ const useSidebarLinks = (
         PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
       ],
       isSubMenu: true,
-      // isSubMenu: isAdmin || role === ROLES.ROLE_AGENT,
       subLinks: [
         {
           linkText: "Webinar Calendars",
           icon: <FaUserSecret />,
-          link:
-            // role === ROLES.ROLE_MASTER_ADMIN
-            true
-              ? paths.typeAppointments.replace(":typeId", "webinar")
-              : adminPathsNew.agentAppointments
-                  .replace(":agentId", userContext.user?.userGuid ?? "")
-                  .replace(":typeId", "webinar"),
+          link: true
+            ? paths.typeAppointments.replace(":typeId", "webinar")
+            : adminPathsNew.agentAppointments
+                .replace(":agentId", userContext.user?.userGuid ?? "")
+                .replace(":typeId", "webinar"),
           isActive:
             currentPage === adminPathsNew.typeAppointments.split("/")[2],
         },
@@ -337,40 +251,6 @@ const useSidebarLinks = (
         },
       ],
     },
-    // {
-    //   linkText: "Calendar",
-    //   link: paths.calendar,
-    //   isActive: currentPage === adminPathsNew.calendar.split("/")[2],
-    //   icon: <FaRegCalendarAlt />,
-    //   role: [
-    //     PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
-    //     PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
-    //     PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
-    //     PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
-    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
-    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
-    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
-    //     PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
-    //     PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
-    //   ],
-    // },
-    // {
-    //   linkText: "Contacts",
-    //   link: paths.contacts,
-    //   isActive: currentPage === adminPathsNew.contacts.split("/")[2],
-    //   icon: <FaBookReader />,
-    //   role: [
-    //     PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
-    //     PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
-    //     PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
-    //     PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
-    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
-    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
-    //     PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
-    //     PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
-    //     PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
-    //   ],
-    // },
     {
       linkText: "Contacts",
       isActive: currentPage === adminPathsNew.mailingList.split("/")[2],
@@ -436,14 +316,6 @@ const useSidebarLinks = (
           link: paths.adminBlogs,
           isActive: currentPage === adminPathsNew.adminBlogs.split("/")[2],
         },
-        // {
-        //   linkText: "File Maintenance",
-        //   icon: <FaFileAlt />,
-        //   link: paths.adminBlogsFileMaintenance,
-        //   isActive:
-        //     currentPage ===
-        //     adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
-        // },
       ],
     },
     {
@@ -465,14 +337,6 @@ const useSidebarLinks = (
           link: paths.adminBlogs,
           isActive: currentPage === adminPathsNew.adminBlogs.split("/")[2],
         },
-        // {
-        //   linkText: "File Maintenance",
-        //   icon: <FaFileAlt />,
-        //   link: paths.adminBlogsFileMaintenance,
-        //   isActive:
-        //     currentPage ===
-        //     adminPathsNew.adminBlogsFileMaintenance.split("/")[2],
-        // },
       ],
     },
     {
@@ -491,21 +355,18 @@ const useSidebarLinks = (
           icon: <FaUserSecret />,
           link: paths.agents,
           isActive: currentPage === adminPathsNew.agents.split("/")[2],
-          badge: agentCount?.activeAgents?.toString(),
         },
         {
           linkText: "Agent Requests",
           icon: <FaUserSecret />,
           link: paths.agentRequests,
           isActive: currentPage === adminPathsNew.agentRequests.split("/")[2],
-          badge: agentCount?.pendingAgents?.toString(),
         },
         {
           linkText: "Declined Agents",
           icon: <FaUserSecret />,
           link: paths.declinedAgents,
           isActive: currentPage === adminPathsNew.declinedAgents.split("/")[2],
-          badge: agentCount?.declinedAgents?.toString(),
         },
         {
           linkText: "Deactivated Agents",
@@ -513,7 +374,6 @@ const useSidebarLinks = (
           link: paths.deactivatedAgents,
           isActive:
             currentPage === adminPathsNew.deactivatedAgents.split("/")[2],
-          badge: agentCount?.deactivatedAgents?.toString(),
         },
       ],
     },
@@ -579,26 +439,6 @@ const useSidebarLinks = (
       icon: <FaThumbsUp />,
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
     },
-    // {
-    //   linkText: "Resources",
-    //   isActive: currentPage === adminPathsNew.webinar.split("/")[2],
-    //   icon: <FaPhotoVideo />,
-    //   role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
-    //   isSubMenu: true,
-    //   subLinks: [
-    //     {
-    //       linkText: "Webinars",
-    //       link: paths.webinar,
-    //       isActive: currentPage === adminPathsNew.webinar.split("/")[2],
-    //     },
-    //     {
-    //       linkText: "Commission Simulation",
-    //       link: paths.commissionSimulation,
-    //       isActive:
-    //         currentPage === adminPathsNew.commissionSimulation.split("/")[2],
-    //     },
-    //   ],
-    // },
     {
       linkText: "My Webinars",
       isActive: currentPage === adminPathsNew.cfsWebinars.split("/")[2],
@@ -661,10 +501,6 @@ const useSidebarLinks = (
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
       isSubMenu: true,
       subLinks: [
-        // {
-        //   linkText: "Manage Editors",
-        //   link: paths.adminBlogUsers,
-        // },
         {
           linkText: "Blogs",
           link: paths.adminBlogs,
@@ -703,32 +539,6 @@ const useSidebarLinks = (
         },
       ],
     },
-    // {
-    //   linkText: "File Maintenance",
-    //   isActive:
-    //     currentPage === adminPathsNew.webinar.split("/")[2] ||
-    //     currentPage === adminPathsNew.webinarSingle.split("/")[2],
-    //   icon: <FaFileAlt />,
-    //   role: [ROLES.ROLE_MASTER_ADMIN],
-    //   isSubMenu: true,
-    //   subLinks: [
-    //     {
-    //       linkText: "Webinars",
-    //       link: paths.webinar,
-    //       isActive: currentPage === adminPathsNew.webinar.split("/")[2],
-    //     },
-    // {
-    //   linkText: "Company Information",
-    //   link: paths.homeMetatags,
-    //   isActive: currentPage === adminPathsNew.homeMetatags.split("/")[2],
-    // },
-    // {
-    //   linkText: "Home Meta Tags",
-    //   link: paths.homeMetatags,
-    //   isActive: currentPage === adminPathsNew.homeMetatags.split("/")[2],
-    // },
-    //   ],
-    // },
   ];
 
   const sidebarMainLinks = sidebarLinks.filter((link: ISidebarLinks) => {
@@ -849,11 +659,8 @@ const useSidebarLinks = (
     },
   ];
 
-  const sidebarOtherLinks = otherLinks.filter(
-    (link: ISidebarLinks) =>
-      // link.role.includes(role)
-      "test"
-  );
+  const sidebarOtherLinks = otherLinks.filter((link: ISidebarLinks) => link);
+
   return {
     sidebarMainLinks,
     sidebarOtherLinks,

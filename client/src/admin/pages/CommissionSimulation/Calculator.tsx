@@ -7,11 +7,14 @@ import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import formatter from "helpers/currencyFormatter";
 import { AiOutlineWarning } from "react-icons/ai";
+import { RiErrorWarningLine } from "react-icons/ri";
 import AlertMessage from "library/AlertMessage/Alert";
 import Button from "library/Button/Button";
 import useAccountValidation from "admin/hooks/useAccountValidation";
 import nameFallback from "helpers/nameFallback";
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import "./Calculator.scss";
+import Badge from "library/Badge/Badge";
 
 const AGENT_ROLES = [
   {
@@ -255,6 +258,18 @@ const Calculator: React.FC = () => {
         data.spread.numberOfPromotedMembers7
       );
 
+      /* Position 8 */
+      /*Traning Associate */
+      const spreadNumberValue8 = Number(data.spread.position8.numberValue);
+      const spreadMonthlyTargetPremium8 = Number(
+        data.spread.monthlyTargetPremium8
+      );
+      const spreadNumberOfMembers8 = Number(data.spread.numberOfMembers8);
+      const spreadPremiumMember8 = Number(data.spread.numberOfPremiumMembers8);
+      const numberOfDirectMembers8 = Number(data.spread.numberOfDirectMembers8);
+      const numberOfPromotedMembers8 = Number(
+        data.spread.numberOfPromotedMembers8
+      );
       /* Formula 7 */
       /* Associate */
 
@@ -562,29 +577,26 @@ const Calculator: React.FC = () => {
       const genTotalVol1 =
         // Formula Associate
         isAssociate
-          ? (spreadNumberOfMembers7 +
-              numberOfDirectMembers7 +
-              numberOfPromotedMembers7) *
-            spreadMonthlyTargetPremium7 *
-            spreadPremiumMember7
+          ? numberOfPromotedMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7 +
+            (spreadNumberOfMembers8 + numberOfDirectMembers8) *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8
           : // Formula SA
           isSeniorAssociate
-          ? (spreadNumberOfMembers6 +
-              numberOfDirectMembers6 +
-              numberOfPromotedMembers6) *
+          ? numberOfPromotedMembers6 *
               spreadMonthlyTargetPremium6 *
               spreadPremiumMember6 +
-            numberOfDirectMembers7 *
+            (spreadNumberOfMembers7 + numberOfDirectMembers7) *
               spreadMonthlyTargetPremium7 *
               spreadPremiumMember7
           : // Formula MD
           isMarketingDirector
-          ? (spreadNumberOfMembers5 +
-              numberOfDirectMembers5 +
-              numberOfPromotedMembers5) *
+          ? numberOfPromotedMembers5 *
               spreadMonthlyTargetPremium5 *
               spreadPremiumMember5 +
-            numberOfDirectMembers6 *
+            (spreadNumberOfMembers6 + numberOfDirectMembers6) *
               spreadMonthlyTargetPremium6 *
               spreadPremiumMember6 +
             numberOfDirectMembers7 *
@@ -592,12 +604,10 @@ const Calculator: React.FC = () => {
               spreadPremiumMember7
           : // Formula SMD
           isSeniorMarketingDirector
-          ? (spreadNumberOfMembers4 +
-              numberOfDirectMembers4 +
-              numberOfPromotedMembers4) *
+          ? numberOfPromotedMembers4 *
               spreadMonthlyTargetPremium4 *
               spreadPremiumMember4 +
-            numberOfDirectMembers5 *
+            (spreadNumberOfMembers5 + numberOfDirectMembers5) *
               spreadMonthlyTargetPremium5 *
               spreadPremiumMember5 +
             numberOfDirectMembers6 *
@@ -605,15 +615,16 @@ const Calculator: React.FC = () => {
               spreadPremiumMember6 +
             numberOfDirectMembers7 *
               spreadMonthlyTargetPremium7 *
-              spreadPremiumMember7
+              spreadPremiumMember7 +
+            numberOfDirectMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8
           : // Formula EMD
-          isMarketingDirector
-          ? (spreadNumberOfMembers3 +
-              numberOfDirectMembers3 +
-              numberOfPromotedMembers3) *
+          isExecutiveMarketingDirector
+          ? numberOfPromotedMembers3 *
               spreadMonthlyTargetPremium3 *
               spreadPremiumMember3 +
-            numberOfDirectMembers4 *
+            (spreadNumberOfMembers4 + numberOfDirectMembers4) *
               spreadMonthlyTargetPremium4 *
               spreadPremiumMember4 +
             numberOfDirectMembers5 *
@@ -627,12 +638,10 @@ const Calculator: React.FC = () => {
               spreadPremiumMember7
           : // Formula SEMD
           isSeniorExecutiveMarketingDirector
-          ? (spreadNumberOfMembers2 +
-              numberOfDirectMembers2 +
-              numberOfPromotedMembers2) *
+          ? numberOfPromotedMembers2 *
               spreadMonthlyTargetPremium2 *
               spreadPremiumMember2 +
-            numberOfDirectMembers3 *
+            (spreadNumberOfMembers3 + numberOfDirectMembers3) *
               spreadMonthlyTargetPremium3 *
               spreadPremiumMember3 +
             numberOfDirectMembers4 *
@@ -649,12 +658,10 @@ const Calculator: React.FC = () => {
               spreadPremiumMember7
           : // Formula EVP
           isVicePresident
-          ? (spreadNumberOfMembers1 +
-              numberOfDirectMembers1 +
-              numberOfPromotedMembers1) *
+          ? numberOfPromotedMembers1 *
               spreadMonthlyTargetPremium1 *
               spreadPremiumMember1 +
-            numberOfDirectMembers2 *
+            (spreadNumberOfMembers2 + numberOfDirectMembers2) *
               spreadMonthlyTargetPremium2 *
               spreadPremiumMember2 +
             numberOfDirectMembers3 *
@@ -679,36 +686,54 @@ const Calculator: React.FC = () => {
       /* Generation 2 Formula*/
       const genValue2 = data.generation.numberValue2;
       const genTotalVol2 =
-        // Formula 2 MD
+        // Formula 2 SA
         isSeniorAssociate
-          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
-            spreadMonthlyTargetPremium7 *
-            spreadPremiumMember7
+          ? spreadNumberOfMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8 +
+            numberOfPromotedMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
           : // Formula 2 MD
           isMarketingDirector
-          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
-            spreadMonthlyTargetPremium6 *
-            spreadPremiumMember6
+          ? spreadNumberOfMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7 +
+            numberOfPromotedMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6
           : // Formula 2 SMD
           isSeniorMarketingDirector
-          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
-            spreadMonthlyTargetPremium5 *
-            spreadPremiumMember5
+          ? spreadNumberOfMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfPromotedMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5
           : // Formula 2 EMD
           isExecutiveMarketingDirector
-          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
-            spreadMonthlyTargetPremium4 *
-            spreadPremiumMember4
-          : // Formula SEMD
+          ? spreadNumberOfMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfPromotedMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4
+          : // Formula 2 SEMD
           isSeniorExecutiveMarketingDirector
-          ? (spreadNumberOfMembers3 + numberOfPromotedMembers3) *
-            spreadMonthlyTargetPremium3 *
-            spreadPremiumMember3
-          : // Formula EVP
+          ? spreadNumberOfMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfPromotedMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3
+          : // Formula 2 EVP
           isVicePresident
-          ? (spreadNumberOfMembers2 + numberOfPromotedMembers2) *
-            spreadMonthlyTargetPremium2 *
-            spreadPremiumMember2
+          ? spreadNumberOfMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3 +
+            numberOfPromotedMembers2 *
+              spreadMonthlyTargetPremium2 *
+              spreadPremiumMember2
           : 0;
 
       const genTotal2 = genTotalVol2 * genValue2;
@@ -716,31 +741,46 @@ const Calculator: React.FC = () => {
       /* Generation 3 Formula*/
       const genValue3 = data.generation.numberValue3;
       const genTotalVol3 =
-        // Formula 3 MD
+        // Formula MD
         isMarketingDirector
-          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
-            spreadMonthlyTargetPremium7 *
-            spreadPremiumMember7
+          ? spreadNumberOfMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8 +
+            numberOfPromotedMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
           : // Formula SMD
           isSeniorMarketingDirector
-          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
-            spreadMonthlyTargetPremium6 *
-            spreadPremiumMember6
+          ? spreadNumberOfMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7 +
+            numberOfPromotedMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6
           : // Formula EMD
           isExecutiveMarketingDirector
-          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
-            spreadMonthlyTargetPremium5 *
-            spreadPremiumMember5
+          ? spreadNumberOfMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfPromotedMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5
           : // Formula SEMD
           isSeniorExecutiveMarketingDirector
-          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
-            spreadMonthlyTargetPremium4 *
-            spreadPremiumMember4
+          ? spreadNumberOfMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfPromotedMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4
           : // Formula EVP
           isVicePresident
-          ? (spreadNumberOfMembers3 + numberOfPromotedMembers3) *
-            spreadMonthlyTargetPremium3 *
-            spreadPremiumMember3
+          ? spreadNumberOfMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfPromotedMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3
           : 0;
 
       const genTotal3 = genTotalVol3 * genValue3;
@@ -748,26 +788,38 @@ const Calculator: React.FC = () => {
       /* Generation 4 Formula*/
       const genValue4 = data.generation.numberValue4;
       const genTotalVol4 =
-        // Formula 4 SMD
+        // Formula 4
         isSeniorMarketingDirector
-          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
-            spreadMonthlyTargetPremium7 *
-            spreadPremiumMember7
-          : // Formula 4 EMD
+          ? spreadNumberOfMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8 +
+            numberOfPromotedMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula 4
           isExecutiveMarketingDirector
-          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
-            spreadMonthlyTargetPremium6 *
-            spreadPremiumMember6
+          ? spreadNumberOfMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7 +
+            numberOfPromotedMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6
           : // Formula 4 SEMD
           isSeniorExecutiveMarketingDirector
-          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
-            spreadMonthlyTargetPremium5 *
-            spreadPremiumMember5
+          ? spreadNumberOfMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfPromotedMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5
           : // Formula 4 EVP
           isVicePresident
-          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
-            spreadMonthlyTargetPremium4 *
-            spreadPremiumMember4
+          ? spreadNumberOfMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfPromotedMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4
           : 0;
 
       const genTotal4 = genTotalVol4 * genValue4;
@@ -1381,7 +1433,6 @@ const Calculator: React.FC = () => {
                               <h2
                                 style={{
                                   textAlign: "center",
-                                  fontSize: "1.2rem",
                                 }}
                               >
                                 Override Earnings per Generation
@@ -1415,7 +1466,7 @@ const Calculator: React.FC = () => {
                           <div className="tri-col-container">
                             <Grid
                               container
-                              spacing={6}
+                              spacing={2}
                               justifyContent="space-between"
                             >
                               <Grid item xs={12} md={12} lg={4}>
@@ -1464,14 +1515,55 @@ const Calculator: React.FC = () => {
                                   </div>
                                 </div>
                               </Grid>
-                              <Grid item xs={12} md={12} lg={4}>
+                              <Grid
+                                item
+                                xs={12}
+                                md={12}
+                                lg={4}
+                                style={{ position: "relative" }}
+                              >
                                 <div className="tri-col-section-captions">
+                                  {values.personal.position[0].numberValue <
+                                  0.81 ? (
+                                    <HtmlTooltip
+                                      title={
+                                        <div
+                                          style={{
+                                            fontSize: "1.3rem",
+                                          }}
+                                        >
+                                          Potential earnings if you are Senior
+                                          Marketing Director or above. Please
+                                          check upline to see more details.{" "}
+                                          <br />
+                                          <i style={{ color: "red" }}>
+                                            This earnings won't be added to your
+                                            projected total earnings.
+                                          </i>
+                                        </div>
+                                      }
+                                    >
+                                      <div className="blog-title">
+                                        <Badge>Potential Earnings</Badge>
+                                      </div>
+                                    </HtmlTooltip>
+                                  ) : (
+                                    <React.Fragment />
+                                  )}
                                   <div className="earnings-title">
                                     <h2>Override Earnings</h2>
                                   </div>
                                   <div className="earnings-label">Monthly</div>
                                   <div className="earnings-value1-block">
-                                    <h2>
+                                    <h2
+                                      style={{
+                                        color:
+                                          values.personal.position[0]
+                                            .numberValue < 0.81
+                                            ? "red"
+                                            : "black",
+                                      }}
+                                    >
                                       {formatter.format(
                                         totalEarnings[0].generationOverride
                                       )}
@@ -1479,7 +1571,16 @@ const Calculator: React.FC = () => {
                                   </div>
                                   <div className="earnings-label">Annual</div>
                                   <div className="earnings-value2-block">
-                                    <h2 className="light">
+                                    <h2
+                                      className="light"
+                                      style={{
+                                        color:
+                                          values.personal.position[0]
+                                            .numberValue < 0.81
+                                            ? "red"
+                                            : "black",
+                                      }}
+                                    >
                                       {formatter.format(
                                         totalEarnings[0].generationOverride * 12
                                       )}
