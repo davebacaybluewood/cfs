@@ -23,6 +23,7 @@ const requestContractController = expressAsync((req, res, next) => {
     licenseNumber: req.body.licenseNumber,
     ssnNumber: req.body.ssnNumber,
     carrier: req.body.carrier,
+    annuity: req.body.annuity,
     dateOfBirth: req.body.dateOfBirth,
   });
 
@@ -38,7 +39,7 @@ const requestContractController = expressAsync((req, res, next) => {
     },
   ];
 
-  const contractEmail = "contracting@gocfs.pro";
+  const contractEmail = "dave.bacay@gocfs.pro";
   try {
     sendHTMLEmail = sendEmail(
       contractEmail,

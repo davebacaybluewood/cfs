@@ -19,15 +19,22 @@ import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import MultiSelectInputV2 from "library/MultiSelectInput/MultiSelectInputV2";
 import moment from "moment";
 
-const CARRIERS = [
+const LIFE_INSURANCE = [
   "Foresters",
+  "F&G Life",
   "Mutual of Omaha",
   "Nationwide",
   "North American",
+  "National Life Group",
+  "Symetra",
+];
+
+const ANNUITIES = [
   "American Equity",
   "Athene",
-  "Nassau RE",
+  "F&G Annuities",
   "Global Atlantic",
+  "Nassau RE",
 ];
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -135,6 +142,7 @@ const ContractForm: React.FC = () => {
     ssnNumber: "",
     licensePic: "",
     carrier: [],
+    annuity: [],
     dateOfBirth: "",
   });
 
@@ -151,6 +159,7 @@ const ContractForm: React.FC = () => {
       state: profile?.state ?? "",
       licensePic: "",
       carrier: [],
+      annuity: [],
       dateOfBirth: "",
     });
   }, [profile]);
@@ -176,7 +185,7 @@ const ContractForm: React.FC = () => {
     >
       <div className="contract-form-container">
         {loading ? <Spinner variant="fixed" /> : null}
-        <h2>Contracting</h2>
+        <h2>Contracting & Appointments</h2>
         <p
           style={{
             fontSize: "1.4rem",
@@ -325,9 +334,9 @@ const ContractForm: React.FC = () => {
                       />
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
-                      <label htmlFor="">Insurance Carrier (Required)</label>
+                      <label htmlFor="">Life Insurance (Required)</label>
                       <MultiSelectInputV2
-                        options={CARRIERS.map((carrier) => {
+                        options={LIFE_INSURANCE.map((carrier) => {
                           return {
                             keyword: carrier,
                             label: carrier,
@@ -351,7 +360,7 @@ const ContractForm: React.FC = () => {
                             ? true
                             : false
                         }
-                        placeholder="Select a specialty item to add"
+                        placeholder="Select a life insurance item to add"
                         value={values.carrier.map((data) => {
                           return {
                             keyword: data,
@@ -366,6 +375,39 @@ const ContractForm: React.FC = () => {
                           values.carrier.length === 0 && !!touched.carrier
                         }
                         text="Insurance carrier field is required."
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                      <label htmlFor="">Annuities (Optional)</label>
+                      <MultiSelectInputV2
+                        options={ANNUITIES.map((carrier) => {
+                          return {
+                            keyword: carrier,
+                            label: carrier,
+                            value: carrier,
+                          };
+                        })}
+                        onChange={(e) => {
+                          const modifiedValue = e?.map((val) => val.keyword);
+                          setFieldValue("annuity", modifiedValue);
+                        }}
+                        onBlur={(e) => {
+                          if (values.annuity.length === 0) {
+                            setTouched({
+                              ...touched,
+                              annuity: [],
+                            });
+                          }
+                        }}
+                        error={false}
+                        placeholder="Select a annuity item to add"
+                        value={values.annuity.map((data) => {
+                          return {
+                            keyword: data,
+                            label: data,
+                            value: data,
+                          };
+                        })}
                       />
                     </Grid>
                     <Grid item xs={12} md={12} lg={12} marginTop={2}>

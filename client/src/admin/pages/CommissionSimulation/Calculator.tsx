@@ -232,8 +232,6 @@ const Calculator: React.FC = () => {
   ];
   const [totalEarnings, setTotalEarnings] = useState(earningsInitialValue);
 
-  console.log(totalEarnings[0].generationOverride);
-
   useEffect(() => {
     const onCalculate = (data = initialValues) => {
       /** Personal */
@@ -244,6 +242,30 @@ const Calculator: React.FC = () => {
       const personalTotal = personalMonthlyTargetPremium * personalNumberValue;
 
       /* Spread */
+
+      /* Position 8 */
+      /*Traning Associate */
+      const spreadNumberValue8 = Number(data.spread.position8.numberValue);
+      const spreadMonthlyTargetPremium8 = Number(
+        data.spread.monthlyTargetPremium8
+      );
+      const spreadNumberOfMembers8 = Number(data.spread.numberOfMembers8);
+      const spreadPremiumMember8 = Number(data.spread.numberOfPremiumMembers8);
+      const numberOfDirectMembers8 = Number(data.spread.numberOfDirectMembers8);
+      const numberOfPromotedMembers8 = Number(
+        data.spread.numberOfPromotedMembers8
+      );
+
+      /* Formula 7 */
+      /* Traning Associate */
+
+      const spread8Calculation =
+        (spreadNumberOfMembers8 + numberOfPromotedMembers8) *
+        spreadPremiumMember8 *
+        spreadMonthlyTargetPremium8;
+
+      const spread8Total = spread8Calculation;
+      console.log("spread8Total", spread8Total);
 
       /* Position 7 */
       /* Associate */
@@ -258,37 +280,16 @@ const Calculator: React.FC = () => {
         data.spread.numberOfPromotedMembers7
       );
 
-      /* Position 8 */
-      /*Traning Associate */
-      const spreadNumberValue8 = Number(data.spread.position8.numberValue);
-      const spreadMonthlyTargetPremium8 = Number(
-        data.spread.monthlyTargetPremium8
-      );
-      const spreadNumberOfMembers8 = Number(data.spread.numberOfMembers8);
-      const spreadPremiumMember8 = Number(data.spread.numberOfPremiumMembers8);
-      const numberOfDirectMembers8 = Number(data.spread.numberOfDirectMembers8);
-      const numberOfPromotedMembers8 = Number(
-        data.spread.numberOfPromotedMembers8
-      );
       /* Formula 7 */
       /* Associate */
 
-      const spread7LessDirectMem7 =
-        spreadNumberOfMembers7 - numberOfDirectMembers7;
-
-      const spread7Indirect =
-        spreadMonthlyTargetPremium7 *
-        spreadNumberOfMembers7 *
+      const spread7Calculation =
+        (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
         spreadPremiumMember7 *
-        (data.spread.position6.numberValue - spreadNumberValue7);
+        spreadMonthlyTargetPremium7;
 
-      const spread7Direct =
-        spreadMonthlyTargetPremium7 *
-        numberOfDirectMembers7 *
-        spreadPremiumMember7 *
-        (personalNumberValue - spreadNumberValue7);
-
-      const spread7Total = spread7Direct + spread7Indirect;
+      const spread7Total = spread7Calculation;
+      console.log("spread7Total", spread7Total);
 
       /* Position 6 */
       /* Senior Associate */
@@ -305,22 +306,13 @@ const Calculator: React.FC = () => {
 
       /* Formula 6 */
 
-      const spread6LessDirectMem6 =
-        spreadNumberOfMembers6 - numberOfDirectMembers6;
-
-      const spread6Indirect =
-        spreadMonthlyTargetPremium6 *
-        spreadNumberOfMembers6 *
+      const spread6Calculation =
+        (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
         spreadPremiumMember6 *
-        (data.spread.position5.numberValue - spreadNumberValue6);
+        spreadMonthlyTargetPremium6;
 
-      const spread6Direct =
-        spreadMonthlyTargetPremium6 *
-        numberOfDirectMembers6 *
-        spreadPremiumMember6 *
-        (personalNumberValue - spreadNumberValue6);
-
-      const spread6Total = spread6Direct + spread6Indirect;
+      const spread6Total = spread6Calculation;
+      console.log("spread6Total", spread6Total);
 
       /* Position 5 */
       /* Marketing Director */
@@ -337,22 +329,15 @@ const Calculator: React.FC = () => {
 
       /* Formula 5 */
 
-      const spread5LessDirectMem5 =
-        spreadNumberOfMembers5 - numberOfDirectMembers5;
-
-      const spread5Indirect =
-        spreadMonthlyTargetPremium5 *
-        spreadNumberOfMembers5 *
+      const spread5Calculation =
+        (spreadNumberOfMembers5 +
+          numberOfDirectMembers5 +
+          numberOfPromotedMembers5) *
         spreadPremiumMember5 *
-        (data.spread.position4.numberValue - spreadNumberValue5);
+        spreadMonthlyTargetPremium5;
 
-      const spread5Direct =
-        spreadMonthlyTargetPremium5 *
-        numberOfDirectMembers5 *
-        spreadPremiumMember5 *
-        (personalNumberValue - spreadNumberValue5);
-
-      const spread5Total = spread5Direct + spread5Indirect;
+      const spread5Total = spread5Calculation;
+      console.log("spread5Total", spread5Total);
 
       /* Position 4 */
       /*Senior Marketing Director */
@@ -368,23 +353,14 @@ const Calculator: React.FC = () => {
       );
 
       /* Formula 4 */
-
-      const spread4LessDirectMem4 =
-        spreadNumberOfMembers4 - numberOfDirectMembers4;
-
-      const spread4Indirect =
-        spreadMonthlyTargetPremium4 *
-        spreadNumberOfMembers4 *
+      const spread4Calculation =
+        numberOfPromotedMembers4 *
         spreadPremiumMember4 *
-        (data.spread.position3.numberValue - spreadNumberValue4);
+        spreadMonthlyTargetPremium4;
 
-      const spread4Direct =
-        spreadMonthlyTargetPremium4 *
-        numberOfDirectMembers4 *
-        spreadPremiumMember4 *
-        (personalNumberValue - spreadNumberValue4);
+      const spread4Total = spread4Calculation;
 
-      const spread4Total = spread4Direct + spread4Indirect;
+      console.log("spread4Total", spread4Total);
 
       /* Position 3 */
       /* Executive Marketing Director */
@@ -474,6 +450,11 @@ const Calculator: React.FC = () => {
         spread5Total +
         spread6Total +
         spread7Total;
+
+      /** TOTAL SPREAD FOR Senior Marketing Director  */
+      const totalSMDSpread =
+        spread8Total + spread7Total + spread6Total + spread5Total;
+      console.log("totalSMDSpread", totalSMDSpread);
 
       /** Validation */
       const isAssociate =
@@ -894,7 +875,6 @@ const Calculator: React.FC = () => {
             generationOverride: generationTotal,
           };
         });
-        console.log(generationTotal);
         return filteredPrevState;
       });
 
@@ -926,8 +906,6 @@ const Calculator: React.FC = () => {
     totalEarnings[0].personal +
     totalEarnings[0].spread +
     (isPositionValid ? totalEarnings[0].generationOverride : 0);
-
-  console.log(isPositionValid);
 
   const totalEarningAnually = totalEarningMonthly * 12;
 
@@ -1197,7 +1175,7 @@ const Calculator: React.FC = () => {
                                     >
                                       <Grid item xs={12} md={12} lg={10}>
                                         <h3 style={{ textAlign: "left" }}>
-                                          {data.label}
+                                          {data.label} {sumIndex}
                                         </h3>
                                       </Grid>
                                     </Grid>

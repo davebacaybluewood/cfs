@@ -11,4 +11,5 @@ export interface ContractingData {
   licensePic: string;
   dateOfBirth: string | undefined;
   carrier: string[];
+  annuity: string[];
 }
