@@ -7,7 +7,7 @@ import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import formatter from "helpers/currencyFormatter";
 import { AiOutlineWarning } from "react-icons/ai";
-import { RiErrorWarningLine } from "react-icons/ri";
+import { FaUsers } from "react-icons/fa";
 import AlertMessage from "library/AlertMessage/Alert";
 import Button from "library/Button/Button";
 import useAccountValidation from "admin/hooks/useAccountValidation";
@@ -202,6 +202,7 @@ const Calculator: React.FC = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [initialValues, setInitialValues] = useState(formInitialValues);
+  const [members, setMembers] = useState(0);
 
   const onChangePositionHandler = (value: any, setFieldValue: any) => {
     setFieldValue("personal.position", [value]);
@@ -570,6 +571,45 @@ const Calculator: React.FC = () => {
         Number(spreadNumberOfMembers2) + Number(numberOfDirectMembers2) < 2 &&
         Number(spreadNumberOfMembers4) + Number(numberOfDirectMembers4) < 6;
 
+      /* Total Members */
+      /* Total Members per position */
+      const totalSpreadMembers =
+        spreadNumberOfMembers8 +
+        spreadNumberOfMembers7 +
+        spreadNumberOfMembers6 +
+        spreadNumberOfMembers5 +
+        spreadNumberOfMembers4 +
+        spreadNumberOfMembers3 +
+        spreadNumberOfMembers2 +
+        spreadNumberOfMembers1;
+
+      /* Total Direct Members per position */
+      const totalSpreadDirectMembers =
+        numberOfDirectMembers8 +
+        numberOfDirectMembers7 +
+        numberOfDirectMembers6 +
+        numberOfDirectMembers5 +
+        numberOfDirectMembers4 +
+        numberOfDirectMembers3 +
+        numberOfDirectMembers2 +
+        numberOfDirectMembers1;
+
+      /* Total Promoted Members per position */
+      const totalPromotedMembers =
+        numberOfPromotedMembers8 +
+        numberOfPromotedMembers7 +
+        numberOfPromotedMembers6 +
+        numberOfPromotedMembers5 +
+        numberOfPromotedMembers4 +
+        numberOfPromotedMembers3 +
+        numberOfPromotedMembers2 +
+        numberOfPromotedMembers1;
+
+      /* Overall Members */
+      const totalMembers =
+        totalSpreadMembers + totalSpreadDirectMembers + totalPromotedMembers;
+      setMembers(totalMembers);
+
       /** Generation Overrride */
 
       /* Generation 1 Formula*/
@@ -927,8 +967,6 @@ const Calculator: React.FC = () => {
     totalEarnings[0].spread +
     (isPositionValid ? totalEarnings[0].generationOverride : 0);
 
-  console.log(isPositionValid);
-
   const totalEarningAnually = totalEarningMonthly * 12;
 
   const formattedearnings = {
@@ -987,6 +1025,10 @@ const Calculator: React.FC = () => {
                         </Grid>
                         <Grid item xs={12} md={12} lg={5}>
                           <div className="right-col-total">
+                            <h2 className="member-holder">
+                              {" "}
+                              <FaUsers /> {members} Members
+                            </h2>
                             <h2>{formattedearnings.totalEarningAnually}</h2>
                             <p>Potential Annual Earning</p>
                           </div>
