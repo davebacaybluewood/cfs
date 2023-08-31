@@ -663,7 +663,7 @@ const useSidebarLinks = (
 
   return {
     sidebarMainLinks,
-    sidebarOtherLinks,
+    sidebarOtherLinks: otherLinks,
   };
 };
 

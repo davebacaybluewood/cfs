@@ -470,8 +470,8 @@ const ContractForm: React.FC = () => {
                   <Button variant="danger" onClick={() => handleSubmit()}>
                     Submit
                   </Button>
-                  <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre>
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}
