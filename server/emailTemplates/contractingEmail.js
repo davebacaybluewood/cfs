@@ -1,3 +1,5 @@
+import { formatISODateOnly } from "../utils/dateFormatter.js";
+
 const contractingEmail = ({
   name,
   state,
@@ -195,9 +197,13 @@ const contractingEmail = ({
             <li style="font-size: 13px; margin-bottom: 10px">
               <b>Phone Number:</b> ${phoneNumber}
             </li>
-            <li style="font-size: 13px; margin-bottom: 10px">
-              <b>Date of Birth:</b> ${dateOfBirth}
-            </li>
+            ${
+              dateOfBirth
+                ? `<li style="font-size: 13px; margin-bottom: 10px">
+                    <b>Date of Birth:</b> ${formatISODateOnly(dateOfBirth)}
+                   </li>`
+                : ``
+            }
             <li style="font-size: 13px; margin-bottom: 10px">
               <b>Resident State:</b> ${state}
             </li>

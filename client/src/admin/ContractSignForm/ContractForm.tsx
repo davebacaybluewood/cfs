@@ -53,17 +53,6 @@ const ContractForm: React.FC = () => {
     carrier: Yup.array()
       .min(1, "Pick at least 1 Insurance Carrier")
       .required("Insurance Carrier is required."),
-    dateOfBirth: Yup.date()
-      .nullable()
-      .notRequired()
-      .test(
-        "Is date greater",
-        "DOB cannot be greater than today's date",
-        (value) => {
-          if (!value) return true;
-          return moment(today).diff(value) > 0;
-        }
-      ),
   });
 
   const crumbs: CrumbTypes[] = [
@@ -286,7 +275,7 @@ const ContractForm: React.FC = () => {
                       />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                      <label htmlFor="">Date of Birth (Required)</label>
+                      <label htmlFor="">Date of Birth (Optional)</label>
                       <FormikTextInput
                         placeholder="Enter your Date of birth"
                         variant="outlined"
@@ -481,8 +470,8 @@ const ContractForm: React.FC = () => {
                   <Button variant="danger" onClick={() => handleSubmit()}>
                     Submit
                   </Button>
-                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre>
                 </React.Fragment>
               );
             }}
