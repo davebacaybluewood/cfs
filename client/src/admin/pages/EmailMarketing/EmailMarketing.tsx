@@ -5,7 +5,7 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { Formik } from "formik";
 import Spinner from "library/Spinner/Spinner";
 import * as Yup from "yup";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./EmailMarketing.scss";
 import FormikTextInput from "library/Formik/FormikInput";
 import Button from "library/Button/Button";
@@ -13,23 +13,17 @@ import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { ClearIndicatorStyles } from "library/MultiSelectInput/MultiSelectInputV2";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
-import ReactQuill from "react-quill";
-import useQuillModules from "../Blogs/useQuillModules";
 import CreatableSelect from "react-select/creatable";
 import { toast } from "react-toastify";
 import DrawerBase, { Anchor } from "library/Drawer/Drawer";
-import {
-  DataGrid,
-  GridColDef,
-  GridRowsProp,
-  GridToolbar,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { BsPlusCircle } from "react-icons/bs";
-import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import nameFallback from "helpers/nameFallback";
 import { formatISODateOnly } from "helpers/date";
 import { AiFillCheckCircle } from "react-icons/ai";
+import EmailEditor, { EditorRef } from "react-email-editor";
 
 export const emailOptions = [
   { value: "dave.bacay.vc@gmail.com", label: "dave.bacay.vc@gmail.com" },
@@ -39,14 +33,8 @@ export const emailOptions = [
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-
-  const validationSchema = Yup.object({
-    emailBody: Yup.string().required("Email body is required."),
-    subject: Yup.string().required("Subject is required."),
-    recipients: Yup.array()
-      .min(1, "Pick at least 1 recipients")
-      .required("Recipients is required."),
-  });
+  const emailEditorRef = useRef<EditorRef>(null);
+  const [design, setDesign] = useState<any>();
 
   const crumbs: CrumbTypes[] = [
     {
@@ -68,18 +56,18 @@ const ContractForm: React.FC = () => {
   });
   const [templates, setTemplates] = useState<any>([]);
   const userCtx = useContext(UserContext) as any;
-  const realQuillModules = useQuillModules();
   const search = useLocation().search;
-  const action = new URLSearchParams(search).get("action");
   const templateId = new URLSearchParams(search).get("templateId");
   const userGuid = userCtx?.user?.userGuid;
 
-  const populateForm = (emailBody: string, subject: string) => {
+  const populateForm = (emailBody: string, subject: string, design: string) => {
     setInitialValues((prevState) => ({
       recipients: prevState.recipients,
       emailBody: emailBody,
       subject: subject,
     }));
+
+    emailEditorRef.current?.loadDesign(JSON.parse(design));
 
     setOpenDrawer(false);
   };
@@ -125,7 +113,11 @@ const ContractForm: React.FC = () => {
               template.status === "DEACTIVATED" || template.status === "DRAFT"
             }
             onClick={() => {
-              populateForm(template.templateBody, template.subject);
+              populateForm(
+                template.templateBody,
+                template.subject,
+                template.design
+              );
             }}
           >
             <span>Import</span> <BsPlusCircle />
@@ -165,36 +157,57 @@ const ContractForm: React.FC = () => {
         subject: data.subject,
         recipients: [],
       });
+      setDesign(data.design);
+
+      /** Load if edit mode */
+      if (emailEditorRef.current) {
+        emailEditorRef.current?.loadDesign(JSON.parse(data.design));
+      }
     };
 
     if (userGuid) {
       fetchTemplateInfo();
       setLoading(false);
     }
-  }, [action, templateId, userGuid]);
+  }, [templateId, userGuid]);
 
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
+    const unlayer = emailEditorRef.current?.editor;
     setLoading(true);
-    const response = await agent.EmailMarketing.createEmailTemplate(
-      userGuid,
-      data
-    );
 
-    if (response) {
-      toast.info(`Email Template has been added.`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setLoading(false);
-    }
+    unlayer?.exportHtml(async (htmlData) => {
+      const { design: updatedDesign, html } = htmlData;
+
+      data.design = JSON.stringify(updatedDesign);
+      data.templateBody = html;
+      const response = await agent.EmailMarketing.createEmailTemplate(
+        userGuid,
+        data
+      );
+
+      if (response) {
+        toast.info(`Email Template has been added.`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setLoading(false);
+      }
+    });
   };
 
+  const validationSchema = Yup.object({
+    emailBody: Yup.string().required("Email body is required."),
+    subject: Yup.string().required("Subject is required."),
+    recipients: Yup.array()
+      .min(1, "Pick at least 1 recipients")
+      .required("Recipients is required."),
+  });
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -210,30 +223,40 @@ const ContractForm: React.FC = () => {
             initialValues={initialValues}
             enableReinitialize
             onSubmit={async (data, actions) => {
-              const finalData = {
+              const unlayer = emailEditorRef.current?.editor;
+
+              const finalData: any = {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
               };
               setLoading(true);
-              const response = await agent.EmailMarketing.sendEmail(finalData);
 
-              if (response) {
-                setLoading(false);
-                toast.info(`Email has been submitted.`, {
-                  position: "top-right",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                });
+              unlayer?.exportHtml(async (htmlData) => {
+                const { design: updatedDesign, html } = htmlData;
 
-                console.log(response);
-              } else {
-                setLoading(false);
-              }
+                finalData.design = updatedDesign;
+                finalData.emailBody = html;
+
+                const response = await agent.EmailMarketing.sendEmail(
+                  finalData
+                );
+
+                if (response) {
+                  setLoading(false);
+                  toast.info(`Email has been submitted.`, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                  });
+                } else {
+                  setLoading(false);
+                }
+              });
             }}
             validationSchema={validationSchema}
           >
@@ -320,12 +343,11 @@ const ContractForm: React.FC = () => {
                       className="form-card-container"
                     >
                       <label>Email Body (Required)</label>
-                      <ReactQuill
-                        value={values.emailBody}
-                        modules={realQuillModules}
-                        onChange={(value) => setFieldValue("emailBody", value)}
-                        theme="snow"
-                        placeholder="Enter the email body here"
+                      <EmailEditor
+                        ref={emailEditorRef}
+                        style={{
+                          height: "500px",
+                        }}
                       />
                     </Grid>
                   </Grid>
@@ -345,6 +367,7 @@ const ContractForm: React.FC = () => {
                             templateStatus: "DRAFT",
                             isAddedByMarketing: true,
                             subject: values.subject,
+                            design: JSON.stringify(design),
                           })
                         }
                       >
@@ -359,6 +382,7 @@ const ContractForm: React.FC = () => {
                             templateStatus: "ACTIVATED",
                             isAddedByMarketing: true,
                             subject: values.subject,
+                            design: JSON.stringify(design),
                           })
                         }
                       >

@@ -19,6 +19,7 @@ export interface EmailTemplateData {
   authorLastname?: string;
   authorName?: string;
   subject: string;
+  design: string;
 }
 
 export interface EmailTemplateTableData {
@@ -39,4 +40,5 @@ export interface EmailTemplateParameter {
   templateStatus: string;
   isAddedByMarketing: boolean;
   subject: string;
+  design: string;
 }

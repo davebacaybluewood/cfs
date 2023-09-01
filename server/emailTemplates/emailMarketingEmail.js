@@ -53,7 +53,6 @@ const emailMarketingEmail = (data) => {
           a:visited {
             /* This is the link colour */
             text-decoration: none !important;
-            color: #0000ee;
           }
           .link {
             text-decoration: underline !important;
@@ -66,7 +65,6 @@ const emailMarketingEmail = (data) => {
             font-family: "Helvetica", Arial, sans-serif;
             font-weight: 300;
             text-decoration: none;
-            color: #000000;
           }
           h1 {
             /* Fallback heading style */
@@ -75,7 +73,6 @@ const emailMarketingEmail = (data) => {
             font-family: "Helvetica", Arial, sans-serif;
             font-weight: normal;
             text-decoration: none;
-            color: #000000;
           }
           .ExternalClass p,
           .ExternalClass span,
@@ -100,33 +97,32 @@ const emailMarketingEmail = (data) => {
           padding-right: 0;
           -webkit-text-size-adjust: 100%;
           background-color: #f2f4f6;
-          color: #000000;
         "
         align="center"
       >
         <!-- Start container for logo -->
         <table
           style="
-            width: 600px;
+            width: 800px;
             margin: auto;
-            max-width: 600px;
+            max-width: 800px;
             background-color: #ffffff;
             border-bottom: 1px solid #eeeeee;
           "
-          width="600"
+          width="800"
         >
           <tbody>
             <tr>
               <td
                 style="
-                  width: 596px;
+                  width: 796px;
                   vertical-align: top;
                   padding-left: 0;
                   padding-right: 0;
                   padding-top: 15px;
                   padding-bottom: 15px;
                 "
-                width="596"
+                width="796"
               >
                 <!-- Your logo is here -->
                 <img
@@ -150,15 +146,15 @@ const emailMarketingEmail = (data) => {
         <!-- Start of email body -->
         <div
           style="
-            width: 570px;
-            max-width: 570px;
+            width: 770px;
+            max-width: 770px;
             background-color: #ffffff;
             margin: auto;
             text-align: left;
             padding: 15px;
             border-bottom: 1px solid #eee;
           "
-          width="570"
+          width="770"
         >
           <div style="margin-bottom: 20px; font-family: 'Roboto', sans-serif;" className="body-container">
             ${body}
@@ -184,8 +180,8 @@ const emailMarketingEmail = (data) => {
         <!-- Start of agent info section -->
         <div
           style="
-            width: 570px;
-            max-width: 570px;
+            width: 770px;
+            max-width: 770px;
             background-color: #ffffff;
             margin: auto;
             text-align: left;
@@ -197,7 +193,7 @@ const emailMarketingEmail = (data) => {
             vertical-align: middle;
             border-bottom: 1px solid #eee;   
           "
-          width="570"
+          width="770"
         >
           <div>
             <img
@@ -281,8 +277,8 @@ const emailMarketingEmail = (data) => {
         <!-- Start of Blog section -->
         <div
           style="
-            width: 570px;
-            max-width: 570px;
+            width: 770px;
+            max-width: 770px;
             background-color: #ffffff;
             margin: auto;
             text-align: left;
@@ -292,7 +288,7 @@ const emailMarketingEmail = (data) => {
             margin-top: 7px;
             margin-bottom: 7px;
           "
-          width="570"
+          width="770"
         >
           ${blogEmail}
         </div>
@@ -304,24 +300,24 @@ const emailMarketingEmail = (data) => {
           style="
             text-align: center;
             vertical-align: top;
-            width: 600px;
-            max-width: 600px;
+            width: 800px;
+            max-width: 800px;
             background-color: #ffffff;
             border-top: 1px solid #eeeeee;
           "
-          width="600"
+          width="800"
         >
           <tbody>
             <tr>
               <td
                 style="
-                  width: 596px;
+                  width: 796px;
                   vertical-align: top;
                   padding-left: 30px;
                   padding-right: 30px;
                   padding-bottom: 10px;
                 "
-                width="596"
+                width="796"
               >
                 <div
                   style="
