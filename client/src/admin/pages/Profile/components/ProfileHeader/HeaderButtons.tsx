@@ -5,7 +5,6 @@ import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  Avatar,
   Button,
   Dialog,
   DialogActions,
@@ -14,7 +13,6 @@ import {
   Divider,
   FormControlLabel,
   Grid,
-  ListItemIcon,
   Menu,
   MenuItem,
   Switch,
@@ -24,7 +22,6 @@ import { paths } from "constants/routes";
 import { Formik } from "formik";
 import Spinner from "library/Spinner/Spinner";
 import FormikTextInput from "library/Formik/FormikInput";
-import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import BusinessCard from "./BusinessCard/BusinessCard";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import { UserContext } from "admin/context/UserProvider";
@@ -65,7 +62,6 @@ const HeaderButtons: React.FC<
     "setOpen" | "setDialogStatus" | "setFormDialogStatus"
   >
 > = (props) => {
-  const [agentStatus, setAgentStatus] = useState(props.status);
   const [dialogStatus, setDialogStatus] = useState<AgentStatuses>(
     AgentStatuses.ACTIVATED
   );
@@ -111,15 +107,7 @@ const HeaderButtons: React.FC<
           progress: undefined,
           theme: "light",
         });
-        if (status === AgentStatuses.ACTIVATED) {
-          navigate(paths.agents);
-        } else if (status === AgentStatuses.DEACTIVATED) {
-          navigate(paths.deactivatedAgents);
-        } else if (status === AgentStatuses.DECLINED) {
-          navigate(paths.declinedAgents);
-        } else {
-          navigate(paths.agentRequests);
-        }
+        navigate(paths.users);
       })
       .then((result) => {
         console.log(result);
@@ -321,7 +309,7 @@ const HeaderButtons: React.FC<
                   progress: undefined,
                   theme: "light",
                 });
-                navigate(paths.agents);
+                navigate(paths.users);
               })
               .then((result) => {
                 console.log(result);

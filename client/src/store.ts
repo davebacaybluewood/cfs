@@ -47,8 +47,8 @@ const reducer = combineReducers({
 
 export type RootState = ReturnType<typeof reducer>;
 
-const userInfoFromStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo") as string)
+const userInfoFromStorage = sessionStorage.getItem("userInfo")
+  ? JSON.parse(sessionStorage.getItem("userInfo") as string)
   : null;
 
 const initialState = {

@@ -47,6 +47,7 @@ const ContractForm: React.FC = () => {
       .email("Invalid Email Address")
       .required("Email address is required."),
     state: Yup.string().required("State is required."),
+    dateOfBirth: Yup.string().required("Date of birth is required"),
     phoneNumber: Yup.string().required("Phone number is required."),
     licenseNumber: Yup.string().required("License number is required."),
     ssnNumber: Yup.string().required("SSN Number is required."),
@@ -275,7 +276,7 @@ const ContractForm: React.FC = () => {
                       />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                      <label htmlFor="">Date of Birth (Optional)</label>
+                      <label htmlFor="">Date of Birth (Required)</label>
                       <FormikTextInput
                         placeholder="Enter your Date of birth"
                         variant="outlined"

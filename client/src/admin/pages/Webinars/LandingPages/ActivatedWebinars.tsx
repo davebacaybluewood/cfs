@@ -22,7 +22,7 @@ const ActivatedWebinars: React.FC = () => {
 
   const { loading, webinars } = useFetchWebinars();
 
-  const agentStorage = localStorage.getItem("userInfo");
+  const agentStorage = sessionStorage.getItem("userInfo");
   const { userGuid } = JSON.parse(agentStorage ?? "");
   const agentInfo = useFetchAgent(userGuid?.toString());
 

@@ -293,8 +293,14 @@ const updateAgentStatus = expressAsync(async (req, res) => {
 
     if (user && agent) {
       const updatedAgent = await agent.save();
-      const createdUser = await user.save();
-      res.json(updatedAgent);
+
+      if (req.body.status === "DEACTIVATED") {
+        await User.deleteOne({
+          userGuid: agent.userGuid,
+        });
+      } else {
+        await user.save();
+      }
     }
 
     if (req.body.status === AGENT_STATUSES.ACTIVATED) {

@@ -1,5 +1,5 @@
 const getUserToken = () => {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo")!);
   const authToken = userInfo?.token;
 
   return authToken;

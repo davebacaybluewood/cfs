@@ -1623,14 +1623,14 @@ const Calculator: React.FC = () => {
   };
 
   useEffect(() => {
-    const isAcknowledged = localStorage.getItem("isAcknowledged");
+    const isAcknowledged = sessionStorage.getItem("isAcknowledged");
     if (!isAcknowledged) {
       setOpen(true);
     }
   }, []);
 
   const acknowledgeHandler = () => {
-    localStorage.setItem("isAcknowledged", "true");
+    sessionStorage.setItem("isAcknowledged", "true");
     setOpen(false);
   };
 
