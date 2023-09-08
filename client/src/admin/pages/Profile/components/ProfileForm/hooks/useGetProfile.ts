@@ -24,7 +24,7 @@ const useGetProfile = () => {
     licenseNumber: "",
   });
 
-  const agentStorage = localStorage.getItem("userInfo");
+  const agentStorage = sessionStorage.getItem("userInfo");
   const { userGuid } = JSON.parse(agentStorage ?? "");
 
   useEffect(() => {

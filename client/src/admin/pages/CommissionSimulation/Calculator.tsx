@@ -7,11 +7,14 @@ import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import formatter from "helpers/currencyFormatter";
 import { AiOutlineWarning } from "react-icons/ai";
+import { RiErrorWarningLine } from "react-icons/ri";
 import AlertMessage from "library/AlertMessage/Alert";
 import Button from "library/Button/Button";
 import useAccountValidation from "admin/hooks/useAccountValidation";
 import nameFallback from "helpers/nameFallback";
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import "./Calculator.scss";
+import Badge from "library/Badge/Badge";
 
 const AGENT_ROLES = [
   {
@@ -229,8 +232,6 @@ const Calculator: React.FC = () => {
   ];
   const [totalEarnings, setTotalEarnings] = useState(earningsInitialValue);
 
-  console.log(totalEarnings[0].generationOverride);
-
   useEffect(() => {
     const onCalculate = (data = initialValues) => {
       /** Personal */
@@ -241,6 +242,30 @@ const Calculator: React.FC = () => {
       const personalTotal = personalMonthlyTargetPremium * personalNumberValue;
 
       /* Spread */
+
+      /* Position 8 */
+      /*Traning Associate */
+      const spreadNumberValue8 = Number(data.spread.position8.numberValue);
+      const spreadMonthlyTargetPremium8 = Number(
+        data.spread.monthlyTargetPremium8
+      );
+      const spreadNumberOfMembers8 = Number(data.spread.numberOfMembers8);
+      const spreadPremiumMember8 = Number(data.spread.numberOfPremiumMembers8);
+      const numberOfDirectMembers8 = Number(data.spread.numberOfDirectMembers8);
+      const numberOfPromotedMembers8 = Number(
+        data.spread.numberOfPromotedMembers8
+      );
+
+      /* Formula 7 */
+      /* Traning Associate */
+
+      const spread8Calculation =
+        (spreadNumberOfMembers8 + numberOfPromotedMembers8) *
+        spreadPremiumMember8 *
+        spreadMonthlyTargetPremium8;
+
+      const spread8Total = spread8Calculation;
+      console.log("spread8Total", spread8Total);
 
       /* Position 7 */
       /* Associate */
@@ -258,22 +283,13 @@ const Calculator: React.FC = () => {
       /* Formula 7 */
       /* Associate */
 
-      const spread7LessDirectMem7 =
-        spreadNumberOfMembers7 - numberOfDirectMembers7;
-
-      const spread7Indirect =
-        spreadMonthlyTargetPremium7 *
-        spreadNumberOfMembers7 *
+      const spread7Calculation =
+        (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
         spreadPremiumMember7 *
-        (data.spread.position6.numberValue - spreadNumberValue7);
+        spreadMonthlyTargetPremium7;
 
-      const spread7Direct =
-        spreadMonthlyTargetPremium7 *
-        numberOfDirectMembers7 *
-        spreadPremiumMember7 *
-        (personalNumberValue - spreadNumberValue7);
-
-      const spread7Total = spread7Direct + spread7Indirect;
+      const spread7Total = spread7Calculation;
+      console.log("spread7Total", spread7Total);
 
       /* Position 6 */
       /* Senior Associate */
@@ -290,22 +306,13 @@ const Calculator: React.FC = () => {
 
       /* Formula 6 */
 
-      const spread6LessDirectMem6 =
-        spreadNumberOfMembers6 - numberOfDirectMembers6;
-
-      const spread6Indirect =
-        spreadMonthlyTargetPremium6 *
-        spreadNumberOfMembers6 *
+      const spread6Calculation =
+        (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
         spreadPremiumMember6 *
-        (data.spread.position5.numberValue - spreadNumberValue6);
+        spreadMonthlyTargetPremium6;
 
-      const spread6Direct =
-        spreadMonthlyTargetPremium6 *
-        numberOfDirectMembers6 *
-        spreadPremiumMember6 *
-        (personalNumberValue - spreadNumberValue6);
-
-      const spread6Total = spread6Direct + spread6Indirect;
+      const spread6Total = spread6Calculation;
+      console.log("spread6Total", spread6Total);
 
       /* Position 5 */
       /* Marketing Director */
@@ -319,25 +326,6 @@ const Calculator: React.FC = () => {
       const numberOfPromotedMembers5 = Number(
         data.spread.numberOfPromotedMembers5
       );
-
-      /* Formula 5 */
-
-      const spread5LessDirectMem5 =
-        spreadNumberOfMembers5 - numberOfDirectMembers5;
-
-      const spread5Indirect =
-        spreadMonthlyTargetPremium5 *
-        spreadNumberOfMembers5 *
-        spreadPremiumMember5 *
-        (data.spread.position4.numberValue - spreadNumberValue5);
-
-      const spread5Direct =
-        spreadMonthlyTargetPremium5 *
-        numberOfDirectMembers5 *
-        spreadPremiumMember5 *
-        (personalNumberValue - spreadNumberValue5);
-
-      const spread5Total = spread5Direct + spread5Indirect;
 
       /* Position 4 */
       /*Senior Marketing Director */
@@ -353,23 +341,14 @@ const Calculator: React.FC = () => {
       );
 
       /* Formula 4 */
-
-      const spread4LessDirectMem4 =
-        spreadNumberOfMembers4 - numberOfDirectMembers4;
-
-      const spread4Indirect =
-        spreadMonthlyTargetPremium4 *
-        spreadNumberOfMembers4 *
+      const spread4Calculation =
+        numberOfPromotedMembers4 *
         spreadPremiumMember4 *
-        (data.spread.position3.numberValue - spreadNumberValue4);
+        spreadMonthlyTargetPremium4;
 
-      const spread4Direct =
-        spreadMonthlyTargetPremium4 *
-        numberOfDirectMembers4 *
-        spreadPremiumMember4 *
-        (personalNumberValue - spreadNumberValue4);
+      const spread4Total = spread4Calculation;
 
-      const spread4Total = spread4Direct + spread4Indirect;
+      console.log("spread4Total", spread4Total);
 
       /* Position 3 */
       /* Executive Marketing Director */
@@ -451,15 +430,6 @@ const Calculator: React.FC = () => {
       const spread1LessDirectMem1 =
         spreadNumberOfMembers1 - numberOfDirectMembers1;
 
-      /* Spread Total Earnings */
-      const spreadTotal =
-        spread2Total +
-        spread3Total +
-        spread4Total +
-        spread5Total +
-        spread6Total +
-        spread7Total;
-
       /** Validation */
       const isAssociate =
         data.personal.position[0].value ===
@@ -488,6 +458,737 @@ const Calculator: React.FC = () => {
       const isVicePresident =
         data.personal.position[0].value ===
         PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value;
+
+      let SPREAD_TOTAL: number = 0;
+
+      const EVP_AND_SEMD_PERCENTAGE = Number(
+        data.spread.position1.numberValue - data.spread.position2.numberValue
+      ).toFixed(2); //1%
+      const EVP_AND_EMD_PERCENTAGE = Number(
+        data.spread.position1.numberValue - data.spread.position3.numberValue
+      ).toFixed(2); //3%
+      const EVP_AND_SMD_PERCENTAGE = Number(
+        data.spread.position1.numberValue - data.spread.position4.numberValue
+      ).toFixed(2); //5%
+      const EVP_AND_MD_PERCENTAGE = Number(
+        data.spread.position1.numberValue - data.spread.position5.numberValue
+      ).toFixed(2); //21%
+      const EVP_AND_SA_PERCENTAGE = Number(
+        data.spread.position1.numberValue - data.spread.position6.numberValue
+      ).toFixed(2); //36%
+      const EVP_AND_A_PERCENTAGE = Number(
+        data.spread.position1.numberValue - data.spread.position7.numberValue
+      ).toFixed(2); //51%
+      const EVP_AND_TA_PERCENTAGE = Number(
+        data.spread.position1.numberValue - data.spread.position8.numberValue
+      ).toFixed(2); //86%
+
+      const SEMD_AND_EMD_PERCENTAGE = Number(
+        data.spread.position2.numberValue - data.spread.position3.numberValue
+      ).toFixed(2); //2%
+      const SEMD_AND_SMD_PERCENTAGE = Number(
+        data.spread.position2.numberValue - data.spread.position4.numberValue
+      ).toFixed(2); //4%
+      const SEMD_AND_MD_PERCENTAGE = Number(
+        data.spread.position2.numberValue - data.spread.position5.numberValue
+      ).toFixed(2); //20%
+      const SEMD_AND_SA_PERCENTAGE = Number(
+        data.spread.position2.numberValue - data.spread.position6.numberValue
+      ).toFixed(2); //35%
+      const SEMD_AND_A_PERCENTAGE = Number(
+        data.spread.position2.numberValue - data.spread.position7.numberValue
+      ).toFixed(2); //50%
+      const SEMD_AND_TA_PERCENTAGE = Number(
+        data.spread.position2.numberValue - data.spread.position8.numberValue
+      ).toFixed(2); //85%
+
+      const EMD_AND_SMD_PERCENTAGE = Number(
+        data.spread.position3.numberValue - data.spread.position4.numberValue
+      ).toFixed(2); //2%
+      const EMD_AND_MD_PERCENTAGE = Number(
+        data.spread.position3.numberValue - data.spread.position5.numberValue
+      ).toFixed(2); //18%
+      const EMD_AND_SA_PERCENTAGE = Number(
+        data.spread.position3.numberValue - data.spread.position6.numberValue
+      ).toFixed(2); //33%
+      const EMD_AND_A_PERCENTAGE = Number(
+        data.spread.position3.numberValue - data.spread.position7.numberValue
+      ).toFixed(2); //48%
+      const EMD_AND_TA_PERCENTAGE = Number(
+        data.spread.position3.numberValue - data.spread.position8.numberValue
+      ).toFixed(2); //83%
+
+      const SMD_AND_MD_PERCENTAGE = Number(
+        data.spread.position4.numberValue - data.spread.position5.numberValue
+      ).toFixed(2); //16%
+      const SMD_AND_SA_PERCENTAGE = Number(
+        data.spread.position4.numberValue - data.spread.position6.numberValue
+      ).toFixed(2); //31%
+      const SMD_AND_A_PERCENTAGE = Number(
+        data.spread.position4.numberValue - data.spread.position7.numberValue
+      ).toFixed(2); //46%
+      const SMD_AND_TA_PERCENTAGE = Number(
+        data.spread.position4.numberValue - data.spread.position8.numberValue
+      ).toFixed(2); //81%
+
+      const MD_AND_SA_PERCENTAGE = Number(
+        data.spread.position5.numberValue - data.spread.position6.numberValue
+      ).toFixed(2); //15%
+      const MD_AND_A_PERCENTAGE = Number(
+        data.spread.position5.numberValue - data.spread.position7.numberValue
+      ).toFixed(2); //30%
+      const MD_AND_TA_PERCENTAGE = Number(
+        data.spread.position5.numberValue - data.spread.position8.numberValue
+      ).toFixed(2); //65%
+
+      const SA_AND_A_PERCENTAGE = Number(
+        data.spread.position6.numberValue - data.spread.position7.numberValue
+      ).toFixed(2); //15%
+      const SA_AND_TA_PERCENTAGE = Number(
+        data.spread.position6.numberValue - data.spread.position8.numberValue
+      ).toFixed(2); //50%
+
+      const A_AND_TA_PERCENTAGE = Number(
+        data.spread.position7.numberValue - data.spread.position8.numberValue
+      ).toFixed(2); //50%
+
+      if (isVicePresident) {
+        /** -------------------- INDIRECT AND DIRECT -----------------------------------  */
+        /** ------ EVP AND EMD */
+        // Formula EVP AND EMD
+        const spreadEVPandEMDCalculation =
+          (spreadNumberOfMembers2 +
+            numberOfDirectMembers2 +
+            numberOfPromotedMembers2) *
+          spreadPremiumMember2 *
+          spreadMonthlyTargetPremium2;
+
+        const spreadEVPandEMDTotal = spreadEVPandEMDCalculation;
+        /* ------- END Formula EVP AND EMD */
+
+        /** ------ EVP AND SEMD */
+        // Formula EVP AND SEMD
+        const spreadEVPandSEMDCalculation =
+          (spreadNumberOfMembers3 + numberOfPromotedMembers3) *
+          spreadPremiumMember3 *
+          spreadMonthlyTargetPremium3;
+
+        const spreadEVPandSEMDTotal = spreadEVPandSEMDCalculation;
+        /* ------- END Formula EVP AND SEMD */
+
+        /** ------ EVP AND SMD */
+        // Formula EVP AND SMD
+        const spreadEVPandSMDCalculation =
+          (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
+          spreadPremiumMember4 *
+          spreadMonthlyTargetPremium4;
+
+        const spreadEVPandSMDTotal = spreadEVPandSMDCalculation;
+        /* ------- END Formula EVP AND SMD */
+
+        /** ------ EVP AND MD */
+        // Formula EVP AND MD
+        const spreadEVPandMDCalculation =
+          (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
+          spreadPremiumMember5 *
+          spreadMonthlyTargetPremium5;
+
+        const spreadEVPandMDTotal = spreadEVPandMDCalculation;
+        /* ------- END Formula EVP AND MD */
+
+        /** ------ EVP AND SA */
+        // Formula EVP AND SA
+        const spreadEVPandSACalculation =
+          (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+          spreadPremiumMember6 *
+          spreadMonthlyTargetPremium6;
+
+        const spreadEVPandSATotal = spreadEVPandSACalculation;
+        /* ------- END Formula EVP AND SA */
+
+        /** ------ EVP AND Associate */
+        // Formula EVP AND Associate
+        const spreadEVPandACalculation =
+          (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+
+        const spreadEVPandATotal = spreadEVPandACalculation;
+        /* ------- END Formula EVP AND Associate */
+
+        /** ------ EVP AND Training Associate */
+        // Formula EVP AND Training Associate
+        const spreadEVPandTACalculation =
+          (spreadNumberOfMembers8 + numberOfPromotedMembers8) *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+
+        const spreadEVPandTATotal = spreadEVPandTACalculation;
+        /* ------- END Formula EVP AND Training Associate */
+
+        const spread1 =
+          (spreadEVPandEMDTotal +
+            spreadEVPandSEMDTotal +
+            spreadEVPandSMDTotal +
+            spreadEVPandTATotal +
+            spreadEVPandATotal +
+            spreadEVPandMDTotal +
+            spreadEVPandSATotal) *
+          Number(EVP_AND_SEMD_PERCENTAGE);
+
+        console.log(spread1);
+
+        /** -------------------- END OF INDIRECT AND DIRECT -----------------------------------  */
+
+        /** -------------------- START OF DIRECT -----------------------------------  */
+
+        /** ------ EMD */
+        // Formula EMD
+        const directEVPExecutiveMarketingDirector =
+          numberOfDirectMembers4 *
+          spreadPremiumMember4 *
+          spreadMonthlyTargetPremium4;
+        const directEVPExecutiveMarketingDirectorTotal =
+          directEVPExecutiveMarketingDirector;
+        const spread2 =
+          directEVPExecutiveMarketingDirectorTotal *
+          Number(EVP_AND_EMD_PERCENTAGE);
+        /* ------- END Formula EMD */
+
+        /** ------ SMD */
+        // Formula SMD
+        const directEVPSeniorMarketingDirector =
+          numberOfDirectMembers4 *
+          spreadPremiumMember4 *
+          spreadMonthlyTargetPremium4;
+        const directEVPSeniorMarketingDirectorTotal =
+          directEVPSeniorMarketingDirector;
+        const spread3 =
+          directEVPSeniorMarketingDirectorTotal *
+          Number(EVP_AND_SMD_PERCENTAGE);
+        /* ------- END Formula SMD */
+
+        /** ------ MD */
+        // Formula MD
+        const directEVPMarketingDirector =
+          numberOfDirectMembers5 *
+          spreadPremiumMember5 *
+          spreadMonthlyTargetPremium5;
+        const directEVPMarketingDirectorTotal = directEVPMarketingDirector;
+        const spread4 =
+          directEVPMarketingDirectorTotal * Number(EVP_AND_MD_PERCENTAGE);
+        /* ------- END Formula MD */
+
+        /** ------ Senior Associate */
+        // Formula Senior Associate
+        const directEVPSeniorAssociate =
+          numberOfDirectMembers6 *
+          spreadPremiumMember6 *
+          spreadMonthlyTargetPremium6;
+        const directEVPSeniorAssociateTotal = directEVPSeniorAssociate;
+        const spread5 =
+          directEVPSeniorAssociateTotal * Number(EVP_AND_SA_PERCENTAGE);
+        /* ------- END Formula Senior Associate */
+
+        /** ------ Associate */
+        // Formula Associate
+        const directEVPAssociate =
+          numberOfDirectMembers7 *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+        const directEVPAssociateTotal = directEVPAssociate;
+        const spread6 = directEVPAssociateTotal * Number(EVP_AND_A_PERCENTAGE);
+        /* ------- END Formula Associate */
+
+        /** ------ TrainingAssociate */
+        // Formula TrainingAssociate
+        const directEVPTrainingAssociate =
+          numberOfDirectMembers8 *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+        const directEVPTrainingAssociateTotal = directEVPTrainingAssociate;
+        const spread7 =
+          directEVPTrainingAssociateTotal * Number(EVP_AND_TA_PERCENTAGE);
+        /* ------- END Formula TrainingAssociate */
+
+        SPREAD_TOTAL =
+          spread1 + spread2 + spread3 + spread4 + spread5 + spread6 + spread7;
+
+        console.log({
+          spread1,
+          spread2,
+          spread3,
+          spread4,
+          spread5,
+          spread6,
+          spread7,
+          EVP_AND_TA_PERCENTAGE,
+          directEVPTrainingAssociateTotal,
+          numberOfDirectMembers8,
+          spreadPremiumMember8,
+          spreadMonthlyTargetPremium8,
+        });
+      } else if (isSeniorExecutiveMarketingDirector) {
+        /** -------------------- INDIRECT AND DIRECT -----------------------------------  */
+        /** ------ SEMD AND EMD */
+        // Formula SEMD AND EMD
+        const spreadSEMDandEMDCalculation =
+          (spreadNumberOfMembers3 +
+            numberOfDirectMembers3 +
+            numberOfPromotedMembers3) *
+          spreadPremiumMember3 *
+          spreadMonthlyTargetPremium3;
+
+        const spreadSEMDandEMDTotal = spreadSEMDandEMDCalculation;
+        /* ------- END Formula SEMD AND EMD */
+
+        /** ------ SEMD AND SMD */
+        // Formula SEMD AND SMD
+        const spreadSEMDandSMDCalculation =
+          (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
+          spreadPremiumMember4 *
+          spreadMonthlyTargetPremium4;
+
+        const spreadSEMDandSMDTotal = spreadSEMDandSMDCalculation;
+        /* ------- END Formula SEMD AND SMD */
+
+        /** ------ SEMD AND MD */
+        // Formula SEMD AND MD
+        const spreadSEMDandMDCalculation =
+          (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
+          spreadPremiumMember5 *
+          spreadMonthlyTargetPremium5;
+
+        const spreadSEMDandMDTotal = spreadSEMDandMDCalculation;
+        /* ------- END Formula SEMD AND MD */
+
+        /** ------ SEMD AND SA */
+        // Formula SEMD AND SA
+        const spreadSEMDandSACalculation =
+          (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+          spreadPremiumMember6 *
+          spreadMonthlyTargetPremium6;
+
+        const spreadSEMDandSATotal = spreadSEMDandSACalculation;
+        /* ------- END Formula SEMD AND SA */
+
+        /** ------ SEMD AND Associate */
+        // Formula SEMD AND Associate
+        const spreadSEMDandACalculation =
+          (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+
+        const spreadSEMDandATotal = spreadSEMDandACalculation;
+        /* ------- END Formula SEMD AND Associate */
+
+        /** ------ SEMD AND Training Associate */
+        // Formula SEMD AND Training Associate
+        const spreadSEMDandTACalculation =
+          (spreadNumberOfMembers8 + numberOfPromotedMembers8) *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+
+        const spreadSEMDandTATotal = spreadSEMDandTACalculation;
+        /* ------- END Formula SEMD AND Training Associate */
+
+        const spread1 =
+          (spreadSEMDandEMDTotal +
+            spreadSEMDandSMDTotal +
+            spreadSEMDandTATotal +
+            spreadSEMDandATotal +
+            spreadSEMDandMDTotal +
+            spreadSEMDandSATotal) *
+          Number(SEMD_AND_EMD_PERCENTAGE);
+
+        /** -------------------- END OF INDIRECT AND DIRECT -----------------------------------  */
+
+        /** -------------------- START OF DIRECT -----------------------------------  */
+
+        /** ------ SMD */
+        // Formula SMD
+        const directSEMDSeniorMarketingDirector =
+          numberOfDirectMembers4 *
+          spreadPremiumMember4 *
+          spreadMonthlyTargetPremium4;
+        const directSEMDSeniorMarketingDirectorTotal =
+          directSEMDSeniorMarketingDirector;
+        const spread2 =
+          directSEMDSeniorMarketingDirectorTotal *
+          Number(SEMD_AND_SMD_PERCENTAGE);
+        /* ------- END Formula SMD */
+
+        /** ------ MD */
+        // Formula MD
+        const directSEMDMarketingDirector =
+          numberOfDirectMembers5 *
+          spreadPremiumMember5 *
+          spreadMonthlyTargetPremium5;
+        const directSEMDMarketingDirectorTotal = directSEMDMarketingDirector;
+        const spread3 =
+          directSEMDMarketingDirectorTotal * Number(SEMD_AND_MD_PERCENTAGE);
+        /* ------- END Formula MD */
+
+        /** ------ Senior Associate */
+        // Formula Senior Associate
+        const directSEMDSeniorAssociate =
+          numberOfDirectMembers6 *
+          spreadPremiumMember6 *
+          spreadMonthlyTargetPremium6;
+        const directSEMDSeniorAssociateTotal = directSEMDSeniorAssociate;
+        const spread4 =
+          directSEMDSeniorAssociateTotal * Number(SEMD_AND_SA_PERCENTAGE);
+        /* ------- END Formula Senior Associate */
+
+        /** ------ Associate */
+        // Formula Associate
+        const directSEMDAssociate =
+          numberOfDirectMembers7 *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+        const directSEMDAssociateTotal = directSEMDAssociate;
+        const spread5 =
+          directSEMDAssociateTotal * Number(SEMD_AND_A_PERCENTAGE);
+        /* ------- END Formula Associate */
+
+        /** ------ TrainingAssociate */
+        // Formula TrainingAssociate
+        const directSEMDTrainingAssociate =
+          numberOfDirectMembers8 *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+        const directSEMDTrainingAssociateTotal = directSEMDTrainingAssociate;
+        const spread6 =
+          directSEMDTrainingAssociateTotal * Number(SEMD_AND_TA_PERCENTAGE);
+        /* ------- END Formula TrainingAssociate */
+
+        SPREAD_TOTAL =
+          spread1 + spread2 + spread3 + spread4 + spread5 + spread6;
+      } else if (isExecutiveMarketingDirector) {
+        /** -------------------- INDIRECT AND DIRECT -----------------------------------  */
+        /** ------ EMD AND SMD */
+        // Formula EMD AND SMD
+        const spreadEMDandSMDCalculation =
+          (spreadNumberOfMembers4 +
+            numberOfDirectMembers4 +
+            numberOfPromotedMembers4) *
+          spreadPremiumMember4 *
+          spreadMonthlyTargetPremium4;
+
+        const spreadEMDandSMDTotal = spreadEMDandSMDCalculation;
+        /* ------- END Formula EMD AND SMD */
+
+        /** ------ EMD AND MD */
+        // Formula EMD AND MD
+        const spreadEMDandMDCalculation =
+          (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
+          spreadPremiumMember5 *
+          spreadMonthlyTargetPremium5;
+
+        const spreadEMDandMDTotal = spreadEMDandMDCalculation;
+        /* ------- END Formula EMD AND MD */
+
+        /** ------ EMD AND SA */
+        // Formula EMD AND SA
+        const spreadEMDandSACalculation =
+          (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+          spreadPremiumMember6 *
+          spreadMonthlyTargetPremium6;
+
+        const spreadEMDandSATotal = spreadEMDandSACalculation;
+        /* ------- END Formula EMD AND SA */
+
+        /** ------ EMD AND Associate */
+        // Formula EMD AND Associate
+        const spreadEMDandACalculation =
+          (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+
+        const spreadEMDandATotal = spreadEMDandACalculation;
+        /* ------- END Formula EMD AND Associate */
+
+        /** ------ EMD AND Training Associate */
+        // Formula EMD AND Training Associate
+        const spreadEMDandTACalculation =
+          (spreadNumberOfMembers8 + numberOfPromotedMembers8) *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+
+        const spreadEMDandTATotal = spreadEMDandTACalculation;
+        /* ------- END Formula EMD AND Training Associate */
+
+        const spread1 =
+          (spreadEMDandSMDTotal +
+            spreadEMDandTATotal +
+            spreadEMDandATotal +
+            spreadEMDandMDTotal +
+            spreadEMDandSATotal) *
+          Number(EMD_AND_SMD_PERCENTAGE);
+
+        /** -------------------- END OF INDIRECT AND DIRECT -----------------------------------  */
+
+        /** -------------------- START OF DIRECT -----------------------------------  */
+
+        /** ------ MD */
+        // Formula MD
+        const directEMDMarketingDirector =
+          numberOfDirectMembers5 *
+          spreadPremiumMember5 *
+          spreadMonthlyTargetPremium5;
+        const directEMDMarketingDirectorTotal = directEMDMarketingDirector;
+        const spread2 =
+          directEMDMarketingDirectorTotal * Number(EMD_AND_MD_PERCENTAGE);
+        /* ------- END Formula MD */
+
+        /** ------ Senior Associate */
+        // Formula Senior Associate
+        const directEMDSeniorAssociate =
+          numberOfDirectMembers6 *
+          spreadPremiumMember6 *
+          spreadMonthlyTargetPremium6;
+        const directEMDSeniorAssociateTotal = directEMDSeniorAssociate;
+        const spread3 =
+          directEMDSeniorAssociateTotal * Number(EMD_AND_SA_PERCENTAGE);
+        /* ------- END Formula Senior Associate */
+
+        /** ------ Associate */
+        // Formula Associate
+        const directEMDAssociate =
+          numberOfDirectMembers7 *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+        const directEMDAssociateTotal = directEMDAssociate;
+        const spread4 = directEMDAssociateTotal * Number(EMD_AND_A_PERCENTAGE);
+        /* ------- END Formula Associate */
+
+        /** ------ TrainingAssociate */
+        // Formula TrainingAssociate
+        const directEMDTrainingAssociate =
+          numberOfDirectMembers8 *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+        const directEMDTrainingAssociateTotal = directEMDTrainingAssociate;
+        const spread5 =
+          directEMDTrainingAssociateTotal * Number(EMD_AND_TA_PERCENTAGE);
+        /* ------- END Formula TrainingAssociate */
+
+        console.log({ spread1, spread2, spread3, spread4, spread5 });
+        SPREAD_TOTAL = spread1 + spread2 + spread3 + spread4 + spread5;
+      } else if (isSeniorMarketingDirector) {
+        /** -------------------- INDIRECT AND DIRECT -----------------------------------  */
+        /** ------ SMD AND MD */
+        // Formula SMD AND MD
+        const spreadSMDandMDCalculation =
+          (spreadNumberOfMembers5 +
+            numberOfDirectMembers5 +
+            numberOfPromotedMembers5) *
+          spreadPremiumMember5 *
+          spreadMonthlyTargetPremium5;
+
+        const spreadSMDandMDTotal = spreadSMDandMDCalculation;
+        /* ------- END Formula SMD AND MD */
+
+        /** ------ SMD AND SA */
+        // Formula SMD AND SA
+        const spreadSMDandSACalculation =
+          (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
+          spreadPremiumMember6 *
+          spreadMonthlyTargetPremium6;
+
+        const spreadSMDandSATotal = spreadSMDandSACalculation;
+        /* ------- END Formula SMD AND SA */
+
+        /** ------ SMD AND Associate */
+        // Formula SMD AND Associate
+        const spreadSMDandACalculation =
+          (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+
+        const spreadSMDandATotal = spreadSMDandACalculation;
+        /* ------- END Formula SMD AND Associate */
+
+        /** ------ SMD AND Training Associate */
+        // Formula SMD AND Training Associate
+        const spreadSMDandTACalculation =
+          (spreadNumberOfMembers8 + numberOfPromotedMembers8) *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+
+        const spreadSMDandTATotal = spreadSMDandTACalculation;
+        /* ------- END Formula SMD AND Training Associate */
+
+        const spread1 =
+          (spreadSMDandTATotal +
+            spreadSMDandATotal +
+            spreadSMDandMDTotal +
+            spreadSMDandSATotal) *
+          Number(SMD_AND_MD_PERCENTAGE);
+
+        /** -------------------- END OF INDIRECT AND DIRECT -----------------------------------  */
+
+        /** -------------------- START OF DIRECT -----------------------------------  */
+
+        /** ------ Senior Associate */
+        // Formula Senior Associate
+        const directSMDSeniorAssociate =
+          numberOfDirectMembers6 *
+          spreadPremiumMember6 *
+          spreadMonthlyTargetPremium6;
+        const directSMDSeniorAssociateTotal = directSMDSeniorAssociate;
+        const spread2 =
+          directSMDSeniorAssociateTotal * Number(SMD_AND_SA_PERCENTAGE);
+        /* ------- END Formula Senior Associate */
+
+        /** ------ Associate */
+        // Formula Associate
+        const directSMDAssociate =
+          numberOfDirectMembers7 *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+        const directSMDAssociateTotal = directSMDAssociate;
+        const spread3 = directSMDAssociateTotal * Number(SMD_AND_A_PERCENTAGE);
+        /* ------- END Formula Associate */
+
+        /** ------ TrainingAssociate */
+        // Formula TrainingAssociate
+        const directSMDTrainingAssociate =
+          numberOfDirectMembers8 *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+        const directSMDTrainingAssociateTotal = directSMDTrainingAssociate;
+        const spread4 =
+          directSMDTrainingAssociateTotal * Number(SMD_AND_TA_PERCENTAGE);
+        /* ------- END Formula TrainingAssociate */
+
+        SPREAD_TOTAL = spread1 + spread2 + spread3 + spread4;
+      } else if (isMarketingDirector) {
+        /** -------------------- INDIRECT AND DIRECT -----------------------------------  */
+        /** ------ MD AND SA */
+        // Formula MD AND SA
+        const spreadMDandSACalculation =
+          (spreadNumberOfMembers6 +
+            numberOfDirectMembers6 +
+            numberOfPromotedMembers6) *
+          spreadPremiumMember6 *
+          spreadMonthlyTargetPremium6;
+
+        const spreadMDandSATotal = spreadMDandSACalculation;
+        /* ------- END Formula MD AND SA */
+
+        /** ------ MD AND Associate */
+        // Formula MD AND Associate
+        const spreadMDandACalculation =
+          (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+
+        const spreadMDandATotal = spreadMDandACalculation;
+        /* ------- END Formula MD AND Associate */
+
+        /** ------ MD AND Training Associate */
+        // Formula MD AND Training Associate
+        const spreadMDandTACalculation =
+          (spreadNumberOfMembers8 + numberOfPromotedMembers8) *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+
+        const spreadMDandTATotal = spreadMDandTACalculation;
+        /* ------- END Formula MD AND Training Associate */
+
+        const spread1 =
+          (spreadMDandSATotal + spreadMDandATotal + spreadMDandTATotal) *
+          Number(MD_AND_SA_PERCENTAGE);
+
+        /** -------------------- END OF INDIRECT AND DIRECT -----------------------------------  */
+
+        /** -------------------- START OF DIRECT -----------------------------------  */
+        /** ------ Associate */
+        // Formula Associate
+        const directMDAssociate =
+          numberOfDirectMembers7 *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+        const directMDAssociateTotal = directMDAssociate;
+        const spread2 = directMDAssociateTotal * Number(MD_AND_A_PERCENTAGE);
+        /* ------- END Formula Associate */
+
+        /** ------ TrainingAssociate */
+        // Formula TrainingAssociate
+        const directMDTrainingAssociate =
+          numberOfDirectMembers8 *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+        const directMDTrainingAssociateTotal = directMDTrainingAssociate;
+        const spread3 =
+          directMDTrainingAssociateTotal * Number(MD_AND_TA_PERCENTAGE);
+        /* ------- END Formula TrainingAssociate */
+
+        SPREAD_TOTAL = spread1 + spread2 + spread3;
+      } else if (isSeniorAssociate) {
+        /** -------------------- INDIRECT AND DIRECT -----------------------------------  */
+        /** ------ SA AND Associate */
+        // Formula SA AND Associate
+        const spreadSAandACalculation =
+          (spreadNumberOfMembers7 +
+            numberOfDirectMembers7 +
+            numberOfPromotedMembers7) *
+          spreadPremiumMember7 *
+          spreadMonthlyTargetPremium7;
+
+        const spreadSAandATotal = spreadSAandACalculation;
+        /* ------- END Formula SA AND Associate */
+
+        /** ------ SA AND Training Associate */
+        // Formula SA AND Training Associate
+        const spreadSAandTACalculation =
+          (spreadNumberOfMembers8 + numberOfPromotedMembers8) *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+
+        const spreadSAandTATotal = spreadSAandTACalculation;
+        /* ------- END Formula SA AND Training Associate */
+
+        const spread1 =
+          (spreadSAandATotal + spreadSAandTATotal) *
+          Number(SA_AND_A_PERCENTAGE);
+
+        /** -------------------- END OF INDIRECT AND DIRECT -----------------------------------  */
+
+        /** -------------------- START OF DIRECT -----------------------------------  */
+        /** ------ TrainingAssociate */
+        // Formula TrainingAssociate
+        const directSATrainingAssociate =
+          numberOfDirectMembers8 *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+        const directSATrainingAssociateTotal = directSATrainingAssociate;
+        const spread2 =
+          directSATrainingAssociateTotal * Number(SA_AND_TA_PERCENTAGE);
+        /* ------- END Formula TrainingAssociate */
+
+        SPREAD_TOTAL = spread1 + spread2;
+      } else if (isAssociate) {
+        /** -------------------- INDIRECT AND DIRECT -----------------------------------  */
+        /** ------ A AND Training Associate */
+        // Formula A AND Training Associate
+        const spreadAandTACalculation =
+          (spreadNumberOfMembers8 +
+            numberOfDirectMembers8 +
+            numberOfPromotedMembers8) *
+          spreadPremiumMember8 *
+          spreadMonthlyTargetPremium8;
+
+        const spreadAandTATotal = spreadAandTACalculation;
+        /* ------- END Formula A AND Training Associate */
+
+        const spread1 = spreadAandTATotal * Number(A_AND_TA_PERCENTAGE);
+
+        /** -------------------- END OF INDIRECT AND DIRECT -----------------------------------  */
+
+        SPREAD_TOTAL = spread1;
+      }
 
       const earningsSetter = () => {
         setTotalEarnings((prevState) => {
@@ -562,42 +1263,40 @@ const Calculator: React.FC = () => {
       const genTotalVol1 =
         // Formula Associate
         isAssociate
-          ? (spreadNumberOfMembers7 +
-              numberOfDirectMembers7 +
-              numberOfPromotedMembers7) *
-            spreadMonthlyTargetPremium7 *
-            spreadPremiumMember7
+          ? numberOfPromotedMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7 +
+            (spreadNumberOfMembers8 + numberOfDirectMembers8) *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8
           : // Formula SA
           isSeniorAssociate
-          ? (spreadNumberOfMembers6 +
-              numberOfDirectMembers6 +
-              numberOfPromotedMembers6) *
+          ? numberOfPromotedMembers6 *
               spreadMonthlyTargetPremium6 *
               spreadPremiumMember6 +
-            numberOfDirectMembers7 *
+            (spreadNumberOfMembers7 + numberOfDirectMembers7) *
               spreadMonthlyTargetPremium7 *
               spreadPremiumMember7
           : // Formula MD
           isMarketingDirector
-          ? (spreadNumberOfMembers5 +
-              numberOfDirectMembers5 +
-              numberOfPromotedMembers5) *
+          ? numberOfPromotedMembers5 *
               spreadMonthlyTargetPremium5 *
               spreadPremiumMember5 +
-            numberOfDirectMembers6 *
+            (spreadNumberOfMembers6 + numberOfDirectMembers6) *
               spreadMonthlyTargetPremium6 *
               spreadPremiumMember6 +
             numberOfDirectMembers7 *
               spreadMonthlyTargetPremium7 *
-              spreadPremiumMember7
+              spreadPremiumMember7 +
+            numberOfDirectMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8
           : // Formula SMD
           isSeniorMarketingDirector
-          ? (spreadNumberOfMembers4 +
-              numberOfDirectMembers4 +
-              numberOfPromotedMembers4) *
+          ? numberOfPromotedMembers4 *
               spreadMonthlyTargetPremium4 *
               spreadPremiumMember4 +
-            numberOfDirectMembers5 *
+            (spreadNumberOfMembers5 + numberOfDirectMembers5) *
               spreadMonthlyTargetPremium5 *
               spreadPremiumMember5 +
             numberOfDirectMembers6 *
@@ -605,15 +1304,16 @@ const Calculator: React.FC = () => {
               spreadPremiumMember6 +
             numberOfDirectMembers7 *
               spreadMonthlyTargetPremium7 *
-              spreadPremiumMember7
+              spreadPremiumMember7 +
+            numberOfDirectMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8
           : // Formula EMD
-          isMarketingDirector
-          ? (spreadNumberOfMembers3 +
-              numberOfDirectMembers3 +
-              numberOfPromotedMembers3) *
+          isExecutiveMarketingDirector
+          ? numberOfPromotedMembers3 *
               spreadMonthlyTargetPremium3 *
               spreadPremiumMember3 +
-            numberOfDirectMembers4 *
+            (spreadNumberOfMembers4 + numberOfDirectMembers4) *
               spreadMonthlyTargetPremium4 *
               spreadPremiumMember4 +
             numberOfDirectMembers5 *
@@ -627,12 +1327,10 @@ const Calculator: React.FC = () => {
               spreadPremiumMember7
           : // Formula SEMD
           isSeniorExecutiveMarketingDirector
-          ? (spreadNumberOfMembers2 +
-              numberOfDirectMembers2 +
-              numberOfPromotedMembers2) *
+          ? numberOfPromotedMembers2 *
               spreadMonthlyTargetPremium2 *
               spreadPremiumMember2 +
-            numberOfDirectMembers3 *
+            (spreadNumberOfMembers3 + numberOfDirectMembers3) *
               spreadMonthlyTargetPremium3 *
               spreadPremiumMember3 +
             numberOfDirectMembers4 *
@@ -649,12 +1347,10 @@ const Calculator: React.FC = () => {
               spreadPremiumMember7
           : // Formula EVP
           isVicePresident
-          ? (spreadNumberOfMembers1 +
-              numberOfDirectMembers1 +
-              numberOfPromotedMembers1) *
+          ? numberOfPromotedMembers1 *
               spreadMonthlyTargetPremium1 *
               spreadPremiumMember1 +
-            numberOfDirectMembers2 *
+            (spreadNumberOfMembers2 + numberOfDirectMembers2) *
               spreadMonthlyTargetPremium2 *
               spreadPremiumMember2 +
             numberOfDirectMembers3 *
@@ -679,36 +1375,54 @@ const Calculator: React.FC = () => {
       /* Generation 2 Formula*/
       const genValue2 = data.generation.numberValue2;
       const genTotalVol2 =
-        // Formula 2 MD
+        // Formula 2 SA
         isSeniorAssociate
-          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
-            spreadMonthlyTargetPremium7 *
-            spreadPremiumMember7
+          ? spreadNumberOfMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8 +
+            numberOfPromotedMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
           : // Formula 2 MD
           isMarketingDirector
-          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
-            spreadMonthlyTargetPremium6 *
-            spreadPremiumMember6
+          ? spreadNumberOfMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7 +
+            numberOfPromotedMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6
           : // Formula 2 SMD
           isSeniorMarketingDirector
-          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
-            spreadMonthlyTargetPremium5 *
-            spreadPremiumMember5
+          ? spreadNumberOfMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfPromotedMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5
           : // Formula 2 EMD
           isExecutiveMarketingDirector
-          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
-            spreadMonthlyTargetPremium4 *
-            spreadPremiumMember4
-          : // Formula SEMD
+          ? spreadNumberOfMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfPromotedMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4
+          : // Formula 2 SEMD
           isSeniorExecutiveMarketingDirector
-          ? (spreadNumberOfMembers3 + numberOfPromotedMembers3) *
-            spreadMonthlyTargetPremium3 *
-            spreadPremiumMember3
-          : // Formula EVP
+          ? spreadNumberOfMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfPromotedMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3
+          : // Formula 2 EVP
           isVicePresident
-          ? (spreadNumberOfMembers2 + numberOfPromotedMembers2) *
-            spreadMonthlyTargetPremium2 *
-            spreadPremiumMember2
+          ? spreadNumberOfMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3 +
+            numberOfPromotedMembers2 *
+              spreadMonthlyTargetPremium2 *
+              spreadPremiumMember2
           : 0;
 
       const genTotal2 = genTotalVol2 * genValue2;
@@ -716,31 +1430,46 @@ const Calculator: React.FC = () => {
       /* Generation 3 Formula*/
       const genValue3 = data.generation.numberValue3;
       const genTotalVol3 =
-        // Formula 3 MD
+        // Formula MD
         isMarketingDirector
-          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
-            spreadMonthlyTargetPremium7 *
-            spreadPremiumMember7
+          ? spreadNumberOfMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8 +
+            numberOfPromotedMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
           : // Formula SMD
           isSeniorMarketingDirector
-          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
-            spreadMonthlyTargetPremium6 *
-            spreadPremiumMember6
+          ? spreadNumberOfMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7 +
+            numberOfPromotedMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6
           : // Formula EMD
           isExecutiveMarketingDirector
-          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
-            spreadMonthlyTargetPremium5 *
-            spreadPremiumMember5
+          ? spreadNumberOfMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfPromotedMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5
           : // Formula SEMD
           isSeniorExecutiveMarketingDirector
-          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
-            spreadMonthlyTargetPremium4 *
-            spreadPremiumMember4
+          ? spreadNumberOfMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfPromotedMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4
           : // Formula EVP
           isVicePresident
-          ? (spreadNumberOfMembers3 + numberOfPromotedMembers3) *
-            spreadMonthlyTargetPremium3 *
-            spreadPremiumMember3
+          ? spreadNumberOfMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4 +
+            numberOfPromotedMembers3 *
+              spreadMonthlyTargetPremium3 *
+              spreadPremiumMember3
           : 0;
 
       const genTotal3 = genTotalVol3 * genValue3;
@@ -748,26 +1477,38 @@ const Calculator: React.FC = () => {
       /* Generation 4 Formula*/
       const genValue4 = data.generation.numberValue4;
       const genTotalVol4 =
-        // Formula 4 SMD
+        // Formula 4
         isSeniorMarketingDirector
-          ? (spreadNumberOfMembers7 + numberOfPromotedMembers7) *
-            spreadMonthlyTargetPremium7 *
-            spreadPremiumMember7
-          : // Formula 4 EMD
+          ? spreadNumberOfMembers8 *
+              spreadMonthlyTargetPremium8 *
+              spreadPremiumMember8 +
+            numberOfPromotedMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7
+          : // Formula 4
           isExecutiveMarketingDirector
-          ? (spreadNumberOfMembers6 + numberOfPromotedMembers6) *
-            spreadMonthlyTargetPremium6 *
-            spreadPremiumMember6
+          ? spreadNumberOfMembers7 *
+              spreadMonthlyTargetPremium7 *
+              spreadPremiumMember7 +
+            numberOfPromotedMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6
           : // Formula 4 SEMD
           isSeniorExecutiveMarketingDirector
-          ? (spreadNumberOfMembers5 + numberOfPromotedMembers5) *
-            spreadMonthlyTargetPremium5 *
-            spreadPremiumMember5
+          ? spreadNumberOfMembers6 *
+              spreadMonthlyTargetPremium6 *
+              spreadPremiumMember6 +
+            numberOfPromotedMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5
           : // Formula 4 EVP
           isVicePresident
-          ? (spreadNumberOfMembers4 + numberOfPromotedMembers4) *
-            spreadMonthlyTargetPremium4 *
-            spreadPremiumMember4
+          ? spreadNumberOfMembers5 *
+              spreadMonthlyTargetPremium5 *
+              spreadPremiumMember5 +
+            numberOfPromotedMembers4 *
+              spreadMonthlyTargetPremium4 *
+              spreadPremiumMember4
           : 0;
 
       const genTotal4 = genTotalVol4 * genValue4;
@@ -838,11 +1579,10 @@ const Calculator: React.FC = () => {
         const filteredPrevState = prevState.map((data) => {
           return {
             personal: personalTotal,
-            spread: spreadTotal,
+            spread: SPREAD_TOTAL,
             generationOverride: generationTotal,
           };
         });
-        console.log(generationTotal);
         return filteredPrevState;
       });
 
@@ -875,8 +1615,6 @@ const Calculator: React.FC = () => {
     totalEarnings[0].spread +
     (isPositionValid ? totalEarnings[0].generationOverride : 0);
 
-  console.log(isPositionValid);
-
   const totalEarningAnually = totalEarningMonthly * 12;
 
   const formattedearnings = {
@@ -885,14 +1623,14 @@ const Calculator: React.FC = () => {
   };
 
   useEffect(() => {
-    const isAcknowledged = localStorage.getItem("isAcknowledged");
+    const isAcknowledged = sessionStorage.getItem("isAcknowledged");
     if (!isAcknowledged) {
       setOpen(true);
     }
   }, []);
 
   const acknowledgeHandler = () => {
-    localStorage.setItem("isAcknowledged", "true");
+    sessionStorage.setItem("isAcknowledged", "true");
     setOpen(false);
   };
 
@@ -1145,7 +1883,7 @@ const Calculator: React.FC = () => {
                                     >
                                       <Grid item xs={12} md={12} lg={10}>
                                         <h3 style={{ textAlign: "left" }}>
-                                          {data.label}
+                                          {data.label} {sumIndex}
                                         </h3>
                                       </Grid>
                                     </Grid>
@@ -1381,7 +2119,6 @@ const Calculator: React.FC = () => {
                               <h2
                                 style={{
                                   textAlign: "center",
-                                  fontSize: "1.2rem",
                                 }}
                               >
                                 Override Earnings per Generation
@@ -1415,7 +2152,7 @@ const Calculator: React.FC = () => {
                           <div className="tri-col-container">
                             <Grid
                               container
-                              spacing={6}
+                              spacing={2}
                               justifyContent="space-between"
                             >
                               <Grid item xs={12} md={12} lg={4}>
@@ -1450,7 +2187,7 @@ const Calculator: React.FC = () => {
                                   <div className="earnings-value1-block">
                                     <h2>
                                       {formatter.format(
-                                        totalEarnings[0].spread
+                                        Math.round(totalEarnings[0].spread)
                                       )}
                                     </h2>
                                   </div>
@@ -1458,20 +2195,61 @@ const Calculator: React.FC = () => {
                                   <div className="earnings-value2-block">
                                     <h2 className="navy">
                                       {formatter.format(
-                                        totalEarnings[0].spread * 12
+                                        Math.round(totalEarnings[0].spread) * 12
                                       )}
                                     </h2>
                                   </div>
                                 </div>
                               </Grid>
-                              <Grid item xs={12} md={12} lg={4}>
+                              <Grid
+                                item
+                                xs={12}
+                                md={12}
+                                lg={4}
+                                style={{ position: "relative" }}
+                              >
                                 <div className="tri-col-section-captions">
+                                  {values.personal.position[0].numberValue <
+                                  0.81 ? (
+                                    <HtmlTooltip
+                                      title={
+                                        <div
+                                          style={{
+                                            fontSize: "1.3rem",
+                                          }}
+                                        >
+                                          Potential earnings if you are Senior
+                                          Marketing Director or above. Please
+                                          check upline to see more details.{" "}
+                                          <br />
+                                          <i style={{ color: "red" }}>
+                                            This earnings won't be added to your
+                                            projected total earnings.
+                                          </i>
+                                        </div>
+                                      }
+                                    >
+                                      <div className="blog-title">
+                                        <Badge>Potential Earnings</Badge>
+                                      </div>
+                                    </HtmlTooltip>
+                                  ) : (
+                                    <React.Fragment />
+                                  )}
                                   <div className="earnings-title">
                                     <h2>Override Earnings</h2>
                                   </div>
                                   <div className="earnings-label">Monthly</div>
                                   <div className="earnings-value1-block">
-                                    <h2>
+                                    <h2
+                                      style={{
+                                        color:
+                                          values.personal.position[0]
+                                            .numberValue < 0.81
+                                            ? "red"
+                                            : "black",
+                                      }}
+                                    >
                                       {formatter.format(
                                         totalEarnings[0].generationOverride
                                       )}
@@ -1479,7 +2257,16 @@ const Calculator: React.FC = () => {
                                   </div>
                                   <div className="earnings-label">Annual</div>
                                   <div className="earnings-value2-block">
-                                    <h2 className="light">
+                                    <h2
+                                      className="light"
+                                      style={{
+                                        color:
+                                          values.personal.position[0]
+                                            .numberValue < 0.81
+                                            ? "red"
+                                            : "black",
+                                      }}
+                                    >
                                       {formatter.format(
                                         totalEarnings[0].generationOverride * 12
                                       )}

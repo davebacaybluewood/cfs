@@ -129,6 +129,7 @@ const EmailMarketing = {
         templateStatus: params.templateStatus,
         isAddedByMarketing: params.isAddedByMarketing,
         subject: params.subject,
+        design: params.design,
       }
     );
 
@@ -143,6 +144,7 @@ const EmailMarketing = {
         templateStatus: params.templateStatus,
         isAddedByMarketing: params.isAddedByMarketing,
         subject: params.subject,
+        design: params.design,
       }
     );
 

@@ -54,6 +54,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
                   -webkit-box-orient: vertical;
                   overflow: hidden;
                   text-overflow: ellipsis;
+                  margin-bottom: 10px;
                 "
               >
                 ${
@@ -69,6 +70,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
                   padding: 10px 20px;
                   border-radius: 2px;
                   font-size: 12px;
+                  margin-top: 10px;
                 "
                 href="https://www.gocfs.pro/blogs/${filteredTitle}"
                 >Learn More</a
@@ -124,6 +126,7 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     templateStatus,
     isAddedByMarketing,
     subject,
+    design,
   } = req.body;
   const { userGuid } = req.params;
   const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
@@ -134,7 +137,8 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     !userGuid ||
     !templateStatus ||
     !validStatuses.includes(templateStatus) ||
-    !subject
+    !subject ||
+    !design
   ) {
     throw new Error("Error occured in submission.");
   }
@@ -146,6 +150,7 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     status: templateStatus,
     isAddedByMarketing,
     subject,
+    design,
   };
 
   const emailTemplate = new EmailTemplate(newTemplate);
@@ -307,7 +312,8 @@ const getSingleEmailTemplate = expressAsync(async (req, res, next) => {
  */
 const updateEmailTemplate = expressAsync(async (req, res, next) => {
   const { userGuid, templateId } = req.params;
-  const { templateName, templateBody, templateStatus, subject } = req.body;
+  const { templateName, templateBody, templateStatus, subject, design } =
+    req.body;
   const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
 
   if (
@@ -317,7 +323,8 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
     !templateBody ||
     !templateName ||
     !validStatuses.includes(templateStatus) ||
-    !subject
+    !subject ||
+    !design
   ) {
     throw new Error("Error occured in updating.");
   }
@@ -338,6 +345,7 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
       emailTemplate.templateBody,
       templateBody
     );
+    emailTemplate.design = undefinedValidator(emailTemplate.design, design);
     emailTemplate.status = undefinedValidator(
       emailTemplate.status,
       templateStatus

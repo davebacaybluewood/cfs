@@ -86,7 +86,8 @@ const MailLibrary: React.FC = () => {
     templateStatus: string,
     isAddedByMarketing: boolean,
     templateId: string,
-    subject: string
+    subject: string,
+    design: string
   ) => {
     setFixedLoading(true);
     const body = {
@@ -95,6 +96,7 @@ const MailLibrary: React.FC = () => {
       templateStatus,
       isAddedByMarketing,
       subject,
+      design,
     };
     const res = await agent.EmailMarketing.updateEmailTemplate(
       userGuid,
@@ -219,7 +221,8 @@ const MailLibrary: React.FC = () => {
                   "ACTIVATED",
                   !!template.isAddedByMarketing,
                   template._id ?? "",
-                  template.subject
+                  template.subject,
+                  template.design
                 )
               }
               disabled={deactivateButtonIsDisabled}
@@ -236,7 +239,8 @@ const MailLibrary: React.FC = () => {
                   "DEACTIVATED",
                   !!template.isAddedByMarketing,
                   template._id ?? "",
-                  template.subject
+                  template.subject,
+                  template.design
                 )
               }
               disabled={deactivateButtonIsDisabled}

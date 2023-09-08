@@ -1,3 +1,5 @@
+import { formatISODateOnly } from "../utils/dateFormatter.js";
+
 const contractingEmail = ({
   name,
   state,
@@ -9,6 +11,7 @@ const contractingEmail = ({
   licensePic,
   dateOfBirth = "-",
   carrier,
+  annuity,
 }) => {
   return `<!-- Free to use, HTML email template designed & built by FullSphere. Learn more about us at www.fullsphere.co.uk -->
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -194,9 +197,13 @@ const contractingEmail = ({
             <li style="font-size: 13px; margin-bottom: 10px">
               <b>Phone Number:</b> ${phoneNumber}
             </li>
-            <li style="font-size: 13px; margin-bottom: 10px">
-              <b>Date of Birth:</b> ${dateOfBirth}
-            </li>
+            ${
+              dateOfBirth
+                ? `<li style="font-size: 13px; margin-bottom: 10px">
+                    <b>Date of Birth:</b> ${formatISODateOnly(dateOfBirth)}
+                   </li>`
+                : ``
+            }
             <li style="font-size: 13px; margin-bottom: 10px">
               <b>Resident State:</b> ${state}
             </li>
@@ -207,8 +214,15 @@ const contractingEmail = ({
               <b>SSN No. :</b> ${ssnNumber}
             </li>
             <li style="font-size: 13px; margin-bottom: 10px">
-              <b>Insurance Carrier:</b> <span>${carrier.join(", ")}</span>
+              <b>Life Insurance:</b> <span>${carrier.join(", ")}</span>
             </li>
+            ${
+              annuity?.length
+                ? `<li style='font-size: 13px; margin-bottom: 10px'>
+                <b>Annuity:</b> <span>${annuity.join(", ")}</span>
+              </li>`
+                : ``
+            }
             <li style="font-size: 13px; margin-bottom: 10px">
               <b>Remarks. :</b> ${remarks}
             </li>

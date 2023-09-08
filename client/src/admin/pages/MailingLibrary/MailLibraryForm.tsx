@@ -5,25 +5,30 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { Formik } from "formik";
 import Spinner from "library/Spinner/Spinner";
 import * as Yup from "yup";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import FormikTextInput from "library/Formik/FormikInput";
 import Button from "library/Button/Button";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
-import ReactQuill from "react-quill";
-import useQuillModules from "../Blogs/useQuillModules";
 import { toast } from "react-toastify";
 import "./MailLibraryForm.scss";
 import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import { useLocation } from "react-router-dom";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
+import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
 
 const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const emailEditorRef = useRef<EditorRef>(null);
+  const [design, setDesign] = useState<any>();
+  const [initialValues, setInitialValues] = useState({
+    emailBody: "",
+    subject: "",
+    templateName: "",
+  });
 
   const validationSchema = Yup.object({
-    emailBody: Yup.string().required("Email body is required."),
     subject: Yup.string().required("Subject is required."),
     templateName: Yup.string().required("Template name is required."),
   });
@@ -46,15 +51,8 @@ const MailLibraryForm: React.FC = () => {
     },
   ];
 
-  const [initialValues, setInitialValues] = useState({
-    emailBody: "",
-    subject: "",
-    templateName: "",
-  });
-
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
-  const realQuillModules = useQuillModules();
   const [editButtonVisibility, setEditButtonVisibility] = useState(false);
 
   const search = useLocation().search;
@@ -73,7 +71,13 @@ const MailLibraryForm: React.FC = () => {
         subject: data.subject,
         templateName: data.templateName,
       });
+      setDesign(data.design);
       setEditButtonVisibility(data.userGuid === userGuid);
+
+      /** Load if edit mode */
+      if (emailEditorRef.current && action && templateId) {
+        emailEditorRef.current?.loadDesign(JSON.parse(data.design));
+      }
     };
 
     if (userGuid) {
@@ -83,54 +87,68 @@ const MailLibraryForm: React.FC = () => {
   }, [action, templateId, userGuid]);
 
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
+    const unlayer = emailEditorRef.current?.editor;
+
     if (action === "edit") {
       setLoading(true);
-      const body = {
-        templateName: data.templateName,
-        templateBody: data.templateBody,
-        templateStatus: data.templateStatus,
-        isAddedByMarketing: data.isAddedByMarketing,
-        subject: data.subject,
-      };
-      const response = await agent.EmailMarketing.updateEmailTemplate(
-        userGuid,
-        templateId ?? "",
-        body
-      );
+      unlayer?.exportHtml(async (htmlData) => {
+        const { design: updatedDesign, html } = htmlData;
+        const body = {
+          templateName: data.templateName,
+          templateBody: html,
+          templateStatus: data.templateStatus,
+          isAddedByMarketing: data.isAddedByMarketing,
+          subject: data.subject,
+          design: JSON.stringify(updatedDesign),
+        };
 
-      if (response) {
-        toast.info(`Email Template has been updated.`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        setLoading(false);
-      }
+        const response = await agent.EmailMarketing.updateEmailTemplate(
+          userGuid,
+          templateId ?? "",
+          body
+        );
+
+        if (response) {
+          toast.info(`Email Template has been updated.`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setLoading(false);
+        }
+      });
     } else {
       setLoading(true);
-      const response = await agent.EmailMarketing.createEmailTemplate(
-        userGuid,
-        data
-      );
+      unlayer?.exportHtml(async (htmlData) => {
+        const { design, html } = htmlData;
 
-      if (response) {
-        toast.info(`Email Template has been added.`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        setLoading(false);
-      }
+        data.templateBody = html;
+        data.design = JSON.stringify(design);
+
+        const response = await agent.EmailMarketing.createEmailTemplate(
+          userGuid,
+          data
+        );
+
+        if (response) {
+          toast.info(`Email Template has been added.`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setLoading(false);
+        }
+      });
     }
   };
 
@@ -145,7 +163,7 @@ const MailLibraryForm: React.FC = () => {
     <Wrapper
       breadcrumb={crumbs}
       error={false}
-      loading={false}
+      loading={profileLoading}
       className="email-template-container"
     >
       <div className="email-template-form-container">
@@ -162,6 +180,7 @@ const MailLibraryForm: React.FC = () => {
                 templateStatus: "ACTIVATED",
                 isAddedByMarketing: !!isAdmin,
                 subject: data.subject,
+                design: JSON.stringify(design),
               };
               saveTemplateHandler(finalData);
             }}
@@ -216,12 +235,12 @@ const MailLibraryForm: React.FC = () => {
                       className="form-card-container"
                     >
                       <label>Email Body (Required)</label>
-                      <ReactQuill
-                        value={values.emailBody}
-                        modules={realQuillModules}
-                        onChange={(value) => setFieldValue("emailBody", value)}
-                        theme="snow"
-                        placeholder="Enter the email body here"
+
+                      <EmailEditor
+                        ref={emailEditorRef}
+                        style={{
+                          height: "500px",
+                        }}
                       />
                     </Grid>
                   </Grid>
@@ -247,6 +266,7 @@ const MailLibraryForm: React.FC = () => {
                                 templateStatus: "DRAFT",
                                 isAddedByMarketing: !!isAdmin,
                                 subject: values.subject,
+                                design: JSON.stringify(design),
                               })
                             }
                           >

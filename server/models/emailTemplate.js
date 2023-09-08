@@ -22,6 +22,10 @@ const emailTemplateModel = mongoose.Schema(
       type: String,
       required: true,
     },
+    design: {
+      type: String,
+      required: true,
+    },
     isAddedByMarketing: {
       type: Boolean,
     },
