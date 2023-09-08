@@ -4,20 +4,12 @@ const leadsSchema = mongoose.Schema(
   {
     userGuid: {
       type: String,
-      required: true,
-      unique: true,
-    },    
-    createdAt: {
-      type: String,
+      required: true
     },
-    updatedAt: {
-      type: String,
-    },
-    agentUserGuid: {
-        type: String,
-        required: true,
-        unique: true,
-      },    
+    // agentUserGuid: {
+    //     type: String,
+    //     required: true
+    //   },    
   },
   { timestamps: true }
 );

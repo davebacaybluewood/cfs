@@ -3,30 +3,78 @@ import expressAsync from "express-async-handler";
 
 /**
  * @desc:  POST a Lead
- * @route: POST /api/Leads/
+ * @route: POST /api/Leads/addLeads
  * @acess: Private
  */
 
 const addLeads = expressAsync(async (req, res) =>{
-    const { userGuid, agentUserGuid } = req.body;
+  const userGuid  = req.body.userGuid;
+  const agentUserGuid = req.body.agentUserGuid;
 
-    const leads = await Leads.create({
-        userGuid,
-        agentUserGuid,
-    });
+  if (
+    !userGuid ||
+    !agentUserGuid
+  ) {
+    throw new Error("Error occured in updating.");
+  }
 
-    if (leads) {
-        res.status(201).json({
-          _id: leads._id,          
-          userGuid: leads.userGuid,
-          createdAt: leads.createdAt,
-          updatedAt: leads.updatedAt,
-          agentUserGuid: leads.agentUserGuid,
-        });
-      } else {
-        res.status(400);
-        throw new Error("Invalid subscriber account data");
-      }
+  const leads = await Leads.create({
+      userGuid,
+      agentUserGuid,
+  });
+
+  if (leads) {
+    res.status(201).json("Lead has successfully added.")
+  } else {
+    res.status(400);
+    throw new Error("Invalid subscriber account data");
+  }
 });
 
-export { addLeads };
+/**
+ * @desc:  Get Lead by UserGuid
+ * @route: POST /api/Leads/user/:userGuid
+ * @acess: Private
+ */
+
+const getLeadByUserGuid = expressAsync(async (req, res) => {
+  const  userGuid  = req.params.userGuid;
+
+  if (!userGuid) {
+    throw new Error("Error occured with user profile.");
+  }
+
+  const leads = await Leads.find({ userGuid: userGuid });
+
+  if (leads) {
+    res.json(leads);
+  } else {
+    res.status(404);
+    throw new Error("Subscriber does not Exist");
+  }
+});
+
+/**
+ * @desc:  Get Lead by AgentUserGuid
+ * @route: POST /api/Leads/agent/:agentUserGuid
+ * @acess: Private
+ */
+
+const getLeadByAgentUserGuid = expressAsync(async (req, res) => {
+  const agentUserGuid = req.params.agentUserGuid;
+
+  if (!agentUserGuid) {
+    throw new Error("Error occured with agent profile.");
+  }
+
+  const leads = await Leads.find({ agentUserGuid: agentUserGuid });
+
+  if (leads.length > 0) {
+    res.json(leads);
+  } else {
+    res.status(404);
+    throw new Error("Agent does not Exist");
+  }
+});
+
+export { addLeads, getLeadByUserGuid, getLeadByAgentUserGuid };

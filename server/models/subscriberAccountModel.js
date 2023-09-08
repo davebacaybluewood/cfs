@@ -23,13 +23,11 @@ const subscriberAccountSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: true
     },
-    createdAt: {
+    agentGuid: {
       type: String,
-    },
-    updatedAt: {
-      type: String,
+      required: true
     },
   },
   { timestamps: true }

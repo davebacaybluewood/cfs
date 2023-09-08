@@ -26,6 +26,7 @@ import Portal from "pages/Portal/Portal";
 import TestimonialForm from "pages/TestimonialForm/TestimonialForm";
 import PreLicensing from "pages/Contract/components/PreLicensing";
 import Annuity from "pages/Contract/components/Annuity";
+import Subscriber from "pages/Subscribers/Subscribe";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -276,6 +277,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: true,
   },
+  {
+    element: <Subscriber />,
+    path: paths.subscribeSubscriber + ":agentId",
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  }
 ];
 
 const CALENDLY = {

@@ -7,6 +7,7 @@ import {
   getAllUsers,
   getUserProfile,
   registerUser,
+  getCheckUserId
 } from "../controllers/userControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -18,5 +19,6 @@ router.post("/login", authUser);
 router.route("/profile").get(protect, getUserProfile);
 router.route("/email-check/account").post(checkEmail);
 router.route("/change-password/account").post(changePassword);
+router.route("/verifyuser/:userGuid").get(getCheckUserId);
 
 export default router;

@@ -31,6 +31,7 @@ import {
   FaUsers,
   FaRegAddressCard,
   FaFileContract,
+  FaBookmark,
 } from "react-icons/fa";
 import { MdEmail, MdLibraryBooks } from "react-icons/md";
 
@@ -289,6 +290,28 @@ const useSidebarLinks = (
       isActive: currentPage === adminPathsNew.users.split("/")[2],
       icon: <FaUsers />,
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
+    },
+    {
+      linkText: "Subscribers",
+      link: paths.agentsubscribers,
+      isActive: currentPage === adminPathsNew.users.split("/")[2],
+      icon: <FaBookmark />,
+      role: [
+        PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
+        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
+        PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
+        PROFILE_ROLES.CONTENT_CREATOR_ROLES.ROLE_CONTENT_CREATOR_BLOGS.value,
+        PROFILE_ROLES.CONTENT_CREATOR_ROLES.ROLE_CONTENT_CREATOR_EMAIL_TEMPLATES
+          .value,
+        PROFILE_ROLES.EDITOR_ROLES.ROLE_EDITOR_BLOGS.value,
+        PROFILE_ROLES.EDITOR_ROLES.ROLE_EDITOR_EMAIL_TEMPLATES.value,
+        PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+      ],
     },
     {
       linkText: "Calendars",

@@ -51,6 +51,9 @@ const paths = {
   adminGraphs: "/portal/graphs",
   adminContacts: "/portal/contacts",
   adminEventInvites: "/portal/event-invites",
+
+  /** Subscribe Page */
+  subscribeSubscriber: "/subscribe/",
 };
 
 export { paths };

@@ -52,6 +52,7 @@ import EmailMarketing from "admin/pages/EmailMarketing/EmailMarketing";
 import MailLibrary from "admin/pages/MailingLibrary/MailingLibrary";
 import MailLibraryForm from "admin/pages/MailingLibrary/MailLibraryForm";
 import MailingLibrary from "admin/pages/MailingLibrary/MailingLibrary";
+import AgentSubscribers from "admin/pages/Subscribers/AgentSubscribers";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -590,6 +591,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <MailLibraryForm />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.agentsubscribers,
+    element: (
+      <GuardedWrapper>
+        <AgentSubscribers />
       </GuardedWrapper>
     ),
   },
