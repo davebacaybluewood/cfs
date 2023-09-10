@@ -16,6 +16,7 @@ import "./PortalRegistration.scss";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 interface PortalRegistrationProps {
   isAdmin?: boolean;
@@ -118,214 +119,223 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     }
   };
 
+  const initialOptions = {
+    clientId:
+      "ATgfpkYOvSw8nL7bwVpNijSHLwRDH0npqNws3-NuHDwCdd9mjhOtP1WcLJGRLxVR7DqF1LTknUV9LYN5",
+    currency: "USD",
+    intent: "capture",
+  };
+
   return (
-    <div className="portal-registration-container">
-      <div className="left-col">
-        <div className="captions">
-          {stage === 6 ? (
-            <h1 style={{ fontSize: "6rem" }}>Congratulations!</h1>
-          ) : (
-            <h1 className={classNames({ "left-header": props.isAdmin })}>
-              {props.isAdmin ? (
-                <React.Fragment>
-                  CFS <br /> Registration
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  Welcome <br /> to CFS
-                </React.Fragment>
-              )}
-            </h1>
-          )}
-          {!props.isAdmin ? (
-            <React.Fragment>
-              {stage === 1 ? (
-                <p>
-                  Start your journey <br /> with us today.
-                </p>
-              ) : stage === 6 ? (
-                <p>Registration Completed</p>
-              ) : (
-                <p>
-                  Please provide your <br /> personal information.
-                </p>
-              )}
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {stage === 1 ? (
-                <p>
-                  Please provide the agent <br /> information.
-                </p>
-              ) : stage === 6 ? (
-                <p>Registration Completed</p>
-              ) : (
-                <p>
-                  Please provide the agent <br /> information.
-                </p>
-              )}
-            </React.Fragment>
-          )}
+    <PayPalScriptProvider options={initialOptions}>
+      <div className="portal-registration-container">
+        <div className="left-col">
+          <div className="captions">
+            {stage === 6 ? (
+              <h1 style={{ fontSize: "6rem" }}>Congratulations!</h1>
+            ) : (
+              <h1 className={classNames({ "left-header": props.isAdmin })}>
+                {props.isAdmin ? (
+                  <React.Fragment>
+                    CFS <br /> Registration
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    Welcome <br /> to CFS
+                  </React.Fragment>
+                )}
+              </h1>
+            )}
+            {!props.isAdmin ? (
+              <React.Fragment>
+                {stage === 1 ? (
+                  <p>
+                    Start your journey <br /> with us today.
+                  </p>
+                ) : stage === 6 ? (
+                  <p>Registration Completed</p>
+                ) : (
+                  <p>
+                    Please provide your <br /> personal information.
+                  </p>
+                )}
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {stage === 1 ? (
+                  <p>
+                    Please provide the agent <br /> information.
+                  </p>
+                ) : stage === 6 ? (
+                  <p>Registration Completed</p>
+                ) : (
+                  <p>
+                    Please provide the agent <br /> information.
+                  </p>
+                )}
+              </React.Fragment>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="right-col">
-        <Formik
-          initialValues={initialValues}
-          enableReinitialize
-          onSubmit={async (values: ValuesType) => {
-            setLoading(true);
-            try {
-              const config = {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
-              };
+        <div className="right-col">
+          <Formik
+            initialValues={initialValues}
+            enableReinitialize
+            onSubmit={async (values: ValuesType) => {
+              setLoading(true);
+              try {
+                const config = {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                };
 
-              const { data } = await axios.post(
-                ENDPOINTS.AGENTS,
-                {
-                  emailAddress: values.emailAddress,
-                  password: values.password,
-                  confirmPassword: values.confirmPassword,
-                  firstName: values.firstName,
-                  lastName: values.lastName,
-                  position: values.position,
-                  roles: values.roles,
-                  bio: values.bio,
-                  languages: values.languages,
-                  specialties: values.specialties,
-                  avatar: values.avatar,
-                  licenseNumber: values.licenseNumber,
-                  phoneNumber: values.phoneNumber,
-                  address: values.address,
-                  facebook: values.facebook,
-                  twitter: values.twitter,
-                  linkedIn: values.linkedIn,
-                  instagram: values.instagram,
-                  weChat: values.weChat,
-                  discordId: values.discordId,
-                  state: values.state,
-                },
-                config
-              );
+                const { data } = await axios.post(
+                  ENDPOINTS.AGENTS,
+                  {
+                    emailAddress: values.emailAddress,
+                    password: values.password,
+                    confirmPassword: values.confirmPassword,
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    position: values.position,
+                    roles: values.roles,
+                    bio: values.bio,
+                    languages: values.languages,
+                    specialties: values.specialties,
+                    avatar: values.avatar,
+                    licenseNumber: values.licenseNumber,
+                    phoneNumber: values.phoneNumber,
+                    address: values.address,
+                    facebook: values.facebook,
+                    twitter: values.twitter,
+                    linkedIn: values.linkedIn,
+                    instagram: values.instagram,
+                    weChat: values.weChat,
+                    discordId: values.discordId,
+                    state: values.state,
+                  },
+                  config
+                );
 
-              setLoading(false);
-              setStage(6);
+                setLoading(false);
+                setStage(6);
 
-              if (props.isAdmin) {
-                navigate(paths.users);
+                if (props.isAdmin) {
+                  navigate(paths.users);
+                }
+              } catch (error) {
+                setLoading(false);
               }
-            } catch (error) {
-              setLoading(false);
-            }
-          }}
-          validationSchema={validationSchema}
-        >
-          {({
-            values,
-            setFieldValue,
-            touched,
-            errors,
-            handleSubmit,
-            isSubmitting,
-            setErrors,
-            setTouched,
-          }) => {
-            const accountDetailsValidity =
-              errors.confirmPassword || errors.password || errors.emailAddress
-                ? false
-                : true;
+            }}
+            validationSchema={validationSchema}
+          >
+            {({
+              values,
+              setFieldValue,
+              touched,
+              errors,
+              handleSubmit,
+              isSubmitting,
+              setErrors,
+              setTouched,
+            }) => {
+              const accountDetailsValidity =
+                errors.confirmPassword || errors.password || errors.emailAddress
+                  ? false
+                  : true;
 
-            const personalInfoValidity =
-              errors.firstName ||
-              errors.lastName ||
-              errors.position ||
-              errors.roles ||
-              errors.bio ||
-              errors.state
-                ? true
-                : false;
+              const personalInfoValidity =
+                errors.firstName ||
+                errors.lastName ||
+                errors.position ||
+                errors.roles ||
+                errors.bio ||
+                errors.state
+                  ? true
+                  : false;
 
-            const contactInfoValidity = errors.phoneNumber ? true : false;
-            return (
-              <div className="portal-form">
-                {loading ? <Spinner variant="fixed" /> : null}
-                <div className="form-header">
-                  {stage !== 6 && (
-                    <React.Fragment>
-                      <h2>STEP {stage}</h2>
-                      <h2>{stageHeader}</h2>
-                    </React.Fragment>
+              const contactInfoValidity = errors.phoneNumber ? true : false;
+              return (
+                <div className="portal-form">
+                  {loading ? <Spinner variant="fixed" /> : null}
+                  <div className="form-header">
+                    {stage !== 6 && (
+                      <React.Fragment>
+                        <h2>STEP {stage}</h2>
+                        <h2>{stageHeader}</h2>
+                      </React.Fragment>
+                    )}
+
+                    {error ? (
+                      <Alert
+                        variant="filled"
+                        severity="error"
+                        className="error-alert"
+                      >
+                        Email Address already taken.
+                      </Alert>
+                    ) : null}
+                  </div>
+                  {stage === 1 && (
+                    <AccountDetails
+                      confirmPassword={values.confirmPassword}
+                      email={values.emailAddress}
+                      password={values.password}
+                      changeStage={changeStage}
+                      isValid={accountDetailsValidity}
+                      onSubmit={createPreProfileHandler}
+                      setFieldValue={setFieldValue}
+                      isAdmin={props.isAdmin}
+                    />
                   )}
-
-                  {error ? (
-                    <Alert
-                      variant="filled"
-                      severity="error"
-                      className="error-alert"
-                    >
-                      Email Address already taken.
-                    </Alert>
-                  ) : null}
-                </div>
-                {stage === 1 && (
-                  <AccountDetails
-                    confirmPassword={values.confirmPassword}
-                    email={values.emailAddress}
-                    password={values.password}
-                    changeStage={changeStage}
-                    isValid={accountDetailsValidity}
-                    onSubmit={createPreProfileHandler}
-                    setFieldValue={setFieldValue}
-                    isAdmin={props.isAdmin}
-                  />
-                )}
-                {stage === 2 && (
-                  <PersonalInfo
-                    values={values}
-                    changeStage={changeStage}
-                    setFieldValue={setFieldValue}
-                    isValid={personalInfoValidity}
-                    touched={touched}
-                    setTouched={setTouched}
-                    onSubmit={updatePreProfile}
-                  />
-                )}
-                {stage === 3 && (
-                  <ContactInfo
-                    changeStage={changeStage}
-                    isValid={contactInfoValidity}
-                    values={values}
-                    onSubmit={updatePreProfile}
-                  />
-                )}
-                {stage === 4 && (
-                  <SocialMediaLinks
-                    changeStage={changeStage}
-                    isValid={true}
-                    values={values}
-                    onSubmit={updatePreProfile}
-                  />
-                )}
-                {stage === 5 && (
-                  <AccountSummary
-                    values={values}
-                    changeStage={changeStage}
-                    isValid={true}
-                    onSubmit={handleSubmit}
-                  />
-                )}
-                {stage === 6 && <SuccessPage />}
-                {/* <pre>{JSON.stringify(values, null, 2)}</pre>
+                  {stage === 2 && (
+                    <PersonalInfo
+                      values={values}
+                      changeStage={changeStage}
+                      setFieldValue={setFieldValue}
+                      isValid={personalInfoValidity}
+                      touched={touched}
+                      setTouched={setTouched}
+                      onSubmit={updatePreProfile}
+                    />
+                  )}
+                  {stage === 3 && (
+                    <ContactInfo
+                      changeStage={changeStage}
+                      isValid={contactInfoValidity}
+                      values={values}
+                      onSubmit={updatePreProfile}
+                    />
+                  )}
+                  {stage === 4 && (
+                    <SocialMediaLinks
+                      changeStage={changeStage}
+                      isValid={true}
+                      values={values}
+                      onSubmit={updatePreProfile}
+                    />
+                  )}
+                  {stage === 2 && (
+                    <AccountSummary
+                      values={values}
+                      changeStage={changeStage}
+                      isValid={true}
+                      onSubmit={handleSubmit}
+                    />
+                  )}
+                  {stage === 6 && <SuccessPage />}
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
                 <pre>{JSON.stringify(initialValues, null, 2)}</pre>
                 <pre>{JSON.stringify(errors, null, 2)}</pre>
                 <pre>{JSON.stringify(touched, null, 2)}</pre> */}
-              </div>
-            );
-          }}
-        </Formik>
+                </div>
+              );
+            }}
+          </Formik>
+        </div>
       </div>
-    </div>
+    </PayPalScriptProvider>
   );
 };
 

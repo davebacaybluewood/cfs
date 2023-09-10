@@ -65,14 +65,12 @@ const AccountDetails: React.FC<AccountDetailsProps> = (props) => {
         />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        {props.isAdmin ? (
-          <div className="recaptcha">
-            <ReCAPTCHA
-              sitekey="6LfeQtsmAAAAAAsHX2QKCI7YOe2_Y9yaSGOfaBlF"
-              onChange={recaptchaOnChangeHandler}
-            />
-          </div>
-        ) : null}
+        <div className="recaptcha">
+          <ReCAPTCHA
+            sitekey="6LfeQtsmAAAAAAsHX2QKCI7YOe2_Y9yaSGOfaBlF"
+            onChange={recaptchaOnChangeHandler}
+          />
+        </div>
         {/* <pre>{JSON.stringify(verified)}</pre>
         <pre>{JSON.stringify(props.isValid)}</pre> */}
         <button
