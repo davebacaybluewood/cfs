@@ -15,7 +15,7 @@ const addLeads = expressAsync(async (req, res) =>{
     !userGuid ||
     !agentUserGuid
   ) {
-    throw new Error("Error occured in updating.");
+    throw new Error("Error occured adding leads.");
   }
 
   const leads = await Leads.create({

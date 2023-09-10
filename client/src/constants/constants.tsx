@@ -39,6 +39,7 @@ type ReactRoutesType = RouteProps & {
 const COMPANY_NAME = "Comfort Financial Solutions";
 
 const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
+//const MAIN_LOCALHOST = "http://lcoalhost:3000";
 
 const SOCIAL_MEDIA_LINKS = {
   FACEBOOK: "https://www.facebook.com/gocfspro",
@@ -279,7 +280,7 @@ const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     element: <Subscriber />,
-    path: paths.subscribeSubscriber + ":agentId",
+    path: `${paths.subscribeSubscriber}:agentId`,
     showHeadline: false,
     showFooter: false,
     showNavbar: false,

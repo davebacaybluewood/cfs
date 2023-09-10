@@ -955,6 +955,10 @@
   src: local("Agrandir"), url(./) format("woff");
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .subscriber-registration-container {
   width: 100%;
   height: 120vh;
@@ -1004,11 +1008,13 @@
   }
   .right-col {
     width: 50%;
-    height: 120vh;
+    height: 40vw;
     position: absolute;
     left: 50%;
     display: flex;
     align-items: center;
+    padding-left: 8rem;
+    
 
     .social-grids {
       label {
@@ -1051,6 +1057,8 @@
       font-size: 1.2rem;
       font-weight: 300;
       line-height: 2rem;
+      padding-top: 24rem;
+      padding-bottom: 8rem;
     }
     .default-image {
       img {

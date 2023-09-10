@@ -24,11 +24,7 @@ const subscriberAccountSchema = mongoose.Schema(
     password: {
       type: String,
       required: true
-    },
-    agentGuid: {
-      type: String,
-      required: true
-    },
+    }
   },
   { timestamps: true }
 );

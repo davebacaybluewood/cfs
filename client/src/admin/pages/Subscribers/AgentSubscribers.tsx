@@ -6,25 +6,19 @@ import Title from "admin/components/Title/Title";
 import {
   DataGrid,
   GridColDef,
-  GridFilterPanel,
-  GridRowsProp,
   GridToolbar,
   GridToolbarContainer,
-  GridToolbarDensitySelector,
-  GridToolbarFilterButton,
 } from "@mui/x-data-grid";
-import { BsPlusCircle } from "react-icons/bs";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Menu, MenuItem, Tooltip } from "@mui/material";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
 import "./AgentSubscribers.scss";
 import { formatISODateOnly } from "helpers/date";
 import { toast } from "react-toastify";
-import classNames from "classnames";
 import Spinner from "library/Spinner/Spinner";
-import { BiFilterAlt } from "react-icons/bi";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard";
+import { MAIN_LOCALHOST } from "constants/constants";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -45,8 +39,8 @@ const AgentSubscribers: React.FC = () => {
   const [fixedLoading, setFixedLoading] = useState(false);
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
-  const [templates, setTemplates] = useState<any>([]);
-  const [originalTemplates, setOriginalTemplates] = useState<any>([]);
+  //const [templates, setTemplates] = useState<any>([]);
+  //onst [originalTemplates, setOriginalTemplates] = useState<any>([]);
   const [subscribers, setSubscribers] = useState<any>([]);
   const [clipboardValue, setClipboardValue] = useCopyToClipboard();
 
@@ -60,58 +54,7 @@ const AgentSubscribers: React.FC = () => {
     { field: "email", headerName: "Email Address", width: 450 },
     { field: "createdAt", headerName: "Date Created", width: 250 },
   ];
-  
-  const activationHandler = async (
-    templateName: string,
-    templateBody: string,
-    templateStatus: string,
-    isAddedByMarketing: boolean,
-    templateId: string,
-    subject: string
-  ) => {
-    setFixedLoading(true);
-    const body = {
-      templateName,
-      templateBody,
-      templateStatus,
-      isAddedByMarketing,
-      subject,
-    };
-    const res = await agent.EmailMarketing.updateEmailTemplate(
-      userGuid,
-      templateId,
-      body
-    );
-    if (res) {
-      toast.info(`Template Updated`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setFixedLoading(false);
-
-      setTemplates((prevRows) => {
-        return prevRows.map((row, index) => {
-          const newData =
-            row._id === templateId
-              ? {
-                  ...row,
-                  status: templateStatus,
-                }
-              : row;
-
-          console.log(newData);
-          return newData;
-        });
-      });
-    }
-  };
-
+    
   useEffect(() => {
     console.log(userGuid);    
 
@@ -140,44 +83,43 @@ const AgentSubscribers: React.FC = () => {
     };
   });
   
-  const FilteredGridToolbar = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const filterHandler = (status: string) => {
-      setTemplates((prevState) => {
-        const filteredData = originalTemplates?.filter(
-          (data) => data.status === status
-        );
-        return status === "ALL" ? originalTemplates : filteredData;
-      });
-      setAnchorEl(null);
-    };
+  // const FilteredGridToolbar = () => {
+  //   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  //   const open = Boolean(anchorEl);
+  //   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //     setAnchorEl(event.currentTarget);
+  //   };
+  //   const filterHandler = (status: string) => {
+  //     setTemplates((prevState) => {
+  //       const filteredData = originalTemplates?.filter(
+  //         (data) => data.status === status
+  //       );
+  //       return status === "ALL" ? originalTemplates : filteredData;
+  //     });
+  //     setAnchorEl(null);
+  //   };
 
     
 
-    return (
-      <GridToolbarContainer className="custom-toolbar">
-        <GridToolbar />
-        <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
-          <MenuItem onClick={() => filterHandler("ALL")}>All Status</MenuItem>
-          <MenuItem onClick={() => filterHandler("ACTIVATED")}>
-            Activated
-          </MenuItem>
-          <MenuItem onClick={() => filterHandler("DRAFT")}>Draft</MenuItem>
-          <MenuItem onClick={() => filterHandler("DEACTIVATED")}>
-            Deactivated
-          </MenuItem>
-        </Menu>
-      </GridToolbarContainer>
-    );
-  };
+  //   return (
+  //     <GridToolbarContainer className="custom-toolbar">
+  //       <GridToolbar />
+  //       <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
+  //         <MenuItem onClick={() => filterHandler("ALL")}>All Status</MenuItem>
+  //         <MenuItem onClick={() => filterHandler("ACTIVATED")}>
+  //           Activated
+  //         </MenuItem>
+  //         <MenuItem onClick={() => filterHandler("DRAFT")}>Draft</MenuItem>
+  //         <MenuItem onClick={() => filterHandler("DEACTIVATED")}>
+  //           Deactivated
+  //         </MenuItem>
+  //       </Menu>
+  //     </GridToolbarContainer>
+  //   );
+  // };
 
   function handleCopyToClipboard() {
-    setClipboardValue("http://localhost:3000" + paths.subscribeSubscriber + userGuid);
-    //setClipboardValue("https://www.gocfs.pro" + paths.subscribeSubscriber + userGuid);
+    setClipboardValue(MAIN_LOCALHOST + paths.subscribeSubscriber + userGuid);
     toast("Link copied to Clipboard");
   };
 
@@ -197,7 +139,7 @@ const AgentSubscribers: React.FC = () => {
             <DataGrid
               rows={filteredRows}
               columns={columns}
-              slots={{ toolbar: FilteredGridToolbar }}
+              //slots={{ toolbar: FilteredGridToolbar }}
             />
           </div>
         </div>

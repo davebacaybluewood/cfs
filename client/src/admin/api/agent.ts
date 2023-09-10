@@ -11,7 +11,6 @@ import {
 } from "admin/models/emailMarketing";
 
 import { AgentSubscriberData } from "admin/models/agentSubscribersModel";
-import { request } from "express";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -97,7 +96,7 @@ const Contracting = {
 
 const AgentSubscribers = {
   getAgentSubscriber: () => {
-    const res = requests.get<AgentSubscriberData[] | undefined>(`/api/subscriberacconts/`);
+    const res = requests.get<AgentSubscriberData[] | undefined>(`/api/subscriberaccounts/`);
 
     return res;
   }

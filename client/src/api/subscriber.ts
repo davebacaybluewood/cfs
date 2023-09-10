@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import getUserToken from "helpers/getUserToken";
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
@@ -16,7 +15,7 @@ export const IsUserValid = {
     requests.get<boolean>(`/api/users/verifyuser/${userGuid}`),
 };
 
-export const sendEmailConfirmation = (email, confirmationCode) => {
+export const sendEmailConfirmation = (email: string, confirmationCode: string) => {
   const apiUrl = `/api/email-subscriber/confirmation`; // Replace with your API endpoint
 
   const body = {
