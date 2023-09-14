@@ -54,6 +54,7 @@ const paths = {
 
   /** Subscribe Page */
   subscribeSubscriber: "/subscribe/",
+  subscribeSuccess: "/subscribe/success"
 };
 
 export { paths };

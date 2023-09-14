@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
  */
 
 const registerSubscriberAccount = expressAsync(async (req, res) => {
-  const { email, password, firstName, lastName } = req.body;
+  const { email, password, firstName, lastName, phoneNumber } = req.body;
 
   if (
     !email ||
@@ -40,7 +40,8 @@ const registerSubscriberAccount = expressAsync(async (req, res) => {
     password: hashedPassword,
     firstName,
     lastName,
-    userGuid, // Assign the generated userGuid
+    userGuid,
+    phoneNumber
   });
 
   if (subscriberAccount) {

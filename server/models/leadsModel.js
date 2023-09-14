@@ -5,11 +5,7 @@ const leadsSchema = mongoose.Schema(
     userGuid: {
       type: String,
       required: true,
-    },
-    agentUserGuid: {
-      type: String,
-      required: true,
-    },
+    }
   },
   { timestamps: true }
 );

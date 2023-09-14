@@ -5,4 +5,5 @@ export interface ValuesType {
     firstName: string;
     lastName: string;
     phoneNumber: string;
+    confirmationUserCode: number,
   }

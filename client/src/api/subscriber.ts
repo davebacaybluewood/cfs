@@ -16,7 +16,7 @@ export const IsUserValid = {
 };
 
 export const sendEmailConfirmation = (email: string, confirmationCode: string) => {
-  const apiUrl = `/api/email-subscriber/confirmation`; // Replace with your API endpoint
+  const apiUrl = `/api/email-subscriber/confirmation`; 
 
   const body = {
     email,
@@ -25,6 +25,18 @@ export const sendEmailConfirmation = (email: string, confirmationCode: string) =
   return requests.post(apiUrl, body);
 };
 
-export const validateEmail = (email: string) => {
-  return requests.post(`/api/subscriberacconts/validateEmail`, email);
+export const IsEmailValid = (email: string) => {
+  const apiUrl = `/api/subscriberaccounts/validateEmail`;
+
+  const body = {
+    email,
+  };
+
+  return requests.post(apiUrl, body);
 }
+
+export const registerSubscriberAccount = (registrationData) => {
+  const apiUrl = `/api/subscriberaccounts/`; 
+
+  return requests.post(apiUrl, registrationData);
+};

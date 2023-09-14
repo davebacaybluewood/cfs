@@ -6,11 +6,8 @@ import Title from "admin/components/Title/Title";
 import {
   DataGrid,
   GridColDef,
-  GridToolbar,
-  GridToolbarContainer,
 } from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
-import { Button, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Button } from "@mui/material";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
 import "./AgentSubscribers.scss";
@@ -18,7 +15,6 @@ import { formatISODateOnly } from "helpers/date";
 import { toast } from "react-toastify";
 import Spinner from "library/Spinner/Spinner";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard";
-import { MAIN_LOCALHOST } from "constants/constants";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -34,13 +30,10 @@ const crumbs: CrumbTypes[] = [
 ];
 
 const AgentSubscribers: React.FC = () => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [fixedLoading, setFixedLoading] = useState(false);
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
-  //const [templates, setTemplates] = useState<any>([]);
-  //onst [originalTemplates, setOriginalTemplates] = useState<any>([]);
   const [subscribers, setSubscribers] = useState<any>([]);
   const [clipboardValue, setClipboardValue] = useCopyToClipboard();
 
@@ -82,44 +75,9 @@ const AgentSubscribers: React.FC = () => {
       createdAt: formatISODateOnly(subscriber.createdAt ?? ""),
     };
   });
-  
-  // const FilteredGridToolbar = () => {
-  //   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  //   const open = Boolean(anchorEl);
-  //   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //     setAnchorEl(event.currentTarget);
-  //   };
-  //   const filterHandler = (status: string) => {
-  //     setTemplates((prevState) => {
-  //       const filteredData = originalTemplates?.filter(
-  //         (data) => data.status === status
-  //       );
-  //       return status === "ALL" ? originalTemplates : filteredData;
-  //     });
-  //     setAnchorEl(null);
-  //   };
-
-    
-
-  //   return (
-  //     <GridToolbarContainer className="custom-toolbar">
-  //       <GridToolbar />
-  //       <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
-  //         <MenuItem onClick={() => filterHandler("ALL")}>All Status</MenuItem>
-  //         <MenuItem onClick={() => filterHandler("ACTIVATED")}>
-  //           Activated
-  //         </MenuItem>
-  //         <MenuItem onClick={() => filterHandler("DRAFT")}>Draft</MenuItem>
-  //         <MenuItem onClick={() => filterHandler("DEACTIVATED")}>
-  //           Deactivated
-  //         </MenuItem>
-  //       </Menu>
-  //     </GridToolbarContainer>
-  //   );
-  // };
 
   function handleCopyToClipboard() {
-    setClipboardValue(MAIN_LOCALHOST + paths.subscribeSubscriber + userGuid);
+    setClipboardValue(window.location.hostname + paths.subscribeSubscriber + userGuid);
     toast("Link copied to Clipboard");
   };
 
@@ -139,7 +97,6 @@ const AgentSubscribers: React.FC = () => {
             <DataGrid
               rows={filteredRows}
               columns={columns}
-              //slots={{ toolbar: FilteredGridToolbar }}
             />
           </div>
         </div>

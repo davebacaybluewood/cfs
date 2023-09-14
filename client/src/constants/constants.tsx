@@ -27,6 +27,7 @@ import TestimonialForm from "pages/TestimonialForm/TestimonialForm";
 import PreLicensing from "pages/Contract/components/PreLicensing";
 import Annuity from "pages/Contract/components/Annuity";
 import Subscriber from "pages/Subscribers/Subscribe";
+import SubscriberSucess from "pages/Subscribers/SubscribeSuccess";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -38,8 +39,8 @@ type ReactRoutesType = RouteProps & {
 
 const COMPANY_NAME = "Comfort Financial Solutions";
 
-const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
-//const MAIN_LOCALHOST = "http://lcoalhost:3000";
+//const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
+const MAIN_LOCALHOST = "http://lcoalhost:3000";
 
 const SOCIAL_MEDIA_LINKS = {
   FACEBOOK: "https://www.facebook.com/gocfspro",
@@ -281,6 +282,20 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <Subscriber />,
     path: `${paths.subscribeSubscriber}:agentId`,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <Subscriber />,
+    path: paths.subscribeSubscriber,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <SubscriberSucess />,
+    path: paths.subscribeSuccess,
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
