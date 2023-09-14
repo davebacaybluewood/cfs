@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Subscribe.scss";
 import { ValuesType } from "./models";
@@ -52,19 +52,6 @@ const Subscribe = () => {
 
   const prevStep = () => {
     setStep(1);
-  };
-
-  const checkEmailAlreadyInUse = (email: string) => {
-    IsEmailValid(email)
-      .then((response) => {
-        if (response) {
-          setStep(step + 1);
-        } else {
-        }
-      })
-      .catch((error) => {
-        console.error("Error validating Email:", error);
-      });
   };
 
   const handleSendEmailConfirmation = async (

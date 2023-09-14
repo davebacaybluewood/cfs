@@ -1,5 +1,15 @@
 import axios, { AxiosResponse } from "axios";
 
+type ResponseData<T> = AxiosResponse<T>;
+
+interface RegistrationData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+}
+
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
@@ -35,8 +45,8 @@ export const IsEmailValid = (email: string) => {
   return requests.post(apiUrl, body);
 }
 
-export const registerSubscriberAccount = (registrationData) => {
+export const registerSubscriberAccount = (registrationData: RegistrationData) => {
   const apiUrl = `/api/subscriberaccounts/`; 
 
-  return requests.post(apiUrl, registrationData);
+  return requests.post<void>(apiUrl, registrationData);
 };
