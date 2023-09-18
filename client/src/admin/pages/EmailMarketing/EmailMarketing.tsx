@@ -33,7 +33,7 @@ export const emailOptions = [
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const emailEditorRef = useRef<EditorRef>(null);
+  const emailEditorRef = useRef<any>(null);
   const [design, setDesign] = useState<any>();
 
   const crumbs: CrumbTypes[] = [

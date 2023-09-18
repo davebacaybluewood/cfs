@@ -229,6 +229,26 @@ const changePassword = expressAsync(async (req, res) => {
   }
 });
 
+
+/**
+ * @desc:  Check user is exist
+ * @route: GET /api/users/profile
+ * @acess: Private
+ */
+const getCheckUserId = expressAsync(async (req, res) => {
+  try {
+    const user = await User.findOne({ userGuid: req.params.userGuid });
+
+    if (!user) {
+      res.status(401).json(false);
+    } else {
+      res.status(200).json(true);
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error." });
+  }
+});
+
 export {
   authUser,
   getUserProfile,
@@ -237,4 +257,5 @@ export {
   deleteUser,
   checkEmail,
   changePassword,
+  getCheckUserId
 };

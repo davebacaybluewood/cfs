@@ -20,7 +20,7 @@ import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
 
 const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const emailEditorRef = useRef<EditorRef>(null);
+  const emailEditorRef = useRef<any>(null);
   const [design, setDesign] = useState<any>();
   const [initialValues, setInitialValues] = useState({
     emailBody: "",
