@@ -27,7 +27,7 @@ import TestimonialForm from "pages/TestimonialForm/TestimonialForm";
 import PreLicensing from "pages/Contract/components/PreLicensing";
 import Annuity from "pages/Contract/components/Annuity";
 import Subscriber from "pages/Subscribers/Subscribe";
-import SubscriberSucess from "pages/Subscribers/SubscribeSuccess";
+// import SubscriberSucess from "pages/Subscribers/SubscribeSuccess";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -293,13 +293,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showFooter: false,
     showNavbar: false,
   },
-  {
-    element: <SubscriberSucess />,
-    path: paths.subscribeSuccess,
-    showHeadline: false,
-    showFooter: false,
-    showNavbar: false,
-  }
+  // {
+  //   element: <SubscriberSucess />,
+  //   path: paths.subscribeSuccess,
+  //   showHeadline: false,
+  //   showFooter: false,
+  //   showNavbar: false,
+  // }
 ];
 
 const CALENDLY = {
