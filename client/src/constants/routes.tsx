@@ -18,6 +18,7 @@ const paths = {
   portal: "/portal",
   testimonialForm: "/testimonial-form/:userGuid",
   invalid: "/invalid",
+  pricing: "/pricing",
 
   /* Contract */
   preLicensing: "/pre-licensing",
