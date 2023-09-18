@@ -1,5 +1,5 @@
 import Banner from "library/Banner/Banner";
-import React, { Component } from "react";
+import React from "react";
 import ReactHelmet from "react-helmet";
 import {
   Table,
@@ -19,10 +19,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import pricingUserData from "./pricingUserData.json";
 import classNames from "classnames";
 import "./Pricing.scss";
-
-interface PricingCategory {
-  [key: string]: boolean;
-}
 
 const categories: string[] = [
   "mainFeatures",
@@ -73,28 +69,13 @@ const Pricing: React.FC = () => {
     <>
       <React.Fragment>
         <div className="pricing">
-          <ReactHelmet>
-            <title>
-              Financial & Life Insurance Advisor | Comfort Financial Solutions
-            </title>
-            <link rel="canonical" href={window.location.href} />
-            <meta
-              name="description"
-              content="Comfort Financial Solutions is an annuity and life insurance advisor that offers financial solutions to help secure your financial future. Contact us today!"
-            />
-            <meta
-              name="keywords"
-              content="financial awareness, financial advisor las vegas nv, life insurance agent los angeles"
-            />
-          </ReactHelmet>
+          
           <Banner
             bigTitle="Pricing"
             title="Explore our insurance plans and affordable pricing"
             hasBorder={true}
           />
           <div>
-            {/* <h1>Pricing</h1> */}
-
             <Grid container justifyContent="center" spacing={2}>
               <Grid item xs={12} md={10} lg={8}>
                 <TableContainer component={Paper}>
@@ -106,12 +87,8 @@ const Pricing: React.FC = () => {
                         </TableCell>
                         {userTypes.map((userType) => (
                           <TableCell key={userType} align="center">
-                            <Typography variant="h4">
-                              {/* <div
-                              style={{ fontWeight: "bold", fontSize: "14px" }}
-                            > */}
-                              {formatCategoryLabel(userType)}
-                              {/* </div> */}
+                            <Typography variant="h4">                              
+                              {formatCategoryLabel(userType)}                              
                             </Typography>
                           </TableCell>
                         ))}
