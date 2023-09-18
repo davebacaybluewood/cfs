@@ -10,6 +10,8 @@ import {
   EmailTemplateParameter,
 } from "admin/models/emailMarketing";
 
+import { AgentSubscriberData } from "admin/models/agentSubscribersModel";
+
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, delay);
@@ -92,6 +94,14 @@ const Contracting = {
   },
 };
 
+const AgentSubscribers = {
+  getAgentSubscriber: () => {
+    const res = requests.get<AgentSubscriberData[] | undefined>(`/api/subscriberaccounts/`);
+
+    return res;
+  }
+};
+
 const EmailMarketing = {
   sendEmail: (body: EmailMarketingData) => {
     const res = requests.post<string>("/api/email-marketing/", body);
@@ -154,6 +164,7 @@ const agent = {
   Agents,
   Contracting,
   EmailMarketing,
+  AgentSubscribers
 };
 
 export default agent;

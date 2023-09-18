@@ -6,6 +6,7 @@ interface IFormikTextInput extends BaseTextFieldProps {
   isTextArea?: boolean;
   isDate?: boolean;
   modifiedInputProps?: any;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
   const [field, meta, helper] = useField<string>(props.name ?? "");
