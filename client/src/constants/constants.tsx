@@ -28,6 +28,7 @@ import PreLicensing from "pages/Contract/components/PreLicensing";
 import Annuity from "pages/Contract/components/Annuity";
 import Subscriber from "pages/Subscribers/Subscribe";
 import SubscriberSucess from "pages/Subscribers/SubscribeSuccess";
+import Pricing from "pages/Pricing/Pricing";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -299,6 +300,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
+  },
+  {
+    element: <Pricing />,
+    path: paths.pricing,
+    showHeadline: false,
+    showFooter: true,
+    showNavbar: true,
   }
 ];
 
