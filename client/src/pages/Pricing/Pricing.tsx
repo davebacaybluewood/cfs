@@ -1,6 +1,5 @@
 import Banner from "library/Banner/Banner";
 import React from "react";
-import ReactHelmet from "react-helmet";
 import {
   Table,
   TableBody,
@@ -16,7 +15,6 @@ import {
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import classNames from "classnames";
 import "./Pricing.scss";
 
 const pricingUserData: { [key: string]: any } = {
