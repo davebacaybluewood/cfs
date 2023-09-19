@@ -16,9 +16,75 @@ import {
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import pricingUserData from "./pricingUserData.json";
 import classNames from "classnames";
 import "./Pricing.scss";
+
+const pricingUserData: { [key: string]: any } = {
+  "subscriber": {
+      "mainFeatures": {
+          "financeNewsAndUpdates": true,
+          "articlesAndBlogs": true,
+          "trainingAndWebinars": true,
+          "onsiteNetworkingEvents": false,
+          "awardsAndRecognition": false,
+          "preLicensingAssistance": false,
+          "postLicensingAssistance": false
+      },
+      "CFSToolsAndSystems": {
+          "registrationAndAccountManagementDashboard": false,
+          "personalWebpage": false,
+          "appointmentSystem": false 
+      },
+      "clientCareHub": {
+          "CFSEmailEditor": false,
+          "CFSLeadGenerationSystem": false
+      },
+      "CFSContentLibrary": {
+          "socialMediaMaterials": false,
+          "emailTemplate": false
+      },
+      "advanceTraining": {
+          "corporateTraining": false,
+          "systemsTraining": false,
+          "productTraining": false,
+          "marketingTraining": false,
+          "salesTraining": false,
+          "continueingClasses": false
+      }
+  },
+  "agent": {
+      "mainFeatures": {
+          "financeNewsAndUpdates": true,
+          "articlesAndBlogs": true,
+          "trainingAndWebinars": true,
+          "onsiteNetworkingEvents": true,
+          "awardsAndRecognition": true,
+          "preLicensingAssistance": true,
+          "postLicensingAssistance": true
+      },
+      "CFSToolsAndSystems": {
+          "registrationAndAccountManagementDashboard": true,
+          "personalWebpage": true,
+          "appointmentSystem": true 
+      },
+      "clientCareHub": {
+          "CFSEmailEditor": true,
+          "CFSLeadGenerationSystem": true
+      },
+      "CFSContentLibrary": {
+          "socialMediaMaterials": false,
+          "emailTemplate": false
+      },
+      "advanceTraining": {
+          "corporateTraining": false,
+          "systemsTraining": true,
+          "productTraining": true,
+          "marketingTraining": true,
+          "salesTraining": true,
+          "continueingClasses": false
+      }
+  }
+};
 
 const categories: string[] = [
   "mainFeatures",
