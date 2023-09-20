@@ -1,8 +1,6 @@
 import { Grid } from "@mui/material";
-import { paths } from "constants/routes";
 import FormikTextInput from "library/Formik/FormikInput";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 
 interface AccountDetailsProps {
