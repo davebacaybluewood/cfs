@@ -1,0 +1,146 @@
+.subscribe-success-container {
+  margin: 2rem 0;
+  height: 100%;
+  width: 100vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  justify-content: center;
+  left: 0;
+  top: 0;
+
+  img {
+    width: 300px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  h3 {
+    position: relative;
+    font-size: 26px;
+    font-weight: 300;
+    text-transform: uppercase;
+    font-family: Roboto, sans-serif;
+    color: #333;
+    margin: 0;
+    letter-spacing: 3px;
+    padding-left: 6px;
+  }
+
+  h1 {
+    font-size: 252px;
+    font-weight: 900;
+    margin: 0;
+    color: #262626;
+    text-transform: uppercase;
+    letter-spacing: -40px;
+    margin-left: -20px;
+    margin-top: -25px;
+    margin-bottom: -25px;
+
+    span {
+      text-shadow: -8px 0 0 #fff;
+    }
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: #000;
+    margin-top: 0;
+    margin-bottom: 25px;
+    width: 290px;
+    font-size: 1.6rem;
+  }
+
+  a {
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    text-decoration: none;
+    padding-bottom: 0.5rem;
+  }
+
+  .secondary-cfs-btn {
+    background: #e0effe;
+    color: #007dfa;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+}
+
+// .not-found-container {
+//     margin: 10rem 0;
+//     height: 100%;
+//     width: 100%;
+//     text-align: center;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     align-content: center;
+//     flex-wrap: nowrap;
+//     justify-content: center;
+//     left: 0;
+//     top: 0;
+//     border: #000;
+//     border-style: solid;
+
+//     img {
+//       width: 300px;
+//       border-bottom: 1px solid #eee;
+//       padding-bottom: 2rem;
+//       margin-bottom: 2rem;
+//     }
+//     h3 {
+//       position: relative;
+//       font-size: 26px;
+//       font-weight: 300;
+//       text-transform: uppercase;
+//       font-family: Roboto, sans-serif;
+//       color: #333;
+//       margin: 0;
+//       letter-spacing: 3px;
+//       padding-left: 6px;
+//     }
+
+//     h1 {
+//       font-size: 252px;
+//       font-weight: 900;
+//       margin: 0;
+//       color: #262626;
+//       text-transform: uppercase;
+//       letter-spacing: -40px;
+//       margin-left: -20px;
+//       margin-top: -25px;
+//       margin-bottom: -25px;
+
+//       span {
+//         text-shadow: -8px 0 0 #fff;
+//       }
+//     }
+
+//     h2 {
+//       font-size: 20px;
+//       font-weight: 300;
+//       text-transform: uppercase;
+//       color: #000;
+//       margin-top: 0;
+//       margin-bottom: 25px;
+//       width: 290px;
+//       font-size: 1.6rem;
+//     }
+
+//     a {
+//       text-transform: uppercase;
+//       font-size: 1.3rem;
+//       text-decoration: none;
+//       padding-bottom: 0.5rem;
+//     }
+//   }
