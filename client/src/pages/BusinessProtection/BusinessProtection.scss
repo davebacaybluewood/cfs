@@ -120,7 +120,7 @@
 @media screen and (max-width: 390px) {
   .business__protection {
     .feature-main-container {
-      .standard-card-container {
+      & > .standard-card-container {
         height: 20vh;
       }
     }
