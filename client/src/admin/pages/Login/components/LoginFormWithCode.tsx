@@ -37,71 +37,67 @@ const LoginFormWithCode: React.FC<AccountDetailsProps> = (props) => {
   return (
     <>
       {page === 1 ? (
-        <>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={12} lg={12}>
-              <label className="form-label">Email Address</label>
-              <FormikTextInput
-                name="emailAddress"
-                value={props.email}
-                variant="outlined"
-                placeholder="Enter your email address"
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <label className="form-label">Email Address</label>
+            <FormikTextInput
+              name="emailAddress"
+              value={props.email}
+              variant="outlined"
+              placeholder="Enter your email address"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <div className="recaptcha">
+              <ReCAPTCHA
+                sitekey="6LfeQtsmAAAAAAsHX2QKCI7YOe2_Y9yaSGOfaBlF"
+                onChange={recaptchaOnChangeHandler}
               />
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12}>
-              <div className="recaptcha">
-                <ReCAPTCHA
-                  sitekey="6LfeQtsmAAAAAAsHX2QKCI7YOe2_Y9yaSGOfaBlF"
-                  onChange={recaptchaOnChangeHandler}
-                />
-              </div>
+            </div>
 
-              <button
-                className="secondary-cfs-btn"
-                onClick={() => handleNextStep(2)}
-                disabled={!props.isValid || !verified}
-              >
-                Send Verification
-              </button>
-            </Grid>
-          </Grid>
-        </>
-      ) : (
-        <>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={12} lg={12}>
-              <label className="form-label">Verification Code</label>
-              <FormikTextInput
-                name="verificationCode"
-                value={props.verificationCode}
-                variant="outlined"
-                placeholder="Enter your verification code"
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12}>           
             <button
-                className="secondary-cfs-btn"
-                onClick={() => handleNextStep(1)}
-                disabled={!props.isValid || !verified}
-              >
-                Go Back
-              </button>
-              <button
-                className="secondary-cfs-btn"
-                onClick={() => {
-                  props.onSubmit(
-                    props.email,
-                    props.verificationCode,
-                    props.setFieldValue
-                  );
-                }}
-                disabled={!props.isValid || !verified}
-              >
-                Login
-              </button>
-            </Grid>
+              className="secondary-cfs-btn"
+              onClick={() => handleNextStep(2)}
+              disabled={!props.isValid || !verified}
+            >
+              Send Verification
+            </button>
           </Grid>
-        </>
+        </Grid>
+      ) : (
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <label className="form-label">Verification Code</label>
+            <FormikTextInput
+              name="verificationCode"
+              value={props.verificationCode}
+              variant="outlined"
+              placeholder="Enter your verification code"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <button
+              className="secondary-cfs-btn"
+              onClick={() => handleNextStep(1)}
+              disabled={!props.isValid || !verified}
+            >
+              Go Back
+            </button>
+            <button
+              className="secondary-cfs-btn"
+              onClick={() => {
+                props.onSubmit(
+                  props.email,
+                  props.verificationCode,
+                  props.setFieldValue
+                );
+              }}
+              disabled={!props.isValid || !verified}
+            >
+              Login
+            </button>
+          </Grid>
+        </Grid>
       )}
     </>
   );

@@ -13,7 +13,6 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import "pages/PortalRegistration/PortalRegistration.scss";
 import "./Login.scss";
-import { Search } from "@mui/icons-material";
 import LoginFormWithCode from "./components/LoginFormWithCode";
 import { paths } from "constants/routes";
 
@@ -32,8 +31,6 @@ const PortalRegistration: React.FC = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state: any) => state.userLogin);
   const { loading: loginLoading, error, userInfo } = userLogin;
-  const [checkEmail, setCheckEmail] = useState(false);
-  const { change_password_status } = useParams();
   const [loading, setLoading] = useState(false);
 
   const urlLocation = useLocation();
