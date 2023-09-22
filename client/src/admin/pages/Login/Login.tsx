@@ -40,8 +40,6 @@ const PortalRegistration: React.FC = () => {
     searchUrlForParameters.get("verification_code");
   const isVerification = isVerificationParamter === "true";
 
-  console.log(isVerification);
-
   const initialWithValues: LoginWithValues = {
     emailAddress: "",
     password: "",
