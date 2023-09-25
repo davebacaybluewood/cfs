@@ -7,7 +7,7 @@
 - Daily Stand Up (with client)
 - Daily Sync Meeting (Tech Team only)
 - User Story Refinement 
-- Sprint Planning 
+- Sprint Planning (During Daily Sync Meeting - Tech)
 - Handoff
 
 ## User Story and Bug Tasking 
