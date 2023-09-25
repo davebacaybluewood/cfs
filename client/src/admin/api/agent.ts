@@ -11,6 +11,10 @@ import {
 } from "admin/models/emailMarketing";
 
 import { AgentSubscriberData } from "admin/models/agentSubscribersModel";
+import {
+  LoginUsingCodeData,
+  LoginUsingEmailData,
+} from "admin/models/loginModel";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -96,10 +100,12 @@ const Contracting = {
 
 const AgentSubscribers = {
   getAgentSubscriber: () => {
-    const res = requests.get<AgentSubscriberData[] | undefined>(`/api/subscriberaccounts/`);
+    const res = requests.get<AgentSubscriberData[] | undefined>(
+      `/api/subscriberaccounts/`
+    );
 
     return res;
-  }
+  },
 };
 
 const EmailMarketing = {
@@ -158,13 +164,50 @@ const EmailMarketing = {
   },
 };
 
+const Login = {
+  loginUsingEmail: async (emailAddress: string) => {
+    const endpoint = "/api/backOffice/login-email";
+
+    try {
+      const res = await requests.post<LoginUsingEmailData>(endpoint, {
+        emailAddress,
+      });
+
+      return res;
+    } catch (error) {
+      return false;
+    }
+  },
+
+  loginUsingCode: async (
+    emailAddress: string,
+    agentCode: string,
+    verificationCode: string
+  ) => {
+    const endpoint = "/api/backOffice/login-code";
+
+    try {
+      const res = await requests.post<LoginUsingCodeData>(endpoint, {
+        emailAddress,
+        verificationCode,
+        agentCode,
+      });
+
+      return res;
+    } catch (error) {
+      return false;
+    }
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
   Agents,
   Contracting,
   EmailMarketing,
-  AgentSubscribers
+  AgentSubscribers,
+  Login,
 };
 
 export default agent;

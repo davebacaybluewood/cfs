@@ -26,9 +26,9 @@ import Portal from "pages/Portal/Portal";
 import TestimonialForm from "pages/TestimonialForm/TestimonialForm";
 import PreLicensing from "pages/Contract/components/PreLicensing";
 import Annuity from "pages/Contract/components/Annuity";
-import Subscriber from "pages/Subscribers/Subscribe";
-import SubscriberSucess from "pages/Subscribers/SubscribeSuccess";
 import Pricing from "pages/Pricing/Pricing";
+import Subscribe from "pages/Subscribers/Subscribe";
+import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -268,6 +268,27 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showNavbar: false,
   },
   {
+    element: <Pricing />,
+    path: paths.pricing,
+    showHeadline: false,
+    showFooter: true,
+    showNavbar: true,
+  },
+  {
+    element: <Subscribe />,
+    path: paths.subscriberRegistration,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <SubscribeSuccess />,
+    path: paths.subscribeSuccess,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
     element: <InvalidRoute />,
     path: "*",
     showNavbar: true,
@@ -280,34 +301,6 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: true,
   },
-  {
-    element: <Subscriber />,
-    path: `${paths.subscribeSubscriber}:agentId`,
-    showHeadline: false,
-    showFooter: false,
-    showNavbar: false,
-  },
-  {
-    element: <Subscriber />,
-    path: paths.subscribeSubscriber,
-    showHeadline: false,
-    showFooter: false,
-    showNavbar: false,
-  },
-  {
-    element: <SubscriberSucess />,
-    path: paths.subscribeSuccess,
-    showHeadline: false,
-    showFooter: false,
-    showNavbar: false,
-  },
-  {
-    element: <Pricing />,
-    path: paths.pricing,
-    showHeadline: false,
-    showFooter: true,
-    showNavbar: true,
-  }
 ];
 
 const CALENDLY = {

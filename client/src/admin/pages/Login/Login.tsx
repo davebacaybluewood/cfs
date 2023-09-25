@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
-import "pages/PortalRegistration/PortalRegistration.scss";
 import LoginForm from "./components/LoginForm";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import adminPathsNew from "admin/constants/routes";
 import { Alert } from "@mui/material";
 import { MAIN_IMAGES } from "constants/constants";
 import { Formik } from "formik";
 import Spinner from "library/Spinner/Spinner";
 import { login } from "redux/actions/userActions";
-import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import "pages/PortalRegistration/PortalRegistration.scss";
-import "./Login.scss";
 import LoginFormWithCode from "./components/LoginFormWithCode";
 import { paths } from "constants/routes";
+import agent from "admin/api/agent";
+import {
+  validationWithCodeSchema,
+  validationWithValuesSchema,
+} from "./validationSchema";
+import PageCaptions from "./PageCaptions";
+import "pages/PortalRegistration/PortalRegistration.scss";
+import "./Login.scss";
+import { USER_LOGIN_ACTION_TYPES } from "constants/redux-constants";
 
 type LoginWithValues = {
   emailAddress: string;
@@ -27,13 +32,16 @@ type LoginWithCode = {
 };
 
 const PortalRegistration: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [invalid, setInvalid] = useState({
+    isInvalid: false,
+    text: "",
+  });
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userLogin = useSelector((state: any) => state.userLogin);
-  const { loading: loginLoading, error, userInfo } = userLogin;
-  const [loading, setLoading] = useState(false);
-
   const urlLocation = useLocation();
+  const { error, userInfo } = userLogin;
 
   const searchUrlForParameters = new URLSearchParams(urlLocation.search);
   const isVerificationParamter =
@@ -47,7 +55,7 @@ const PortalRegistration: React.FC = () => {
 
   const initialWithCode: LoginWithCode = {
     emailAddress: "",
-    verificationCode: ""
+    verificationCode: "",
   };
 
   useEffect(() => {
@@ -56,65 +64,89 @@ const PortalRegistration: React.FC = () => {
     }
   }, [navigate, userInfo]);
 
-  const validationWithValuesSchema = Yup.object({
-    emailAddress: Yup.string()
-      .email("Invalid email address")
-      .required("Email address field is required."),
-    password: Yup.string().required("Password field is required."),
-  });
+  /** Login with code variables */
+  const [page, setPage] = useState(1);
+  const [agentCode, setAgentCode] = useState("");
 
-  const validationWithCodeSchema = Yup.object({
-    emailAddress: Yup.string()
-      .email("Invalid email address")
-      .required("Email address field is required."),    
-  });
+  const handleNextStep = (stepNumber: number) => {
+    setPage(stepNumber);
+  };
 
   return (
     <div className="portal-registration-container">
       <div className="left-col">
         <div className="captions">
-          <h1>
-            Welcome <br /> to CFS
-          </h1>
-          <p>
-            Start your journey <br /> with us today.
-          </p>
+          <PageCaptions />
         </div>
       </div>
       <div className="right-col-login">
-        <div className="login-container" style={{ width: "100%"}}>
+        <div className="login-container" style={{ width: "100%" }}>
           {isVerification ? (
             <>
               <Formik
                 initialValues={initialWithCode}
                 enableReinitialize
                 onSubmit={async (values: LoginWithCode) => {
-                  try {
+                  if (page === 1) {
                     setLoading(true);
-                    // dispatch(
-                    //   login(values.emailAddress, values.verificationCode) as any
-                    // );
-                    setLoading(false);
-                  } catch (error) {
-                    setLoading(false);
+                    const res = await agent.Login.loginUsingEmail(
+                      values.emailAddress
+                    );
+
+                    if (!res) {
+                      setLoading(false);
+                      setInvalid({
+                        isInvalid: true,
+                        text: "Invalid Email Address",
+                      });
+                    } else {
+                      setInvalid({
+                        isInvalid: false,
+                        text: "",
+                      });
+                      handleNextStep(2);
+                      setLoading(false);
+                      setAgentCode(res.agent.agentCode);
+                    }
+                  } else if (page === 2) {
+                    setLoading(true);
+                    const res = await agent.Login.loginUsingCode(
+                      values.emailAddress,
+                      agentCode,
+                      values.verificationCode
+                    );
+
+                    if (!res) {
+                      setLoading(false);
+                      setInvalid({
+                        isInvalid: true,
+                        text: "Invalid Verification Code",
+                      });
+                    } else {
+                      setInvalid({
+                        isInvalid: false,
+                        text: "",
+                      });
+                      setLoading(false);
+
+                      const storageData = res.user;
+                      sessionStorage.setItem(
+                        "userInfo",
+                        JSON.stringify(storageData)
+                      );
+                      dispatch({
+                        type: USER_LOGIN_ACTION_TYPES.USER_LOGIN_SUCCESS,
+                        payload: storageData,
+                      });
+                    }
                   }
                 }}
                 validationSchema={validationWithCodeSchema}
               >
-                {({
-                  values,
-                  setFieldValue,
-                  touched,
-                  errors,
-                  handleSubmit,
-                  isSubmitting,
-                  setErrors,
-                  setTouched,
-                }) => {
-                  const accountDetailsWithCodeValidity =
-                   errors.emailAddress
-                      ? false
-                      : true;
+                {({ values, setFieldValue, errors, handleSubmit }) => {
+                  const accountDetailsWithCodeValidity = errors.emailAddress
+                    ? false
+                    : true;
 
                   return (
                     <div className="portal-form">
@@ -136,13 +168,13 @@ const PortalRegistration: React.FC = () => {
                           Sigin to continue
                         </h2>
 
-                        {error ? (
+                        {invalid.isInvalid ? (
                           <Alert
                             variant="filled"
                             severity="error"
                             className="error-alert"
                           >
-                            Invalid Email & Password
+                            {invalid.text}
                           </Alert>
                         ) : null}
                       </div>
@@ -152,6 +184,8 @@ const PortalRegistration: React.FC = () => {
                         isValid={accountDetailsWithCodeValidity}
                         onSubmit={async () => handleSubmit()}
                         setFieldValue={setFieldValue}
+                        page={page}
+                        handleNextStep={handleNextStep}
                       />
                     </div>
                   );
@@ -164,12 +198,6 @@ const PortalRegistration: React.FC = () => {
             </>
           ) : (
             <>
-              {/* <div className="image-holder">
-                    <img src={MAIN_IMAGES.MAIN_LOGO} alt={MAIN_IMAGES.MAIN_LOGO} />
-                  </div>
-                  <div className="login-captions">
-                    <h3>Welcome to CFS Portal</h3>
-                  </div> */}
               <Formik
                 initialValues={initialWithValues}
                 enableReinitialize
@@ -186,16 +214,7 @@ const PortalRegistration: React.FC = () => {
                 }}
                 validationSchema={validationWithValuesSchema}
               >
-                {({
-                  values,
-                  setFieldValue,
-                  touched,
-                  errors,
-                  handleSubmit,
-                  isSubmitting,
-                  setErrors,
-                  setTouched,
-                }) => {
+                {({ values, setFieldValue, errors, handleSubmit }) => {
                   const accountDetailsValidity =
                     errors.password || errors.emailAddress ? false : true;
 

@@ -1,37 +1,53 @@
-import { useNavigate } from "react-router-dom"; // Assuming you are using React Router
-import { paths } from "constants/routes";
-import "./SubscribeSuccess.scss";
 import {
-  Grid,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
 } from "@mui/material";
+import { USER_FAQ } from "pages/PortalRegistration/constants";
+import React from "react";
 
-const SubscribeSuccess = () => {
-  const navigate = useNavigate();
+const SuccessPage: React.FC = () => {
+  const [expanded, setExpanded] = React.useState();
 
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
   return (
-    <div className="subscribe-success-container">
+    <div className="success-page">
       <img
-        src="\assets\images\logos\cfs-logo.png"
-        alt="\assets\images\logos\cfs-logo.png"
+        src="/assets/icons/success.svg"
+        alt="success-indicator"
+        className="success-image"
       />
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        <h3>Welcome to CFS</h3>
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        <button
-          className="secondary-cfs-btn"
-          style={{ width: "24rem", height: "3rem", marginTop: "1rem" }}
-          onClick={() => {
-            navigate(paths.login);
-          }}
-        >
-          Login
-        </button>
-      </Grid>
-      
+      <h2>Subscriber Registration Success</h2>
+      <p>
+        Thank you for registering with Comfort Financial Solutions. <br /> It
+        will take 3-5 business days to process your request.
+      </p>
 
+      <div className="faq-accordions">
+        {USER_FAQ.map((data) => {
+          return (
+            <Accordion
+              expanded={expanded === data.id}
+              onChange={handleChange(data.id)}
+            >
+              <AccordionSummary
+                aria-controls="panel1d-content"
+                id="panel1d-header"
+              >
+                <Typography>{data.title}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>{data.description}</Typography>
+              </AccordionDetails>
+            </Accordion>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
-export default SubscribeSuccess;
+export default SuccessPage;

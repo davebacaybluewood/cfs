@@ -24,8 +24,10 @@ import contractingRoutes from "./routes/contractingRoutes.js";
 import emailMarketingRoutes from "./routes/emailMarketingRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import subscriberAccountRoutes from "./routes/subscriberAccountRoutes.js";
+import subscriberRoutes from "./routes/subscriberRoutes.js";
 import leadsRoutes from "./routes/leadsRoutes.js";
 import emailSubscriberRoutes from "./routes/emailSubscriberRoutes.js";
+import backOfficeRoutes from "./routes/backOfficeRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
 import { ApolloServer, gql } from "apollo-server-express";
@@ -75,8 +77,10 @@ app.use("/api/contracting/", contractingRoutes);
 app.use("/api/email-marketing/", emailMarketingRoutes);
 app.use("/api/payment/", paymentRoutes);
 app.use("/api/subscriberaccounts/", subscriberAccountRoutes);
+app.use("/api/subscriber/", subscriberRoutes);
 app.use("/api/leads", leadsRoutes);
 app.use("/api/email-subscriber", emailSubscriberRoutes);
+app.use("/api/backOffice/", backOfficeRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

@@ -99,6 +99,14 @@ const AGENT_ROLES = [
     label: "Executive Vice President",
   },
 ];
+
+const SUBSCRIBER_ROLES = [
+  {
+    value: "ROLE_SUBSCRIBER",
+    label: "Subscriber",
+  },
+];
+
 const EDITOR_ROLES = [
   {
     value: "ROLE_EDITOR_BLOGS",
@@ -133,11 +141,18 @@ const PROFILE_POSITIONS = {
     value: "POSITION_CONTENT_CREATOR",
     label: "Content Creator",
   },
+  SUBSCRIBER: {
+    value: "POSITION_SUBSCRIBER",
+    label: "Subscriber",
+  },
   MASTER_ADMIN: {
     value: "POSITION_MASTER_ADMIN",
     label: "Master Admin",
   },
 };
+
+const DEFAULT_IMAGE =
+  "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps";
 
 export {
   CONTENT_CREATOR_ROLES,
@@ -145,4 +160,6 @@ export {
   AGENT_ROLES,
   POSITIONS,
   PROFILE_POSITIONS,
+  SUBSCRIBER_ROLES,
+  DEFAULT_IMAGE,
 };

@@ -63,14 +63,12 @@ const agentSchema = mongoose.Schema(
     },
     avatar: {
       type: String,
-      // required: true,
     },
     title: {
       type: String,
     },
     bio: {
       type: String,
-      required: true,
     },
     phoneNumber: {
       type: String,

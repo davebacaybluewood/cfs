@@ -3,10 +3,7 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import {
-  DataGrid,
-  GridColDef,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
@@ -47,14 +44,14 @@ const AgentSubscribers: React.FC = () => {
     { field: "email", headerName: "Email Address", width: 450 },
     { field: "createdAt", headerName: "Date Created", width: 250 },
   ];
-    
+
   useEffect(() => {
-    console.log(userGuid);    
+    console.log(userGuid);
 
     const fetchAgentSubscription = async () => {
       setLoading(true);
       const data = await agent.AgentSubscribers.getAgentSubscriber();
-      
+
       setSubscribers(data);
     };
 
@@ -62,8 +59,6 @@ const AgentSubscribers: React.FC = () => {
       fetchAgentSubscription();
       setLoading(false);
     }
-    console.log(subscribers);
-
   }, [userGuid]);
 
   const filteredRows = subscribers?.map((subscriber) => {
@@ -77,27 +72,26 @@ const AgentSubscribers: React.FC = () => {
   });
 
   function handleCopyToClipboard() {
-    setClipboardValue(window.location.hostname + paths.subscribeSubscriber + userGuid);
+    setClipboardValue(
+      window.location.hostname + paths.subscriberRegistration + userGuid
+    );
     toast("Link copied to Clipboard");
-  };
+  }
 
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <div className="agent-subscribers-container">
-        <Title title="Agent Subscribers" subtitle="List of Agent's Subscribers.">
-          <Button
-            onClick={() => handleCopyToClipboard() }
-            variant="contained"
-          >
+        <Title
+          title="Agent Subscribers"
+          subtitle="List of Agent's Subscribers."
+        >
+          <Button onClick={() => handleCopyToClipboard()} variant="contained">
             Subscribe Link
           </Button>
         </Title>
         <div className="agent-subscribers-table">
           <div style={{ width: "100%" }}>
-            <DataGrid
-              rows={filteredRows}
-              columns={columns}
-            />
+            <DataGrid rows={filteredRows} columns={columns} />
           </div>
         </div>
       </div>

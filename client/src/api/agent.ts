@@ -6,6 +6,7 @@ import {
   BlogPayload,
 } from "pages/BlogPage/models";
 import { SubscriptionsData } from "./models/Subscriptions";
+import { SubscriberRegisterData } from "./models/Subscriber";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -178,10 +179,63 @@ const Inquiry = {
   },
 };
 
+const Subscriber = {
+  emailConfirmation: async (
+    email: string,
+    password: string,
+    lastName: string,
+    firstName: string,
+    phoneNumber: string
+  ) => {
+    const endpoint = "/api/subscriber/subscribe-email";
+
+    try {
+      const res = await requests.post<SubscriberRegisterData>(endpoint, {
+        email,
+        password,
+        lastName,
+        firstName,
+        phoneNumber,
+      });
+
+      return res;
+    } catch (error) {
+      return false;
+    }
+  },
+
+  subscriberRegistration: async (
+    email: string,
+    password: string,
+    lastName: string,
+    firstName: string,
+    phoneNumber: string,
+    verificationCode: string
+  ) => {
+    const endpoint = "/api/subscriber/subscribe-code";
+
+    try {
+      const res = await requests.post<SubscriberRegisterData>(endpoint, {
+        email,
+        password,
+        lastName,
+        firstName,
+        phoneNumber,
+        verificationCode,
+      });
+
+      return res;
+    } catch (error) {
+      return false;
+    }
+  },
+};
+
 const agent = {
   BlogAndResource,
   Subscription,
   Inquiry,
+  Subscriber,
 };
 
 export default agent;

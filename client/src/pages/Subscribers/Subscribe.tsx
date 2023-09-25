@@ -2,34 +2,35 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import SubscribeAccountDetails from "./SubscribeAccountDetails";
 import Spinner from "library/Spinner/Spinner";
-import axios from "axios";
-import ENDPOINTS from "constants/endpoints";
 import { Alert } from "@mui/material";
-import SuccessPage from "./SubscribeSuccess";
 import { ValuesType } from "./models";
 import validationSchema from "./validationSchema";
-import "./Subscribe.scss";
 import classNames from "classnames";
-import { useNavigate } from "react-router-dom";
-import { paths } from "constants/routes";
+import { MAIN_IMAGES } from "constants/constants";
+import agent from "api/agent";
+import "./Subscribe.scss";
 
 interface SubscribeProps {
   isAdmin?: boolean;
 }
 const Subscribe: React.FC<SubscribeProps> = (props) => {
   const [stage, setStage] = useState(1);
-  const [error, setError] = useState(false);
+  const [invalid, setInvalid] = useState({
+    isInvalid: false,
+    text: "",
+  });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const [initialValues, setInitialValues] = useState<ValuesType>({
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const initialValues = {
     email: "",
     password: "",
     confirmPassword: "",
     lastName: "",
     firstName: "",
     phoneNumber: "",
-    confirmationUserCode: 0,
-  });
+    confirmationUserCode: "",
+  };
 
   return (
     <div className="portal-registration-container">
@@ -85,37 +86,60 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
         <Formik
           initialValues={initialValues}
           enableReinitialize
-          onSubmit={async (values: ValuesType) => {
+          onSubmit={async (data: ValuesType) => {
             setLoading(true);
-            try {
-              const config = {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
-              };
+            if (currentPage === 1) {
+              const req = await agent.Subscriber.emailConfirmation(
+                data.email,
+                data.password,
+                data.firstName,
+                data.lastName,
+                data.phoneNumber
+              );
 
-              setLoading(false);
-              setStage(6);
-
-              if (props.isAdmin) {
-                navigate(paths.users);
+              if (req) {
+                setLoading(false);
+                setCurrentPage(2);
+                setInvalid({
+                  text: "",
+                  isInvalid: false,
+                });
+              } else {
+                setLoading(false);
+                setInvalid({
+                  text: "Email Address already taken.",
+                  isInvalid: true,
+                });
               }
-            } catch (error) {
-              setLoading(false);
+            } else if (currentPage === 2) {
+              const req = await agent.Subscriber.subscriberRegistration(
+                data.email,
+                data.password,
+                data.firstName,
+                data.lastName,
+                data.phoneNumber,
+                data.confirmationUserCode
+              );
+
+              if (req) {
+                setLoading(false);
+                setCurrentPage(3);
+              } else {
+                setLoading(false);
+                setInvalid({
+                  text: "Invalid Verification Code",
+                  isInvalid: true,
+                });
+              }
             }
           }}
-          validationSchema={validationSchema}
+          validationSchema={
+            currentPage === 1
+              ? validationSchema.validationSchemaEmail
+              : validationSchema.validationSchemaCode
+          }
         >
-          {({
-            values,
-            setFieldValue,
-            touched,
-            errors,
-            handleSubmit,
-            isSubmitting,
-            setErrors,
-            setTouched,
-          }) => {
+          {({ values, errors, handleSubmit }) => {
             const subscribeAccountDetailsValidity =
               errors.confirmPassword ||
               errors.password ||
@@ -128,21 +152,45 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
             return (
               <div className="portal-form">
                 {loading ? <Spinner variant="fixed" /> : null}
-                <div className="form-header">
+                {currentPage !== 3 ? (
                   <React.Fragment>
-                    <h2>Subscriber Registration</h2>
-                  </React.Fragment>
+                    <div className="image-holder">
+                      <img
+                        src={MAIN_IMAGES.MAIN_LOGO}
+                        alt={MAIN_IMAGES.MAIN_LOGO}
+                        style={{
+                          width: 200,
+                          margin: "auto",
+                          display: "block",
+                          marginBottom: 40,
+                        }}
+                      />
+                    </div>
+                    <div className="form-header">
+                      <h2 style={{ fontFamily: "Montserrat" }}>
+                        Subscriber Registration
+                      </h2>
+                      <h2
+                        style={{
+                          fontWeight: "300",
+                          fontFamily: "Montserrat",
+                        }}
+                      >
+                        Signup to continue
+                      </h2>
 
-                  {error ? (
-                    <Alert
-                      variant="filled"
-                      severity="error"
-                      className="error-alert"
-                    >
-                      Email Address already taken.
-                    </Alert>
-                  ) : null}
-                </div>
+                      {invalid.isInvalid ? (
+                        <Alert
+                          variant="filled"
+                          severity="error"
+                          className="error-alert"
+                        >
+                          {invalid.text}
+                        </Alert>
+                      ) : null}
+                    </div>
+                  </React.Fragment>
+                ) : null}
 
                 <SubscribeAccountDetails
                   confirmPassword={values.confirmPassword}
@@ -153,7 +201,9 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                   password={values.password}
                   confirmationUserCode={values.confirmationUserCode}
                   isValid={subscribeAccountDetailsValidity}
-                  setFieldValue={setFieldValue}
+                  onSubmit={() => handleSubmit()}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
                 />
               </div>
             );
