@@ -43,22 +43,33 @@ User Story and Tasks
 
    1. Status is NEW and assign to Dev 
    2. Dev to update status to ACTIVE when he/she started the work 
+
         a. Dev to update the Task as well 
+
    3. Dev to update the completed time in Task daily 
+
         a. Close the Task once done. 
+
    4. Dev to close all Tasks once development is done 
+
         a. Status remains to ACTIVE 
+
    5. QA to update the status to In QA, QA Complete then Resolved 
 
 Bug and Tasks 
 
    1. Status is NEW and assign to Dev 
    2. Dev to update status to ACTIVE when he/she started the work 
+
         a. Dev to update the Task as well 
+
    3. Dev to update the completed time in Task daily 
+
         a. Close the Task once done. 
+
    4. Dev to close all Tasks once bug is fixed 
    5. If the fix has been verified in QA environment, Dev to assign the bug to Mark Louie Luna. marklouieluna@gocfs.pro. Assigning the bug to Louie is like telling the QA that is it ready for retest. 
+        
         a. Status remains to ACTIVE 
 
 ## Branch Naming Convention and Pull Request Procedures 
@@ -70,11 +81,16 @@ Bug and Tasks
 ### Pull Request Process 
 
    1. Dev to create a Pull Request in ADO once he/she is complete  and committed his/her changes. 
+
         a. PR Title Format: US or Bug <ID> : Title of User story or Bug 
         Ex: US 53256: Technical debt – Improve Unit Test Coverage 
+
         b. Mark Dave Bacay as required reviewer
+
         c. Link the Work Items – Input the user story or bug id 
+
         d. Then create/submit 
    2. Handoff the user story or bug to Dave or other leads before completing the PR. This is important to avoid bug and error.
-   3. PR can be set to Auto-Complete or manually complete the PR once approved and already handded off
+   3. PR can be set to Auto-Complete or manually complete the PR once approved and already handed off
+
         a. Resolve comments 
