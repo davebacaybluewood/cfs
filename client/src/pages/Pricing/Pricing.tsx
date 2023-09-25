@@ -11,10 +11,15 @@ import {
   IconButton,
   Grid,
   Typography,
+  Container,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import "./Pricing.scss";
+import Button from "library/Button/Button";
+import { useNavigate } from "react-router-dom";
+import { BsChevronDoubleRight } from "react-icons/bs";
+import { paths } from "constants/routes";
 
 const pricingUserData = {
   subscriber: {
@@ -128,85 +133,185 @@ const formatCategoryLabel = (label: string) => {
 };
 
 const Pricing: React.FC = () => {
+  const navigate = useNavigate();
   return (
-    <React.Fragment>
-      <div className="pricing">
-        <Banner
-          bigTitle="Pricing"
-          title="Explore our insurance plans and affordable pricing"
-          hasBorder={true}
-        />
-        <div>
-          <Grid container justifyContent="center" spacing={2}>
-            <Grid item xs={12} md={10} lg={8}>
-              <TableContainer component={Paper}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>
-                        <Typography variant="h4"></Typography>
-                      </TableCell>
-                      {userTypes.map((userType) => (
-                        <TableCell key={userType} align="center">
-                          <Typography variant="h4">
-                            {formatCategoryLabel(userType)}
-                          </Typography>
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {categories.map((mainCategory) => (
-                      <React.Fragment key={mainCategory}>
-                        <TableRow>
-                          <TableCell colSpan={userTypes.length + 1}>
-                            <div
-                              style={{ fontWeight: "bold", fontSize: "18px" }}
-                            >
-                              {formatCategoryLabel(mainCategory)}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                        {subcategories[mainCategory].map((subcategory) => (
-                          <TableRow key={subcategory}>
-                            <TableCell style={{ fontSize: "14px" }}>
-                              {formatCategoryLabel(subcategory)}
-                            </TableCell>
-                            {userTypes.map((userType) => (
-                              <TableCell key={userType} align="center">
-                                {pricingUserData[userType][mainCategory][
-                                  subcategory
-                                ] ? (
-                                  <IconButton color="primary" aria-label="True">
-                                    <CheckIcon />
-                                  </IconButton>
-                                ) : (
-                                  <IconButton color="error" aria-label="False">
-                                    <CloseIcon />
-                                  </IconButton>
-                                )}
-                              </TableCell>
-                            ))}
-                          </TableRow>
-                        ))}
-                      </React.Fragment>
-                    ))}
-                    <TableRow>
-                      <TableCell></TableCell>
-                      {userTypes.map((userType) => (
-                        <TableCell key={userType} align="center">
-                          <button className="portal-btn">Join</button>
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Grid>
-          </Grid>
+    <div className="pricing-wrapper">
+      <Banner
+        bigTitle="Pricing"
+        title="Explore our insurance plans and affordable pricing"
+        hasBorder={true}
+      />
+
+      <Container>
+        <div className="header">
+          <h1>
+            Pricing built <br />
+            for amazing agents.
+          </h1>
         </div>
-      </div>
-    </React.Fragment>
+        <Grid container spacing={2}>
+          <Grid item md={6}>
+            <div className="pricing-card pricing-card-light">
+              <Grid container spacing={2} alignItems="center">
+                <Grid item md={7}>
+                  <div className="card-captions">
+                    <h3>Subscriber</h3>
+                    <p>
+                      Access a complete payments platform with simple,
+                      pay-as-you-go pricing. No setup fees, monthly fees, or
+                      hidden fees.
+                    </p>
+                    <Button
+                      variant="danger"
+                      onClick={() => navigate(paths.subscriberRegistration)}
+                    >
+                      Get Started <BsChevronDoubleRight />
+                    </Button>
+                  </div>
+                </Grid>
+                <Grid item md={5} alignContent="center" textAlign="center">
+                  <div className="price">
+                    <h5>FREE</h5>
+                  </div>
+                </Grid>
+              </Grid>
+            </div>
+          </Grid>
+          <Grid item md={6}>
+            <div className="pricing-card pricing-card-dark">
+              <Grid container spacing={2} alignItems="center">
+                <Grid item md={7}>
+                  <div className="card-captions">
+                    <h3>Agents</h3>
+                    <p>
+                      Access a complete payments platform with simple,
+                      pay-as-you-go pricing. No setup fees, monthly fees, or
+                      hidden fees.
+                    </p>
+                    <Button
+                      variant="danger"
+                      onClick={() =>
+                        window.open(
+                          "https://agent.comfortfinancialsolutions.com/signup",
+                          "_blank"
+                        )
+                      }
+                    >
+                      Get Started <BsChevronDoubleRight />
+                    </Button>
+                  </div>
+                </Grid>
+                <Grid item md={5} alignContent="center" textAlign="center">
+                  <div className="price">
+                    <h5>$149.00</h5>
+                    <span>One time payment</span>
+                  </div>
+                </Grid>
+              </Grid>
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
+      <Container>
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item xs={12} md={10} lg={12}>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="h4"></Typography>
+                    </TableCell>
+                    {userTypes.map((userType) => (
+                      <TableCell key={userType} align="center">
+                        <Typography
+                          variant="h4"
+                          style={{ fontFamily: "Agrandir" }}
+                        >
+                          {formatCategoryLabel(userType)}
+                        </Typography>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {categories.map((mainCategory) => (
+                    <React.Fragment key={mainCategory}>
+                      <TableRow>
+                        <TableCell colSpan={userTypes.length + 1}>
+                          <div
+                            style={{
+                              fontWeight: "bold",
+                              fontSize: "18px",
+                              fontFamily: "Agrandir",
+                            }}
+                          >
+                            {formatCategoryLabel(mainCategory)}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                      {subcategories[mainCategory].map((subcategory) => (
+                        <TableRow key={subcategory}>
+                          <TableCell
+                            style={{ fontSize: "14px", background: "#f6f9fc" }}
+                          >
+                            <span
+                              style={{ fontFamily: `"Montserrat", sans-serif` }}
+                            >
+                              {formatCategoryLabel(subcategory)}
+                            </span>
+                          </TableCell>
+                          {userTypes.map((userType) => (
+                            <TableCell
+                              key={userType}
+                              align="center"
+                              style={{ background: "#f6f9fc" }}
+                            >
+                              {pricingUserData[userType][mainCategory][
+                                subcategory
+                              ] ? (
+                                <IconButton color="primary" aria-label="True">
+                                  <CheckIcon />
+                                </IconButton>
+                              ) : (
+                                <IconButton color="error" aria-label="False">
+                                  <CloseIcon />
+                                </IconButton>
+                              )}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                  <TableRow>
+                    <TableCell></TableCell>
+                    {userTypes.map((userType) => (
+                      <TableCell key={userType} align="center">
+                        <button
+                          className="portal-btn"
+                          onClick={() => {
+                            userType === "agent"
+                              ? window.open(
+                                  "https://agent.comfortfinancialsolutions.com/signup",
+                                  "_blank"
+                                )
+                              : navigate(paths.subscriberRegistration);
+                          }}
+                        >
+                          Join as {userType === "agent" ? "an" : "a"}{" "}
+                          <span>{userType}</span>
+                        </button>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Grid>
+      </Container>
+    </div>
   );
 };
 

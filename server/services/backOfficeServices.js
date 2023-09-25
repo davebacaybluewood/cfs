@@ -6,7 +6,7 @@ import loginOTP from "../emailTemplates/loginOTP.js";
 import User from "../models/userModel.js";
 import Agents from "../models/agentModel.js";
 import { v4 as uuid } from "uuid";
-import { AGENT_ROLES, POSITIONS } from "../constants/constants.js";
+import { AGENT_ROLES, PROFILE_POSITIONS } from "../constants/constants.js";
 import generateToken from "../utils/generateToken.js";
 
 const BACK_OFFICE_ENDPOINTS = {
@@ -149,6 +149,7 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
     });
 
     let token;
+    let response;
 
     if (!isEmailExist.length) {
       /** Login using CFS credentials */
@@ -170,7 +171,7 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
         email: agent.emailAddress,
         password: "Test",
         roles: [AGENT_ROLES[0]],
-        position: [POSITIONS[0]],
+        position: [PROFILE_POSITIONS.AGENT],
       };
 
       const profileInfo = {
@@ -180,7 +181,7 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
         emailAddress: agent.emailAddress,
         password: "Test",
         roles: [AGENT_ROLES[0]],
-        position: [POSITIONS[0]],
+        position: [PROFILE_POSITIONS.AGENT],
         status: "ACTIVATED",
         avatar: DEFAULT_IMAGE,
       };
@@ -190,14 +191,33 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
       await user.save();
       await profile.save();
 
-      token = generateToken(user._id);
+      token = generateToken(profile._id);
+
+      response = {
+        _id: profile._id,
+        name: profile.name,
+        userGuid: profile.userGuid,
+        email: profile.email,
+        token: token,
+        role: "ROLE_AGENT",
+      };
     } else {
       const user = await User.find({
-        emailAddress,
+        email: emailAddress,
       });
-      token = generateToken(user._id);
+      token = generateToken(user[0]._id);
+
+      response = {
+        _id: user[0]._id,
+        name: user[0].name,
+        userGuid: user[0].userGuid,
+        email: user[0].email,
+        token: token,
+        role: "ROLE_AGENT",
+      };
     }
-    return token;
+
+    return response;
   } else {
     return false;
   }

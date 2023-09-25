@@ -89,6 +89,12 @@ export const PROFILE_ROLES = {
       label: "Master Admin",
     },
   },
+  SUBSCRIBER: {
+    ROLE_SUBSRIBER: {
+      value: "ROLE_SUBSCRIBER",
+      label: "Subscriber",
+    },
+  },
 };
 const POSITIONS = [
   {
@@ -218,11 +224,17 @@ const USER_FAQ = [
   {
     title: "How can I login to the CFS Portal?",
     id: "panel3",
-    description: `You may access the login portal using this ${(
-      <a target="_blank" href="gocfs.pro/portal-login">
-        Link
-      </a>
-    )} or copy and paste gocfs.pro/portal-login into your browser.`,
+    description: (
+      <React.Fragment>
+        You may access the login portal using this{" "}
+        {
+          <a target="_blank" href={`${window.location.origin}/portal/login`}>
+            Link
+          </a>
+        }{" "}
+        or copy and paste gocfs.pro/portal-login into your browser.
+      </React.Fragment>
+    ),
   },
 ];
 

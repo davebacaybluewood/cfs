@@ -54,8 +54,8 @@ const paths = {
   adminEventInvites: "/portal/event-invites",
 
   /** Subscribe Page */
-  subscribeSubscriber: "/subscribe/",
-  subscribeSuccess: "/subscribe/success"
+  subscriberRegistration: "/subscribe/",
+  subscribeSuccess: "/subscribe/success",
 };
 
 export { paths };

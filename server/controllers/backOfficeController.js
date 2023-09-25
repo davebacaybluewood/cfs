@@ -18,7 +18,7 @@ const loginUsingCode = async (req, res, next) => {
     res.status(200).json({
       message: "Email Login Code Success",
       status: "SUCCESS",
-      token: loginResponse,
+      user: loginResponse,
     });
   } else {
     res.status(401).json({
@@ -45,7 +45,7 @@ const loginUsingEmail = async (req, res, next) => {
       agent: loginResponse,
     });
   } else {
-    res.status(500).json({
+    res.status(401).json({
       error: "invalid_request",
       description: "Unauthorized",
     });

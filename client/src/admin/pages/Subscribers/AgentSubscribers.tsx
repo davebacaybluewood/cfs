@@ -73,7 +73,7 @@ const AgentSubscribers: React.FC = () => {
 
   function handleCopyToClipboard() {
     setClipboardValue(
-      window.location.hostname + paths.subscribeSubscriber + userGuid
+      window.location.hostname + paths.subscriberRegistration + userGuid
     );
     toast("Link copied to Clipboard");
   }
