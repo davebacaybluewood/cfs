@@ -21,107 +21,107 @@ import { useNavigate } from "react-router-dom";
 import { BsChevronDoubleRight } from "react-icons/bs";
 import { paths } from "constants/routes";
 
-const pricingUserData = {
-  subscriber: {
-    mainFeatures: {
-      financeNewsAndUpdates: true,
-      articlesAndBlogs: true,
-      trainingAndWebinars: true,
-      onsiteNetworkingEvents: false,
-      awardsAndRecognition: false,
-      preLicensingAssistance: false,
-      postLicensingAssistance: false,
-    },
-    CFSToolsAndSystems: {
-      registrationAndAccountManagementDashboard: false,
-      personalWebpage: false,
-      appointmentSystem: false,
-    },
-    clientCareHub: {
-      CFSEmailEditor: false,
-      CFSLeadGenerationSystem: false,
-    },
-    CFSContentLibrary: {
-      socialMediaMaterials: false,
-      emailTemplate: false,
-    },
-    advanceTraining: {
-      corporateTraining: false,
-      systemsTraining: false,
-      productTraining: false,
-      marketingTraining: false,
-      salesTraining: false,
-      continueingClasses: false,
-    },
+const pricingUserData: { [key: string]: any } = {
+  "subscriber": {
+      "Main Features": {
+          "Finance News and Updates": true,
+          "Articles and Blogs": true,
+          "Training And Webinars": true,
+          "Onsite Networking Events": false,
+          "Awards And Recognition": false,
+          "Pre Licensing Assistance": false,
+          "Post Licensing Assistance": false
+      },
+      "CFS Tools And Systems": {
+          "Registration And Account Management Dashboard": false,
+          "Personal Webpage": false,
+          "Appointment System": false 
+      },
+      "Client Care Hub": {
+          "CFS Email Editor": false,
+          "CFS LeadGeneration System": false
+      },
+      "CFS Content Library": {
+          "Social Media Materials": false,
+          "Email Template": false
+      },
+      "Advance Training": {
+          "Corporate Training": false,
+          "Systems Training": false,
+          "Product Training": false,
+          "Marketing Training": false,
+          "Sales Training": false,
+          "Continueing Classes": false
+      }
   },
-  agent: {
-    mainFeatures: {
-      financeNewsAndUpdates: true,
-      articlesAndBlogs: true,
-      trainingAndWebinars: true,
-      onsiteNetworkingEvents: true,
-      awardsAndRecognition: true,
-      preLicensingAssistance: true,
-      postLicensingAssistance: true,
-    },
-    CFSToolsAndSystems: {
-      registrationAndAccountManagementDashboard: true,
-      personalWebpage: true,
-      appointmentSystem: true,
-    },
-    clientCareHub: {
-      CFSEmailEditor: true,
-      CFSLeadGenerationSystem: true,
-    },
-    CFSContentLibrary: {
-      socialMediaMaterials: false,
-      emailTemplate: false,
-    },
-    advanceTraining: {
-      corporateTraining: false,
-      systemsTraining: true,
-      productTraining: true,
-      marketingTraining: true,
-      salesTraining: true,
-      continueingClasses: false,
-    },
-  },
+  "agent": {
+      "Main Features": {
+          "Finance News and Updates": true,
+          "Articles and Blogs": true,
+          "Training And Webinars": true,
+          "Onsite Networking Events": true,
+          "Awards And Recognition": true,
+          "Pre Licensing Assistance": true,
+          "Post Licensing Assistance": true
+      },
+      "CFS Tools And Systems": {
+        "Registration And Account Management Dashboard": true,
+        "Personal Webpage": true,
+        "Appointment System": true 
+      },
+      "Client Care Hub": {
+        "CFS Email Editor": true,
+        "CFS LeadGeneration System": true
+      },
+      "CFS Content Library": {
+        "Social Media Materials": false,
+        "Email Template": false
+      },
+      "Advance Training": {
+        "Corporate Training": false,
+        "Systems Training": true,
+        "Product Training": true,
+        "Marketing Training": true,
+        "Sales Training": true,
+        "Continueing Classes": false
+      }
+  }
 };
 
 const categories: string[] = [
-  "mainFeatures",
-  "CFSToolsAndSystems",
-  "clientCareHub",
-  "CFSContentLibrary",
-  "advanceTraining",
+  "Main Features",
+  "CFS Tools And Systems",
+  "Client Care Hub",
+  "CFS Content Library",
+  "Advance Training",
 ];
 
 const userTypes: string[] = ["agent", "subscriber"];
 
 const subcategories: { [key: string]: string[] } = {
-  mainFeatures: [
-    "financeNewsAndUpdates",
-    "articlesAndBlogs",
-    "trainingAndWebinars",
-    "onsiteNetworkingEvents",
-    "awardsAndRecognition",
-    "preLicensingAssistance",
-    "postLicensingAssistance",
+  "Main Features": [
+    "Finance News and Updates",
+    "Articles and Blogs",
+    "Training and Webinars",
+    "Onsite Networking Events",
+    "Awards And Recognition",
+    "Pre Licensing Assistance",
+    "Post Licensing Assistance",
   ],
-  CFSToolsAndSystems: [
-    "registrationAndAccountManagementDashboard",
-    "personalWebpage",
-    "appointmentSystem",
+  "CFS Tools And Systems": [
+    "Registration And Account Management Dashboard",
+    "Personal Webpage",
+    "Appointment System",
   ],
-  clientCareHub: ["CFSEmailEditor", "CFSLeadGenerationSystem"],
-  CFSContentLibrary: ["socialMediaMaterials", "emailTemplate"],
-  advanceTraining: [
-    "corporateTraining",
-    "systemsTraining",
-    "productTraining",
-    "marketingTraining",
-    "salesTraining",
-    "continueingClasses",
+  "Client Care Hub": ["CFS Email Editor", "CFS Lead Generation System"],
+  "CFS Content Library": ["Social Media Materials", "Email Template"],
+  "Advance Training": [
+    "Corporate Training",
+    "Systems Training",
+    "Product Training",
+    "Marketing Training",
+    "Sales Training",
+    "Continuing Classes",
   ],
 };
 
@@ -228,7 +228,7 @@ const Pricing: React.FC = () => {
                           variant="h4"
                           style={{ fontFamily: "Agrandir" }}
                         >
-                          {formatCategoryLabel(userType)}
+                          {(userType)}
                         </Typography>
                       </TableCell>
                     ))}
@@ -246,7 +246,7 @@ const Pricing: React.FC = () => {
                               fontFamily: "Agrandir",
                             }}
                           >
-                            {formatCategoryLabel(mainCategory)}
+                            {(mainCategory)}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -258,7 +258,7 @@ const Pricing: React.FC = () => {
                             <span
                               style={{ fontFamily: `"Montserrat", sans-serif` }}
                             >
-                              {formatCategoryLabel(subcategory)}
+                              {(subcategory)}
                             </span>
                           </TableCell>
                           {userTypes.map((userType) => (
