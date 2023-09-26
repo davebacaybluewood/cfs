@@ -13,8 +13,10 @@
       font-weight: 700;
     }
   }
+
   .feature-main-container {
-    margin-top: -15.5rem;
+    margin-top: -22.5rem;
+
     .standard-card-container {
       height: 270px;
       align-items: center;
@@ -63,6 +65,7 @@
         }
       }
     }
+
     .navbar__business {
       .navbar {
         background: #0057b7;
@@ -84,8 +87,10 @@
     .standard-card-container {
       margin-top: 0;
     }
+
     .carousel-navigator-container {
       margin-top: -25rem;
+
       .carousel-navigator-btn {
         button {
           margin-top: -3rem !important;
@@ -98,6 +103,7 @@
         border: none;
         box-shadow: none;
       }
+
       .carousel-navigator {
         h2 {
           margin-bottom: 2rem;
@@ -107,6 +113,7 @@
         p {
           color: white;
         }
+
         button {
           width: 20% !important;
           margin-top: -3rem !important;
@@ -114,6 +121,11 @@
         }
       }
     }
+
+    .feature-main-container {
+      margin-top: -15.5rem;
+    }
+
   }
 }
 
