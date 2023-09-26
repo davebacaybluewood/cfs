@@ -22,7 +22,7 @@ import { BsChevronDoubleRight } from "react-icons/bs";
 import { paths } from "constants/routes";
 
 const pricingUserData: { [key: string]: any } = {
-  "subscriber": {
+  "Subscriber": {
       "Main Features": {
           "Finance News and Updates": true,
           "Articles and Blogs": true,
@@ -54,7 +54,7 @@ const pricingUserData: { [key: string]: any } = {
           "Continueing Classes": false
       }
   },
-  "agent": {
+  "Agent": {
       "Main Features": {
           "Finance News and Updates": true,
           "Articles and Blogs": true,
@@ -96,7 +96,7 @@ const categories: string[] = [
   "Advance Training",
 ];
 
-const userTypes: string[] = ["agent", "subscriber"];
+const userTypes: string[] = ["Agent", "Subscriber"];
 
 const subcategories: { [key: string]: string[] } = {
   "Main Features": [
