@@ -126,7 +126,8 @@
   .business__protection {
     .feature-main-container {
       .standard-card-container {
-        height: 20vh;
+        //height: fit-content;
+        border: none;
       }
     }
   }
