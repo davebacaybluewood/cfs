@@ -107,6 +107,9 @@
     }
 
     .price {
+      text-align: center;
+      align-items: center;
+      
       h5 {
         color: #fff;
       }
@@ -114,5 +117,11 @@
         color: #fff;
       }
     }
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .price {
+    width: 90vw;
   }
 }
