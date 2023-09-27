@@ -31,7 +31,7 @@ const getLeadByUserGuid = expressAsync(async (req, res) => {
       throw new Error("Error occured with merchandise.");
     }
   
-    const merchandise = await Merchandise.find({ id: id });
+    const merchandise = await Merchandise.find({ _id: id });
   
     if (merchandise) {
       res.json(merchandise);
