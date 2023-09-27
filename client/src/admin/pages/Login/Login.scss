@@ -230,6 +230,14 @@
       }
     }
   }
+
+  .right-col-login {
+    .MuiGrid-root {
+      width: 100% !important;
+      padding: 1rem 1rem;
+      margin-left: 0rem;
+    }
+  }
 }
 
 @media screen and (max-width: 375px) {
