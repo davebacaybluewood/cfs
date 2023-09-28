@@ -8,10 +8,10 @@ import expressAsync from "express-async-handler";
  */
 
 const getMerchandise = expressAsync(async (req, res) => {   
-    const merchandise = await Merchandise.find({});
+    const merchandises = await Merchandise.find({});
   
-    if (merchandise) {
-      res.json(merchandise);
+    if (merchandises.length) {
+      res.json(merchandises);
     } else {
       res.status(404);
       throw new Error("Error Getting Merchandise Information");
@@ -31,10 +31,10 @@ const getMerchandiseByUserGuid = expressAsync(async (req, res) => {
       throw new Error("Error occured with merchandise.");
     }
   
-    const merchandise = await Merchandise.find({ _id: id });
+    const merchandises = await Merchandise.find({ _id: id });
   
-    if (merchandise) {
-      res.json(merchandise);
+    if (merchandises.length) {
+      res.json(merchandises);
     } else {
       res.status(404);
       throw new Error("Error getting merchandise by id");
