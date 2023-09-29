@@ -24,7 +24,7 @@ const getMerchandise = expressAsync(async (req, res) => {
  * @acess: Private
  */
 
-const getMerchandiseByUserGuid = expressAsync(async (req, res) => {
+const getMerchandiseById = expressAsync(async (req, res) => {
     const  id  = req.params.id;
   
     if (!id) {
@@ -41,4 +41,4 @@ const getMerchandiseByUserGuid = expressAsync(async (req, res) => {
     }
   });
 
-  export { getMerchandise, getMerchandiseByUserGuid };
+  export { getMerchandise, getMerchandiseById };
