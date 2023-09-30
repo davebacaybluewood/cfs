@@ -63,6 +63,7 @@ const adminPaths = {
   mailLibrary: adminCfsRoute + "email-library",
   mailLibraryForm: adminCfsRoute + "email-library-form",
   agentsubscribers: adminCfsRoute + "agent-subscribers",
+  merchandises: adminCfsRoute + "merchandises",
 } as const;
 
 export default adminPaths;
