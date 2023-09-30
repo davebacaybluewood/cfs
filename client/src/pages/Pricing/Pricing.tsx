@@ -12,6 +12,8 @@ import {
   Grid,
   Typography,
   Container,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
@@ -22,70 +24,70 @@ import { BsChevronDoubleRight } from "react-icons/bs";
 import { paths } from "constants/routes";
 
 const pricingUserData: { [key: string]: any } = {
-  "Subscriber": {
-      "Main Features": {
-          "Finance News and Updates": true,
-          "Articles and Blogs": true,
-          "Training And Webinars": true,
-          "Onsite Networking Events": false,
-          "Awards And Recognition": false,
-          "Pre Licensing Assistance": false,
-          "Post Licensing Assistance": false
-      },
-      "CFS Tools And Systems": {
-          "Registration And Account Management Dashboard": false,
-          "Personal Webpage": false,
-          "Appointment System": false 
-      },
-      "Client Care Hub": {
-          "CFS Email Editor": false,
-          "CFS LeadGeneration System": false
-      },
-      "CFS Content Library": {
-          "Social Media Materials": false,
-          "Email Template": false
-      },
-      "Advance Training": {
-          "Corporate Training": false,
-          "Systems Training": false,
-          "Product Training": false,
-          "Marketing Training": false,
-          "Sales Training": false,
-          "Continueing Classes": false
-      }
+  Subscriber: {
+    "Main Features": {
+      "Finance News and Updates": true,
+      "Articles and Blogs": true,
+      "Training And Webinars": true,
+      "Onsite Networking Events": false,
+      "Awards And Recognition": false,
+      "Pre Licensing Assistance": false,
+      "Post Licensing Assistance": false,
+    },
+    "CFS Tools And Systems": {
+      "Registration And Account Management Dashboard": false,
+      "Personal Webpage": false,
+      "Appointment System": false,
+    },
+    "Client Care Hub": {
+      "CFS Email Editor": false,
+      "CFS LeadGeneration System": false,
+    },
+    "CFS Content Library": {
+      "Social Media Materials": false,
+      "Email Template": false,
+    },
+    "Advance Training": {
+      "Corporate Training": false,
+      "Systems Training": false,
+      "Product Training": false,
+      "Marketing Training": false,
+      "Sales Training": false,
+      "Continueing Classes": false,
+    },
   },
-  "Agent": {
-      "Main Features": {
-          "Finance News and Updates": true,
-          "Articles and Blogs": true,
-          "Training And Webinars": true,
-          "Onsite Networking Events": true,
-          "Awards And Recognition": true,
-          "Pre Licensing Assistance": true,
-          "Post Licensing Assistance": true
-      },
-      "CFS Tools And Systems": {
-        "Registration And Account Management Dashboard": true,
-        "Personal Webpage": true,
-        "Appointment System": true 
-      },
-      "Client Care Hub": {
-        "CFS Email Editor": true,
-        "CFS LeadGeneration System": true
-      },
-      "CFS Content Library": {
-        "Social Media Materials": false,
-        "Email Template": false
-      },
-      "Advance Training": {
-        "Corporate Training": false,
-        "Systems Training": true,
-        "Product Training": true,
-        "Marketing Training": true,
-        "Sales Training": true,
-        "Continueing Classes": false
-      }
-  }
+  Agent: {
+    "Main Features": {
+      "Finance News and Updates": true,
+      "Articles and Blogs": true,
+      "Training And Webinars": true,
+      "Onsite Networking Events": true,
+      "Awards And Recognition": true,
+      "Pre Licensing Assistance": true,
+      "Post Licensing Assistance": true,
+    },
+    "CFS Tools And Systems": {
+      "Registration And Account Management Dashboard": true,
+      "Personal Webpage": true,
+      "Appointment System": true,
+    },
+    "Client Care Hub": {
+      "CFS Email Editor": true,
+      "CFS LeadGeneration System": true,
+    },
+    "CFS Content Library": {
+      "Social Media Materials": false,
+      "Email Template": false,
+    },
+    "Advance Training": {
+      "Corporate Training": false,
+      "Systems Training": true,
+      "Product Training": true,
+      "Marketing Training": true,
+      "Sales Training": true,
+      "Continuing Classes": false,
+    },
+  },
 };
 
 const categories: string[] = [
@@ -125,15 +127,9 @@ const subcategories: { [key: string]: string[] } = {
   ],
 };
 
-const formatCategoryLabel = (label: string) => {
-  return label
-    .split(/(?=[A-Z])/)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-};
-
 const Pricing: React.FC = () => {
   const navigate = useNavigate();
+
   return (
     <div className="pricing-wrapper">
       <Banner
@@ -141,7 +137,6 @@ const Pricing: React.FC = () => {
         title="Explore our insurance plans and affordable pricing"
         hasBorder={true}
       />
-
       <Container>
         <div className="header">
           <h1>
@@ -214,7 +209,109 @@ const Pricing: React.FC = () => {
       </Container>
       <Container>
         <Grid container justifyContent="center" spacing={2}>
-          <Grid item xs={12} md={10} lg={12}>
+          {window.innerWidth >= 768 ? (
+            <Grid item md={10} lg={12}>
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <Typography variant="h4"></Typography>
+                      </TableCell>
+                      {userTypes.map((userType) => (
+                        <TableCell key={userType} align="center">
+                          <Typography
+                            variant="h4"
+                            style={{ fontFamily: "Agrandir" }}
+                          >
+                            {userType}
+                          </Typography>
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {categories.map((mainCategory) => (
+                      <React.Fragment key={mainCategory}>
+                        <TableRow>
+                          <TableCell colSpan={userTypes.length + 1}>
+                            <div
+                              style={{
+                                fontWeight: "bold",
+                                fontSize: "18px",
+                                fontFamily: "Agrandir",
+                              }}
+                            >
+                              {mainCategory}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                        {subcategories[mainCategory].map((subcategory) => (
+                          <TableRow key={subcategory}>
+                            <TableCell
+                              style={{
+                                fontSize: "14px",
+                                background: "#f6f9fc",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  fontFamily: `"Montserrat", sans-serif`,
+                                }}
+                              >
+                                {subcategory}
+                              </span>
+                            </TableCell>
+                            {userTypes.map((userType) => (
+                              <TableCell
+                                key={userType}
+                                align="center"
+                                style={{ background: "#f6f9fc" }}
+                              >
+                                {pricingUserData[userType][mainCategory][
+                                  subcategory
+                                ] ? (
+                                  <IconButton color="primary" aria-label="True">
+                                    <CheckIcon />
+                                  </IconButton>
+                                ) : (
+                                  <IconButton color="error" aria-label="False">
+                                    <CloseIcon />
+                                  </IconButton>
+                                )}
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))}
+                      </React.Fragment>
+                    ))}
+                    <TableRow>
+                      <TableCell></TableCell>
+                      {userTypes.map((userType) => (
+                        <TableCell key={userType} align="center">
+                          <button
+                            className="portal-btn"
+                            onClick={() => {
+                              userType === "Agent"
+                                ? window.open(
+                                    "https://agent.comfortfinancialsolutions.com/signup",
+                                    "_blank"
+                                  )
+                                : navigate(paths.subscriberRegistration);
+                            }}
+                          >
+                            Join as {userType === "Agent" ? "an" : "a"}{" "}
+                            <span>{userType}</span>
+                          </button>
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          ) : (
+            <Grid item xs={12} md={10} lg={12}>
             <TableContainer component={Paper}>
               <Table>
                 <TableHead>
@@ -226,9 +323,9 @@ const Pricing: React.FC = () => {
                       <TableCell key={userType} align="center">
                         <Typography
                           variant="h4"
-                          style={{ fontFamily: "Agrandir" }}
+                          style={{ fontFamily: "Agrandir", fontSize: "1.2rem" }}
                         >
-                          {(userType)}
+                          {userType}
                         </Typography>
                       </TableCell>
                     ))}
@@ -242,23 +339,23 @@ const Pricing: React.FC = () => {
                           <div
                             style={{
                               fontWeight: "bold",
-                              fontSize: "18px",
                               fontFamily: "Agrandir",
+                              fontSize: "1.2rem",
                             }}
                           >
-                            {(mainCategory)}
+                            {mainCategory}
                           </div>
                         </TableCell>
                       </TableRow>
                       {subcategories[mainCategory].map((subcategory) => (
                         <TableRow key={subcategory}>
                           <TableCell
-                            style={{ fontSize: "14px", background: "#f6f9fc" }}
+                            style={{ background: "#f6f9fc", fontSize: "1rem" }}
                           >
                             <span
                               style={{ fontFamily: `"Montserrat", sans-serif` }}
                             >
-                              {(subcategory)}
+                              {subcategory}
                             </span>
                           </TableCell>
                           {userTypes.map((userType) => (
@@ -287,20 +384,20 @@ const Pricing: React.FC = () => {
                   <TableRow>
                     <TableCell></TableCell>
                     {userTypes.map((userType) => (
-                      <TableCell key={userType} align="center">
+                      <TableCell key={userType}>
                         <button
                           className="portal-btn"
                           onClick={() => {
-                            userType === "agent"
+                            userType === "Agent"
                               ? window.open(
                                   "https://agent.comfortfinancialsolutions.com/signup",
                                   "_blank"
                                 )
                               : navigate(paths.subscriberRegistration);
                           }}
+                          style={{ fontSize: "1rem", minWidth: "94px"}}
                         >
-                          Join as {userType === "agent" ? "an" : "a"}{" "}
-                          <span>{userType}</span>
+                          Join as {" "}{userType}                          
                         </button>
                       </TableCell>
                     ))}
@@ -309,6 +406,7 @@ const Pricing: React.FC = () => {
               </Table>
             </TableContainer>
           </Grid>
+          )}
         </Grid>
       </Container>
     </div>
