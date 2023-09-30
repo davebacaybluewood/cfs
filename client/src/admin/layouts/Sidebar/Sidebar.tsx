@@ -65,8 +65,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     return f.value === PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value;
   });
 
-  console.log(isSubscriber);
-
   const profileName = profile?.name
     ? profile?.name
     : `${profile?.firstName} ${profile?.lastName}`;
