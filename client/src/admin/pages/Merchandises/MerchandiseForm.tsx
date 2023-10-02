@@ -232,8 +232,8 @@ const MerchandiseForm: React.FC = () => {
                       {action === "edit" ? "Edit" : "Save"} Merchandise
                     </Button>
                   </div>
-                  <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre>
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}

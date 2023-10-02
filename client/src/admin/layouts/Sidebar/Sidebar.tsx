@@ -204,9 +204,10 @@ const Sidebar: React.FC<SidebarProps> = ({
               className="sidebar-btn"
               href="https://agent.comfortfinancialsolutions.com/signup"
               target="_blank"
+              style={{ fontSize: 16 }}
             >
               <FaGlobe />
-              <span>Upgrade to Agent</span>
+              <span style={{ fontSize: 14 }}>Upgrade to Agent</span>
             </a>
           </div>
         ) : (
