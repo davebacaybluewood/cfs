@@ -9,7 +9,6 @@ const Solution: React.FC = () => {
       <div className='section__title'>
         <Typography variant='h2'>Here's Why Families Choose Us</Typography>
       </div>
-      {/* test */}
       <div className='solution__card__container'>
         <Grid container spacing={2} justifyContent='space-between'>
           <Grid item xs={12} sm={12} md={2} lg={2}>
