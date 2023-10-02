@@ -30,6 +30,9 @@ import {
   FaRegAddressCard,
   FaFileContract,
   FaBookmark,
+  FaCube,
+  FaHistory,
+  FaMailBulk,
 } from "react-icons/fa";
 import { MdEmail, MdLibraryBooks } from "react-icons/md";
 
@@ -87,6 +90,7 @@ const useSidebarLinks = (
         PROFILE_ROLES.EDITOR_ROLES.ROLE_EDITOR_BLOGS.value,
         PROFILE_ROLES.EDITOR_ROLES.ROLE_EDITOR_EMAIL_TEMPLATES.value,
         PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+        PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value,
       ],
     },
     {
@@ -209,7 +213,7 @@ const useSidebarLinks = (
     {
       linkText: "Subscribers",
       link: paths.agentsubscribers,
-      isActive: currentPage === adminPathsNew.users.split("/")[2],
+      isActive: currentPage === adminPathsNew.agentsubscribers.split("/")[2],
       icon: <FaBookmark />,
       role: [
         PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
@@ -232,7 +236,7 @@ const useSidebarLinks = (
       linkText: "Merchandises",
       link: paths.merchandises,
       isActive: currentPage === adminPathsNew.merchandises.split("/")[2],
-      icon: <FaBookmark />,
+      icon: <FaCube />,
       role: [
         PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
         PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
@@ -250,6 +254,20 @@ const useSidebarLinks = (
         PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
         PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value,
       ],
+    },
+    {
+      linkText: "Shareable Emails",
+      link: paths.shareableEmails,
+      isActive: currentPage === adminPathsNew.shareableEmails.split("/")[2],
+      icon: <FaMailBulk />,
+      role: [PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value],
+    },
+    {
+      linkText: "Rewards History",
+      link: paths.rewardsHistory,
+      isActive: currentPage === adminPathsNew.rewardsHistory.split("/")[2],
+      icon: <FaHistory />,
+      role: [PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value],
     },
     {
       linkText: "Calendars",

@@ -23,7 +23,8 @@ import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import nameFallback from "helpers/nameFallback";
 import { formatISODateOnly } from "helpers/date";
 import { AiFillCheckCircle } from "react-icons/ai";
-import EmailEditor, { EditorRef } from "react-email-editor";
+import EmailEditor from "react-email-editor";
+import ReactHtmlParser from "html-react-parser";
 
 export const emailOptions = [
   { value: "dave.bacay.vc@gmail.com", label: "dave.bacay.vc@gmail.com" },
@@ -58,6 +59,7 @@ const ContractForm: React.FC = () => {
   const userCtx = useContext(UserContext) as any;
   const search = useLocation().search;
   const templateId = new URLSearchParams(search).get("templateId");
+  const action = new URLSearchParams(search).get("action");
   const userGuid = userCtx?.user?.userGuid;
 
   const populateForm = (emailBody: string, subject: string, design: string) => {
@@ -223,19 +225,43 @@ const ContractForm: React.FC = () => {
             initialValues={initialValues}
             enableReinitialize
             onSubmit={async (data, actions) => {
-              const unlayer = emailEditorRef.current?.editor;
-
               const finalData: any = {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
               };
               setLoading(true);
 
-              unlayer?.exportHtml(async (htmlData) => {
-                const { design: updatedDesign, html } = htmlData;
+              if (action !== "view") {
+                const unlayer = emailEditorRef.current?.editor;
+                unlayer?.exportHtml(async (htmlData) => {
+                  const { design: updatedDesign, html } = htmlData;
 
-                finalData.design = updatedDesign;
-                finalData.emailBody = html;
+                  finalData.design = updatedDesign;
+                  finalData.emailBody = html;
+
+                  const response = await agent.EmailMarketing.sendEmail(
+                    finalData
+                  );
+
+                  if (response) {
+                    setLoading(false);
+                    toast.info(`Email has been submitted.`, {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                    });
+                  } else {
+                    setLoading(false);
+                  }
+                });
+              } else {
+                finalData.design = design;
+                finalData.emailBody = initialValues.emailBody;
 
                 const response = await agent.EmailMarketing.sendEmail(
                   finalData
@@ -256,18 +282,11 @@ const ContractForm: React.FC = () => {
                 } else {
                   setLoading(false);
                 }
-              });
+              }
             }}
             validationSchema={validationSchema}
           >
-            {({
-              values,
-              errors,
-              handleSubmit,
-              setFieldValue,
-              touched,
-              setTouched,
-            }) => {
+            {({ values, handleSubmit, setFieldValue, touched, setTouched }) => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -342,59 +361,72 @@ const ContractForm: React.FC = () => {
                       lg={12}
                       className="form-card-container"
                     >
-                      <label>Email Body (Required)</label>
-                      <EmailEditor
-                        ref={emailEditorRef}
-                        style={{
-                          height: "500px",
-                        }}
-                      />
+                      {action !== "view" ? (
+                        <React.Fragment>
+                          <label>Email Body (Required)</label>
+
+                          <EmailEditor
+                            ref={emailEditorRef}
+                            style={{
+                              height: "500px",
+                            }}
+                          />
+                        </React.Fragment>
+                      ) : (
+                        ReactHtmlParser(initialValues.emailBody)
+                      )}
                     </Grid>
                   </Grid>
                   <div className="form-actions">
-                    <div className="template-library-btn">
-                      <button onClick={() => setOpenDrawer(true)}>
-                        Template Library
-                      </button>
-                    </div>
+                    {action !== "view" ? (
+                      <div className="template-library-btn">
+                        <button onClick={() => setOpenDrawer(true)}>
+                          Template Library
+                        </button>
+                      </div>
+                    ) : null}
                     <div className="actions">
-                      <Button
-                        variant="default"
-                        onClick={async () =>
-                          saveTemplateHandler({
-                            templateName: values.subject,
-                            templateBody: values.emailBody,
-                            templateStatus: "DRAFT",
-                            isAddedByMarketing: true,
-                            subject: values.subject,
-                            design: JSON.stringify(design),
-                          })
-                        }
-                      >
-                        Save as draft
-                      </Button>
-                      <Button
-                        variant="default"
-                        onClick={async () =>
-                          saveTemplateHandler({
-                            templateName: values.subject,
-                            templateBody: values.emailBody,
-                            templateStatus: "ACTIVATED",
-                            isAddedByMarketing: true,
-                            subject: values.subject,
-                            design: JSON.stringify(design),
-                          })
-                        }
-                      >
-                        Save as template
-                      </Button>
+                      {action !== "view" ? (
+                        <React.Fragment>
+                          <Button
+                            variant="default"
+                            onClick={async () =>
+                              saveTemplateHandler({
+                                templateName: values.subject,
+                                templateBody: values.emailBody,
+                                templateStatus: "DRAFT",
+                                isAddedByMarketing: true,
+                                subject: values.subject,
+                                design: JSON.stringify(design),
+                              })
+                            }
+                          >
+                            Save as draft
+                          </Button>
+                          <Button
+                            variant="default"
+                            onClick={async () =>
+                              saveTemplateHandler({
+                                templateName: values.subject,
+                                templateBody: values.emailBody,
+                                templateStatus: "ACTIVATED",
+                                isAddedByMarketing: true,
+                                subject: values.subject,
+                                design: JSON.stringify(design),
+                              })
+                            }
+                          >
+                            Save as template
+                          </Button>
+                        </React.Fragment>
+                      ) : null}
                       <Button variant="danger" onClick={() => handleSubmit()}>
                         Send
                       </Button>
                     </div>
                   </div>
-                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+                  {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}

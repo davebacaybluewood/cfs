@@ -5,7 +5,7 @@ import BlogCard from "library/Blogs/BlogCard/BlogCard";
 import { paths } from "constants/routes";
 import UserDetails from "library/UserDetail/UserDetails";
 import ReactHtmlParser from "html-react-parser";
-import { formatISODateOnly, formatISODateToDate } from "helpers/date";
+import { formatISODateOnly } from "helpers/date";
 import useScroll from "hooks/useScroll";
 import { BlogData } from "pages/BlogPage/models";
 import agent from "api/agent";

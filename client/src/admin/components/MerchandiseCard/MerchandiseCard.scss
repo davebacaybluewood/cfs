@@ -1,0 +1,44 @@
+.merchandise-card {
+  background-color: #fff;
+  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+  border: 1px solid #eee;
+  border-radius: 9px;
+
+  .merchandise-image {
+    padding: 2rem;
+    img {
+      width: 100%;
+      border-radius: 9px;
+    }
+  }
+
+  .merchandise-captions {
+    background-color: #e2e0e1;
+    padding: 1rem;
+
+    h2 {
+      font-weight: 700;
+      font-family: "Montserrat", sans-serif;
+      margin-bottom: 0.1rem;
+    }
+    p {
+      font-size: 1.2rem;
+      font-weight: 400;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .claim-btn {
+      background-color: #0057b8;
+      width: 100%;
+      text-align: center;
+      margin-top: 1rem;
+      color: #fff;
+      padding: 1rem 0;
+      border-radius: 20px;
+
+      &:hover {
+        background-color: rgba(0, 87, 184, 0.8);
+      }
+    }
+  }
+}

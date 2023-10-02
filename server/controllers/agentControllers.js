@@ -180,7 +180,11 @@ const getSingleAgent = expressAsync(async (req, res) => {
 // @access  Private/Admin
 const deleteAgent = expressAsync(async (req, res) => {
   const agent = await Agents.deleteOne({
-    _id: req.params.id,
+    userGuid: req.params.id,
+  });
+
+  await User.deleteOne({
+    userGuid: req.params.id,
   });
 
   if (agent) {

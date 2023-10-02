@@ -53,6 +53,8 @@ import MailLibraryForm from "admin/pages/MailingLibrary/MailLibraryForm";
 import MailingLibrary from "admin/pages/MailingLibrary/MailingLibrary";
 import AgentSubscribers from "admin/pages/Subscribers/AgentSubscribers";
 import Merchandises from "admin/pages/Merchandises/Merchandises";
+import MerchandiseForm from "admin/pages/Merchandises/MerchandiseForm";
+import ShareableEmails from "admin/pages/ShareableEmails/ShareableEmails";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -562,14 +564,6 @@ export const adminRoutes = [
       </GuardedWrapper>
     ),
   },
-  // {
-  //   path: adminPathsNew.commissionSimulation,
-  //   element: (
-  //     <GuardedWrapper>
-  //       <CommissionSimulation />
-  //     </GuardedWrapper>
-  //   ),
-  // },
   {
     path: adminPathsNew.mailingList,
     element: (
@@ -607,6 +601,22 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <Merchandises />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.merchandiseForm,
+    element: (
+      <GuardedWrapper>
+        <MerchandiseForm />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.shareableEmails,
+    element: (
+      <GuardedWrapper>
+        <ShareableEmails />
       </GuardedWrapper>
     ),
   },

@@ -37,7 +37,7 @@ const BlogCard: React.FC<BlogType> = (props) => {
         </div>
       </div>
       <UserDetails
-        authorName={props.author.authorName}
+        authorName="CFS Editor"
         image={props.author.image ? props.author.image : ""}
       />
     </div>

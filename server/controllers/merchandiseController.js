@@ -1,5 +1,6 @@
 import Merchandise from "../models/merchandiseModel.js";
 import expressAsync from "express-async-handler";
+import cloudinary from "../utils/cloudinary.js";
 
 function isFieldEmpty(field) {
   return field === undefined || field === null || field === "";
@@ -11,15 +12,10 @@ function isFieldEmpty(field) {
  * @access: Private
  */
 const createMerchandise = expressAsync(async (req, res) => {
-  const { name, points, image, status } = req.body;
+  const { name, points } = req.body;
 
   // Check if any of the required fields are empty
-  if (
-    isFieldEmpty(name) ||
-    isFieldEmpty(points) ||
-    isFieldEmpty(image) ||
-    isFieldEmpty(status)
-  ) {
+  if (isFieldEmpty(name) || isFieldEmpty(points)) {
     res.status(400).json({
       error: "required_validation",
       message: "Fields are required.",
@@ -27,16 +23,30 @@ const createMerchandise = expressAsync(async (req, res) => {
     return;
   }
 
-  const newMerchandise = new Merchandise({
-    name,
-    points,
-    image,
-    status,
-  });
+  /** Upload avatar to cloudinary */
+  let profileImgResult;
+  try {
+    profileImgResult = await cloudinary.v2.uploader.upload(req.file?.path, {
+      folder: "merchandises",
+      use_filename: true,
+    });
+  } catch (error) {
+    throw new Error("Error occured in adding merchandise.");
+  }
 
-  const createdMerchandise = await newMerchandise.save();
+  try {
+    const newMerchandise = new Merchandise({
+      name,
+      points,
+      image: profileImgResult.secure_url,
+      status: "ACTIVATED",
+    });
 
-  res.status(201).json(createdMerchandise);
+    const createdMerchandise = await newMerchandise.save();
+    res.status(201).json(createdMerchandise);
+  } catch (error) {
+    throw new Error("Error occured in adding merchandise.");
+  }
 });
 
 /**
@@ -60,7 +70,7 @@ const deleteMerchandise = expressAsync(async (req, res) => {
 
   if (merchandise) {
     await merchandise.remove();
-    res.json({ message: "Merchandise deleted" });
+    res.json({ message: "Merchandise deleted", success: true });
   } else {
     res.status(404);
     throw new Error("Merchandise not found");
@@ -76,12 +86,7 @@ const deleteMerchandise = expressAsync(async (req, res) => {
 const getMerchandise = expressAsync(async (req, res) => {
   const merchandises = await Merchandise.find({});
 
-  if (merchandises.length) {
-    res.json(merchandises);
-  } else {
-    res.status(404);
-    throw new Error("Error Getting Merchandise Information");
-  }
+  res.json(merchandises);
 });
 
 /**
@@ -94,16 +99,15 @@ const getMerchandiseById = expressAsync(async (req, res) => {
   const id = req.params.id;
 
   if (!id) {
-    throw new Error("Error occured with merchandise.");
+    throw new Error("Invalid Params.");
   }
 
   const merchandises = await Merchandise.find({ _id: id });
 
   if (merchandises.length) {
-    res.json(merchandises);
+    res.json(merchandises[0]);
   } else {
-    res.status(404);
-    throw new Error("Error getting merchandise by id");
+    throw new Error("No merchandise found.");
   }
 });
 
@@ -114,15 +118,10 @@ const getMerchandiseById = expressAsync(async (req, res) => {
  */
 const updateMerchandiseDetails = expressAsync(async (req, res) => {
   const merchandiseId = req.params.id;
-  const { name, points, image, status } = req.body;
+  const { name, points, image } = req.body;
 
   // Check if any of the required fields are empty
-  if (
-    isFieldEmpty(name) ||
-    isFieldEmpty(points) ||
-    isFieldEmpty(image) ||
-    isFieldEmpty(status)
-  ) {
+  if (!name || !points) {
     res.status(400).json({
       error: "required_validation",
       message: "Fields are required.",
@@ -132,11 +131,26 @@ const updateMerchandiseDetails = expressAsync(async (req, res) => {
 
   const merchandise = await Merchandise.findById(merchandiseId);
 
+  /** Upload avatar to cloudinary */
+  let merchandiseImage;
+  try {
+    merchandiseImage = await cloudinary.v2.uploader.upload(req.file?.path, {
+      folder: "merchandises",
+      use_filename: true,
+    });
+  } catch (error) {
+    merchandiseImage = image || "";
+  }
+
   if (merchandise) {
     merchandise.name = name;
     merchandise.points = points;
-    merchandise.image = image;
-    merchandise.status = status;
+    merchandise.image =
+      typeof req.body.image === "string"
+        ? req.body.image
+        : merchandiseImage.secure_url
+        ? merchandiseImage.secure_url
+        : merchandise.image;
 
     const updatedMerchandise = await merchandise.save();
     res.json(updatedMerchandise);
@@ -159,7 +173,7 @@ const updateMerchandiseStatus = expressAsync(async (req, res) => {
   if (isFieldEmpty(status)) {
     res.status(400).json({
       error: "required_validation",
-      message: "Status is required."
+      message: "Status is required.",
     });
     return;
   }

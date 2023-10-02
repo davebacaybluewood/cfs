@@ -36,12 +36,14 @@ import { toast } from "react-toastify";
 import Spinner from "library/Spinner/Spinner";
 import FormikTextInput from "library/Formik/FormikInput";
 import { Formik } from "formik";
+import agent from "admin/api/agent";
 
 interface ActionButtonsProps {
   userGuid: string;
   status: string;
   isAgent: boolean;
   id: string;
+  setProfiles: React.Dispatch<React.SetStateAction<ProfileData[] | undefined>>;
 }
 const crumbs: CrumbTypes[] = [
   {
@@ -61,6 +63,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [confirmationDialog, setConfirmationDialog] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [activeId, setActiveId] = useState("");
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,6 +71,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const initialValues = {
     personalWebPage: "",
     displayCalendly: true,
@@ -85,7 +89,25 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
       ? "Deactivate"
       : dialogStatus === AgentStatuses.DECLINED
       ? "Decline"
+      : dialogStatus === AgentStatuses.DELETE
+      ? "Delete"
       : "";
+
+  const handleDelete = async (id: string) => {
+    setLoading(true);
+    setConfirmationDialog(true);
+    setDialogStatus(AgentStatuses.DELETE);
+    const res = await agent.Agents.deleteAgent(id);
+
+    if (res) {
+      setConfirmationDialog(false);
+      setLoading(false);
+      setDialogStatus(AgentStatuses.ACTIVATED);
+      props.setProfiles((prevState) =>
+        prevState?.filter((data) => data.userGuid !== activeId)
+      );
+    }
+  };
 
   const statusHandler = (agentId: string) => {
     const status =
@@ -185,6 +207,16 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
         <MenuItem onClick={handleClose} disabled={props.status === "ACTIVATED"}>
           Decline
         </MenuItem>
+        <MenuItem
+          onClick={() => {
+            setDialogStatus(AgentStatuses.DELETE);
+            setConfirmationDialog(true);
+            setActiveId(props.userGuid);
+          }}
+          // disabled={props.status === "ACTIVATED"}
+        >
+          Delete
+        </MenuItem>
       </Menu>
       <Dialog
         open={confirmationDialog}
@@ -192,8 +224,9 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
       >
         <DialogContent>
           <DialogContentText fontSize={15}>
-            Are you sure you want to {dialogMessageStatus.toLowerCase()} the
-            status of this profile?
+            Are you sure you want to {dialogMessageStatus.toLowerCase()}{" "}
+            {dialogStatus === AgentStatuses.DELETE ? "" : `the status of `}
+            this profile?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -204,7 +237,11 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
             No
           </Button>
           <Button
-            onClick={() => statusHandler(props.userGuid)}
+            onClick={() =>
+              dialogStatus === AgentStatuses.DELETE
+                ? handleDelete(activeId)
+                : statusHandler(props.userGuid)
+            }
             autoFocus
             style={{ fontSize: "13px" }}
           >
@@ -446,6 +483,7 @@ const Users: React.FC = () => {
             status={data?.status}
             isAgent={isAgent}
             id={data?._id}
+            setProfiles={setProfiles}
           />
         ),
       };

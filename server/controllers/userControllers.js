@@ -191,7 +191,7 @@ const changePassword = expressAsync(async (req, res) => {
   if (password !== confirmPassword) {
     throw new Error("Invalid Password Registered");
   } else if (!agent) {
-    throw new Error("Invalid Password Registered2");
+    throw new Error("Invalid Password Registered");
   } else {
     let sendHTMLEmail;
     let mailSubject = "CFS Password has been updated";
@@ -203,7 +203,7 @@ const changePassword = expressAsync(async (req, res) => {
     );
     try {
       agent.password = password;
-      agent.idPassword = undefined;
+      // agent.idPassword = undefined;
 
       sendHTMLEmail = sendEmail(
         agent?.email,
@@ -228,7 +228,6 @@ const changePassword = expressAsync(async (req, res) => {
     }
   }
 });
-
 
 /**
  * @desc:  Check user is exist
@@ -257,5 +256,5 @@ export {
   deleteUser,
   checkEmail,
   changePassword,
-  getCheckUserId
+  getCheckUserId,
 };

@@ -1,0 +1,40 @@
+.email-card {
+  background-color: #fff;
+  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+  margin-bottom: 1rem;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .captions {
+    h2 {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      text-transform: capitalize;
+    }
+    p {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 400;
+      font-size: 1.2rem;
+    }
+  }
+
+  .actions {
+    button {
+      display: flex;
+      align-items: center;
+      background-color: #1565d8;
+      padding: 0.5rem 1rem;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      margin-left: 1rem;
+      span {
+        margin-right: 1rem;
+        color: #fff;
+      }
+    }
+  }
+}

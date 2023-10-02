@@ -69,16 +69,6 @@ const LoginForm: React.FC<AccountDetailsProps> = (props) => {
         >
           Login
         </button>
-        {/* <div className="login-caption">
-          <Link
-            to={paths.portalRegistration}
-            style={{
-              borderBottom: "1px dotted #000",
-            }}
-          >
-            Create an account
-          </Link>
-        </div> */}
       </Grid>
     </Grid>
   );

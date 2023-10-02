@@ -15,6 +15,11 @@ import {
   LoginUsingCodeData,
   LoginUsingEmailData,
 } from "admin/models/loginModel";
+import {
+  MerchandiseBody,
+  MerchandiseData,
+  MerchandiseError,
+} from "admin/models/merchandiseModel";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -80,6 +85,8 @@ const LandingPageRegisteredUsers = {
 const Agents = {
   agentInformation: (userGuid: string) =>
     requests.get<AgentData | undefined>(`/api/agents/${userGuid}`),
+  deleteAgent: (userGuid: string) =>
+    requests.del<string>(`/api/agents/${userGuid}`),
 };
 
 const Contracting = {
@@ -93,6 +100,30 @@ const Contracting = {
       return config;
     });
     const res = requests.post<string>("/api/contracting/", body);
+
+    return res;
+  },
+};
+
+const Profile = {
+  forgotPassword: (emailAddress: string) => {
+    const res = requests.post<AgentSubscriberData[] | undefined>(
+      `/api/users/email-check/account`,
+      { emailAddress }
+    );
+
+    return res;
+  },
+  changePassword: (
+    passwordId: string,
+    password: string,
+    confirmPassword: string
+  ) => {
+    const res = requests.post<string>(`/api/users/change-password/account`, {
+      password,
+      passwordId,
+      confirmPassword,
+    });
 
     return res;
   },
@@ -200,6 +231,66 @@ const Login = {
   },
 };
 
+const Merchandise = {
+  getAllMerchandise: () => {
+    const res = requests.get<MerchandiseData[] | undefined>(
+      `/api/merchandise/`
+    );
+
+    return res;
+  },
+  getSingleMerchandiseById: (id: string) => {
+    const res = requests.get<MerchandiseData | undefined>(
+      `/api/merchandise/${id}`
+    );
+
+    return res;
+  },
+  addMerchandise: (body: MerchandiseBody) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      return config;
+    });
+
+    const res = requests.post<MerchandiseData | undefined>(
+      `/api/merchandise/`,
+      body
+    );
+
+    return res;
+  },
+  editMerchandise: (id: string, body: MerchandiseBody) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      return config;
+    });
+
+    const res = requests.put<MerchandiseData>(
+      `/api/merchandise/details/${id}`,
+      body
+    );
+
+    return res;
+  },
+  deleteMerchandise: async (id: string) => {
+    const res = await requests.del<MerchandiseError>(`/api/merchandise/${id}`);
+
+    if (res.success) {
+      return res;
+    } else {
+      return false;
+    }
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
@@ -208,6 +299,8 @@ const agent = {
   EmailMarketing,
   AgentSubscribers,
   Login,
+  Merchandise,
+  Profile,
 };
 
 export default agent;

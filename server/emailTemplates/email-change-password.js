@@ -134,7 +134,7 @@ const emailChangePasswordMail = (email, name, id) => {
                     color: #ffffff;
                   "
                   alt="Logo"
-                  src="	https://www.gocfs.pro/assets/logos/comfort-life-new-logo.png"
+                  src="https://www.gocfs.pro/assets/images/logos/cfs-logo.png"
                   align="center"
                   width="180"
                 />
@@ -183,7 +183,7 @@ const emailChangePasswordMail = (email, name, id) => {
             To reset your password, click the button below.
           </p>
           <a
-            href="${hostName}/portal/login/true?passwordId=${id}"
+            href="${hostName}/portal/login/forgot_password=&passwordId=${id}"
             target="_blank"
             style="
               background-color: #333333;

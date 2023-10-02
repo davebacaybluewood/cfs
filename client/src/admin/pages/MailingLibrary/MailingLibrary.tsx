@@ -6,19 +6,14 @@ import Title from "admin/components/Title/Title";
 import {
   DataGrid,
   GridColDef,
-  GridFilterPanel,
-  GridRowsProp,
   GridToolbar,
   GridToolbarContainer,
-  GridToolbarDensitySelector,
-  GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import { BsPlusCircle } from "react-icons/bs";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { Button, Menu, MenuItem, Tooltip } from "@mui/material";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
-import "./MailingLibrary.scss";
 import nameFallback from "helpers/nameFallback";
 import { formatISODateOnly } from "helpers/date";
 import { AiFillCheckCircle, AiOutlineCheckCircle } from "react-icons/ai";
@@ -28,6 +23,7 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { RiExternalLinkFill } from "react-icons/ri";
 import Spinner from "library/Spinner/Spinner";
 import { BiFilterAlt } from "react-icons/bi";
+import "./MailingLibrary.scss";
 
 const crumbs: CrumbTypes[] = [
   {

@@ -7,7 +7,7 @@ type DashboardCardProps = {
   count: number;
   countText: string;
   icon?: React.ReactNode;
-  url: string;
+  url?: string;
 };
 const DashboardCard: React.FC<DashboardCardProps> = (props) => {
   return (
@@ -21,9 +21,15 @@ const DashboardCard: React.FC<DashboardCardProps> = (props) => {
           <div className="icon-holder">{props.icon}</div>
         </div>
       </div>
-      <Link to={props.url}>
-        View All Information <FaAngleRight />
-      </Link>
+      {props.url ? (
+        <Link to={props.url}>
+          View All Information <FaAngleRight />
+        </Link>
+      ) : (
+        <p className="disabled-link">
+          View All Information <FaAngleRight />
+        </p>
+      )}
     </div>
   );
 };

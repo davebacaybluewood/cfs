@@ -198,16 +198,29 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Menu>
       </SidebarContent>
       <SidebarFooter style={{ textAlign: "center" }}>
-        <div className="sidebar-btn-wrapper" style={{ padding: "16px" }}>
-          <a
-            className="sidebar-btn"
-            href={MAIN_WEBSITE_LINK[0]}
-            target="_blank"
-          >
-            <FaGlobe />
-            <span>Comfort Financial Solutions Web</span>
-          </a>
-        </div>
+        {isSubscriber ? (
+          <div className="sidebar-btn-wrapper" style={{ padding: "16px" }}>
+            <a
+              className="sidebar-btn"
+              href="https://agent.comfortfinancialsolutions.com/signup"
+              target="_blank"
+            >
+              <FaGlobe />
+              <span>Upgrade to Agent</span>
+            </a>
+          </div>
+        ) : (
+          <div className="sidebar-btn-wrapper" style={{ padding: "16px" }}>
+            <a
+              className="sidebar-btn"
+              href={MAIN_WEBSITE_LINK[0]}
+              target="_blank"
+            >
+              <FaGlobe />
+              <span>Comfort Financial Solutions Web</span>
+            </a>
+          </div>
+        )}
       </SidebarFooter>
     </ProSidebar>
   );

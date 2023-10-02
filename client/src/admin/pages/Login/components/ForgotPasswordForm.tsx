@@ -1,94 +1,205 @@
-import { Alert } from "@mui/material";
-import Spinner from "admin/components/Spinner/Spinner";
-import axios from "axios";
-import ENDPOINTS from "constants/endpoints";
 import { Formik } from "formik";
-import Button from "library/Button/Button";
-import ComponentValidator from "library/ComponentValidator/ComponentValidator";
-import FormikTextInput from "library/Formik/FormikInput";
 import React, { useState } from "react";
-import * as Yup from "yup";
+import {
+  validationForgotPassword,
+  validationWithCodeSchema,
+} from "../validationSchema";
+import Spinner from "library/Spinner/Spinner";
+import { MAIN_IMAGES } from "constants/constants";
+import { Alert, Grid } from "@mui/material";
+import FormikTextInput from "library/Formik/FormikInput";
+import agent from "admin/api/agent";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { paths } from "constants/routes";
 
 const ForgotPasswordForm: React.FC = () => {
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const urlLocation = useLocation();
+  const navigate = useNavigate();
   const initialValues = {
     emailAddress: "",
   };
+  const initialValuesWithPassword = {
+    password: "",
+    confirmPassword: "",
+  };
 
-  const validationSchema = Yup.object({
-    emailAddress: Yup.string()
-      .email("Invalid email address")
-      .required("Email address field is required."),
-  });
+  const searchUrlForParameters = new URLSearchParams(urlLocation.search);
+  const passwordId = searchUrlForParameters.get("passwordId");
 
-  return (
-    <div className="reset-form">
+  if (passwordId) {
+    return (
       <Formik
-        {...{ validationSchema, initialValues }}
-        onSubmit={async ({ emailAddress }) => {
+        initialValues={initialValuesWithPassword}
+        enableReinitialize
+        onSubmit={async (data) => {
           setLoading(true);
-          axios
-            .post(ENDPOINTS.CHECK_EMAIL, {
-              emailAddress,
-            })
-            .then((data) => {
-              console.log(data);
-              setLoading(false);
-              setSuccess(true);
-            })
-            .catch((error) => {
-              setError(true);
-              setLoading(false);
+          const res = await agent.Profile.changePassword(
+            passwordId,
+            data.password,
+            data.confirmPassword
+          );
+
+          if (res) {
+            setLoading(false);
+            toast.info(`Change Password Success`, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
             });
+            navigate(paths.login);
+          } else {
+            setLoading(false);
+            setError(true);
+          }
         }}
+        validationSchema={validationForgotPassword}
       >
-        {({ values, handleSubmit }) => {
+        {({ values, setFieldValue, errors, handleSubmit }) => {
           return (
-            <div className="email-form">
-              <h2>Reset Password</h2>
-              <p>
-                Enter the email associated with your account and we'll send an
-                email with instructions to reset your password.
-              </p>
-              <ComponentValidator showNull={!error}>
-                <Alert variant="filled" severity="error" className="form-alert">
-                  Invalid Email & Password
-                </Alert>
-              </ComponentValidator>
-              <ComponentValidator showNull={!success}>
-                <Alert
-                  variant="filled"
-                  severity="success"
-                  className="form-alert success"
+            <div className="portal-form">
+              {loading ? <Spinner variant="fixed" /> : null}
+              <div className="image-holder">
+                <img src={MAIN_IMAGES.MAIN_LOGO} alt={MAIN_IMAGES.MAIN_LOGO} />
+              </div>
+              <div className="form-header">
+                <h2 style={{ fontFamily: "Montserrat" }}>Forgot Password</h2>
+                <h2
+                  style={{
+                    fontWeight: "300",
+                    fontFamily: "Montserrat",
+                    fontSize: 13,
+                  }}
                 >
-                  Mail has been sent to your email address
-                </Alert>
-              </ComponentValidator>
-              <FormikTextInput
-                label="Email Address"
-                variant="filled"
-                fullWidth
-                className="filled-input"
-                name="emailAddress"
-                isTextArea={false}
-                type="text"
-              />
-              {loading ? (
-                <Spinner />
-              ) : (
-                <ComponentValidator showNull={success}>
-                  <Button variant="primary" onClick={() => handleSubmit()}>
-                    Submit
-                  </Button>
-                </ComponentValidator>
-              )}
+                  Enter your new password
+                </h2>
+
+                {error ? (
+                  <Alert
+                    variant="filled"
+                    severity="error"
+                    className="error-alert"
+                  >
+                    Invalid
+                  </Alert>
+                ) : null}
+
+                <Grid container spacing={2} style={{ marginTop: 10 }}>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <label className="form-label">Password</label>
+                    <FormikTextInput
+                      name="password"
+                      type="password"
+                      value={values.password}
+                      variant="outlined"
+                      placeholder="Enter your new password"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <label className="form-label">Confirm Password</label>
+                    <FormikTextInput
+                      name="confirmPassword"
+                      type="password"
+                      value={values.confirmPassword}
+                      variant="outlined"
+                      placeholder="Enter your new password again"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <button
+                      className="secondary-cfs-btn"
+                      onClick={() => {
+                        handleSubmit();
+                      }}
+                    >
+                      Login
+                    </button>
+                  </Grid>
+                </Grid>
+              </div>
             </div>
           );
         }}
       </Formik>
-    </div>
+    );
+  }
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      enableReinitialize
+      onSubmit={async (data) => {
+        setLoading(true);
+        const res = await agent.Profile.forgotPassword(data.emailAddress);
+
+        if (res) {
+          setLoading(false);
+        }
+      }}
+      validationSchema={validationWithCodeSchema}
+    >
+      {({ values, setFieldValue, errors, handleSubmit }) => {
+        return (
+          <div className="portal-form">
+            {loading ? <Spinner variant="fixed" /> : null}
+            <div className="image-holder">
+              <img src={MAIN_IMAGES.MAIN_LOGO} alt={MAIN_IMAGES.MAIN_LOGO} />
+            </div>
+            <div className="form-header">
+              <h2 style={{ fontFamily: "Montserrat" }}>Forgot Password</h2>
+              <h2
+                style={{
+                  fontWeight: "300",
+                  fontFamily: "Montserrat",
+                  fontSize: 13,
+                }}
+              >
+                Enter your email address
+              </h2>
+
+              {error ? (
+                <Alert
+                  variant="filled"
+                  severity="error"
+                  className="error-alert"
+                >
+                  Invalid Email & Password
+                </Alert>
+              ) : null}
+
+              <Grid container spacing={2} style={{ marginTop: 10 }}>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <label className="form-label">Email Address</label>
+                  <FormikTextInput
+                    name="emailAddress"
+                    value={values.emailAddress}
+                    variant="outlined"
+                    placeholder="Enter your email address"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <button
+                    className="secondary-cfs-btn"
+                    onClick={() => {
+                      handleSubmit();
+                    }}
+                  >
+                    Login
+                  </button>
+                </Grid>
+              </Grid>
+            </div>
+          </div>
+        );
+      }}
+    </Formik>
   );
 };
 

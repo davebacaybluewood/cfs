@@ -20,6 +20,7 @@ import PageCaptions from "./PageCaptions";
 import "pages/PortalRegistration/PortalRegistration.scss";
 import "./Login.scss";
 import { USER_LOGIN_ACTION_TYPES } from "constants/redux-constants";
+import ForgotPasswordForm from "./components/ForgotPasswordForm";
 
 type LoginWithValues = {
   emailAddress: string;
@@ -46,6 +47,7 @@ const PortalRegistration: React.FC = () => {
   const searchUrlForParameters = new URLSearchParams(urlLocation.search);
   const isVerificationParamter =
     searchUrlForParameters.get("verification_code");
+  const forgotPassword = searchUrlForParameters.get("forgot_password");
   const isVerification = isVerificationParamter === "true";
 
   const initialWithValues: LoginWithValues = {
@@ -196,6 +198,8 @@ const PortalRegistration: React.FC = () => {
                 <Link to={paths.login}>Log in</Link>
               </div>
             </>
+          ) : forgotPassword ? (
+            <ForgotPasswordForm />
           ) : (
             <>
               <Formik
@@ -262,6 +266,11 @@ const PortalRegistration: React.FC = () => {
               <div className="login-caption">
                 <span>Login using verification code</span>
                 <Link to={paths.login + "?verification_code=true"}>Log in</Link>
+              </div>
+              <div className="login-caption">
+                <Link to={paths.login + "?forgot_password=true"}>
+                  Forgot password?
+                </Link>
               </div>
             </>
           )}

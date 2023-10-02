@@ -3,6 +3,7 @@ const adminCfsRoute = "/portal/";
 const adminPaths = {
   index: adminCfsRoute + "",
   login: adminCfsRoute + "login",
+  forgotPassword: adminCfsRoute + "forgot-password",
   loginWithParams: adminCfsRoute + "login/:change_password_status",
   agents: adminCfsRoute + "agents",
   dashboard: adminCfsRoute + "dashboard",
@@ -64,6 +65,9 @@ const adminPaths = {
   mailLibraryForm: adminCfsRoute + "email-library-form",
   agentsubscribers: adminCfsRoute + "agent-subscribers",
   merchandises: adminCfsRoute + "merchandises",
+  merchandiseForm: adminCfsRoute + "merchandises/form",
+  rewardsHistory: adminCfsRoute + "rewards/history",
+  shareableEmails: adminCfsRoute + "shareable-emails",
 } as const;
 
 export default adminPaths;
