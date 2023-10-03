@@ -1,40 +1,18 @@
 import {
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
+  Grid
 } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { paths } from "constants/routes";
+import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import {
   FaUserShield,
-  FaSnowman,
-  FaUser,
-  FaRegEnvelope,
-  FaPhone,
   FaCalendarMinus,
 } from "react-icons/fa";
 import DashboardCard from "../DashboardCard/DashboardCard";
 import { StatisticTypes } from "../../types";
-import Box from "admin/components/Box/Box";
 import Title from "admin/components/Title/Title";
-import { formatISODateToDate } from "helpers/dateFormatter";
-import BoxTable from "../BoxTable/BoxTable";
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
-import useFetchWebinars, {
-  WebinarValuesType,
-} from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchWebinars";
-import CardContent from "library/CardContent/CardContent";
 import { useNavigate } from "react-router-dom";
 import useFetchAgent from "admin/pages/Agents/hooks/useFetchAgent";
-import { NOTIFICATION_ENUMS } from "constants/constants";
 import "../../Dashboard.scss";
-import classNames from "classnames";
 import { MerchandiseData } from "admin/models/merchandiseModel";
 import agent from "admin/api/agent";
 import MerchandiseCard from "admin/components/MerchandiseCard/MerchandiseCard";
