@@ -18,7 +18,7 @@ import Contacts from "admin/pages/Contacts/Contacts";
 import EventInvites from "admin/pages/EventInvites/EventInvites";
 import Events from "admin/pages/Events/Events";
 import EventsForm from "admin/pages/Events/EventsForm";
-import FAQs from "admin/pages/FAQs/FAQs";
+import FAQSubscriber from "admin/pages/FAQSubscriber/FAQSubscriber";
 import Webinars from "admin/pages/FileMaintenance/pages/Webinars/Webinars";
 import WebinarSingle from "admin/pages/FileMaintenance/pages/Webinars/WebinarSingle";
 import Inquiries from "admin/pages/Inquiries/Inquiries";
@@ -357,7 +357,7 @@ export const adminRoutes = [
     path: adminPathsNew.faqs,
     element: (
       <GuardedWrapper>
-        <FAQs />
+        <FAQSubscriber />
       </GuardedWrapper>
     ),
   },
