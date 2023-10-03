@@ -27,3 +27,76 @@
     }
   }
 }
+
+.column-header-h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.reward-history-table {
+  background-color: #fff;
+  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+
+  .MuiDataGrid-root {
+    button,
+    span,
+    p,
+    input,
+    select,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    div,
+    label {
+      font-size: 1.2rem;
+    }
+  }
+
+  .MuiDataGrid-columnHeaderTitle {
+    font-weight: 800;
+    font-size: 1.6rem !important;
+  }
+
+  .template-name-header {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-right: 0.5rem;
+    }
+
+    svg {
+      color: #4caf50;
+      font-size: 1.5rem;
+    }
+  }
+
+  .select-btn {
+    display: flex;
+    align-items: center;
+    background-color: #1565d8;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    margin-left: 1rem;
+    span {
+      margin-right: 1rem;
+      color: #fff;
+    }
+  }
+
+  .danger {
+    background-color: #ed3e4b;
+  }
+
+  .select-btn:disabled,
+  .select-btn[disabled] {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: auto;
+  }
+}
