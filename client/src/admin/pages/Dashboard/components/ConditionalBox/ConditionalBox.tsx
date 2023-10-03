@@ -2,6 +2,7 @@ import React from "react";
 import AdminBox from "./AdminBox";
 import AgentBox from "./AgentBox";
 import EditorBox from "./EditorBox";
+import SubscriberBox from "./SubscriberBox";
 
 export interface PositionAndRoleType {
   value: string;
@@ -23,11 +24,14 @@ const ConditionalBox: React.FC<ConditionalBoxProps> = (props) => {
     (e) => e.value === "POSITION_CONTENT_CREATOR"
   );
 
+  const isSubscriber = props.position?.some((e) => e.value === "POSITION_SUBSCRIBER");
+
   return (
     <div>
       {isAdmin && <AdminBox />}
       {isAgent && <AgentBox />}
       {(isContentCreator || isEditor) && <EditorBox />}
+      {isSubscriber && <SubscriberBox />}
     </div>
   );
 };
