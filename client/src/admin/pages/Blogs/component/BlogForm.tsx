@@ -5,33 +5,33 @@ import {
   Grid,
   Button as MUIButton,
   TextField,
-} from "@mui/material";
-import Title from "admin/components/Title/Title";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { CrumbTypes } from "admin/pages/Dashboard/types";
-import { Formik } from "formik";
-import Button from "library/Button/Button";
-import FormikTextInput from "library/Formik/FormikInput";
-import React, { useContext, useEffect, useState } from "react";
-import ReactQuill from "react-quill";
-import { useNavigate, useParams } from "react-router-dom";
-import ComponentValidator from "library/ComponentValidator/ComponentValidator";
-import Spinner from "library/Spinner/Spinner";
-import "react-quill/dist/quill.snow.css";
-import adminPaths from "admin/constants/routes";
-import "./BlogForm.scss";
-import useQuillModules from "../useQuillModules";
-import blogValidationSchema from "./blogValidationSchema";
-import { BlogData, BlogPayload } from "pages/BlogPage/models";
-import ErrorText from "pages/PortalRegistration/components/ErrorText";
-import MultiSelectInputWithCreate from "library/MultiSelectInput/MultiSelectInputWithCreate";
-import { blogTags, metatagKeywords } from "../utils";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import { UserContext } from "admin/context/UserProvider";
-import agent from "api/agent";
-import { toast } from "react-toastify";
-import { paths } from "constants/routes";
-import MultiSelectInput from "library/MultiSelectInput/MultiSelectInput";
+} from "@mui/material"
+import Title from "admin/components/Title/Title"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { CrumbTypes } from "admin/pages/Dashboard/types"
+import { Formik } from "formik"
+import Button from "library/Button/Button"
+import FormikTextInput from "library/Formik/FormikInput"
+import React, { useContext, useEffect, useState } from "react"
+import ReactQuill from "react-quill"
+import { useNavigate, useParams } from "react-router-dom"
+import ComponentValidator from "library/ComponentValidator/ComponentValidator"
+import Spinner from "library/Spinner/Spinner"
+import "react-quill/dist/quill.snow.css"
+import adminPaths from "admin/constants/routes"
+import "./BlogForm.scss"
+import useQuillModules from "../useQuillModules"
+import blogValidationSchema from "./blogValidationSchema"
+import { BlogData, BlogPayload } from "pages/BlogPage/models"
+import ErrorText from "pages/PortalRegistration/components/ErrorText"
+import MultiSelectInputWithCreate from "library/MultiSelectInput/MultiSelectInputWithCreate"
+import { blogTags, metatagKeywords } from "../utils"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import { UserContext } from "admin/context/UserProvider"
+import agent from "api/agent"
+import { toast } from "react-toastify"
+import { paths } from "constants/routes"
+import MultiSelectInput from "library/MultiSelectInput/MultiSelectInput"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -49,20 +49,20 @@ const crumbs: CrumbTypes[] = [
     url: adminPaths.adminBlogs,
     isActive: true,
   },
-];
+]
 
 const BlogForm: React.FC = () => {
-  const navigate = useNavigate();
-  const [loading, setIsLoading] = useState(false);
-  const [thumbnailPreview, setThumbnailPreview] = useState("");
-  const [author, setAuthor] = useState("");
-  const [selfAuthor, setSelfAuthor] = useState(false);
-  const userCtx = useContext(UserContext) as any;
+  const navigate = useNavigate()
+  const [loading, setIsLoading] = useState(false)
+  const [thumbnailPreview, setThumbnailPreview] = useState("")
+  const [author, setAuthor] = useState("")
+  const [selfAuthor, setSelfAuthor] = useState(false)
+  const userCtx = useContext(UserContext) as any
   const { profile, loading: profileLoading } = useFetchUserProfile(
     userCtx?.user?.userGuid ?? ""
-  );
-  const { id: indicator } = useParams();
-  const [blog, setBlog] = useState<BlogData | undefined>();
+  )
+  const { id: indicator } = useParams()
+  const [blog, setBlog] = useState<BlogData | undefined>()
 
   const [initialValues, setInitialValues] = useState<BlogData>({
     metaTagTitle: "",
@@ -76,12 +76,12 @@ const BlogForm: React.FC = () => {
     thumbnail: "",
     thumbnailAlt: "",
     thumbnailCloudinaryId: "",
-  });
+  })
 
   useEffect(() => {
     const fetchSingleData = async () => {
-      const data = await agent.BlogAndResource.listSingleById(indicator ?? "");
-      setBlog(data);
+      const data = await agent.BlogAndResource.listSingleById(indicator ?? "")
+      setBlog(data)
       setInitialValues({
         _id: data?._id ?? "",
         authorID: data?.userGuid ?? "",
@@ -93,7 +93,7 @@ const BlogForm: React.FC = () => {
             label: data.label,
             value: data.label,
             keyword: data.label,
-          };
+          }
         }) as any,
         authorThumbnail: data?.authorThumbnail,
         createdAt: data?.createdAt,
@@ -104,73 +104,73 @@ const BlogForm: React.FC = () => {
             label: data.keyword,
             value: data.keyword,
             keyword: data.keyword,
-          };
+          }
         }) as any,
         metaTagTitle: data?.metaTagTitle ?? "",
         thumbnailAlt: data?.thumbnailAlt,
         thumbnailCloudinaryId: data?.thumbnailCloudinaryId,
         updatedAt: data?.updatedAt,
-      });
-      const author = data?.authorName;
-      setAuthor(author ?? "");
-      setIsLoading(false);
-      setSelfAuthor(data?.userGuid === profile?.userGuid);
-    };
+      })
+      const author = data?.authorName
+      setAuthor(author ?? "")
+      setIsLoading(false)
+      setSelfAuthor(data?.userGuid === profile?.userGuid)
+    }
 
     if (indicator === "add") {
       setInitialValues((prevState) => {
         return {
           ...prevState,
           authorID: profile?.userGuid ?? "",
-        };
-      });
+        }
+      })
 
       const author = !profile?.firstName
         ? profile?.name
-        : `${profile?.firstName} ${profile?.lastName}`;
-      setAuthor(author ?? "");
+        : `${profile?.firstName} ${profile?.lastName}`
+      setAuthor(author ?? "")
     } else {
-      fetchSingleData();
+      fetchSingleData()
     }
-  }, [profile, indicator]);
+  }, [profile, indicator])
 
-  const realQuillModules = useQuillModules();
-  const validationSchema = blogValidationSchema();
+  const realQuillModules = useQuillModules()
+  const validationSchema = blogValidationSchema()
 
   const pageConfigs = {
     isEditMode: indicator !== "add",
     pageTitle: indicator !== "add" ? "Edit Blog" : "Add Blog",
     subTitle: "All fields (*) are required.",
     hideCheckbox: indicator === "add",
-  };
+  }
 
   const backToBlogsHandler = () => {
-    navigate(adminPaths.adminBlogs);
-  };
+    navigate(adminPaths.adminBlogs)
+  }
   const handleFocusBack = () => {
-    setThumbnailPreview("");
-    window.removeEventListener("focus", handleFocusBack);
-  };
+    setThumbnailPreview("")
+    window.removeEventListener("focus", handleFocusBack)
+  }
   const clickedFileInput = () => {
-    window.addEventListener("focus", handleFocusBack);
-  };
+    window.addEventListener("focus", handleFocusBack)
+  }
   const thumbnailChangeHandler = (event, setFieldValue) => {
-    setFieldValue("thumbnail", event.currentTarget.files![0]);
-    const fileReader = new FileReader();
+    setFieldValue("thumbnail", event.currentTarget.files![0])
+    const fileReader = new FileReader()
     fileReader.onload = () => {
       if (fileReader.readyState === 2) {
-        setThumbnailPreview(fileReader.result?.toString() ?? "");
+        setThumbnailPreview(fileReader.result?.toString() ?? "")
       }
-    };
-    fileReader.readAsDataURL(event.target.files![0]);
-    window.removeEventListener("focus", handleFocusBack);
-  };
+    }
+    fileReader.readAsDataURL(event.target.files![0])
+    window.removeEventListener("focus", handleFocusBack)
+  }
 
   const submitHandler = async (values: BlogPayload) => {
-    setIsLoading(true);
+    setIsLoading(true)
 
     if (pageConfigs.isEditMode) {
-      const res = await agent.BlogAndResource.update(values);
+      const res = await agent.BlogAndResource.update(values)
       if (res) {
         toast.info(`Blog Edited`, {
           position: "top-right",
@@ -181,12 +181,12 @@ const BlogForm: React.FC = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-        });
-        setIsLoading(true);
-        navigate(paths.adminBlogs);
+        })
+        setIsLoading(true)
+        navigate(paths.adminBlogs)
       }
     } else {
-      const res = await agent.BlogAndResource.create(values);
+      const res = await agent.BlogAndResource.create(values)
       if (res) {
         toast.info(`Blog Added`, {
           position: "top-right",
@@ -197,12 +197,12 @@ const BlogForm: React.FC = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-        });
-        setIsLoading(true);
-        navigate(paths.adminBlogs);
+        })
+        setIsLoading(true)
+        navigate(paths.adminBlogs)
       }
     }
-  };
+  }
 
   return (
     <Wrapper breadcrumb={crumbs} error={false} className="blog-form-wrapper">
@@ -218,28 +218,28 @@ const BlogForm: React.FC = () => {
             const checkHandler = (
               event: React.ChangeEvent<HTMLInputElement>
             ) => {
-              setSelfAuthor((prevState) => !prevState);
+              setSelfAuthor((prevState) => !prevState)
 
               if (!selfAuthor) {
-                setAuthor(`${profile?.firstName} ${profile?.lastName}`);
+                setAuthor(`${profile?.firstName} ${profile?.lastName}`)
                 setInitialValues((prevState: any) => {
                   return {
                     ...prevState,
                     userGuid: profile?.userGuid,
                     authorID: profile?.userGuid,
-                  };
-                });
+                  }
+                })
               } else {
-                setAuthor(blog?.authorName ?? "");
+                setAuthor(blog?.authorName ?? "")
                 setInitialValues((prevState: any) => {
                   return {
                     ...prevState,
                     userGuid: blog?.authorID,
                     authorID: blog?.authorID,
-                  };
-                });
+                  }
+                })
               }
-            };
+            }
             return (
               <div className="blog-form">
                 <Grid container spacing={2} className="blog-form-container">
@@ -346,16 +346,16 @@ const BlogForm: React.FC = () => {
                             label: data.label,
                             value: data.label,
                             keyword: data.label,
-                          };
+                          }
                         }) as any
                       }
                       name="tags"
                       onCreate={(e: any) => {
-                        console.log(e);
-                        setFieldValue("tags", e);
+                        console.log(e)
+                        setFieldValue("tags", e)
                       }}
                       onChange={(e: any) => {
-                        setFieldValue("tags", e);
+                        setFieldValue("tags", e)
                       }}
                     />
                   </Grid>
@@ -403,16 +403,16 @@ const BlogForm: React.FC = () => {
                             label: data.keyword,
                             value: data.keyword,
                             keyword: data.keyword,
-                          };
+                          }
                         }) as any
                       }
                       name="metaTagKeywords"
                       onCreate={(e: any) => {
-                        console.log(e);
-                        setFieldValue("metaTagKeywords", e);
+                        console.log(e)
+                        setFieldValue("metaTagKeywords", e)
                       }}
                       onChange={(e: any) => {
-                        setFieldValue("metaTagKeywords", e);
+                        setFieldValue("metaTagKeywords", e)
                       }}
                     />
                   </Grid>
@@ -434,12 +434,12 @@ const BlogForm: React.FC = () => {
                   </Button>
                 </div>
               </div>
-            );
+            )
           }}
         </Formik>
       </div>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default BlogForm;
+export default BlogForm
