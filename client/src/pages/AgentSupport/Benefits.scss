@@ -13,7 +13,7 @@
   .content-container {
     .section-title {
       h2 {
-        font-family: "Montserrat", sans-serif;
+        font-family: 'Montserrat', sans-serif;
         font-size: 3rem;
         margin-bottom: 2rem;
       }
@@ -39,14 +39,14 @@
           h3 {
             font-size: 1.4rem;
             margin-bottom: 1rem;
-            font-family: "Montserrat", sans-serif;
+            font-family: 'Montserrat', sans-serif;
           }
         }
 
         .box-description {
           p {
             font-weight: 300;
-            font-family: "Montserrat", sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.5rem;
           }
         }
@@ -74,10 +74,16 @@
 @media screen and (max-width: 1023px) {
   .main-container {
     .content-container {
+      .cfs-btn.cfs-btn-danger {
+        display: flex;
+      }
       button {
         width: 20% !important;
         margin-top: 2rem !important;
         margin-bottom: 0.5rem !important;
+        min-width: 21rem;
+        margin-left: auto;
+        margin-right: auto;
       }
     }
   }

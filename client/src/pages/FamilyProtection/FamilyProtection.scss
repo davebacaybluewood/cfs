@@ -133,3 +133,15 @@
     }
   }
 }
+
+@media (max-width: 320px) {
+  .headline__content {
+    .headline__btn {
+      width: 100% !important;
+    }
+
+    .cfs-btn.cfs-btn-danger {
+      margin: auto !important;
+    }
+  }
+}
