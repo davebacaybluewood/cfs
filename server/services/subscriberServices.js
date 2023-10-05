@@ -145,8 +145,8 @@ const subscriberRegistration = async (
     }
   }
 
-  // await user.save();
-  // await profile.save();
+  await user.save();
+  await profile.save();
 
   let response = {
     _id: profile._id,
