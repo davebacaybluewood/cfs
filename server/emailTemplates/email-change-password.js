@@ -183,7 +183,7 @@ const emailChangePasswordMail = (email, name, id) => {
             To reset your password, click the button below.
           </p>
           <a
-            href="${hostName}/portal/login/forgot_password=&passwordId=${id}"
+            href="${hostName}/portal/login?forgot_password=true&passwordId=${id}"
             target="_blank"
             style="
               background-color: #333333;
@@ -221,9 +221,9 @@ const emailChangePasswordMail = (email, name, id) => {
             Or copy and paste the URL below into your browser
           </p>
           <a
-            href="${hostName}/portal/login/true?passwordId=${id}"
+            href="${hostName}/portal/login?forgot_password=true&passwordId=${id}"
             style="font-family: 'Helvetica', Arial, sans-serif"
-            >${hostName}/portal/login/true?passwordId=${id}</a
+            >${hostName}/portal/login?forgot_password=true&passwordId=${id}</a
           >
         </div>
         <!-- Start footer -->

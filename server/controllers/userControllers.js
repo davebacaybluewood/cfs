@@ -133,10 +133,10 @@ const checkEmail = expressAsync(async (req, res) => {
     email: emailAddress,
   });
 
-  if (agent.length === 0) {
+  if (agent?.length === 0) {
     throw new Error("No email address registed.");
   } else {
-    if (agent.length === 0) {
+    if (agent?.length === 0) {
       throw new Error("No email address registed.");
     } else {
       agent.idPassword = idPassword;

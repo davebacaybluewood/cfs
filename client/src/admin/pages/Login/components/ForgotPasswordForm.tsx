@@ -119,7 +119,7 @@ const ForgotPasswordForm: React.FC = () => {
                         handleSubmit();
                       }}
                     >
-                      Login
+                      Change Password
                     </button>
                   </Grid>
                 </Grid>
@@ -141,6 +141,16 @@ const ForgotPasswordForm: React.FC = () => {
 
         if (res) {
           setLoading(false);
+          toast.info(`Email sent to your email address`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
       }}
       validationSchema={validationWithCodeSchema}
@@ -191,7 +201,7 @@ const ForgotPasswordForm: React.FC = () => {
                       handleSubmit();
                     }}
                   >
-                    Login
+                    Send Email Verification
                   </button>
                 </Grid>
               </Grid>

@@ -55,6 +55,7 @@ import AgentSubscribers from "admin/pages/Subscribers/AgentSubscribers";
 import Merchandises from "admin/pages/Merchandises/Merchandises";
 import MerchandiseForm from "admin/pages/Merchandises/MerchandiseForm";
 import ShareableEmails from "admin/pages/ShareableEmails/ShareableEmails";
+import RewardsHistory from "admin/pages/RewardsHistory/RewardsHistory";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -617,6 +618,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <ShareableEmails />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.rewardsHistory,
+    element: (
+      <GuardedWrapper>
+        <RewardsHistory />
       </GuardedWrapper>
     ),
   },

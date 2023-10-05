@@ -6,6 +6,9 @@ const emailTemplateModel = mongoose.Schema(
       type: String,
       required: true,
     },
+    hierarchyCode: {
+      type: String,
+    },
     templateBody: {
       type: String,
       required: true,
