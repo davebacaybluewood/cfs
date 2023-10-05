@@ -24,6 +24,7 @@ import { RiExternalLinkFill } from "react-icons/ri";
 import Spinner from "library/Spinner/Spinner";
 import { BiFilterAlt } from "react-icons/bi";
 import "./MailingLibrary.scss";
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -286,6 +287,10 @@ const MailLibrary: React.FC = () => {
     );
   };
 
+  if (loading) {
+    return <Spinner variant="relative" />;
+  }
+
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <div className="mailing-library-container">
@@ -300,13 +305,20 @@ const MailLibrary: React.FC = () => {
             Add Template
           </Button>
         </Title>
-        <div className="mailing-library-table">
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            slots={{ toolbar: FilteredGridToolbar }}
-          />
-        </div>
+
+        <NoInformationToDisplay
+          message="No email template available"
+          title="No information to display"
+          showNoInfo={!filteredRows?.length && !loading}
+        >
+          <div className="mailing-library-table">
+            <DataGrid
+              rows={filteredRows}
+              columns={columns}
+              slots={{ toolbar: FilteredGridToolbar }}
+            />
+          </div>
+        </NoInformationToDisplay>
       </div>
       {fixedLoading ? <Spinner variant="fixed" /> : null}
     </Wrapper>

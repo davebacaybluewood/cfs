@@ -10,6 +10,7 @@ import {
 } from "../constants/constants.js";
 import User from "../models/userModel.js";
 import Profile from "../models/agentModel.js";
+import Hierarchy from "../models/hierarchyModel.js";
 
 const emailConfirmation = async (emailAddress) => {
   const isEmailExist = await User.find({
@@ -54,7 +55,8 @@ const subscriberRegistration = async (
   lastName,
   firstName,
   phoneNumber,
-  confirmationCode
+  confirmationCode,
+  userGuid
 ) => {
   const isCodeExist = await VerificationCode.find({
     verificationCode: confirmationCode,
@@ -65,12 +67,12 @@ const subscriberRegistration = async (
     return false;
   }
 
-  const userGuid = uuid();
+  const newUserGuid = uuid();
   const userInfo = {
     name: `${firstName} ${lastName}`,
     firstName: firstName,
     lastName: lastName,
-    userGuid: userGuid,
+    userGuid: newUserGuid,
     isAdmin: false,
     email: email,
     password: password,
@@ -81,7 +83,7 @@ const subscriberRegistration = async (
   const profileInfo = {
     firstName: firstName,
     lastName: lastName,
-    userGuid: userGuid,
+    userGuid: newUserGuid,
     emailAddress: email,
     password: password,
     roles: [SUBSCRIBER_ROLES[0]],
@@ -94,8 +96,57 @@ const subscriberRegistration = async (
   const user = new User(userInfo);
   const profile = new Profile(profileInfo);
 
-  await user.save();
-  await profile.save();
+  /** Generation of hierarchy */
+  if (userGuid) {
+    const hierarchy = await Hierarchy.find({
+      userGuid,
+    });
+
+    if (!hierarchy.length) {
+      const hierarchyId = generateString(6);
+      const newHierarchyId = generateString(6);
+      const hierarchyCode = generateString(6);
+      const newHierarchy = [
+        {
+          userGuid,
+          parent: "",
+          hierarchyId: hierarchyId,
+          hierarchyCode: hierarchyCode,
+        },
+        {
+          userGuid: newUserGuid,
+          parent: hierarchyId,
+          hierarchyId: newHierarchyId,
+          hierarchyCode: hierarchyCode,
+        },
+      ];
+
+      await Hierarchy.insertMany(newHierarchy);
+    } else {
+      /** Get the hierarchy code */
+      const hierarchyCode = hierarchy[0].hierarchyCode;
+
+      /** Get the most recent hierarchy code */
+      const recentHierarchy = await Hierarchy.find({
+        hierarchyCode,
+        userGuid,
+      }).sort({ _id: -1 });
+      const recentHierarchyData = recentHierarchy[0];
+
+      const newHierarchyId = generateString(6);
+      const newHierarchy = {
+        userGuid: newUserGuid,
+        parent: recentHierarchyData.hierarchyId,
+        hierarchyId: newHierarchyId,
+        hierarchyCode: hierarchyCode,
+      };
+
+      await Hierarchy.create(newHierarchy);
+    }
+  }
+
+  // await user.save();
+  // await profile.save();
 
   let response = {
     _id: profile._id,

@@ -12,12 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 const registerSubscriberAccount = expressAsync(async (req, res) => {
   const { email, password, firstName, lastName, phoneNumber } = req.body;
 
-  if (
-    !email ||
-    !password ||
-    !firstName ||
-    !lastName
-  ) {
+  if (!email || !password || !firstName || !lastName) {
     throw new Error("Error occured in updating.");
   }
 
@@ -41,11 +36,11 @@ const registerSubscriberAccount = expressAsync(async (req, res) => {
     firstName,
     lastName,
     userGuid,
-    phoneNumber
+    phoneNumber,
   });
 
   if (subscriberAccount) {
-    res.status(201).json("[Subscriber Account] has been successfully created.")
+    res.status(201).json("[Subscriber Account] has been successfully created.");
   } else {
     res.status(400);
     throw new Error("Invalid subscriber account data");
@@ -61,9 +56,7 @@ const registerSubscriberAccount = expressAsync(async (req, res) => {
 const getSubscriberAccountByUserGuid = expressAsync(async (req, res) => {
   const userGuid = req.params.userGuid;
 
-  if (
-    !userGuid
-  ) {
+  if (!userGuid) {
     throw new Error("Error occured in updating.");
   }
 
@@ -86,9 +79,7 @@ const getSubscriberAccountByUserGuid = expressAsync(async (req, res) => {
 const getSubscriberAccountByAgentUserGuid = expressAsync(async (req, res) => {
   const agentUserGuid = req.params.agentUserGuid;
 
-  if (
-    !agentUserGuid
-  ) {
+  if (!agentUserGuid) {
     throw new Error("Error occured in fetching data.");
   }
 
@@ -137,4 +128,10 @@ const validateEmail = expressAsync(async (req, res) => {
   }
 });
 
-export { registerSubscriberAccount, getSubscriberAccountByUserGuid, getSubscriberAccountByAgentUserGuid, getAllSubscriberAccounts, validateEmail };
+export {
+  registerSubscriberAccount,
+  getSubscriberAccountByUserGuid,
+  getSubscriberAccountByAgentUserGuid,
+  getAllSubscriberAccounts,
+  validateEmail,
+};

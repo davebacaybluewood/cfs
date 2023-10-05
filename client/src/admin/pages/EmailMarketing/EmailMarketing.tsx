@@ -163,11 +163,10 @@ const ContractForm: React.FC = () => {
 
       /** Load if edit mode */
       if (emailEditorRef.current) {
-        emailEditorRef.current?.loadDesign(JSON.parse(data.design));
+        emailEditorRef.current?.loadDesign(JSON.parse(data.design || ""));
       }
     };
-
-    if (userGuid) {
+    if (userGuid && templateId) {
       fetchTemplateInfo();
       setLoading(false);
     }

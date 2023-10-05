@@ -186,14 +186,7 @@ const MailLibraryForm: React.FC = () => {
             }}
             validationSchema={validationSchema}
           >
-            {({
-              values,
-              errors,
-              handleSubmit,
-              setFieldValue,
-              touched,
-              setTouched,
-            }) => {
+            {({ values, handleSubmit }) => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
