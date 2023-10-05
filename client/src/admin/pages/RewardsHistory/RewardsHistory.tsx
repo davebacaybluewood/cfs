@@ -2,10 +2,8 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { paths } from "constants/routes";
 import React, { useContext } from "react";
 import { CrumbTypes } from "../Dashboard/types";
-import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
 import Title from "admin/components/Title/Title";
-import { Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import "./RewardsHistory.scss";
 
