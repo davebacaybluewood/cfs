@@ -311,101 +311,113 @@ const Pricing: React.FC = () => {
               </TableContainer>
             </Grid>
           ) : (
-            <Grid item xs={12} md={10} lg={12}>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>
-                      <Typography variant="h4"></Typography>
-                    </TableCell>
-                    {userTypes.map((userType) => (
-                      <TableCell key={userType} align="center">
-                        <Typography
-                          variant="h4"
-                          style={{ fontFamily: "Agrandir", fontSize: "1.2rem" }}
-                        >
-                          {userType}
-                        </Typography>
+            <Grid item xs={12} md={12}>
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <Typography variant="h4"></Typography>
                       </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {categories.map((mainCategory) => (
-                    <React.Fragment key={mainCategory}>
-                      <TableRow>
-                        <TableCell colSpan={userTypes.length + 1}>
-                          <div
+                      {userTypes.map((userType) => (
+                        <TableCell key={userType} align="center">
+                          <Typography
+                            variant="h4"
                             style={{
                               fontWeight: "bold",
                               fontFamily: "Agrandir",
-                              fontSize: "1.2rem",
+                              fontSize: ".9rem",
                             }}
                           >
-                            {mainCategory}
-                          </div>
+                            {userType}
+                          </Typography>
                         </TableCell>
-                      </TableRow>
-                      {subcategories[mainCategory].map((subcategory) => (
-                        <TableRow key={subcategory}>
-                          <TableCell
-                            style={{ background: "#f6f9fc", fontSize: "1rem" }}
-                          >
-                            <span
-                              style={{ fontFamily: `"Montserrat", sans-serif` }}
-                            >
-                              {subcategory}
-                            </span>
-                          </TableCell>
-                          {userTypes.map((userType) => (
-                            <TableCell
-                              key={userType}
-                              align="center"
-                              style={{ background: "#f6f9fc" }}
-                            >
-                              {pricingUserData[userType][mainCategory][
-                                subcategory
-                              ] ? (
-                                <IconButton color="primary" aria-label="True">
-                                  <CheckIcon />
-                                </IconButton>
-                              ) : (
-                                <IconButton color="error" aria-label="False">
-                                  <CloseIcon />
-                                </IconButton>
-                              )}
-                            </TableCell>
-                          ))}
-                        </TableRow>
                       ))}
-                    </React.Fragment>
-                  ))}
-                  <TableRow>
-                    <TableCell></TableCell>
-                    {userTypes.map((userType) => (
-                      <TableCell key={userType}>
-                        <button
-                          className="portal-btn"
-                          onClick={() => {
-                            userType === "Agent"
-                              ? window.open(
-                                  "https://agent.comfortfinancialsolutions.com/signup",
-                                  "_blank"
-                                )
-                              : navigate(paths.subscriberRegistration);
-                          }}
-                          style={{ fontSize: "1rem", minWidth: "94px"}}
-                        >
-                          Join as {" "}{userType}                          
-                        </button>
-                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {categories.map((mainCategory) => (
+                      <React.Fragment key={mainCategory}>
+                        <TableRow>
+                          <TableCell colSpan={userTypes.length + 1}>
+                            <div
+                              style={{
+                                fontWeight: "bold",
+                                fontFamily: "Agrandir",
+                                fontSize: "1rem",
+                                display: "flex",
+                                justifyContent: "center",
+                                textAlign: "center"
+                              }}
+                            >
+                              {mainCategory}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                        {subcategories[mainCategory].map((subcategory) => (
+                          <TableRow key={subcategory}>
+                            <TableCell
+                              style={{
+                                background: "#f6f9fc",
+                                fontSize: "1rem",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  fontFamily: `"Montserrat", sans-serif`,
+                                }}
+                              >
+                                {subcategory}
+                              </span>
+                            </TableCell>
+                            {userTypes.map((userType) => (
+                              <TableCell
+                                key={userType}
+                                align="center"
+                                style={{ background: "#f6f9fc" }}
+                              >
+                                {pricingUserData[userType][mainCategory][
+                                  subcategory
+                                ] ? (
+                                  <IconButton color="primary" aria-label="True">
+                                    <CheckIcon />
+                                  </IconButton>
+                                ) : (
+                                  <IconButton color="error" aria-label="False">
+                                    <CloseIcon />
+                                  </IconButton>
+                                )}
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))}
+                      </React.Fragment>
                     ))}
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
+                    <TableRow>
+                      <TableCell></TableCell>
+                      {userTypes.map((userType) => (
+                        <TableCell key={userType}>
+                          <button
+                            className="portal-btn"
+                            onClick={() => {
+                              userType === "Agent"
+                                ? window.open(
+                                    "https://agent.comfortfinancialsolutions.com/signup",
+                                    "_blank"
+                                  )
+                                : navigate(paths.subscriberRegistration);
+                            }}
+                            style={{ fontSize: "1rem", minWidth: "94px" }}
+                          >
+                            Join as {userType}
+                          </button>
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
           )}
         </Grid>
       </Container>
