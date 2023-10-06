@@ -30,22 +30,25 @@ const FAQSubscriber: React.FC = (props) => {
   return (
     <Wrapper breadcrumb={crumbs}>
       <PageTitle key="title" title="Frequently Asked Questions (FAQ)" />
-      <div className="section__title">
-        <h3>Frequently Asked Questions (FAQ)</h3>
+
+      <div className="faq-subscriber-container">
+        <div className="section__title">
+          <h3>Frequently Asked Questions (FAQ)</h3>
+        </div>
+        <Grid container spacing={2}>
+          {faqs.map((f) => {
+            return (
+              <Grid item xs={12}>
+                <StandardCard
+                  key={f.id}
+                  title={f.title}
+                  description={f.description}
+                ></StandardCard>
+              </Grid>
+            );
+          })}
+        </Grid>
       </div>
-      <Grid container spacing={2}>
-        {faqs.map((f) => {
-          return (
-            <Grid item xs={12}>
-              <StandardCard
-                key={f.id}
-                title={f.title}
-                description={f.description}
-              ></StandardCard>
-            </Grid>
-          );
-        })}
-      </Grid>
     </Wrapper>
   );
 };
