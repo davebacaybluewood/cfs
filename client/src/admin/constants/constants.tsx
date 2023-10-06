@@ -1,89 +1,89 @@
-import AgentForm from "admin/pages/Agents/AgentForm";
-import AgentProfile from "admin/pages/Agents/LandingPages/ActiveAgents/AgentProfile";
-import AgentRequest from "admin/pages/Agents/LandingPages/AgentRequests/AgentRequest";
-import AgentRequestProfile from "admin/pages/Agents/LandingPages/AgentRequests/AgentRequestProfile";
-import DeactivatedAgentProfile from "admin/pages/Agents/LandingPages/DeactivatedAgents/DeactivatedAgentProfile";
-import DeactivatedAgents from "admin/pages/Agents/LandingPages/DeactivatedAgents/DeactivatedAgents";
-import DeclinedAgentProfile from "admin/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgentProfile";
-import DeclinedAgents from "admin/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgents";
-import Appointments from "admin/pages/Appointments/Appointments";
-import AgentAppointments from "admin/pages/Appointments/LandingPages/AgentAppointments/AgentAppointments";
-import AppointmentInformation from "admin/pages/Appointments/LandingPages/ScheduledAppointment/AppointmentInformation";
-import ScheduleAppointment from "admin/pages/Appointments/LandingPages/ScheduledAppointment/ScheduleAppointment";
-import Blogs from "admin/pages/Blogs/Blogs";
-import BlogForm from "admin/pages/Blogs/component/BlogForm";
-import Calendar from "admin/pages/Calendar/Calendar";
-import ContactAdmin from "admin/pages/ContactAdmin/ContactAdmin";
-import Contacts from "admin/pages/Contacts/Contacts";
-import EventInvites from "admin/pages/EventInvites/EventInvites";
-import Events from "admin/pages/Events/Events";
-import EventsForm from "admin/pages/Events/EventsForm";
-import FAQs from "admin/pages/FAQs/FAQs";
-import Webinars from "admin/pages/FileMaintenance/pages/Webinars/Webinars";
-import WebinarSingle from "admin/pages/FileMaintenance/pages/Webinars/WebinarSingle";
-import Inquiries from "admin/pages/Inquiries/Inquiries";
-import Login from "admin/pages/Login/Login";
-import Notifications from "admin/pages/Notifications/Notifications";
-import RaiseSupport from "admin/pages/RaiseSupport/RaiseSupport";
-import Settings from "admin/pages/Settings/Settings";
-import UserProfile from "admin/pages/UserProfile/UserProfile";
-import CFSWebinars from "admin/pages/Webinars/LandingPages/CFSWebinars";
-import ActivatedWebinars from "admin/pages/Webinars/LandingPages/ActivatedWebinars";
-import RequestedWebinars from "admin/pages/Webinars/LandingPages/RequestedWebinars";
-import DynamicWebinarInformation from "admin/pages/Webinars/LandingPages/WebinarSingle/DynamicWebinarInformation";
-import GuardedWrapper from "../layouts/GuardedWrapper";
-import Agents from "../pages/Agents/LandingPages/ActiveAgents/Agents";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import adminPathsNew from "./routes";
-import AdminWebinars from "admin/pages/Webinars/LandingPages/AdminWebinars";
-import LandingPage from "admin/pages/LandingPage/LandingPage";
-import LandingPageInfo from "admin/pages/LandingPage/LandingPageInfo";
-import ProfileForm from "admin/pages/Profile/components/ProfileForm/ProfileForm";
-import ProfileSettings from "admin/pages/Profile/components/ProfileSettings/ProfileSettings";
-import WebinarForm from "admin/pages/FileMaintenance/pages/Webinars/WebinarForm";
-import Users from "admin/pages/Users/Users";
-import ViewBlog from "admin/pages/Blogs/ViewBlog";
-import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
-import MailingList from "admin/pages/MailingList/MailingList";
-import ProfileFormAdd from "admin/pages/Profile/components/ProfileForm/ProfileFormAdd";
-import Licensing from "admin/pages/Licensing/Licensing";
-import ContractForm from "admin/ContractSignForm/ContractForm";
-import EmailMarketing from "admin/pages/EmailMarketing/EmailMarketing";
-import MailLibraryForm from "admin/pages/MailingLibrary/MailLibraryForm";
-import MailingLibrary from "admin/pages/MailingLibrary/MailingLibrary";
-import AgentSubscribers from "admin/pages/Subscribers/AgentSubscribers";
-import Merchandises from "admin/pages/Merchandises/Merchandises";
-import MerchandiseForm from "admin/pages/Merchandises/MerchandiseForm";
-import ShareableEmails from "admin/pages/ShareableEmails/ShareableEmails";
+import AgentForm from "admin/pages/Agents/AgentForm"
+import AgentProfile from "admin/pages/Agents/LandingPages/ActiveAgents/AgentProfile"
+import AgentRequest from "admin/pages/Agents/LandingPages/AgentRequests/AgentRequest"
+import AgentRequestProfile from "admin/pages/Agents/LandingPages/AgentRequests/AgentRequestProfile"
+import DeactivatedAgentProfile from "admin/pages/Agents/LandingPages/DeactivatedAgents/DeactivatedAgentProfile"
+import DeactivatedAgents from "admin/pages/Agents/LandingPages/DeactivatedAgents/DeactivatedAgents"
+import DeclinedAgentProfile from "admin/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgentProfile"
+import DeclinedAgents from "admin/pages/Agents/LandingPages/DeclinedAgents/DeclinedAgents"
+import Appointments from "admin/pages/Appointments/Appointments"
+import AgentAppointments from "admin/pages/Appointments/LandingPages/AgentAppointments/AgentAppointments"
+import AppointmentInformation from "admin/pages/Appointments/LandingPages/ScheduledAppointment/AppointmentInformation"
+import ScheduleAppointment from "admin/pages/Appointments/LandingPages/ScheduledAppointment/ScheduleAppointment"
+import Blogs from "admin/pages/Blogs/Blogs"
+import BlogForm from "admin/pages/Blogs/component/BlogForm"
+import Calendar from "admin/pages/Calendar/Calendar"
+import ContactAdmin from "admin/pages/ContactAdmin/ContactAdmin"
+import Contacts from "admin/pages/Contacts/Contacts"
+import EventInvites from "admin/pages/EventInvites/EventInvites"
+import Events from "admin/pages/Events/Events"
+import EventsForm from "admin/pages/Events/EventsForm"
+import FAQs from "admin/pages/FAQs/FAQs"
+import Webinars from "admin/pages/FileMaintenance/pages/Webinars/Webinars"
+import WebinarSingle from "admin/pages/FileMaintenance/pages/Webinars/WebinarSingle"
+import Inquiries from "admin/pages/Inquiries/Inquiries"
+import Login from "admin/pages/Login/Login"
+import Notifications from "admin/pages/Notifications/Notifications"
+import RaiseSupport from "admin/pages/RaiseSupport/Subcribers/RaiseSupport"
+import Settings from "admin/pages/Settings/Settings"
+import UserProfile from "admin/pages/UserProfile/UserProfile"
+import CFSWebinars from "admin/pages/Webinars/LandingPages/CFSWebinars"
+import ActivatedWebinars from "admin/pages/Webinars/LandingPages/ActivatedWebinars"
+import RequestedWebinars from "admin/pages/Webinars/LandingPages/RequestedWebinars"
+import DynamicWebinarInformation from "admin/pages/Webinars/LandingPages/WebinarSingle/DynamicWebinarInformation"
+import GuardedWrapper from "../layouts/GuardedWrapper"
+import Agents from "../pages/Agents/LandingPages/ActiveAgents/Agents"
+import Dashboard from "../pages/Dashboard/Dashboard"
+import adminPathsNew from "./routes"
+import AdminWebinars from "admin/pages/Webinars/LandingPages/AdminWebinars"
+import LandingPage from "admin/pages/LandingPage/LandingPage"
+import LandingPageInfo from "admin/pages/LandingPage/LandingPageInfo"
+import ProfileForm from "admin/pages/Profile/components/ProfileForm/ProfileForm"
+import ProfileSettings from "admin/pages/Profile/components/ProfileSettings/ProfileSettings"
+import WebinarForm from "admin/pages/FileMaintenance/pages/Webinars/WebinarForm"
+import Users from "admin/pages/Users/Users"
+import ViewBlog from "admin/pages/Blogs/ViewBlog"
+import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation"
+import MailingList from "admin/pages/MailingList/MailingList"
+import ProfileFormAdd from "admin/pages/Profile/components/ProfileForm/ProfileFormAdd"
+import Licensing from "admin/pages/Licensing/Licensing"
+import ContractForm from "admin/ContractSignForm/ContractForm"
+import EmailMarketing from "admin/pages/EmailMarketing/EmailMarketing"
+import MailLibraryForm from "admin/pages/MailingLibrary/MailLibraryForm"
+import MailingLibrary from "admin/pages/MailingLibrary/MailingLibrary"
+import AgentSubscribers from "admin/pages/Subscribers/AgentSubscribers"
+import Merchandises from "admin/pages/Merchandises/Merchandises"
+import MerchandiseForm from "admin/pages/Merchandises/MerchandiseForm"
+import ShareableEmails from "admin/pages/ShareableEmails/ShareableEmails"
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
   ROLE_EDITOR: "ROLE_EDITOR",
   ROLE_MASTER_ADMIN: "ROLE_MASTER_ADMIN",
-};
+}
 
 export const OUTSOURCE_LINKS = {
   AGENCY_ROCKET: "https://agencyrocket.com/",
   BACK_OFFICE: "https://agent.comfortfinancialsolutions.com",
-};
+}
 
 export const MAIN_WEBSITE_LINK = [
   "https://www.comfortfinancialsolutions.com/",
   "https://www.gocfs.pro/",
-];
+]
 
 export const SCHEDULE_TYPES = {
   WEBINAR: "WEBINAR",
   PAW: "PAW",
-};
+}
 
-export const DEFAULT_IMAGE = "/assets/others/no-image.png";
+export const DEFAULT_IMAGE = "/assets/others/no-image.png"
 
 export const APPOINTMENT_STATUSES = {
   CANCELLED: "CANCELLED",
   ACTIVE: "ACTIVE",
   ONGOING: "ONGOING",
-};
+}
 
 export const POSITIONS = [
   {
@@ -98,7 +98,7 @@ export const POSITIONS = [
     value: "POSITION_CONTENT_CREATOR",
     label: "Content Creator",
   },
-];
+]
 
 export const AGENT_ROLES = [
   {
@@ -133,7 +133,7 @@ export const AGENT_ROLES = [
     value: "ROLE_EXECUTIVE_VICE_PRESIDENT",
     label: "Executive Vice President",
   },
-];
+]
 export const EDITOR_ROLES = [
   {
     value: "ROLE_EDITOR_BLOGS",
@@ -143,7 +143,7 @@ export const EDITOR_ROLES = [
     value: "ROLE_EDITOR_EMAIL_TEMPLATES",
     label: "Email Templates",
   },
-];
+]
 export const CONTENT_CREATOR_ROLES = [
   {
     value: "ROLE_CONTENT_CREATOR_BLOGS",
@@ -153,7 +153,7 @@ export const CONTENT_CREATOR_ROLES = [
     value: "ROLE_CONTENT_CREATOR_EMAIL_TEMPLATES",
     label: "Email Templates",
   },
-];
+]
 
 export const adminRoutes = [
   {
@@ -620,4 +620,4 @@ export const adminRoutes = [
       </GuardedWrapper>
     ),
   },
-];
+]

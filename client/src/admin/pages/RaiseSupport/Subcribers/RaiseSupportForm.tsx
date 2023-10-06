@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 // Formik
 import { Formik } from "formik"
 import FormikTextInput from "library/Formik/FormikInput"
 // Material UI
-import { Alert, AlertTitle, Grid } from "@mui/material"
-import IconButton from "@mui/material/IconButton"
-import CloseIcon from "@mui/icons-material/Close"
-
+import { Grid, CircularProgress } from "@mui/material"
 // Components
 import Button from "library/Button/Button"
-import Spinner from "library/Spinner/Spinner"
 import ErrorText from "pages/PortalRegistration/components/ErrorText"
+import AlertMessage from "./AlertMessage"
 // Yup
 import * as Yup from "yup"
 // ReactQuill
 import ReactQuill from "react-quill"
 import useQuillModules from "./useQuillModules"
-import AlertMessage from "./AlertMessage"
 
 const RaiseSupportForm = () => {
   const [isIssueEmpty, setIsIssueEmpty] = useState(false)
@@ -31,10 +27,6 @@ const RaiseSupportForm = () => {
   })
   const realQuillModules = useQuillModules()
 
-  useEffect(() => {
-    console.log("FORM IS LOADING")
-  }, [loading])
-
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required."),
     email: Yup.string().email().required("Email is required."),
@@ -44,7 +36,6 @@ const RaiseSupportForm = () => {
 
   return (
     <>
-      {loading ? <Spinner variant="fixed" /> : null}
       {isFormSuccess && !loading ? (
         <AlertMessage />
       ) : (
@@ -56,21 +47,18 @@ const RaiseSupportForm = () => {
               // test loading
               setTimeout(() => {
                 setLoading(false)
-              }, 1500)
+              }, 2000)
               setIsFormSuccess(true)
-              console.log(data.issue)
               setIsIssueEmpty(false)
-              console.log("ISSUES FILLED SUCCESS")
             } else {
-              console.log("ISSUES FIELD ERROR")
               setIsIssueEmpty(true)
             }
-            // handle empty issue field
           }}
           validationSchema={validationSchema}
         >
-          {({ values, handleSubmit, setFieldValue, touched, setTouched }) => {
+          {({ values, handleSubmit, setFieldValue }) => {
             return (
+              // form element handles submit when enter key is pressed
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                   {/* Name Field */}
@@ -83,6 +71,7 @@ const RaiseSupportForm = () => {
                   >
                     <label htmlFor="">Name (Required)</label>
                     <FormikTextInput
+                      disabled={loading && true}
                       placeholder={`Enter your name here`}
                       variant="outlined"
                       name="name"
@@ -99,6 +88,7 @@ const RaiseSupportForm = () => {
                   >
                     <label htmlFor="">Email (Required)</label>
                     <FormikTextInput
+                      disabled={loading && true}
                       placeholder={`Enter your email here`}
                       variant="outlined"
                       name="email"
@@ -116,6 +106,7 @@ const RaiseSupportForm = () => {
                   >
                     <label htmlFor="">Contact Number (Required)</label>
                     <FormikTextInput
+                      disabled={loading && true}
                       placeholder={`Enter your name here`}
                       variant="outlined"
                       name="contactNum"
@@ -132,6 +123,7 @@ const RaiseSupportForm = () => {
                   >
                     <label htmlFor="">Subject (Required)</label>
                     <FormikTextInput
+                      disabled={loading && true}
                       placeholder={`Enter subject here`}
                       variant="outlined"
                       name="subject"
@@ -146,19 +138,22 @@ const RaiseSupportForm = () => {
                       better understand the problem.
                     </p>
                     <ReactQuill
+                      readOnly={loading && true}
                       style={{
                         border: isIssueEmpty ? "red solid 1px" : "none",
                         borderRadius: "5px",
+                        background: loading ? "rgb(240, 240, 240)" : "",
+                        cursor: loading ? "not-allowed" : "",
                       }}
                       value={values.issue}
                       modules={realQuillModules}
                       onChange={(value) => {
                         setFieldValue("issue", value)
-                        console.log(value)
                       }}
                       theme="snow"
                       placeholder="Please describe the issue here."
                     />
+                    {/* custom validation error message because YUP doesn't validate ReactQuill */}
                     <ErrorText
                       isError={isIssueEmpty}
                       text="Issue cannot be empty"
@@ -166,7 +161,23 @@ const RaiseSupportForm = () => {
                   </Grid>
                   {/* Submit Button */}
                   <Grid item>
-                    <Button type="submit" variant="primary">
+                    <Button
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        cursor: loading ? "not-allowed" : "",
+                      }}
+                      type="submit"
+                      variant="primary"
+                      disabled={loading && true}
+                    >
+                      {loading && (
+                        <CircularProgress
+                          color="info"
+                          style={{ marginRight: "5px" }}
+                          size={20}
+                        />
+                      )}
                       Submit
                     </Button>
                   </Grid>

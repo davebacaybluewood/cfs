@@ -1,16 +1,16 @@
-import { Button } from "@mui/material";
-import Table from "admin/components/Table/Table";
-import Title from "admin/components/Title/Title";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import { formatISODateToDate } from "helpers/dateFormatter";
-import Toast from "library/Toast/Toast";
-import React, { memo, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { deleteEvent, listEvents } from "redux/actions/eventActions";
-import { CrumbTypes } from "../Dashboard/types";
-import Form from "./components/Form";
+import { Button } from "@mui/material"
+import Table from "admin/components/Table/Table"
+import Title from "admin/components/Title/Title"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { paths } from "constants/routes"
+import { formatISODateToDate } from "helpers/dateFormatter"
+import Toast from "library/Toast/Toast"
+import React, { memo, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { deleteEvent, listEvents } from "redux/actions/eventActions"
+import { CrumbTypes } from "../Dashboard/types"
+import Form from "./components/Form"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -23,39 +23,39 @@ const crumbs: CrumbTypes[] = [
     url: paths.newAdminEvents,
     isActive: true,
   },
-];
+]
 
 const Events: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [showDrawer, setShowDrawer] = useState(false);
-  const [showDialog, setShowDialog] = useState(false);
-  const [eventData, setEventData] = useState([]);
-  const [showToast, setShowToast] = useState(false);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [showDrawer, setShowDrawer] = useState(false)
+  const [showDialog, setShowDialog] = useState(false)
+  const [eventData, setEventData] = useState([])
+  const [showToast, setShowToast] = useState(false)
 
   useEffect(() => {
-    dispatch(listEvents() as any);
-  }, [dispatch]);
+    dispatch(listEvents() as any)
+  }, [dispatch])
 
-  const eventList = useSelector((state: any) => state.eventList);
-  const { loading, events } = eventList;
+  const eventList = useSelector((state: any) => state.eventList)
+  const { loading, events } = eventList
 
   useEffect(() => {
-    setEventData(events);
-  }, [events]);
+    setEventData(events)
+  }, [events])
 
   const deleteHandler = (id: string) => {
-    const filteredEvents = eventData.filter((x: any) => x._id !== id);
+    const filteredEvents = eventData.filter((x: any) => x._id !== id)
     if (window.confirm("Are you sure you want to delete this data?")) {
-      setShowToast(true);
-      dispatch(deleteEvent(id) as any);
-      setEventData(filteredEvents);
+      setShowToast(true)
+      dispatch(deleteEvent(id) as any)
+      setEventData(filteredEvents)
     }
-  };
+  }
 
   const viewHandler = (id: string) => {
-    navigate(paths.newAdminEventsForm.replace(":id", id));
-  };
+    navigate(paths.newAdminEventsForm.replace(":id", id))
+  }
 
   const actionButtons = (id: string) => {
     return (
@@ -72,8 +72,8 @@ const Events: React.FC = () => {
           Delete
         </Button>
       </div>
-    );
-  };
+    )
+  }
   const tableDefs = {
     columns: [
       {
@@ -122,14 +122,14 @@ const Events: React.FC = () => {
         eventDate: formatISODateToDate(event.event_date),
         description: event.description,
         actions: actionButtons(event._id),
-      };
+      }
     }),
-  };
+  }
 
   const addEventHandler = () => {
     // setShowDrawer(true);
-    navigate(paths.newAdminEventsForm.replace(":id", "add"));
-  };
+    navigate(paths.newAdminEventsForm.replace(":id", "add"))
+  }
 
   return (
     <Wrapper
@@ -161,7 +161,7 @@ const Events: React.FC = () => {
         text="Data has been submitted."
       />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default memo(Events);
+export default memo(Events)
