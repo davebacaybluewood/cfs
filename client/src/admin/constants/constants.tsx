@@ -18,13 +18,13 @@ import Contacts from "admin/pages/Contacts/Contacts"
 import EventInvites from "admin/pages/EventInvites/EventInvites"
 import Events from "admin/pages/Events/Events"
 import EventsForm from "admin/pages/Events/EventsForm"
-import FAQs from "admin/pages/FAQs/FAQs"
+import FAQSubscriber from "admin/pages/FAQSubscriber/FAQSubscriber"
 import Webinars from "admin/pages/FileMaintenance/pages/Webinars/Webinars"
 import WebinarSingle from "admin/pages/FileMaintenance/pages/Webinars/WebinarSingle"
 import Inquiries from "admin/pages/Inquiries/Inquiries"
 import Login from "admin/pages/Login/Login"
 import Notifications from "admin/pages/Notifications/Notifications"
-import RaiseSupport from "admin/pages/RaiseSupport/Subcribers/RaiseSupport"
+import RaiseSupport from "admin/pages/RaiseSupport/RaiseSupport"
 import Settings from "admin/pages/Settings/Settings"
 import UserProfile from "admin/pages/UserProfile/UserProfile"
 import CFSWebinars from "admin/pages/Webinars/LandingPages/CFSWebinars"
@@ -55,6 +55,9 @@ import AgentSubscribers from "admin/pages/Subscribers/AgentSubscribers"
 import Merchandises from "admin/pages/Merchandises/Merchandises"
 import MerchandiseForm from "admin/pages/Merchandises/MerchandiseForm"
 import ShareableEmails from "admin/pages/ShareableEmails/ShareableEmails"
+import RewardsHistory from "admin/pages/RewardsHistory/RewardsHistory"
+import RaiseSupportTicket from "admin/pages/RaiseSupport/Admin/single-page/RaiseSupportTicket"
+// >>>>>>> 7e77eb1400849711ea11c6d30765d7357d03efc6
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -360,7 +363,7 @@ export const adminRoutes = [
     path: adminPathsNew.faqs,
     element: (
       <GuardedWrapper>
-        <FAQs />
+        <FAQSubscriber />
       </GuardedWrapper>
     ),
   },
@@ -369,6 +372,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <RaiseSupport />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.raiseSupportTicket,
+    element: (
+      <GuardedWrapper>
+        <RaiseSupportTicket />
       </GuardedWrapper>
     ),
   },
@@ -617,6 +628,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <ShareableEmails />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.rewardsHistory,
+    element: (
+      <GuardedWrapper>
+        <RewardsHistory />
       </GuardedWrapper>
     ),
   },

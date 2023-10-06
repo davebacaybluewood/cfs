@@ -1,36 +1,43 @@
 import React, { useState } from "react"
-// Formik
+// formik
 import { Formik } from "formik"
 import FormikTextInput from "library/Formik/FormikInput"
-// Material UI
+// mui
 import { Grid, CircularProgress } from "@mui/material"
-// Components
+// components
 import Button from "library/Button/Button"
 import ErrorText from "pages/PortalRegistration/components/ErrorText"
 import AlertMessage from "./AlertMessage"
-// Yup
-import * as Yup from "yup"
-// ReactQuill
+// reactquill
 import ReactQuill from "react-quill"
 import useQuillModules from "./useQuillModules"
+// library
+import * as Yup from "yup"
+import axios from "axios"
+// endpoints
+import ENDPOINTS from "constants/endpoints"
 
 const RaiseSupportForm = () => {
   const [isIssueEmpty, setIsIssueEmpty] = useState(false)
   const [loading, setLoading] = useState(false)
+  // shows alert message when state is true
   const [isFormSuccess, setIsFormSuccess] = useState(false)
+
+  // Formik initial values
   const [initialValues, setInitialValues] = useState({
-    name: "",
+    contactNumber: "",
     email: "",
-    contactNum: "",
-    subject: "",
     issue: "",
+    name: "",
+    subject: "",
+    status: "PENDING",
   })
   const realQuillModules = useQuillModules()
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required."),
     email: Yup.string().email().required("Email is required."),
-    contactNum: Yup.string().required("Contact number is required."),
+    contactNumber: Yup.string().required("Contact number is required."),
     subject: Yup.string().required("Subject is required."),
   })
 
@@ -43,13 +50,29 @@ const RaiseSupportForm = () => {
           initialValues={initialValues}
           onSubmit={async (data) => {
             if (data.issue) {
-              setLoading(true)
-              // test loading
-              setTimeout(() => {
+              try {
+                setLoading(true)
+
+                const response = await axios.post(
+                  ENDPOINTS.RAISE_SUPPORT_ROOT,
+                  {
+                    name: data.name,
+                    email: data.email,
+                    contactNumber: data.contactNumber,
+                    subject: data.subject,
+                    issue: data.issue,
+                    status: "PENDING",
+                  }
+                )
+
                 setLoading(false)
-              }, 2000)
-              setIsFormSuccess(true)
-              setIsIssueEmpty(false)
+                setIsFormSuccess(true)
+                setIsIssueEmpty(false)
+
+                return response.data
+              } catch (error) {
+                console.error("Error posting data:", error)
+              }
             } else {
               setIsIssueEmpty(true)
             }
@@ -109,8 +132,8 @@ const RaiseSupportForm = () => {
                       disabled={loading && true}
                       placeholder={`Enter your name here`}
                       variant="outlined"
-                      name="contactNum"
-                      value={values.contactNum}
+                      name="contactNumber"
+                      value={values.contactNumber}
                     />
                   </Grid>
                   {/* Subject Field */}

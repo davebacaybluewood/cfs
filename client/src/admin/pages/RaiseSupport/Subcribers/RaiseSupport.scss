@@ -12,7 +12,6 @@
     }
 
     .raise-support-form {
-      max-width: 800px;
       margin: 4rem auto 0;
       background: #fff;
       padding: 5rem 4rem;
@@ -60,56 +59,56 @@
 
     .loading-label {
       height: 10px;
-      background: rgb(205, 205, 205);
+      background: rgb(217, 217, 217);
       width: 40%;
-      margin-bottom: 4px;
-      border-radius: 3px;
+      margin-bottom: 7px;
+      border-radius: 50px;
       animation: pulse 1s infinite alternate; /* Apply pulse animation */
     }
 
     .loading-field {
       height: 20px;
-      background: rgb(184, 184, 184);
+      background: rgb(197, 197, 197);
       width: 50%;
-      border-radius: 3px;
+      border-radius: 50px;
       margin-bottom: 2em;
       animation: pulse 1s infinite alternate; /* Apply pulse animation */
     }
 
     .loading-label-2 {
       height: 10px;
-      background: rgb(205, 205, 205);
+      background: rgb(217, 217, 217);
       width: 60%;
-      margin-bottom: 4px;
-      border-radius: 3px;
-      animation: pulse 1.2s infinite alternate; /* Apply pulse animation */
+      margin-bottom: 7px;
+      border-radius: 50px;
+      animation: pulse 1s infinite alternate;
     }
 
     .loading-field-2 {
       height: 20px;
-      background: rgb(184, 184, 184);
+      background: rgb(197, 197, 197);
       width: 80%;
-      border-radius: 3px;
+      border-radius: 50px;
       margin-bottom: 2em;
-      animation: pulse 1.2s infinite alternate; /* Apply pulse animation */
+      animation: pulse 1s infinite alternate;
     }
 
     .loading-label-3 {
       height: 10px;
-      background: rgb(205, 205, 205);
+      background: rgb(217, 217, 217);
       width: 20%;
-      border-radius: 3px;
-      margin-bottom: 3px;
-      animation: pulse 1.4s infinite alternate; /* Apply pulse animation */
+      border-radius: 50px;
+      margin-bottom: 7px;
+      animation: pulse 1s infinite alternate;
     }
 
     .loading-field-3 {
       height: 20px;
-      background: rgb(184, 184, 184);
+      background: rgb(197, 197, 197);
       width: 60%;
-      border-radius: 3px;
+      border-radius: 50px;
       margin-bottom: 2em;
-      animation: pulse 1.4s infinite alternate; /* Apply pulse animation */
+      animation: pulse 1s infinite alternate;
     }
   }
 }

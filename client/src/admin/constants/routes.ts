@@ -33,6 +33,7 @@ const adminPaths = {
   adminBlogUsers: adminCfsRoute + "editors",
   faqs: adminCfsRoute + "faqs",
   raiseSupport: adminCfsRoute + "raise-support",
+  raiseSupportTicket: adminCfsRoute + "raise-support/:id",
   contactAdmin: adminCfsRoute + "contact-admin",
   adminAgents: adminCfsRoute + "agents",
   agentRequests: adminCfsRoute + "agent-requests",
@@ -68,6 +69,6 @@ const adminPaths = {
   merchandiseForm: adminCfsRoute + "merchandises/form",
   rewardsHistory: adminCfsRoute + "rewards/history",
   shareableEmails: adminCfsRoute + "shareable-emails",
-} as const;
+} as const
 
 export default adminPaths;

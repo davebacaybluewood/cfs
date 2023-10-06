@@ -4,9 +4,10 @@ import sendEmail from "../utils/sendNodeMail.js";
 import BlogsAndResource from "../models/blogAndResourceModel.js";
 import Agents from "../models/agentModel.js";
 import EmailTemplate from "../models/emailTemplate.js";
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import undefinedValidator from "./helpers/undefinedValidator.js";
 import Agent from "../models/agentModel.js";
+import generateString from "../utils/generateString.js";
 
 /**
  * @desc: Send an email marketing
@@ -143,6 +144,8 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     throw new Error("Error occured in submission.");
   }
 
+  const hierarchyCode = generateString(6);
+
   const newTemplate = {
     templateName,
     templateBody,
@@ -151,6 +154,7 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     isAddedByMarketing,
     subject,
     design,
+    hierarchyCode,
   };
 
   const emailTemplate = new EmailTemplate(newTemplate);

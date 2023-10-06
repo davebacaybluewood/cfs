@@ -1,23 +1,18 @@
-import React, { useContext, useEffect } from "react"
-import { paths } from "constants/routes"
-import "./RaiseSupport.scss"
-
-// Components
+import React, { useContext } from "react"
+import "./Subcribers/RaiseSupport.scss"
+// components
 import Wrapper from "admin/components/Wrapper/Wrapper"
-import { CrumbTypes } from "../../Dashboard/types"
-
-import RaiseSupportForm from "./RaiseSupportForm"
-
-// Context
+import { CrumbTypes } from "../Dashboard/types"
+import RaiseSupportForm from "./Subcribers/RaiseSupportForm"
+import RaiseSupportTable from "./Admin/RaiseSupportTable"
+import RaiseSupportFormLoading from "./loading/RaiseSupportFormLoading"
+// context
 import { UserContext } from "admin/context/UserProvider"
+// custom hooks
 import useFetchUserProfile from "admin/hooks/useFetchProfile"
-import {
-  EDITOR_ROLES,
-  POSITIONS,
-  PROFILE_ROLES,
-} from "pages/PortalRegistration/constants"
-import RaiseSupportTable from "../Admin/RaiseSupportTable"
-import RaiseSupportLoading from "../loading/RaiseSupportLoading"
+// constants
+import { paths } from "constants/routes"
+import { PROFILE_ROLES } from "pages/PortalRegistration/constants"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -42,10 +37,6 @@ const RaiseSupport: React.FC = () => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value
   })
 
-  useEffect(() => {
-    console.log(isAdmin)
-  }, [isAdmin])
-
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -55,7 +46,10 @@ const RaiseSupport: React.FC = () => {
     >
       <div className="raise-support-form-container">
         <h2>Raise Support</h2>
-        <div className="raise-support-form">
+        <div
+          className="raise-support-form"
+          style={{ maxWidth: isAdmin !== undefined && !isAdmin ? "800px" : "" }}
+        >
           {!loading ? (
             <>
               {isAdmin !== undefined && !isAdmin ? (
@@ -65,7 +59,7 @@ const RaiseSupport: React.FC = () => {
               )}
             </>
           ) : (
-            <RaiseSupportLoading />
+            <RaiseSupportFormLoading />
           )}
         </div>
       </div>

@@ -42,6 +42,7 @@ const subscriberRegistration = async (req, res, next) => {
     firstName,
     phoneNumber,
     verificationCode,
+    userGuid,
   } = req.body;
 
   if (
@@ -65,7 +66,8 @@ const subscriberRegistration = async (req, res, next) => {
     lastName,
     firstName,
     phoneNumber,
-    verificationCode
+    verificationCode,
+    userGuid
   );
 
   if (registrationResponse) {
