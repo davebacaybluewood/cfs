@@ -45,7 +45,6 @@ const RewardsHistory: React.FC = () => {
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
 
-  console.log(JSON.stringify(userGuid));
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={false}>
       <div className="rewards-history-container">
