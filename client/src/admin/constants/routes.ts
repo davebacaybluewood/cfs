@@ -1,4 +1,4 @@
-const adminCfsRoute = "/portal/";
+const adminCfsRoute = "/portal/"
 
 const adminPaths = {
   index: adminCfsRoute + "",
@@ -71,4 +71,4 @@ const adminPaths = {
   shareableEmails: adminCfsRoute + "shareable-emails",
 } as const
 
-export default adminPaths;
+export default adminPaths
