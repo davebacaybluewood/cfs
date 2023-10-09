@@ -236,13 +236,6 @@ const useSidebarLinks = (
       ],
     },
     {
-      linkText: "Rewards History",
-      link: paths.rewardsHistory,
-      isActive: currentPage === adminPathsNew.rewardsHistory.split("/")[2],
-      icon: <FaClock />,
-      role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
-    },
-    {
       linkText: "Merchandises",
       link: paths.merchandises,
       isActive: currentPage === adminPathsNew.merchandises.split("/")[2],
