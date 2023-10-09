@@ -57,7 +57,6 @@ import MerchandiseForm from "admin/pages/Merchandises/MerchandiseForm"
 import ShareableEmails from "admin/pages/ShareableEmails/ShareableEmails"
 import RewardsHistory from "admin/pages/RewardsHistory/RewardsHistory"
 import RaiseSupportTicket from "admin/pages/RaiseSupport/Admin/single-page/RaiseSupportTicket"
-// >>>>>>> 7e77eb1400849711ea11c6d30765d7357d03efc6
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
