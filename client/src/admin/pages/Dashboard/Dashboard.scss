@@ -37,21 +37,19 @@
   background-color: #fff;
   box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
 
-  .MuiDataGrid-root {
-    button,
-    span,
-    p,
-    input,
-    select,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    div,
-    label {
-      font-size: 1.2rem;
-    }
+  button,
+  span,
+  p,
+  input,
+  select,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  div,
+  label {
+    font-size: 1.2rem;
   }
 
   .MuiDataGrid-columnHeaderTitle {

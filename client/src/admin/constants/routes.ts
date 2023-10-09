@@ -64,11 +64,12 @@ const adminPaths = {
   mailingList: adminCfsRoute + "mailing-list",
   mailLibrary: adminCfsRoute + "email-library",
   mailLibraryForm: adminCfsRoute + "email-library-form",
-  agentsubscribers: adminCfsRoute + "agent-subscribers",
+  mySubscribers: adminCfsRoute + "subscribers",
   merchandises: adminCfsRoute + "merchandises",
   merchandiseForm: adminCfsRoute + "merchandises/form",
   rewardsHistory: adminCfsRoute + "rewards/history",
   shareableEmails: adminCfsRoute + "shareable-emails",
-} as const
+  orderHistory: adminCfsRoute + "merchandises/order-history",
+} as const;
 
 export default adminPaths

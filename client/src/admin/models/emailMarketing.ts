@@ -20,6 +20,7 @@ export interface EmailTemplateData {
   authorName?: string;
   subject: string;
   design: string;
+  settings: string[];
 }
 
 export interface EmailTemplateTableData {
@@ -41,4 +42,10 @@ export interface EmailTemplateParameter {
   isAddedByMarketing: boolean;
   subject: string;
   design: string;
+  settings: string[];
+}
+
+export interface EmailTemplateDataSubscriber {
+  templates: EmailTemplateData[];
+  name: string;
 }

@@ -14,6 +14,7 @@ import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { UserContext } from "admin/context/UserProvider";
 import RolesForm from "./components/RolesForm";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
+import SubscriberForm from "./components/SubscriberForm";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -51,10 +52,11 @@ const ProfileForm: React.FC = () => {
 
   const navigate = useNavigate();
   const [activeForm, setActiveForm] = useState({
-    main: true,
+    main: false,
     password: false,
     email: false,
     roles: false,
+    subscriber: true,
   });
 
   const formClassnames = classNames("profile-form-content", {
@@ -118,6 +120,7 @@ const ProfileForm: React.FC = () => {
                   email: false,
                   password: true,
                   roles: false,
+                  subscriber: false,
                 })
               }
             >
@@ -139,6 +142,7 @@ const ProfileForm: React.FC = () => {
                     email: false,
                     password: false,
                     roles: true,
+                    subscriber: false,
                   })
                 }
               >
@@ -149,6 +153,7 @@ const ProfileForm: React.FC = () => {
         ) : null}
       </Grid>
       <div className={formClassnames}>
+        {activeForm.subscriber ? <SubscriberForm profile={profile} /> : null}
         {activeForm.main ? <MainForm profile={profile} /> : null}
         {activeForm.password ? <PasswordForm profile={profile} /> : null}
         {activeForm.email ? <EmailForm profile={profile} /> : null}

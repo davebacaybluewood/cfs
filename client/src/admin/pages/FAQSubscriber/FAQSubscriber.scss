@@ -1,25 +1,26 @@
-.standard-card-container {
-  .card-description {
-    p {
-      height: 3rem;
-      font-size: clamp(1rem, 1vw, 10rem);
+.faq-subscriber-container {
+  text-align: left;
+
+  .standard-card-container {
+    .card-title {
+      h3 {
+        text-align: inherit;
+      }
     }
-  }
+    .card-description {
+      p {
+        height: inherit;
+        font-size: clamp(13px, 13px, 5rem);
+        text-align: inherit;
+      }
+    }
 
-  //override standard-card-container class
-  box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
-  padding: 2rem;
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+    padding: 2rem;
+    border-radius: 4px;
 
-  @media screen and (max-width: 1024px) {
-    margin: auto;
-  }
-}
-
-.section__title {
-  h3 {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-size: 5rem;
-    margin-bottom: 2rem;
+    @media screen and (max-width: 1024px) {
+      margin: auto;
+    }
   }
 }

@@ -16,7 +16,7 @@ import "./PortalRegistration.scss";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 interface PortalRegistrationProps {
   isAdmin?: boolean;

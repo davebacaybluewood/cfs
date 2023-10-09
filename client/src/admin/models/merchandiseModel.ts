@@ -1,4 +1,4 @@
-export interface MerchandiseError {
+export interface MerchandiseResData {
   message: string;
   success: string;
 }
@@ -17,4 +17,13 @@ export interface MerchandiseBody {
   name: string;
   image: any;
   points: number;
+}
+
+export interface MerchandiseRedeemBody {
+  name: string;
+  address: string;
+  phoneNumber: string;
+  emailAddress: string;
+  remarks: string;
+  userGuid: string;
 }

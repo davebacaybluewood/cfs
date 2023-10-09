@@ -1,30 +1,41 @@
-import { Grid, Tooltip } from "@mui/material"
-import { CrumbTypes } from "admin/pages/Dashboard/types"
-import { paths } from "constants/routes"
-import Wrapper from "admin/components/Wrapper/Wrapper"
-import { Formik } from "formik"
-import Spinner from "library/Spinner/Spinner"
-import * as Yup from "yup"
-import React, { useContext, useEffect, useRef, useState } from "react"
-import "./EmailMarketing.scss"
-import FormikTextInput from "library/Formik/FormikInput"
-import Button from "library/Button/Button"
-import ErrorText from "pages/PortalRegistration/components/ErrorText"
-import { ClearIndicatorStyles } from "library/MultiSelectInput/MultiSelectInputV2"
-import agent from "admin/api/agent"
-import { UserContext } from "admin/context/UserProvider"
-import CreatableSelect from "react-select/creatable"
-import { toast } from "react-toastify"
-import DrawerBase, { Anchor } from "library/Drawer/Drawer"
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid"
-import { BsPlusCircle } from "react-icons/bs"
-import { useLocation } from "react-router-dom"
-import { EmailTemplateParameter } from "admin/models/emailMarketing"
-import nameFallback from "helpers/nameFallback"
-import { formatISODateOnly } from "helpers/date"
-import { AiFillCheckCircle } from "react-icons/ai"
-import EmailEditor from "react-email-editor"
-import ReactHtmlParser from "html-react-parser"
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import { CrumbTypes } from "admin/pages/Dashboard/types";
+import { paths } from "constants/routes";
+import Wrapper from "admin/components/Wrapper/Wrapper";
+import { Formik } from "formik";
+import Spinner from "library/Spinner/Spinner";
+import * as Yup from "yup";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import "./EmailMarketing.scss";
+import FormikTextInput from "library/Formik/FormikInput";
+import Button from "library/Button/Button";
+import ErrorText from "pages/PortalRegistration/components/ErrorText";
+import { ClearIndicatorStyles } from "library/MultiSelectInput/MultiSelectInputV2";
+import agent from "admin/api/agent";
+import { UserContext } from "admin/context/UserProvider";
+import CreatableSelect from "react-select/creatable";
+import { toast } from "react-toastify";
+import DrawerBase, { Anchor } from "library/Drawer/Drawer";
+import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
+import { BsPlusCircle } from "react-icons/bs";
+import { useLocation } from "react-router-dom";
+import { EmailTemplateParameter } from "admin/models/emailMarketing";
+import nameFallback from "helpers/nameFallback";
+import { formatISODateOnly } from "helpers/date";
+import { AiFillCheckCircle } from "react-icons/ai";
+import EmailEditor from "react-email-editor";
+import ReactHtmlParser from "html-react-parser";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export const emailOptions = [
   { value: "dave.bacay.vc@gmail.com", label: "dave.bacay.vc@gmail.com" },
@@ -32,10 +43,16 @@ export const emailOptions = [
 ]
 
 const ContractForm: React.FC = () => {
-  const [loading, setLoading] = useState(false)
-  const [openDrawer, setOpenDrawer] = useState(false)
-  const emailEditorRef = useRef<any>(null)
-  const [design, setDesign] = useState<any>()
+  const [loading, setLoading] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const emailEditorRef = useRef<any>(null);
+  const [design, setDesign] = useState<any>();
+  const [expanded, setExpanded] = React.useState<string | false>(false);
+
+  const handleChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
 
   const crumbs: CrumbTypes[] = [
     {
@@ -54,20 +71,27 @@ const ContractForm: React.FC = () => {
     recipients: [],
     emailBody: "",
     subject: "",
-  })
-  const [templates, setTemplates] = useState<any>([])
-  const userCtx = useContext(UserContext) as any
-  const search = useLocation().search
-  const templateId = new URLSearchParams(search).get("templateId")
-  const action = new URLSearchParams(search).get("action")
-  const userGuid = userCtx?.user?.userGuid
+    settings: [""],
+  });
+  const [templates, setTemplates] = useState<any>([]);
+  const userCtx = useContext(UserContext) as any;
+  const search = useLocation().search;
+  const templateId = new URLSearchParams(search).get("templateId");
+  const action = new URLSearchParams(search).get("action");
+  const userGuid = userCtx?.user?.userGuid;
 
-  const populateForm = (emailBody: string, subject: string, design: string) => {
+  const populateForm = (
+    emailBody: string,
+    subject: string,
+    design: string,
+    settings: string[]
+  ) => {
     setInitialValues((prevState) => ({
       recipients: prevState.recipients,
       emailBody: emailBody,
       subject: subject,
-    }))
+      settings: settings,
+    }));
 
     emailEditorRef.current?.loadDesign(JSON.parse(design))
 
@@ -118,8 +142,9 @@ const ContractForm: React.FC = () => {
               populateForm(
                 template.templateBody,
                 template.subject,
-                template.design
-              )
+                template.design,
+                template.settings
+              );
             }}
           >
             <span>Import</span> <BsPlusCircle />
@@ -158,8 +183,9 @@ const ContractForm: React.FC = () => {
         emailBody: data.templateBody,
         subject: data.subject,
         recipients: [],
-      })
-      setDesign(data.design)
+        settings: data.settings,
+      });
+      setDesign(data.design);
 
       /** Load if edit mode */
       if (emailEditorRef.current) {
@@ -373,6 +399,96 @@ const ContractForm: React.FC = () => {
                         ReactHtmlParser(initialValues.emailBody)
                       )}
                     </Grid>
+                    <Grid
+                      item
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      className="form-card-container"
+                    >
+                      <Accordion
+                        expanded={expanded === "panel1"}
+                        onChange={handleChange("panel1")}
+                      >
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="panel1bh-content"
+                          id="panel1bh-header"
+                        >
+                          <Typography
+                            sx={{ fontSize: 15, width: "33%", flexShrink: 0 }}
+                          >
+                            Advanced Settings
+                          </Typography>
+                          <Typography
+                            sx={{ fontSize: 13, color: "text.secondary" }}
+                          >
+                            Configure your email settings
+                          </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <FormGroup>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  name="BLOGS"
+                                  checked={values.settings.includes("BLOGS")}
+                                />
+                              }
+                              label="Show Blogs"
+                              onChange={(e) => {
+                                if (values.settings.includes("BLOGS")) {
+                                  const filteredValues = values.settings.filter(
+                                    function (item: string) {
+                                      return item !== "BLOGS";
+                                    }
+                                  );
+
+                                  setFieldValue("settings", filteredValues);
+                                } else {
+                                  const filteredValues = [
+                                    ...values.settings,
+                                    "BLOGS",
+                                  ];
+                                  setFieldValue("settings", filteredValues);
+                                }
+                              }}
+                            />
+                            <FormControlLabel
+                              required
+                              control={
+                                <Checkbox
+                                  name="REGISTER"
+                                  checked={values.settings.includes(
+                                    "REGISTER_BUTTONS"
+                                  )}
+                                />
+                              }
+                              label="Show Register Buttons"
+                              onChange={(e) => {
+                                if (
+                                  values.settings.includes("REGISTER_BUTTONS")
+                                ) {
+                                  const filteredValues = values.settings.filter(
+                                    function (item: string) {
+                                      return item !== "REGISTER_BUTTONS";
+                                    }
+                                  );
+
+                                  setFieldValue("settings", filteredValues);
+                                } else {
+                                  const filteredValues = [
+                                    ...values.settings,
+                                    "REGISTER_BUTTONS",
+                                  ];
+                                  setFieldValue("settings", filteredValues);
+                                }
+                              }}
+                            />
+                          </FormGroup>
+                        </AccordionDetails>
+                      </Accordion>
+                    </Grid>
                   </Grid>
                   <div className="form-actions">
                     {action !== "view" ? (
@@ -395,6 +511,7 @@ const ContractForm: React.FC = () => {
                                 isAddedByMarketing: true,
                                 subject: values.subject,
                                 design: JSON.stringify(design),
+                                settings: values.settings,
                               })
                             }
                           >
@@ -410,6 +527,7 @@ const ContractForm: React.FC = () => {
                                 isAddedByMarketing: true,
                                 subject: values.subject,
                                 design: JSON.stringify(design),
+                                settings: values.settings,
                               })
                             }
                           >

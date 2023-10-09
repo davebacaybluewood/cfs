@@ -4,7 +4,7 @@ import {
   deleteSubscription,
   getSubscriptions,
 } from "../controllers/subscriptionControllers.js";
-import { adminAuth, agentAuth, protect } from "../middleware/authMiddleware.js";
+import { adminAuth, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 router

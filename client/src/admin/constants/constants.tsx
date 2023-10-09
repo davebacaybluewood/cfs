@@ -57,6 +57,7 @@ import MerchandiseForm from "admin/pages/Merchandises/MerchandiseForm"
 import ShareableEmails from "admin/pages/ShareableEmails/ShareableEmails"
 import RewardsHistory from "admin/pages/RewardsHistory/RewardsHistory"
 import RaiseSupportTicket from "admin/pages/RaiseSupport/Admin/single-page/RaiseSupportTicket"
+import OrderHistory from "admin/pages/OrderHistory/OrderHistory"
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -599,7 +600,7 @@ export const adminRoutes = [
     ),
   },
   {
-    path: adminPathsNew.agentsubscribers,
+    path: adminPathsNew.mySubscribers,
     element: (
       <GuardedWrapper>
         <AgentSubscribers />
@@ -635,6 +636,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <RewardsHistory />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.orderHistory,
+    element: (
+      <GuardedWrapper>
+        <OrderHistory />
       </GuardedWrapper>
     ),
   },

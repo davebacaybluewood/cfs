@@ -1,4 +1,13 @@
-import { Grid } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { CrumbTypes } from "admin/pages/Dashboard/types";
 import { paths } from "constants/routes";
 import Wrapper from "admin/components/Wrapper/Wrapper";
@@ -16,16 +25,18 @@ import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import { useLocation } from "react-router-dom";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
-import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
+import EmailEditor from "react-email-editor";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const emailEditorRef = useRef<any>(null);
   const [design, setDesign] = useState<any>();
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues, setInitialValues] = useState<any>({
     emailBody: "",
     subject: "",
     templateName: "",
+    settings: [""],
   });
 
   const validationSchema = Yup.object({
@@ -67,9 +78,10 @@ const MailLibraryForm: React.FC = () => {
         templateId || ""
       );
       setInitialValues({
-        emailBody: data.templateBody,
-        subject: data.subject,
-        templateName: data.templateName,
+        emailBody: data.templateBody ?? "",
+        subject: data.subject ?? "",
+        templateName: data.templateName ?? "",
+        settings: data.settings ?? [],
       });
       setDesign(data.design);
       setEditButtonVisibility(data.userGuid === userGuid);
@@ -100,6 +112,7 @@ const MailLibraryForm: React.FC = () => {
           isAddedByMarketing: data.isAddedByMarketing,
           subject: data.subject,
           design: JSON.stringify(updatedDesign),
+          settings: data.settings,
         };
 
         const response = await agent.EmailMarketing.updateEmailTemplate(
@@ -159,6 +172,13 @@ const MailLibraryForm: React.FC = () => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
 
+  const [expanded, setExpanded] = React.useState<string | false>(false);
+
+  const handleChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -181,12 +201,13 @@ const MailLibraryForm: React.FC = () => {
                 isAddedByMarketing: !!isAdmin,
                 subject: data.subject,
                 design: JSON.stringify(design),
+                settings: data.settings,
               };
               saveTemplateHandler(finalData);
             }}
             validationSchema={validationSchema}
           >
-            {({ values, handleSubmit }) => {
+            {({ values, handleSubmit, errors, setFieldValue }) => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -236,6 +257,100 @@ const MailLibraryForm: React.FC = () => {
                         }}
                       />
                     </Grid>
+                    <Grid
+                      item
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      className="form-card-container"
+                    >
+                      <Accordion
+                        expanded={expanded === "panel1"}
+                        onChange={handleChange("panel1")}
+                      >
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="panel1bh-content"
+                          id="panel1bh-header"
+                        >
+                          <Typography
+                            sx={{ fontSize: 15, width: "33%", flexShrink: 0 }}
+                          >
+                            Advanced Settings
+                          </Typography>
+                          <Typography
+                            sx={{ fontSize: 13, color: "text.secondary" }}
+                          >
+                            Configure your email settings
+                          </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <FormGroup>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  name="BLOGS"
+                                  checked={
+                                    values.settings &&
+                                    values.settings.includes("BLOGS")
+                                  }
+                                />
+                              }
+                              label="Show Blogs"
+                              onChange={(e) => {
+                                if (values.settings.includes("BLOGS")) {
+                                  const filteredValues = values.settings.filter(
+                                    function (item: string) {
+                                      return item !== "BLOGS";
+                                    }
+                                  );
+
+                                  setFieldValue("settings", filteredValues);
+                                } else {
+                                  const filteredValues = [
+                                    ...values.settings,
+                                    "BLOGS",
+                                  ];
+                                  setFieldValue("settings", filteredValues);
+                                }
+                              }}
+                            />
+                            <FormControlLabel
+                              required
+                              control={
+                                <Checkbox
+                                  name="REGISTER"
+                                  checked={
+                                    values.settings &&
+                                    values.settings.includes("REGISTER_BUTTONS")
+                                  }
+                                />
+                              }
+                              label="Show Register Buttons"
+                              onChange={(e) => {
+                                if (
+                                  values.settings.includes("REGISTER_BUTTONS")
+                                ) {
+                                  const filteredValues = values.settings.filter(
+                                    function (item: string) {
+                                      return item !== "REGISTER_BUTTONS";
+                                    }
+                                  );
+
+                                  setFieldValue("settings", filteredValues);
+                                } else {
+                                  const filteredValues = [
+                                    ...values.settings,
+                                    "REGISTER_BUTTONS",
+                                  ];
+                                  setFieldValue("settings", filteredValues);
+                                }
+                              }}
+                            />
+                          </FormGroup>
+                        </AccordionDetails>
+                      </Accordion>
+                    </Grid>
                   </Grid>
                   <div className="form-actions">
                     <div className="actions">
@@ -260,6 +375,7 @@ const MailLibraryForm: React.FC = () => {
                                 isAddedByMarketing: !!isAdmin,
                                 subject: values.subject,
                                 design: JSON.stringify(design),
+                                settings: values.settings,
                               })
                             }
                           >
@@ -275,8 +391,8 @@ const MailLibraryForm: React.FC = () => {
                       )}
                     </div>
                   </div>
-                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+                  {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}

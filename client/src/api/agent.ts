@@ -185,7 +185,8 @@ const Subscriber = {
     password: string,
     lastName: string,
     firstName: string,
-    phoneNumber: string
+    phoneNumber: string,
+    userGuid: string
   ) => {
     const endpoint = "/api/subscriber/subscribe-email";
 
@@ -196,6 +197,7 @@ const Subscriber = {
         lastName,
         firstName,
         phoneNumber,
+        userGuid,
       });
 
       return res;
@@ -210,7 +212,8 @@ const Subscriber = {
     lastName: string,
     firstName: string,
     phoneNumber: string,
-    verificationCode: string
+    verificationCode: string,
+    userGuid: string
   ) => {
     const endpoint = "/api/subscriber/subscribe-code";
 
@@ -222,6 +225,7 @@ const Subscriber = {
         firstName,
         phoneNumber,
         verificationCode,
+        userGuid,
       });
 
       return res;
