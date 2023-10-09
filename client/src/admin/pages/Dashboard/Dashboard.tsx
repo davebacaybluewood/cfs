@@ -23,14 +23,8 @@ const crumbs: CrumbTypes[] = [
 const Dashboard: React.FC = () => {
   const userCtx = useContext(UserContext) as any;
   const { profile } = useFetchUserProfile(userCtx?.user?.userGuid ?? "");
-
   const USER_POSITION = profile?.position;
   const USER_ROLE = profile?.roles;
-
-  console.log({
-    USER_POSITION,
-    USER_ROLE,
-  });
 
   return (
     <Wrapper breadcrumb={crumbs} className="dashboard-content">

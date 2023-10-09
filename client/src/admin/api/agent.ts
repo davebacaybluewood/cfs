@@ -20,6 +20,8 @@ import {
   MerchandiseData,
   MerchandiseError,
 } from "admin/models/merchandiseModel";
+import { PointsData } from "admin/models/pointsModels";
+import { SubscriberMainData } from "admin/models/subscriberModel";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -291,6 +293,21 @@ const Merchandise = {
   },
 };
 
+const Points = {
+  getPointsByUserGuid: (userGuid: string) => {
+    const res = requests.get<PointsData | undefined>(`/api/points/${userGuid}`);
+
+    return res;
+  },
+  getSubscribersByUserGuid: (userGuid: string) => {
+    const res = requests.get<SubscriberMainData | undefined>(
+      `/api/points/subscribers/${userGuid}`
+    );
+
+    return res;
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
@@ -301,6 +318,7 @@ const agent = {
   Login,
   Merchandise,
   Profile,
+  Points,
 };
 
 export default agent;

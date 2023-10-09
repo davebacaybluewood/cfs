@@ -97,3 +97,18 @@
     }
   }
 }
+
+.dialog-merchandise {
+  .MuiPaper-root {
+    max-width: 900px;
+  }
+  label {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 2rem;
+  }
+  .MuiInputBase-root,
+  .MuiFormLabel-root {
+    font-size: 1.3rem !important;
+  }
+}

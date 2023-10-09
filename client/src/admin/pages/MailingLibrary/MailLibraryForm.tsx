@@ -1,4 +1,13 @@
-import { Grid } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { CrumbTypes } from "admin/pages/Dashboard/types";
 import { paths } from "constants/routes";
 import Wrapper from "admin/components/Wrapper/Wrapper";
@@ -16,7 +25,8 @@ import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import { useLocation } from "react-router-dom";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
-import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
+import EmailEditor from "react-email-editor";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -159,6 +169,13 @@ const MailLibraryForm: React.FC = () => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
 
+  const [expanded, setExpanded] = React.useState<string | false>(false);
+
+  const handleChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -186,7 +203,7 @@ const MailLibraryForm: React.FC = () => {
             }}
             validationSchema={validationSchema}
           >
-            {({ values, handleSubmit }) => {
+            {({ values, handleSubmit, errors }) => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -236,6 +253,51 @@ const MailLibraryForm: React.FC = () => {
                         }}
                       />
                     </Grid>
+                    <Grid
+                      item
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      className="form-card-container"
+                    >
+                      <label></label>
+                      <Accordion
+                        expanded={expanded === "panel1"}
+                        onChange={handleChange("panel1")}
+                      >
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="panel1bh-content"
+                          id="panel1bh-header"
+                        >
+                          <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                            Advanced Settings
+                          </Typography>
+                          <Typography sx={{ color: "text.secondary" }}>
+                            Configure your email settings
+                          </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Typography>
+                            Nulla facilisi. Phasellus sollicitudin nulla et quam
+                            mattis feugiat. Aliquam eget maximus est, id
+                            dignissim quam.
+                          </Typography>
+                        </AccordionDetails>
+                      </Accordion>
+
+                      <FormGroup>
+                        <FormControlLabel
+                          control={<Checkbox defaultChecked />}
+                          label="Show Blogs"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Show Register Buttons"
+                        />
+                      </FormGroup>
+                    </Grid>
                   </Grid>
                   <div className="form-actions">
                     <div className="actions">
@@ -275,8 +337,8 @@ const MailLibraryForm: React.FC = () => {
                       )}
                     </div>
                   </div>
-                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre>
                 </React.Fragment>
               );
             }}

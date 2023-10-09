@@ -151,6 +151,17 @@ const PROFILE_POSITIONS = {
   },
 };
 
+const POINTS_TYPE = {
+  PERSONAL_ACCOUNT_REGISTRATION: {
+    NAME: "PERSONAL_ACCOUNT_REGISTRATION",
+    POINTS: 100,
+  },
+  SUBSCRIBER_REGISTRATION_SUCCESS: {
+    NAME: "SUBSCRIBER_REGISTRATION_SUCCESS",
+    POINTS: 100,
+  },
+};
+
 const DEFAULT_IMAGE =
   "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps";
 
@@ -162,4 +173,5 @@ export {
   PROFILE_POSITIONS,
   SUBSCRIBER_ROLES,
   DEFAULT_IMAGE,
+  POINTS_TYPE,
 };
