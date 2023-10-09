@@ -56,6 +56,7 @@ import Merchandises from "admin/pages/Merchandises/Merchandises";
 import MerchandiseForm from "admin/pages/Merchandises/MerchandiseForm";
 import ShareableEmails from "admin/pages/ShareableEmails/ShareableEmails";
 import RewardsHistory from "admin/pages/RewardsHistory/RewardsHistory";
+import OrderHistory from "admin/pages/OrderHistory/OrderHistory";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -626,6 +627,14 @@ export const adminRoutes = [
     element: (
       <GuardedWrapper>
         <RewardsHistory />
+      </GuardedWrapper>
+    ),
+  },
+  {
+    path: adminPathsNew.orderHistory,
+    element: (
+      <GuardedWrapper>
+        <OrderHistory />
       </GuardedWrapper>
     ),
   },

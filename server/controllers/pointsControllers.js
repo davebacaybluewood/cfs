@@ -1,6 +1,6 @@
 import Points from "../models/pointsModel.js";
+import RedeeemPoints from "../models/redeemedPointsModel.js";
 import Hierarchy from "../models/hierarchyModel.js";
-import Agents from "../models/agentModel.js";
 
 const getPointsByUserGuid = async (req, res, next) => {
   const { userGuid } = req.params;
@@ -14,14 +14,25 @@ const getPointsByUserGuid = async (req, res, next) => {
   }
 
   const points = await Points.find({ userGuid });
-
   let totalPoints = 0;
-
   points.forEach((item) => {
     totalPoints += parseInt(item.points);
   });
 
-  res.json({ totalPoints, points });
+  const redeemedPoints = await RedeeemPoints.find({ userGuid });
+  let totalRedeemedPoints = 0;
+  redeemedPoints.forEach((item) => {
+    totalRedeemedPoints += parseInt(item.points);
+  });
+
+  const response = {
+    totalPoints: parseInt(totalPoints - totalRedeemedPoints),
+    points,
+    redeemedPoints,
+    totalRedeemedPoints,
+  };
+
+  res.json(response);
 };
 
 const getSubscribersByUserGuid = async (req, res, next) => {
@@ -35,8 +46,10 @@ const getSubscribersByUserGuid = async (req, res, next) => {
     return;
   }
 
-  // const subscribers = await Hierarchy.find({ recruiterUserGuid: userGuid });
   const subscribers = await Hierarchy.aggregate([
+    {
+      $match: { recruiterUserGuid: userGuid },
+    },
     {
       $lookup: {
         from: "users",
@@ -61,7 +74,7 @@ const getSubscribersByUserGuid = async (req, res, next) => {
     {
       $unset: "userDoc",
     },
-  ]).skip(1);
+  ]);
 
   res.json({
     totalSubscribers: subscribers.length,

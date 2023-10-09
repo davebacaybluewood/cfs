@@ -2,8 +2,10 @@ import express from "express";
 import {
   createMerchandise,
   deleteMerchandise,
+  emailRedeemMerchNotif,
   getMerchandise,
   getMerchandiseById,
+  redeemMerchandise,
   updateMerchandiseDetails,
   updateMerchandiseStatus,
 } from "../controllers/merchandiseController.js";
@@ -24,5 +26,9 @@ router
   .route("/details/:id")
   .put(protect, multer.single("image"), updateMerchandiseDetails);
 router.route("/status/:id").put(protect, updateMerchandiseStatus);
+
+router
+  .route("/redeem-merch/:merchandiseId")
+  .post(protect, redeemMerchandise, emailRedeemMerchNotif);
 
 export default router;

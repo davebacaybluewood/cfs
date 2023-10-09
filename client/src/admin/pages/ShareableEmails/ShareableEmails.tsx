@@ -7,6 +7,7 @@ import Title from "admin/components/Title/Title";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { UserContext } from "admin/context/UserProvider";
 import agent from "admin/api/agent";
+import { EmailTemplateDataSubscriber } from "admin/models/emailMarketing";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -26,15 +27,21 @@ const ShareableEmails: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
-  const [templates, setTemplates] = useState<any>([]);
+  const [templates, setTemplates] = useState<
+    EmailTemplateDataSubscriber | undefined
+  >();
+  const [name, setName] = useState("");
 
   useEffect(() => {
     setLoading(false);
     const fetchEmailTemplates = async () => {
       setLoading(true);
-      const data = await agent.EmailMarketing.getEmailTemplates(userGuid);
+      const data = await agent.EmailMarketing.getEmailTemplatesBySubscriber(
+        userGuid
+      );
 
       setTemplates(data);
+      setName(data?.name ?? "");
     };
 
     if (userGuid) {
@@ -49,16 +56,16 @@ const ShareableEmails: React.FC = () => {
         title="Shareable emails"
         subtitle="List of available shareable emails."
       ></Title>
-      {templates?.map((data) => {
+      {templates?.templates?.map((data) => {
         return (
           <EmailCard
             subject={data.subject}
-            createdBy="Dave Bacay"
+            createdBy={name}
             onClick={() =>
               navigate({
                 pathname: paths.emailMarketing,
                 search: createSearchParams({
-                  templateId: data._id,
+                  templateId: data._id ?? "",
                   action: "view",
                 }).toString(),
               })

@@ -7,6 +7,7 @@ import EmailTemplate from "../models/emailTemplate.js";
 import mongoose from "mongoose";
 import undefinedValidator from "./helpers/undefinedValidator.js";
 import Agent from "../models/agentModel.js";
+import Hierarchy from "../models/hierarchyModel.js";
 import generateString from "../utils/generateString.js";
 
 /**
@@ -18,6 +19,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
   let sendHTMLEmail;
   const mailSubject = req.body.subject;
   const contractEmail = req.body.recipients;
+  const settings = req.body.settings;
 
   const blogs = await BlogsAndResource.find().limit(5).sort({ $natural: -1 });
   const agent = await Agents.find({ userGuid: req.body.userGuid });
@@ -84,7 +86,8 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
   const mailContent = emailMarketingEmail({
     agentInfo: agentInfo,
     body: req.body.emailBody,
-    blogEmail: blogEmail.join(""),
+    blogEmail: settings.includes("BLOGS") ? blogEmail.join("") : null,
+    userGuid: req.body.userGuid,
   });
 
   const bcc = contractEmail;
@@ -128,6 +131,7 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     isAddedByMarketing,
     subject,
     design,
+    settings,
   } = req.body;
   const { userGuid } = req.params;
   const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
@@ -155,6 +159,7 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
     subject,
     design,
     hierarchyCode,
+    settings,
   };
 
   const emailTemplate = new EmailTemplate(newTemplate);
@@ -258,6 +263,41 @@ const getEmailTemplates = expressAsync(async (req, res, next) => {
 });
 
 /**
+ * @desc: get all available email template
+ * @route: POST /api/email-marketing/template/subscriber/:userGuid
+ * @access: Private
+ */
+const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
+  const { userGuid } = req.params;
+  const { status } = req.query;
+
+  if (!userGuid) {
+    throw new Error("Error occured in fetching.");
+  }
+
+  /** Find the hierarchy */
+  const hierarchy = await Hierarchy.find({ userGuid });
+  const hierachyCode = hierarchy[0].hierachyCode;
+
+  /** Get the head of hierarchy to get the user guid */
+  const hierarchyHead = await Hierarchy.find({ hierachyCode });
+  const userGuidHead = hierarchyHead[0].userGuid;
+
+  /** Get the head information */
+  const agents = await Agents.find({ userGuid: userGuidHead });
+
+  const templates = await EmailTemplate.find({
+    userGuid: userGuidHead,
+    status,
+  });
+
+  res.json({
+    templates,
+    name: agents[0].firstName + " " + agents[0].lastName,
+  });
+});
+
+/**
  * @desc: get single email template
  * @route: POST /api/email-marketing/template/:userGuid
  * @access: Private
@@ -316,8 +356,14 @@ const getSingleEmailTemplate = expressAsync(async (req, res, next) => {
  */
 const updateEmailTemplate = expressAsync(async (req, res, next) => {
   const { userGuid, templateId } = req.params;
-  const { templateName, templateBody, templateStatus, subject, design } =
-    req.body;
+  const {
+    templateName,
+    templateBody,
+    templateStatus,
+    subject,
+    design,
+    settings,
+  } = req.body;
   const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
 
   if (
@@ -354,6 +400,9 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
       emailTemplate.status,
       templateStatus
     );
+    emailTemplate.settings = settings.length
+      ? settings
+      : emailTemplate.settings;
     emailTemplate.subject = undefinedValidator(emailTemplate.subject, subject);
     await emailTemplate.save();
     res.json("[Email Template] has been successfuly updated.");
@@ -368,4 +417,5 @@ export {
   getEmailTemplates,
   getSingleEmailTemplate,
   updateEmailTemplate,
+  getEmailTemplatesBySubscriber,
 };

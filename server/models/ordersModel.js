@@ -1,39 +1,41 @@
 import mongoose from "mongoose";
 
-const emailTemplateModel = mongoose.Schema(
+const ordersModel = mongoose.Schema(
   {
     userGuid: {
       type: String,
       required: true,
     },
-    hierarchyCode: {
+    merchandiseId: {
       type: String,
+      ref: "merchandises",
     },
-    templateBody: {
-      type: String,
-      required: true,
-    },
-    templateName: {
+    points: {
       type: String,
       required: true,
     },
     status: {
       type: String,
-      enum: ["DRAFT", "ACTIVATED", "DEACTIVATED"],
+      required: true,
     },
-    subject: {
+    name: {
       type: String,
       required: true,
     },
-    design: {
+    emailAddress: {
       type: String,
       required: true,
     },
-    isAddedByMarketing: {
-      type: Boolean,
+    phoneNumber: {
+      type: String,
+      required: true,
     },
-    settings: {
-      type: [String],
+    address: {
+      type: String,
+      required: true,
+    },
+    remarks: {
+      type: String,
     },
   },
   {
@@ -41,6 +43,6 @@ const emailTemplateModel = mongoose.Schema(
   }
 );
 
-const EmailTemplate = mongoose.model("EmailTemplate", emailTemplateModel);
+const Orders = mongoose.model("Orders", ordersModel);
 
-export default EmailTemplate;
+export default Orders;

@@ -2,6 +2,9 @@ const emailMarketingEmail = (data) => {
   const blogEmail = data.blogEmail;
   const agentInfo = data.agentInfo;
   const body = data.body;
+  const userGuid = data.userGuid;
+
+  const host = "http://localhost:3000";
 
   return `<!-- Free to use, HTML email template designed & built by FullSphere. Learn more about us at www.fullsphere.co.uk -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -159,6 +162,16 @@ const emailMarketingEmail = (data) => {
           <div style="margin-bottom: 20px; font-family: 'Roboto', sans-serif;" className="body-container">
             ${body}
           </div>
+          <div style="margin-bottom: 20px; font-family: 'Roboto', sans-serif;" className="body-container">
+              <div style="background: #e7e7e7; width: 382px; display: inline-block; text-align: center; padding-top: 13px; padding-bottom: 13px;">
+                  <h2 style="margin: 0; font-size: 16px; color: #333333;">Register as an Agent</h2>
+                  <a href="https://agent.comfortfinancialsolutions.com/signup">Click here to register</a>
+              </div>
+              <div style="background: #e7e7e7; width: 382px; display: inline-block; text-align: center; padding-top: 13px; padding-bottom: 13px;">
+                  <h2 style="margin: 0; font-size: 16px; color: #333333;">Register as a Subscriber</h2>
+                  <a href="${host}/subscribe?userGuid=${userGuid}">Click here to register</a>
+              </div>
+          </div>
     
           <div style="font-family: 'Roboto', sans-serif; color: #333">
             Sincerely, <br />
@@ -171,7 +184,11 @@ const emailMarketingEmail = (data) => {
               >${agentInfo.name}</span
             >
             <br />
-            License #${agentInfo.licenseNumber} <br />
+            ${
+              agentInfo.licenseNumber
+                ? `License #${agentInfo.licenseNumber} <br />`
+                : ""
+            }
             ${agentInfo.position}
           </div>
         </div>
@@ -214,20 +231,26 @@ const emailMarketingEmail = (data) => {
               width: 100%;
             "
           >
-            <h3 style="margin-bottom: 0; margin-top: 0; color: #333;">${agentInfo.name}</h3>
-            <p
-              style="
-                margin: 0;
-                border-bottom: 1px solid #eee;
-                font-weight: 300;
-                color: #333;
-                line-height: 17px;
-                font-size: 12px;
-                padding-bottom: 5px;
-              "
-            >
-              ${agentInfo.bio}
-            </p>
+            <h3 style="margin-bottom: 0; margin-top: 0; color: #333;">${
+              agentInfo.name
+            }</h3>
+            ${
+              agentInfo.bio
+                ? `<p
+            style="
+              margin: 0;
+              border-bottom: 1px solid #eee;
+              font-weight: 300;
+              color: #333;
+              line-height: 17px;
+              font-size: 12px;
+              padding-bottom: 5px;
+            "
+          >
+            ${agentInfo.bio}
+          </p>`
+                : ""
+            }
             <div
               style="
                 display: flex;
@@ -240,7 +263,9 @@ const emailMarketingEmail = (data) => {
                 src="https://res.cloudinary.com/dfm2vczpy/image/upload/v1691788376/icons/phone-call_2_uizjys.png"
                 style="margin-right: 10px"
               />
-              <div style="font-weight: 400; margin: 0; color: #333; position: relative; margin-top: 4px; font-size: 16px;">${agentInfo.phoneNumber}</div>
+              <div style="font-weight: 400; margin: 0; color: #333; position: relative; margin-top: 4px; font-size: 16px;">${
+                agentInfo.phoneNumber ? agentInfo.phoneNumber : "-"
+              }</div>
             </div>
             <div
               style="
@@ -255,7 +280,9 @@ const emailMarketingEmail = (data) => {
                 src="https://res.cloudinary.com/dfm2vczpy/image/upload/v1691788486/icons/email_qfppzi.png"
                 style="margin-right: 10px"
               />
-              <div style="font-weight: 400; margin: 0; position: relative; margin-top: 4px; font-size: 16px;">${agentInfo.emailAddress}</div>
+              <div style="font-weight: 400; margin: 0; position: relative; margin-top: 4px; font-size: 16px;">${
+                agentInfo.emailAddress
+              }</div>
             </div>
 
             <div style="margin-top: 25px;">
@@ -275,8 +302,11 @@ const emailMarketingEmail = (data) => {
         <!-- End of agent info section -->
     
         <!-- Start of Blog section -->
-        <div
-          style="
+        ${
+          blogEmail
+            ? `
+            <div
+              style="
             width: 770px;
             max-width: 770px;
             background-color: #ffffff;
@@ -288,10 +318,13 @@ const emailMarketingEmail = (data) => {
             margin-top: 7px;
             margin-bottom: 7px;
           "
-          width="770"
-        >
-          ${blogEmail}
-        </div>
+              width="770"
+            >
+              ${blogEmail}
+            </div>
+          `
+            : ""
+        }
         <!-- End of Blog section -->
     
         <!-- Start footer -->
