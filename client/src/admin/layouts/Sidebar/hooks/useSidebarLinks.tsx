@@ -33,6 +33,7 @@ import {
   FaCube,
   FaHistory,
   FaMailBulk,
+  FaClock,
 } from "react-icons/fa";
 import { MdEmail, MdLibraryBooks } from "react-icons/md";
 
@@ -233,6 +234,13 @@ const useSidebarLinks = (
         PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
         PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value,
       ],
+    },
+    {
+      linkText: "Rewards History",
+      link: paths.rewardsHistory,
+      isActive: currentPage === adminPathsNew.rewardsHistory.split("/")[2],
+      icon: <FaClock />,
+      role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
     },
     {
       linkText: "Merchandises",
