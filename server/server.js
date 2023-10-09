@@ -30,6 +30,7 @@ import emailSubscriberRoutes from "./routes/emailSubscriberRoutes.js";
 import backOfficeRoutes from "./routes/backOfficeRoutes.js";
 import merchandiseRoute from "./routes/merchandiseRoute.js";
 import raiseSupportRoute from "./routes/raiseSupportRoute.js";
+import pointsRoutes from "./routes/pointsRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
 import { ApolloServer, gql } from "apollo-server-express";
@@ -85,6 +86,7 @@ app.use("/api/email-subscriber", emailSubscriberRoutes);
 app.use("/api/backOffice/", backOfficeRoutes);
 app.use("/api/merchandise/", merchandiseRoute);
 app.use("/api/raise-support/", raiseSupportRoute);
+app.use("/api/points/", pointsRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

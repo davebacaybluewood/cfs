@@ -5,7 +5,6 @@ import { CrumbTypes } from "../Dashboard/types";
 import "./FAQSubscriber.scss";
 import Indicator from "admin/components/Indicator/Indicator";
 import StandardCard from "library/StandardCard/StandardCard";
-
 import { faqs } from "./FAQdummy";
 import { Grid } from "@mui/material";
 import PageTitle from "library/PageTitle/PageTitle";
@@ -30,7 +29,10 @@ const FAQSubscriber: React.FC = () => {
       <PageTitle key="title" title="Frequently Asked Questions (FAQ)" />
 
       <div className="faq-subscriber-container">
-        <Title title="Frequently Asked Questions (FAQ)" subtitle="" />
+        <Title
+          title="Frequently Asked Questions (FAQ)"
+          subtitle="List of FAQs"
+        />
         <Grid container spacing={2}>
           {faqs.map((f) => {
             return (

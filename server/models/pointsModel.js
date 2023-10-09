@@ -1,24 +1,22 @@
 import mongoose from "mongoose";
 
-const hierarchyModel = mongoose.Schema(
+const pointsSchema = mongoose.Schema(
   {
     userGuid: {
       type: String,
       required: true,
     },
-    recruiterUserGuid: {
-      type: String,
-    },
-    hierarchyId: {
+    expirationDate: {
       type: String,
       required: true,
     },
-    hierarchyCode: {
+    points: {
       type: String,
       required: true,
     },
-    parent: {
+    type: {
       type: String,
+      required: true,
     },
   },
   {
@@ -26,6 +24,6 @@ const hierarchyModel = mongoose.Schema(
   }
 );
 
-const hierarchy = mongoose.model("Hierarchy", hierarchyModel);
+const Points = mongoose.model("Points", pointsSchema);
 
-export default hierarchy;
+export default Points;

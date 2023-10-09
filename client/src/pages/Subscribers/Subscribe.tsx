@@ -9,6 +9,7 @@ import classNames from "classnames";
 import { MAIN_IMAGES } from "constants/constants";
 import agent from "api/agent";
 import "./Subscribe.scss";
+import { useLocation } from "react-router-dom";
 
 interface SubscribeProps {
   isAdmin?: boolean;
@@ -31,6 +32,9 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
     phoneNumber: "",
     confirmationUserCode: "",
   };
+
+  const search = useLocation().search;
+  const userGuid = new URLSearchParams(search).get("userGuid");
 
   return (
     <div className="portal-registration-container">
@@ -94,7 +98,8 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                 data.password,
                 data.firstName,
                 data.lastName,
-                data.phoneNumber
+                data.phoneNumber,
+                userGuid ?? ""
               );
 
               if (req) {
@@ -118,7 +123,8 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                 data.firstName,
                 data.lastName,
                 data.phoneNumber,
-                data.confirmationUserCode
+                data.confirmationUserCode,
+                userGuid ?? ""
               );
 
               if (req) {

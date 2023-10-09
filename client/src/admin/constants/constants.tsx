@@ -590,7 +590,7 @@ export const adminRoutes = [
     ),
   },
   {
-    path: adminPathsNew.agentsubscribers,
+    path: adminPathsNew.mySubscribers,
     element: (
       <GuardedWrapper>
         <AgentSubscribers />

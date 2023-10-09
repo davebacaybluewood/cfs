@@ -5,7 +5,7 @@ interface MerchandiseCardProps {
   name: string;
   image: string;
   points: number;
-  button: {
+  button?: {
     onClick: () => void;
     text: string;
     display: boolean;
@@ -22,9 +22,11 @@ const MerchandiseCard: React.FC<MerchandiseCardProps> = (props) => {
       <div className="merchandise-captions">
         <h2>{props.name}</h2>
         <p>{props.points} points</p>
-        <button className="claim-btn" onClick={props.button.onClick}>
-          {props.button.text}
-        </button>
+        {props.button?.display ? (
+          <button className="claim-btn" onClick={props.button?.onClick}>
+            {props.button?.text}
+          </button>
+        ) : null}
       </div>
     </div>
   );

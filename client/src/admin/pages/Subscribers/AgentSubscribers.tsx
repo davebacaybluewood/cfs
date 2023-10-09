@@ -12,6 +12,7 @@ import { formatISODateOnly } from "helpers/date";
 import { toast } from "react-toastify";
 import Spinner from "library/Spinner/Spinner";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard";
+import useFetchSubscribers from "../RewardsHistory/useFetchSubscribers";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -20,19 +21,17 @@ const crumbs: CrumbTypes[] = [
     isActive: false,
   },
   {
-    title: "Agent's Subscribers",
-    url: paths.agentsubscribers,
+    title: "Subscribers",
+    url: paths.mySubscribers,
     isActive: true,
   },
 ];
 
 const AgentSubscribers: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  const [fixedLoading, setFixedLoading] = useState(false);
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
-  const [subscribers, setSubscribers] = useState<any>([]);
   const [clipboardValue, setClipboardValue] = useCopyToClipboard();
+  const { loading, subscribers } = useFetchSubscribers(userGuid);
 
   const columns: GridColDef[] = [
     {
@@ -44,22 +43,6 @@ const AgentSubscribers: React.FC = () => {
     { field: "email", headerName: "Email Address", width: 450 },
     { field: "createdAt", headerName: "Date Created", width: 250 },
   ];
-
-  useEffect(() => {
-    console.log(userGuid);
-
-    const fetchAgentSubscription = async () => {
-      setLoading(true);
-      const data = await agent.AgentSubscribers.getAgentSubscriber();
-
-      setSubscribers(data);
-    };
-
-    if (userGuid) {
-      fetchAgentSubscription();
-      setLoading(false);
-    }
-  }, [userGuid]);
 
   const filteredRows = subscribers?.map((subscriber) => {
     return {
@@ -73,7 +56,9 @@ const AgentSubscribers: React.FC = () => {
 
   function handleCopyToClipboard() {
     setClipboardValue(
-      window.location.hostname + paths.subscriberRegistration + userGuid
+      window.location.host +
+        paths.subscriberRegistration +
+        `?userGuid=${userGuid}`
     );
     toast("Link copied to Clipboard");
   }
@@ -81,21 +66,18 @@ const AgentSubscribers: React.FC = () => {
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <div className="agent-subscribers-container">
-        <Title
-          title="Agent Subscribers"
-          subtitle="List of Agent's Subscribers."
-        >
+        <Title title="Subscribers" subtitle="List of subscribers">
           <Button onClick={() => handleCopyToClipboard()} variant="contained">
-            Subscribe Link
+            Copy Subscriber Registration Link
           </Button>
         </Title>
         <div className="agent-subscribers-table">
           <div style={{ width: "100%" }}>
-            <DataGrid rows={filteredRows} columns={columns} />
+            <DataGrid rows={filteredRows || []} columns={columns} />
           </div>
         </div>
       </div>
-      {fixedLoading ? <Spinner variant="fixed" /> : null}
+      {loading ? <Spinner variant="fixed" /> : null}
     </Wrapper>
   );
 };
