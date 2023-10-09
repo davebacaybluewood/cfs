@@ -7,6 +7,7 @@ import { ContractingData } from "admin/models/contractingModel";
 import {
   EmailMarketingData,
   EmailTemplateData,
+  EmailTemplateDataSubscriber,
   EmailTemplateParameter,
 } from "admin/models/emailMarketing";
 
@@ -18,10 +19,12 @@ import {
 import {
   MerchandiseBody,
   MerchandiseData,
-  MerchandiseError,
+  MerchandiseResData,
+  MerchandiseRedeemBody,
 } from "admin/models/merchandiseModel";
 import { PointsData } from "admin/models/pointsModels";
 import { SubscriberMainData } from "admin/models/subscriberModel";
+import { OrdersData } from "admin/models/ordersModels";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -154,6 +157,13 @@ const EmailMarketing = {
 
     return res;
   },
+  getEmailTemplatesBySubscriber: (userGuid: string) => {
+    const res = requests.get<EmailTemplateDataSubscriber | undefined>(
+      `/api/email-marketing/template/subscriber/${userGuid}?status=ACTIVATED`
+    );
+
+    return res;
+  },
   updateEmailTemplate: (
     userGuid: string,
     templateId: string,
@@ -168,6 +178,7 @@ const EmailMarketing = {
         isAddedByMarketing: params.isAddedByMarketing,
         subject: params.subject,
         design: params.design,
+        settings: params.settings,
       }
     );
 
@@ -183,6 +194,7 @@ const EmailMarketing = {
         isAddedByMarketing: params.isAddedByMarketing,
         subject: params.subject,
         design: params.design,
+        settings: params.settings,
       }
     );
 
@@ -283,7 +295,24 @@ const Merchandise = {
     return res;
   },
   deleteMerchandise: async (id: string) => {
-    const res = await requests.del<MerchandiseError>(`/api/merchandise/${id}`);
+    const res = await requests.del<MerchandiseResData>(
+      `/api/merchandise/${id}`
+    );
+
+    if (res.success) {
+      return res;
+    } else {
+      return false;
+    }
+  },
+  submitMerchandise: async (
+    merchandiseId: string,
+    body: MerchandiseRedeemBody
+  ) => {
+    const res = await requests.post<MerchandiseResData>(
+      `/api/merchandise/redeem-merch/${merchandiseId}`,
+      body
+    );
 
     if (res.success) {
       return res;
@@ -308,6 +337,16 @@ const Points = {
   },
 };
 
+const Orders = {
+  getOrdersByUserGuid: (userGuid: string) => {
+    const res = requests.get<OrdersData[] | undefined>(
+      `/api/orders/${userGuid}`
+    );
+
+    return res;
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
@@ -319,6 +358,7 @@ const agent = {
   Merchandise,
   Profile,
   Points,
+  Orders,
 };
 
 export default agent;

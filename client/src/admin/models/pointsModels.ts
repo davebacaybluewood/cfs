@@ -16,6 +16,7 @@ export interface PointsUserData {
 
 export interface PointsData {
   totalPoints: number;
+  totalRedeemedPoints: number;
   points: PointsUserData[];
 }
 

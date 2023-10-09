@@ -32,10 +32,11 @@ const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const emailEditorRef = useRef<any>(null);
   const [design, setDesign] = useState<any>();
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues, setInitialValues] = useState<any>({
     emailBody: "",
     subject: "",
     templateName: "",
+    settings: [""],
   });
 
   const validationSchema = Yup.object({
@@ -77,9 +78,10 @@ const MailLibraryForm: React.FC = () => {
         templateId || ""
       );
       setInitialValues({
-        emailBody: data.templateBody,
-        subject: data.subject,
-        templateName: data.templateName,
+        emailBody: data.templateBody ?? "",
+        subject: data.subject ?? "",
+        templateName: data.templateName ?? "",
+        settings: data.settings ?? [],
       });
       setDesign(data.design);
       setEditButtonVisibility(data.userGuid === userGuid);
@@ -110,6 +112,7 @@ const MailLibraryForm: React.FC = () => {
           isAddedByMarketing: data.isAddedByMarketing,
           subject: data.subject,
           design: JSON.stringify(updatedDesign),
+          settings: data.settings,
         };
 
         const response = await agent.EmailMarketing.updateEmailTemplate(
@@ -198,12 +201,13 @@ const MailLibraryForm: React.FC = () => {
                 isAddedByMarketing: !!isAdmin,
                 subject: data.subject,
                 design: JSON.stringify(design),
+                settings: data.settings,
               };
               saveTemplateHandler(finalData);
             }}
             validationSchema={validationSchema}
           >
-            {({ values, handleSubmit, errors }) => {
+            {({ values, handleSubmit, errors, setFieldValue }) => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -260,7 +264,6 @@ const MailLibraryForm: React.FC = () => {
                       lg={12}
                       className="form-card-container"
                     >
-                      <label></label>
                       <Accordion
                         expanded={expanded === "panel1"}
                         onChange={handleChange("panel1")}
@@ -270,33 +273,83 @@ const MailLibraryForm: React.FC = () => {
                           aria-controls="panel1bh-content"
                           id="panel1bh-header"
                         >
-                          <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                          <Typography
+                            sx={{ fontSize: 15, width: "33%", flexShrink: 0 }}
+                          >
                             Advanced Settings
                           </Typography>
-                          <Typography sx={{ color: "text.secondary" }}>
+                          <Typography
+                            sx={{ fontSize: 13, color: "text.secondary" }}
+                          >
                             Configure your email settings
                           </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          <Typography>
-                            Nulla facilisi. Phasellus sollicitudin nulla et quam
-                            mattis feugiat. Aliquam eget maximus est, id
-                            dignissim quam.
-                          </Typography>
+                          <FormGroup>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  name="BLOGS"
+                                  checked={
+                                    values.settings &&
+                                    values.settings.includes("BLOGS")
+                                  }
+                                />
+                              }
+                              label="Show Blogs"
+                              onChange={(e) => {
+                                if (values.settings.includes("BLOGS")) {
+                                  const filteredValues = values.settings.filter(
+                                    function (item: string) {
+                                      return item !== "BLOGS";
+                                    }
+                                  );
+
+                                  setFieldValue("settings", filteredValues);
+                                } else {
+                                  const filteredValues = [
+                                    ...values.settings,
+                                    "BLOGS",
+                                  ];
+                                  setFieldValue("settings", filteredValues);
+                                }
+                              }}
+                            />
+                            <FormControlLabel
+                              required
+                              control={
+                                <Checkbox
+                                  name="REGISTER"
+                                  checked={
+                                    values.settings &&
+                                    values.settings.includes("REGISTER_BUTTONS")
+                                  }
+                                />
+                              }
+                              label="Show Register Buttons"
+                              onChange={(e) => {
+                                if (
+                                  values.settings.includes("REGISTER_BUTTONS")
+                                ) {
+                                  const filteredValues = values.settings.filter(
+                                    function (item: string) {
+                                      return item !== "REGISTER_BUTTONS";
+                                    }
+                                  );
+
+                                  setFieldValue("settings", filteredValues);
+                                } else {
+                                  const filteredValues = [
+                                    ...values.settings,
+                                    "REGISTER_BUTTONS",
+                                  ];
+                                  setFieldValue("settings", filteredValues);
+                                }
+                              }}
+                            />
+                          </FormGroup>
                         </AccordionDetails>
                       </Accordion>
-
-                      <FormGroup>
-                        <FormControlLabel
-                          control={<Checkbox defaultChecked />}
-                          label="Show Blogs"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Show Register Buttons"
-                        />
-                      </FormGroup>
                     </Grid>
                   </Grid>
                   <div className="form-actions">
@@ -322,6 +375,7 @@ const MailLibraryForm: React.FC = () => {
                                 isAddedByMarketing: !!isAdmin,
                                 subject: values.subject,
                                 design: JSON.stringify(design),
+                                settings: values.settings,
                               })
                             }
                           >
@@ -337,8 +391,8 @@ const MailLibraryForm: React.FC = () => {
                       )}
                     </div>
                   </div>
-                  <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre>
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+                  {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}

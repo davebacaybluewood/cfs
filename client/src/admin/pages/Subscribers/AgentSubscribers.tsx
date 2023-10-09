@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import Spinner from "library/Spinner/Spinner";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard";
 import useFetchSubscribers from "../RewardsHistory/useFetchSubscribers";
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -73,7 +74,13 @@ const AgentSubscribers: React.FC = () => {
         </Title>
         <div className="agent-subscribers-table">
           <div style={{ width: "100%" }}>
-            <DataGrid rows={filteredRows || []} columns={columns} />
+            <NoInformationToDisplay
+              showNoInfo={!filteredRows?.length}
+              title="No Subscribers"
+              message="No information to display"
+            >
+              <DataGrid rows={filteredRows || []} columns={columns} />
+            </NoInformationToDisplay>
           </div>
         </div>
       </div>

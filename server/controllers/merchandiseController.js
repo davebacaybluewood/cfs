@@ -1,6 +1,12 @@
 import Merchandise from "../models/merchandiseModel.js";
 import expressAsync from "express-async-handler";
 import cloudinary from "../utils/cloudinary.js";
+import Orders from "../models/ordersModel.js";
+import User from "../models/userModel.js";
+import sendEmail from "../utils/sendNodeMail.js";
+import merchandiseAdminNotif from "../emailTemplates/merchandiseAdminNotif.js";
+import merchandiseSubscriberNotif from "../emailTemplates/merchandiseSubscriberNotif.js";
+import RedeemedPoints from "../models/redeemedPointsModel.js";
 
 function isFieldEmpty(field) {
   return field === undefined || field === null || field === "";
@@ -191,6 +197,154 @@ const updateMerchandiseStatus = expressAsync(async (req, res) => {
   }
 });
 
+/**
+ * @desc: Update Merchandise Status
+ * @route: PUT /api/merchandise/:id?status=true
+ * @access: Private
+ */
+const redeemMerchandise = expressAsync(async (req, res, next) => {
+  const { name, address, phoneNumber, emailAddress, remarks, userGuid } =
+    req.body;
+  const { merchandiseId } = req.params;
+
+  // Check fields if empty
+  if (
+    !merchandiseId ||
+    !name ||
+    !address ||
+    !phoneNumber ||
+    !emailAddress ||
+    !userGuid
+  ) {
+    res.status(400).json({
+      error: "required_validation",
+      message: "Fields are required.",
+    });
+    return;
+  }
+
+  const merchandise = await Merchandise.find({
+    _id: merchandiseId,
+  });
+
+  if (merchandise.length) {
+    const newOrder = new Orders({
+      userGuid,
+      merchandiseId,
+      points: merchandise[0].points,
+      status: "PENDING",
+      name,
+      emailAddress,
+      phoneNumber,
+      address,
+      remarks,
+    });
+
+    const redeemedPoints = new RedeemedPoints({
+      userGuid,
+      points: merchandise[0].points,
+      type: "MERCHANDISE_ORDER",
+    });
+
+    await redeemedPoints.save();
+    await newOrder.save();
+
+    next();
+  }
+});
+
+/**
+ * @desc: send Merchandise notification email to Admin
+ * @route: Get /api/subscription/redeem-merch/
+ * @access: Private
+ */
+
+const emailRedeemMerchNotif = expressAsync(async (req, res) => {
+  const mailSubject = "Merchandise Ship Request";
+  const note = req.body.remarks;
+  const shipAddr = req.body.address;
+  const { merchandiseId } = req.params;
+
+  const subscriber = await User.find({ userGuid: req.body.userGuid });
+
+  const admin = await User.find({
+    isAdmin: true,
+  });
+
+  const merchandise = await Merchandise.find({
+    _id: merchandiseId,
+  });
+  const merchandiseData = {
+    merchantName: merchandise[0].name,
+    merchantImage: merchandise[0].image,
+    merchantPoints: merchandise[0].points + " points",
+  };
+
+  const addDays = (date, days) => {
+    date.setDate(date.getDate() + days);
+    return date;
+  };
+
+  const dateRequested = new Date();
+  let shipDate = new Date();
+  shipDate = addDays(shipDate, 2);
+  let resultMsg = [];
+
+  const recipients = [...subscriber, ...admin];
+
+  try {
+    const emailPromise = recipients.map((user) => {
+      const subscriberName = subscriber[0].name;
+      let recipientEmail = user.email;
+      let mailContent;
+
+      if (user.isAdmin) {
+        mailContent = merchandiseAdminNotif({
+          subscriberName,
+          dateRequested,
+          note,
+          shipAddr,
+          ...merchandiseData,
+        });
+      } else {
+        mailContent = merchandiseSubscriberNotif({
+          dateRequested,
+          shipDate,
+          ...merchandiseData,
+        });
+      }
+
+      return sendEmail(
+        recipientEmail,
+        mailSubject,
+        mailContent,
+        [],
+        recipientEmail //bcc
+      )
+        .then((resolve, reject) => {
+          let msg = reject
+            ? "Failed email for " + recipientEmail
+            : "Sent email to " + recipientEmail;
+          resultMsg.push(msg);
+        })
+        .catch((error) => {
+          console.log("failed sending");
+          res.status(500);
+          console.log(error);
+          throw new Error("Error occured in submission.");
+        });
+    });
+
+    Promise.all(emailPromise).then(() => {
+      res.send({ message: resultMsg, success: true });
+    });
+  } catch (error) {
+    res.status(500);
+    console.log(error);
+    throw new Error("Error occured in submission.");
+  }
+});
+
 export {
   createMerchandise,
   deleteMerchandise,
@@ -198,4 +352,6 @@ export {
   getMerchandiseById,
   updateMerchandiseDetails,
   updateMerchandiseStatus,
+  redeemMerchandise,
+  emailRedeemMerchNotif,
 };

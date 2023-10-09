@@ -24,7 +24,7 @@ const RewardsHistory: React.FC = () => {
       <div className="rewards-history-container">
         <Title
           title="Rewards Points"
-          subtitle="List of all rewards points earned."
+          subtitle="List of all rewards points earned"
         />
         <div className="rewards-history-table">
           <RewardsHistoryTable />

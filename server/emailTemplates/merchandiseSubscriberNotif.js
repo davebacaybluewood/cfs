@@ -131,6 +131,7 @@ const emailContent = ({
                 font-size: 0.8rem;
                 font-weight: 400;
                 font-family: "Montserrat", sans-serif;
+                margin-bottom: 0;
             }
         </style>
         <!-- End stylesheet -->

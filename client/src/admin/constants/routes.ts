@@ -68,6 +68,7 @@ const adminPaths = {
   merchandiseForm: adminCfsRoute + "merchandises/form",
   rewardsHistory: adminCfsRoute + "rewards/history",
   shareableEmails: adminCfsRoute + "shareable-emails",
+  orderHistory: adminCfsRoute + "merchandises/order-history",
 } as const;
 
 export default adminPaths;
