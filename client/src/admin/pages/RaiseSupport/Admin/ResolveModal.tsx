@@ -2,7 +2,6 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Modal from "@mui/material/Modal"
 import "./RaiseSupportAdmin.scss"
-import { Button } from "@mui/material"
 
 const style = {
   position: "absolute" as "absolute",

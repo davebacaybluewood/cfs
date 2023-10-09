@@ -24,14 +24,15 @@ const RaiseSupportForm = () => {
   const [isFormSuccess, setIsFormSuccess] = useState(false)
 
   // Formik initial values
-  const [initialValues, setInitialValues] = useState({
+  const initialValues = {
     contactNumber: "",
     email: "",
     issue: "",
     name: "",
     subject: "",
     status: "PENDING",
-  })
+  }
+
   const realQuillModules = useQuillModules()
 
   const validationSchema = Yup.object().shape({
