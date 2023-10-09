@@ -71,6 +71,9 @@ const ENDPOINTS = {
   /** User Profile */
   PROFILE_BY_ID: "/api/agents/:id",
   PROFILE_ROLES: "/api/profile/position-roles/:userGuid",
-};
 
-export default ENDPOINTS;
+  /* Raise Support */
+  RAISE_SUPPORT_ROOT: "/api/raise-support",
+}
+
+export default ENDPOINTS

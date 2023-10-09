@@ -1,8 +1,18 @@
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import React from "react";
-import { CrumbTypes } from "../Dashboard/types";
-import Indicator from "admin/components/Indicator/Indicator";
+import React, { useContext } from "react"
+import "./Subcribers/RaiseSupport.scss"
+// components
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { CrumbTypes } from "../Dashboard/types"
+import RaiseSupportForm from "./Subcribers/RaiseSupportForm"
+import RaiseSupportTable from "./Admin/RaiseSupportTable"
+import RaiseSupportFormLoading from "./loading/RaiseSupportFormLoading"
+// context
+import { UserContext } from "admin/context/UserProvider"
+// custom hooks
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+// constants
+import { paths } from "constants/routes"
+import { PROFILE_ROLES } from "pages/PortalRegistration/constants"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -15,14 +25,46 @@ const crumbs: CrumbTypes[] = [
     url: paths.raiseSupport,
     isActive: true,
   },
-];
+]
 
 const RaiseSupport: React.FC = () => {
-  return (
-    <Wrapper breadcrumb={crumbs} error={false} loading={false}>
-      <Indicator />
-    </Wrapper>
-  );
-};
+  const userCtx = useContext(UserContext) as any
+  const { profile, loading } = useFetchUserProfile(
+    userCtx?.user?.userGuid ?? ""
+  )
 
-export default RaiseSupport;
+  const isAdmin = profile?.roles?.some((f) => {
+    return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value
+  })
+
+  return (
+    <Wrapper
+      breadcrumb={crumbs}
+      error={false}
+      loading={false}
+      className="raise-support-container"
+    >
+      <div className="raise-support-form-container">
+        <h2>Raise Support</h2>
+        <div
+          className="raise-support-form"
+          style={{ maxWidth: isAdmin !== undefined && !isAdmin ? "800px" : "" }}
+        >
+          {!loading ? (
+            <>
+              {isAdmin !== undefined && !isAdmin ? (
+                <RaiseSupportForm />
+              ) : (
+                <RaiseSupportTable />
+              )}
+            </>
+          ) : (
+            <RaiseSupportFormLoading />
+          )}
+        </div>
+      </div>
+    </Wrapper>
+  )
+}
+
+export default RaiseSupport

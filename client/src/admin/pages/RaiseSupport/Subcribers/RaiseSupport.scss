@@ -1,0 +1,126 @@
+.raise-support-container {
+  .raise-support-form-container {
+    background: #1565d8;
+    height: 40vh;
+    padding: 4rem 2rem;
+
+    h2 {
+      text-align: center;
+      font-family: "Montserrat", sans-serif;
+      font-size: 3rem;
+      color: #fff;
+    }
+
+    .raise-support-form {
+      margin: 4rem auto 0;
+      background: #fff;
+      padding: 5rem 4rem;
+      border-radius: 10px;
+      box-shadow: 0px 10px 36px 0px rgba(0, 0, 0, 0.29);
+      -webkit-box-shadow: 0px 10px 36px 0px rgba(0, 0, 0, 0.29);
+      -moz-box-shadow: 0px 10px 36px 0px rgba(0, 0, 0, 0.29);
+
+      .react-quill-note {
+        font-weight: 400;
+        font-style: italic;
+        font-size: 11px;
+        margin-bottom: 10px;
+
+        @media (min-width: 1200px) {
+          width: 50% !important;
+        }
+      }
+
+      .form-card-container {
+        width: 100%;
+      }
+
+      label,
+      span,
+      p,
+      input,
+      select,
+      h1,
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      .primary-cfs-btn {
+        margin-top: 1rem;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.raise-support-loading {
+  .field-loading {
+    margin-bottom: 2em;
+
+    .loading-label {
+      height: 10px;
+      background: rgb(217, 217, 217);
+      width: 40%;
+      margin-bottom: 7px;
+      border-radius: 50px;
+      animation: pulse 1s infinite alternate; /* Apply pulse animation */
+    }
+
+    .loading-field {
+      height: 20px;
+      background: rgb(197, 197, 197);
+      width: 50%;
+      border-radius: 50px;
+      margin-bottom: 2em;
+      animation: pulse 1s infinite alternate; /* Apply pulse animation */
+    }
+
+    .loading-label-2 {
+      height: 10px;
+      background: rgb(217, 217, 217);
+      width: 60%;
+      margin-bottom: 7px;
+      border-radius: 50px;
+      animation: pulse 1s infinite alternate;
+    }
+
+    .loading-field-2 {
+      height: 20px;
+      background: rgb(197, 197, 197);
+      width: 80%;
+      border-radius: 50px;
+      margin-bottom: 2em;
+      animation: pulse 1s infinite alternate;
+    }
+
+    .loading-label-3 {
+      height: 10px;
+      background: rgb(217, 217, 217);
+      width: 20%;
+      border-radius: 50px;
+      margin-bottom: 7px;
+      animation: pulse 1s infinite alternate;
+    }
+
+    .loading-field-3 {
+      height: 20px;
+      background: rgb(197, 197, 197);
+      width: 60%;
+      border-radius: 50px;
+      margin-bottom: 2em;
+      animation: pulse 1s infinite alternate;
+    }
+  }
+}
+
+/* Keyframes for the pulse animation */
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
