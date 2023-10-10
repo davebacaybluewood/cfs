@@ -1,4 +1,3 @@
-import "../RaiseSupportAdmin.scss";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 // constants
 import { SUPPORT_TYPE } from "constants/constants";

@@ -127,6 +127,22 @@
   font-size: 11px !important;
 }
 
+// type badge styles
+.badge-feature {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.badge-bug {
+  background: #fecaca;
+  color: #dc2626;
+}
+
+.badge-other {
+  background: #f1f2f4;
+  color: #565d6b;
+}
+
 .filter-component {
   display: flex;
   gap: 10px;
