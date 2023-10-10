@@ -269,7 +269,10 @@ const useSidebarLinks = (
       link: paths.rewardsHistory,
       isActive: currentPage === adminPathsNew.rewardsHistory.split("/")[2],
       icon: <FaHistory />,
-      role: [PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value],
+      role: [
+        PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value,
+        PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+      ],
     },
     {
       linkText: "Calendars",
