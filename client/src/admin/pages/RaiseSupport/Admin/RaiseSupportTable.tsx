@@ -15,19 +15,26 @@ import ENDPOINTS from "constants/endpoints"
 import { TicketProps } from "../TicketProps"
 // paths
 import adminPaths from "admin/constants/routes"
-import ResolveModal from "./ResolveModal"
+import ResolveModal from "./components/ResolveModal"
+// components
+import TypeBadge from "./components/TypeBadge"
+import Filter from "./components/Filter"
 
 const RaiseSupportTable = () => {
   const [ticketData, setTicketData] = useState<TicketProps[]>([])
+  // only for testing, since API model not updated yet
+  const [newTicketData, setNewTicketData] = useState<TicketProps[]>([])
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
+  const [selectedValue, setSelectedValue] = useState("")
 
   const navigate = useNavigate()
 
+  // fetch data
   useEffect(() => {
     const fetchTickets = async () => {
       setLoading(true)
-      const response = await axios(ENDPOINTS.RAISE_SUPPORT_ROOT, {
+      await axios(ENDPOINTS.RAISE_SUPPORT_ROOT, {
         headers: {
           Authorization: "Bearer " + getUserToken(),
         },
@@ -38,6 +45,28 @@ const RaiseSupportTable = () => {
     }
     fetchTickets()
   }, [])
+
+  // FOR TESTING: remove this once API model is updated
+  useEffect(() => {
+    // populate newTicketData state to updated data with FAKE TYPE
+    const ticketDataWithType = ticketData.map((item) => {
+      const randomNumber = Math.ceil(Math.random() * 3)
+      let randomGeneratedType = "other"
+      if (randomNumber === 1) {
+        randomGeneratedType = "bug"
+      } else if (randomNumber === 2) {
+        randomGeneratedType = "feature"
+      } else {
+        randomGeneratedType = "other"
+      }
+      // here is the updated data
+      return {
+        ...item,
+        type: randomGeneratedType,
+      }
+    })
+    setNewTicketData(ticketDataWithType)
+  }, [ticketData])
 
   const viewHandler = (id: string) => {
     navigate("/")
@@ -52,7 +81,7 @@ const RaiseSupportTable = () => {
   const actionButtons = (id: string) => {
     return (
       <div className="action-buttons">
-        {/* Modal */}
+        {/* Resolve Modal */}
         <ResolveModal open={open} setOpen={setOpen} />
         <Button variant="outlined" size="small" onClick={() => viewHandler(id)}>
           View
@@ -65,6 +94,15 @@ const RaiseSupportTable = () => {
         >
           Resolve
         </Button>
+      </div>
+    )
+  }
+
+  // Render type badge
+  const renderTypeBadge = (type: string) => {
+    return (
+      <div>
+        <TypeBadge type={type} />
       </div>
     )
   }
@@ -93,6 +131,12 @@ const RaiseSupportTable = () => {
       width: 200,
     },
     {
+      field: "type",
+      headerName: "Type",
+      width: 120,
+      renderCell: (params) => renderTypeBadge(params.value),
+    },
+    {
       field: "actions",
       headerName: "Actions",
       width: 200,
@@ -101,20 +145,33 @@ const RaiseSupportTable = () => {
   ]
 
   // rows for data grid
-  const rows = ticketData.map((item: any) => {
-    return {
-      id: item._id,
-      name: item.name,
-      emailAddress: item.email,
-      contactNumber: item.contactNumber,
-      subject: item.subject,
-      actions: actionButtons(item),
-    }
-  })
+  const rows = newTicketData
+    .filter((item) => {
+      if (selectedValue) {
+        return item.type?.toLowerCase() === selectedValue.toLowerCase()
+      } else {
+        return item
+      }
+    })
+    .map((item: any) => {
+      return {
+        id: item._id,
+        name: item.name,
+        emailAddress: item.email,
+        contactNumber: item.contactNumber,
+        subject: item.subject,
+        type: item.type,
+        actions: actionButtons(item),
+      }
+    })
 
   return (
     <main>
       <Box sx={{ height: 600 }}>
+        <Filter
+          selectedValue={selectedValue}
+          setSelectedValue={setSelectedValue}
+        />
         <DataGrid
           rows={rows}
           columns={columns}

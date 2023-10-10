@@ -5,4 +5,5 @@ export interface TicketProps {
   name: string
   status: string
   subject: string
+  type?: string
 }
