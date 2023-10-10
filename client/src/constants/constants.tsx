@@ -308,6 +308,8 @@ const CALENDLY = {
   WEEKLY: "https://calendly.com/gocfs/one-time-weekly-meeting",
 };
 
+const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
+
 export {
   COMPANY_NAME,
   SOCIAL_MEDIA_LINKS,
@@ -322,4 +324,5 @@ export {
   COMPANY_CONTACT_INFO,
   eventSteps,
   MAIN_LOCALHOST,
+  SUPPORT_TYPE,
 };
