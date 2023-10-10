@@ -3,7 +3,15 @@ import React, { useState } from "react"
 import { Formik } from "formik"
 import FormikTextInput from "library/Formik/FormikInput"
 // mui
-import { Grid, CircularProgress } from "@mui/material"
+import {
+  Grid,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  Select,
+  SelectChangeEvent,
+  MenuItem,
+} from "@mui/material"
 // components
 import Button from "library/Button/Button"
 import ErrorText from "pages/PortalRegistration/components/ErrorText"
@@ -22,6 +30,8 @@ const RaiseSupportForm = () => {
   const [loading, setLoading] = useState(false)
   // shows alert message when state is true
   const [isFormSuccess, setIsFormSuccess] = useState(false)
+  // state for select input
+  const [supportType, setSupportType] = useState("")
 
   // Formik initial values
   const initialValues = {
@@ -30,6 +40,7 @@ const RaiseSupportForm = () => {
     issue: "",
     name: "",
     subject: "",
+    type: "",
     status: "PENDING",
   }
 
@@ -40,6 +51,7 @@ const RaiseSupportForm = () => {
     email: Yup.string().email().required("Email is required."),
     contactNumber: Yup.string().required("Contact number is required."),
     subject: Yup.string().required("Subject is required."),
+    type: Yup.string().required("Type is required"),
   })
 
   return (
@@ -154,6 +166,36 @@ const RaiseSupportForm = () => {
                       value={values.subject}
                     />
                   </Grid>
+                  {/* Type */}
+                  <Grid
+                    item
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    className="form-card-container"
+                  >
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Type
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={supportType}
+                        label="Age"
+                        sx={{ fontSize: "12px" }}
+                        onChange={(e: SelectChangeEvent) => {
+                          setSupportType(e.target.value)
+                        }}
+                      >
+                        <MenuItem value={"bug"}>Report a Bug</MenuItem>
+                        <MenuItem value={"feature"}>Suggest a Feature</MenuItem>
+                        <MenuItem value={"other"}>Other</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+
+                  {/* Issue */}
                   <Grid item sm={12}>
                     <label htmlFor="">Issue (Required)</label>
                     <p className="react-quill-note">
