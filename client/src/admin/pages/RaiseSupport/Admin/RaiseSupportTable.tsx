@@ -1,81 +1,83 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 // react-router-dom
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 // mui
-import Box from "@mui/material/Box"
-import { DataGrid, GridColDef } from "@mui/x-data-grid"
-import { Button } from "@mui/material"
+import Box from "@mui/material/Box";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Button } from "@mui/material";
 // axios
-import axios from "axios"
+import axios from "axios";
 // user token
-import getUserToken from "helpers/getUserToken"
+import getUserToken from "helpers/getUserToken";
 // end points
-import ENDPOINTS from "constants/endpoints"
+import ENDPOINTS from "constants/endpoints";
 // props
-import { TicketProps } from "../TicketProps"
+import { TicketProps } from "../TicketProps";
 // paths
-import adminPaths from "admin/constants/routes"
-import ResolveModal from "./components/ResolveModal"
+import adminPaths from "admin/constants/routes";
+import ResolveModal from "./components/ResolveModal";
 // components
-import TypeBadge from "./components/TypeBadge"
-import Filter from "./components/Filter"
+import TypeBadge from "./components/TypeBadge";
+import Filter from "./components/Filter";
+// constants
+import { SUPPORT_TYPE } from "constants/constants";
 
 const RaiseSupportTable = () => {
-  const [ticketData, setTicketData] = useState<TicketProps[]>([])
+  const [ticketData, setTicketData] = useState<TicketProps[]>([]);
   // only for testing, since API model not updated yet
-  const [newTicketData, setNewTicketData] = useState<TicketProps[]>([])
-  const [loading, setLoading] = useState(false)
-  const [open, setOpen] = useState(false)
-  const [selectedValue, setSelectedValue] = useState("")
+  const [newTicketData, setNewTicketData] = useState<TicketProps[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // fetch data
   useEffect(() => {
     const fetchTickets = async () => {
-      setLoading(true)
+      setLoading(true);
       await axios(ENDPOINTS.RAISE_SUPPORT_ROOT, {
         headers: {
           Authorization: "Bearer " + getUserToken(),
         },
       }).then((res) => {
-        setTicketData(res.data)
-        setLoading(false)
-      })
-    }
-    fetchTickets()
-  }, [])
+        setTicketData(res.data);
+        setLoading(false);
+      });
+    };
+    fetchTickets();
+  }, []);
 
   // FOR TESTING: remove this once API model is updated
   useEffect(() => {
     // populate newTicketData state to updated data with FAKE TYPE
     const ticketDataWithType = ticketData.map((item) => {
-      const randomNumber = Math.ceil(Math.random() * 3)
-      let randomGeneratedType = "other"
+      const randomNumber = Math.ceil(Math.random() * 3);
+      let randomGeneratedType = SUPPORT_TYPE.OTHER;
       if (randomNumber === 1) {
-        randomGeneratedType = "bug"
+        randomGeneratedType = SUPPORT_TYPE.BUG;
       } else if (randomNumber === 2) {
-        randomGeneratedType = "feature"
+        randomGeneratedType = SUPPORT_TYPE.FEATURE;
       } else {
-        randomGeneratedType = "other"
+        randomGeneratedType = SUPPORT_TYPE.OTHER;
       }
       // here is the updated data
       return {
         ...item,
         type: randomGeneratedType,
-      }
-    })
-    setNewTicketData(ticketDataWithType)
-  }, [ticketData])
+      };
+    });
+    setNewTicketData(ticketDataWithType);
+  }, [ticketData]);
 
   const viewHandler = (id: string) => {
-    navigate("/")
-    navigate(adminPaths.raiseSupportTicket.replace(":id", id))
-  }
+    navigate("/");
+    navigate(adminPaths.raiseSupportTicket.replace(":id", id));
+  };
 
   const resolveHandler = (id: string) => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   // Render action buttons
   const actionButtons = (id: string) => {
@@ -95,8 +97,8 @@ const RaiseSupportTable = () => {
           Resolve
         </Button>
       </div>
-    )
-  }
+    );
+  };
 
   // Render type badge
   const renderTypeBadge = (type: string) => {
@@ -104,8 +106,8 @@ const RaiseSupportTable = () => {
       <div>
         <TypeBadge type={type} />
       </div>
-    )
-  }
+    );
+  };
 
   // Table Definitions
   const columns: GridColDef[] = [
@@ -142,15 +144,15 @@ const RaiseSupportTable = () => {
       width: 200,
       renderCell: (params) => actionButtons(params.id.toString()),
     },
-  ]
+  ];
 
   // rows for data grid
   const rows = newTicketData
     .filter((item) => {
       if (selectedValue) {
-        return item.type?.toLowerCase() === selectedValue.toLowerCase()
+        return item.type?.toLowerCase() === selectedValue.toLowerCase();
       } else {
-        return item
+        return item;
       }
     })
     .map((item: any) => {
@@ -162,8 +164,8 @@ const RaiseSupportTable = () => {
         subject: item.subject,
         type: item.type,
         actions: actionButtons(item),
-      }
-    })
+      };
+    });
 
   return (
     <main>
@@ -188,7 +190,7 @@ const RaiseSupportTable = () => {
         />
       </Box>
     </main>
-  )
-}
+  );
+};
 
-export default RaiseSupportTable
+export default RaiseSupportTable;
