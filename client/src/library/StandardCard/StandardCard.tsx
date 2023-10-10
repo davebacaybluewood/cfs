@@ -5,7 +5,7 @@ import "./StandardCard.scss";
 interface StandardProps {
   icon?: JSX.Element | string;
   title?: string;
-  description?: string;
+  description?: JSX.Element | string;
   button?: {
     text: string;
     onClick?: () => void;
