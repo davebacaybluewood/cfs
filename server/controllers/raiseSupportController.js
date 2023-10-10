@@ -69,4 +69,45 @@ const getRaiseSupportById = expressAsync(async (req, res) => {
     }
   });
 
-export { createRaiseSupport, getRaiseSupport, getRaiseSupportById };
+  /**
+ * @desc: Update the status of a Raise Support Ticket to "RESOLVED" by ID
+ * @route: PUT /api/raise-support/:id
+ * @access: Private
+ */
+const markRaiseSupportAsResolved = expressAsync(async (req, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    res.status(400).json({
+      error: "invalid_params",
+      message: "Invalid ID provided.",
+    });
+    return;
+  }
+
+  try {
+    const raiseSupport = await RaiseSupport.findById(id);
+
+    if (!raiseSupport) {
+      res.status(404).json({
+        error: "not_found",
+        message: "Support ticket not found.",
+      });
+      return;
+    }
+
+    // Set the status to "RESOLVED"
+    raiseSupport.status = "RESOLVED";
+
+    const updatedRaiseSupport = await raiseSupport.save();
+
+    res.json(updatedRaiseSupport);
+  } catch (error) {
+    res.status(500).json({
+      error: "server_error",
+      message: "An error occurred while updating the support ticket.",
+    });
+  }
+});
+
+export { createRaiseSupport, getRaiseSupport, getRaiseSupportById, markRaiseSupportAsResolved };

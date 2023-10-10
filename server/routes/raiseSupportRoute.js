@@ -3,6 +3,7 @@ import {
   createRaiseSupport,
   getRaiseSupport,
   getRaiseSupportById,
+  markRaiseSupportAsResolved,
 } from "../controllers/raiseSupportController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -12,6 +13,9 @@ router
   .route("/")
   .get(protect, getRaiseSupport)
   .post(protect, createRaiseSupport);
-router.route("/:id").get(protect, getRaiseSupportById);
+router
+  .route("/:id")
+  .get(protect, getRaiseSupportById)
+  .put(protect, markRaiseSupportAsResolved);
 
 export default router;
