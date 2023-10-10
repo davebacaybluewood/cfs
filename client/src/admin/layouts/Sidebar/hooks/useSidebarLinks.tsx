@@ -404,44 +404,6 @@ const useSidebarLinks = (
       ],
     },
     {
-      linkText: "Agents Submenu",
-      isActive:
-        currentPage === adminPathsNew.agents.split("/")[2] ||
-        currentPage === adminPathsNew.agentRequests.split("/")[2] ||
-        currentPage === adminPathsNew.deactivatedAgents.split("/")[2] ||
-        currentPage === adminPathsNew.declinedAgents.split("/")[2],
-      icon: <FaUserSecret />,
-      role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
-      isSubMenu: true,
-      subLinks: [
-        {
-          linkText: "Activated Agents",
-          icon: <FaUserSecret />,
-          link: paths.agents,
-          isActive: currentPage === adminPathsNew.agents.split("/")[2],
-        },
-        {
-          linkText: "Agent Requests",
-          icon: <FaUserSecret />,
-          link: paths.agentRequests,
-          isActive: currentPage === adminPathsNew.agentRequests.split("/")[2],
-        },
-        {
-          linkText: "Declined Agents",
-          icon: <FaUserSecret />,
-          link: paths.declinedAgents,
-          isActive: currentPage === adminPathsNew.declinedAgents.split("/")[2],
-        },
-        {
-          linkText: "Deactivated Agents",
-          icon: <FaUserSecret />,
-          link: paths.deactivatedAgents,
-          isActive:
-            currentPage === adminPathsNew.deactivatedAgents.split("/")[2],
-        },
-      ],
-    },
-    {
       linkText: "Marketing Materials",
       isActive: currentPage === adminPathsNew.landingPage.split("/")[2],
       icon: <FaSwatchbook />,
