@@ -1,27 +1,39 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 // formik
-import { Formik } from "formik"
-import FormikTextInput from "library/Formik/FormikInput"
+import { Formik } from "formik";
+import FormikTextInput from "library/Formik/FormikInput";
 // mui
-import { Grid, CircularProgress } from "@mui/material"
+import {
+  Grid,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  Select,
+  SelectChangeEvent,
+  MenuItem,
+} from "@mui/material";
 // components
-import Button from "library/Button/Button"
-import ErrorText from "pages/PortalRegistration/components/ErrorText"
-import AlertMessage from "./AlertMessage"
+import Button from "library/Button/Button";
+import ErrorText from "pages/PortalRegistration/components/ErrorText";
+import AlertMessage from "./AlertMessage";
 // reactquill
-import ReactQuill from "react-quill"
-import useQuillModules from "./useQuillModules"
+import ReactQuill from "react-quill";
+import useQuillModules from "./useQuillModules";
 // library
-import * as Yup from "yup"
-import axios from "axios"
+import * as Yup from "yup";
+import axios from "axios";
 // endpoints
-import ENDPOINTS from "constants/endpoints"
+import ENDPOINTS from "constants/endpoints";
+// constants
+import { SUPPORT_TYPE } from "constants/constants";
 
 const RaiseSupportForm = () => {
-  const [isIssueEmpty, setIsIssueEmpty] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [isIssueEmpty, setIsIssueEmpty] = useState(false);
+  const [loading, setLoading] = useState(false);
   // shows alert message when state is true
-  const [isFormSuccess, setIsFormSuccess] = useState(false)
+  const [isFormSuccess, setIsFormSuccess] = useState(false);
+  // state for select input
+  const [supportType, setSupportType] = useState("");
 
   // Formik initial values
   const initialValues = {
@@ -30,17 +42,19 @@ const RaiseSupportForm = () => {
     issue: "",
     name: "",
     subject: "",
+    type: "",
     status: "PENDING",
-  }
+  };
 
-  const realQuillModules = useQuillModules()
+  const realQuillModules = useQuillModules();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required."),
     email: Yup.string().email().required("Email is required."),
     contactNumber: Yup.string().required("Contact number is required."),
     subject: Yup.string().required("Subject is required."),
-  })
+    type: Yup.string().required("Type is required"),
+  });
 
   return (
     <>
@@ -52,7 +66,7 @@ const RaiseSupportForm = () => {
           onSubmit={async (data) => {
             if (data.issue) {
               try {
-                setLoading(true)
+                setLoading(true);
 
                 const response = await axios.post(
                   ENDPOINTS.RAISE_SUPPORT_ROOT,
@@ -64,18 +78,18 @@ const RaiseSupportForm = () => {
                     issue: data.issue,
                     status: "PENDING",
                   }
-                )
+                );
 
-                setLoading(false)
-                setIsFormSuccess(true)
-                setIsIssueEmpty(false)
+                setLoading(false);
+                setIsFormSuccess(true);
+                setIsIssueEmpty(false);
 
-                return response.data
+                return response.data;
               } catch (error) {
-                console.error("Error posting data:", error)
+                console.error("Error posting data:", error);
               }
             } else {
-              setIsIssueEmpty(true)
+              setIsIssueEmpty(true);
             }
           }}
           validationSchema={validationSchema}
@@ -154,6 +168,40 @@ const RaiseSupportForm = () => {
                       value={values.subject}
                     />
                   </Grid>
+                  {/* Type */}
+                  <Grid
+                    item
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    className="form-card-container"
+                  >
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Type
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={supportType}
+                        label="Age"
+                        sx={{ fontSize: "12px" }}
+                        onChange={(e: SelectChangeEvent) => {
+                          setSupportType(e.target.value);
+                        }}
+                      >
+                        <MenuItem value={SUPPORT_TYPE.BUG}>
+                          Report a Bug
+                        </MenuItem>
+                        <MenuItem value={SUPPORT_TYPE.FEATURE}>
+                          Suggest a Feature
+                        </MenuItem>
+                        <MenuItem value={SUPPORT_TYPE.OTHER}>Other</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+
+                  {/* Issue */}
                   <Grid item sm={12}>
                     <label htmlFor="">Issue (Required)</label>
                     <p className="react-quill-note">
@@ -172,7 +220,7 @@ const RaiseSupportForm = () => {
                       value={values.issue}
                       modules={realQuillModules}
                       onChange={(value) => {
-                        setFieldValue("issue", value)
+                        setFieldValue("issue", value);
                       }}
                       theme="snow"
                       placeholder="Please describe the issue here."
@@ -207,12 +255,12 @@ const RaiseSupportForm = () => {
                   </Grid>
                 </Grid>
               </form>
-            )
+            );
           }}
         </Formik>
       )}
     </>
-  )
-}
+  );
+};
 
-export default RaiseSupportForm
+export default RaiseSupportForm;
