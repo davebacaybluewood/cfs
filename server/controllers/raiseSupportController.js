@@ -1,5 +1,6 @@
 import RaiseSupport from "../models/raiseSupportModel.js";
 import expressAsync from "express-async-handler";
+import { TICKET_STATUS } from "../constants/constants.js";
 
 /**
  * @desc: Create a new Raise Support
@@ -97,7 +98,7 @@ const markRaiseSupportAsResolved = expressAsync(async (req, res) => {
     }
 
     // Set the status to "RESOLVED"
-    raiseSupport.status = "RESOLVED";
+    raiseSupport.status = TICKET_STATUS.RESOLVED;
 
     const updatedRaiseSupport = await raiseSupport.save();
 

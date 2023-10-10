@@ -165,6 +165,10 @@ const POINTS_TYPE = {
 const DEFAULT_IMAGE =
   "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps";
 
+const TICKET_STATUS = {
+  RESOLVED: "RESOLVED",
+  PENDING: "PENDING",
+}
 export {
   CONTENT_CREATOR_ROLES,
   EDITOR_ROLES,
@@ -174,4 +178,5 @@ export {
   SUBSCRIBER_ROLES,
   DEFAULT_IMAGE,
   POINTS_TYPE,
+  TICKET_STATUS
 };
