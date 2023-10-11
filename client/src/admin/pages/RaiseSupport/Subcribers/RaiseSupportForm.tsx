@@ -42,7 +42,7 @@ const RaiseSupportForm = () => {
     issue: "",
     name: "",
     subject: "",
-    type: "",
+    // type: "",
     status: "PENDING",
   };
 
@@ -53,7 +53,7 @@ const RaiseSupportForm = () => {
     email: Yup.string().email().required("Email is required."),
     contactNumber: Yup.string().required("Contact number is required."),
     subject: Yup.string().required("Subject is required."),
-    type: Yup.string().required("Type is required"),
+    // type: Yup.string().required("Type is required"),
   });
 
   return (
@@ -97,164 +97,163 @@ const RaiseSupportForm = () => {
           {({ values, handleSubmit, setFieldValue }) => {
             return (
               // form element handles submit when enter key is pressed
-              <form onSubmit={handleSubmit}>
-                <Grid container spacing={2}>
-                  {/* Name Field */}
-                  <Grid
-                    item
-                    sm={12}
-                    md={12}
-                    lg={12}
-                    className="form-card-container"
-                  >
-                    <label htmlFor="">Name (Required)</label>
-                    <FormikTextInput
-                      disabled={loading && true}
-                      placeholder={`Enter your name here`}
-                      variant="outlined"
-                      name="name"
-                      value={values.name}
-                    />
-                  </Grid>
-                  {/* Email Field */}
-                  <Grid
-                    item
-                    sm={12}
-                    md={12}
-                    lg={12}
-                    className="form-card-container"
-                  >
-                    <label htmlFor="">Email (Required)</label>
-                    <FormikTextInput
-                      disabled={loading && true}
-                      placeholder={`Enter your email here`}
-                      variant="outlined"
-                      name="email"
-                      value={values.email}
-                      type="email"
-                    />
-                  </Grid>
-                  {/* Contact Number Field */}
-                  <Grid
-                    item
-                    sm={12}
-                    md={12}
-                    lg={12}
-                    className="form-card-container"
-                  >
-                    <label htmlFor="">Contact Number (Required)</label>
-                    <FormikTextInput
-                      disabled={loading && true}
-                      placeholder={`Enter your name here`}
-                      variant="outlined"
-                      name="contactNumber"
-                      value={values.contactNumber}
-                    />
-                  </Grid>
-                  {/* Subject Field */}
-                  <Grid
-                    item
-                    sm={12}
-                    md={12}
-                    lg={12}
-                    className="form-card-container"
-                  >
-                    <label htmlFor="">Subject (Required)</label>
-                    <FormikTextInput
-                      disabled={loading && true}
-                      placeholder={`Enter subject here`}
-                      variant="outlined"
-                      name="subject"
-                      value={values.subject}
-                    />
-                  </Grid>
-                  {/* Type */}
-                  <Grid
-                    item
-                    sm={12}
-                    md={12}
-                    lg={12}
-                    className="form-card-container"
-                  >
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">
-                        Type
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={supportType}
-                        label="Age"
-                        sx={{ fontSize: "12px" }}
-                        onChange={(e: SelectChangeEvent) => {
-                          setSupportType(e.target.value);
-                        }}
-                      >
-                        <MenuItem value={SUPPORT_TYPE.BUG}>
-                          Report a Bug
-                        </MenuItem>
-                        <MenuItem value={SUPPORT_TYPE.FEATURE}>
-                          Suggest a Feature
-                        </MenuItem>
-                        <MenuItem value={SUPPORT_TYPE.OTHER}>Other</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
 
-                  {/* Issue */}
-                  <Grid item sm={12}>
-                    <label htmlFor="">Issue (Required)</label>
-                    <p className="react-quill-note">
-                      Include as much detail as possible, such as what happened,
-                      when it occurred. You can also upload images to help us
-                      better understand the problem.
-                    </p>
-                    <ReactQuill
-                      readOnly={loading && true}
-                      style={{
-                        border: isIssueEmpty ? "red solid 1px" : "none",
-                        borderRadius: "5px",
-                        background: loading ? "rgb(240, 240, 240)" : "",
-                        cursor: loading ? "not-allowed" : "",
-                      }}
-                      value={values.issue}
-                      modules={realQuillModules}
-                      onChange={(value) => {
-                        setFieldValue("issue", value);
-                      }}
-                      theme="snow"
-                      placeholder="Please describe the issue here."
-                    />
-                    {/* custom validation error message because YUP doesn't validate ReactQuill */}
-                    <ErrorText
-                      isError={isIssueEmpty}
-                      text="Issue cannot be empty"
-                    />
-                  </Grid>
-                  {/* Submit Button */}
-                  <Grid item>
-                    <Button
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        cursor: loading ? "not-allowed" : "",
-                      }}
-                      type="submit"
-                      variant="primary"
-                      disabled={loading && true}
-                    >
-                      {loading && (
-                        <CircularProgress
-                          color="info"
-                          style={{ marginRight: "5px" }}
-                          size={20}
-                        />
-                      )}
-                      Submit
-                    </Button>
-                  </Grid>
+              <Grid container spacing={2}>
+                {/* Name Field */}
+                <Grid
+                  item
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  className="form-card-container"
+                >
+                  <label htmlFor="">Name (Required)</label>
+                  <FormikTextInput
+                    disabled={loading && true}
+                    placeholder={`Enter your name here`}
+                    variant="outlined"
+                    name="name"
+                    value={values.name}
+                  />
                 </Grid>
-              </form>
+                {/* Email Field */}
+                <Grid
+                  item
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  className="form-card-container"
+                >
+                  <label htmlFor="">Email (Required)</label>
+                  <FormikTextInput
+                    disabled={loading && true}
+                    placeholder={`Enter your email here`}
+                    variant="outlined"
+                    name="email"
+                    value={values.email}
+                    type="email"
+                  />
+                </Grid>
+                {/* Contact Number Field */}
+                <Grid
+                  item
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  className="form-card-container"
+                >
+                  <label htmlFor="">Contact Number (Required)</label>
+                  <FormikTextInput
+                    disabled={loading && true}
+                    placeholder={`Enter your name here`}
+                    variant="outlined"
+                    name="contactNumber"
+                    value={values.contactNumber}
+                  />
+                </Grid>
+                {/* Subject Field */}
+                <Grid
+                  item
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  className="form-card-container"
+                >
+                  <label htmlFor="">Subject (Required)</label>
+                  <FormikTextInput
+                    disabled={loading && true}
+                    placeholder={`Enter subject here`}
+                    variant="outlined"
+                    name="subject"
+                    value={values.subject}
+                  />
+                </Grid>
+                {/* Type */}
+                <Grid
+                  item
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  className="form-card-container"
+                >
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={supportType}
+                      label="Age"
+                      sx={{ fontSize: "12px" }}
+                      onChange={(e: SelectChangeEvent) => {
+                        setSupportType(e.target.value);
+                      }}
+                    >
+                      <MenuItem value={SUPPORT_TYPE.BUG}>Report a Bug</MenuItem>
+                      <MenuItem value={SUPPORT_TYPE.FEATURE}>
+                        Suggest a Feature
+                      </MenuItem>
+                      <MenuItem value={SUPPORT_TYPE.OTHER}>Other</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                {/* Issue */}
+                <Grid item sm={12}>
+                  <label htmlFor="">Issue (Required)</label>
+                  <p className="react-quill-note">
+                    Include as much detail as possible, such as what happened,
+                    when it occurred. You can also upload images to help us
+                    better understand the problem.
+                  </p>
+                  <ReactQuill
+                    readOnly={loading && true}
+                    style={{
+                      border: isIssueEmpty ? "red solid 1px" : "none",
+                      borderRadius: "5px",
+                      background: loading ? "rgb(240, 240, 240)" : "",
+                      cursor: loading ? "not-allowed" : "",
+                    }}
+                    value={values.issue}
+                    modules={realQuillModules}
+                    onChange={(value) => {
+                      setFieldValue("issue", value);
+                    }}
+                    theme="snow"
+                    placeholder="Please describe the issue here."
+                  />
+                  {/* custom validation error message because YUP doesn't validate ReactQuill */}
+                  <ErrorText
+                    isError={isIssueEmpty}
+                    text="Issue cannot be empty"
+                  />
+                </Grid>
+                {/* Submit Button */}
+                <Grid item>
+                  <Button
+                    // onClick={() => handleSubmit()}
+                    onClick={() => {
+                      handleSubmit();
+                    }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: loading ? "not-allowed" : "",
+                    }}
+                    type="button"
+                    variant="primary"
+                    disabled={loading && true}
+                  >
+                    {loading && (
+                      <CircularProgress
+                        color="info"
+                        style={{ marginRight: "5px" }}
+                        size={20}
+                      />
+                    )}
+                    Submit
+                  </Button>
+                </Grid>
+              </Grid>
             );
           }}
         </Formik>

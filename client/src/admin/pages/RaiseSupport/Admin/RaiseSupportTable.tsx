@@ -30,6 +30,10 @@ const RaiseSupportTable = () => {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
+  // FOR: resolve modal
+  // PURPOSE: set id value when a resolve button item is clicked
+  const [selectedId, setSelectedId] = useState<any>(null);
+
   const navigate = useNavigate();
 
   // fetch data
@@ -76,28 +80,8 @@ const RaiseSupportTable = () => {
   };
 
   const resolveHandler = (id: string) => {
+    setSelectedId(id);
     setOpen(true);
-  };
-
-  // Render action buttons
-  const actionButtons = (id: string) => {
-    return (
-      <div className="action-buttons">
-        {/* Resolve Modal */}
-        <ResolveModal open={open} setOpen={setOpen} />
-        <Button variant="outlined" size="small" onClick={() => viewHandler(id)}>
-          View
-        </Button>
-        <Button
-          variant="outlined"
-          size="small"
-          color="success"
-          onClick={() => resolveHandler(id)}
-        >
-          Resolve
-        </Button>
-      </div>
-    );
   };
 
   // Render type badge
@@ -111,7 +95,7 @@ const RaiseSupportTable = () => {
 
   // Table Definitions
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 200 },
+    { field: "id", headerName: "ID", width: 250 },
     {
       field: "name",
       headerName: "Name",
@@ -142,7 +126,36 @@ const RaiseSupportTable = () => {
       field: "actions",
       headerName: "Actions",
       width: 200,
-      renderCell: (params) => actionButtons(params.id.toString()),
+
+      renderCell: (params) => {
+        // console.log(params.row.id);
+        return (
+          <div className="action-buttons">
+            {/* Resolve Modal */}
+            {params.row.status === "PENDING" ? (
+              <>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => viewHandler(params.row.id)}
+                >
+                  View
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  color="success"
+                  onClick={() => resolveHandler(params.row.id)}
+                >
+                  Resolve
+                </Button>
+              </>
+            ) : (
+              <h2 style={{ color: "#059669" }}>RESOLVED</h2>
+            )}
+          </div>
+        );
+      },
     },
   ];
 
@@ -163,12 +176,13 @@ const RaiseSupportTable = () => {
         contactNumber: item.contactNumber,
         subject: item.subject,
         type: item.type,
-        actions: actionButtons(item),
+        status: item.status,
       };
     });
 
   return (
     <main>
+      <ResolveModal open={open} setOpen={setOpen} id={selectedId} />
       <Box sx={{ height: 600 }}>
         <Filter
           selectedValue={selectedValue}
