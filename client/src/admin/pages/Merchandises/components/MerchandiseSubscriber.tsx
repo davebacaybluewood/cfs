@@ -22,7 +22,7 @@ import { Formik } from "formik";
 import AlertMessage from "library/AlertMessage/Alert";
 import FormikTextInput from "library/Formik/FormikInput";
 import Spinner from "library/Spinner/Spinner";
-import { USER_FAQ } from "pages/PortalRegistration/constants";
+import { SUBSCRIBER_FAQ } from "../../FAQSubscriber/FAQList";
 import React, { useContext, useEffect, useState } from "react";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { FaCube, FaHistory } from "react-icons/fa";
@@ -189,7 +189,7 @@ const MerchandiseSubscriber: React.FC = () => {
             </p>
 
             <div className="faq-accordions">
-              {USER_FAQ.map((data) => {
+              {SUBSCRIBER_FAQ.slice(0, 5).map((data) => {
                 return (
                   <Accordion
                     expanded={expanded === data.id}
