@@ -4,6 +4,7 @@ import {
   getRaiseSupport,
   getRaiseSupportById,
   markRaiseSupportAsResolved,
+  changeRaiseSupportType
 } from "../controllers/raiseSupportController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -17,5 +18,8 @@ router
   .route("/:id")
   .get(protect, getRaiseSupportById)
   .put(protect, markRaiseSupportAsResolved);
+router
+  .route("/type/:id")
+  .put(protect, changeRaiseSupportType);
 
 export default router;
