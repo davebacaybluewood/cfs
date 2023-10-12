@@ -2,7 +2,6 @@ import { Grid } from "@mui/material";
 import React from "react";
 import ReactHelmet from "react-helmet";
 import { Parallax } from "react-parallax";
-import PortalContent from "./PortalContent";
 import "./Portal.scss";
 
 const Portal: React.FC = () => {
@@ -21,23 +20,28 @@ const Portal: React.FC = () => {
         <link rel="canonical" href={window.location.href} />
       </ReactHelmet>
 
-      <Grid container>
-        <Grid item sm={12} md={6} lg={6}>
+      <Grid container>        
+        <Grid item xs={12} sm={12} md={6} lg={6}>
           <Parallax
             bgImage="https://images.pexels.com/photos/3228684/pexels-photo-3228684.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             strength={500}
             bgImageSizes="100%"
+            bgImageStyle={{ opacity: ".3" }}
           >
-            <div style={{ height: 1000 }}>
-              <PortalContent
-                title="New Member"
-                description=""
-                linkProps={{
-                  link: "https://agent.comfortfinancialsolutions.com/signup",
-                  text: "Sign up",
-                }}
-                bgFadedPosition="right"
-              />
+            <div
+              className="contentColoumn"
+              style={{
+                display: "flex",
+                flexFlow: "column nowrap",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h2 className="contentTitle">New Memeber</h2>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <a href="https://agent.comfortfinancialsolutions.com/signup">Signup</a>
+                <a href="/subscribe">Subscribe</a>
+              </div>
             </div>
           </Parallax>
         </Grid>
@@ -46,17 +50,21 @@ const Portal: React.FC = () => {
             bgImage="https://images.pexels.com/photos/2505056/pexels-photo-2505056.jpeg"
             strength={500}
             bgImageSizes="100%"
+            bgImageStyle={{ opacity: ".3" }}
           >
-            <div style={{ height: 1000 }}>
-              <PortalContent
-                title="CFS Agent Portal"
-                description=""
-                linkProps={{
-                  link: `${window.location.origin}/portal/login`,
-                  text: "Login",
-                }}
-                bgFadedPosition="left"
-              />
+            <div
+              className="contentColoumn"
+              style={{
+                display: "flex",
+                flexFlow: "column nowrap",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h2 className="contentTitle">CFS Agent Portal</h2>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <a href="/portal/login">Login</a>
+              </div>
             </div>
           </Parallax>
         </Grid>
