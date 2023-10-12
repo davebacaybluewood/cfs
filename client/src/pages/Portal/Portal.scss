@@ -1,4 +1,4 @@
-$smallDevice: 300px;
+$smallDevice: 390px;
 $deviceMode: 900px;
 
 .portal-container {
@@ -45,12 +45,14 @@ $deviceMode: 900px;
 
     .content {
       z-index: 2;
+
       h5 {
         font-weight: 900;
-        font-size: 8rem;
+        font-size: 6rem;
         text-transform: uppercase;
         font-family: "Agrandir";
       }
+
       p {
         font-size: 1.5rem;
         width: 400px;
@@ -81,6 +83,54 @@ $deviceMode: 900px;
           border: 1px solid #ed3e4b;
         }
       }
+    }
+  }
+}
+
+.contentColoumn {
+  height: 100vh;
+
+  .contentTitle {
+    font-size: 6rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-family: "Agrandir";
+  }
+
+  a {
+    font-size: 1.5rem;
+    margin: 1rem;
+    padding: 1rem 5rem;
+    border-radius: 28px;
+    text-decoration: none;
+    transition: 0.5s;
+    text-transform: uppercase;
+    display: inline-block;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: white;
+    background-color: #ed3e4b;
+    border: 1px solid transparent;
+
+    &:hover {
+      background-color: rgba(237, 62, 75, 0.6);
+      border: 1px solid #ed3e4b;
+    }
+  }
+
+  @media screen and (max-width: $deviceMode) {
+    width: 100vw;
+    height: 50vh;
+
+    .contentTitle {
+      font-size: 3rem;
+    }
+
+    a {
+      font-size: 1.5rem;
+      padding: 1rem 3rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
   }
 }
