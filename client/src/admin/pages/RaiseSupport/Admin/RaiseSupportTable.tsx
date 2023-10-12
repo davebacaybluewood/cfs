@@ -151,7 +151,18 @@ const RaiseSupportTable = () => {
                 </Button>
               </>
             ) : (
-              <h2 style={{ color: "#059669" }}>RESOLVED</h2>
+              <div
+                style={{ display: "flex", gap: "5px", alignItems: "center" }}
+              >
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => viewHandler(params.row.id)}
+                >
+                  View
+                </Button>
+                <h5 style={{ color: "#059669" }}>RESOLVED</h5>
+              </div>
             )}
           </div>
         );
