@@ -94,7 +94,7 @@ const ResolveModal = ({
                     id="modal-modal-title"
                     variant="h4"
                   >
-                    Loading... Please wait
+                    Loading... Please wait..
                   </Typography>
                 </>
               ) : (
