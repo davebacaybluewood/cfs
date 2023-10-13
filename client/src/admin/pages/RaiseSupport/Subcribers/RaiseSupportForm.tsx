@@ -32,8 +32,6 @@ const RaiseSupportForm = () => {
   const [loading, setLoading] = useState(false);
   // shows alert message when state is true
   const [isFormSuccess, setIsFormSuccess] = useState(false);
-  // state for select input
-  const [supportType, setSupportType] = useState("");
 
   // Formik initial values
   const initialValues = {
@@ -64,10 +62,10 @@ const RaiseSupportForm = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={async (data) => {
-            if (data.issue) {
+            // CONDITIONAL PURPOSE: issue and type doesn't work on YUP validation schema
+            if (data.issue && data.type) {
               try {
                 setLoading(true);
-
                 const response = await axios.post(
                   ENDPOINTS.RAISE_SUPPORT_ROOT,
                   {
@@ -77,13 +75,12 @@ const RaiseSupportForm = () => {
                     subject: data.subject,
                     issue: data.issue,
                     status: "PENDING",
+                    type: data.type,
                   }
                 );
-
                 setLoading(false);
                 setIsFormSuccess(true);
                 setIsIssueEmpty(false);
-
                 return response.data;
               } catch (error) {
                 console.error("Error posting data:", error);
@@ -94,7 +91,15 @@ const RaiseSupportForm = () => {
           }}
           validationSchema={validationSchema}
         >
-          {({ values, handleSubmit, setFieldValue }) => {
+          {({
+            values,
+            handleSubmit,
+            setFieldValue,
+            handleChange,
+            touched,
+            errors,
+            handleBlur,
+          }) => {
             return (
               // form element handles submit when enter key is pressed
               <form onSubmit={handleSubmit}>
@@ -107,7 +112,7 @@ const RaiseSupportForm = () => {
                     lg={12}
                     className="form-card-container"
                   >
-                    <label htmlFor="">Name (Required)</label>
+                    <label htmlFor="">Name</label>
                     <FormikTextInput
                       disabled={loading && true}
                       placeholder={`Enter your name here`}
@@ -124,7 +129,7 @@ const RaiseSupportForm = () => {
                     lg={12}
                     className="form-card-container"
                   >
-                    <label htmlFor="">Email (Required)</label>
+                    <label htmlFor="">Email</label>
                     <FormikTextInput
                       disabled={loading && true}
                       placeholder={`Enter your email here`}
@@ -142,7 +147,7 @@ const RaiseSupportForm = () => {
                     lg={12}
                     className="form-card-container"
                   >
-                    <label htmlFor="">Contact Number (Required)</label>
+                    <label htmlFor="">Contact Number</label>
                     <FormikTextInput
                       disabled={loading && true}
                       placeholder={`Enter your name here`}
@@ -159,7 +164,7 @@ const RaiseSupportForm = () => {
                     lg={12}
                     className="form-card-container"
                   >
-                    <label htmlFor="">Subject (Required)</label>
+                    <label htmlFor="">Subject</label>
                     <FormikTextInput
                       disabled={loading && true}
                       placeholder={`Enter subject here`}
@@ -176,20 +181,25 @@ const RaiseSupportForm = () => {
                     lg={12}
                     className="form-card-container"
                   >
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">
+                    <FormControl fullWidth className="form-card-container">
+                      <InputLabel id="demo-multiple-chip-label">
                         Type
                       </InputLabel>
                       <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={supportType}
-                        label="Age"
-                        sx={{ fontSize: "12px" }}
-                        onChange={(e: SelectChangeEvent) => {
-                          setSupportType(e.target.value);
+                        disabled={loading}
+                        onBlur={handleBlur}
+                        name="type"
+                        value={values.type}
+                        onChange={handleChange}
+                        label="type"
+                        sx={{
+                          fontSize: "12px",
+                          background: loading ? "lightgray" : "",
                         }}
                       >
+                        <MenuItem value={SUPPORT_TYPE.BUG}>
+                          Select a type
+                        </MenuItem>
                         <MenuItem value={SUPPORT_TYPE.BUG}>
                           Report a Bug
                         </MenuItem>
@@ -198,6 +208,18 @@ const RaiseSupportForm = () => {
                         </MenuItem>
                         <MenuItem value={SUPPORT_TYPE.OTHER}>Other</MenuItem>
                       </Select>
+                      {/* Display an error message if the 'type' field has been touched and has an error */}
+                      {touched.type && errors.type && (
+                        <label
+                          style={{
+                            color: "#D32F2F",
+                            marginTop: "10px",
+                            marginLeft: "1rem",
+                          }}
+                        >
+                          {errors.type}
+                        </label>
+                      )}
                     </FormControl>
                   </Grid>
 
@@ -234,12 +256,15 @@ const RaiseSupportForm = () => {
                   {/* Submit Button */}
                   <Grid item>
                     <Button
+                      onClick={() => {
+                        handleSubmit();
+                      }}
                       style={{
                         display: "flex",
                         alignItems: "center",
                         cursor: loading ? "not-allowed" : "",
                       }}
-                      type="submit"
+                      type="button"
                       variant="primary"
                       disabled={loading && true}
                     >

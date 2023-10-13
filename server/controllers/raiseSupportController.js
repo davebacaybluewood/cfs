@@ -73,7 +73,7 @@ const getRaiseSupportById = expressAsync(async (req, res) => {
 
   /**
  * @desc: Update the status of a Raise Support Ticket to "RESOLVED" by ID
- * @route: PUT /api/raise-support/:id
+ * @route: PUT /api/raise-support/:id`
  * @access: Private
  */
 const markRaiseSupportAsResolved = expressAsync(async (req, res) => {
