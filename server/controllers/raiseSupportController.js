@@ -56,26 +56,26 @@ const getRaiseSupport = expressAsync(async (req, res) => {
  */
 
 const getRaiseSupportById = expressAsync(async (req, res) => {
-    const id = req.params.id;
-  
-    if (!id) {
-      throw new Error("Invalid Params.");
-    }
-  
-    const raiseSupport = await RaiseSupport.find({ _id: id });
-  
-    if (raiseSupport.length) {
-      res.json(raiseSupport[0]);
-    } else {
-      throw new Error("No Ticket found.");
-    }
-  });
+  const id = req.params.id;
 
-  /**
- * @desc: Update the status of a Raise Support Ticket to "RESOLVED" by ID
- * @route: PUT /api/raise-support/:id`
- * @access: Private
- */
+  if (!id) {
+    throw new Error("Invalid Params.");
+  }
+
+  const raiseSupport = await RaiseSupport.find({ _id: id });
+
+  if (raiseSupport.length) {
+    res.json(raiseSupport[0]);
+  } else {
+    throw new Error("No Ticket found.");
+  }
+});
+
+/**
+* @desc: Update the status of a Raise Support Ticket to "RESOLVED" by ID
+* @route: PUT /api/raise-support/:id
+* @access: Private
+*/
 const markRaiseSupportAsResolved = expressAsync(async (req, res) => {
   const id = req.params.id;
 
