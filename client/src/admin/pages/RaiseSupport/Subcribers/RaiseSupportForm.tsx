@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 // formik
 import { Formik } from "formik";
 import FormikTextInput from "library/Formik/FormikInput";
@@ -9,7 +9,6 @@ import {
   FormControl,
   InputLabel,
   Select,
-  SelectChangeEvent,
   MenuItem,
 } from "@mui/material";
 // components
@@ -32,6 +31,17 @@ const RaiseSupportForm = () => {
   const [loading, setLoading] = useState(false);
   // shows alert message when state is true
   const [isFormSuccess, setIsFormSuccess] = useState(false);
+
+  // Formik Types
+  type RaiseSupportProps = {
+    contactNumber: string;
+    email: string;
+    issue: string;
+    name: string;
+    subject: string;
+    type: string;
+    status: string;
+  };
 
   // Formik initial values
   const initialValues = {
@@ -61,9 +71,9 @@ const RaiseSupportForm = () => {
       ) : (
         <Formik
           initialValues={initialValues}
-          onSubmit={async (data) => {
-            // CONDITIONAL PURPOSE: issue and type doesn't work on YUP validation schema
-            if (data.issue && data.type) {
+          onSubmit={async (data: RaiseSupportProps) => {
+            // CONDITIONAL PURPOSE: issue field does not work YUP validation schema. Can't use name attribute inside react-quill
+            if (data.issue !== "") {
               try {
                 setLoading(true);
                 const response = await axios.post(
@@ -215,6 +225,7 @@ const RaiseSupportForm = () => {
                             color: "#D32F2F",
                             marginTop: "10px",
                             marginLeft: "1rem",
+                            fontSize: "13.4px",
                           }}
                         >
                           {errors.type}
