@@ -9,7 +9,7 @@ import {
   SubMenu,
 } from "react-pro-sidebar";
 import { FaGlobe, FaAngleDoubleRight } from "react-icons/fa";
-import React, { useContext, useMemo, useEffect } from "react";
+import React, { useContext } from "react";
 import "./Sidebar.scss";
 import { MAIN_IMAGES } from "constants/constants";
 import useSidebarLinks, { ISidebarLinks } from "./hooks/useSidebarLinks";
@@ -45,10 +45,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   handleCollapsedChange,
 }) => {
   const userCtx = useContext(UserContext) as any;
-  // const { profile, loading } = useMemo(
-  //   () => useFetchUserProfile("test"),
-  //   [userCtx.user]
-  // );
   const { profile, loading } = useFetchUserProfile(
     userCtx?.user?.userGuid ?? ""
   );
