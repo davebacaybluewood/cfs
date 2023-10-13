@@ -24,8 +24,6 @@ import { SUPPORT_TYPE } from "constants/constants";
 
 const RaiseSupportTable = () => {
   const [ticketData, setTicketData] = useState<TicketProps[]>([]);
-  // only for testing, since API model not updated yet
-  const [newTicketData, setNewTicketData] = useState<TicketProps[]>([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
@@ -47,28 +45,6 @@ const RaiseSupportTable = () => {
     };
     fetchTickets();
   }, []);
-
-  // FOR TESTING: remove this once API model is updated
-  useEffect(() => {
-    // populate newTicketData state to updated data with FAKE TYPE
-    const ticketDataWithType = ticketData.map((item) => {
-      const randomNumber = Math.ceil(Math.random() * 3);
-      let randomGeneratedType = SUPPORT_TYPE.OTHER;
-      if (randomNumber === 1) {
-        randomGeneratedType = SUPPORT_TYPE.BUG;
-      } else if (randomNumber === 2) {
-        randomGeneratedType = SUPPORT_TYPE.FEATURE;
-      } else {
-        randomGeneratedType = SUPPORT_TYPE.OTHER;
-      }
-      // here is the updated data
-      return {
-        ...item,
-        type: randomGeneratedType,
-      };
-    });
-    setNewTicketData(ticketDataWithType);
-  }, [ticketData]);
 
   const viewHandler = (id: string) => {
     navigate("/");
@@ -147,7 +123,7 @@ const RaiseSupportTable = () => {
   ];
 
   // rows for data grid
-  const rows = newTicketData
+  const rows = ticketData
     .filter((item) => {
       if (selectedValue) {
         return item.type?.toLowerCase() === selectedValue.toLowerCase();
