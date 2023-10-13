@@ -20,7 +20,9 @@ import ResolveModal from "./components/ResolveModal";
 import TypeBadge from "./components/TypeBadge";
 import Filter from "./components/Filter";
 // constants
-import { SUPPORT_TYPE } from "constants/constants";
+import { SUPPORT_TYPE, SUPPORT_STATUS } from "constants/constants";
+
+type SelectedIdProps = string;
 
 const RaiseSupportTable = () => {
   const [ticketData, setTicketData] = useState<TicketProps[]>([]);
@@ -32,7 +34,7 @@ const RaiseSupportTable = () => {
 
   // FOR: resolve modal
   // PURPOSE: set id value when a resolve button item is clicked
-  const [selectedId, setSelectedId] = useState<any>(null);
+  const [selectedId, setSelectedId] = useState<SelectedIdProps>("");
 
   const navigate = useNavigate();
 
@@ -132,7 +134,7 @@ const RaiseSupportTable = () => {
         return (
           <div className="action-buttons">
             {/* Resolve Modal */}
-            {params.row.status === "PENDING" ? (
+            {params.row.status === SUPPORT_STATUS.PENDING ? (
               <>
                 <Button
                   variant="outlined"

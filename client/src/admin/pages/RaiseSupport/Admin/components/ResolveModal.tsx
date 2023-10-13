@@ -24,7 +24,7 @@ const ResolveModal = ({
   id,
 }: {
   open: boolean;
-  setOpen: any;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   id: string;
 }) => {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -43,9 +43,9 @@ const ResolveModal = ({
         headers: {
           Authorization: "Bearer " + getUserToken(),
         },
-        body: JSON.stringify({
+        body: {
           status: "RESOLVED",
-        }),
+        },
       })
       .then((res) => {
         console.log(res);
@@ -88,15 +88,13 @@ const ResolveModal = ({
           ) : (
             <>
               {isLoading ? (
-                <>
-                  <Typography
-                    sx={{ textAlign: "center" }}
-                    id="modal-modal-title"
-                    variant="h4"
-                  >
-                    Loading... Please wait..
-                  </Typography>
-                </>
+                <Typography
+                  sx={{ textAlign: "center" }}
+                  id="modal-modal-title"
+                  variant="h4"
+                >
+                  Loading... Please wait..
+                </Typography>
               ) : (
                 <>
                   <Typography

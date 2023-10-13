@@ -309,6 +309,7 @@ const CALENDLY = {
 };
 
 const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
+const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
 
 export {
   COMPANY_NAME,
@@ -325,4 +326,5 @@ export {
   eventSteps,
   MAIN_LOCALHOST,
   SUPPORT_TYPE,
+  SUPPORT_STATUS,
 };
