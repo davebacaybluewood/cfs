@@ -6,6 +6,7 @@ import "../RaiseSupportAdmin.scss";
 import axios from "axios";
 import ENDPOINTS from "constants/endpoints";
 import getUserToken from "helpers/getUserToken";
+import agent from "admin/api/agent";
 
 const style = {
   position: "absolute" as "absolute",
@@ -35,27 +36,12 @@ const ResolveModal = ({
     window.location.reload();
   };
 
-  const handleYes = () => {
+  const handleYes = async () => {
     setIsLoading(true);
-    axios
-      .put(ENDPOINTS.RAISE_SUPPORT_UPDATE_STATUS.replace(":id", id), {
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer " + getUserToken(),
-        },
-        body: {
-          status: "RESOLVED",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setIsLoading(false);
-        setIsSuccess(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
+    const body = { status: "RESOLVED" };
+    await agent.RaiseSupport.resolveTicket(id, body);
+    setIsLoading(false);
+    setIsSuccess(true);
   };
 
   return (
