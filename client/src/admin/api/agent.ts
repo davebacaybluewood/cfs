@@ -347,6 +347,13 @@ const Orders = {
   },
 };
 
+const RaiseSupport = {
+  resolveTicket: (id: string, body: { status: string }) => {
+    const res = requests.put<string>(`/api/raise-support/${id}`, body);
+    return res;
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
@@ -359,6 +366,7 @@ const agent = {
   Profile,
   Points,
   Orders,
+  RaiseSupport,
 };
 
 export default agent;

@@ -42,7 +42,7 @@ const RaiseSupportForm = () => {
     issue: "",
     name: "",
     subject: "",
-    type: "",
+    // type: "",
     status: "PENDING",
   };
 
@@ -53,7 +53,7 @@ const RaiseSupportForm = () => {
     email: Yup.string().email().required("Email is required."),
     contactNumber: Yup.string().required("Contact number is required."),
     subject: Yup.string().required("Subject is required."),
-    type: Yup.string().required("Type is required"),
+    // type: Yup.string().required("Type is required"),
   });
 
   return (
