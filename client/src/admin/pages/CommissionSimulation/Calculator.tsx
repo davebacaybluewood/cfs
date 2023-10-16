@@ -1883,7 +1883,7 @@ const Calculator: React.FC = () => {
                                     >
                                       <Grid item xs={12} md={12} lg={10}>
                                         <h3 style={{ textAlign: "left" }}>
-                                          {data.label} {sumIndex}
+                                          {data.label}
                                         </h3>
                                       </Grid>
                                     </Grid>

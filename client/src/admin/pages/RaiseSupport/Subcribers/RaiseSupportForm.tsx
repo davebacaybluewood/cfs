@@ -100,13 +100,7 @@ const RaiseSupportForm = () => {
 
               <Grid container spacing={2}>
                 {/* Name Field */}
-                <Grid
-                  item
-                  sm={12}
-                  md={12}
-                  lg={12}
-                  className="form-card-container"
-                >
+                <Grid item sm={12} md={12} lg={12} className="form-group">
                   <label htmlFor="">Name (Required)</label>
                   <FormikTextInput
                     disabled={loading && true}
@@ -117,13 +111,7 @@ const RaiseSupportForm = () => {
                   />
                 </Grid>
                 {/* Email Field */}
-                <Grid
-                  item
-                  sm={12}
-                  md={12}
-                  lg={12}
-                  className="form-card-container"
-                >
+                <Grid item sm={12} md={12} lg={12} className="form-group">
                   <label htmlFor="">Email (Required)</label>
                   <FormikTextInput
                     disabled={loading && true}
@@ -135,13 +123,7 @@ const RaiseSupportForm = () => {
                   />
                 </Grid>
                 {/* Contact Number Field */}
-                <Grid
-                  item
-                  sm={12}
-                  md={12}
-                  lg={12}
-                  className="form-card-container"
-                >
+                <Grid item sm={12} md={12} lg={12} className="form-group">
                   <label htmlFor="">Contact Number (Required)</label>
                   <FormikTextInput
                     disabled={loading && true}
@@ -152,13 +134,7 @@ const RaiseSupportForm = () => {
                   />
                 </Grid>
                 {/* Subject Field */}
-                <Grid
-                  item
-                  sm={12}
-                  md={12}
-                  lg={12}
-                  className="form-card-container"
-                >
+                <Grid item sm={12} md={12} lg={12} className="form-group">
                   <label htmlFor="">Subject (Required)</label>
                   <FormikTextInput
                     disabled={loading && true}
@@ -169,13 +145,7 @@ const RaiseSupportForm = () => {
                   />
                 </Grid>
                 {/* Type */}
-                <Grid
-                  item
-                  sm={12}
-                  md={12}
-                  lg={12}
-                  className="form-card-container"
-                >
+                <Grid item sm={12} md={12} lg={12} className="form-group">
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Type</InputLabel>
                     <Select
@@ -198,7 +168,7 @@ const RaiseSupportForm = () => {
                 </Grid>
 
                 {/* Issue */}
-                <Grid item sm={12}>
+                <Grid item sm={12} className="form-group">
                   <label htmlFor="">Issue (Required)</label>
                   <p className="react-quill-note">
                     Include as much detail as possible, such as what happened,
@@ -228,9 +198,9 @@ const RaiseSupportForm = () => {
                   />
                 </Grid>
                 {/* Submit Button */}
-                <Grid item>
+                <Grid item className="form-group">
                   <Button
-                    // onClick={() => handleSubmit()}
+                    className="primary-cfs-btn"
                     onClick={() => {
                       handleSubmit();
                     }}
