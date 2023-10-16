@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 // formik
 import { Formik } from "formik";
 import FormikTextInput from "library/Formik/FormikInput";
@@ -9,7 +9,6 @@ import {
   FormControl,
   InputLabel,
   Select,
-  SelectChangeEvent,
   MenuItem,
 } from "@mui/material";
 // components
@@ -32,8 +31,17 @@ const RaiseSupportForm = () => {
   const [loading, setLoading] = useState(false);
   // shows alert message when state is true
   const [isFormSuccess, setIsFormSuccess] = useState(false);
-  // state for select input
-  const [supportType, setSupportType] = useState("");
+
+  // Formik Types
+  type RaiseSupportProps = {
+    contactNumber: string;
+    email: string;
+    issue: string;
+    name: string;
+    subject: string;
+    type: string;
+    status: string;
+  };
 
   // Formik initial values
   const initialValues = {
@@ -42,7 +50,7 @@ const RaiseSupportForm = () => {
     issue: "",
     name: "",
     subject: "",
-    // type: "",
+    type: "",
     status: "PENDING",
   };
 
@@ -63,11 +71,11 @@ const RaiseSupportForm = () => {
       ) : (
         <Formik
           initialValues={initialValues}
-          onSubmit={async (data) => {
-            if (data.issue) {
+          onSubmit={async (data: RaiseSupportProps) => {
+            // CONDITIONAL PURPOSE: issue field does not work YUP validation schema. Can't use name attribute inside react-quill
+            if (data.issue !== "") {
               try {
                 setLoading(true);
-
                 const response = await axios.post(
                   ENDPOINTS.RAISE_SUPPORT_ROOT,
                   {
@@ -77,13 +85,12 @@ const RaiseSupportForm = () => {
                     subject: data.subject,
                     issue: data.issue,
                     status: "PENDING",
+                    type: data.type,
                   }
                 );
-
                 setLoading(false);
                 setIsFormSuccess(true);
                 setIsIssueEmpty(false);
-
                 return response.data;
               } catch (error) {
                 console.error("Error posting data:", error);
@@ -94,7 +101,15 @@ const RaiseSupportForm = () => {
           }}
           validationSchema={validationSchema}
         >
-          {({ values, handleSubmit, setFieldValue }) => {
+          {({
+            values,
+            handleSubmit,
+            setFieldValue,
+            handleChange,
+            touched,
+            errors,
+            handleBlur,
+          }) => {
             return (
               // form element handles submit when enter key is pressed
 
@@ -145,25 +160,49 @@ const RaiseSupportForm = () => {
                   />
                 </Grid>
                 {/* Type */}
-                <Grid item sm={12} md={12} lg={12} className="form-group">
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                <Grid
+                  item
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  className="form-card-container"
+                >
+                  <FormControl fullWidth className="form-card-container">
+                    <InputLabel id="demo-multiple-chip-label">Type</InputLabel>
                     <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={supportType}
-                      label="Age"
-                      sx={{ fontSize: "12px" }}
-                      onChange={(e: SelectChangeEvent) => {
-                        setSupportType(e.target.value);
+                      disabled={loading}
+                      onBlur={handleBlur}
+                      name="type"
+                      value={values.type}
+                      onChange={handleChange}
+                      label="type"
+                      sx={{
+                        fontSize: "12px",
+                        background: loading ? "lightgray" : "",
                       }}
                     >
+                      <MenuItem value={SUPPORT_TYPE.BUG}>
+                        Select a type
+                      </MenuItem>
                       <MenuItem value={SUPPORT_TYPE.BUG}>Report a Bug</MenuItem>
                       <MenuItem value={SUPPORT_TYPE.FEATURE}>
                         Suggest a Feature
                       </MenuItem>
                       <MenuItem value={SUPPORT_TYPE.OTHER}>Other</MenuItem>
                     </Select>
+                    {/* Display an error message if the 'type' field has been touched and has an error */}
+                    {touched.type && errors.type && (
+                      <label
+                        style={{
+                          color: "#D32F2F",
+                          marginTop: "10px",
+                          marginLeft: "1rem",
+                          fontSize: "13.4px",
+                        }}
+                      >
+                        {errors.type}
+                      </label>
+                    )}
                   </FormControl>
                 </Grid>
 
