@@ -74,6 +74,7 @@ const ENDPOINTS = {
 
   /* Raise Support */
   RAISE_SUPPORT_ROOT: "/api/raise-support",
-}
+  RAISE_SUPPORT_UPDATE_STATUS: "/api/raise-support/:id",
+};
 
-export default ENDPOINTS
+export default ENDPOINTS;
