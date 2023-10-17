@@ -1,12 +1,12 @@
-import { OUTSOURCE_LINKS, ROLES } from "admin/constants/constants";
-import adminPathsNew from "admin/constants/routes";
-import { UserContext } from "admin/context/UserProvider";
-import { PositionAndRoleType } from "admin/pages/Dashboard/components/ConditionalBox/ConditionalBox";
-import { NOTIFICATION_ENUMS } from "constants/constants";
-import { paths } from "constants/routes";
-import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
-import React, { useContext, useEffect, useState } from "react";
-import { BsTools } from "react-icons/bs";
+import { OUTSOURCE_LINKS, ROLES } from "admin/constants/constants"
+import adminPathsNew from "admin/constants/routes"
+import { UserContext } from "admin/context/UserProvider"
+import { PositionAndRoleType } from "admin/pages/Dashboard/components/ConditionalBox/ConditionalBox"
+import { NOTIFICATION_ENUMS } from "constants/constants"
+import { paths } from "constants/routes"
+import { PROFILE_ROLES } from "pages/PortalRegistration/constants"
+import React, { useContext, useEffect, useState } from "react"
+import { BsTools } from "react-icons/bs"
 import {
   FaTachometerAlt,
   FaBookReader,
@@ -33,42 +33,42 @@ import {
   FaCube,
   FaHistory,
   FaMailBulk,
-} from "react-icons/fa";
-import { MdEmail, MdLibraryBooks } from "react-icons/md";
+} from "react-icons/fa"
+import { MdEmail, MdLibraryBooks } from "react-icons/md"
 
 export interface ISidebarLinks {
-  linkText: string;
-  link?: string;
-  isActive?: boolean;
-  icon: React.ReactNode;
-  role: string[];
-  isSubMenu?: boolean;
+  linkText: string
+  link?: string
+  isActive?: boolean
+  icon: React.ReactNode
+  role: string[]
+  isSubMenu?: boolean
   subLinks?: {
-    linkText?: string;
-    link?: string;
-    icon?: React.ReactNode;
-    isActive?: boolean;
-    badge?: string;
-  }[];
+    linkText?: string
+    link?: string
+    icon?: React.ReactNode
+    isActive?: boolean
+    badge?: string
+  }[]
 }
 
 type AgentStatistics = {
-  loading: boolean;
-  error: null;
+  loading: boolean
+  error: null
   agentCount?: {
-    activeAgents: number;
-    deactivatedAgents: number;
-    declinedAgents: number;
-    pendingAgents: number;
-  };
-};
+    activeAgents: number
+    deactivatedAgents: number
+    declinedAgents: number
+    pendingAgents: number
+  }
+}
 
 const useSidebarLinks = (
   position?: PositionAndRoleType[] | undefined,
   roles?: PositionAndRoleType[] | undefined
 ) => {
-  const currentPage = document.location.href.split("/")[4];
-  const userContext = useContext(UserContext);
+  const currentPage = document.location.href.split("/")[4]
+  const userContext = useContext(UserContext)
   const sidebarLinks: ISidebarLinks[] = [
     {
       linkText: "Dashboard",
@@ -269,7 +269,10 @@ const useSidebarLinks = (
       link: paths.rewardsHistory,
       isActive: currentPage === adminPathsNew.rewardsHistory.split("/")[2],
       icon: <FaHistory />,
-      role: [PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value],
+      role: [
+        PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value,
+        PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+      ],
     },
     {
       linkText: "Calendars",
@@ -565,13 +568,13 @@ const useSidebarLinks = (
         },
       ],
     },
-  ];
+  ]
 
   const sidebarMainLinks = sidebarLinks.filter((link: ISidebarLinks) => {
     return roles?.some((f) => {
-      return link.role.includes(f.value);
-    });
-  });
+      return link.role.includes(f.value)
+    })
+  })
 
   const otherLinks = [
     {
@@ -662,14 +665,14 @@ const useSidebarLinks = (
         PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
       ],
     },
-  ];
+  ]
 
-  const sidebarOtherLinks = otherLinks.filter((link: ISidebarLinks) => link);
+  const sidebarOtherLinks = otherLinks.filter((link: ISidebarLinks) => link)
 
   return {
     sidebarMainLinks,
     sidebarOtherLinks: otherLinks,
-  };
-};
+  }
+}
 
-export default useSidebarLinks;
+export default useSidebarLinks

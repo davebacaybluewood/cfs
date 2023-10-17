@@ -26,6 +26,11 @@ const raiseSupportSchema = mongoose.Schema(
       type: String,
       required: true,
       enum: ['RESOLVED','PENDING'],
+    },
+    type: {
+      type: String,
+      required: true,
+      enum: ['BUG','FEATURE','OTHER'],
     }
   },
   {

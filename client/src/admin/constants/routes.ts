@@ -1,4 +1,4 @@
-const adminCfsRoute = "/portal/";
+const adminCfsRoute = "/portal/"
 
 const adminPaths = {
   index: adminCfsRoute + "",
@@ -33,6 +33,7 @@ const adminPaths = {
   adminBlogUsers: adminCfsRoute + "editors",
   faqs: adminCfsRoute + "faqs",
   raiseSupport: adminCfsRoute + "raise-support",
+  raiseSupportTicket: adminCfsRoute + "raise-support/:id",
   contactAdmin: adminCfsRoute + "contact-admin",
   adminAgents: adminCfsRoute + "agents",
   agentRequests: adminCfsRoute + "agent-requests",
@@ -71,4 +72,4 @@ const adminPaths = {
   orderHistory: adminCfsRoute + "merchandises/order-history",
 } as const;
 
-export default adminPaths;
+export default adminPaths

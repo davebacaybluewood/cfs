@@ -22,7 +22,7 @@ import { Formik } from "formik";
 import AlertMessage from "library/AlertMessage/Alert";
 import FormikTextInput from "library/Formik/FormikInput";
 import Spinner from "library/Spinner/Spinner";
-import { USER_FAQ } from "pages/PortalRegistration/constants";
+import { SUBSCRIBER_FAQ } from "../../FAQSubscriber/FAQList";
 import React, { useContext, useEffect, useState } from "react";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { FaCube, FaHistory } from "react-icons/fa";
@@ -189,7 +189,7 @@ const MerchandiseSubscriber: React.FC = () => {
             </p>
 
             <div className="faq-accordions">
-              {USER_FAQ.map((data) => {
+              {SUBSCRIBER_FAQ.slice(0, 5).map((data) => {
                 return (
                   <Accordion
                     expanded={expanded === data.id}
@@ -287,7 +287,7 @@ const MerchandiseSubscriber: React.FC = () => {
                       </Grid>
                       <Grid item sm={12} md={6} lg={8}>
                         <Grid container spacing={2}>
-                          <Grid item sm={12} md={12} lg={12}>
+                          <Grid item xs={12}>
                             <label>Name (Required)</label>
                             <FormikTextInput
                               placeholder="Enter your name here"
@@ -296,7 +296,7 @@ const MerchandiseSubscriber: React.FC = () => {
                               value={values.name}
                             />
                           </Grid>
-                          <Grid item sm={12} md={12} lg={12}>
+                          <Grid item xs={12}>
                             <label>Email Address (Required)</label>
                             <FormikTextInput
                               placeholder="Enter your email address here"
@@ -305,7 +305,7 @@ const MerchandiseSubscriber: React.FC = () => {
                               value={values.emailAddress}
                             />
                           </Grid>
-                          <Grid item sm={12} md={12} lg={12}>
+                          <Grid item xs={12}>
                             <label>Phone Number (Required)</label>
                             <FormikTextInput
                               placeholder="Enter your phone number here"
@@ -314,7 +314,7 @@ const MerchandiseSubscriber: React.FC = () => {
                               value={values.phoneNumber}
                             />
                           </Grid>
-                          <Grid item sm={12} md={12} lg={12}>
+                          <Grid item xs={12}>
                             <label>Address (Required)</label>
                             <FormikTextInput
                               placeholder="Enter your template address here"
@@ -324,7 +324,7 @@ const MerchandiseSubscriber: React.FC = () => {
                               isTextArea
                             />
                           </Grid>
-                          <Grid item sm={12} md={12} lg={12}>
+                          <Grid item xs={12}>
                             <label>Remarks</label>
                             <FormikTextInput
                               placeholder="Enter your remarks here"
