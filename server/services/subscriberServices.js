@@ -1,5 +1,6 @@
 import subscriberVerification from "../emailTemplates/subscriberVerification.js";
 import VerificationCode from "../models/verificationCodeModel.js";
+import { consumeCode } from "./verificationCodeServices.js";
 import generateString from "../utils/generateString.js";
 import sendEmail from "../utils/sendNodeMail.js";
 import { v4 as uuid } from "uuid";
@@ -74,6 +75,8 @@ const subscriberRegistration = async (
   if (!isCodeExist.length) {
     return false;
   }
+
+  consumeCode({ emailAddress: email });
 
   const newUserGuid = uuid();
   const userInfo = {
