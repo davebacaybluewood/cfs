@@ -13,6 +13,7 @@ import {
   COMPANY_CONTACT_INFO,
   COMPANY_NAME,
   SOCIAL_MEDIA_LINKS,
+  TWITTER_LOGO,
 } from "constants/constants";
 import Partners from "library/Partners/Partners";
 
@@ -20,22 +21,7 @@ interface FooterProps {
   showPartners?: boolean;
 }
 
-const TwitterLogo = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-    >
-      <rect x="0" y="0" width="24" height="24" fill="#23a6f0" stroke="none" />
-      <path
-        fill="#0e1f51"
-        d="M18.205 2.25h3.308l-7.227 8.26l8.502 11.24H16.13l-5.214-6.817L4.95 21.75H1.64l7.73-8.835L1.215 2.25H8.04l4.713 6.231l5.45-6.231Zm-1.161 17.52h1.833L7.045 4.126H5.078L17.044 19.77Z"
-      />
-    </svg>
-  );
-};
+
 
 const Footer: React.FC<FooterProps> = (props) => {
   return (
@@ -166,7 +152,7 @@ const Footer: React.FC<FooterProps> = (props) => {
               <RiInstagramFill />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.TWITTER}>
-              <TwitterLogo />
+              <TWITTER_LOGO width="18" height="18" viewBox="0 0 24 24" />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.LINKEDIN}>
               <FaLinkedin />
