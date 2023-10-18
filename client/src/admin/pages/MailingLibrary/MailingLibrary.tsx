@@ -320,7 +320,6 @@ const MailLibrary: React.FC = () => {
               sx={{
                 boxShadow: "0 4px 6px -1px #eee, 0 2px 4px -1px #eee",
                 background: "white",
-                // m: 2,
                 p: 2,
               }}
               rows={filteredRows}
