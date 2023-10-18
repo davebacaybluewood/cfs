@@ -168,7 +168,21 @@ const DEFAULT_IMAGE =
 const TICKET_STATUS = {
   RESOLVED: "RESOLVED",
   PENDING: "PENDING",
-}
+};
+
+export const API_RES_OK = (msg) => {
+  return {
+    message: msg,
+    status: "SUCCESS",
+  };
+};
+
+export const API_RES_FAIL = (msg = null) => {
+  return {
+    error: "invalid_request",
+    description: msg ?? "Fields are required",
+  };
+};
 
 export {
   CONTENT_CREATOR_ROLES,
@@ -179,5 +193,5 @@ export {
   SUBSCRIBER_ROLES,
   DEFAULT_IMAGE,
   POINTS_TYPE,
-  TICKET_STATUS
+  TICKET_STATUS,
 };

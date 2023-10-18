@@ -11,7 +11,7 @@ import {
   updateEvent,
   getCountInviteByEventId,
 } from "../controllers/eventControllers.js";
-import { admin, protect } from "../middleware/authMiddleware.js";
+import { protect } from "../middleware/authMiddleware.js";
 import multer from "../utils/multer.js";
 
 const router = express.Router();
