@@ -100,7 +100,7 @@ const ContractForm: React.FC = () => {
       settings: settings,
     }));
 
-    emailEditorRef.current?.loadDesign(JSON.parse(design));
+    emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || ""));
 
     setOpenDrawer(false);
   };
@@ -257,7 +257,7 @@ const ContractForm: React.FC = () => {
   const loadDesign = useCallback(() => {
     if (emailEditorRef.current) {
       console.log(JSON.parse(design || "{}"));
-      emailEditorRef.current.loadDesign(JSON.parse(design || "{}"));
+      emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || "{}"));
     }
   }, [emailEditorRef, design]);
   return (
