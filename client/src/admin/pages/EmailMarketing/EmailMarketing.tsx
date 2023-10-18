@@ -204,6 +204,9 @@ const ContractForm: React.FC = () => {
     };
     if (userGuid && templateId) {
       console.log("triggered");
+      console.log({
+        design,
+      });
       fetchTemplateInfo();
       setLoading(false);
     }
@@ -259,7 +262,8 @@ const ContractForm: React.FC = () => {
 
   const loadDesign = useCallback(() => {
     if (emailEditorRef.current) {
-      console.log(JSON.parse(design || "{}"));
+      console.log(design);
+      console.log(JSON.parse(design));
       emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || "{}"));
     }
   }, [emailEditorRef, design]);
