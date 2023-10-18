@@ -234,7 +234,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <div>
             {/* If current role is master admin, display 19 skeleton */}
             {sessionStorage.userRole ===
-            PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value ? (
+              PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value &&
               [
                 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
                 19,
@@ -243,27 +243,21 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <Skeleton variant="circular" width={20} height={20} />
                   <Skeleton variant="rounded" width={180} height={20} />
                 </div>
-              ))
-            ) : (
-              <></>
-            )}
+              ))}
 
             {/* If current role is subscriber, display 6 skeleton component */}
             {sessionStorage.userRole ===
-            PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value ? (
+              PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value &&
               [1, 2, 3, 4, 5, 6].map((item, index: number) => (
                 <div className="links-parent-skeleton" key={index}>
                   <Skeleton variant="circular" width={20} height={20} />
                   <Skeleton variant="rounded" width={180} height={20} />
                 </div>
-              ))
-            ) : (
-              <></>
-            )}
+              ))}
 
             {/* If current role is agent, display 14 skeleton component */}
             {sessionStorage.userRole ===
-            PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value ? (
+              PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value &&
               [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(
                 (item, index: number) => (
                   <div className="links-parent-skeleton" key={index}>
@@ -271,10 +265,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <Skeleton variant="rounded" width={180} height={20} />
                   </div>
                 )
-              )
-            ) : (
-              <></>
-            )}
+              )}
           </div>
         )}
 
