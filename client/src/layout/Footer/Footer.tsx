@@ -152,7 +152,7 @@ const Footer: React.FC<FooterProps> = (props) => {
               <RiInstagramFill />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.TWITTER}>
-              <TWITTER_LOGO width="18" height="18" viewBox="0 0 24 24" />
+              <TWITTER_LOGO width="18" height="18" viewBox="0 0 24 24" reactX={0} reactY={0} reactWidth={24} reactHeight={24} reactFill={"#23a6f0"} pathFill={"#0e1f51"} />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.LINKEDIN}>
               <FaLinkedin />
