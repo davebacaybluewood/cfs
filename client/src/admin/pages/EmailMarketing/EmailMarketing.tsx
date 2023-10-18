@@ -15,7 +15,13 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { Formik } from "formik";
 import Spinner from "library/Spinner/Spinner";
 import * as Yup from "yup";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "./EmailMarketing.scss";
 import FormikTextInput from "library/Formik/FormikInput";
 import Button from "library/Button/Button";
@@ -41,6 +47,9 @@ export const emailOptions = [
   { value: "dave.bacay.vc@gmail.com", label: "dave.bacay.vc@gmail.com" },
   { value: "dave.bacay@gocfs.pro", label: "dave.bacay@gocfs.pro" },
 ];
+
+const testData =
+  '{"counters":{"u_column":6,"u_row":6,"u_content_image":6,"u_content_text":4},"body":{"id":"3ikzk4sDP_","rows":[{"id":"csHFJF237C","cells":[1],"columns":[{"id":"X1zWdJ57IZ","contents":[{"id":"wS2YtbKZ7V","type":"image","values":{"containerPadding":"0px","anchor":"","src":{"url":"https://assets.unlayer.com/stock-templates/1697639044538-header.png","width":600,"height":94},"textAlign":"center","altText":"","action":{"name":"web","values":{"href":"","target":"_blank"}},"displayCondition":null,"_meta":{"htmlID":"u_content_image_1","htmlClassNames":"u_content_image"},"selectable":true,"draggable":true,"duplicatable":true,"deletable":true,"hideable":true}},{"id":"0e7iddrikW","type":"text","values":{"containerPadding":"10px","anchor":"","fontFamily":{"label":"Cabin","value":"\'Cabin\',sans-serif","url":"https://fonts.googleapis.com/css?family=Cabin:400,700","defaultFont":true,"weights":[400,700]},"fontSize":"14px","textAlign":"left","lineHeight":"140%","linkStyle":{"inherit":true,"linkColor":"#0000ee","linkHoverColor":"#0000ee","linkUnderline":true,"linkHoverUnderline":true},"displayCondition":null,"_meta":{"htmlID":"u_content_text_2","htmlClassNames":"u_content_text"},"selectable":true,"draggable":true,"duplicatable":true,"deletable":true,"hideable":true,"text":"<p style=\\"line-height: 140%; margin-bottom: 8pt;\\"><span style=\\"color: #000000; white-space-collapse: preserve; line-height: 19.6px;\\">Good day Agent!</span></p>\\n<p style=\\"line-height: 140%; margin-bottom: 8pt;\\"><span style=\\"color: #000000; white-space-collapse: preserve; line-height: 19.6px;\\">You are chosen among an extensive list of aspiring experts in the financial world.</span></p>\\n<p style=\\"line-height: 140%; margin-bottom: 8pt;\\"><span style=\\"color: #000000; white-space-collapse: preserve; line-height: 19.6px;\\">Your mission: to gather the best agents and form the best performing CFS team.</span></p>\\n<p style=\\"line-height: 140%; margin-bottom: 8pt;\\"><span style=\\"color: #000000; white-space-collapse: preserve; line-height: 19.6px;\\">Should you choose to accept this mission, CFS will grant you the top-of-the-line tools an agent will find most useful in this mission.</span></p>\\n<p style=\\"line-height: 140%; margin-bottom: 8pt;\\"><span style=\\"color: #000000; white-space-collapse: preserve; line-height: 19.6px;\\">Click on the link below to register and see you in the Business Opportunity Presentation along with the other agents of your caliber.</span></p>"}},{"id":"atJeljrxQ9","type":"image","values":{"containerPadding":"0px","anchor":"","src":{"url":"https://assets.unlayer.com/stock-templates/1697639159379-Speaker-Spotlight.png","width":600,"height":148},"textAlign":"center","altText":"","action":{"name":"web","values":{"href":"","target":"_blank"}},"displayCondition":null,"_meta":{"htmlID":"u_content_image_3","htmlClassNames":"u_content_image"},"selectable":true,"draggable":true,"duplicatable":true,"deletable":true,"hideable":true}},{"id":"kfSH3nfM74","type":"image","values":{"containerPadding":"0px","anchor":"","src":{"url":"https://assets.unlayer.com/stock-templates/1697639253304-Sponsors.png","width":600,"height":120},"textAlign":"center","altText":"","action":{"name":"web","values":{"href":"","target":"_blank"}},"displayCondition":null,"_meta":{"htmlID":"u_content_image_2","htmlClassNames":"u_content_image"},"selectable":true,"draggable":true,"duplicatable":true,"deletable":true,"hideable":true}},{"id":"rgZ1iuhw45","type":"image","values":{"containerPadding":"0px","anchor":"","src":{"url":"https://assets.unlayer.com/stock-templates/1697639560645-Featured-Products.png","width":600,"height":140},"textAlign":"center","altText":"","action":{"name":"web","values":{"href":"","target":"_blank"}},"displayCondition":null,"_meta":{"htmlID":"u_content_image_4","htmlClassNames":"u_content_image"},"selectable":true,"draggable":true,"duplicatable":true,"deletable":true,"hideable":true}},{"id":"LP2pXqWaIX","type":"image","values":{"containerPadding":"0px","anchor":"","src":{"url":"https://assets.unlayer.com/stock-templates/1697639617246-footer.png","width":600,"height":92},"textAlign":"center","altText":"","action":{"name":"web","values":{"href":"","target":"_blank"}},"displayCondition":null,"_meta":{"htmlID":"u_content_image_5","htmlClassNames":"u_content_image"},"selectable":true,"draggable":true,"duplicatable":true,"deletable":true,"hideable":true}}],"values":{"backgroundColor":"#ffffff","padding":"0px","border":{},"_meta":{"htmlID":"u_column_1","htmlClassNames":"u_column"}}}],"values":{"displayCondition":null,"columns":false,"backgroundColor":"","columnsBackgroundColor":"","backgroundImage":{"url":"","fullWidth":true,"repeat":"no-repeat","size":"custom","position":"center"},"padding":"0px","anchor":"","hideDesktop":false,"_meta":{"htmlID":"u_row_1","htmlClassNames":"u_row"},"selectable":true,"draggable":true,"duplicatable":true,"deletable":true,"hideable":true}}],"headers":[],"footers":[],"values":{"popupPosition":"center","popupWidth":"600px","popupHeight":"auto","borderRadius":"10px","contentAlign":"center","contentVerticalAlign":"center","contentWidth":"500px","fontFamily":{"label":"Arial","value":"arial,helvetica,sans-serif"},"textColor":"#000000","popupBackgroundColor":"#FFFFFF","popupBackgroundImage":{"url":"","fullWidth":true,"repeat":"no-repeat","size":"cover","position":"center"},"popupOverlay_backgroundColor":"rgba(0, 0, 0, 0.1)","popupCloseButton_position":"top-right","popupCloseButton_backgroundColor":"#DDDDDD","popupCloseButton_iconColor":"#000000","popupCloseButton_borderRadius":"0px","popupCloseButton_margin":"0px","popupCloseButton_action":{"name":"close_popup","attrs":{"onClick":"document.querySelector(\'.u-popup-container\').style.display = \'none\';"}},"backgroundColor":"#e7e7e7","backgroundImage":{"url":"","fullWidth":true,"repeat":"no-repeat","size":"custom","position":"center"},"preheaderText":"","linkStyle":{"body":true,"linkColor":"#0000ee","linkHoverColor":"#0000ee","linkUnderline":true,"linkHoverUnderline":true},"_meta":{"htmlID":"u_body","htmlClassNames":"u_body"}}},"schemaVersion":16}';
 
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -189,16 +198,16 @@ const ContractForm: React.FC = () => {
       setDesign(data.design);
 
       /** Load if edit mode */
-      if (Object.keys(data.design).length) {
-        console.log(emailEditorRef.current);
-        emailEditorRef.current?.loadDesign(JSON.parse(data.design || ""));
-      }
+      // if (Object.keys(data.design)?.length) {
+      //   console.log(emailEditorRef.current);
+      //   emailEditorRef.current?.loadDesign(JSON.parse(data.design || testData));
+      // }
     };
     if (userGuid && templateId) {
       fetchTemplateInfo();
       setLoading(false);
     }
-  }, [templateId, userGuid]);
+  }, [templateId, userGuid, emailEditorRef]);
 
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     const unlayer = emailEditorRef.current?.editor;
@@ -247,6 +256,12 @@ const ContractForm: React.FC = () => {
       .min(1, "Pick at least 1 recipients")
       .required("Recipients is required."),
   });
+
+  const loadDesign = useCallback(() => {
+    if (emailEditorRef.current) {
+      emailEditorRef.current.loadDesign(JSON.parse(design || "{}"));
+    }
+  }, [emailEditorRef, design]);
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -404,6 +419,7 @@ const ContractForm: React.FC = () => {
 
                           <EmailEditor
                             ref={emailEditorRef}
+                            onReady={loadDesign}
                             style={{
                               height: "500px",
                             }}
