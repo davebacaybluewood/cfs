@@ -36,7 +36,6 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import EmailEditor from "react-email-editor";
 import ReactHtmlParser from "html-react-parser";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ModalContent from "react-calendly/typings/components/PopupModal/ModalContent";
 
 export const emailOptions = [
   { value: "dave.bacay.vc@gmail.com", label: "dave.bacay.vc@gmail.com" },
