@@ -13,12 +13,16 @@ import {
   COMPANY_CONTACT_INFO,
   COMPANY_NAME,
   SOCIAL_MEDIA_LINKS,
+  TWITTER_LOGO,
 } from "constants/constants";
 import Partners from "library/Partners/Partners";
 
 interface FooterProps {
   showPartners?: boolean;
 }
+
+
+
 const Footer: React.FC<FooterProps> = (props) => {
   return (
     <div className="footer">
@@ -148,11 +152,7 @@ const Footer: React.FC<FooterProps> = (props) => {
               <RiInstagramFill />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.TWITTER}>
-              <img
-                src="/assets/icons/TwitterX.svg"
-                alt="/assets/icons/TwitterX.svg"
-                className="footer__socials"
-              />
+              <TWITTER_LOGO width="18" height="18" viewBox="0 0 24 24" />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.LINKEDIN}>
               <FaLinkedin />
