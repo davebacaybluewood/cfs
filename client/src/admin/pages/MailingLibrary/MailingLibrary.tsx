@@ -56,22 +56,22 @@ const MailLibrary: React.FC = () => {
     {
       field: "templateName",
       headerName: "Template Name",
-      width: 400,
+      width: 200,
       renderCell: (params) => params.value,
     },
-    { field: "subject", headerName: "Subject", width: 150 },
-    { field: "createdBy", headerName: "Created By", width: 150 },
-    { field: "createdAt", headerName: "Date Created", width: 150 },
+    { field: "subject", headerName: "Subject", width: 200 },
+    { field: "createdBy", headerName: "Created By", width: 200 },
+    { field: "createdAt", headerName: "Date Created", width: 200 },
     {
       field: "status",
       headerName: "Status",
-      width: 150,
+      width: 100,
       renderCell: (params) => params.value,
     },
     {
       field: "actions",
       headerName: "",
-      width: 580,
+      width: 320,
       align: "right",
       renderCell: (params) => params.value,
     },
@@ -297,7 +297,7 @@ const MailLibrary: React.FC = () => {
 
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
-      <div className="mailing-library-container">
+      <div className="mailing-library-container" style={{ padding: "2rem" }}>
         <Title
           title="Email Library"
           subtitle="List of all available email libraries."
@@ -317,6 +317,12 @@ const MailLibrary: React.FC = () => {
         >
           <div className="mailing-library-table">
             <DataGrid
+              sx={{
+                boxShadow: "0 4px 6px -1px #eee, 0 2px 4px -1px #eee",
+                background: "white",
+                // m: 2,
+                p: 2,
+              }}
               rows={filteredRows}
               columns={columns}
               slots={{ toolbar: FilteredGridToolbar }}
