@@ -20,6 +20,17 @@
       -webkit-box-shadow: 0px 10px 36px 0px rgba(0, 0, 0, 0.29);
       -moz-box-shadow: 0px 10px 36px 0px rgba(0, 0, 0, 0.29);
 
+      .save-template-error-text {
+        display: flex;
+        justify-content: end;
+        padding: 10px;
+
+        span {
+          color: #ff5733;
+          font-size: 14px;
+        }
+      }
+
       .form-actions {
         display: flex;
         justify-content: space-between;
