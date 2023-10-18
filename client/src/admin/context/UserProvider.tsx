@@ -14,7 +14,7 @@ export const UserContext = createContext<UserContextData>({
   user: undefined,
 });
 
-function setLocalStorage(key, value) {
+function setSessionStorage(key, value) {
   try {
     window.sessionStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
@@ -23,7 +23,7 @@ function setLocalStorage(key, value) {
   }
 }
 
-function getLocalStorage(key, initialValue) {
+function getSessionStorage(key, initialValue) {
   try {
     const value = window.sessionStorage.getItem(key);
     return value ? JSON.parse(value) : initialValue;
@@ -35,7 +35,7 @@ function getLocalStorage(key, initialValue) {
 
 const UserProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   const [data, setData] = useState(() =>
-    getLocalStorage("userInfo", {
+    getSessionStorage("userInfo", {
       loading: false,
       error: null,
       user: undefined,
@@ -43,7 +43,7 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   );
   const localData = sessionStorage.getItem("userInfo");
   useEffect(() => {
-    setLocalStorage("userInfo", data);
+    setSessionStorage("userInfo", data);
   }, [data]);
 
   return (

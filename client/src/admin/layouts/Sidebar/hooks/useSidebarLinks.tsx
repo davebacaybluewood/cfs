@@ -710,6 +710,7 @@ const useSidebarLinks = (
   return {
     sidebarMainLinks,
     sidebarOtherLinks: otherLinks,
+    linksLength: sidebarMainLinks.length,
   };
 };
 

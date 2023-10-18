@@ -70,6 +70,30 @@ const Sidebar: React.FC<SidebarProps> = ({
     ? profile?.name
     : `${profile?.firstName} ${profile?.lastName}`;
 
+  /* Subscriber length: 6 */
+  const { linksLength: linksLengthSub } = useSidebarLinks(undefined, [
+    {
+      label: PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.label,
+      value: PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value,
+    },
+  ]);
+
+  /* Agent length: 14 */
+  const { linksLength: linksLengthAgent } = useSidebarLinks(undefined, [
+    {
+      label: PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.label,
+      value: PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
+    },
+  ]);
+
+  /* Admin length: 19 */
+  const { linksLength: linksLengthAdmin } = useSidebarLinks(undefined, [
+    {
+      label: PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.label,
+      value: PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+    },
+  ]);
+
   return (
     <ProSidebar
       collapsed={collapsed}
@@ -146,22 +170,20 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
         ) : (
-          <>
-            <div className="profile-parent-skeleton">
-              <Skeleton
-                className="profile-name-skeleton"
-                variant="rounded"
-                width={180}
-                height={20}
-              />
-              <Skeleton
-                className="badge-skeleton"
-                variant="rounded"
-                width={110}
-                height={15}
-              />
-            </div>
-          </>
+          <div className="profile-parent-skeleton">
+            <Skeleton
+              className="profile-name-skeleton"
+              variant="rounded"
+              width={180}
+              height={20}
+            />
+            <Skeleton
+              className="badge-skeleton"
+              variant="rounded"
+              width={110}
+              height={15}
+            />
+          </div>
         )}
 
         <h2 className="sidebar-label">Main Links</h2>
@@ -210,13 +232,49 @@ const Sidebar: React.FC<SidebarProps> = ({
           </>
         ) : (
           <div>
-            {/* ARRAY USE: to display skeleton component multiple times */}
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index: number) => (
-              <div className="links-parent-skeleton" key={index}>
-                <Skeleton variant="circular" width={20} height={20} />
-                <Skeleton variant="rounded" width={180} height={20} />
-              </div>
-            ))}
+            {/* If current role is master admin, display 19 skeleton */}
+            {sessionStorage.userRole ===
+            PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value ? (
+              [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+                19,
+              ].map((item, index: number) => (
+                <div className="links-parent-skeleton" key={index}>
+                  <Skeleton variant="circular" width={20} height={20} />
+                  <Skeleton variant="rounded" width={180} height={20} />
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+
+            {/* If current role is subscriber, display 6 skeleton component */}
+            {sessionStorage.userRole ===
+            PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value ? (
+              [1, 2, 3, 4, 5, 6].map((item, index: number) => (
+                <div className="links-parent-skeleton" key={index}>
+                  <Skeleton variant="circular" width={20} height={20} />
+                  <Skeleton variant="rounded" width={180} height={20} />
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+
+            {/* If current role is agent, display 14 skeleton component */}
+            {sessionStorage.userRole ===
+            PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value ? (
+              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(
+                (item, index: number) => (
+                  <div className="links-parent-skeleton" key={index}>
+                    <Skeleton variant="circular" width={20} height={20} />
+                    <Skeleton variant="rounded" width={180} height={20} />
+                  </div>
+                )
+              )
+            ) : (
+              <></>
+            )}
           </div>
         )}
 
