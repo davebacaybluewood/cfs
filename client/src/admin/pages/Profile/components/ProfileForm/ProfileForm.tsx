@@ -1,7 +1,7 @@
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import { CrumbTypes } from "admin/pages/Dashboard/types";
 import { paths } from "constants/routes";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ProfileForm.scss";
 import MainForm from "./components/MainForm";
 import { Grid } from "@mui/material";
@@ -56,7 +56,7 @@ const ProfileForm: React.FC = () => {
     password: false,
     email: false,
     roles: false,
-    subscriber: true,
+    subscriber: false,
   });
 
   const formClassnames = classNames("profile-form-content", {
@@ -76,6 +76,18 @@ const ProfileForm: React.FC = () => {
       f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
     );
   });
+
+  useEffect(() => {
+    if (isAgent || isAdmin) {
+      setActiveForm({
+        main: true,
+        email: false,
+        password: false,
+        roles: false,
+        subscriber: false,
+      });
+    }
+  }, [isAgent]);
 
   return (
     <Wrapper
