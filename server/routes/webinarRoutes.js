@@ -12,7 +12,7 @@ import {
   submitAppointment,
   updateWebinar,
 } from "../controllers/webinarControllers.js";
-import { admin, adminAuth, protect } from "../middleware/authMiddleware.js";
+import { adminAuth, protect } from "../middleware/authMiddleware.js";
 import multer from "../utils/multer.js";
 
 const router = express.Router();
