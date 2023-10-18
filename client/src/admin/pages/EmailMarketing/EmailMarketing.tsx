@@ -6,7 +6,6 @@ import {
   FormControlLabel,
   FormGroup,
   Grid,
-  Modal,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -50,7 +49,7 @@ const ContractForm: React.FC = () => {
   const emailEditorRef = useRef<any>(null);
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
-  const [emailSubjectError, setEmailSubjectError] = useState<string>("");
+  const [saveTemplateError, setSaveTemplateError] = useState<string>("");
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -210,11 +209,11 @@ const ContractForm: React.FC = () => {
       data.design = JSON.stringify(updatedDesign);
       data.templateBody = html;
 
-      // check if fields not empty
+      // check if fields not empty (only templateBody and templateName is needed to validate for this)
       const isNoEmptyFields = data.templateBody && data.templateName;
 
       if (isNoEmptyFields) {
-        setEmailSubjectError("");
+        setSaveTemplateError("");
         setLoading(true);
         const response = await agent.EmailMarketing.createEmailTemplate(
           userGuid,
@@ -235,7 +234,7 @@ const ContractForm: React.FC = () => {
           setLoading(false);
         }
       } else {
-        setEmailSubjectError("Please complete all fields.");
+        setSaveTemplateError("Please complete all fields.");
         setLoading(false);
       }
     });
@@ -505,22 +504,9 @@ const ContractForm: React.FC = () => {
                       </Accordion>
                     </Grid>
                   </Grid>
-                  {emailSubjectError && (
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "end",
-                        padding: "10px",
-                      }}
-                    >
-                      <span
-                        style={{
-                          color: "#FF5733",
-                          fontSize: "14px",
-                        }}
-                      >
-                        {emailSubjectError}
-                      </span>
+                  {saveTemplateError && (
+                    <div className="save-template-error-text">
+                      <span>{saveTemplateError}</span>
                     </div>
                   )}
 
