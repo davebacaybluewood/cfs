@@ -199,12 +199,15 @@ const ContractForm: React.FC = () => {
       });
 
       /** Load if edit mode */
-      // if (Object.keys(data.design)?.length) {
-      //   console.log(emailEditorRef.current);
-      //   emailEditorRef.current?.editor?.loadDesign(
-      //     JSON.parse(data.design || "{}")
-      //   );
-      // }
+      if (Object.keys(data.design)?.length) {
+        console.log("triggered123123");
+        console.log({
+          ifUE: data.design,
+        });
+        emailEditorRef.current?.editor?.loadDesign(
+          JSON.parse(data.design || "{}")
+        );
+      }
     };
     if (userGuid && templateId) {
       console.log("triggered");
@@ -270,11 +273,12 @@ const ContractForm: React.FC = () => {
   });
 
   const loadDesign = useCallback(() => {
-    if (emailEditorRef.current) {
-      console.log(design);
-      console.log(JSON.parse(design));
-      emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || "{}"));
-    }
+    // if (emailEditorRef.current) {
+    //   console.log(design);
+    //   console.log(JSON.parse(design));
+    //   emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || "{}"));
+    // }
+    console.log("ready");
   }, [emailEditorRef, design]);
 
   useEffect(() => {}, [design]);
