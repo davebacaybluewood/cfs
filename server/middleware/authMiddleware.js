@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
-import { BEARER, ROLES } from "../constants/constants.js";
+import { API_RES_FAIL, BEARER, ROLES } from "../constants/constants.js";
 import expressAsync from "express-async-handler";
 
 const protect = expressAsync(async (req, res, next) => {
@@ -123,13 +123,21 @@ const blogAuth = expressAsync(async (req, res, next) => {
   }
 });
 
-const admin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
+const subscriberAuth = async (req, res, next) => {
+  const userGuid = req.body.userGuid;
+
+  if (!userGuid) res.status(400).send(API_RES_FAIL());
+
+  const subscriber = await User.findOne({
+    roles: { $elemMatch: { value: "ROLE_SUBSCRIBER" } },
+    userGuid: userGuid,
+  });
+
+  if (subscriber) {
     next();
   } else {
-    res.status(401);
-    throw new Error("Not authorized as an admin");
+    res.status(401).send("Not authorized as an subscriber");
   }
 };
 
-export { protect, admin, agentAuth, adminAuth, blogAuth };
+export { protect, agentAuth, adminAuth, blogAuth, subscriberAuth };
