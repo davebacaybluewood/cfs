@@ -197,10 +197,13 @@ const ContractForm: React.FC = () => {
       /** Load if edit mode */
       // if (Object.keys(data.design)?.length) {
       //   console.log(emailEditorRef.current);
-      //   emailEditorRef.current?.loadDesign(JSON.parse(data.design || testData));
+      //   emailEditorRef.current?.editor?.loadDesign(
+      //     JSON.parse(data.design || "{}")
+      //   );
       // }
     };
     if (userGuid && templateId) {
+      console.log("triggered");
       fetchTemplateInfo();
       setLoading(false);
     }
