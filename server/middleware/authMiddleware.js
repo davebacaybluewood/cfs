@@ -136,7 +136,7 @@ const subscriberAuth = async (req, res, next) => {
   if (subscriber) {
     next();
   } else {
-    res.status(401).send("Not authorized as an subscriber");
+    res.status(401).send("Not authorized as a subscriber");
   }
 };
 
