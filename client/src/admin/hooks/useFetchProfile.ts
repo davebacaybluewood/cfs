@@ -105,6 +105,10 @@ const useFetchUserProfile = (userGuid: string) => {
       .get(ENDPOINTS.PROFILE.replace(":userGuid", userGuid))
       .then((response) => {
         setProfile(response.data);
+        // Add response.data.role to sessionStorage userRole
+        if (!sessionStorage.getItem("userRole")) {
+          sessionStorage.setItem("userRole", response.data.roles[0].value);
+        }
         setLoading(false);
       })
       .catch((error) => {

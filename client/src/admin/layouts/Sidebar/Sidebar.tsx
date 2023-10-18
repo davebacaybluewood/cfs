@@ -28,6 +28,7 @@ import {
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import Spinner from "library/Spinner/Spinner";
 import Badge from "library/Badge/Badge";
+import { Skeleton } from "@mui/material";
 
 type SidebarProps = {
   image?: string;
@@ -69,6 +70,30 @@ const Sidebar: React.FC<SidebarProps> = ({
     ? profile?.name
     : `${profile?.firstName} ${profile?.lastName}`;
 
+  /* Subscriber length: 6 */
+  const { linksLength: linksLengthSub } = useSidebarLinks(undefined, [
+    {
+      label: PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.label,
+      value: PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value,
+    },
+  ]);
+
+  /* Agent length: 14 */
+  const { linksLength: linksLengthAgent } = useSidebarLinks(undefined, [
+    {
+      label: PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.label,
+      value: PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
+    },
+  ]);
+
+  /* Admin length: 19 */
+  const { linksLength: linksLengthAdmin } = useSidebarLinks(undefined, [
+    {
+      label: PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.label,
+      value: PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+    },
+  ]);
+
   return (
     <ProSidebar
       collapsed={collapsed}
@@ -96,94 +121,153 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Menu>
       </SidebarHeader>
       <SidebarContent>
-        {loading ? null : (
-          <div className="user-sidebar">
-            <h2>{profileName}</h2>
-            <div>
-              {profile?.position?.map((data) => {
-                const isAgent = POSITIONS[0].value === data.value;
-                const isEditor = POSITIONS[1].value === data.value;
-                const isContentCreator = POSITIONS[2].value === data.value;
-
-                const badgeVariant = isAgent
-                  ? "secondary"
-                  : isEditor || isContentCreator
-                  ? "danger"
-                  : "primary";
-                return <Badge variant={badgeVariant}>{data.label}</Badge>;
-              })}
-            </div>
-            {isAdmin || isSubscriber ? null : (
+        {!loading ? (
+          <div>
+            <div className="user-sidebar">
+              <h2>{profileName}</h2>
               <div>
-                {profile?.roles?.map((data) => {
-                  const isAgent = AGENT_ROLES?.some(
-                    (e) => e.value === data.value
-                  );
-                  const isEditor = EDITOR_ROLES?.some(
-                    (e) => e.value === data.value
-                  );
-                  const isContentCreator = CONTENT_CREATOR_ROLES?.some(
-                    (e) => e.value === data.value
-                  );
+                {profile?.position?.map((data) => {
+                  const isAgent = POSITIONS[0].value === data.value;
+                  const isEditor = POSITIONS[1].value === data.value;
+                  const isContentCreator = POSITIONS[2].value === data.value;
 
                   const badgeVariant = isAgent
                     ? "secondary"
                     : isEditor || isContentCreator
                     ? "danger"
                     : "primary";
-                  return (
-                    <React.Fragment>
-                      <Badge variant={badgeVariant} isBordered>
-                        {data.label}
-                      </Badge>
-                    </React.Fragment>
-                  );
+                  return <Badge variant={badgeVariant}>{data.label}</Badge>;
                 })}
               </div>
-            )}
+              {isAdmin || isSubscriber ? null : (
+                <div>
+                  {profile?.roles?.map((data) => {
+                    const isAgent = AGENT_ROLES?.some(
+                      (e) => e.value === data.value
+                    );
+                    const isEditor = EDITOR_ROLES?.some(
+                      (e) => e.value === data.value
+                    );
+                    const isContentCreator = CONTENT_CREATOR_ROLES?.some(
+                      (e) => e.value === data.value
+                    );
+
+                    const badgeVariant = isAgent
+                      ? "secondary"
+                      : isEditor || isContentCreator
+                      ? "danger"
+                      : "primary";
+                    return (
+                      <React.Fragment>
+                        <Badge variant={badgeVariant} isBordered>
+                          {data.label}
+                        </Badge>
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="profile-parent-skeleton">
+            <Skeleton
+              className="profile-name-skeleton"
+              variant="rounded"
+              width={180}
+              height={20}
+            />
+            <Skeleton
+              className="badge-skeleton"
+              variant="rounded"
+              width={110}
+              height={15}
+            />
           </div>
         )}
+
         <h2 className="sidebar-label">Main Links</h2>
-        <Menu iconShape="circle">
-          {sidebarLinks.map((link: ISidebarLinks, index: number) => {
-            const submenuClassnames = classNames({
-              "active-submenu": link.isActive,
-              "submenu-default": true,
-            });
-            if (link.isSubMenu) {
-              return (
-                <SubMenu
-                  title={link.linkText}
-                  icon={link.icon}
-                  className={submenuClassnames}
-                  // open={link.open}
-                  key={index}
-                >
-                  {link.subLinks?.map((sm, sLIndex) => (
-                    <MenuItem
-                      icon={sm.icon}
-                      suffix={
-                        sm.badge ? (
-                          <span className="badge">{sm.badge}</span>
-                        ) : null
-                      }
-                      active={sm.isActive}
-                      key={sLIndex}
+        {!loading ? (
+          <>
+            <Menu iconShape="circle">
+              {sidebarLinks.map((link: ISidebarLinks, index: number) => {
+                const submenuClassnames = classNames({
+                  "active-submenu": link.isActive,
+                  "submenu-default": true,
+                });
+                if (link.isSubMenu) {
+                  return (
+                    <SubMenu
+                      title={link.linkText}
+                      icon={link.icon}
+                      className={submenuClassnames}
+                      // open={link.open}
+                      key={index}
                     >
-                      <NavLink to={sm.link ?? ""}>{sm.linkText}</NavLink>
-                    </MenuItem>
-                  ))}
-                </SubMenu>
-              );
-            }
-            return (
-              <MenuItem icon={link.icon} active={link.isActive} key={index}>
-                {link.linkText}
-                <NavLink to={link.link ?? ""} />
-              </MenuItem>
-            );
-          })}
-        </Menu>
+                      {link.subLinks?.map((sm, sLIndex) => (
+                        <MenuItem
+                          icon={sm.icon}
+                          suffix={
+                            sm.badge ? (
+                              <span className="badge">{sm.badge}</span>
+                            ) : null
+                          }
+                          active={sm.isActive}
+                          key={sLIndex}
+                        >
+                          <NavLink to={sm.link ?? ""}>{sm.linkText}</NavLink>
+                        </MenuItem>
+                      ))}
+                    </SubMenu>
+                  );
+                }
+                return (
+                  <MenuItem icon={link.icon} active={link.isActive} key={index}>
+                    {link.linkText}
+                    <NavLink to={link.link ?? ""} />
+                  </MenuItem>
+                );
+              })}
+            </Menu>
+          </>
+        ) : (
+          <div>
+            {/* If current role is master admin, display 19 skeleton */}
+            {sessionStorage.userRole ===
+              PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value &&
+              [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+                19,
+              ].map((item, index: number) => (
+                <div className="links-parent-skeleton" key={index}>
+                  <Skeleton variant="circular" width={20} height={20} />
+                  <Skeleton variant="rounded" width={180} height={20} />
+                </div>
+              ))}
+
+            {/* If current role is subscriber, display 6 skeleton component */}
+            {sessionStorage.userRole ===
+              PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value &&
+              [1, 2, 3, 4, 5, 6].map((item, index: number) => (
+                <div className="links-parent-skeleton" key={index}>
+                  <Skeleton variant="circular" width={20} height={20} />
+                  <Skeleton variant="rounded" width={180} height={20} />
+                </div>
+              ))}
+
+            {/* If current role is agent, display 14 skeleton component */}
+            {sessionStorage.userRole ===
+              PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value &&
+              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(
+                (item, index: number) => (
+                  <div className="links-parent-skeleton" key={index}>
+                    <Skeleton variant="circular" width={20} height={20} />
+                    <Skeleton variant="rounded" width={180} height={20} />
+                  </div>
+                )
+              )}
+          </div>
+        )}
 
         <h2 className="sidebar-label">Other Links</h2>
         <Menu iconShape="circle">
@@ -199,11 +283,12 @@ const Sidebar: React.FC<SidebarProps> = ({
       </SidebarContent>
       <SidebarFooter style={{ textAlign: "center" }}>
         {isSubscriber ? (
-          <div className="sidebar-btn-wrapper" style={{ padding: "16px" }}>
+          <div className="sidebar-btn-wrapper">
             <a
               className="sidebar-btn"
               href="https://agent.comfortfinancialsolutions.com/signup"
               target="_blank"
+              rel="noreferrer"
               style={{ fontSize: 16 }}
             >
               <FaGlobe />
@@ -211,11 +296,12 @@ const Sidebar: React.FC<SidebarProps> = ({
             </a>
           </div>
         ) : (
-          <div className="sidebar-btn-wrapper" style={{ padding: "16px" }}>
+          <div className="sidebar-btn-wrapper">
             <a
               className="sidebar-btn"
               href={MAIN_WEBSITE_LINK[0]}
               target="_blank"
+              rel="noreferrer"
             >
               <FaGlobe />
               <span>Comfort Financial Solutions Web</span>
