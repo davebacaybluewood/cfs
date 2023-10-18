@@ -194,6 +194,10 @@ const ContractForm: React.FC = () => {
       });
       setDesign(data.design);
 
+      console.log({
+        dataDesignUE: data.design,
+      });
+
       /** Load if edit mode */
       // if (Object.keys(data.design)?.length) {
       //   console.log(emailEditorRef.current);
@@ -207,10 +211,15 @@ const ContractForm: React.FC = () => {
       console.log({
         design,
       });
+
       fetchTemplateInfo();
       setLoading(false);
     }
-  }, [templateId, userGuid, emailEditorRef]);
+  }, [templateId, userGuid]);
+
+  console.log({
+    dataDesign: design,
+  });
 
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     const unlayer = emailEditorRef.current?.editor;
@@ -267,6 +276,8 @@ const ContractForm: React.FC = () => {
       emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || "{}"));
     }
   }, [emailEditorRef, design]);
+
+  useEffect(() => {}, [design]);
   return (
     <Wrapper
       breadcrumb={crumbs}
