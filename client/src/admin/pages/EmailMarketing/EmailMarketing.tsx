@@ -190,6 +190,12 @@ const ContractForm: React.FC = () => {
 
       /** Load if edit mode */
       if (emailEditorRef.current) {
+        // console.log(data);
+        const test = JSON.parse(data.design || "");
+        console.log({
+          test,
+          design: data.design,
+        });
         emailEditorRef.current?.loadDesign(JSON.parse(data.design || ""));
       }
     };
