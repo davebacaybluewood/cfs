@@ -197,7 +197,6 @@ const EmailMarketing = {
         settings: params.settings,
       }
     );
-
     return res;
   },
   getSingleTemplate: (userGuid: string, templateId: string) => {

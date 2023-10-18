@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   FormGroup,
   Grid,
+  Modal,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -36,11 +37,12 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import EmailEditor from "react-email-editor";
 import ReactHtmlParser from "html-react-parser";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ModalContent from "react-calendly/typings/components/PopupModal/ModalContent";
 
 export const emailOptions = [
   { value: "dave.bacay.vc@gmail.com", label: "dave.bacay.vc@gmail.com" },
   { value: "dave.bacay@gocfs.pro", label: "dave.bacay@gocfs.pro" },
-]
+];
 
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -48,6 +50,7 @@ const ContractForm: React.FC = () => {
   const emailEditorRef = useRef<any>(null);
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
+  const [emailSubjectError, setEmailSubjectError] = useState<string>("");
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -65,7 +68,7 @@ const ContractForm: React.FC = () => {
       url: paths.emailMarketing,
       isActive: true,
     },
-  ]
+  ];
 
   const [initialValues, setInitialValues] = useState({
     recipients: [],
@@ -93,24 +96,24 @@ const ContractForm: React.FC = () => {
       settings: settings,
     }));
 
-    emailEditorRef.current?.loadDesign(JSON.parse(design))
+    emailEditorRef.current?.loadDesign(JSON.parse(design));
 
-    setOpenDrawer(false)
-  }
+    setOpenDrawer(false);
+  };
 
   useEffect(() => {
     const fetchEmailTemplates = async () => {
-      setLoading(true)
-      const data = await agent.EmailMarketing.getEmailTemplates(userGuid)
+      setLoading(true);
+      const data = await agent.EmailMarketing.getEmailTemplates(userGuid);
 
-      setTemplates(data)
-    }
+      setTemplates(data);
+    };
 
     if (userGuid) {
-      fetchEmailTemplates()
-      setLoading(false)
+      fetchEmailTemplates();
+      setLoading(false);
     }
-  }, [userGuid])
+  }, [userGuid]);
 
   const rows: GridRowsProp = templates?.map((template) => {
     return {
@@ -151,8 +154,8 @@ const ContractForm: React.FC = () => {
           </button>
         </React.Fragment>
       ),
-    }
-  })
+    };
+  });
 
   const columns: GridColDef[] = [
     {
@@ -170,15 +173,15 @@ const ContractForm: React.FC = () => {
       align: "right",
       renderCell: (params) => params.value,
     },
-  ]
+  ];
 
   useEffect(() => {
     const fetchTemplateInfo = async () => {
-      setLoading(true)
+      setLoading(true);
       const data = await agent.EmailMarketing.getSingleTemplate(
         userGuid,
         templateId || ""
-      )
+      );
       setInitialValues({
         emailBody: data.templateBody,
         subject: data.subject,
@@ -189,44 +192,54 @@ const ContractForm: React.FC = () => {
 
       /** Load if edit mode */
       if (emailEditorRef.current) {
-        emailEditorRef.current?.loadDesign(JSON.parse(data.design || ""))
+        emailEditorRef.current?.loadDesign(JSON.parse(data.design || ""));
       }
-    }
+    };
     if (userGuid && templateId) {
-      fetchTemplateInfo()
-      setLoading(false)
+      fetchTemplateInfo();
+      setLoading(false);
     }
-  }, [templateId, userGuid])
+  }, [templateId, userGuid]);
 
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
-    const unlayer = emailEditorRef.current?.editor
-    setLoading(true)
+    const unlayer = emailEditorRef.current?.editor;
 
     unlayer?.exportHtml(async (htmlData) => {
-      const { design: updatedDesign, html } = htmlData
+      const { design: updatedDesign, html } = htmlData;
 
-      data.design = JSON.stringify(updatedDesign)
-      data.templateBody = html
-      const response = await agent.EmailMarketing.createEmailTemplate(
-        userGuid,
-        data
-      )
+      data.design = JSON.stringify(updatedDesign);
+      data.templateBody = html;
 
-      if (response) {
-        toast.info(`Email Template has been added.`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        })
-        setLoading(false)
+      // check if fields not empty
+      const isNoEmptyFields = data.templateBody && data.templateName;
+
+      if (isNoEmptyFields) {
+        setEmailSubjectError("");
+        setLoading(true);
+        const response = await agent.EmailMarketing.createEmailTemplate(
+          userGuid,
+          data
+        );
+
+        if (response) {
+          toast.info(`Email Template has been added.`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setLoading(false);
+        }
+      } else {
+        setEmailSubjectError("Please complete all fields.");
+        setLoading(false);
       }
-    })
-  }
+    });
+  };
 
   const validationSchema = Yup.object({
     emailBody: Yup.string().required("Email body is required."),
@@ -234,7 +247,7 @@ const ContractForm: React.FC = () => {
     recipients: Yup.array()
       .min(1, "Pick at least 1 recipients")
       .required("Recipients is required."),
-  })
+  });
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -253,23 +266,23 @@ const ContractForm: React.FC = () => {
               const finalData: any = {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
-              }
-              setLoading(true)
+              };
+              setLoading(true);
 
               if (action !== "view") {
-                const unlayer = emailEditorRef.current?.editor
+                const unlayer = emailEditorRef.current?.editor;
                 unlayer?.exportHtml(async (htmlData) => {
-                  const { design: updatedDesign, html } = htmlData
+                  const { design: updatedDesign, html } = htmlData;
 
-                  finalData.design = updatedDesign
-                  finalData.emailBody = html
+                  finalData.design = updatedDesign;
+                  finalData.emailBody = html;
 
                   const response = await agent.EmailMarketing.sendEmail(
                     finalData
-                  )
+                  );
 
                   if (response) {
-                    setLoading(false)
+                    setLoading(false);
                     toast.info(`Email has been submitted.`, {
                       position: "top-right",
                       autoClose: 5000,
@@ -279,19 +292,21 @@ const ContractForm: React.FC = () => {
                       draggable: true,
                       progress: undefined,
                       theme: "light",
-                    })
+                    });
                   } else {
-                    setLoading(false)
+                    setLoading(false);
                   }
-                })
+                });
               } else {
-                finalData.design = design
-                finalData.emailBody = initialValues.emailBody
+                finalData.design = design;
+                finalData.emailBody = initialValues.emailBody;
 
-                const response = await agent.EmailMarketing.sendEmail(finalData)
+                const response = await agent.EmailMarketing.sendEmail(
+                  finalData
+                );
 
                 if (response) {
-                  setLoading(false)
+                  setLoading(false);
                   toast.info(`Email has been submitted.`, {
                     position: "top-right",
                     autoClose: 5000,
@@ -301,9 +316,9 @@ const ContractForm: React.FC = () => {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
-                  })
+                  });
                 } else {
-                  setLoading(false)
+                  setLoading(false);
                 }
               }
             }}
@@ -321,15 +336,15 @@ const ContractForm: React.FC = () => {
                         options={emailOptions as any}
                         placeholder="Select a recipient item to add"
                         onChange={(e) => {
-                          const modifiedValue = e?.map((val) => val.label)
-                          setFieldValue("recipients", modifiedValue)
+                          const modifiedValue = e?.map((val) => val.label);
+                          setFieldValue("recipients", modifiedValue);
                         }}
                         onBlur={(e) => {
                           if (values.recipients.length === 0) {
                             setTouched({
                               ...touched,
                               recipients: [],
-                            })
+                            });
                           }
                         }}
                         styles={{
@@ -339,7 +354,7 @@ const ContractForm: React.FC = () => {
                               ...defaultStyles,
                               color: "rgba(0, 0, 0, 0.3)",
                               zIndex: 9,
-                            }
+                            };
                           },
 
                           menuPortal: (base) => ({ ...base, zIndex: 9999 }),
@@ -350,7 +365,7 @@ const ContractForm: React.FC = () => {
                               paddingTop: "5px",
                               paddingBottom: "5px",
                               borderColor: "hsl(0, 0%, 80%)",
-                            }
+                            };
                           },
                         }}
                       />
@@ -490,6 +505,25 @@ const ContractForm: React.FC = () => {
                       </Accordion>
                     </Grid>
                   </Grid>
+                  {emailSubjectError && (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "end",
+                        padding: "10px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "#FF5733",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {emailSubjectError}
+                      </span>
+                    </div>
+                  )}
+
                   <div className="form-actions">
                     {action !== "view" ? (
                       <div className="template-library-btn">
@@ -543,7 +577,7 @@ const ContractForm: React.FC = () => {
                   {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
                   {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
-              )
+              );
             }}
           </Formik>
         </div>
@@ -569,7 +603,7 @@ const ContractForm: React.FC = () => {
         </div>
       </DrawerBase>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default ContractForm
+export default ContractForm;
