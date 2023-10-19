@@ -87,8 +87,10 @@ const MailLibraryForm: React.FC = () => {
       setEditButtonVisibility(data.userGuid === userGuid);
 
       /** Load if edit mode */
-      if (emailEditorRef.current && action && templateId) {
-        emailEditorRef.current?.loadDesign(JSON.parse(data.design));
+      if (Object.keys(data.design)?.length) {
+        emailEditorRef.current?.editor?.loadDesign(
+          JSON.parse(data.design || "{}")
+        );
       }
     };
 

@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
   const USER_POSITION = profile?.position;
   const USER_ROLE = profile?.roles;
 
-  const [showCalendly, setShowCalendly] = useState(false);
+  const [showCalendly, setShowCalendly] = useState(true);
 
   return (
     <Wrapper breadcrumb={crumbs} className="dashboard-content">
