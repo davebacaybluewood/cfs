@@ -28,58 +28,123 @@ const subscribeFreeTrial = expressAsync(async (req, res) => {
  * @access: Private
  */
 
+// const getAllSubscribeFreeTrial = expressAsync(async (req, res) => {
+//   try {
+//     const portalSubscriptions = await PortalSubscription.find();
+
+//     if (portalSubscriptions.length === 0) {
+//       return res.status(404).json({ message: "Subscriber not found" });
+//     }
+
+//     const usersData = await Promise.all(
+//       portalSubscriptions.map(async (portalSubscription) => {
+//         const agent = await Agent.findOne({
+//           userGuid: portalSubscription.userGuid,
+//         });
+//         if (agent) {
+//           const dateCreated = portalSubscription.createdAt;
+//           const expirationDate = new Date(dateCreated);
+//           expirationDate.setDate(expirationDate.getDate() + 30);
+
+//           const currentDate = new Date();
+//           const daysRemaining = Math.max(
+//             0,
+//             Math.floor((expirationDate - currentDate) / (24 * 60 * 60 * 1000))
+//           );
+
+//           return {
+//             _id: portalSubscription._id,
+//             userGuid: portalSubscription.userGuid,
+//             dateCreated: dateCreated,
+//             expirationDate: expirationDate,
+//             daysRemaining: daysRemaining,
+//             firstName: agent.firstName,
+//             lastName: agent.lastName,
+//             emailAddress: agent.emailAddress,
+//           };
+//         }
+//         return {
+//           _id: portalSubscription._id,
+//           userGuid: portalSubscription.userGuid,
+//           dateCreated: portalSubscription.dateCreated,
+//           expirationDate: portalSubscription.dateCreated,
+//           daysRemaining: 0,
+//           firstName: "Agent not found",
+//           lastName: "Agent not found",
+//           emailAddress: "Agent not found",
+//         };
+//       })
+//     );
+
+//     res.json(usersData);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send(API_RES_FAIL("Server Error"));
+//   }
+// });
+
 const getAllSubscribeFreeTrial = expressAsync(async (req, res) => {
   try {
-    const portalSubscriptions = await PortalSubscription.find();
+    const usersData = await PortalSubscription.aggregate([
+      {
+        $lookup: {
+          from: "agents",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "agent",
+        },
+      },
+      {
+        $unwind: {
+          path: "$agent",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          userGuid: 1,
+          dateCreated: "$createdAt",
+          daysRemaining: {
+            $max: [
+              0,
+              {
+                $floor: {
+                  $divide: [
+                    {
+                      $subtract: [
+                        {
+                          $add: ["$createdAt", 30 * 24 * 60 * 60 * 1000],
+                        },
+                        new Date(),
+                      ],
+                    },
+                    24 * 60 * 60 * 1000,
+                  ],
+                },
+              },
+            ],
+          },
+          firstName: {
+            $ifNull: ["$agent.firstName", "Agent not found"],
+          },
+          lastName: {
+            $ifNull: ["$agent.lastName", "Agent not found"],
+          },
+          emailAddress: {
+            $ifNull: ["$agent.emailAddress", "Agent not found"],
+          },
+        },
+      },
+    ]);
 
-    if (portalSubscriptions.length === 0) {
-      return res.status(404).json({ message: "Subscriber not found" });
+    if (usersData.length === 0) {
+      return res.status(404).send(API_RES_FAIL("No agent data found"));
     }
 
-    const usersData = await Promise.all(
-      portalSubscriptions.map(async (portalSubscription) => {
-        const agent = await Agent.findOne({
-          userGuid: portalSubscription.userGuid,
-        });
-        if (agent) {
-          const dateCreated = portalSubscription.createdAt;
-          const expirationDate = new Date(dateCreated);
-          expirationDate.setDate(expirationDate.getDate() + 30);
-
-          const currentDate = new Date();
-          const daysRemaining = Math.max(
-            0,
-            Math.floor((expirationDate - currentDate) / (24 * 60 * 60 * 1000))
-          );
-
-          return {
-            _id: portalSubscription._id,
-            userGuid: portalSubscription.userGuid,
-            dateCreated: dateCreated,
-            expirationDate: expirationDate,
-            daysRemaining: daysRemaining,
-            firstName: agent.firstName,
-            lastName: agent.lastName,
-            emailAddress: agent.emailAddress,
-          };
-        }
-        return {
-          _id: portalSubscription._id,
-          userGuid: portalSubscription.userGuid,
-          dateCreated: portalSubscription.dateCreated,
-          expirationDate: portalSubscription.dateCreated,
-          daysRemaining: 0,
-          firstName: "Agent not found",
-          lastName: "Agent not found",
-          emailAddress: "Agent not found",
-        };
-      })
-    );
-
     res.json(usersData);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send(API_RES_FAIL("Server Error"));
+  } catch (error) {
+    res.status(500).send(API_RES_FAIL("Server error encountered"));
   }
 });
 
