@@ -77,7 +77,7 @@ const MailLibraryForm: React.FC = () => {
         userGuid,
         templateId || ""
       );
-      console.log(data);
+
       setInitialValues({
         emailBody: data.templateBody ?? "",
         subject: data.subject ?? "",
