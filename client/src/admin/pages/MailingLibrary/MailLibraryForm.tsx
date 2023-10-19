@@ -95,7 +95,6 @@ const MailLibraryForm: React.FC = () => {
         } catch {
           console.error("There's an error with load if edit mode.");
         }
-        // console.log(JSON.parse(data.design));
       }
     };
 
