@@ -77,6 +77,7 @@ const MailLibraryForm: React.FC = () => {
         userGuid,
         templateId || ""
       );
+      console.log(data);
       setInitialValues({
         emailBody: data.templateBody ?? "",
         subject: data.subject ?? "",
@@ -88,7 +89,12 @@ const MailLibraryForm: React.FC = () => {
 
       /** Load if edit mode */
       if (emailEditorRef.current && action && templateId) {
-        emailEditorRef.current?.loadDesign(JSON.parse(data.design));
+        try {
+          emailEditorRef.current.editor?.loadDesign(JSON.parse(data.design));
+        } catch {
+          console.error("There's an error with load if edit mode.");
+        }
+        // console.log(JSON.parse(data.design));
       }
     };
 
