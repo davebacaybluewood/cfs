@@ -23,8 +23,8 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { RiExternalLinkFill } from "react-icons/ri";
 import Spinner from "library/Spinner/Spinner";
 import { BiFilterAlt } from "react-icons/bi";
-import "./MailingLibrary.scss";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
+import "./MailingLibrary.scss";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -38,10 +38,6 @@ const crumbs: CrumbTypes[] = [
     isActive: true,
   },
 ];
-
-interface FilteredGridToolbarProps {
-  setter: React.Dispatch<any>;
-}
 
 const MailLibrary: React.FC = () => {
   const navigate = useNavigate();
@@ -297,7 +293,7 @@ const MailLibrary: React.FC = () => {
 
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
-      <div className="mailing-library-container" style={{ padding: "2rem" }}>
+      <div className="mailing-library-container">
         <Title
           title="Email Library"
           subtitle="List of all available email libraries."
