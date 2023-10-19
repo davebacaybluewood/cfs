@@ -14,7 +14,13 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { Formik } from "formik";
 import Spinner from "library/Spinner/Spinner";
 import * as Yup from "yup";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import FormikTextInput from "library/Formik/FormikInput";
 import Button from "library/Button/Button";
 import agent from "admin/api/agent";
@@ -25,12 +31,12 @@ import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import { useLocation } from "react-router-dom";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
-import EmailEditor from "react-email-editor";
+import EmailEditor, { EditorRef } from "react-email-editor";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const emailEditorRef = useRef<any>(null);
+  const emailEditorRef = useRef<EditorRef>(null);
   const [design, setDesign] = useState<any>();
   const [initialValues, setInitialValues] = useState<any>({
     emailBody: "",
@@ -181,6 +187,10 @@ const MailLibraryForm: React.FC = () => {
       setExpanded(isExpanded ? panel : false);
     };
 
+  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
+
+  useEffect(() => {}, [design]);
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -254,6 +264,7 @@ const MailLibraryForm: React.FC = () => {
 
                       <EmailEditor
                         ref={emailEditorRef}
+                        onReady={loadDesign}
                         style={{
                           height: "500px",
                         }}
