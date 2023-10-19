@@ -194,35 +194,18 @@ const ContractForm: React.FC = () => {
       });
       setDesign(data.design);
 
-      console.log({
-        dataDesignUE: data.design,
-      });
-
       /** Load if edit mode */
       if (Object.keys(data.design)?.length) {
-        console.log("triggered123123");
-        console.log({
-          ifUE: data.design,
-        });
         emailEditorRef.current?.editor?.loadDesign(
           JSON.parse(data.design || "{}")
         );
       }
     };
     if (userGuid && templateId) {
-      console.log("triggered");
-      console.log({
-        design,
-      });
-
       fetchTemplateInfo();
       setLoading(false);
     }
   }, [templateId, userGuid]);
-
-  console.log({
-    dataDesign: design,
-  });
 
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     const unlayer = emailEditorRef.current?.editor;
@@ -272,14 +255,7 @@ const ContractForm: React.FC = () => {
       .required("Recipients is required."),
   });
 
-  const loadDesign = useCallback(() => {
-    // if (emailEditorRef.current) {
-    //   console.log(design);
-    //   console.log(JSON.parse(design));
-    //   emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || "{}"));
-    // }
-    console.log("ready");
-  }, [emailEditorRef, design]);
+  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
 
   useEffect(() => {}, [design]);
   return (
