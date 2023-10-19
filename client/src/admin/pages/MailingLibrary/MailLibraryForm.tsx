@@ -90,11 +90,7 @@ const MailLibraryForm: React.FC = () => {
 
       /** Load if edit mode */
       if (emailEditorRef.current && action && templateId) {
-        try {
-          emailEditorRef.current.editor?.loadDesign(JSON.parse(data.design));
-        } catch {
-          console.error("There's an error with load if edit mode.");
-        }
+        emailEditorRef.current?.loadDesign(JSON.parse(data.design));
       }
     };
 
