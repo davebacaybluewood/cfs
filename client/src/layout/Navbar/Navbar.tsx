@@ -8,6 +8,7 @@ import { paths } from "constants/routes";
 import { MAIN_IMAGES, SOCIAL_MEDIA_LINKS } from "constants/constants";
 import classNames from "classnames";
 import "./Navbar.scss";
+import { TWITTER_LOGO } from "constants/constants";
 
 interface NavbarProps {
   theme?: "SKY" | "RED" | "NAVY";
@@ -170,7 +171,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               </li>
               <li>
                 <a href={SOCIAL_MEDIA_LINKS.TWITTER} target="_blank">
-                  <FaTwitter />
+                  <TWITTER_LOGO width={14} height={14} viewBox={"0 0 24 24"} reactX={0} reactY={0} reactWidth={24} reactHeight={24} reactFill={"#0e1f51"} pathFill={"#FFFFFF"}/>
                 </a>
               </li>
             </ul>
