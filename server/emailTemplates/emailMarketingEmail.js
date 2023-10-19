@@ -4,7 +4,7 @@ const emailMarketingEmail = (data) => {
   const body = data.body;
   const userGuid = data.userGuid;
 
-  const host = "http://localhost:3000";
+  const host = "https://www.gocfs.pro";
 
   return `<!-- Free to use, HTML email template designed & built by FullSphere. Learn more about us at www.fullsphere.co.uk -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
