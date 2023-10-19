@@ -203,6 +203,7 @@ const MailLibraryForm: React.FC = () => {
               const finalData = {
                 templateName: data.templateName,
                 templateBody: data.emailBody,
+                // test
                 templateStatus: data.status,
                 isAddedByMarketing: !!isAdmin,
                 subject: data.subject,
