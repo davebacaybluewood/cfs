@@ -77,11 +77,13 @@ const MailLibraryForm: React.FC = () => {
         userGuid,
         templateId || ""
       );
+
       setInitialValues({
         emailBody: data.templateBody ?? "",
         subject: data.subject ?? "",
         templateName: data.templateName ?? "",
         settings: data.settings ?? [],
+        status: data.status,
       });
       setDesign(data.design);
       setEditButtonVisibility(data.userGuid === userGuid);
@@ -197,7 +199,7 @@ const MailLibraryForm: React.FC = () => {
               const finalData = {
                 templateName: data.templateName,
                 templateBody: data.emailBody,
-                templateStatus: "ACTIVATED",
+                templateStatus: data.status,
                 isAddedByMarketing: !!isAdmin,
                 subject: data.subject,
                 design: JSON.stringify(design),
