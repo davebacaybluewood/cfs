@@ -11,7 +11,7 @@ import {
 } from "@mui/x-data-grid";
 import { BsPlusCircle } from "react-icons/bs";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { Button, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Button, Menu, MenuItem, Skeleton, Tooltip } from "@mui/material";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
 import nameFallback from "helpers/nameFallback";
@@ -59,9 +59,24 @@ const MailLibrary: React.FC = () => {
       width: 200,
       renderCell: (params) => params.value,
     },
-    { field: "subject", headerName: "Subject", width: 200 },
-    { field: "createdBy", headerName: "Created By", width: 200 },
-    { field: "createdAt", headerName: "Date Created", width: 200 },
+    {
+      field: "subject",
+      headerName: "Subject",
+      width: 200,
+      renderCell: (params) => params.value,
+    },
+    {
+      field: "createdBy",
+      headerName: "Created By",
+      width: 200,
+      renderCell: (params) => params.value,
+    },
+    {
+      field: "createdAt",
+      headerName: "Date Created",
+      width: 200,
+      renderCell: (params) => params.value,
+    },
     {
       field: "status",
       headerName: "Status",
@@ -147,7 +162,7 @@ const MailLibrary: React.FC = () => {
     }
   }, [userGuid]);
 
-  const filteredRows = templates?.map((template) => {
+  const templateList = templates?.map((template) => {
     const deactivateButtonIsDisabled = template.userGuid !== userGuid;
     const btnClassnames = classNames("select-btn", {
       danger: template.status === "ACTIVATED",
@@ -253,6 +268,19 @@ const MailLibrary: React.FC = () => {
       ),
     };
   });
+
+  const templateSkeleton = Array.from({ length: 5 }).map((row, index) => {
+    return {
+      id: index,
+      templateName: <Skeleton variant="rectangular" width={180} height={20} />,
+      subject: <Skeleton variant="rectangular" width={180} height={20} />,
+      createdBy: <Skeleton variant="rectangular" width={180} height={20} />,
+      createdAt: <Skeleton variant="rectangular" width={180} height={20} />,
+      status: <Skeleton variant="rectangular" width={180} height={20} />,
+    };
+  });
+
+  const filteredRows = templates.length > 0 ? templateList : templateSkeleton;
 
   // This will be refactor september
   const FilteredGridToolbar = () => {
