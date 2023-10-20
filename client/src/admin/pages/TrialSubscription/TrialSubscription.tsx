@@ -6,6 +6,7 @@ import { paths } from "constants/routes";
 import { CrumbTypes } from "../Dashboard/types";
 import TrialSubscriptionTable from "./TrialSubscriptionTable";
 import { data } from "./TestData";
+import useDocumentTitle from "./useDocumentTitle";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -21,14 +22,7 @@ const crumbs: CrumbTypes[] = [
 ];
 
 const TrialSubscription = () => {
-  useEffect(() => {
-    document.title = "Portal Free Subscriptions - CFS Portal";
-
-    // back to original document title when not on current page
-    return () => {
-      document.title = "Comfort Financial Solutions";
-    };
-  }, []);
+  useDocumentTitle("Portal Free Subscriptions - CFS Portal");
 
   return (
     <Wrapper
