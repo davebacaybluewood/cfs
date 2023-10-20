@@ -338,24 +338,18 @@ const MailLibrary: React.FC = () => {
           </Button>
         </Title>
 
-        <NoInformationToDisplay
-          message="No email template available"
-          title="No information to display"
-          showNoInfo={!filteredRows?.length && !loading}
-        >
-          <div className="mailing-library-table">
-            <DataGrid
-              sx={{
-                boxShadow: "0 4px 6px -1px #eee, 0 2px 4px -1px #eee",
-                background: "white",
-                p: 2,
-              }}
-              rows={filteredRows}
-              columns={columns}
-              slots={{ toolbar: FilteredGridToolbar }}
-            />
-          </div>
-        </NoInformationToDisplay>
+        <div className="mailing-library-table">
+          <DataGrid
+            sx={{
+              boxShadow: "0 4px 6px -1px #eee, 0 2px 4px -1px #eee",
+              background: "white",
+              p: 2,
+            }}
+            rows={filteredRows}
+            columns={columns}
+            slots={{ toolbar: FilteredGridToolbar }}
+          />
+        </div>
       </div>
       {fixedLoading ? <Spinner variant="fixed" /> : null}
     </Wrapper>
