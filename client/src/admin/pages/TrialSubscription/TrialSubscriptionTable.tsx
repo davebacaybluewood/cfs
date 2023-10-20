@@ -3,8 +3,9 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { useState, useEffect } from "react";
 import "./TrialSubscription.scss";
 import FilteredGridToolbar from "./FilteredGridToolbar";
+import { BLANK_VALUE } from "constants/constants";
 
-type TrialSubscriptionProps = {
+export type TrialSubscriptionProps = {
   _id: string;
   userGuid: string;
   dateCreated: string;
@@ -85,15 +86,15 @@ const TrialSubscriptionTable = ({
       userGuid: item.userGuid,
       dateCreated: item.dateCreated,
       expirationDate: item.expirationDate,
-      daysRemaining: item.daysRemaining === 0 ? "—" : item.daysRemaining,
+      daysRemaining:
+        item.daysRemaining === 0 ? BLANK_VALUE : item.daysRemaining,
       firstName: item.firstName,
       lastName: item.lastName,
       emailAddress: item.emailAddress,
     };
   });
   return (
-    <Box sx={{ height: "500", maxWidth: 1200 }}>
-      {/* <Box sx={{ height: loading ? 500 : "auto", maxWidth: 1200 }}> */}
+    <Box sx={{ height: loading ? 500 : "auto", maxWidth: 1200 }}>
       <DataGrid
         rows={rows}
         columns={columns}

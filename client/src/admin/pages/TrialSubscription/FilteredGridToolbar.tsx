@@ -7,11 +7,17 @@ import {
 import React, { useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 import "./TrialSubscription.scss";
+import { TrialSubscriptionProps } from "./TrialSubscriptionTable";
 
 const FilteredGridToolbar = ({
   subscriptions,
   setFilteredSubscriptions,
-}: any) => {
+}: {
+  subscriptions: TrialSubscriptionProps[];
+  setFilteredSubscriptions: React.Dispatch<
+    React.SetStateAction<TrialSubscriptionProps[]>
+  >;
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const apiRef = useGridApiContext();

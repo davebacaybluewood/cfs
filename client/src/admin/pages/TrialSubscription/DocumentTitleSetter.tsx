@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function useDocumentTitle(title) {
+function DocumentTitleSetter({ title }) {
   useEffect(() => {
     document.title = title;
 
@@ -9,6 +9,8 @@ function useDocumentTitle(title) {
       document.title = "Comfort Financial Solutions";
     };
   }, [title]);
+
+  return null; // This component doesn't render anything
 }
 
-export default useDocumentTitle;
+export default DocumentTitleSetter;
