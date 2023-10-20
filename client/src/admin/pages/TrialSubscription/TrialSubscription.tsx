@@ -5,7 +5,7 @@ import { paths } from "constants/routes";
 import { CrumbTypes } from "../Dashboard/types";
 import TrialSubscriptionTable from "./TrialSubscriptionTable";
 import { data } from "./TestData";
-import DocumentTitleSetter from "./DocumentTitleSetter";
+import DocumentTitleSetter from "../../../library/DocumentTitleSetter/DocumentTitleSetter";
 
 const crumbs: CrumbTypes[] = [
   {
