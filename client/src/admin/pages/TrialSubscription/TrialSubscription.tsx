@@ -1,7 +1,7 @@
 import Title from "admin/components/Title/Title";
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
-import React from "react";
+import React, { useEffect } from "react";
 import { paths } from "constants/routes";
 import { CrumbTypes } from "../Dashboard/types";
 import TrialSubscriptionTable from "./TrialSubscriptionTable";
@@ -21,7 +21,15 @@ const crumbs: CrumbTypes[] = [
 ];
 
 const TrialSubscription = () => {
-  console.log(data.length);
+  useEffect(() => {
+    document.title = "Portal Free Subscriptions - CFS Portal";
+
+    // back to original document title when not on current page
+    return () => {
+      document.title = "Comfort Financial Solutions";
+    };
+  }, []);
+
   return (
     <Wrapper
       className="webinar-admin-container"
