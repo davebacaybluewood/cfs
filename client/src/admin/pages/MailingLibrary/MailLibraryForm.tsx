@@ -51,7 +51,7 @@ const MailLibraryForm: React.FC = () => {
       isActive: false,
     },
     {
-      title: "Email Library",
+      title: "EmailPro Templates",
       url: paths.mailLibrary,
       isActive: false,
     },
