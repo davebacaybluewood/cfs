@@ -33,7 +33,7 @@ const crumbs: CrumbTypes[] = [
     isActive: false,
   },
   {
-    title: "Email Library",
+    title: "EmailPro Templates",
     url: paths.mailLibrary,
     isActive: true,
   },
@@ -299,8 +299,8 @@ const MailLibrary: React.FC = () => {
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <div className="mailing-library-container" style={{ padding: "2rem" }}>
         <Title
-          title="Email Library"
-          subtitle="List of all available email libraries."
+          title="EmailPro Templates"
+          subtitle=""
         >
           <Button
             onClick={() => navigate(paths.mailLibraryForm)}

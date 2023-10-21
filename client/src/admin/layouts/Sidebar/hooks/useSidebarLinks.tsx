@@ -183,7 +183,7 @@ const useSidebarLinks = (
       ],
     },
     {
-      linkText: "Email Library",
+      linkText: "EmailPro Templates",
       link: paths.mailLibrary,
       isActive: currentPage === adminPathsNew.mailLibrary.split("/")[2],
       icon: <MdLibraryBooks />,

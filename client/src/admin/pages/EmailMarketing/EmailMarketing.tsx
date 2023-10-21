@@ -573,7 +573,7 @@ const ContractForm: React.FC = () => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
         anchor={Anchor.Right}
-        title="Email Library"
+        title="EmailPro Templates"
         className="drawer-email-library"
         footer={
           <React.Fragment>
