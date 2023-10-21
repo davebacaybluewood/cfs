@@ -14,6 +14,7 @@ import { UserContext } from "admin/context/UserProvider";
 import useFetchSubscribers from "admin/pages/RewardsHistory/useFetchSubscribers";
 import ClaimMerchDialog from "admin/pages/Merchandises/components/ClaimMerchDialog";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import { AiFillStar } from "react-icons/ai";
 
 const SubscriberBox = () => {
   const [merchandises, setMerchandises] = useState<
@@ -90,7 +91,7 @@ const SubscriberBox = () => {
       countText: "Active Points",
       count: statisticsNumber.points,
       url: "", //paths.typeAppointments.replace(":typeId", "paw"),
-      icon: <FaCalendarMinus />,
+      icon: <AiFillStar />,
     },
     {
       countText: "Registered Subscriber",
