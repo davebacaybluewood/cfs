@@ -1,4 +1,4 @@
-const adminCfsRoute = "/portal/"
+const adminCfsRoute = "/portal/";
 
 const adminPaths = {
   index: adminCfsRoute + "",
@@ -62,7 +62,7 @@ const adminPaths = {
   users: adminCfsRoute + "users",
   // commissionSimulation: adminCfsRoute + "commission-simulation",
   mailingList: adminCfsRoute + "mailing-list",
-  mailLibrary: adminCfsRoute + "email-library",
+  mailLibrary: adminCfsRoute + "emailpro-templates",
   mailLibraryForm: adminCfsRoute + "email-library-form",
   mySubscribers: adminCfsRoute + "subscribers",
   merchandises: adminCfsRoute + "merchandises",
@@ -70,6 +70,7 @@ const adminPaths = {
   rewardsHistory: adminCfsRoute + "rewards/history",
   shareableEmails: adminCfsRoute + "shareable-emails",
   orderHistory: adminCfsRoute + "merchandises/order-history",
+  trialSubscription: adminCfsRoute + "trial-subscription",
 } as const;
 
-export default adminPaths
+export default adminPaths;

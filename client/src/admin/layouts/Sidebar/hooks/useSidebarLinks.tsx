@@ -34,7 +34,7 @@ import {
   FaHistory,
   FaMailBulk,
 } from "react-icons/fa";
-import { MdEmail, MdLibraryBooks } from "react-icons/md";
+import { MdEmail, MdLibraryBooks, MdUnsubscribe } from "react-icons/md";
 
 export interface ISidebarLinks {
   linkText: string;
@@ -183,7 +183,7 @@ const useSidebarLinks = (
       ],
     },
     {
-      linkText: "Email Library",
+      linkText: "EmailPro Templates",
       link: paths.mailLibrary,
       isActive: currentPage === adminPathsNew.mailLibrary.split("/")[2],
       icon: <MdLibraryBooks />,
@@ -560,6 +560,21 @@ const useSidebarLinks = (
           linkText: "Calculator",
           link: "/calculator",
         },
+      ],
+    },
+    {
+      linkText: "Trial Subscription",
+      link: paths.trialSubscription,
+      icon: <MdUnsubscribe />,
+      role: [
+        PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
+        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
+        PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
       ],
     },
     {

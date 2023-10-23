@@ -1,0 +1,11 @@
+.filter-inputer {
+  border: 1px solid #1976d2;
+  padding: 4px 10px;
+  color: #1976d2 !important;
+  font-weight: 300;
+  outline: none;
+}
+
+.filter-inputer::placeholder {
+  color: #1976d2 !important;
+}
