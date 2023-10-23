@@ -565,8 +565,8 @@ const useSidebarLinks = (
     {
       linkText: "Trial Subscription",
       link: paths.trialSubscription,
+      isActive: currentPage === paths.trialSubscription.split("/")[2],
       icon: <MdUnsubscribe />,
-      // CLARIFICATION: is this the correct role for trial subscription sidebar link?
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
     },
     {
