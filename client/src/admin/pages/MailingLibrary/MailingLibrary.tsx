@@ -11,7 +11,14 @@ import {
 } from "@mui/x-data-grid";
 import { BsPlusCircle } from "react-icons/bs";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { Button, Menu, MenuItem, Tooltip } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Skeleton,
+  Tooltip,
+} from "@mui/material";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
 import nameFallback from "helpers/nameFallback";
@@ -24,7 +31,6 @@ import { RiExternalLinkFill } from "react-icons/ri";
 import Spinner from "library/Spinner/Spinner";
 import { BiFilterAlt } from "react-icons/bi";
 import "./MailingLibrary.scss";
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -52,6 +58,16 @@ const MailLibrary: React.FC = () => {
   const [templates, setTemplates] = useState<any>([]);
   const [originalTemplates, setOriginalTemplates] = useState<any>([]);
 
+  const TextOverFlow = ({ value }) => {
+    return (
+      <Tooltip title={<h1 style={{ color: "#fff" }}>{value}</h1>}>
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
+          {value}
+        </span>
+      </Tooltip>
+    );
+  };
+
   const columns: GridColDef[] = [
     {
       field: "templateName",
@@ -59,14 +75,29 @@ const MailLibrary: React.FC = () => {
       width: 200,
       renderCell: (params) => params.value,
     },
-    { field: "subject", headerName: "Subject", width: 200 },
-    { field: "createdBy", headerName: "Created By", width: 200 },
-    { field: "createdAt", headerName: "Date Created", width: 200 },
+    {
+      field: "subject",
+      headerName: "Subject",
+      width: 200,
+      renderCell: (params) => <TextOverFlow value={params.value} />,
+    },
+    {
+      field: "createdBy",
+      headerName: "Created By",
+      width: 200,
+      renderCell: (params) => <TextOverFlow value={params.value} />,
+    },
+    {
+      field: "createdAt",
+      headerName: "Date Created",
+      width: 200,
+      renderCell: (params) => <TextOverFlow value={params.value} />,
+    },
     {
       field: "status",
       headerName: "Status",
       width: 100,
-      renderCell: (params) => params.value,
+      renderCell: (params) => <TextOverFlow value={params.value} />,
     },
     {
       field: "actions",
@@ -147,7 +178,7 @@ const MailLibrary: React.FC = () => {
     }
   }, [userGuid]);
 
-  const filteredRows = templates?.map((template) => {
+  const templateList = templates?.map((template) => {
     const deactivateButtonIsDisabled = template.userGuid !== userGuid;
     const btnClassnames = classNames("select-btn", {
       danger: template.status === "ACTIVATED",
@@ -162,14 +193,26 @@ const MailLibrary: React.FC = () => {
       ),
       createdAt: formatISODateOnly(template.createdAt ?? ""),
       templateName: (
-        <Tooltip
-          title={<h1 style={{ color: "#fff" }}>Created by Marketing Team</h1>}
-        >
-          <div className="template-name-header">
-            <span>{template.templateName}</span>
-            {template.isAddedByMarketing ? <AiFillCheckCircle /> : null}
-          </div>
-        </Tooltip>
+        <>
+          <Tooltip
+            title={<h1 style={{ color: "#fff" }}>{template.templateName}</h1>}
+          >
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
+              {template.templateName}
+            </span>
+          </Tooltip>
+          {template.isAddedByMarketing ? (
+            <Tooltip
+              title={
+                <h1 style={{ color: "#fff" }}>Created by Marketing Team</h1>
+              }
+            >
+              <IconButton>
+                <AiFillCheckCircle />
+              </IconButton>
+            </Tooltip>
+          ) : null}
+        </>
       ),
       subject: template.subject,
       body: template.templateBody,
@@ -184,6 +227,11 @@ const MailLibrary: React.FC = () => {
             disabled={
               template.status === "DEACTIVATED" || template.status === "DRAFT"
             }
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onClick={() => {
               navigate({
                 pathname: paths.emailMarketing,
@@ -197,6 +245,11 @@ const MailLibrary: React.FC = () => {
           </button>
           <button
             className="select-btn"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onClick={() => {
               navigate({
                 pathname: paths.mailLibraryForm,
@@ -212,7 +265,15 @@ const MailLibrary: React.FC = () => {
           {template.status === "DEACTIVATED" ||
           (template.status === "DRAFT" && template.userGuid === userGuid) ? (
             <button
-              className={btnClassnames}
+              className={classNames("select-btn", {
+                danger: template.status === "ACTIVATED",
+              })}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
               onClick={() =>
                 activationHandler(
                   template.templateName,
@@ -231,7 +292,15 @@ const MailLibrary: React.FC = () => {
             </button>
           ) : (
             <button
-              className={btnClassnames}
+              className={classNames("select-btn", {
+                danger: template.status === "ACTIVATED",
+              })}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
               onClick={() =>
                 activationHandler(
                   template.templateName,
@@ -253,6 +322,19 @@ const MailLibrary: React.FC = () => {
       ),
     };
   });
+
+  const templateSkeleton = Array.from({ length: 5 }).map((row, index) => {
+    return {
+      id: index,
+      templateName: <Skeleton variant="rectangular" width={180} height={20} />,
+      subject: <Skeleton variant="rectangular" width={180} height={20} />,
+      createdBy: <Skeleton variant="rectangular" width={180} height={20} />,
+      createdAt: <Skeleton variant="rectangular" width={180} height={20} />,
+      status: <Skeleton variant="rectangular" width={180} height={20} />,
+    };
+  });
+
+  const filteredRows = templates.length > 0 ? templateList : templateSkeleton;
 
   // This will be refactor september
   const FilteredGridToolbar = () => {
@@ -298,10 +380,7 @@ const MailLibrary: React.FC = () => {
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <div className="mailing-library-container" style={{ padding: "2rem" }}>
-        <Title
-          title="EmailPro Templates"
-          subtitle=""
-        >
+        <Title title="EmailPro Templates" subtitle="">
           <Button
             onClick={() => navigate(paths.mailLibraryForm)}
             variant="contained"
@@ -310,24 +389,18 @@ const MailLibrary: React.FC = () => {
           </Button>
         </Title>
 
-        <NoInformationToDisplay
-          message="No email template available"
-          title="No information to display"
-          showNoInfo={!filteredRows?.length && !loading}
-        >
-          <div className="mailing-library-table">
-            <DataGrid
-              sx={{
-                boxShadow: "0 4px 6px -1px #eee, 0 2px 4px -1px #eee",
-                background: "white",
-                p: 2,
-              }}
-              rows={filteredRows}
-              columns={columns}
-              slots={{ toolbar: FilteredGridToolbar }}
-            />
-          </div>
-        </NoInformationToDisplay>
+        <div className="mailing-library-table">
+          <DataGrid
+            sx={{
+              boxShadow: "0 4px 6px -1px #eee, 0 2px 4px -1px #eee",
+              background: "white",
+              p: 2,
+            }}
+            rows={filteredRows}
+            columns={columns}
+            slots={{ toolbar: FilteredGridToolbar }}
+          />
+        </div>
       </div>
       {fixedLoading ? <Spinner variant="fixed" /> : null}
     </Wrapper>

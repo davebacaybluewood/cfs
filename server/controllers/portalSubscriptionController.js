@@ -50,6 +50,9 @@ const getAllSubscribeFreeTrial = expressAsync(async (req, res) => {
           _id: 1,
           userGuid: 1,
           dateCreated: "$createdAt",
+          expirationDate: {
+            $add: ["$createdAt", 30 * 24 * 60 * 60 * 1000],
+          },
           daysRemaining: {
             $max: [
               0,
