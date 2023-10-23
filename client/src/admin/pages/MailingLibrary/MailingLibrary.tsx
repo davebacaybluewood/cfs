@@ -184,6 +184,7 @@ const MailLibrary: React.FC = () => {
             disabled={
               template.status === "DEACTIVATED" || template.status === "DRAFT"
             }
+            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
             onClick={() => {
               navigate({
                 pathname: paths.emailMarketing,
@@ -197,6 +198,7 @@ const MailLibrary: React.FC = () => {
           </button>
           <button
             className="select-btn"
+            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
             onClick={() => {
               navigate({
                 pathname: paths.mailLibraryForm,
@@ -212,7 +214,15 @@ const MailLibrary: React.FC = () => {
           {template.status === "DEACTIVATED" ||
           (template.status === "DRAFT" && template.userGuid === userGuid) ? (
             <button
-              className={btnClassnames}
+              className={classNames("select-btn", {
+                danger: template.status === "ACTIVATED",
+              })}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
               onClick={() =>
                 activationHandler(
                   template.templateName,
@@ -231,7 +241,15 @@ const MailLibrary: React.FC = () => {
             </button>
           ) : (
             <button
-              className={btnClassnames}
+              className={classNames("select-btn", {
+                danger: template.status === "ACTIVATED",
+              })}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
               onClick={() =>
                 activationHandler(
                   template.templateName,
