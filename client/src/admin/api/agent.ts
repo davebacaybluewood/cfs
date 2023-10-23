@@ -353,6 +353,13 @@ const RaiseSupport = {
   },
 };
 
+const TrialSubscription = {
+  getTrialSubscriptions: () => {
+    const res = requests.get<string>(`/api/portal-subscription/free-trial`);
+    return res;
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
@@ -366,6 +373,7 @@ const agent = {
   Points,
   Orders,
   RaiseSupport,
+  TrialSubscription,
 };
 
 export default agent;
