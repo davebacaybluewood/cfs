@@ -7,7 +7,7 @@ import {
 import React, { useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 import "./TrialSubscription.scss";
-import { TrialSubscriptionProps } from "./TrialSubscriptionTable";
+import { TrialSubscriptionProps } from "./TrialSubscription";
 
 const FilteredGridToolbar = ({
   subscriptions,
@@ -20,6 +20,7 @@ const FilteredGridToolbar = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  // search filter function
   const apiRef = useGridApiContext();
   const updateSearchValue = React.useCallback(
     (newSearchValue: string) => {
@@ -48,6 +49,7 @@ const FilteredGridToolbar = ({
         : status === "EXPIRED"
         ? filterExpiredData
         : filterActiveData;
+
     setFilteredSubscriptions(() => {
       return result;
     });
@@ -72,6 +74,11 @@ const FilteredGridToolbar = ({
         onChange={(e) => updateSearchValue(e.target.value)}
         size="small"
         sx={{ minWidth: "250px" }}
+        InputProps={{
+          style: {
+            borderRadius: "0",
+          },
+        }}
       />
     </GridToolbarContainer>
   );

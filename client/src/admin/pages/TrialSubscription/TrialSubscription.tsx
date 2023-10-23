@@ -1,11 +1,11 @@
 import Title from "admin/components/Title/Title";
 import Wrapper from "admin/components/Wrapper/Wrapper";
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import { paths } from "constants/routes";
 import { CrumbTypes } from "../Dashboard/types";
 import TrialSubscriptionTable from "./TrialSubscriptionTable";
-import { data } from "./TestData";
 import DocumentTitleSetter from "../../../library/DocumentTitleSetter/DocumentTitleSetter";
+import { useState, useEffect } from "react";
+import agent from "admin/api/agent";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -20,7 +20,44 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
+export type TrialSubscriptionProps = {
+  dateCreated: string;
+  daysRemaining: number;
+  emailAddress: string;
+  firstName: string;
+  lastName: string;
+  userGuid: string;
+  _id: string;
+  expirationDate: string;
+};
+
 const TrialSubscription = () => {
+  const [subscriptions, setSubscriptions] = useState<TrialSubscriptionProps[]>(
+    []
+  );
+  const [filteredSubscriptions, setFilteredSubscriptions] = useState<
+    TrialSubscriptionProps[]
+  >([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  // fetch data
+  useEffect(() => {
+    const fetchTickets = async () => {
+      setLoading(true);
+      try {
+        const res = await agent.TrialSubscription.getTrialSubscriptions();
+        // check if res is array. otherwise, it returns error that says that res might be string.
+        if (Array.isArray(res)) {
+          setFilteredSubscriptions(res);
+          setSubscriptions(res);
+        }
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
+    };
+    fetchTickets();
+  }, []);
   return (
     <Wrapper
       className="webinar-admin-container"
@@ -34,13 +71,12 @@ const TrialSubscription = () => {
         title="Trial Subscription"
         subtitle="Displaying all active and expired subscriptions"
       />
-      <NoInformationToDisplay
-        showNoInfo={data.length === 0}
-        message="No trial subscription available."
-        title="No Information to display."
-      >
-        <TrialSubscriptionTable data={data} />
-      </NoInformationToDisplay>
+      <TrialSubscriptionTable
+        subscriptions={subscriptions}
+        filteredSubscriptions={filteredSubscriptions}
+        setFilteredSubscriptions={setFilteredSubscriptions}
+        loading={loading}
+      />
     </Wrapper>
   );
 };
