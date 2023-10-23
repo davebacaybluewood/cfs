@@ -69,7 +69,7 @@ const TrialSubscriptionTable = ({
       userGuid: item.userGuid,
       // without slice, this returns 2023-10-18T19:07:55.525Z
       dateCreated: item.dateCreated.slice(0, 10),
-      expirationDate: item.expirationDate,
+      expirationDate: item.expirationDate.slice(0, 10),
       daysRemaining:
         item.daysRemaining === 0 ? BLANK_VALUE : item.daysRemaining,
       firstName: item.firstName,
