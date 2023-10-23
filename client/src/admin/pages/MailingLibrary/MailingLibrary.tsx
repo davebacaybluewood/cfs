@@ -11,7 +11,14 @@ import {
 } from "@mui/x-data-grid";
 import { BsPlusCircle } from "react-icons/bs";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { Button, Menu, MenuItem, Skeleton, Tooltip } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Skeleton,
+  Tooltip,
+} from "@mui/material";
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
 import nameFallback from "helpers/nameFallback";
@@ -24,7 +31,6 @@ import { RiExternalLinkFill } from "react-icons/ri";
 import Spinner from "library/Spinner/Spinner";
 import { BiFilterAlt } from "react-icons/bi";
 import "./MailingLibrary.scss";
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -52,6 +58,16 @@ const MailLibrary: React.FC = () => {
   const [templates, setTemplates] = useState<any>([]);
   const [originalTemplates, setOriginalTemplates] = useState<any>([]);
 
+  const TextOverFlow = ({ value }) => {
+    return (
+      <Tooltip title={<h1 style={{ color: "#fff" }}>{value}</h1>}>
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
+          {value}
+        </span>
+      </Tooltip>
+    );
+  };
+
   const columns: GridColDef[] = [
     {
       field: "templateName",
@@ -63,25 +79,25 @@ const MailLibrary: React.FC = () => {
       field: "subject",
       headerName: "Subject",
       width: 200,
-      renderCell: (params) => params.value,
+      renderCell: (params) => <TextOverFlow value={params.value} />,
     },
     {
       field: "createdBy",
       headerName: "Created By",
       width: 200,
-      renderCell: (params) => params.value,
+      renderCell: (params) => <TextOverFlow value={params.value} />,
     },
     {
       field: "createdAt",
       headerName: "Date Created",
       width: 200,
-      renderCell: (params) => params.value,
+      renderCell: (params) => <TextOverFlow value={params.value} />,
     },
     {
       field: "status",
       headerName: "Status",
       width: 100,
-      renderCell: (params) => params.value,
+      renderCell: (params) => <TextOverFlow value={params.value} />,
     },
     {
       field: "actions",
@@ -177,14 +193,26 @@ const MailLibrary: React.FC = () => {
       ),
       createdAt: formatISODateOnly(template.createdAt ?? ""),
       templateName: (
-        <Tooltip
-          title={<h1 style={{ color: "#fff" }}>Created by Marketing Team</h1>}
-        >
-          <div className="template-name-header">
-            <span>{template.templateName}</span>
-            {template.isAddedByMarketing ? <AiFillCheckCircle /> : null}
-          </div>
-        </Tooltip>
+        <>
+          <Tooltip
+            title={<h1 style={{ color: "#fff" }}>{template.templateName}</h1>}
+          >
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
+              {template.templateName}
+            </span>
+          </Tooltip>
+          {template.isAddedByMarketing ? (
+            <Tooltip
+              title={
+                <h1 style={{ color: "#fff" }}>Created by Marketing Team</h1>
+              }
+            >
+              <IconButton>
+                <AiFillCheckCircle />
+              </IconButton>
+            </Tooltip>
+          ) : null}
+        </>
       ),
       subject: template.subject,
       body: template.templateBody,
@@ -199,7 +227,11 @@ const MailLibrary: React.FC = () => {
             disabled={
               template.status === "DEACTIVATED" || template.status === "DRAFT"
             }
-            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onClick={() => {
               navigate({
                 pathname: paths.emailMarketing,
@@ -213,7 +245,11 @@ const MailLibrary: React.FC = () => {
           </button>
           <button
             className="select-btn"
-            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onClick={() => {
               navigate({
                 pathname: paths.mailLibraryForm,
@@ -344,10 +380,7 @@ const MailLibrary: React.FC = () => {
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <div className="mailing-library-container" style={{ padding: "2rem" }}>
-        <Title
-          title="EmailPro Templates"
-          subtitle=""
-        >
+        <Title title="EmailPro Templates" subtitle="">
           <Button
             onClick={() => navigate(paths.mailLibraryForm)}
             variant="contained"
