@@ -14,7 +14,9 @@ const TrialSubscriptionTable = ({
 }: {
   subscriptions: TrialSubscriptionProps[];
   filteredSubscriptions: TrialSubscriptionProps[];
-  setFilteredSubscriptions: any;
+  setFilteredSubscriptions: React.Dispatch<
+    React.SetStateAction<TrialSubscriptionProps[]>
+  >;
   loading: boolean;
 }) => {
   // Table Definitions
