@@ -32,7 +32,7 @@ import ActivatedWebinars from "admin/pages/Webinars/LandingPages/ActivatedWebina
 import RequestedWebinars from "admin/pages/Webinars/LandingPages/RequestedWebinars";
 import DynamicWebinarInformation from "admin/pages/Webinars/LandingPages/WebinarSingle/DynamicWebinarInformation";
 import GuardedWrapper from "../layouts/GuardedWrapper";
-import AdminAgentWrapperProps from "../pages/TrialSubscription/AdminAgentWrapper";
+import AdminAgentWrapper from "../pages/TrialSubscription/AdminAgentWrapper";
 import Agents from "../pages/Agents/LandingPages/ActiveAgents/Agents";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import adminPathsNew from "./routes";
@@ -469,9 +469,9 @@ export const adminRoutes = [
     path: adminPathsNew.trialSubscription,
     element: (
       <GuardedWrapper>
-        <AdminAgentWrapperProps>
+        <AdminAgentWrapper>
           <TrialSubscription />
-        </AdminAgentWrapperProps>
+        </AdminAgentWrapper>
       </GuardedWrapper>
     ),
   },
