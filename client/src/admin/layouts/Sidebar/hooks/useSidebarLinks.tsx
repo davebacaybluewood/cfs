@@ -567,7 +567,19 @@ const useSidebarLinks = (
       link: paths.trialSubscription,
       isActive: currentPage === paths.trialSubscription.split("/")[2],
       icon: <MdUnsubscribe />,
-      role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
+      role: [
+        // Master Admin Value
+        PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value,
+        // Agent Values
+        PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,
+        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_EXECUTIVE_VICE_PRESIDENT.value,
+        PROFILE_ROLES.AGENT.ROLE_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value,
+        PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value,
+        PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value,
+      ],
     },
     {
       linkText: "Blogs & Resources",
