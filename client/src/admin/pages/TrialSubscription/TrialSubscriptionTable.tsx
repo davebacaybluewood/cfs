@@ -76,26 +76,19 @@ const TrialSubscriptionTable: React.FC<{
   setFilteredSubscriptions: React.Dispatch<
     React.SetStateAction<TrialSubscriptionProps[]>
   >;
-  loading: boolean;
-}> = ({
-  subscriptions,
-  filteredSubscriptions,
-  setFilteredSubscriptions,
-  loading,
-}) => {
+}> = ({ subscriptions, filteredSubscriptions, setFilteredSubscriptions }) => {
   const rows = filteredSubscriptions.map(mapSubscriptionToRow);
 
   return (
     <Box
       sx={{
-        height: loading ? 500 : rows.length === 0 ? 500 : "auto",
+        height: "auto",
         maxWidth: 1200,
       }}
     >
       <DataGrid
         rows={rows}
         columns={columns}
-        loading={loading}
         initialState={{
           pagination: {
             paginationModel: {
@@ -104,7 +97,13 @@ const TrialSubscriptionTable: React.FC<{
           },
         }}
         pageSizeOptions={[10]}
-        sx={{ fontSize: "14px", p: 3, background: "white" }}
+        sx={{
+          fontSize: "14px",
+          fontWeight: "300",
+          p: 3,
+          background: "white",
+          "& .MuiButton-text": { fontSize: 10 },
+        }}
         slots={{
           toolbar: () => (
             <FilteredGridToolbar
