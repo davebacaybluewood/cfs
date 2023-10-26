@@ -9,7 +9,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SUBSCRIBER_FAQ } from "admin/pages/FAQSubscriber/FAQList";
 import { Formik } from "formik";
 import agent from "admin/api/agent";
@@ -36,6 +36,7 @@ type props = {
   };
   pointsData: PointsData | undefined;
   profile: ProfileData | undefined;
+  setActivePoints?: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const ClaimMerchDialog = ({
@@ -46,6 +47,7 @@ const ClaimMerchDialog = ({
   activeMerchandise,
   pointsData,
   profile,
+  setActivePoints,
 }: props) => {
   const [expanded, setExpanded] = useState("");
   const [loading, setLoading] = useState(false);
@@ -160,6 +162,12 @@ const ClaimMerchDialog = ({
                   userGuid: profile!.userGuid,
                 }
               );
+
+              if (setActivePoints && pointsData) {
+                setActivePoints(
+                  pointsData.totalPoints - activeMerchandise.points
+                );
+              }
 
               setLoading(false);
               setShowSuccessMsg(true);
