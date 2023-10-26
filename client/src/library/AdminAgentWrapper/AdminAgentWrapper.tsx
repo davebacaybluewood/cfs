@@ -7,7 +7,6 @@ import Spinner from 'admin/components/Spinner/Spinner'
 const components = {
   POSITION_AGENT: [
     'Appointments',
-    'Appointments',
     'AgentAppointments',
     'AppointmentInformation',
     'ScheduleAppointment',
@@ -40,7 +39,6 @@ const components = {
     'TrialSubscription',
   ],
   POSITION_MASTER_ADMIN: [
-    'Appointments',
     'Appointments',
     'AgentAppointments',
     'AppointmentInformation',
