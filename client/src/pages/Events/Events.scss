@@ -6,6 +6,10 @@ $main-color-gradient: linear-gradient(
   $main-color
 ) !important;
 
+.centered-heading {
+  text-align: center;
+}
+
 .event-content {
   .banner {
     margin-bottom: 0;

@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import colors from "colors";
-import eventRoutes from "./routes/eventRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import inquiryRoutes from "./routes/inquiryRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
@@ -57,7 +56,6 @@ app.use(
   express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
 );
 
-app.use("/api/events/", eventRoutes);
 app.use("/api/users/", userRoutes);
 app.use("/api/profile/", profileRoutes);
 app.use("/api/inquiries/", inquiryRoutes);
