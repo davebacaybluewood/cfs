@@ -38,7 +38,6 @@ const Events: React.FC = () => {
         <link rel="canonical" href={window.location.href} />
       </ReactHelmet>      
       <Banner bigTitle="Events" title="See Upcoming Events" hasBorder />
-      <h2 className="centered-heading">Event Updated {formattedDate}</h2>
       {/* <WorkingSteps
         bigTitle={
           <React.Fragment>
