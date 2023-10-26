@@ -9,7 +9,7 @@ import agent from "admin/api/agent";
 import SubscriptionTableLoading from "./SubscriptionTableLoading";
 
 const crumbs: CrumbTypes[] = [
-  {
+  { 
     title: "Comfort Financial Solutions",
     url: paths.dashboard,
     isActive: false,
