@@ -29,7 +29,7 @@ const SubscriptionGuard: React.FC<SubscriptionGuardProps> = (props) => {
 
   return (
     <main>
-      {!loading ? (
+      {!loading && hasAccess !== undefined ? (
         hasAccess ? (
           props.children
         ) : (
