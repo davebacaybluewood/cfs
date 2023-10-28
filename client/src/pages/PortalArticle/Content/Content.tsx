@@ -14,7 +14,7 @@ const Content = () => {
         fontWeight={300}
         variant='h5'
         component={'h5'}
-        sx={{ marginTop: '2rem', marginBottom: '2rem' }}
+        sx={{ marginTop: '2rem', marginBottom: '4rem' }}
         lineHeight={2}
       >
         Comfort Financial Solutions is committed to providing a seamless and
@@ -35,7 +35,7 @@ const Content = () => {
         fontWeight={300}
         variant='h5'
         component={'h5'}
-        sx={{ marginTop: '0.5rem', marginBottom: '2rem' }}
+        sx={{ marginTop: '0.5rem', marginBottom: '4rem' }}
         lineHeight={2}
       >
         Visit the Comfort Financial Solutions website: Start by opening your web

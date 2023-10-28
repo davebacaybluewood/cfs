@@ -9,7 +9,7 @@ interface StepNumberProps {
 
 const StepNumber = ({ number, title, description }: StepNumberProps) => {
   return (
-    <Box sx={{ marginBottom: '10px' }}>
+    <Box>
       <Stack flexDirection={'row'} gap={2}>
         <div
           style={{

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 import React from 'react'
 import StepNumber from './StepNumber'
 
@@ -13,7 +13,7 @@ const steps = [
     description: `Locate the "Login" button: Look for the "Login" or "Sign In" button on the top right corner of the webpage. Click on it to proceed.`,
   },
   {
-    title: 'Enter your credentials:',
+    title: 'Enter your credentials',
     description: `Enter your credentials: You will be prompted to enter your username and password. Make sure to type in your correct login details.`,
   },
   {
@@ -25,14 +25,16 @@ const steps = [
 const StepByStep = () => {
   return (
     <Box>
-      {steps.map((item, index) => (
-        <StepNumber
-          key={index}
-          number={index}
-          title={item.title}
-          description={item.description}
-        />
-      ))}
+      <Stack gap={2}>
+        {steps.map((item, index) => (
+          <StepNumber
+            key={index}
+            number={index}
+            title={item.title}
+            description={item.description}
+          />
+        ))}
+      </Stack>
     </Box>
   )
 }

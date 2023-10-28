@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material'
-import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface linksProps {
   title: string
@@ -15,23 +15,22 @@ const CategoryLinks = ({ categoryTitle, links }: CategoryLinksProps) => {
   return (
     <div style={{ marginBottom: '3.5rem' }}>
       <Typography sx={{ marginBottom: '1rem' }} variant='h5' component={'h5'}>
-        Categories
+        {categoryTitle}
       </Typography>
       <Stack
-        spacing={{ xs: 1, sm: 1 }}
+        spacing={{ xs: 1, sm: 2 }}
         direction='column'
         useFlexGap
         flexWrap='wrap'
+        sx={{ paddingLeft: '1.5rem' }}
       >
         {links.map((item, index) => (
-          <Typography
-            key={index}
-            fontWeight={300}
-            variant='h5'
-            component={'h5'}
+          <Link
+            style={{ fontSize: '15px', color: 'gray', fontWeight: 300 }}
+            to={item.path}
           >
             {item.title}
-          </Typography>
+          </Link>
         ))}
       </Stack>
     </div>
