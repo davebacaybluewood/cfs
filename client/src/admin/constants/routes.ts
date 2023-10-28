@@ -46,7 +46,7 @@ const adminPaths = {
   adminAgentForm: adminCfsRoute + "agents/form/:action",
   inquiries: adminCfsRoute + "inquiries",
   newAdminEvents: adminCfsRoute + "events",
-  newAdminEventsForm: adminCfsRoute + "events/:id",
+  newAdminEventsForm: adminCfsRoute + "events/form",
   newAdminEventInvites: adminCfsRoute + "event-invites",
   webinar: adminCfsRoute + "webinar",
   cfsWebinars: adminCfsRoute + "cfs-webinars",
