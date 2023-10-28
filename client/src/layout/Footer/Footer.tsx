@@ -1,53 +1,53 @@
-import { Container, Grid, Typography } from "@mui/material";
-import { HiOutlinePhone } from "react-icons/hi";
-import { CiLocationOn } from "react-icons/ci";
-import { MdEmail } from "react-icons/md";
-import { SiFacebook } from "react-icons/si";
-import { FaLinkedin } from "react-icons/fa";
-import { RiInstagramFill } from "react-icons/ri";
-import GridLinks from "./components/GridLinks";
-import { paths } from "constants/routes";
-import { Link } from "react-router-dom";
-import "./Footer.scss";
+import { Container, Grid, Typography } from '@mui/material'
+import { HiOutlinePhone } from 'react-icons/hi'
+import { CiLocationOn } from 'react-icons/ci'
+import { MdEmail } from 'react-icons/md'
+import { SiFacebook } from 'react-icons/si'
+import { FaLinkedin } from 'react-icons/fa'
+import { RiInstagramFill } from 'react-icons/ri'
+import GridLinks from './components/GridLinks'
+import { paths } from 'constants/routes'
+import { Link } from 'react-router-dom'
+import './Footer.scss'
 import {
   COMPANY_CONTACT_INFO,
   COMPANY_NAME,
   SOCIAL_MEDIA_LINKS,
   TWITTER_LOGO,
-} from "constants/constants";
-import Partners from "library/Partners/Partners";
+} from 'constants/constants'
+import Partners from 'library/Partners/Partners'
 
 interface FooterProps {
-  showPartners?: boolean;
+  showPartners?: boolean
 }
-
-
 
 const Footer: React.FC<FooterProps> = (props) => {
   return (
-    <div className="footer">
-      <div className="footer__header">
-        {props.showPartners ? <Partners /> : null}
-      </div>
+    <div className='footer'>
+      {props.showPartners ? (
+        <div className='footer__header'>
+          <Partners /> 
+        </div>
+      ) : null}
 
-      <div className="footer__main-section">
+      <div className='footer__main-section'>
         <Container>
-          <Grid container spacing={2} className="footer__main-section__links">
+          <Grid container spacing={2} className='footer__main-section__links'>
             <Grid item xs={12} sm={4} md={4} lg={2}>
               <GridLinks
-                title="Company Info"
+                title='Company Info'
                 links={[
                   {
                     link: paths.about_us,
-                    text: "About Us",
+                    text: 'About Us',
                   },
                   {
                     link: paths.about_us,
-                    text: "Our Mission",
+                    text: 'Our Mission',
                   },
                   {
                     link: paths.about_us,
-                    text: "Our Vision",
+                    text: 'Our Vision',
                   },
                 ]}
               />
@@ -55,19 +55,19 @@ const Footer: React.FC<FooterProps> = (props) => {
 
             <Grid item xs={12} sm={4} md={4} lg={2}>
               <GridLinks
-                title="Solutions"
+                title='Solutions'
                 links={[
                   {
                     link: paths.family_protection,
-                    text: "For Families",
+                    text: 'For Families',
                   },
                   {
                     link: paths.individual_protection,
-                    text: "For Individuals",
+                    text: 'For Individuals',
                   },
                   {
                     link: paths.join_our_team,
-                    text: "For Agents",
+                    text: 'For Agents',
                   },
                 ]}
               />
@@ -75,15 +75,15 @@ const Footer: React.FC<FooterProps> = (props) => {
 
             <Grid item xs={12} sm={4} md={4} lg={2}>
               <GridLinks
-                title="Features"
+                title='Features'
                 links={[
                   {
-                    link: paths.cfsPages.replace(":pageId", "cfs-edge"),
-                    text: "CFS Edge",
+                    link: paths.cfsPages.replace(':pageId', 'cfs-edge'),
+                    text: 'CFS Edge',
                   },
                   {
-                    link: paths.cfsPages.replace(":pageId", "cfs-advantage"),
-                    text: "CFS Advantage",
+                    link: paths.cfsPages.replace(':pageId', 'cfs-advantage'),
+                    text: 'CFS Advantage',
                   },
                 ]}
               />
@@ -91,15 +91,15 @@ const Footer: React.FC<FooterProps> = (props) => {
 
             <Grid item xs={12} sm={4} md={4} lg={2}>
               <GridLinks
-                title="Resources"
+                title='Resources'
                 links={[
                   {
                     link: paths.resources,
-                    text: "Free Agent Training",
+                    text: 'Free Agent Training',
                   },
                   {
                     link: paths.resources,
-                    text: "Blog",
+                    text: 'Blog',
                   },
                   // {
                   //   link: "/",
@@ -127,7 +127,7 @@ const Footer: React.FC<FooterProps> = (props) => {
                   <CiLocationOn /> <span>{COMPANY_CONTACT_INFO.STATE_NY}</span>
                 </li>
                 <li>
-                  <a href="mailto:support@gocfs.pro">
+                  <a href='mailto:support@gocfs.pro'>
                     <MdEmail />
                     <span>{COMPANY_CONTACT_INFO.EMAIL}</span>
                   </a>
@@ -137,14 +137,14 @@ const Footer: React.FC<FooterProps> = (props) => {
           </Grid>
         </Container>
       </div>
-      <div className="sub-footer">
+      <div className='sub-footer'>
         <Container>
-          <div className="footer__copyright">
-            <Typography variant="h5">
+          <div className='footer__copyright'>
+            <Typography variant='h5'>
               Copyright {new Date().getFullYear()} | {COMPANY_NAME}
             </Typography>
           </div>
-          <div className="footer__socials">
+          <div className='footer__socials'>
             <Link to={SOCIAL_MEDIA_LINKS.FACEBOOK}>
               <SiFacebook />
             </Link>
@@ -152,7 +152,17 @@ const Footer: React.FC<FooterProps> = (props) => {
               <RiInstagramFill />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.TWITTER}>
-              <TWITTER_LOGO width="18" height="18" viewBox="0 0 24 24" reactX={0} reactY={0} reactWidth={24} reactHeight={24} reactFill={"#23a6f0"} pathFill={"#0e1f51"} />
+              <TWITTER_LOGO
+                width='18'
+                height='18'
+                viewBox='0 0 24 24'
+                reactX={0}
+                reactY={0}
+                reactWidth={24}
+                reactHeight={24}
+                reactFill={'#23a6f0'}
+                pathFill={'#0e1f51'}
+              />
             </Link>
             <Link to={SOCIAL_MEDIA_LINKS.LINKEDIN}>
               <FaLinkedin />
@@ -164,10 +174,10 @@ const Footer: React.FC<FooterProps> = (props) => {
         </Container>
       </div>
     </div>
-  );
-};
+  )
+}
 
 Footer.defaultProps = {
   showPartners: false,
-};
-export default Footer;
+}
+export default Footer

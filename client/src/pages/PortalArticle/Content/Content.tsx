@@ -1,10 +1,10 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
 import StepByStep from '../StepByStep/StepByStep'
 
 const Content = () => {
   return (
-    <div>
+    <Box style={{ paddingBottom: '3rem' }}>
       <img
         style={{ width: '80%', height: '300px', objectFit: 'cover' }}
         src='https://images.unsplash.com/photo-1586314265219-192da32be7eb?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
@@ -48,7 +48,7 @@ const Content = () => {
         account.
       </Typography>
       <StepByStep />
-    </div>
+    </Box>
   )
 }
 
