@@ -25,6 +25,7 @@ import {
 import { PointsData } from "admin/models/pointsModels";
 import { SubscriberMainData } from "admin/models/subscriberModel";
 import { OrdersData } from "admin/models/ordersModels";
+import Event from "admin/models/eventModel";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -360,6 +361,18 @@ const TrialSubscription = {
   },
 };
 
+const Events = {
+  getByRole: (role: string) => {
+    const res = requests.get<Event[]>(`/api/events?role=${role}`);
+    return res;
+  },
+
+  getById: (eventId: string) => {
+    const res = requests.get<Event>(`/api/events/${eventId}`);
+    return res;
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
@@ -374,6 +387,7 @@ const agent = {
   Orders,
   RaiseSupport,
   TrialSubscription,
+  Events,
 };
 
 export default agent;
