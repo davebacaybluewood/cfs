@@ -264,8 +264,17 @@ const PortalRegistration: React.FC = () => {
                 }}
               </Formik>
               <div className="login-caption">
-                <span>Login using verification code</span>
-                <Link to={paths.login + "?verification_code=true"}>Log in</Link>
+                <Link
+                  to="https://agent.comfortfinancialsolutions.com/Signup/Wizard/0"
+                  target="_blank"
+                >
+                  Sign up as an Agent
+                </Link>
+              </div>
+              <div className="login-caption">
+                <Link to={paths.login + "?verification_code=true"}>
+                  Login using verification code
+                </Link>
               </div>
               <div className="login-caption">
                 <Link to={paths.login + "?forgot_password=true"}>

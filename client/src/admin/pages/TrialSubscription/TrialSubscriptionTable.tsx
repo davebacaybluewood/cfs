@@ -1,82 +1,67 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import React, { useState, useEffect } from "react";
 import "./TrialSubscription.scss";
 import FilteredGridToolbar from "./FilteredGridToolbar";
 import { BLANK_VALUE } from "constants/constants";
 
-export type TrialSubscriptionProps = {
-  _id: string;
-  userGuid: string;
-  dateCreated: string;
-  expirationDate: string;
-  daysRemaining: number;
-  firstName: string;
-  lastName: string;
-  emailAddress: string;
-};
+import { TrialSubscriptionProps } from "./TrialSubscription";
 
 const TrialSubscriptionTable = ({
-  data,
+  subscriptions,
+  filteredSubscriptions,
+  setFilteredSubscriptions,
+  loading,
 }: {
-  data: TrialSubscriptionProps[];
+  subscriptions: TrialSubscriptionProps[];
+  filteredSubscriptions: TrialSubscriptionProps[];
+  setFilteredSubscriptions: React.Dispatch<
+    React.SetStateAction<TrialSubscriptionProps[]>
+  >;
+  loading: boolean;
 }) => {
-  const [subscriptions, setSubscriptions] = useState<TrialSubscriptionProps[]>(
-    []
-  );
-  const [filteredSubscriptions, setFilteredSubscriptions] = useState<
-    TrialSubscriptionProps[]
-  >([]);
-
-  const [loading, setLoading] = useState<boolean>(false);
-
-  // fetch data here
-  useEffect(() => {
-    const getSubscriptions = () => {
-      setLoading(true);
-      setTimeout(() => {
-        if (data) {
-          setSubscriptions(data);
-          setFilteredSubscriptions(data);
-        }
-        setLoading(false);
-      }, 2000);
-    };
-
-    getSubscriptions();
-  }, []);
-
   // Table Definitions
   const columns: GridColDef[] = [
     {
       field: "firstName",
       headerName: "First name",
-      width: 130,
+      flex: 1,
+      maxWidth: 180,
+      renderCell: (params) => (
+        <div style={{ textTransform: "capitalize" }}>{params.value}</div>
+      ),
     },
     {
       field: "lastName",
       headerName: "Last name",
-      width: 130,
+      maxWidth: 180,
+      flex: 1,
+      renderCell: (params) => (
+        <div style={{ textTransform: "capitalize" }}>{params.value}</div>
+      ),
     },
     {
       field: "dateCreated",
       headerName: "Subscribed Date",
-      width: 150,
+      maxWidth: 150,
+      flex: 1,
     },
     {
       field: "expirationDate",
       headerName: "Expiration Date",
-      width: 150,
+      maxWidth: 150,
+      flex: 1,
     },
     {
       field: "daysRemaining",
       headerName: "Days Remaining",
-      width: 150,
+      maxWidth: 150,
+      flex: 1,
     },
     {
       field: "emailAddress",
       headerName: "Email",
-      width: 220,
+      minWidth: 80,
+      flex: 1,
     },
   ];
 
@@ -84,8 +69,9 @@ const TrialSubscriptionTable = ({
     return {
       id: item._id,
       userGuid: item.userGuid,
-      dateCreated: item.dateCreated,
-      expirationDate: item.expirationDate,
+      // without slice, this returns 2023-10-18T19:07:55.525Z
+      dateCreated: item.dateCreated.slice(0, 10),
+      expirationDate: item.expirationDate.slice(0, 10),
       daysRemaining:
         item.daysRemaining === 0 ? BLANK_VALUE : item.daysRemaining,
       firstName: item.firstName,
@@ -94,7 +80,12 @@ const TrialSubscriptionTable = ({
     };
   });
   return (
-    <Box sx={{ height: loading ? 500 : "auto", maxWidth: 1200 }}>
+    <Box
+      sx={{
+        height: loading ? 500 : rows.length === 0 ? 500 : "auto",
+        maxWidth: 1200,
+      }}
+    >
       <DataGrid
         rows={rows}
         columns={columns}

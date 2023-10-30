@@ -6,7 +6,11 @@ import { Link, useParams } from "react-router-dom";
 import { paths } from "constants/routes";
 import { toast } from "react-toastify";
 
-const SimpleNavbar: React.FC = () => {
+interface SimpleNavbarProps {
+  showAgentLink?: boolean;
+}
+const SimpleNavbar: React.FC<SimpleNavbarProps> = (props) => {
+  const { showAgentLink } = props;
   const { userGuid } = useParams();
 
   const copyToClip = async () => {
@@ -32,15 +36,17 @@ const SimpleNavbar: React.FC = () => {
               Home
             </Link>
           </li>
-          <li>
-            <Link
-              to={paths.agent_with_id.replace(":id", userGuid ?? "")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Agent Information
-            </Link>
-          </li>
+          {showAgentLink ? (
+            <li>
+              <Link
+                to={paths.agent_with_id.replace(":id", userGuid ?? "")}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Agent Information
+              </Link>
+            </li>
+          ) : null}
           <li>
             <button onClick={() => copyToClip()}>
               <AiOutlineLink />

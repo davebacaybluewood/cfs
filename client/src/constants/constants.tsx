@@ -29,6 +29,8 @@ import Annuity from "pages/Contract/components/Annuity";
 import Pricing from "pages/Pricing/Pricing";
 import Subscribe from "pages/Subscribers/Subscribe";
 import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
+import RSVPForm from "pages/RSVP/RSVPForm";
+import RSVPLanding from "pages/RSVP/RSVPLanding";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -268,6 +270,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showNavbar: false,
   },
   {
+    element: <RSVPForm />,
+    path: paths.rsvpForm,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
     element: <Pricing />,
     path: paths.pricing,
     showHeadline: false,
@@ -311,7 +320,17 @@ const CALENDLY = {
 const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
 const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
 
-const TWITTER_LOGO = ({width, height, viewBox, reactX, reactY, reactWidth, reactHeight, reactFill, pathFill}) => {
+const TWITTER_LOGO = ({
+  width,
+  height,
+  viewBox,
+  reactX,
+  reactY,
+  reactWidth,
+  reactHeight,
+  reactFill,
+  pathFill,
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -319,7 +338,14 @@ const TWITTER_LOGO = ({width, height, viewBox, reactX, reactY, reactWidth, react
       height={height}
       viewBox={viewBox}
     >
-      <rect x={reactX} y={reactY} width={reactWidth} height={reactHeight} fill={reactFill} stroke="none" />
+      <rect
+        x={reactX}
+        y={reactY}
+        width={reactWidth}
+        height={reactHeight}
+        fill={reactFill}
+        stroke="none"
+      />
       <path
         fill={pathFill}
         d="M18.205 2.25h3.308l-7.227 8.26l8.502 11.24H16.13l-5.214-6.817L4.95 21.75H1.64l7.73-8.835L1.215 2.25H8.04l4.713 6.231l5.45-6.231Zm-1.161 17.52h1.833L7.045 4.126H5.078L17.044 19.77Z"
@@ -343,5 +369,5 @@ export {
   MAIN_LOCALHOST,
   SUPPORT_TYPE,
   SUPPORT_STATUS,
-  TWITTER_LOGO
+  TWITTER_LOGO,
 };

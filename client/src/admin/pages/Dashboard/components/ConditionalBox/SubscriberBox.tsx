@@ -14,6 +14,7 @@ import { UserContext } from "admin/context/UserProvider";
 import useFetchSubscribers from "admin/pages/RewardsHistory/useFetchSubscribers";
 import ClaimMerchDialog from "admin/pages/Merchandises/components/ClaimMerchDialog";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import { AiFillStar } from "react-icons/ai";
 
 const SubscriberBox = () => {
   const [merchandises, setMerchandises] = useState<
@@ -42,6 +43,8 @@ const SubscriberBox = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  // for dashboard active points value
+  const [activePoints, setActivePoints] = useState(0);
 
   const [activeMerchandise, setActiveMerchandise] = useState({
     name: "",
@@ -83,14 +86,16 @@ const SubscriberBox = () => {
         registeredSubscribers: totalSubscribers ?? 0,
       };
     });
+
+    setActivePoints(pointsData?.totalPoints ?? 0);
   }, [pointsData, totalSubscribers]);
 
   const statistics: StatisticTypes[] = [
     {
       countText: "Active Points",
-      count: statisticsNumber.points,
+      count: activePoints,
       url: "", //paths.typeAppointments.replace(":typeId", "paw"),
-      icon: <FaCalendarMinus />,
+      icon: <AiFillStar />,
     },
     {
       countText: "Registered Subscriber",
@@ -168,6 +173,7 @@ const SubscriberBox = () => {
         activeMerchandise={activeMerchandise}
         pointsData={pointsData}
         profile={profile}
+        setActivePoints={setActivePoints}
       />
 
       <Grid container spacing={2} marginBottom={3}>

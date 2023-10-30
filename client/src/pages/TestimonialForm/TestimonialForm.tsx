@@ -63,7 +63,7 @@ const TestimonialForm: React.FC = () => {
   }
   return (
     <div className="testimonial-form-container">
-      <SimpleNavbar />
+      <SimpleNavbar showAgentLink={true} />
 
       <Container className="form-main-container">
         <Grid container style={{ height: "100%" }}>

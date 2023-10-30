@@ -1,0 +1,116 @@
+.rsvp-form-container {
+  .form-main-container {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 1px 8px 0 rgb(0 0 0/8%);
+    padding: 1rem;
+    background-color: #fff;
+    margin-top: 5rem;
+    height: 80vh;
+    position: relative;
+    .form-information {
+      padding: 2rem;
+      border-right: 1px solid #eee;
+      height: calc(100% - 4rem);
+
+      h2 {
+        font-weight: 800;
+        font-size: 3rem;
+        line-height: 3rem;
+        color: #333;
+      }
+
+      h5 {
+        color: #646464;
+        font-size: 1.6rem;
+        font-family: "Agrandir";
+        margin-bottom: 1rem;
+      }
+      h3 {
+        font-size: 3rem;
+        font-family: "Roboto", sans-serif;
+        font-weight: 500;
+      }
+      p {
+        font-weight: 300;
+        line-height: 1.5;
+        font-size: 1.5rem;
+      }
+      img {
+        width: 80px;
+        margin-bottom: 1rem;
+      }
+
+      .basic-info {
+        list-style: none;
+        margin: 1rem 0;
+
+        li {
+          margin-bottom: 0.5rem;
+
+          svg {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+          }
+
+          span {
+            font-size: 1.5rem;
+            font-weight: 300;
+            position: relative;
+            top: -0.1rem;
+          }
+        }
+      }
+
+      .social-medias {
+        li {
+          list-style: none;
+          display: inline;
+          a {
+            color: #333;
+            font-size: 3rem;
+
+            &:hover {
+              opacity: 0.5;
+            }
+          }
+        }
+      }
+    }
+
+    .user-form {
+      padding: 2rem;
+
+      h2 {
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        color: #333;
+      }
+
+      .form-control {
+        h5 {
+          margin: 0;
+          font-size: 1.4rem;
+          font-weight: 300;
+          margin-bottom: 0.5rem;
+        }
+
+        .MuiInputBase-root {
+          margin-top: 0;
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  .success-message {
+    text-align: center;
+    h2 {
+      font-weight: 900;
+      font-size: 1.8rem;
+    }
+    img {
+      width: 100%;
+    }
+  }
+}

@@ -75,6 +75,9 @@ const ENDPOINTS = {
   /* Raise Support */
   RAISE_SUPPORT_ROOT: "/api/raise-support",
   RAISE_SUPPORT_UPDATE_STATUS: "/api/raise-support/:id",
+
+  /* Trial Subscription */
+  TRIAL_SUBSCRIPTION_ROOT: "/api/portal-subscription/free-trial",
 };
 
 export default ENDPOINTS;

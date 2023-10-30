@@ -17,8 +17,8 @@ const paths = {
   events: "/events",
   portal: "/portal",
   testimonialForm: "/testimonial-form/:userGuid",
-  invalid: "/invalid",
   pricing: "/pricing",
+  rsvpForm: "/rsvp-form/:eventId",
 
   /* Contract */
   preLicensing: "/pre-licensing",
@@ -52,10 +52,12 @@ const paths = {
   adminGraphs: "/portal/graphs",
   adminContacts: "/portal/contacts",
   adminEventInvites: "/portal/event-invites",
+  rsvpLanding: "/portal/rsvp",
 
   /** Subscribe Page */
   subscriberRegistration: "/subscribe/",
   subscribeSuccess: "/subscribe/success",
+  invalid: "/invalid",
 };
 
 export { paths };
