@@ -1,4 +1,11 @@
 .article-content {
+  img {
+    width: 80%;
+    height: 300px;
+    object-fit: cover;
+    margin-bottom: 2rem;
+  }
+
   @media (max-width: 991px) {
     padding: 2rem;
   }

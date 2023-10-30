@@ -1,5 +1,8 @@
-.sidebar-links:hover {
+.sidebar-links {
   transition-duration: 1s;
+  font-size: 15px;
+  color: gray;
+  font-weight: 300;
 }
 
 .sidebar-links:hover {
@@ -8,7 +11,8 @@
 }
 
 .article-sidebar {
-  @media (max-width: 991px) {
-    display: none !important;
-  }
+  padding: 4rem 3rem;
+  min-width: 300px;
+  background: white !important;
+  align-self: flex-start;
 }

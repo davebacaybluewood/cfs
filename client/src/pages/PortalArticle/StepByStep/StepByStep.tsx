@@ -32,7 +32,7 @@ const steps = [
 
 const StepByStep = () => {
   return (
-    <Box>
+    <Box style={{ margin: '3rem 0' }}>
       <Stack gap={2}>
         {steps.map((item, index) => (
           <StepNumber

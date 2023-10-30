@@ -1,23 +1,18 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import StepByStep from '../StepByStep/StepByStep'
-import SideBySideContent from './SideBySideContent'
 import './Content.scss'
+import useIsMobile from '../custom-hook/useIsMobileMD'
 
 const Content = () => {
+  const isMobileMD = useIsMobile()
   return (
     <Box
       className='article-content'
       style={{
-        paddingBottom: '5rem',
+        paddingBottom: !isMobileMD ? '5rem' : '',
       }}
     >
       <img
-        style={{
-          width: '80%',
-          height: '300px',
-          objectFit: 'cover',
-          marginBottom: '2rem',
-        }}
         src='https://images.unsplash.com/photo-1586314265219-192da32be7eb?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
         alt=''
       />
@@ -47,7 +42,7 @@ const Content = () => {
         fontWeight={300}
         variant='h5'
         component={'h5'}
-        sx={{ marginTop: '0.5rem', marginBottom: '4rem' }}
+        sx={{ marginTop: '0.5rem', marginBottom: isMobileMD ? '' : '4rem' }}
         lineHeight={2}
       >
         Visit the Comfort Financial Solutions website: Start by opening your web
@@ -60,7 +55,35 @@ const Content = () => {
         account.
       </Typography>
       <StepByStep />
-      <SideBySideContent />
+
+      {/* last content */}
+      <Box
+        sx={{
+          padding: '3rem 0',
+        }}
+      >
+        <Stack flexDirection={'column'} gap={4}>
+          <img
+            style={{
+              width: isMobileMD ? '100%' : '60%',
+            }}
+            src='https://images.unsplash.com/photo-1665686306265-c52ee9054479?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            alt='laptop'
+          />
+          <div>
+            <Typography variant='h5' fontWeight={300} lineHeight={2}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi
+              sit magni repudiandae provident, assumenda tempore maiores
+              nesciunt perferendis neque aut incidunt eum rerum modi itaque,
+              asperiores porro corrupti enim. Lorem ipsum dolor sit amet
+              consectetur adipisicing elit. Et nisi sit magni repudiandae
+              provident, assumenda tempore maiores nesciunt perferendis neque
+              aut incidunt eum rerum modi itaque, asperiores porro corrupti
+              enim.
+            </Typography>
+          </div>
+        </Stack>
+      </Box>
     </Box>
   )
 }

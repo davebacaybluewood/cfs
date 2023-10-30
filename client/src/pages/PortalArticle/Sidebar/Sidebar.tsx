@@ -1,14 +1,17 @@
-import { Box } from '@mui/material'
-import React, { useState, useEffect } from 'react'
+import { Box, Grid, Stack } from '@mui/material'
+import { useState, useEffect } from 'react'
 import CategoryLinks from './CategoryLinks'
 import {
   ARTICLE_TECHONOLOGY,
   ARTICLE_FINANCE,
   ARTICLE_HEALTH,
 } from './TestLinks'
+import './Sidebar.scss'
+import useIsMobileMD from '../custom-hook/useIsMobileMD'
 
 const Sidebar = () => {
   const [scrollPosition, setScrollPosition] = useState(0)
+  const isMobileMD = useIsMobileMD()
 
   const handleScroll = () => {
     const position = window.pageYOffset
@@ -24,36 +27,41 @@ const Sidebar = () => {
   }, [])
   return (
     <>
-      {/* When sidebar set to fixed */}
+      {/* when sidebar is set to fix, display a copy of a sidebar to not break the display flex layout */}
       <Box
         className='article-sidebar'
         sx={{
-          padding: '4rem 3rem',
-          minWidth: '300px',
-          background: '#f7f7f7',
-          alignSelf: 'flex-start',
-          display: scrollPosition > 329 ? 'block' : 'none',
+          display: scrollPosition > 329 && !isMobileMD ? 'block' : 'none',
         }}
       ></Box>
       <Box
         className='article-sidebar'
         sx={{
-          padding: '4rem 3rem',
-          minWidth: '300px',
-          background: 'white',
-          alignSelf: 'flex-start',
-          position: scrollPosition > 329 ? 'fixed' : null,
+          position: scrollPosition > 329 && !isMobileMD ? 'fixed' : 'static',
           top: scrollPosition > 329 ? '1rem' : null,
-          // bottom: 0,
+          width: isMobileMD ? '100%' : '20%',
         }}
       >
-        <CategoryLinks categoryTitle='Technology' links={ARTICLE_TECHONOLOGY} />
-        <CategoryLinks categoryTitle='Finance' links={ARTICLE_FINANCE} />
-        <CategoryLinks
-          categoryTitle='Health and Wellness'
-          links={ARTICLE_HEALTH}
-        />
-        <CategoryLinks categoryTitle='Finance' links={ARTICLE_FINANCE} />
+        <Grid container spacing={2}>
+          <Grid item sm={6} md={12}>
+            <CategoryLinks
+              categoryTitle='Technology'
+              links={ARTICLE_TECHONOLOGY}
+            />
+          </Grid>
+          <Grid item sm={6} md={12}>
+            <CategoryLinks categoryTitle='Finance' links={ARTICLE_FINANCE} />
+          </Grid>
+          <Grid item sm={6} md={12}>
+            <CategoryLinks
+              categoryTitle='Health and Wellness'
+              links={ARTICLE_HEALTH}
+            />
+          </Grid>
+          <Grid item sm={6} md={12}>
+            <CategoryLinks categoryTitle='Finance' links={ARTICLE_FINANCE} />
+          </Grid>
+        </Grid>
       </Box>
     </>
   )
