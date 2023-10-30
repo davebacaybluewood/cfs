@@ -30,7 +30,7 @@ import Pricing from "pages/Pricing/Pricing";
 import Subscribe from "pages/Subscribers/Subscribe";
 import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
 import RSVPForm from "pages/RSVP/RSVPForm";
-import RSVPLanding from "pages/RSVP/RSVPLanding";
+import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;

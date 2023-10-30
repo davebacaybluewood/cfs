@@ -43,10 +43,7 @@ import EmailEditor, { EditorRef } from "react-email-editor";
 import ReactHtmlParser from "html-react-parser";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-export const emailOptions = [
-  { value: "dave.bacay.vc@gmail.com", label: "dave.bacay.vc@gmail.com" },
-  { value: "dave.bacay@gocfs.pro", label: "dave.bacay@gocfs.pro" },
-];
+export const emailOptions = [];
 
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
