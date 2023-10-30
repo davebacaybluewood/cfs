@@ -26,16 +26,17 @@ const Content = () => {
         fontWeight={300}
         variant='h5'
         component={'h5'}
-        sx={{ marginTop: '2rem', marginBottom: '3rem' }}
+        sx={{ marginTop: '2rem', marginBottom: '3rem', width: '100%' }}
         lineHeight={2}
       >
-        Comfort Financial Solutions is committed to providing a seamless and
-        convenient online experience for our clients. Our user-friendly portal
-        offers a host of features to help you manage your financial needs
-        efficiently. In this guide, we'll walk you through the basics of using
-        the Comfort Financial Solutions Portal. Whether you need to access your
-        account, update your profile, or check important information, we've got
-        you covered with easy-to-follow instructions.
+        Welcome Agent! We’re glad to welcome you here at CFS. Let’s get you
+        started into the action, but first, let’s set-up your Accounting System
+        account to track your accounting and hierarchy number. ! To access your
+        Back Office account, please click the link below:
+      </Typography>
+
+      <Typography sx={{ marginBottom: '0.5rem' }} fontWeight={500} variant='h4'>
+        Access Your Back Office Account(Link)
       </Typography>
 
       <Typography
@@ -45,14 +46,20 @@ const Content = () => {
         sx={{ marginTop: '0.5rem', marginBottom: isMobileMD ? '' : '4rem' }}
         lineHeight={2}
       >
-        Visit the Comfort Financial Solutions website: Start by opening your web
-        browser and typing in the URL for Comfort Financial Solutions. Locate
-        the "Login" button: Look for the "Login" or "Sign In" button on the top
-        right corner of the webpage. Click on it to proceed. Enter your
-        credentials: You will be prompted to enter your username and password.
-        Make sure to type in your correct login details. Click "Login": Once
-        your credentials are entered, click the "Login" button to access your
-        account.
+        Once set-up with your Back Office account, let’s get you up to speed
+        with your tools. Set-up your suitcase by accessing the Agent’s portal on
+        the link below:
+      </Typography>
+      <Typography
+        fontWeight={300}
+        variant='h5'
+        component={'h5'}
+        sx={{ marginTop: '0.5rem', marginBottom: isMobileMD ? '' : '4rem' }}
+        lineHeight={2}
+      >
+        <a target='_blank' href='https://www.gocfs.pro/portal/login'>
+          https://www.gocfs.pro/portal/login
+        </a>
       </Typography>
       <StepByStep />
 
@@ -71,14 +78,10 @@ const Content = () => {
           />
           <div>
             <Typography variant='h5' fontWeight={300} lineHeight={2}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nisi
-              sit magni repudiandae provident, assumenda tempore maiores
-              nesciunt perferendis neque aut incidunt eum rerum modi itaque,
-              asperiores porro corrupti enim. Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Et nisi sit magni repudiandae
-              provident, assumenda tempore maiores nesciunt perferendis neque
-              aut incidunt eum rerum modi itaque, asperiores porro corrupti
-              enim.
+              Congratulations! With this one-time set-up done, you now have
+              access to all of CFS’ latest tech to help you achieve financial
+              comfort and success. Goodluck agent, and together, let us re-shape
+              the financial industry.
             </Typography>
           </div>
         </Stack>

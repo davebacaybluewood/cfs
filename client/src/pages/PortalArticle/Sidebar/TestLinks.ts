@@ -1,16 +1,17 @@
 export const ARTICLE_TECHONOLOGY = [
   {
-    title: 'The Latest Advancements in AI',
+    title:
+      'New Agent | Navigating Comfort Financial Solutions Portal: A Step-by-Step Guide',
     path: '/#',
   },
-  {
-    title: 'How to Secure Your Online Data',
-    path: '/#',
-  },
-  {
-    title: 'A Guide to Choosing the Right Smartphone',
-    path: '/#',
-  },
+  // {
+  //   title: 'How to Secure Your Online Data',
+  //   path: '/#',
+  // },
+  // {
+  //   title: 'A Guide to Choosing the Right Smartphone',
+  //   path: '/#',
+  // },
 ]
 
 export const ARTICLE_FINANCE = [

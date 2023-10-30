@@ -12,8 +12,14 @@ const Header = () => {
       }}
     >
       <Container sx={{ padding: '10rem 0' }}>
-        <Typography variant='h2' fontWeight={700} color={'white'}>
-          Navigating Comfort Financial Solutions Portal: A Step-by-Step Guide
+        <Typography
+          variant='h2'
+          fontWeight={700}
+          color={'white'}
+          textAlign={'center'}
+        >
+          New Agent | Navigating Comfort Financial Solutions Portal: A
+          Step-by-Step Guide
         </Typography>
       </Container>
     </Box>

@@ -1,6 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import './Sidebar.scss'
+import useIsMobile from '../custom-hook/useIsMobileMD'
 
 interface linksProps {
   title: string
@@ -13,9 +14,18 @@ interface CategoryLinksProps {
 }
 
 const CategoryLinks = ({ categoryTitle, links }: CategoryLinksProps) => {
+  const isMobile = useIsMobile()
   return (
-    <Box style={{ marginBottom: '3.5rem' }}>
-      <Typography sx={{ marginBottom: '1rem' }} variant='h5' component={'h5'}>
+    <Box
+      style={{
+        marginBottom: '3.5rem',
+      }}
+    >
+      <Typography
+        sx={{ marginBottom: '1rem', textAlign: isMobile ? 'center' : 'start' }}
+        variant='h5'
+        component={'h5'}
+      >
         {categoryTitle}
       </Typography>
       <Stack
@@ -26,7 +36,11 @@ const CategoryLinks = ({ categoryTitle, links }: CategoryLinksProps) => {
         sx={{ paddingLeft: '1.5rem' }}
       >
         {links.map((item, index) => (
-          <Link className='sidebar-links' to={item.path}>
+          <Link
+            className='sidebar-links'
+            to={item.path}
+            style={{ textAlign: isMobile ? 'center' : 'start' }}
+          >
             {item.title}
           </Link>
         ))}

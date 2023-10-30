@@ -39,28 +39,28 @@ const Sidebar = () => {
         sx={{
           position: scrollPosition > 329 && !isMobileMD ? 'fixed' : 'static',
           top: scrollPosition > 329 ? '1rem' : null,
-          width: isMobileMD ? '100%' : '20%',
+          width: isMobileMD ? '100%' : '15%',
         }}
       >
         <Grid container spacing={2}>
-          <Grid item sm={6} md={12}>
+          <Grid item xs={12} sm={6} md={12}>
             <CategoryLinks
-              categoryTitle='Technology'
+              categoryTitle='CFS Back Office'
               links={ARTICLE_TECHONOLOGY}
             />
           </Grid>
-          <Grid item sm={6} md={12}>
+          {/* <Grid item xs={12} sm={6} md={12}>
             <CategoryLinks categoryTitle='Finance' links={ARTICLE_FINANCE} />
-          </Grid>
-          <Grid item sm={6} md={12}>
+          </Grid> */}
+          {/* <Grid item xs={12} sm={6} md={12}>
             <CategoryLinks
               categoryTitle='Health and Wellness'
               links={ARTICLE_HEALTH}
             />
           </Grid>
-          <Grid item sm={6} md={12}>
+          <Grid item xs={12} sm={6} md={12}>
             <CategoryLinks categoryTitle='Finance' links={ARTICLE_FINANCE} />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
     </>

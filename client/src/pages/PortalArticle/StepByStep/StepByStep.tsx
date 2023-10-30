@@ -4,29 +4,34 @@ import StepNumber from './StepNumber'
 
 const steps = [
   {
-    title: 'Visit the website',
-    description: `Visit the Comfort Financial Solutions website: Start by opening your
-            web browser and typing in the URL for Comfort Financial Solutions.`,
+    title: "Click on 'Sign In Using Verification Code'",
+    description:
+      "To start the login process, click on the option that says 'Sign In Using Verification Code.'",
   },
   {
-    title: 'Locate login button',
-    description: `Locate the "Login" button: Look for the "Login" or "Sign In" button on the top right corner of the webpage. Click on it to proceed.`,
+    title: 'Enter Your Email Address',
+    description:
+      'In the provided field, enter your registered email address to proceed.',
   },
   {
-    title: 'Enter your credentials',
-    description: `Enter your credentials: You will be prompted to enter your username and password. Make sure to type in your correct login details.`,
+    title: "Click 'Request Code'",
+    description:
+      "Click the 'Request Code' button to initiate the verification process. A code will be sent to your email.",
   },
   {
-    title: 'Click "Login"',
-    description: `Once your credentials are entered, click the "Login" button to access your account.`,
+    title: 'Receive the Verification Code',
+    description:
+      'Check your email inbox for the verification code. It will be sent to the email address you provided earlier.',
   },
   {
-    title: 'Locate login button',
-    description: `Locate the "Login" button: Look for the "Login" or "Sign In" button on the top right corner of the webpage. Click on it to proceed.`,
+    title: 'Enter the Verification Code',
+    description:
+      'Retrieve the code from your email and enter it into the login portal to complete the verification process.',
   },
   {
-    title: 'Enter your credentials',
-    description: `Enter your credentials: You will be prompted to enter your username and password. Make sure to type in your correct login details.`,
+    title: "Access the Agent's Portal",
+    description:
+      "After successful verification, you will be automatically redirected to the Agent's Portal dashboard, where you can access your account and services.",
   },
 ]
 
