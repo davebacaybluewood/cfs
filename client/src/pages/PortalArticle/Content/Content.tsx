@@ -56,7 +56,6 @@ const Content = () => {
       </Typography>
       <StepByStep />
 
-      {/* last content */}
       <Box
         sx={{
           padding: '3rem 0',
