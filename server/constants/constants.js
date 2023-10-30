@@ -180,7 +180,7 @@ export const API_RES_OK = (msg) => {
 export const API_RES_FAIL = (msg = null) => {
   return {
     error: "invalid_request",
-    description: msg ?? "Fields are required",
+    description: msg ?? "Error occured",
   };
 };
 

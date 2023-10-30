@@ -60,7 +60,8 @@ const subscriberRegistration = async (
   firstName,
   phoneNumber,
   confirmationCode,
-  userGuid
+  userGuid,
+  hasNoCode
 ) => {
   const isCodeExist = await VerificationCode.find({
     verificationCode: confirmationCode,
@@ -72,7 +73,7 @@ const subscriberRegistration = async (
     return f.value === PROFILE_POSITIONS.SUBSCRIBER.value;
   });
 
-  if (!isCodeExist.length) {
+  if (!isCodeExist.length && !hasNoCode) {
     return false;
   }
 

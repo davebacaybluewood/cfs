@@ -4,7 +4,7 @@ const emailMarketingEmail = (data) => {
   const body = data.body;
   const userGuid = data.userGuid;
 
-  const host = "http://localhost:3000";
+  const host = "https://www.gocfs.pro";
 
   return `<!-- Free to use, HTML email template designed & built by FullSphere. Learn more about us at www.fullsphere.co.uk -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -164,11 +164,11 @@ const emailMarketingEmail = (data) => {
           </div>
           <div style="margin-bottom: 20px; font-family: 'Roboto', sans-serif;" className="body-container">
               <div style="background: #e7e7e7; width: 382px; display: inline-block; text-align: center; padding-top: 13px; padding-bottom: 13px;">
-                  <h2 style="margin: 0; font-size: 16px; color: #333333;">Register as an Agent</h2>
+                  <h2 style="margin: 0; font-size: 16px; color: #333333;">Register as a CFS Agent</h2>
                   <a href="https://agent.comfortfinancialsolutions.com/signup">Click here to register</a>
               </div>
               <div style="background: #e7e7e7; width: 382px; display: inline-block; text-align: center; padding-top: 13px; padding-bottom: 13px;">
-                  <h2 style="margin: 0; font-size: 16px; color: #333333;">Register as a Subscriber</h2>
+                  <h2 style="margin: 0; font-size: 16px; color: #333333;">Earn rewards as a Subscriber</h2>
                   <a href="${host}/subscribe?userGuid=${userGuid}">Click here to register</a>
               </div>
           </div>

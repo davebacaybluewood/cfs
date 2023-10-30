@@ -7,6 +7,7 @@ import {
 } from "pages/BlogPage/models";
 import { SubscriptionsData } from "./models/Subscriptions";
 import { SubscriberRegisterData } from "./models/Subscriber";
+import { DefaultResSuccess } from "./models/Defaults";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -235,11 +236,39 @@ const Subscriber = {
   },
 };
 
+const RSVP = {
+  submitRSVP: async (
+    firstName: string,
+    lastName: string,
+    emailAddress: string,
+    phoneNumber: string,
+    remarks: string,
+    eventId: string
+  ) => {
+    const endpoint = `/api/rsvp-event/${eventId}`;
+
+    try {
+      const res = await requests.post<DefaultResSuccess>(endpoint, {
+        firstName,
+        lastName,
+        emailAddress,
+        phoneNumber,
+        remarks,
+      });
+
+      return res;
+    } catch (error) {
+      return false;
+    }
+  },
+};
+
 const agent = {
   BlogAndResource,
   Subscription,
   Inquiry,
   Subscriber,
+  RSVP,
 };
 
 export default agent;

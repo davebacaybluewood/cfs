@@ -59,6 +59,8 @@ import RewardsHistory from "admin/pages/RewardsHistory/RewardsHistory";
 import RaiseSupportTicket from "admin/pages/RaiseSupport/Admin/single-page/RaiseSupportTicket";
 import OrderHistory from "admin/pages/OrderHistory/OrderHistory";
 import TrialSubscription from "admin/pages/TrialSubscription/TrialSubscription";
+import RSVPLanding from "pages/RSVP/RSVPLanding";
+import UserAccessWrapper from "./UserAccessWrapper";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -268,7 +270,9 @@ export const adminRoutes = [
     path: adminPathsNew.dashboard,
     element: (
       <GuardedWrapper>
-        <Dashboard />
+        <UserAccessWrapper>
+          <Dashboard />
+        </UserAccessWrapper>
       </GuardedWrapper>
     ),
   },
@@ -647,6 +651,14 @@ export const adminRoutes = [
         <RewardsHistory />
       </GuardedWrapper>
     ),
+  },
+  {
+    element: (
+      <GuardedWrapper>
+        <RSVPLanding />
+      </GuardedWrapper>
+    ),
+    path: adminPathsNew.rsvpLanding,
   },
   {
     path: adminPathsNew.orderHistory,

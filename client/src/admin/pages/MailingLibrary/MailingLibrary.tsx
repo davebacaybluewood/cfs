@@ -45,10 +45,6 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
-interface FilteredGridToolbarProps {
-  setter: React.Dispatch<any>;
-}
-
 const MailLibrary: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

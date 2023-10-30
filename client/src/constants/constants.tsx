@@ -30,6 +30,7 @@ import Pricing from 'pages/Pricing/Pricing'
 import Subscribe from 'pages/Subscribers/Subscribe'
 import SubscribeSuccess from 'pages/Subscribers/SubscribeSuccess'
 import PortalArticle from 'pages/PortalArticle/PortalArticle'
+import RSVPForm from 'pages/RSVP/RSVPForm'
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean
@@ -275,6 +276,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showNavbar: false,
   },
   {
+    element: <RSVPForm />,
+    path: paths.rsvpForm,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
     element: <Pricing />,
     path: paths.pricing,
     showHeadline: false,
@@ -342,7 +350,7 @@ const TWITTER_LOGO = ({
         width={reactWidth}
         height={reactHeight}
         fill={reactFill}
-        stroke='none'
+        stroke="none"
       />
       <path
         fill={pathFill}
@@ -368,4 +376,4 @@ export {
   SUPPORT_TYPE,
   SUPPORT_STATUS,
   TWITTER_LOGO,
-}
+};

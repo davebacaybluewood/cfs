@@ -71,6 +71,7 @@ const adminPaths = {
   shareableEmails: adminCfsRoute + "shareable-emails",
   orderHistory: adminCfsRoute + "merchandises/order-history",
   trialSubscription: adminCfsRoute + "trial-subscription",
+  rsvpLanding: adminCfsRoute + "rsvp",
 } as const;
 
 export default adminPaths;
