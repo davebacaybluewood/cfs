@@ -1,20 +1,37 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
 import StepByStep from '../StepByStep/StepByStep'
+import SideBySideContent from './SideBySideContent'
+import './Content.scss'
 
 const Content = () => {
   return (
-    <Box style={{ paddingBottom: '3rem' }}>
+    <Box
+      className='article-content'
+      style={{
+        paddingBottom: '5rem',
+      }}
+    >
       <img
-        style={{ width: '80%', height: '300px', objectFit: 'cover' }}
+        style={{
+          width: '80%',
+          height: '300px',
+          objectFit: 'cover',
+          marginBottom: '2rem',
+        }}
         src='https://images.unsplash.com/photo-1586314265219-192da32be7eb?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
         alt=''
       />
+      <Typography sx={{ marginBottom: '0.5rem' }} fontWeight={500} variant='h4'>
+        Step-by-Step Guide
+      </Typography>
+      <Typography variant='subtitle1' gutterBottom color={'gray'}>
+        OCTOBER 28, 2023
+      </Typography>
       <Typography
         fontWeight={300}
         variant='h5'
         component={'h5'}
-        sx={{ marginTop: '2rem', marginBottom: '4rem' }}
+        sx={{ marginTop: '2rem', marginBottom: '3rem' }}
         lineHeight={2}
       >
         Comfort Financial Solutions is committed to providing a seamless and
@@ -25,12 +42,7 @@ const Content = () => {
         account, update your profile, or check important information, we've got
         you covered with easy-to-follow instructions.
       </Typography>
-      <Typography sx={{ marginBottom: '0.5rem' }} fontWeight={500} variant='h4'>
-        Step-by-Step Guide
-      </Typography>
-      <Typography variant='subtitle1' gutterBottom color={'gray'}>
-        OCTOBER 28, 2023
-      </Typography>
+
       <Typography
         fontWeight={300}
         variant='h5'
@@ -48,6 +60,7 @@ const Content = () => {
         account.
       </Typography>
       <StepByStep />
+      <SideBySideContent />
     </Box>
   )
 }

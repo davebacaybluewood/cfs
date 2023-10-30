@@ -20,6 +20,14 @@ const steps = [
     title: 'Click "Login"',
     description: `Once your credentials are entered, click the "Login" button to access your account.`,
   },
+  {
+    title: 'Locate login button',
+    description: `Locate the "Login" button: Look for the "Login" or "Sign In" button on the top right corner of the webpage. Click on it to proceed.`,
+  },
+  {
+    title: 'Enter your credentials',
+    description: `Enter your credentials: You will be prompted to enter your username and password. Make sure to type in your correct login details.`,
+  },
 ]
 
 const StepByStep = () => {

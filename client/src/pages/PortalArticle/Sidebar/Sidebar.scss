@@ -1,0 +1,14 @@
+.sidebar-links:hover {
+  transition-duration: 1s;
+}
+
+.sidebar-links:hover {
+  color: darkblue !important;
+  text-decoration: underline;
+}
+
+.article-sidebar {
+  @media (max-width: 991px) {
+    display: none !important;
+  }
+}

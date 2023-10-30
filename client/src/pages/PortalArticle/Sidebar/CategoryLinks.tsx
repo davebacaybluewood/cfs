@@ -1,5 +1,6 @@
 import { Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
+import './Sidebar.scss'
 
 interface linksProps {
   title: string
@@ -26,6 +27,7 @@ const CategoryLinks = ({ categoryTitle, links }: CategoryLinksProps) => {
       >
         {links.map((item, index) => (
           <Link
+            className='sidebar-links'
             style={{ fontSize: '15px', color: 'gray', fontWeight: 300 }}
             to={item.path}
           >

@@ -10,7 +10,7 @@ const PortalArticle = () => {
       {/* Full width header */}
       <Header />
       <Container style={{ padding: '2rem 0' }}>
-        <Stack gap={5} flexDirection={'row'}>
+        <Stack sx={{ position: 'relative' }} gap={5} flexDirection={'row'}>
           <Sidebar />
           <Content />
         </Stack>
