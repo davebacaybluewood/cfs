@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Accordion, Container, Grid } from "@mui/material";
+import React from "react";
+import { Container, Grid } from "@mui/material";
 import TwoContentCard from "library/TwoContentCard/TwoContentCard";
 import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
@@ -13,28 +13,11 @@ import LinearProgress, {
 } from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { faqs } from "./faqs";
+import { Helmet } from "react-helmet";
 import "./Missions.scss";
 
 const Missions: React.FC = () => {
-  const [expanded, setExpanded] = useState<string | false>("panel1");
-  const [progress, setProgress] = useState(10);
-
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
-
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress((prevProgress) =>
-  //       prevProgress >= 100 ? 10 : prevProgress + 10
-  //     );
-  //   }, 800);
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []); //Could be used in future
-
   const LinearProgressWithLabel = (
     props: LinearProgressProps & { value: number }
   ) => {
@@ -126,77 +109,61 @@ const Missions: React.FC = () => {
         "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut veniam at blanditiis dicta aperiam dolorum suscipit voluptas aliquam. Placeat aperiam natus inventore iure a debitis quaerat voluptatum labore odio eos.",
       progress: (
         <Box sx={{ width: "100%" }}>
-          <LinearProgressWithLabel value={100} />
+          <LinearProgressWithLabel value={78} />
         </Box>
       ),
     },
   ];
 
-  // FAQs Array
-  const faqs = [
-    {
-      header: "What is Finance ? 1",
-      content:
-        " Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo molestias praesentium animi! Explicabo culpa nostrum unde voluptatum molestiae laudantium omnis.",
-    },
-
-    {
-      header: "What is Finance ? 2",
-      content:
-        " Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo molestias praesentium animi! Explicabo culpa nostrum unde voluptatum molestiae laudantium omnis.",
-    },
-
-    {
-      header: "What is Finance ? 3",
-      content:
-        " Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo molestias praesentium animi! Explicabo culpa nostrum unde voluptatum molestiae laudantium omnis.",
-    },
-
-    {
-      header: "What is Finance ? 4",
-      content:
-        " Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo molestias praesentium animi! Explicabo culpa nostrum unde voluptatum molestiae laudantium omnis.",
-    },
-  ];
-
   return (
-    <Container>
-      <div className="missions-page-main-container">
-        <div className="mission-page-content">
-          <Grid container spacing={4}>
-            <Grid item md={8}>
-              <h2 className="title-label">Missions</h2>
-              <h3 className="page-subtitle">List of Missions</h3>
-
-              {content.map((item) => (
-                <React.Fragment>
-                  <TwoContentCard
-                    title={item.title}
-                    description={item.description}
-                    element={item.progress}
-                  />
-                </React.Fragment>
-              ))}
-            </Grid>
-            <Grid item md={4}>
-              <h2 className="title-label">FAQs</h2>
-              <h3 className="page-subtitle">Frequently asked questions.</h3>
-              {faqs.map((faq) => (
-                <Accordion>
-                  <AccordionSummary
-                    aria-controls="panel1d-content"
-                    id="panel1d-header"
-                  >
-                    <h3>{faq.header}</h3>
-                  </AccordionSummary>
-                  <AccordionDetails>{faq.content}</AccordionDetails>
-                </Accordion>
-              ))}
-            </Grid>
-          </Grid>
+    <div className="missions-page-main-container">
+      {/* <Container> */}
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Comfort Financial Solutions | Missions & Events</title>
+        <link rel="canonical" href="gocfs.pro/missions/events" />
+      </Helmet>
+      <div className="mission-page-content">
+        <div className="mission-page-captions-header">
+          <h2>Missions & Events</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, atque.
+          </p>
+          <div className="divider"></div>
         </div>
+        <Grid container spacing={4}>
+          <Grid item md={8}>
+            <h2 className="title-label">Missions</h2>
+            <h3 className="page-subtitle">List of Missions</h3>
+
+            {content.map((item) => (
+              <TwoContentCard
+                title={item.title}
+                description={item.description}
+                element={item.progress}
+              />
+            ))}
+            <div className="empty-container"></div>
+          </Grid>
+          <Grid item md={4}>
+            <h2 className="title-label">FAQs</h2>
+            <h3 className="page-subtitle">Frequently asked questions.</h3>
+            {faqs.map((faq) => (
+              <Accordion>
+                <AccordionSummary
+                  aria-controls="panel1d-content"
+                  id="panel1d-header"
+                >
+                  <h3>{faq.header}</h3>
+                </AccordionSummary>
+                <AccordionDetails>{faq.content}</AccordionDetails>
+              </Accordion>
+            ))}
+          </Grid>
+        </Grid>
       </div>
-    </Container>
+      {/* </Container> */}
+    </div>
   );
 };
 
