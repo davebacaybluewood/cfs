@@ -77,9 +77,8 @@ const RSVPForm: React.FC = () => {
                   <img src="\assets\images\modal-message.png" />
                   <h2>Your RSVP has been submitted</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    Your request has been successfully submitted. Please check
+                    your email for confirmation.
                   </p>
                 </div>
               ) : (
