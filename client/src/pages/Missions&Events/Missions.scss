@@ -1,0 +1,49 @@
+html {
+  background-image: url("../../../public/assets/images/missions-page/background-missions.png");
+  background-position: center;
+
+  .missions-page-main-container {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    color: #fff;
+    margin: 3rem 0;
+
+    .mission-page-content {
+      .title-label {
+        font: 700 2.5rem "Montserrat";
+      }
+
+      .page-subtitle {
+        font: 400 1.1rem "Montserrat";
+        margin-bottom: 2rem;
+      }
+      .MuiAccordionSummary-content {
+        h3 {
+          font: 700 1.5rem "Montserrat";
+        }
+      }
+      .MuiAccordionDetails-root {
+        font: 400 1.3rem "Montserrat";
+      }
+      .MuiButtonBase-root {
+        padding: 1rem;
+      }
+      .MuiPaper-root {
+        border-radius: 10px;
+        margin: 0.5rem 0;
+      }
+      .MuiBox-root {
+        p {
+          color: #fff;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  .footer {
+    .footer__header {
+      padding: unset;
+    }
+  }
+}

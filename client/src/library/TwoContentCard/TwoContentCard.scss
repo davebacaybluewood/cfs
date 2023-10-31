@@ -1,0 +1,21 @@
+.two-content-container {
+  border-radius: 10px;
+  padding: 2rem;
+  margin: 2rem 0;
+  border: 0.5px solid rgba(205, 207, 200, 0.4);
+
+  .two-content-container-captions {
+    font-family: "Montserrat", sans-serif;
+
+    h2 {
+      margin-bottom: 1rem;
+      font: 700 2.5rem "Montserrat";
+    }
+
+    p {
+      margin-bottom: 1rem;
+      font: 400 1.7rem "Montserrat";
+      font: 300 1.2rem "Montserrat";
+    }
+  }
+}

@@ -31,6 +31,7 @@ import Subscribe from "pages/Subscribers/Subscribe";
 import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
 import RSVPForm from "pages/RSVP/RSVPForm";
 import RSVPLanding from "pages/RSVP/RSVPLanding";
+import Missions from "pages/Missions&Events/Missions";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -183,6 +184,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <AboutUs />,
     path: paths.about_us,
+  },
+  {
+    element: <Missions />,
+    path: paths.missions,
+    showNavbar: false,
+    showFooter: false,
+    showHeadline: false,
   },
   {
     element: <Solutions />,
