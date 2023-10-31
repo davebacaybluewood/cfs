@@ -2,13 +2,15 @@ import mongoose from "mongoose";
 
 const contactModel = mongoose.Schema(
   {
-    fullName: {
+    userGuid: {
       type: String,
       required: true,
     },
+    fullName: {
+      type: String,
+    },
     mobileNumber: {
       type: String,
-      required: true,
     },
     emailAddress: {
       type: String,
