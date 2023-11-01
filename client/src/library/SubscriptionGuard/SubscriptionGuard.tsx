@@ -18,6 +18,7 @@ const SubscriptionGuard: React.FC<SubscriptionGuardProps> = (props) => {
   const { children } = props
   const USER_POSITION = profile?.position
   const childrenName = children?.type?.name
+  
   useEffect(() => {
     if (USER_POSITION) {
       setHasAccess(() => {
