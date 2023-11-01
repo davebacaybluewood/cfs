@@ -7,11 +7,23 @@ import MerchandiseCard from "admin/components/MerchandiseCard/MerchandiseCard";
 import useFetchPoints from "admin/pages/RewardsHistory/useFetchPoints";
 import { UserContext } from "admin/context/UserProvider";
 import useFetchSubscribers from "admin/pages/RewardsHistory/useFetchSubscribers";
+import ClaimMerchDialog from "./ClaimMerchDialog";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
 
 const MerchandiseAgent = () => {
   const [merchandises, setMerchandises] = useState<
     MerchandiseData[] | undefined
   >();
+  const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [activeMerchandise, setActiveMerchandise] = useState({
+    name: "",
+    image: "",
+    points: 0,
+    merchandiseId: "",
+  });
+  
+  
 
   const [statisticsNumber, setStatisticsNumber] = useState({
     points: 0,
@@ -23,6 +35,7 @@ const MerchandiseAgent = () => {
   const userGuid = userCtx?.user?.userGuid;
   const { pointsData } = useFetchPoints(userGuid);
   const { totalSubscribers } = useFetchSubscribers(userGuid);
+  const { profile } = useFetchUserProfile(userGuid);
 
   useEffect(() => {
     const fetchMerchandises = async () => {
@@ -51,7 +64,7 @@ const MerchandiseAgent = () => {
 
 
   return (
-    <React.Fragment>      
+    <React.Fragment>
       <Grid container spacing={2} marginBottom={3}>
         <Grid item sm={12} md={12} lg={12}>
           <Title title="Merchandises" subtitle="List of all Merchandises." />
@@ -71,14 +84,35 @@ const MerchandiseAgent = () => {
                 points={data.points}
                 button={{
                   display: true,
-                  onClick: () => console.log("test"),
+                  onClick: () => {
+                    setShowSuccessMsg(false);
+                    setOpenDialog(true);
+                    setActiveMerchandise({
+                      image: data.image,
+                      name: data.name,
+                      points: data.points,
+                      merchandiseId: data._id,
+                    });
+                  },
                   text: "Claim Reward",
                 }}
               />
+
+              <ClaimMerchDialog
+                openDialog={openDialog}
+                showSuccessMsg={showSuccessMsg}
+                setOpenDialog={setOpenDialog}
+                setShowSuccessMsg={setShowSuccessMsg}
+                activeMerchandise={activeMerchandise}
+                pointsData={pointsData}
+                profile={profile}
+              />
+
+
             </Grid>
           );
         })}
-      </Grid>      
+      </Grid>
     </React.Fragment>
   );
 };

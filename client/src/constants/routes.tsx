@@ -49,11 +49,11 @@ const paths = {
   adminAccounts: "/portal/admin-accounts",
   adminAccountsForm: "/portal/admin-accounts/:id",
   adminEvents: "/portal/events",
-  adminEventsForm: "/portal/events/:id",
+  adminEventsForm: "/portal/events/form",
   adminGraphs: "/portal/graphs",
   adminContacts: "/portal/contacts",
   adminEventInvites: "/portal/event-invites",
-  rsvpLanding: "/portal/rsvp",
+  rsvpLanding: "/portal/events/rsvp/:eventId",
 
   /** Subscribe Page */
   subscriberRegistration: "/subscribe/",

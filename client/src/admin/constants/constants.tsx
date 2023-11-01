@@ -17,7 +17,6 @@ import ContactAdmin from "admin/pages/ContactAdmin/ContactAdmin";
 import Contacts from "admin/pages/Contacts/Contacts";
 import EventInvites from "admin/pages/EventInvites/EventInvites";
 import Events from "admin/pages/Events/Events";
-import EventsForm from "admin/pages/Events/EventsForm";
 import FAQSubscriber from "admin/pages/FAQSubscriber/FAQSubscriber";
 import Webinars from "admin/pages/FileMaintenance/pages/Webinars/Webinars";
 import WebinarSingle from "admin/pages/FileMaintenance/pages/Webinars/WebinarSingle";
@@ -59,13 +58,16 @@ import RewardsHistory from "admin/pages/RewardsHistory/RewardsHistory";
 import RaiseSupportTicket from "admin/pages/RaiseSupport/Admin/single-page/RaiseSupportTicket";
 import OrderHistory from "admin/pages/OrderHistory/OrderHistory";
 import TrialSubscription from "admin/pages/TrialSubscription/TrialSubscription";
-import RSVPLanding from "pages/RSVP/RSVPLanding";
 import UserAccessWrapper from "./UserAccessWrapper";
+import EventsTable from "admin/pages/Events/components/Table/EventsTable";
+import EventsForm from "admin/pages/Events/components/Form/EventsForm";
+import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
   ROLE_EDITOR: "ROLE_EDITOR",
   ROLE_MASTER_ADMIN: "ROLE_MASTER_ADMIN",
+  ROLE_SUBSCRIBER: "ROLE_SUBSCRIBER",
 };
 
 export const OUTSOURCE_LINKS = {
@@ -276,14 +278,6 @@ export const adminRoutes = [
       </GuardedWrapper>
     ),
   },
-  // {
-  //   path: adminPathsNew.profile,
-  //   element: (
-  //     <GuardedWrapper>
-  //       <Profile />
-  //     </GuardedWrapper>
-  //   ),
-  // },
   {
     path: adminPathsNew.appointments,
     element: (

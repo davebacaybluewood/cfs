@@ -1,36 +1,37 @@
-import { RouteProps } from 'react-router-dom'
-import US_STATES from './statesAndLocation'
-import InvalidRoutePage from 'pages/SingleBlogPage/InvalidRoutePage'
-import AboutUs from 'pages/AboutUs/AboutUs'
-import AgentSupport from 'pages/AgentSupport/AgentSupport'
-import BlogPage from 'pages/BlogPage/BlogPage'
-import BusinessProtection from 'pages/BusinessProtection/BusinessProtection'
-import ContactPage from 'pages/ContactPage/ContactPage'
-import FamilyProtection from 'pages/FamilyProtection/FamilyProtection'
-import Home from 'pages/Home/Home'
-import SingleBlogPage from 'pages/SingleBlogPage/SingleBlogPage'
-import Solutions from 'pages/Solutions/Solutions'
-import { adminRoutes } from 'admin/constants/constants'
-import { paths } from './routes'
-import PortalRegistration from 'pages/PortalRegistration/PortalRegistration'
-import Events from 'pages/Events/Events'
-import InvalidRoute from 'layout/InvalidRoute/InvalidRoute'
-import LandingPages from 'pages/LandingPages/LandingPages'
-import Agents from 'pages/Agents/Agents'
-import { ToastOptions } from 'react-toastify'
-import CommissionSimulation from 'admin/pages/CommissionSimulation/CommissionSimulation'
-import Calculator from 'admin/pages/CommissionSimulation/Calculator'
-import AgentWebinar from 'pages/Agents/AgentWebinar'
-import AgentAppointment from 'pages/Agents/AgentAppointment'
-import Portal from 'pages/Portal/Portal'
-import TestimonialForm from 'pages/TestimonialForm/TestimonialForm'
-import PreLicensing from 'pages/Contract/components/PreLicensing'
-import Annuity from 'pages/Contract/components/Annuity'
-import Pricing from 'pages/Pricing/Pricing'
-import Subscribe from 'pages/Subscribers/Subscribe'
-import SubscribeSuccess from 'pages/Subscribers/SubscribeSuccess'
-import PortalArticle from 'pages/PortalArticle/PortalArticle'
-import RSVPForm from 'pages/RSVP/RSVPForm'
+import { RouteProps } from "react-router-dom";
+import US_STATES from "./statesAndLocation";
+import InvalidRoutePage from "pages/SingleBlogPage/InvalidRoutePage";
+import AboutUs from "pages/AboutUs/AboutUs";
+import AgentSupport from "pages/AgentSupport/AgentSupport";
+import BlogPage from "pages/BlogPage/BlogPage";
+import BusinessProtection from "pages/BusinessProtection/BusinessProtection";
+import ContactPage from "pages/ContactPage/ContactPage";
+import FamilyProtection from "pages/FamilyProtection/FamilyProtection";
+import Home from "pages/Home/Home";
+import SingleBlogPage from "pages/SingleBlogPage/SingleBlogPage";
+import Solutions from "pages/Solutions/Solutions";
+import { adminRoutes } from "admin/constants/constants";
+import { paths } from "./routes";
+import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
+import Events from "pages/Events/Events";
+import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
+import LandingPages from "pages/LandingPages/LandingPages";
+import Agents from "pages/Agents/Agents";
+import { ToastOptions } from "react-toastify";
+import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
+import Calculator from "admin/pages/CommissionSimulation/Calculator";
+import AgentWebinar from "pages/Agents/AgentWebinar";
+import AgentAppointment from "pages/Agents/AgentAppointment";
+import Portal from "pages/Portal/Portal";
+import TestimonialForm from "pages/TestimonialForm/TestimonialForm";
+import PreLicensing from "pages/Contract/components/PreLicensing";
+import Annuity from "pages/Contract/components/Annuity";
+import Pricing from "pages/Pricing/Pricing";
+import Subscribe from "pages/Subscribers/Subscribe";
+import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
+import RSVPForm from "pages/RSVP/RSVPForm";
+import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
+import PortalArticle from "pages/PortalArticle/PortalArticle";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean

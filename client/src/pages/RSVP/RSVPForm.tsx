@@ -1,6 +1,6 @@
 import { Container, Grid } from "@mui/material";
 import SimpleNavbar from "layout/SimpleNavbar/SimpleNavbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import FormikTextInput from "library/Formik/FormikInput";
 import * as Yup from "yup";
@@ -9,7 +9,10 @@ import Spinner from "library/Spinner/Spinner";
 import "./RSVPForm.scss";
 import { FaClock } from "react-icons/fa";
 import agent from "api/agent";
+import adminAgent from "admin/api/agent";
 import { useParams } from "react-router-dom";
+import Event from "admin/models/eventModel";
+import { formatISODateOnly } from "helpers/date";
 
 const RSVPForm: React.FC = () => {
   const { eventId } = useParams();
@@ -30,6 +33,16 @@ const RSVPForm: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
+  const [event, setEvent] = useState<Event | undefined>();
+
+  useEffect(() => {
+    const getSingleEvent = async () => {
+      const res = await adminAgent.Events.getSingleEvent(eventId ?? "");
+      setEvent(res);
+    };
+
+    getSingleEvent();
+  }, [eventId]);
 
   return (
     <div className="rsvp-form-container">
@@ -41,23 +54,20 @@ const RSVPForm: React.FC = () => {
             <div className="form-information">
               <img src="/assets/images/logos/small-logo.png" alt="small-cfs" />
               <h5>Comfort Financial Solutions</h5>
-              <h2>National Life Product Training</h2>
+              {event ? (
+                <React.Fragment>
+                  <h2>{event?.title}</h2>
 
-              <ul className="basic-info">
-                <li>
-                  <FaClock />
-                  <span>30mins</span>
-                </li>
-              </ul>
+                  <ul className="basic-info">
+                    <li>
+                      <FaClock />
+                      <span>{formatISODateOnly(event?.eventDate ?? "")}</span>
+                    </li>
+                  </ul>
 
-              <p>
-                Join us on Tuesday, October 24, 2023, at 10:00 AM for an
-                exclusive National Life Product Training Webinar designed
-                especially for our dedicated agents. Discover how to master the
-                National Life product portfolio, provide tailored solutions to
-                your clients, and excel in your role. Elevate your skills, boost
-                your performance, and become the go-to National Life expert.
-              </p>
+                  <p>{event?.shortDescription}</p>
+                </React.Fragment>
+              ) : null}
             </div>
           </Grid>
           <Grid sm={12} md={4} lg={6}>
@@ -67,9 +77,8 @@ const RSVPForm: React.FC = () => {
                   <img src="\assets\images\modal-message.png" />
                   <h2>Your RSVP has been submitted</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    Your request has been successfully submitted. Please check
+                    your email for confirmation.
                   </p>
                 </div>
               ) : (
@@ -159,7 +168,7 @@ const RSVPForm: React.FC = () => {
                             variant="danger"
                             onClick={() => handleSubmit()}
                           >
-                            Submit RSVP
+                            RSVP
                           </Button>
                         </React.Fragment>
                       );

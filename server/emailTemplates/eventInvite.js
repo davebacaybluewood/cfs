@@ -180,8 +180,10 @@ const eventInvite = ({
                   ? ""
                   : `<p style="margin-bottom: 0">
                   <span style="display: block; margin-bottom: 10px"
-                    >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</span
+                    >As a token of appreciation and welcome, we are delighted to grant you an exclusive reward of 100 points. You can easily access these points through the CFS MyRewards dashboard. Your journey to exciting rewards begins here!</span
+                  >
+                  <span style="display: block; margin-bottom: 10px"
+                    >Below, you'll find your temporary login details:</span
                   >
                   <span style="font-weight: 900; display: block"
                     >Subscriber Account:</span
