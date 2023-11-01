@@ -37,7 +37,7 @@ const Portal: React.FC = () => {
                 alignItems: "center",
               }}
             >
-              <h2 className="contentTitle">New Member</h2>
+              <h2 className="contentTitle">New Memeber</h2>
               <div style={{ display: "flex", gap: "10px" }}>
                 <a href="https://agent.comfortfinancialsolutions.com/signup">
                   Signup
