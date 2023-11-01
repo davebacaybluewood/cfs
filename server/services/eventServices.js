@@ -170,8 +170,8 @@ const getEvents = async (userGuid) => {
     });
 
     events = subscriberEvents?.map((data) => {
-      data.authorFirstName = agentModel[0].firstName;
-      data.authorLastName = agentModel[0].lastName;
+      data.authorFirstName = "Admin";
+      data.authorLastName = "";
 
       return data;
     });
