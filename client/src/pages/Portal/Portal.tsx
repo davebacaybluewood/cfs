@@ -20,7 +20,7 @@ const Portal: React.FC = () => {
         <link rel="canonical" href={window.location.href} />
       </ReactHelmet>
 
-      <Grid container>        
+      <Grid container>
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <Parallax
             bgImage="https://images.pexels.com/photos/3228684/pexels-photo-3228684.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -37,9 +37,11 @@ const Portal: React.FC = () => {
                 alignItems: "center",
               }}
             >
-              <h2 className="contentTitle">New Memeber</h2>
+              <h2 className="contentTitle">New Member</h2>
               <div style={{ display: "flex", gap: "10px" }}>
-                <a href="https://agent.comfortfinancialsolutions.com/signup">Signup</a>
+                <a href="https://agent.comfortfinancialsolutions.com/signup">
+                  Signup
+                </a>
                 <a href="/subscribe">Subscribe</a>
               </div>
             </div>
