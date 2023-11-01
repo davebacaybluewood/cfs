@@ -14,8 +14,8 @@ import Users from "./models/userModel.js";
 /** DB Connect */
 import connectDB from "./config/db.js";
 
-import { ROLES } from "./constants/constants.js"
-import bcrypt from "bcryptjs"
+import { ROLES } from "./constants/constants.js";
+import bcrypt from "bcryptjs";
 
 dotenv.config();
 
@@ -57,13 +57,12 @@ const importMasterAdmin = async () => {
         email: "dave.bacay.vc@gmail.com",
         password: bcrypt.hashSync("@D123123d@", 10),
         isAdmin: true,
-        role: ROLES.ROLE_MASTER_ADMIN
-      }
-    ]
+        role: ROLES.ROLE_MASTER_ADMIN,
+      },
+    ];
     const createdUser = await Users.insertMany(users);
     const userCreated = createdUser[0]._id;
 
-    
     console.log("Users Imported!".green.inverse);
     process.exit();
   } catch (error) {
@@ -89,7 +88,7 @@ const destroyData = async () => {
 if (process.argv[2] === "-d") {
   destroyData();
 } else if (process.argv[2] === "-a") {
-  importMasterAdmin()
+  importMasterAdmin();
 } else {
   importData();
 }

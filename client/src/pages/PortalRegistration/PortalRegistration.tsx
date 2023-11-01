@@ -316,7 +316,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                       onSubmit={updatePreProfile}
                     />
                   )}
-                  {stage === 2 && (
+                  {stage === 5 && (
                     <AccountSummary
                       values={values}
                       changeStage={changeStage}

@@ -1,11 +1,12 @@
 import { paths } from "constants/routes";
 import Wrapper from "admin/components/Wrapper/Wrapper";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { CrumbTypes } from "./types";
 import ConditionalBox from "./components/ConditionalBox/ConditionalBox";
 import { UserContext } from "admin/context/UserProvider";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import "./Dashboard.scss";
+import { PopupModal, PopupWidget } from "react-calendly";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -20,15 +21,29 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
+/**
+ *
+ * Calendly code will be removed on December.
+ * The reason we retained this because we might need this feature now.
+ */
+
 const Dashboard: React.FC = () => {
   const userCtx = useContext(UserContext) as any;
   const { profile } = useFetchUserProfile(userCtx?.user?.userGuid ?? "");
   const USER_POSITION = profile?.position;
   const USER_ROLE = profile?.roles;
 
+  // const [showCalendly, setShowCalendly] = useState(true);
+
   return (
     <Wrapper breadcrumb={crumbs} className="dashboard-content">
       <ConditionalBox position={USER_POSITION} roles={USER_ROLE} />
+      {/* <PopupModal
+        url="https://calendly.com/gocfs/initial-bop-to-existing-agents-in-preparation-of-launching"
+        onModalClose={() => setShowCalendly((prevState) => !prevState)}
+        open={showCalendly}
+        rootElement={document.getElementById("root") as any}
+      /> */}
     </Wrapper>
   );
 };

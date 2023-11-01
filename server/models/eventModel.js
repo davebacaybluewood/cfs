@@ -2,47 +2,46 @@ import mongoose from "mongoose";
 
 const eventsSchema = mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
+    thumbnail: {
+      type: String,
       required: true,
-      ref: "User",
+    },
+    userGuid: {
+      type: String,
+      required: true,
     },
     title: {
       type: String,
       required: true,
     },
-    date: {
+    eventDate: {
       type: String,
       required: true,
     },
-    description: {
+    shortDescription: {
       type: String,
       required: true,
     },
-    event_date: {
+    content: {
+      type: String,
+    },
+    design: {
+      type: String,
+    },
+    status: {
       type: String,
       required: true,
     },
-    image: {
+    privacy: {
       type: String,
       required: true,
     },
-    ticket: {
+    postedBy: {
       type: String,
       required: true,
     },
-    ticket_cloudinary_id: {
+    meetingLink: {
       type: String,
-      required: true,
-    },
-    image_cloudinary_id: {
-      type: String,
-      required: true,
-    },
-    variant: {
-      type: String,
-      required: true,
-      default: "dark",
     },
   },
   {

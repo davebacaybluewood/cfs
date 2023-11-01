@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import colors from "colors";
-import eventRoutes from "./routes/eventRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import inquiryRoutes from "./routes/inquiryRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
@@ -33,6 +32,8 @@ import raiseSupportRoute from "./routes/raiseSupportRoute.js";
 import pointsRoutes from "./routes/pointsRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import portalSubscriptionRoutes from "./routes/portalSubscriptionRoutes.js";
+import eventsRSVPRoutes from "./routes/eventsRSVPRoutes.js";
+import eventRoutes from "./routes/eventRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import path from "path";
 import { ApolloServer, gql } from "apollo-server-express";
@@ -57,7 +58,6 @@ app.use(
   express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
 );
 
-app.use("/api/events/", eventRoutes);
 app.use("/api/users/", userRoutes);
 app.use("/api/profile/", profileRoutes);
 app.use("/api/inquiries/", inquiryRoutes);
@@ -91,6 +91,8 @@ app.use("/api/raise-support/", raiseSupportRoute);
 app.use("/api/points/", pointsRoutes);
 app.use("/api/orders/", orderRoutes);
 app.use("/api/portal-subscription/", portalSubscriptionRoutes);
+app.use("/api/events/", eventRoutes);
+app.use("/api/rsvp-event/", eventsRSVPRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

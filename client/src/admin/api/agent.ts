@@ -25,6 +25,8 @@ import {
 import { PointsData } from "admin/models/pointsModels";
 import { SubscriberMainData } from "admin/models/subscriberModel";
 import { OrdersData } from "admin/models/ordersModels";
+import Event, { EventBody, ResponseMessage } from "admin/models/eventModel";
+import { RSVPData } from "admin/models/rsvpModel";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -360,6 +362,62 @@ const TrialSubscription = {
   },
 };
 
+const Events = {
+  getEvents: (userGuid: string) => {
+    const res = requests.get<Event[]>(`/api/events?userGuid=${userGuid}`);
+    return res;
+  },
+  getSingleEvent: (eventId: string) => {
+    const res = requests.get<Event | undefined>(`/api/events/${eventId}`);
+    return res;
+  },
+  createEvent: (body: EventBody) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      return config;
+    });
+    const res = requests.post<ResponseMessage>(`/api/events/`, body);
+    return res;
+  },
+  updateEvent: (eventId: string, body: EventBody) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      return config;
+    });
+    const res = requests.put<ResponseMessage>(`/api/events/${eventId}`, body);
+    return res;
+  },
+  deleteEvent: (eventId: string) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      return config;
+    });
+    const res = requests.del<ResponseMessage>(`/api/events/${eventId}`);
+    return res;
+  },
+};
+
+const RSVP = {
+  getEventRsvps: (eventId: string) => {
+    const res = requests.get<RSVPData[] | undefined>(
+      `/api/rsvp-event/${eventId}`
+    );
+    return res;
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
@@ -374,6 +432,8 @@ const agent = {
   Orders,
   RaiseSupport,
   TrialSubscription,
+  Events,
+  RSVP,
 };
 
 export default agent;
