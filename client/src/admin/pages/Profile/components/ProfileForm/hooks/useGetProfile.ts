@@ -26,7 +26,7 @@ const useGetProfile = () => {
 
   const agentStorage = sessionStorage.getItem("userInfo");
 
-  const { userGuid } = JSON.parse(agentStorage ?? "");
+  const { userGuid } = JSON.parse(agentStorage ?? "{}");
 
   useEffect(() => {
     setLoading(true);
