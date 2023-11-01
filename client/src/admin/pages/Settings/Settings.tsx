@@ -1,12 +1,13 @@
-import { Paper } from "@mui/material";
-import Box from "admin/components/Box/Box";
-import Title from "admin/components/Title/Title";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import React from "react";
-import { CrumbTypes } from "../Dashboard/types";
-import AdminSettings from "./components/AdminSettings";
-import "./Settings.scss";
+import { Paper } from "@mui/material"
+import Box from "admin/components/Box/Box"
+import Title from "admin/components/Title/Title"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { paths } from "constants/routes"
+import React from "react"
+import { CrumbTypes } from "../Dashboard/types"
+import AdminSettings from "./components/AdminSettings"
+import "./Settings.scss"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -19,7 +20,7 @@ const crumbs: CrumbTypes[] = [
     url: paths.settings,
     isActive: true,
   },
-];
+]
 
 const Settings: React.FC = () => {
   return (
@@ -29,6 +30,7 @@ const Settings: React.FC = () => {
       loading={false}
       className="setting-container"
     >
+      <DocumentTitleSetter title="Settings | CFS Portal" />
       <Box>
         <Paper>
           {/* <div className="setting">
@@ -48,7 +50,7 @@ const Settings: React.FC = () => {
         </Paper>
       </Box>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Settings;
+export default Settings
