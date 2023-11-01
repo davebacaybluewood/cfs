@@ -52,6 +52,11 @@ const Agents: React.FC<AgentsProps> = (props) => {
   const recaptchaOnChangeHandler = (value) => {
     setVerified(typeof value === "string");
   };
+  const navigate = useNavigate();
+
+  if (agent?.status === "DEACTIVATED" || agent?.status === "UNSUBSCRIBED") {
+    navigate("*");
+  }
 
   useCalendlyEventListener({
     onProfilePageViewed: () => console.log("onProfilePageViewed"),
