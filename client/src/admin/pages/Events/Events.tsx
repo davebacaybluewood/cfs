@@ -295,12 +295,14 @@ const Events: React.FC = () => {
     >
       <div className="events-container">
         <Title title="Events" subtitle="List of amazing events">
-          <Button
-            onClick={() => navigate(paths.newAdminEventsForm + "?action=add")}
-            variant="contained"
-          >
-            Add Event
-          </Button>
+          {isAdmin ? (
+            <Button
+              onClick={() => navigate(paths.newAdminEventsForm + "?action=add")}
+              variant="contained"
+            >
+              Add Event
+            </Button>
+          ) : null}
         </Title>
 
         <div className="events-table">
