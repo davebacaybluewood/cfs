@@ -162,11 +162,16 @@ const getEvents = async (userGuid) => {
       return data;
     });
   } else if (position === PROFILE_POSITIONS.SUBSCRIBER.value) {
-    const agentEvents = await Events.find({ userGuid: recruiterUserGuid });
+    const subscriberEvents = await Events.find({
+      $or: [
+        { postedBy: PROFILE_POSITIONS.MASTER_ADMIN.value },
+        { userGuid: recruiterUserGuid },
+      ],
+    });
 
-    events = agentEvents?.map((data) => {
-      data.authorFirstName = agentModel[0].firstName;
-      data.authorLastName = agentModel[0].lastName;
+    events = subscriberEvents?.map((data) => {
+      data.authorFirstName = "Admin";
+      data.authorLastName = "";
 
       return data;
     });

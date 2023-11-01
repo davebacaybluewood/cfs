@@ -246,8 +246,18 @@ const Events: React.FC = () => {
       ...modifiedData,
       actions: (
         <React.Fragment>
-          <button>
-            <span>Share</span> <HiOutlineTrash />
+          <button
+            className="select-btn"
+            onClick={() => {
+              setClipboardValue(
+                window.location.host +
+                  paths.rsvpForm.replace(":eventId", event._id) +
+                  `?userGuid=${userGuid}`
+              );
+              toast("Link copied to Clipboard");
+            }}
+          >
+            <span>Copy Link</span> <FaCopy />
           </button>
         </React.Fragment>
       ),
