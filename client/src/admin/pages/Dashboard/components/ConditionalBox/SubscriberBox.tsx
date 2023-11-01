@@ -43,6 +43,8 @@ const SubscriberBox = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  // for dashboard active points value
+  const [activePoints, setActivePoints] = useState(0);
 
   const [activeMerchandise, setActiveMerchandise] = useState({
     name: "",
@@ -84,12 +86,14 @@ const SubscriberBox = () => {
         registeredSubscribers: totalSubscribers ?? 0,
       };
     });
+
+    setActivePoints(pointsData?.totalPoints ?? 0);
   }, [pointsData, totalSubscribers]);
 
   const statistics: StatisticTypes[] = [
     {
       countText: "Active Points",
-      count: statisticsNumber.points,
+      count: activePoints,
       url: "", //paths.typeAppointments.replace(":typeId", "paw"),
       icon: <AiFillStar />,
     },
@@ -169,6 +173,7 @@ const SubscriberBox = () => {
         activeMerchandise={activeMerchandise}
         pointsData={pointsData}
         profile={profile}
+        setActivePoints={setActivePoints}
       />
 
       <Grid container spacing={2} marginBottom={3}>

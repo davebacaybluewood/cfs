@@ -15,7 +15,13 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { Formik } from "formik";
 import Spinner from "library/Spinner/Spinner";
 import * as Yup from "yup";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "./EmailMarketing.scss";
 import FormikTextInput from "library/Formik/FormikInput";
 import Button from "library/Button/Button";
@@ -33,19 +39,16 @@ import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import nameFallback from "helpers/nameFallback";
 import { formatISODateOnly } from "helpers/date";
 import { AiFillCheckCircle } from "react-icons/ai";
-import EmailEditor from "react-email-editor";
+import EmailEditor, { EditorRef } from "react-email-editor";
 import ReactHtmlParser from "html-react-parser";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-export const emailOptions = [
-  { value: "dave.bacay.vc@gmail.com", label: "dave.bacay.vc@gmail.com" },
-  { value: "dave.bacay@gocfs.pro", label: "dave.bacay@gocfs.pro" },
-];
+export const emailOptions = [];
 
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const emailEditorRef = useRef<any>(null);
+  const emailEditorRef = useRef<EditorRef>(null);
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
@@ -94,7 +97,7 @@ const ContractForm: React.FC = () => {
       settings: settings,
     }));
 
-    emailEditorRef.current?.loadDesign(JSON.parse(design));
+    emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || ""));
 
     setOpenDrawer(false);
   };
@@ -189,8 +192,10 @@ const ContractForm: React.FC = () => {
       setDesign(data.design);
 
       /** Load if edit mode */
-      if (emailEditorRef.current) {
-        emailEditorRef.current?.loadDesign(JSON.parse(data.design || ""));
+      if (Object.keys(data.design)?.length) {
+        emailEditorRef.current?.editor?.loadDesign(
+          JSON.parse(data.design || "{}")
+        );
       }
     };
     if (userGuid && templateId) {
@@ -246,6 +251,10 @@ const ContractForm: React.FC = () => {
       .min(1, "Pick at least 1 recipients")
       .required("Recipients is required."),
   });
+
+  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
+
+  useEffect(() => {}, [design]);
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -403,6 +412,7 @@ const ContractForm: React.FC = () => {
 
                           <EmailEditor
                             ref={emailEditorRef}
+                            onReady={loadDesign}
                             style={{
                               height: "500px",
                             }}
