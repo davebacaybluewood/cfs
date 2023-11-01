@@ -12,10 +12,7 @@ const Content = () => {
         paddingBottom: !isMobileMD ? '5rem' : '',
       }}
     >
-      <img
-        src='https://images.unsplash.com/photo-1586314265219-192da32be7eb?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        alt=''
-      />
+      <img src='/assets/images/article/steps-illustration.svg' alt='' />
       <Typography sx={{ marginBottom: '0.5rem' }} fontWeight={500} variant='h4'>
         Step-by-Step Guide
       </Typography>
@@ -43,7 +40,7 @@ const Content = () => {
         fontWeight={300}
         variant='h5'
         component={'h5'}
-        sx={{ marginTop: '0.5rem', marginBottom: isMobileMD ? '' : '4rem' }}
+        sx={{ marginTop: '0.5rem', marginBottom: isMobileMD ? '' : '2rem' }}
         lineHeight={2}
       >
         Once set-up with your Back Office account, let’s get you up to speed
@@ -54,11 +51,15 @@ const Content = () => {
         fontWeight={300}
         variant='h5'
         component={'h5'}
-        sx={{ marginTop: '0.5rem', marginBottom: isMobileMD ? '' : '4rem' }}
+        sx={{ marginTop: '0.5rem', marginBottom: isMobileMD ? '' : '6rem' }}
         lineHeight={2}
       >
-        <a target='_blank' href='https://www.gocfs.pro/portal/login'>
-          https://www.gocfs.pro/portal/login
+        <a
+          className='agent-portal-button'
+          target='_blank'
+          href='https://www.gocfs.pro/portal/login'
+        >
+          Get access
         </a>
       </Typography>
       <StepByStep />
@@ -68,20 +69,21 @@ const Content = () => {
           padding: '3rem 0',
         }}
       >
-        <Stack flexDirection={'column'} gap={4}>
+        <Stack flexDirection={isMobileMD ? 'column' : 'row'} gap={4}>
           <img
             style={{
               width: isMobileMD ? '100%' : '60%',
             }}
-            src='https://images.unsplash.com/photo-1665686306265-c52ee9054479?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            src='/assets/images/article/done.svg'
             alt='laptop'
           />
           <div>
             <Typography variant='h5' fontWeight={300} lineHeight={2}>
-              Congratulations! With this one-time set-up done, you now have
-              access to all of CFS’ latest tech to help you achieve financial
-              comfort and success. Goodluck agent, and together, let us re-shape
-              the financial industry.
+              <strong style={{ color: 'green' }}>Congratulations!</strong> With
+              this one-time set-up done, you now have access to all of CFS’
+              latest tech to help you achieve financial comfort and success.
+              Goodluck agent, and together, let us re-shape the financial
+              industry.
             </Typography>
           </div>
         </Stack>
