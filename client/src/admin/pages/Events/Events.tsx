@@ -37,6 +37,7 @@ import { toast } from "react-toastify";
 import Event from "admin/models/eventModel";
 import generateRandomChars from "helpers/generateRandomChars";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard";
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -304,17 +305,23 @@ const Events: React.FC = () => {
         </Title>
 
         <div className="events-table">
-          <DataGrid
-            sx={{
-              boxShadow: "0 4px 6px -1px #eee, 0 2px 4px -1px #eee",
-              background: "white",
-              p: 2,
-            }}
-            rows={eventDataRows ?? []}
-            columns={columns}
-            slots={{ toolbar: FilteredGridToolbar }}
-            getRowId={(row: any) => generateRandomChars(5)}
-          />
+          <NoInformationToDisplay
+            showNoInfo={!eventDataRows?.length}
+            message="No information to display"
+            title="No events available."
+          >
+            <DataGrid
+              sx={{
+                boxShadow: "0 4px 6px -1px #eee, 0 2px 4px -1px #eee",
+                background: "white",
+                p: 2,
+              }}
+              rows={eventDataRows ?? []}
+              columns={columns}
+              slots={{ toolbar: FilteredGridToolbar }}
+              getRowId={(row: any) => generateRandomChars(5)}
+            />
+          </NoInformationToDisplay>
         </div>
       </div>
       {loading ? <Spinner variant="fixed" /> : null}
