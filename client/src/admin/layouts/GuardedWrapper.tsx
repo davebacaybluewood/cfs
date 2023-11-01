@@ -1,7 +1,7 @@
 import adminPathsNew from "admin/constants/routes";
-import UserProvider from "admin/context/UserProvider";
+import UserProvider, { UserContext } from "admin/context/UserProvider";
 import classNames from "classnames";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -15,16 +15,14 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
   const [collapsed, setCollapsed] = useState(false);
   const [toggled, setToggled] = useState(false);
   const navigate = useNavigate();
-  const userLogin = useSelector((state: any) => state.userLogin);
-  const { userInfo } = userLogin;
 
-  const { loading, profile } = useGetProfile();
+  const localData = sessionStorage.getItem("userInfo");
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!localData) {
       navigate(adminPathsNew.login);
     }
-  }, [userInfo]);
+  }, [localData]);
 
   const handleCollapsedChange = () => {
     setCollapsed(!collapsed);
