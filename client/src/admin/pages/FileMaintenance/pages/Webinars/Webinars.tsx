@@ -1,19 +1,20 @@
-import { Button, Grid } from "@mui/material";
-import Title from "admin/components/Title/Title";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import CardContent from "library/CardContent/CardContent";
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import useFetchWebinars, { WebinarValuesType } from "./hooks/useFetchWebinars";
-import "./Webinars.scss";
+import { Button, Grid } from "@mui/material"
+import Title from "admin/components/Title/Title"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { paths } from "constants/routes"
+import CardContent from "library/CardContent/CardContent"
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
+import React from "react"
+import { useNavigate } from "react-router-dom"
+import useFetchWebinars, { WebinarValuesType } from "./hooks/useFetchWebinars"
+import "./Webinars.scss"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const Webinars: React.FC = (props) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const learnMoreHandler = (id: string) => {
-    navigate(paths.webinarSingle.replace(":webinarId", id));
-  };
+    navigate(paths.webinarSingle.replace(":webinarId", id))
+  }
   const breadcrumb = [
     {
       title: "Comfort Financial Solutions",
@@ -25,9 +26,9 @@ const Webinars: React.FC = (props) => {
       url: paths.webinar,
       isActive: true,
     },
-  ];
+  ]
 
-  const { loading, webinars } = useFetchWebinars();
+  const { loading, webinars } = useFetchWebinars()
 
   return (
     <Wrapper
@@ -36,6 +37,7 @@ const Webinars: React.FC = (props) => {
       error={false}
       breadcrumb={breadcrumb}
     >
+      <DocumentTitleSetter title="Webinars | CFS Portal" />
       <Title
         title="Webinar"
         subtitle="Manage all webinar available for the agents."
@@ -64,17 +66,17 @@ const Webinars: React.FC = (props) => {
                   onClick={() => learnMoreHandler(webinar._id ?? "")}
                 ></CardContent>
               </Grid>
-            );
+            )
           })}
         </Grid>
       </NoInformationToDisplay>
     </Wrapper>
-  );
-};
+  )
+}
 
 Webinars.defaultProps = {
   title: "Webinars",
   subtitle: "List of webinars",
   showHeaderButtons: true,
-};
-export default Webinars;
+}
+export default Webinars

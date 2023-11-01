@@ -1,18 +1,19 @@
-import { Button as MuiButton, Grid } from "@mui/material";
-import Title from "admin/components/Title/Title";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { CrumbTypes } from "../Dashboard/types";
-import adminPaths from "admin/constants/routes";
-import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
-import { BlogData } from "pages/BlogPage/models";
-import BlogCard from "library/Blogs/BlogCard/BlogCard";
-import { paths } from "constants/routes";
-import Button from "library/Button/Button";
-import Spinner from "library/Spinner/Spinner";
-import "./Blogs.scss";
+import { Button as MuiButton, Grid } from "@mui/material"
+import Title from "admin/components/Title/Title"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
+import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { CrumbTypes } from "../Dashboard/types"
+import adminPaths from "admin/constants/routes"
+import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource"
+import { BlogData } from "pages/BlogPage/models"
+import BlogCard from "library/Blogs/BlogCard/BlogCard"
+import { paths } from "constants/routes"
+import Button from "library/Button/Button"
+import Spinner from "library/Spinner/Spinner"
+import "./Blogs.scss"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -25,34 +26,33 @@ const crumbs: CrumbTypes[] = [
     url: adminPaths.adminBlogs,
     isActive: true,
   },
-];
+]
 
-const ADDITIONAL_BLOGS = 6;
+const ADDITIONAL_BLOGS = 6
 const Blogs: React.FC = () => {
-  const [limit, setLimit] = useState(12);
-  const { blogs, loading, blogTotalLength } = useFetchBlogResource(0, limit);
-  const navigate = useNavigate();
+  const [limit, setLimit] = useState(12)
+  const { blogs, loading, blogTotalLength } = useFetchBlogResource(0, limit)
+  const navigate = useNavigate()
 
   const addBlogHandler = () => {
-    navigate(adminPaths.adminBlogForm.replace(":id", "add"));
-  };
+    navigate(adminPaths.adminBlogForm.replace(":id", "add"))
+  }
 
-  const [displayedBlogs, setDisplayedBlogs] = useState<
-    BlogData[] | undefined
-  >();
+  const [displayedBlogs, setDisplayedBlogs] = useState<BlogData[] | undefined>()
 
   const loadMoreHandler = () => {
-    setLimit((currState) => currState + ADDITIONAL_BLOGS);
-  };
+    setLimit((currState) => currState + ADDITIONAL_BLOGS)
+  }
 
-  const displayedBlogsLength = (displayedBlogs?.length || 0) + 3;
+  const displayedBlogsLength = (displayedBlogs?.length || 0) + 3
 
   useEffect(() => {
-    setDisplayedBlogs(blogs);
-  }, [blogs]);
+    setDisplayedBlogs(blogs)
+  }, [blogs])
 
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={false}>
+      <DocumentTitleSetter title="Blogs | CFS Portal" />
       <Title subtitle="Manage all available blogs." title="Blogs">
         <div className="add-blogs">
           <MuiButton variant="contained" onClick={addBlogHandler}>
@@ -95,11 +95,11 @@ const Blogs: React.FC = () => {
                     onClick={() => {
                       navigate(
                         paths.adminViewBlogs.replace(":blogTitle", blog?._id)
-                      );
+                      )
                     }}
                   />
                 </Grid>
-              );
+              )
             })}
             <div className="loadMore-btn">
               {blogTotalLength > displayedBlogsLength ? (
@@ -116,7 +116,7 @@ const Blogs: React.FC = () => {
         </NoInformationToDisplay>
       </div>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Blogs;
+export default Blogs
