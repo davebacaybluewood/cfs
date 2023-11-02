@@ -30,6 +30,7 @@ import { ClearIndicatorStyles } from "library/MultiSelectInput/MultiSelectInputV
 import agent from "admin/api/agent";
 import { UserContext } from "admin/context/UserProvider";
 import CreatableSelect from "react-select/creatable";
+import { components } from "react-select";
 import { toast } from "react-toastify";
 import DrawerBase, { Anchor } from "library/Drawer/Drawer";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
@@ -42,8 +43,7 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import EmailEditor, { EditorRef } from "react-email-editor";
 import ReactHtmlParser from "html-react-parser";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-export const emailOptions = [];
+import { Contacts } from "admin/models/contactsModel";
 
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -83,6 +83,8 @@ const ContractForm: React.FC = () => {
   const templateId = new URLSearchParams(search).get("templateId");
   const action = new URLSearchParams(search).get("action");
   const userGuid = userCtx?.user?.userGuid;
+  const [contacts, setContacts] = useState<any>([]);
+  const [recipientLoading, setRecipientLoading] = useState(false);
 
   const populateForm = (
     emailBody: string,
@@ -110,11 +112,75 @@ const ContractForm: React.FC = () => {
       setTemplates(data);
     };
 
+    const fetchMailingList = async () => {
+      setLoading(true);
+      const data = await agent.Contacts.getMailingList(userGuid);
+
+      const emailArray = data.map((e) => {
+        return {
+          value: e._id,
+          label: e.emailAddress,
+          keyword: "",
+        };
+      });
+
+      setContacts(emailArray);
+    };
+
     if (userGuid) {
       fetchEmailTemplates();
+      fetchMailingList();
       setLoading(false);
     }
   }, [userGuid]);
+
+  const handleCreateContact = async (data: Contacts) => {
+    if (data.emailAddress && data.userGuid)
+      await agent.Contacts.create(data)
+        .then((c) => {
+          setRecipientLoading(true);
+          setTimeout(() => {
+            const newOption = createOption(c.data.emailAddress, c.data._id);
+
+            setRecipientLoading(false);
+            setContacts((prev) => [...prev, newOption]);
+          }, 1000);
+
+          toast.info(`New Contact added. ${c.data.emailAddress}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        })
+        .catch((err) => {
+          let errMsg = "";
+          if (
+            err.response?.data?.description.match(
+              /(ValidationError).*(emailAddress)/
+            )
+          ) {
+            errMsg = "Invalid Email Address format";
+          } else {
+            errMsg = err.response?.data?.description;
+          }
+
+          toast.error(errMsg, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        });
+  };
 
   const rows: GridRowsProp = templates?.map((template) => {
     return {
@@ -255,6 +321,70 @@ const ContractForm: React.FC = () => {
   const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
 
   useEffect(() => {}, [design]);
+
+  const handleDeleteContact = async (contactId: string) => {
+    if (contactId) {
+      setRecipientLoading(true);
+      await agent.Contacts.delete(contactId)
+        .then((c) => {
+          setContacts(contacts.filter((data) => data.value !== contactId));
+          setRecipientLoading(false);
+          toast.info(`Contact removed: ${c.data.emailAddress}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        })
+        .catch((err) => {
+          let errMsg =
+            err.response?.data?.description ?? "Something went wrong";
+
+          toast.error(errMsg, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setRecipientLoading(false);
+        });
+    }
+  };
+
+  const RemoveContactButton = (props) => {
+    return (
+      <components.Option {...props}>
+        {props.children}
+        {!props.children.match(/^Create/) && ( //disable button on Create option
+          <button
+            className="close"
+            style={{ marginLeft: "2px" }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDeleteContact(props.data.value);
+            }}
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        )}
+      </components.Option>
+    );
+  };
+
+  const createOption = (label: string, value: string) => ({
+    label: label,
+    value: value,
+    keyword: "",
+  });
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -340,8 +470,19 @@ const ContractForm: React.FC = () => {
 
                       <CreatableSelect
                         isMulti
-                        options={emailOptions as any}
+                        options={contacts}
+                        isLoading={recipientLoading}
+                        components={{ Option: RemoveContactButton }}
                         placeholder="Select a recipient item to add"
+                        onCreateOption={(input) => {
+                          let data = {
+                            _id: "",
+                            userGuid: userGuid,
+                            emailAddress: input,
+                          };
+
+                          handleCreateContact(data);
+                        }}
                         onChange={(e) => {
                           const modifiedValue = e?.map((val) => val.label);
                           setFieldValue("recipients", modifiedValue);
