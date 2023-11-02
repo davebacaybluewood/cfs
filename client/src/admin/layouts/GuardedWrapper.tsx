@@ -16,7 +16,7 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
   const [toggled, setToggled] = useState(false);
   const navigate = useNavigate();
 
-  const localData = sessionStorage.getItem("userInfo");
+  const localData = localStorage.getItem("userInfo");
 
   useEffect(() => {
     if (!localData) {

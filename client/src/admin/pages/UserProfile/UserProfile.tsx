@@ -18,7 +18,7 @@ const crumbs: CrumbTypes[] = [
 ];
 
 const UserProfile: React.FC = () => {
-  const localData = sessionStorage.getItem("userInfo") as any;
+  const localData = localStorage.getItem("userInfo") as any;
   const parsedLocalData = JSON.parse(localData as any);
   const userGuid = parsedLocalData.userGuid;
 
