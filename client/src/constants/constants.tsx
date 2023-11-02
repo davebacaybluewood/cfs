@@ -308,7 +308,7 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <MessagePage />,
     path: paths.unsubscribe,
-    showHeadline: false,
+    showHeadline: true,
     showFooter: true,
     showNavbar: true,
   },

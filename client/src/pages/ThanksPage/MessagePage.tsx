@@ -6,20 +6,12 @@ const MessagePage: React.FC = () => {
   return (
     <Container>
       <div className="message-page-container">
+        <h2>Unsubscribe</h2>
+        <p>Lorem ipsum dolor sit amet.</p>
         <img src="/assets/images/templates/logout-img.png" alt="" />
         <div className="message-captions">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus
-          illum ullam, natus necessitatibus ipsa sapiente architecto, maxime
-          corrupti repudiandae pariatur eius ex assumenda optio? Sit sed quam
-          sapiente ipsam necessitatibus illum. Blanditiis fuga aliquam quidem
-          nesciunt, temporibus accusamus soluta rem mollitia. Rerum, eaque
-          praesentium ratione minus porro nam libero. Corrupti at nostrum in ea
-          ad. Voluptates obcaecati cumque doloribus, delectus sit facere, magnam
-          voluptas soluta rem corporis placeat rerum necessitatibus eligendi
-          corrupti a accusantium, harum repellat blanditiis animi! Error nostrum
-          quidem ab quis repellendus omnis obcaecati, praesentium commodi nemo
-          qui, nihil, sint autem deserunt. Magnam debitis laudantium itaque
-          cupiditate deserunt.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit id odio
+          omnis ratione commodi cumque nisi amet maiores atque rem!
         </div>
       </div>
     </Container>
