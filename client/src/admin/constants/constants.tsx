@@ -17,7 +17,6 @@ import ContactAdmin from "admin/pages/ContactAdmin/ContactAdmin";
 import Contacts from "admin/pages/Contacts/Contacts";
 import EventInvites from "admin/pages/EventInvites/EventInvites";
 import Events from "admin/pages/Events/Events";
-import EventsForm from "admin/pages/Events/EventsForm";
 import FAQSubscriber from "admin/pages/FAQSubscriber/FAQSubscriber";
 import Webinars from "admin/pages/FileMaintenance/pages/Webinars/Webinars";
 import WebinarSingle from "admin/pages/FileMaintenance/pages/Webinars/WebinarSingle";
@@ -32,6 +31,7 @@ import ActivatedWebinars from "admin/pages/Webinars/LandingPages/ActivatedWebina
 import RequestedWebinars from "admin/pages/Webinars/LandingPages/RequestedWebinars";
 import DynamicWebinarInformation from "admin/pages/Webinars/LandingPages/WebinarSingle/DynamicWebinarInformation";
 import GuardedWrapper from "../layouts/GuardedWrapper";
+import AdminAgentWrapper from "../../library/AdminAgentWrapper/AdminAgentWrapper";
 import Agents from "../pages/Agents/LandingPages/ActiveAgents/Agents";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import adminPathsNew from "./routes";
@@ -59,13 +59,15 @@ import RewardsHistory from "admin/pages/RewardsHistory/RewardsHistory";
 import RaiseSupportTicket from "admin/pages/RaiseSupport/Admin/single-page/RaiseSupportTicket";
 import OrderHistory from "admin/pages/OrderHistory/OrderHistory";
 import TrialSubscription from "admin/pages/TrialSubscription/TrialSubscription";
-import RSVPLanding from "pages/RSVP/RSVPLanding";
-import UserAccessWrapper from "./UserAccessWrapper";
+import EventsForm from "admin/pages/Events/components/Form/EventsForm";
+import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
+import SubscriptionGuard from "library/SubscriptionGuard/SubscriptionGuard";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
   ROLE_EDITOR: "ROLE_EDITOR",
   ROLE_MASTER_ADMIN: "ROLE_MASTER_ADMIN",
+  ROLE_SUBSCRIBER: "ROLE_SUBSCRIBER",
 };
 
 export const OUTSOURCE_LINKS = {
@@ -270,20 +272,10 @@ export const adminRoutes = [
     path: adminPathsNew.dashboard,
     element: (
       <GuardedWrapper>
-        <UserAccessWrapper>
-          <Dashboard />
-        </UserAccessWrapper>
+        <Dashboard />
       </GuardedWrapper>
     ),
   },
-  // {
-  //   path: adminPathsNew.profile,
-  //   element: (
-  //     <GuardedWrapper>
-  //       <Profile />
-  //     </GuardedWrapper>
-  //   ),
-  // },
   {
     path: adminPathsNew.appointments,
     element: (
@@ -472,7 +464,9 @@ export const adminRoutes = [
     path: adminPathsNew.trialSubscription,
     element: (
       <GuardedWrapper>
-        <TrialSubscription />
+        <SubscriptionGuard>
+          <TrialSubscription />
+        </SubscriptionGuard>
       </GuardedWrapper>
     ),
   },

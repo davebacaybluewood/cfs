@@ -1,46 +1,47 @@
 import RSVP from "../models/eventsRSVPModel.js";
 import expressAsync from "express-async-handler";
 import sendEmail from "../utils/sendNodeMail.js";
-import inquiryEmail from "../emailTemplates/inquiry-email.js";
 import { API_RES_FAIL, API_RES_OK } from "../constants/constants.js";
 import Agent from "../models/agentModel.js";
-import { v4 as uuid } from "uuid";
 import generateString from "../utils/generateString.js";
-import {
-  PROFILE_POSITIONS,
-  SUBSCRIBER_ROLES,
-  DEFAULT_IMAGE,
-  POINTS_TYPE,
-} from "../constants/constants.js";
 import subscriberServices from "../services/subscriberServices.js";
+import eventServices from "../services/eventServices.js";
 import eventInvite from "../emailTemplates/eventInvite.js";
+import EventsRSVP from "../models/eventsRSVPModel.js";
 
-/**
- * @desc: Fetch all inquiries
- * @route: GET /api/inquiries
- * @acess: Private
- */
-const getInquiries = expressAsync(async (req, res) => {
-  const inquiries = await Inquiries.find({});
-  res.json(inquiries);
-});
-
-/**
- * @desc: Fetch single inquiry
- * @route: GET /api/inquiries/:id
- * @acess: Private
- */
-const getSingleInquiry = expressAsync(async (req, res) => {
-  const inquiry = await Inquiries.findOne({
-    _id: req.params.id,
-  });
-
-  if (inquiry) {
-    res.json(inquiry);
-  } else {
-    res.status(404);
-    throw new Error("Inquiry not found.");
-  }
+const getEventRVPS = expressAsync(async (req, res) => {
+  const { eventId } = req.params;
+  const rsvps = await EventsRSVP.aggregate([
+    { $match: { eventId: eventId } },
+    {
+      $lookup: {
+        from: "agents",
+        localField: "userGuid",
+        foreignField: "userGuid",
+        as: "eventDoc",
+      },
+    },
+    {
+      $set: {
+        authorFirstName: {
+          $first: "$eventDoc.firstName",
+        },
+        authorLastName: {
+          $first: "$eventDoc.lastName",
+        },
+        phoneNumber: {
+          $first: "$eventDoc.phoneNumber",
+        },
+        emailAddress: {
+          $first: "$eventDoc.emailAddress",
+        },
+      },
+    },
+    {
+      $unset: "eventDoc",
+    },
+  ]);
+  res.json(rsvps);
 });
 
 const submitRSVP = expressAsync(async (req, res) => {
@@ -81,10 +82,13 @@ const submitRSVP = expressAsync(async (req, res) => {
   });
   await rsvp.save();
 
-  const mailSubject = "RSVP Submission";
-  const eventName = "Event Test";
-  const zoomLink =
-    "https://us06web.zoom.us/j/6430504997?pwd=VE13L3VQU2VqTjRuVDc1dEh5enh5Zz09#success";
+  const event = await eventServices.getSingleEvent(eventId);
+
+  const mailSubject = `RSVP - ${event.title}`;
+  const eventName = event.title;
+  const zoomLink = event.meetingLink;
+
+  console.log(event);
   const mailContent = eventInvite({
     password,
     eventName,
@@ -103,4 +107,4 @@ const submitRSVP = expressAsync(async (req, res) => {
   }
 });
 
-export default { submitRSVP };
+export default { submitRSVP, getEventRVPS };

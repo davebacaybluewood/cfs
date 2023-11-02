@@ -121,16 +121,18 @@
 }
 
 @media screen and (max-width: 390px) {
-  .price {
-    width: "90vw";
-    display: flex;
-    justify-content: center;
-    text-align: center;
-  }
+  .pricing-card {
+    .price {
+      width: "90vw";
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
 
-  .MuiGrid-root {
-    display: flex;
-    justify-content: center;
-    text-align: center;
+    .MuiGrid-root {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
   }
 }

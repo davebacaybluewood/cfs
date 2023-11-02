@@ -1,5 +1,7 @@
-.email-template-container {
-  .email-template-form-container {
+.email-template-container,
+.events-admin-container {
+  .email-template-form-container,
+  .events-admin-form-container {
     background: #1565d8;
     height: 40vh;
     padding: 4rem 2rem;
@@ -11,7 +13,8 @@
       color: #fff;
     }
 
-    .email-template-form {
+    .email-template-form,
+    .events-admin-form {
       background: #fff;
       margin-top: 4rem;
       padding: 5rem 4rem;

@@ -1,4 +1,6 @@
 .footer {
+  z-index: 99999 !important;
+  position: relative;
   .footer__header {
     background: #fff;
     padding: 4rem 0;
@@ -14,7 +16,7 @@
     padding: 6rem 0;
     h5 {
       font-size: 1.4rem;
-      font-family: "Roboto", sans-serif;
+      font-family: 'Roboto', sans-serif;
       color: #ffffff;
     }
 
@@ -28,7 +30,7 @@
         padding-bottom: 1rem;
         color: #ffffff;
         align-items: center;
-        font-family: "roboto", sans-serif;
+        font-family: 'roboto', sans-serif;
         font-size: 1.2rem;
         text-decoration: none;
         display: flex;
@@ -42,7 +44,7 @@
       a {
         text-decoration: none;
         font-size: 1.2rem;
-        font-family: "roboto", sans-serif;
+        font-family: 'roboto', sans-serif;
         color: #ffffff;
         align-items: center;
 
@@ -66,7 +68,7 @@
 
     .footer__copyright {
       color: white;
-      font-family: "Roboto", sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-weight: 600;
       display: inline-block;
       width: 50%;

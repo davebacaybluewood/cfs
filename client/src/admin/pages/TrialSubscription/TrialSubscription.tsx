@@ -6,9 +6,10 @@ import TrialSubscriptionTable from "./TrialSubscriptionTable";
 import DocumentTitleSetter from "../../../library/DocumentTitleSetter/DocumentTitleSetter";
 import { useState, useEffect } from "react";
 import agent from "admin/api/agent";
+import SubscriptionTableLoading from "./SubscriptionTableLoading";
 
 const crumbs: CrumbTypes[] = [
-  {
+  { 
     title: "Comfort Financial Solutions",
     url: paths.dashboard,
     isActive: false,
@@ -59,24 +60,21 @@ const TrialSubscription = () => {
     fetchTickets();
   }, []);
   return (
-    <Wrapper
-      className="webinar-admin-container"
-      error={false}
-      breadcrumb={crumbs}
-      loading={false}
-    >
-      {/* Sets document title */}
-      <DocumentTitleSetter title="Portal Free Subscriptions - CFS Portal" />
+    <Wrapper error={false} breadcrumb={crumbs} loading={false}>
+      <DocumentTitleSetter title="30-Day Free Trial Subscriptions - CFS Portal" />
       <Title
-        title="Trial Subscription"
+        title="30-Day Free Trial Subscriptions"
         subtitle="Displaying all active and expired subscriptions"
       />
-      <TrialSubscriptionTable
-        subscriptions={subscriptions}
-        filteredSubscriptions={filteredSubscriptions}
-        setFilteredSubscriptions={setFilteredSubscriptions}
-        loading={loading}
-      />
+      {loading ? (
+        <SubscriptionTableLoading />
+      ) : (
+        <TrialSubscriptionTable
+          subscriptions={subscriptions}
+          filteredSubscriptions={filteredSubscriptions}
+          setFilteredSubscriptions={setFilteredSubscriptions}
+        />
+      )}
     </Wrapper>
   );
 };
