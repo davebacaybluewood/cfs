@@ -34,7 +34,7 @@ import { components } from "react-select";
 import { toast } from "react-toastify";
 import DrawerBase, { Anchor } from "library/Drawer/Drawer";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import { BsPlusCircle } from "react-icons/bs";
+import { BsFillTrashFill, BsPlusCircle } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import nameFallback from "helpers/nameFallback";
@@ -84,6 +84,7 @@ const ContractForm: React.FC = () => {
   const action = new URLSearchParams(search).get("action");
   const userGuid = userCtx?.user?.userGuid;
   const [contacts, setContacts] = useState<any>([]);
+  const [contactsValue, setContactsValue] = useState<any>([]);
   const [recipientLoading, setRecipientLoading] = useState(false);
 
   const populateForm = (
@@ -140,10 +141,11 @@ const ContractForm: React.FC = () => {
         .then((c) => {
           setRecipientLoading(true);
           setTimeout(() => {
-            const newOption = createOption(c.data.emailAddress, c.data._id);
+            const newContact = createOption(c.data.emailAddress, c.data._id);
 
             setRecipientLoading(false);
-            setContacts((prev) => [...prev, newOption]);
+            setContacts((prev) => [...prev, newContact]);
+            setContactsValue((prev) => [...prev, newContact]);
           }, 1000);
 
           toast.info(`New Contact added. ${c.data.emailAddress}`, {
@@ -325,9 +327,9 @@ const ContractForm: React.FC = () => {
   const handleDeleteContact = async (contactId: string) => {
     if (contactId) {
       setRecipientLoading(true);
+      setContacts(contacts.filter((data) => data.value !== contactId));
       await agent.Contacts.delete(contactId)
         .then((c) => {
-          setContacts(contacts.filter((data) => data.value !== contactId));
           setRecipientLoading(false);
           toast.info(`Contact removed: ${c.data.emailAddress}`, {
             position: "top-right",
@@ -372,7 +374,7 @@ const ContractForm: React.FC = () => {
               handleDeleteContact(props.data.value);
             }}
           >
-            <span aria-hidden="true">&times;</span>
+            <BsFillTrashFill style={{ color: "red" }} />
           </button>
         )}
       </components.Option>
@@ -472,6 +474,7 @@ const ContractForm: React.FC = () => {
                         isMulti
                         options={contacts}
                         isLoading={recipientLoading}
+                        value={contactsValue}
                         components={{ Option: RemoveContactButton }}
                         placeholder="Select a recipient item to add"
                         onCreateOption={(input) => {
@@ -480,12 +483,17 @@ const ContractForm: React.FC = () => {
                             userGuid: userGuid,
                             emailAddress: input,
                           };
-
                           handleCreateContact(data);
                         }}
                         onChange={(e) => {
-                          const modifiedValue = e?.map((val) => val.label);
+                          const modifiedValue = e?.map((contact) => {
+                            return {
+                              label: contact.label,
+                              value: contact.value,
+                            };
+                          });
                           setFieldValue("recipients", modifiedValue);
+                          setContactsValue(modifiedValue);
                         }}
                         onBlur={(e) => {
                           if (values.recipients.length === 0) {
