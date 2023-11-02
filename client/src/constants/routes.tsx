@@ -57,6 +57,7 @@ const paths = {
   /** Subscribe Page */
   subscriberRegistration: "/subscribe/",
   subscribeSuccess: "/subscribe/success",
+  unsubscribe: "/unsubscribe",
   invalid: "/invalid",
 };
 

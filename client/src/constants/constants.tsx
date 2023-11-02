@@ -31,6 +31,7 @@ import Subscribe from "pages/Subscribers/Subscribe";
 import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
 import RSVPForm from "pages/RSVP/RSVPForm";
 import RSVPLanding from "pages/RSVP/RSVPLanding";
+import MessagePage from "pages/ThanksPage/MessagePage";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -296,6 +297,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
+  },
+  {
+    element: <MessagePage />,
+    path: paths.unsubscribe,
+    showHeadline: false,
+    showFooter: true,
+    showNavbar: true,
   },
   {
     element: <InvalidRoutePage />,

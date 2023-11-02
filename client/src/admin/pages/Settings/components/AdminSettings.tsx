@@ -56,21 +56,18 @@ const AdminSettings: React.FC = () => {
     setLoading(true);
     try {
       const res = await agent.Profile.unsubscribe(userGuid, data.password);
+
       if (res) {
         toast.info("You've Successfully Unsubscribed.");
-        dispatch(logout() as any);
-        setLoading(false);
-        setOpen(false);
+        sessionStorage.removeItem("userInfo");
+        sessionStorage.removeItem("isAcknowledged");
+        navigate(paths.unsubscribe);
       }
     } catch (error) {
       toast.error("Invalid Password");
       setLoading(false);
     }
   };
-
-  if (loading) {
-    return <Spinner variant="fixed" />;
-  }
 
   return (
     <div className="admin-settings-container">
@@ -133,6 +130,7 @@ const AdminSettings: React.FC = () => {
           </div>
         </Box>
       </Modal>
+      {loading ? <Spinner variant="fixed" /> : null}
     </div>
   );
 };
