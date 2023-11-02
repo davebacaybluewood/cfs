@@ -7,7 +7,8 @@ import {
   getAllUsers,
   getUserProfile,
   registerUser,
-  getCheckUserId
+  getCheckUserId,
+  unsubcribeUser,
 } from "../controllers/userControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -20,5 +21,6 @@ router.route("/profile").get(protect, getUserProfile);
 router.route("/email-check/account").post(checkEmail);
 router.route("/change-password/account").post(changePassword);
 router.route("/verifyuser/:userGuid").get(getCheckUserId);
+router.route("/unsubscribe").put(protect, unsubcribeUser);
 
 export default router;

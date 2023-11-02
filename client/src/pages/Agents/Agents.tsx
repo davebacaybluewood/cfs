@@ -6,22 +6,19 @@ import CommonHeaderTitle from "library/HeaderTitle/HeaderTitle";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { listSingleAgent } from "redux/actions/agentActions";
-import { RootState } from "store";
 import AgentProfile from "./components/AgentProfile";
 import Testimonials from "./components/Testimonials";
 import AgentVideos from "./components/AgentVideos";
 import Spinner from "admin/components/Spinner/Spinner";
 import AgentPending from "./components/AgentPending";
-import { paths } from "constants/routes";
 import useFetchAgentWebinars from "admin/pages/Profile/components/Webinars/hooks/useFetchAgentWebinars";
 import ENDPOINTS from "constants/endpoints";
 import { NOTIFICATION_ENUMS } from "constants/constants";
-import "./Agents.scss";
 import Wrapper from "library/Wrapper/Wrapper";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import ReCAPTCHA from "react-google-recaptcha";
+import "./Agents.scss";
+import { STATUS } from "admin/constants/constants";
 
 type FilteredContainerProps = {
   noSpacing?: boolean;
@@ -52,6 +49,14 @@ const Agents: React.FC<AgentsProps> = (props) => {
   const recaptchaOnChangeHandler = (value) => {
     setVerified(typeof value === "string");
   };
+  const navigate = useNavigate();
+
+  if (
+    agent?.status === STATUS.DEACTIVATED ||
+    agent?.status === STATUS.UNSUBSCRIBED
+  ) {
+    navigate("*");
+  }
 
   useCalendlyEventListener({
     onProfilePageViewed: () => console.log("onProfilePageViewed"),

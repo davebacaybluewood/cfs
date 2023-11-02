@@ -121,6 +121,12 @@ const Profile = {
 
     return res;
   },
+  unsubscribe: (userGuid: string, password: string) =>
+    requests.put<string>("/api/users/unsubscribe", {
+      userGuid,
+      password,
+    }),
+
   changePassword: (
     passwordId: string,
     password: string,
