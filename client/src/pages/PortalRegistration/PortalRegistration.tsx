@@ -17,6 +17,7 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { PROFILE_POSITIONS, PROFILE_ROLES } from "./constants";
 
 interface PortalRegistrationProps {
   isAdmin?: boolean;
@@ -80,6 +81,18 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
       const { data } = await axios.post(ENDPOINTS.CREATE_PRE_PROFILE, {
         emailAddress: emailAddress,
         password: password,
+        position: [
+          {
+            value: PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value,
+            label: PROFILE_POSITIONS.FREE_30DAYS_TRIAL.label,
+          },
+        ],
+        roles: [
+          {
+            value: PROFILE_ROLES.FREE_30DAYS_TRIAL.ROLE_FREE_30DAYS_TRIAL.value,
+            label: PROFILE_ROLES.FREE_30DAYS_TRIAL.ROLE_FREE_30DAYS_TRIAL.label,
+          },
+        ],
       });
 
       Object.keys(initialValues).map((dataValue) => {
@@ -326,9 +339,9 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                   )}
                   {stage === 6 && <SuccessPage />}
                   {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                <pre>{JSON.stringify(initialValues, null, 2)}</pre>
-                <pre>{JSON.stringify(errors, null, 2)}</pre>
-                <pre>{JSON.stringify(touched, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(initialValues, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre>
+                  <pre>{JSON.stringify(touched, null, 2)}</pre> */}
                 </div>
               );
             }}

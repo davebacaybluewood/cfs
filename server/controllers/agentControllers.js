@@ -392,7 +392,7 @@ const createAgent = expressAsync(async (req, res) => {
       firstName: req.body?.firstName,
       lastName: req.body?.lastName,
       role: ROLES.ROLE_AGENT,
-      status: AGENT_STATUSES.PENDING,
+      status: AGENT_STATUSES.ACTIVATED,
       telNumber: req.body?.telNumber,
       password: req.body?.password,
       avatar:
@@ -405,6 +405,19 @@ const createAgent = expressAsync(async (req, res) => {
 
     if (agent) {
       await agent.save();
+      const userData = {
+        userGuid: userGuid,
+        name: req.body.firstName + " " + req.body.lastName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.emailAddress,
+        password: req.body.password,
+        isAdmin: false,
+        roles: req.body.roles,
+        position: req.body.position,
+      };
+      const user = new User(userData);
+      await user.save();
       await PreProfile.deleteOne({
         emailAddress: req.body?.emailAddress,
       });
