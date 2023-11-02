@@ -5,7 +5,7 @@ import cloudinary from "../utils/cloudinary.js";
 import User from "../models/userModel.js";
 import { v4 as uuid } from "uuid";
 import PreProfile from "../models/preProfileModel.js";
-import { PROFILE_POSITIONS } from "../constants/constants.js";
+import { AGENT_STATUSES, PROFILE_POSITIONS } from "../constants/constants.js";
 
 /**
  * @desc: List of all profiles
@@ -13,7 +13,14 @@ import { PROFILE_POSITIONS } from "../constants/constants.js";
  * @acess: Private
  */
 const listProfile = expressAsync(async (req, res) => {
-  const profiles = await Agents.find({}).sort({ createdAt: -1 });
+  const profiles = await Agents.find({
+    $or: [
+      { status: AGENT_STATUSES.ACTIVATED },
+      { status: AGENT_STATUSES.DEACTIVATED },
+    ],
+  }).sort({
+    createdAt: -1,
+  });
   res.json(profiles);
 });
 

@@ -30,115 +30,116 @@ import Pricing from "pages/Pricing/Pricing";
 import Subscribe from "pages/Subscribers/Subscribe";
 import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
 import RSVPForm from "pages/RSVP/RSVPForm";
+import MessagePage from "pages/ThanksPage/MessagePage";
 import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
 
 type ReactRoutesType = RouteProps & {
-  showFooter?: boolean
-  showNavbar?: boolean
-  showHeadline?: boolean
-  theme?: 'SKY' | 'RED' | 'NAVY'
-  showPartners?: boolean
-}
+  showFooter?: boolean;
+  showNavbar?: boolean;
+  showHeadline?: boolean;
+  theme?: "SKY" | "RED" | "NAVY";
+  showPartners?: boolean;
+};
 
-const COMPANY_NAME = 'Comfort Financial Solutions'
+const COMPANY_NAME = "Comfort Financial Solutions";
 
 //const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
-const MAIN_LOCALHOST = 'http://lcoalhost:3000'
+const MAIN_LOCALHOST = "http://lcoalhost:3000";
 
 const SOCIAL_MEDIA_LINKS = {
-  FACEBOOK: 'https://www.facebook.com/gocfspro',
-  TWITTER: 'https://twitter.com/goCFSpro',
-  INSTAGRAM: 'https://www.instagram.com/gocfspro/',
-  LINKEDIN: 'https://www.linkedin.com/company/gocfspro',
+  FACEBOOK: "https://www.facebook.com/gocfspro",
+  TWITTER: "https://twitter.com/goCFSpro",
+  INSTAGRAM: "https://www.instagram.com/gocfspro/",
+  LINKEDIN: "https://www.linkedin.com/company/gocfspro",
 
   /*These Links are dummy, actual links are to be followed by the marketing team */
-  PINTEREST: 'https://www.pinterest.ph/',
-  TIKTOK: 'https://www.tiktok.com/en/',
-  YOUTUBE: 'https://www.youtube.com/',
-}
+  PINTEREST: "https://www.pinterest.ph/",
+  TIKTOK: "https://www.tiktok.com/en/",
+  YOUTUBE: "https://www.youtube.com/",
+};
 
 const COMPANY_CONTACT_INFO = {
-  EMAIL: 'support@gocfs.pro',
-  PHONE: '+1 (702) 900-5666',
-  STATE_NV: 'Las Vegas, NV',
-  STATE_CA: 'Los Angeles, CA',
-  STATE_NY: 'New York, NY',
-}
+  EMAIL: "support@gocfs.pro",
+  PHONE: "+1 (702) 900-5666",
+  STATE_NV: "Las Vegas, NV",
+  STATE_CA: "Los Angeles, CA",
+  STATE_NY: "New York, NY",
+};
 
 const MAIN_IMAGES = {
-  WHITE_LOGO: '/assets/images/logos/logo-white.png',
-  MAIN_LOGO: '/assets/images/logos/cfs-main-logo.png',
-}
+  WHITE_LOGO: "/assets/images/logos/logo-white.png",
+  MAIN_LOGO: "/assets/images/logos/cfs-main-logo.png",
+};
 
 const CFS_STATES = US_STATES.map((data) => {
   return {
     label: data.name,
     value: data.name,
-  }
-})
+  };
+});
 
 const NOTIFICATION_ENUMS = {
   WEBINARS: {
-    WEBINAR_REQUEST: 'WEBINAR_REQUEST',
-    WEBINAR_DECLINED: 'WEBINAR_DECLINED',
-    WEBINAR_APPROVED: 'WEBINAR_APPROVED',
+    WEBINAR_REQUEST: "WEBINAR_REQUEST",
+    WEBINAR_DECLINED: "WEBINAR_DECLINED",
+    WEBINAR_APPROVED: "WEBINAR_APPROVED",
   },
   APPOINTMENTS: {
-    APPOINTMENT_CANCELLED: 'APPOINTMENT_CANCELLED',
-    APPOINTMENT_NEW: 'APPOINTMENT_NEW',
+    APPOINTMENT_CANCELLED: "APPOINTMENT_CANCELLED",
+    APPOINTMENT_NEW: "APPOINTMENT_NEW",
   },
   BLOGS: {
-    BLOGS_REQUEST: 'BLOGS_REQUEST',
-    BLOGS_DRAFT: 'BLOGS_DRAFT',
-    BLOGS_PUBLISHED: 'BLOGS_PUBLISHED',
-    BLOGS_DECLINED: 'BLOGS_DECLINED',
+    BLOGS_REQUEST: "BLOGS_REQUEST",
+    BLOGS_DRAFT: "BLOGS_DRAFT",
+    BLOGS_PUBLISHED: "BLOGS_PUBLISHED",
+    BLOGS_DECLINED: "BLOGS_DECLINED",
   },
-}
-const CURRENT_DOMAIN = window.location.origin
+};
+const CURRENT_DOMAIN = window.location.origin;
 
 const AGENT_SPECIALTIES = [
-  'Wealth Builder',
-  'Financial Freedom',
-  'Long Term Care',
-  'Legacy Builder',
-]
+  "Wealth Builder",
+  "Financial Freedom",
+  "Long Term Care",
+  "Legacy Builder",
+];
 
-const BLANK_VALUE = '—'
+const BLANK_VALUE = "—";
 
 const eventSteps = [
   {
-    title: '01',
-    subTitle: 'Pick a Event',
-    description: '',
+    title: "01",
+    subTitle: "Pick a Event",
+    description: "",
   },
   {
-    title: '02',
-    subTitle: 'Submit a form',
-    description: '',
+    title: "02",
+    subTitle: "Submit a form",
+    description: "",
   },
   {
-    title: '03',
-    subTitle: 'Get the reference ID',
-    description: '',
+    title: "03",
+    subTitle: "Get the reference ID",
+    description: "",
   },
   {
-    title: '04',
-    subTitle: 'Mark your calendars!',
-    description: '',
+    title: "04",
+    subTitle: "Mark your calendars!",
+    description: "",
   },
-]
+];
 
 export const toastConfigs: ToastOptions<{}> | undefined = {
-  position: 'top-right',
+  position: "top-right",
   autoClose: 5000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
   draggable: true,
   progress: undefined,
-  theme: 'light',
-}
+  theme: "light",
+};
 
 const filteredAdminRoutes: ReactRoutesType[] = adminRoutes.map((data) => {
   return {
@@ -146,18 +147,18 @@ const filteredAdminRoutes: ReactRoutesType[] = adminRoutes.map((data) => {
     showFooter: false,
     showHeadline: false,
     showNavbar: false,
-  }
-})
+  };
+});
 
 const REACT_ROUTES: ReactRoutesType[] = [
   ...filteredAdminRoutes,
   {
-    element: <Home key='main-index' />,
+    element: <Home key="main-index" />,
     path: paths.index,
     showPartners: true,
   },
   {
-    element: <Home key='index' />,
+    element: <Home key="index" />,
     path: paths.home,
     showPartners: true,
   },
@@ -175,13 +176,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     element: <BusinessProtection />,
     path: paths.individual_protection,
     showHeadline: false,
-    theme: 'SKY',
+    theme: "SKY",
   },
   {
     element: <AgentSupport />,
     path: paths.join_our_team,
     showHeadline: false,
-    theme: 'RED',
+    theme: "RED",
   },
   {
     element: <BlogPage />,
@@ -220,14 +221,14 @@ const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     path: paths.cfsPages,
-    element: <LandingPages key='main' />,
+    element: <LandingPages key="main" />,
     showNavbar: false,
     showHeadline: false,
     showFooter: false,
   },
   {
     path: paths.cfsPagesWithAgent,
-    element: <LandingPages key='agent' />,
+    element: <LandingPages key="agent" />,
     showNavbar: false,
     showHeadline: false,
     showFooter: false,
@@ -246,21 +247,21 @@ const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     element: <Calculator />,
-    path: '/calculator',
+    path: "/calculator",
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
   },
   {
     element: <PreLicensing />,
-    path: '/pre-licensing',
+    path: "/pre-licensing",
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
   },
   {
     element: <Annuity />,
-    path: '/annuity',
+    path: "/annuity",
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
@@ -305,11 +306,11 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showNavbar: false,
   },
   {
-    element: <InvalidRoute />,
-    path: '*',
-    showNavbar: true,
-    showHeadline: false,
+    element: <MessagePage />,
+    path: paths.unsubscribe,
+    showHeadline: true,
     showFooter: true,
+    showNavbar: true,
   },
   {
     element: <InvalidRoutePage />,
@@ -317,15 +318,22 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: true,
   },
-]
+  {
+    element: <InvalidRoute />,
+    path: "*",
+    showNavbar: true,
+    showHeadline: false,
+    showFooter: true,
+  },
+];
 
 const CALENDLY = {
-  CONSULTATION: 'https://calendly.com/gocfs/cfs-consultation',
-  WEEKLY: 'https://calendly.com/gocfs/one-time-weekly-meeting',
-}
+  CONSULTATION: "https://calendly.com/gocfs/cfs-consultation",
+  WEEKLY: "https://calendly.com/gocfs/one-time-weekly-meeting",
+};
 
-const SUPPORT_TYPE = { FEATURE: 'feature', BUG: 'bug', OTHER: 'other' }
-const SUPPORT_STATUS = { PENDING: 'PENDING', RESOLVED: 'RESOLVED' }
+const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
+const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
 
 const TWITTER_LOGO = ({
   width,
@@ -340,7 +348,7 @@ const TWITTER_LOGO = ({
 }) => {
   return (
     <svg
-      xmlns='http://www.w3.org/2000/svg'
+      xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
       viewBox={viewBox}
@@ -355,11 +363,11 @@ const TWITTER_LOGO = ({
       />
       <path
         fill={pathFill}
-        d='M18.205 2.25h3.308l-7.227 8.26l8.502 11.24H16.13l-5.214-6.817L4.95 21.75H1.64l7.73-8.835L1.215 2.25H8.04l4.713 6.231l5.45-6.231Zm-1.161 17.52h1.833L7.045 4.126H5.078L17.044 19.77Z'
+        d="M18.205 2.25h3.308l-7.227 8.26l8.502 11.24H16.13l-5.214-6.817L4.95 21.75H1.64l7.73-8.835L1.215 2.25H8.04l4.713 6.231l5.45-6.231Zm-1.161 17.52h1.833L7.045 4.126H5.078L17.044 19.77Z"
       />
     </svg>
-  )
-}
+  );
+};
 export {
   COMPANY_NAME,
   SOCIAL_MEDIA_LINKS,
