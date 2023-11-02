@@ -30,8 +30,9 @@ import Pricing from "pages/Pricing/Pricing";
 import Subscribe from "pages/Subscribers/Subscribe";
 import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
 import RSVPForm from "pages/RSVP/RSVPForm";
-import RSVPLanding from "pages/RSVP/RSVPLanding";
 import MessagePage from "pages/ThanksPage/MessagePage";
+import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
+import PortalArticle from "pages/PortalArticle/PortalArticle";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -160,6 +161,12 @@ const REACT_ROUTES: ReactRoutesType[] = [
     element: <Home key="index" />,
     path: paths.home,
     showPartners: true,
+  },
+  {
+    element: <PortalArticle />,
+    path: paths.portalArticle,
+    showHeadline: false,
+    showFooter: true,
   },
   {
     element: <FamilyProtection />,

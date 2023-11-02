@@ -1,4 +1,4 @@
-import adminPaths from "admin/constants/routes";
+import adminPaths from 'admin/constants/routes'
 
 const paths = {
   ...adminPaths,
@@ -19,26 +19,27 @@ const paths = {
   testimonialForm: "/testimonial-form/:userGuid",
   pricing: "/pricing",
   rsvpForm: "/rsvp-form/:eventId",
+  portalArticle: '/article/portal',
 
   /* Contract */
-  preLicensing: "/pre-licensing",
-  anunity: "/annuity",
+  preLicensing: '/pre-licensing',
+  anunity: '/annuity',
 
   /** Webinar */
-  agent_with_id: "/agents/:id",
-  agent_check_status: "/agents/status/:id",
-  webinarForm: "/webinar/:videoId/:agentId",
-  webinarAppointment: "/webinar/:videoId/:agentId/:submissionId",
-  agentRegistration: "/portal-registration",
-  agentRegistrationSuccess: "/portal-registration-success/:agentId",
+  agent_with_id: '/agents/:id',
+  agent_check_status: '/agents/status/:id',
+  webinarForm: '/webinar/:videoId/:agentId',
+  webinarAppointment: '/webinar/:videoId/:agentId/:submissionId',
+  agentRegistration: '/portal-registration',
+  agentRegistrationSuccess: '/portal-registration-success/:agentId',
 
   /** Page Success */
-  pageSuccess: "/success-page/:pageId",
+  pageSuccess: '/success-page/:pageId',
 
   /** Landing Pages */
-  cfsPages: "/page/:pageId",
-  cfsPagesWithAgent: "/page/:pageId/:agentGuid",
-  portalRegistration: "/portal-registration",
+  cfsPages: '/page/:pageId',
+  cfsPagesWithAgent: '/page/:pageId/:agentGuid',
+  portalRegistration: '/portal-registration',
 
   /** ADMIN PATHS */
   adminDashboard: "/portal/dashboard",
@@ -48,11 +49,11 @@ const paths = {
   adminAccounts: "/portal/admin-accounts",
   adminAccountsForm: "/portal/admin-accounts/:id",
   adminEvents: "/portal/events",
-  adminEventsForm: "/portal/events/:id",
+  adminEventsForm: "/portal/events/form",
   adminGraphs: "/portal/graphs",
   adminContacts: "/portal/contacts",
   adminEventInvites: "/portal/event-invites",
-  rsvpLanding: "/portal/rsvp",
+  rsvpLanding: "/portal/events/rsvp/:eventId",
 
   /** Subscribe Page */
   subscriberRegistration: "/subscribe/",
@@ -61,4 +62,4 @@ const paths = {
   invalid: "/invalid",
 };
 
-export { paths };
+export { paths }

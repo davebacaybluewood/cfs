@@ -1,7 +1,9 @@
-.mailing-library-container {
+.mailing-library-container,
+.events-admin-container {
   // Added maxwidth so table won't get too much unnecessary white spaces
 
-  .mailing-library-table {
+  .mailing-library-table,
+  .events-admin-table {
     .MuiDataGrid-root {
       button,
       span,

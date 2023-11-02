@@ -1,0 +1,21 @@
+.article-content {
+  img {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 2rem;
+
+    @media (min-width: 992px) {
+      width: 80%;
+    }
+  }
+
+  .agent-portal-button {
+    background: darkblue;
+    color: white;
+    padding: 10px 30px;
+  }
+
+  @media (max-width: 991px) {
+    padding: 2rem;
+  }
+}

@@ -33,6 +33,29 @@ export const APPOINTMENT_STATUSES = {
   ONGOING: "ONGOING",
 };
 
+export const EVENT_STATUSES = {
+  CANCELLED: {
+    text: "Cancelled",
+    value: "CANCELLED",
+  },
+  ACTIVE: {
+    text: "Active",
+    value: "ACTIVE",
+  },
+  COMING_SOON: {
+    text: "Coming Soon",
+    value: "COMING_SOON",
+  },
+  ONGOING: {
+    text: "Ongoing",
+    value: "ONGOING",
+  },
+  COMPLETED: {
+    text: "Comleted",
+    value: "COMPLETED",
+  },
+};
+
 export const NOTIFICATION_ENUMS = {
   WEBINARS: {
     WEBINAR_REQUEST: "WEBINAR_REQUEST",

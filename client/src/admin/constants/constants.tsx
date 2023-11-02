@@ -17,7 +17,6 @@ import ContactAdmin from "admin/pages/ContactAdmin/ContactAdmin";
 import Contacts from "admin/pages/Contacts/Contacts";
 import EventInvites from "admin/pages/EventInvites/EventInvites";
 import Events from "admin/pages/Events/Events";
-import EventsForm from "admin/pages/Events/EventsForm";
 import FAQSubscriber from "admin/pages/FAQSubscriber/FAQSubscriber";
 import Webinars from "admin/pages/FileMaintenance/pages/Webinars/Webinars";
 import WebinarSingle from "admin/pages/FileMaintenance/pages/Webinars/WebinarSingle";
@@ -32,6 +31,7 @@ import ActivatedWebinars from "admin/pages/Webinars/LandingPages/ActivatedWebina
 import RequestedWebinars from "admin/pages/Webinars/LandingPages/RequestedWebinars";
 import DynamicWebinarInformation from "admin/pages/Webinars/LandingPages/WebinarSingle/DynamicWebinarInformation";
 import GuardedWrapper from "../layouts/GuardedWrapper";
+import AdminAgentWrapper from "../../library/AdminAgentWrapper/AdminAgentWrapper";
 import Agents from "../pages/Agents/LandingPages/ActiveAgents/Agents";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import adminPathsNew from "./routes";
@@ -59,107 +59,111 @@ import RewardsHistory from "admin/pages/RewardsHistory/RewardsHistory";
 import RaiseSupportTicket from "admin/pages/RaiseSupport/Admin/single-page/RaiseSupportTicket";
 import OrderHistory from "admin/pages/OrderHistory/OrderHistory";
 import TrialSubscription from "admin/pages/TrialSubscription/TrialSubscription";
-import RSVPLanding from "pages/RSVP/RSVPLanding";
 import UserAccessWrapper from "./UserAccessWrapper";
+import EventsTable from "admin/pages/Events/components/Table/EventsTable";
+import EventsForm from "admin/pages/Events/components/Form/EventsForm";
+import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
+import SubscriptionGuard from "library/SubscriptionGuard/SubscriptionGuard";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
   ROLE_EDITOR: "ROLE_EDITOR",
   ROLE_MASTER_ADMIN: "ROLE_MASTER_ADMIN",
+  ROLE_SUBSCRIBER: "ROLE_SUBSCRIBER",
 };
 
 export const OUTSOURCE_LINKS = {
-  AGENCY_ROCKET: "https://agencyrocket.com/",
-  BACK_OFFICE: "https://agent.comfortfinancialsolutions.com",
-};
+  AGENCY_ROCKET: 'https://agencyrocket.com/',
+  BACK_OFFICE: 'https://agent.comfortfinancialsolutions.com',
+}
 
 export const MAIN_WEBSITE_LINK = [
-  "https://www.comfortfinancialsolutions.com/",
-  "https://www.gocfs.pro/",
-];
+  'https://www.comfortfinancialsolutions.com/',
+  'https://www.gocfs.pro/',
+]
 
 export const SCHEDULE_TYPES = {
-  WEBINAR: "WEBINAR",
-  PAW: "PAW",
-};
+  WEBINAR: 'WEBINAR',
+  PAW: 'PAW',
+}
 
-export const DEFAULT_IMAGE = "/assets/others/no-image.png";
+export const DEFAULT_IMAGE = '/assets/others/no-image.png'
 
 export const APPOINTMENT_STATUSES = {
-  CANCELLED: "CANCELLED",
-  ACTIVE: "ACTIVE",
-  ONGOING: "ONGOING",
-};
+  CANCELLED: 'CANCELLED',
+  ACTIVE: 'ACTIVE',
+  ONGOING: 'ONGOING',
+}
 
 export const POSITIONS = [
   {
-    value: "POSITION_AGENT",
-    label: "Agent",
+    value: 'POSITION_AGENT',
+    label: 'Agent',
   },
   {
-    value: "POSITION_EDITOR",
-    label: "Editor",
+    value: 'POSITION_EDITOR',
+    label: 'Editor',
   },
   {
-    value: "POSITION_CONTENT_CREATOR",
-    label: "Content Creator",
+    value: 'POSITION_CONTENT_CREATOR',
+    label: 'Content Creator',
   },
-];
+]
 
 export const AGENT_ROLES = [
   {
-    value: "ROLE_TRAINING_ASSOCIATE",
-    label: "Training Associate",
+    value: 'ROLE_TRAINING_ASSOCIATE',
+    label: 'Training Associate',
   },
   {
-    value: "ROLE_ASSOCIATE",
-    label: "Associate",
+    value: 'ROLE_ASSOCIATE',
+    label: 'Associate',
   },
   {
-    value: "ROLE_SENIOR_ASSOCIATE",
-    label: "Senior Associate",
+    value: 'ROLE_SENIOR_ASSOCIATE',
+    label: 'Senior Associate',
   },
   {
-    value: "ROLE_MARKETING_DIRECTOR",
-    label: "Marketing Director",
+    value: 'ROLE_MARKETING_DIRECTOR',
+    label: 'Marketing Director',
   },
   {
-    value: "ROLE_SENIOR_MARKETING_DIRECTOR",
-    label: "Senior Marketing Director",
+    value: 'ROLE_SENIOR_MARKETING_DIRECTOR',
+    label: 'Senior Marketing Director',
   },
   {
-    value: "ROLE_EXECUTIVE_MARKETING_DIRECTOR",
-    label: "Executive Marketing Director",
+    value: 'ROLE_EXECUTIVE_MARKETING_DIRECTOR',
+    label: 'Executive Marketing Director',
   },
   {
-    value: "ROLE_SENIOR_EXECUTIVE_MARKETING",
-    label: "Senior Executive Marketing",
+    value: 'ROLE_SENIOR_EXECUTIVE_MARKETING',
+    label: 'Senior Executive Marketing',
   },
   {
-    value: "ROLE_EXECUTIVE_VICE_PRESIDENT",
-    label: "Executive Vice President",
+    value: 'ROLE_EXECUTIVE_VICE_PRESIDENT',
+    label: 'Executive Vice President',
   },
-];
+]
 export const EDITOR_ROLES = [
   {
-    value: "ROLE_EDITOR_BLOGS",
-    label: "Blogs",
+    value: 'ROLE_EDITOR_BLOGS',
+    label: 'Blogs',
   },
   {
-    value: "ROLE_EDITOR_EMAIL_TEMPLATES",
-    label: "Email Templates",
+    value: 'ROLE_EDITOR_EMAIL_TEMPLATES',
+    label: 'Email Templates',
   },
-];
+]
 export const CONTENT_CREATOR_ROLES = [
   {
-    value: "ROLE_CONTENT_CREATOR_BLOGS",
-    label: "Blogs",
+    value: 'ROLE_CONTENT_CREATOR_BLOGS',
+    label: 'Blogs',
   },
   {
-    value: "ROLE_CONTENT_CREATOR_EMAIL_TEMPLATES",
-    label: "Email Templates",
+    value: 'ROLE_CONTENT_CREATOR_EMAIL_TEMPLATES',
+    label: 'Email Templates',
   },
-];
+]
 
 export const adminRoutes = [
   {
@@ -230,7 +234,7 @@ export const adminRoutes = [
     path: adminPathsNew.profileForm,
     element: (
       <GuardedWrapper>
-        <ProfileForm key="form" />
+        <ProfileForm key='form' />
       </GuardedWrapper>
     ),
   },
@@ -246,7 +250,7 @@ export const adminRoutes = [
     path: adminPathsNew.profileFormWithProfileId,
     element: (
       <GuardedWrapper>
-        <ProfileForm key="form-id" />
+        <ProfileForm key='form-id' />
       </GuardedWrapper>
     ),
   },
@@ -276,14 +280,6 @@ export const adminRoutes = [
       </GuardedWrapper>
     ),
   },
-  // {
-  //   path: adminPathsNew.profile,
-  //   element: (
-  //     <GuardedWrapper>
-  //       <Profile />
-  //     </GuardedWrapper>
-  //   ),
-  // },
   {
     path: adminPathsNew.appointments,
     element: (
@@ -472,7 +468,9 @@ export const adminRoutes = [
     path: adminPathsNew.trialSubscription,
     element: (
       <GuardedWrapper>
-        <TrialSubscription />
+        <SubscriptionGuard>
+          <TrialSubscription />
+        </SubscriptionGuard>
       </GuardedWrapper>
     ),
   },
@@ -668,4 +666,4 @@ export const adminRoutes = [
       </GuardedWrapper>
     ),
   },
-];
+]
