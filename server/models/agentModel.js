@@ -118,7 +118,7 @@ const agentSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["ACTIVATED", "DECLINED", "PENDING", "DEACTIVATED"],
+      enum: ["ACTIVATED", "DECLINED", "PENDING", "DEACTIVATED", "ARCHIVED"],
     },
     telNumber: {
       type: String,
