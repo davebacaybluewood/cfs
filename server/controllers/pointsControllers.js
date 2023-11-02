@@ -1,6 +1,6 @@
 import Points from "../models/pointsModel.js";
 import RedeeemPoints from "../models/redeemedPointsModel.js";
-import Hierarchy from "../models/hierarchyModel.js";
+import subscriberServices from "../services/subscriberServices.js";
 
 const getPointsByUserGuid = async (req, res, next) => {
   const { userGuid } = req.params;
@@ -46,35 +46,7 @@ const getSubscribersByUserGuid = async (req, res, next) => {
     return;
   }
 
-  const subscribers = await Hierarchy.aggregate([
-    {
-      $match: { recruiterUserGuid: userGuid },
-    },
-    {
-      $lookup: {
-        from: "users",
-        localField: "userGuid",
-        foreignField: "userGuid",
-        as: "userDoc",
-      },
-    },
-    {
-      $set: {
-        firstName: {
-          $first: "$userDoc.firstName",
-        },
-        lastName: {
-          $first: "$userDoc.lastName",
-        },
-        email: {
-          $first: "$userDoc.email",
-        },
-      },
-    },
-    {
-      $unset: "userDoc",
-    },
-  ]);
+  const subscribers = await subscriberServices.fetchSubscribersByUser(userGuid);
 
   res.json({
     totalSubscribers: subscribers.length,
