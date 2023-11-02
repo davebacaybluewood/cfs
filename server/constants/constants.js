@@ -208,6 +208,14 @@ export const API_RES_FAIL = (msg = null) => {
   };
 };
 
+export const status = {
+  ACTIVATED: "ACTIVATED",
+  DEACTIVATED: "DEACTIVATED",
+  DECLINED: "DECLINED",
+  PENDING: "PENDING",
+  UNSUBSCRIBED: "UNSUBSCRIBED",
+};
+
 export {
   CONTENT_CREATOR_ROLES,
   EDITOR_ROLES,

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button as MUIButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -9,11 +9,9 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import agent from "admin/api/agent";
 import { SubscriptionsData } from "api/models/Subscriptions";
-import { useNavigate, useParams } from "react-router-dom";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "admin/context/UserProvider";
 import { useDispatch } from "react-redux";
-import { logout } from "redux/actions/userActions";
 import { paths } from "constants/routes";
 
 const AdminSettings: React.FC = () => {
@@ -23,10 +21,6 @@ const AdminSettings: React.FC = () => {
   const [initialValues, setInitialValues] = useState({
     password: "",
   });
-  const [subscriber, setSubscriber] = useState<
-    SubscriptionsData[] | undefined
-  >();
-  const [showMessage, setShowMessage] = useState(false);
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
 
@@ -88,7 +82,7 @@ const AdminSettings: React.FC = () => {
       >
         <Box sx={style}>
           <div className="modal-content">
-            <h3>Please Verify: </h3>
+            <h3>Input your password to unsubscribe. </h3>
             <Formik
               initialValues={initialValues}
               onSubmit={(data: any) => unsubscibeHandler(data)}

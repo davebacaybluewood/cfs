@@ -95,6 +95,14 @@ export const APPOINTMENT_STATUSES = {
   ONGOING: 'ONGOING',
 }
 
+export const STATUS = {
+  UNSUBSCRIBED: 'UNSUBSCRIBED',
+  ACTIVATED: 'ACTIVATED',
+  DEACTIVATED: 'DEACTIVATED',
+
+}
+
+
 export const POSITIONS = [
   {
     value: 'POSITION_AGENT',

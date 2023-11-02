@@ -5,7 +5,11 @@ import sendEmail from "../utils/sendNodeMail.js";
 import emailChangePasswordMail from "../emailTemplates/email-change-password.js";
 import { v4 as uuidv4 } from "uuid";
 import emailChangePasswordSuccess from "../emailTemplates/emailChangePasswordSuccess.js";
-import { AGENT_STATUSES, API_RES_FAIL } from "../constants/constants.js";
+import {
+  AGENT_STATUSES,
+  API_RES_FAIL,
+  API_RES_OK,
+} from "../constants/constants.js";
 import Agent from "../models/agentModel.js";
 
 /**
@@ -271,7 +275,7 @@ const unsubcribeUser = expressAsync(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     agent.status = AGENT_STATUSES.UNSUBSCRIBED;
     agent.save();
-    res.json("User Successfull Unsubcribed");
+    res.json(API_RES_OK("User Successfull Unsubcribed"));
   } else {
     res.status(500).json(API_RES_FAIL("Error Occured"));
   }
