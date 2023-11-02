@@ -144,7 +144,7 @@ const getEvents = async (userGuid) => {
     position = PROFILE_POSITIONS.SUBSCRIBER.value;
 
     const hierarchyModel = await hierarchy.find({ userGuid });
-    recruiterUserGuid = hierarchyModel[0].recruiterUserGuid;
+    recruiterUserGuid = hierarchyModel[0]?.recruiterUserGuid || "";
   } else {
     /** Master Admin | Content Creator */
     position = PROFILE_POSITIONS.MASTER_ADMIN.value;
