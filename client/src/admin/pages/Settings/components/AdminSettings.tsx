@@ -8,10 +8,8 @@ import FormikTextInput from "library/Formik/FormikInput";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import agent from "admin/api/agent";
-import { SubscriptionsData } from "api/models/Subscriptions";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "admin/context/UserProvider";
-import { useDispatch } from "react-redux";
 import { paths } from "constants/routes";
 
 const AdminSettings: React.FC = () => {
@@ -43,7 +41,6 @@ const AdminSettings: React.FC = () => {
     p: 3,
   };
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   /* Unsubcribe Function */
   const unsubscibeHandler = async (data: any) => {

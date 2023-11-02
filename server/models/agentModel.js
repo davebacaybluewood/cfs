@@ -123,6 +123,7 @@ const agentSchema = mongoose.Schema(
         status.DEACTIVATED,
         status.DECLINED,
         status.PENDING,
+        status.UNSUBSCRIBED,
       ],
     },
     telNumber: {
