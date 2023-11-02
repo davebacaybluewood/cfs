@@ -218,7 +218,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
         <MenuItem
           onClick={() => {
             setDialogStatus(AgentStatuses.ARCHIVED);
-            setConfirmationDialog(true);     
+            setConfirmationDialog(true);  
           }}
         >
           Archive
@@ -388,10 +388,7 @@ const Users: React.FC = () => {
         },
       });
 
-      const allProfiles = await response.data;
-      const filteredProfiles = allProfiles.filter((profile) => profile.status !== AgentStatuses.ARCHIVED);
-
-      setProfiles(filteredProfiles);
+      setProfiles(await response.data);
       setLoading(false);
     };
 
