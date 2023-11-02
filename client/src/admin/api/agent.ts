@@ -27,6 +27,7 @@ import { SubscriberMainData } from "admin/models/subscriberModel";
 import { OrdersData } from "admin/models/ordersModels";
 import Event, { EventBody, ResponseMessage } from "admin/models/eventModel";
 import { RSVPData } from "admin/models/rsvpModel";
+import { Contacts as ContactsData } from "admin/models/contactsModel";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -121,6 +122,12 @@ const Profile = {
 
     return res;
   },
+  unsubscribe: (userGuid: string, password: string) =>
+    requests.put<string>("/api/users/unsubscribe", {
+      userGuid,
+      password,
+    }),
+
   changePassword: (
     passwordId: string,
     password: string,
@@ -418,6 +425,25 @@ const RSVP = {
   },
 };
 
+const Contacts = {
+  getMailingList: async (userGuid: string) => {
+    const res = await requests.get<ContactsData[]>(
+      `/api/contacts/mailing-list/${userGuid}`
+    );
+    return res;
+  },
+  create: async (data: ContactsData) => {
+    const res = axios.post(`/api/contacts/mailing-list/${data.userGuid}`, {
+      emailAddress: data.emailAddress,
+    });
+    return res;
+  },
+  delete: async (contactId: string) => {
+    const res = axios.delete(`/api/contacts/mailing-list/${contactId}`);
+    return res;
+  },
+};
+
 const agent = {
   LandingPage,
   LandingPageRegisteredUsers,
@@ -434,6 +460,7 @@ const agent = {
   TrialSubscription,
   Events,
   RSVP,
+  Contacts,
 };
 
 export default agent;

@@ -5,6 +5,12 @@ import sendEmail from "../utils/sendNodeMail.js";
 import emailChangePasswordMail from "../emailTemplates/email-change-password.js";
 import { v4 as uuidv4 } from "uuid";
 import emailChangePasswordSuccess from "../emailTemplates/emailChangePasswordSuccess.js";
+import {
+  AGENT_STATUSES,
+  API_RES_FAIL,
+  API_RES_OK,
+} from "../constants/constants.js";
+import Agent from "../models/agentModel.js";
 
 /**
  * @desc:  Auth the user & get token
@@ -14,8 +20,11 @@ import emailChangePasswordSuccess from "../emailTemplates/emailChangePasswordSuc
 const authUser = expressAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
+  const agent = await Agent.findOne({ emailAddress: email });
+  const isValidStatus =
+    agent.status === "ACTIVATED" || agent.status === "DEACTIVATED";
 
-  if (user && (await user.matchPassword(password))) {
+  if (user && (await user.matchPassword(password)) && isValidStatus) {
     res.json({
       _id: user._id,
       name: user.name,
@@ -248,6 +257,30 @@ const getCheckUserId = expressAsync(async (req, res) => {
   }
 });
 
+/**
+ * @desc:  Unsubcribe
+ * @route: PUT /api/unsubcribe
+ * @acess: Private
+ */
+const unsubcribeUser = expressAsync(async (req, res) => {
+  const { userGuid, password } = req.body;
+  if (!password || !userGuid) {
+    res.status(404).json(API_RES_FAIL("User not found"));
+    return;
+  }
+
+  const user = await User.findOne({ userGuid });
+  const agent = await Agent.findOne({ userGuid });
+
+  if (user && (await user.matchPassword(password))) {
+    agent.status = AGENT_STATUSES.UNSUBSCRIBED;
+    agent.save();
+    res.json(API_RES_OK("User Successfull Unsubcribed"));
+  } else {
+    res.status(500).json(API_RES_FAIL("Error Occured"));
+  }
+});
+
 export {
   authUser,
   getUserProfile,
@@ -257,4 +290,5 @@ export {
   checkEmail,
   changePassword,
   getCheckUserId,
+  unsubcribeUser,
 };

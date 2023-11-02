@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { NOTIFICATION_ENUMS } from "../constants/constants.js";
+import { NOTIFICATION_ENUMS, status } from "../constants/constants.js";
 import { positionSchema } from "./preProfileModel.js";
 
 const testimonialsSchema = mongoose.Schema(
@@ -118,7 +118,13 @@ const agentSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["ACTIVATED", "DECLINED", "PENDING", "DEACTIVATED"],
+      enum: [
+        status.ACTIVATED,
+        status.DEACTIVATED,
+        status.DECLINED,
+        status.PENDING,
+        status.UNSUBSCRIBED,
+      ],
     },
     telNumber: {
       type: String,
