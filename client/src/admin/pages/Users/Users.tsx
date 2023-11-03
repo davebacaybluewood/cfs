@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import "./Users.scss";
-import { CrumbTypes } from "../Dashboard/types";
-import { paths } from "constants/routes";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import Title from "admin/components/Title/Title";
+import React, { useEffect, useState } from "react"
+import "./Users.scss"
+import { CrumbTypes } from "../Dashboard/types"
+import { paths } from "constants/routes"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import Title from "admin/components/Title/Title"
 import {
   Button,
   Dialog,
@@ -15,35 +15,36 @@ import {
   Menu,
   MenuItem,
   Switch,
-} from "@mui/material";
-import Table from "admin/components/Table/Table";
+} from "@mui/material"
+import Table from "admin/components/Table/Table"
 import {
   AGENT_ROLES,
   CONTENT_CREATOR_ROLES,
   EDITOR_ROLES,
   POSITIONS,
-} from "pages/PortalRegistration/constants";
-import Badge from "library/Badge/Badge";
-import { formatISODateOnly } from "helpers/dateFormatter";
-import { ProfileData } from "admin/hooks/useFetchProfile";
-import ENDPOINTS from "constants/endpoints";
-import axios from "axios";
-import getUserToken from "helpers/getUserToken";
-import { useNavigate } from "react-router-dom";
-import { FaEllipsisV } from "react-icons/fa";
-import { AgentStatuses } from "../Agents/types";
-import { toast } from "react-toastify";
-import Spinner from "library/Spinner/Spinner";
-import FormikTextInput from "library/Formik/FormikInput";
-import { Formik } from "formik";
-import agent from "admin/api/agent";
+} from "pages/PortalRegistration/constants"
+import Badge from "library/Badge/Badge"
+import { formatISODateOnly } from "helpers/dateFormatter"
+import { ProfileData } from "admin/hooks/useFetchProfile"
+import ENDPOINTS from "constants/endpoints"
+import axios from "axios"
+import getUserToken from "helpers/getUserToken"
+import { useNavigate } from "react-router-dom"
+import { FaEllipsisV } from "react-icons/fa"
+import { AgentStatuses } from "../Agents/types"
+import { toast } from "react-toastify"
+import Spinner from "library/Spinner/Spinner"
+import FormikTextInput from "library/Formik/FormikInput"
+import { Formik } from "formik"
+import agent from "admin/api/agent"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 interface ActionButtonsProps {
-  userGuid: string;
-  status: string;
-  isAgent: boolean;
-  id: string;
-  setProfiles: React.Dispatch<React.SetStateAction<ProfileData[] | undefined>>;
+  userGuid: string
+  status: string
+  isAgent: boolean
+  id: string
+  setProfiles: React.Dispatch<React.SetStateAction<ProfileData[] | undefined>>
 }
 const crumbs: CrumbTypes[] = [
   {
@@ -56,31 +57,31 @@ const crumbs: CrumbTypes[] = [
     url: paths.users,
     isActive: true,
   },
-];
+]
 
 const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [confirmationDialog, setConfirmationDialog] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [activeId, setActiveId] = useState("");
-  const open = Boolean(anchorEl);
+  const navigate = useNavigate()
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [confirmationDialog, setConfirmationDialog] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [activeId, setActiveId] = useState("")
+  const open = Boolean(anchorEl)
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   const initialValues = {
     personalWebPage: "",
     displayCalendly: true,
-  };
+  }
   const [dialogStatus, setDialogStatus] = useState<AgentStatuses>(
     AgentStatuses.ACTIVATED
-  );
-  const [openFormDialog, setOpenFormDialog] = useState(false);
-  const [displayCalendlyToggle, setDisplayCalendlyToggle] = useState(true);
+  )
+  const [openFormDialog, setOpenFormDialog] = useState(false)
+  const [displayCalendlyToggle, setDisplayCalendlyToggle] = useState(true)
 
   const dialogMessageStatus =
     dialogStatus === AgentStatuses.ACTIVATED
@@ -93,23 +94,23 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
       ? "Decline"
       : dialogStatus === AgentStatuses.DELETE
       ? "Delete"
-      : "";
+      : ""
 
   const handleDelete = async (id: string) => {
-    setLoading(true);
-    setConfirmationDialog(true);
-    setDialogStatus(AgentStatuses.DELETE);
-    const res = await agent.Agents.deleteAgent(id);
+    setLoading(true)
+    setConfirmationDialog(true)
+    setDialogStatus(AgentStatuses.DELETE)
+    const res = await agent.Agents.deleteAgent(id)
 
     if (res) {
-      setConfirmationDialog(false);
-      setLoading(false);
-      setDialogStatus(AgentStatuses.ACTIVATED);
+      setConfirmationDialog(false)
+      setLoading(false)
+      setDialogStatus(AgentStatuses.ACTIVATED)
       props.setProfiles((prevState) =>
         prevState?.filter((data) => data.userGuid !== activeId)
-      );
+      )
     }
-  };
+  }
 
   const handleArchive = async (agentId: string) => {
     setLoading(true);
@@ -125,9 +126,9 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
         ? AgentStatuses.DEACTIVATED
         : dialogStatus === AgentStatuses.DECLINED
         ? AgentStatuses.DECLINED
-        : AgentStatuses.ACTIVATED;
+        : AgentStatuses.ACTIVATED
 
-    setLoading(true);
+    setLoading(true)
     fetch(ENDPOINTS.AGENT_UPDATE_STATUS.replace(":agentId", props.id), {
       method: "PUT",
       headers: {
@@ -148,29 +149,29 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
           draggable: true,
           progress: undefined,
           theme: "light",
-        });
-        setLoading(false);
-        setConfirmationDialog(false);
-        window.location.reload();
+        })
+        setLoading(false)
+        setConfirmationDialog(false)
+        window.location.reload()
       })
       .then((result) => {
-        console.log(result);
-        setLoading(false);
-      });
-  };
+        console.log(result)
+        setLoading(false)
+      })
+  }
 
   const dialogHandler = () => {
     if (props.isAgent) {
-      setOpenFormDialog(true);
+      setOpenFormDialog(true)
     } else {
-      setConfirmationDialog(true);
+      setConfirmationDialog(true)
     }
-  };
+  }
 
   const closeConfirmationDialog = () => {
-    setConfirmationDialog(false);
-    setAnchorEl(null);
-  };
+    setConfirmationDialog(false)
+    setAnchorEl(null)
+  }
 
   return (
     <div className="action-buttons">
@@ -269,7 +270,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
         <Formik
           initialValues={initialValues}
           onSubmit={async (values, actions) => {
-            setLoading(true);
+            setLoading(true)
             fetch(ENDPOINTS.AGENT_UPDATE_STATUS.replace(":agentId", props.id), {
               method: "PUT",
               headers: {
@@ -292,13 +293,13 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
                   draggable: true,
                   progress: undefined,
                   theme: "light",
-                });
-                window.location.reload();
+                })
+                window.location.reload()
               })
               .then((result) => {
-                console.log(result);
-                setLoading(false);
-              });
+                console.log(result)
+                setLoading(false)
+              })
           }}
         >
           {({ values, handleSubmit, setFieldValue }) => {
@@ -327,14 +328,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
                             className="switch-font"
                             onChange={
                               (e) => {
-                                setDisplayCalendlyToggle(
-                                  !displayCalendlyToggle
-                                );
+                                setDisplayCalendlyToggle(!displayCalendlyToggle)
 
                                 setFieldValue(
                                   "displayCalendly",
                                   !displayCalendlyToggle
-                                );
+                                )
                               }
                               // setFieldValue("displayCalendly", e.target.value)
                             }
@@ -351,8 +350,8 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
                 <DialogActions>
                   <Button
                     onClick={() => {
-                      setOpenFormDialog(false);
-                      setAnchorEl(null);
+                      setOpenFormDialog(false)
+                      setAnchorEl(null)
                     }}
                     style={{ fontSize: "13px" }}
                   >
@@ -367,33 +366,33 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
                   </Button>
                 </DialogActions>
               </React.Fragment>
-            );
+            )
           }}
         </Formik>
       </Dialog>
     </div>
-  );
-};
+  )
+}
 
 const Users: React.FC = () => {
-  const [profiles, setProfiles] = useState<ProfileData[] | undefined>();
-  const [loading, setLoading] = useState(false);
+  const [profiles, setProfiles] = useState<ProfileData[] | undefined>()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     const fetchData = async () => {
       const response = await axios(ENDPOINTS.PROFILE_ROOT, {
         headers: {
           Authorization: "Bearer " + getUserToken(),
         },
-      });
+      })
 
-      setProfiles(await response.data);
-      setLoading(false);
-    };
+      setProfiles(await response.data)
+      setLoading(false)
+    }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const tableDefs = {
     columns: [
@@ -448,45 +447,45 @@ const Users: React.FC = () => {
     ],
 
     rows: profiles?.map((data) => {
-      const isAgent = data.position?.some((e) => e.value === "POSITION_AGENT");
+      const isAgent = data.position?.some((e) => e.value === "POSITION_AGENT")
       const tableData = {
         userGuid: data?.userGuid,
         name: !data?.name ? data?.firstName + " " + data?.lastName : data?.name,
         position: data?.position.map((data) => {
-          const isAgent = POSITIONS[0].value === data.value;
-          const isEditor = POSITIONS[1].value === data.value;
-          const isContentCreator = POSITIONS[2].value === data.value;
+          const isAgent = POSITIONS[0].value === data.value
+          const isEditor = POSITIONS[1].value === data.value
+          const isContentCreator = POSITIONS[2].value === data.value
 
           const badgeVariant = isAgent
             ? "secondary"
             : isEditor || isContentCreator
             ? "danger"
-            : "primary";
+            : "primary"
           return (
             <React.Fragment>
               <Badge variant={badgeVariant}>{data.label}</Badge>
             </React.Fragment>
-          );
+          )
         }),
         roles: data?.roles.map((data) => {
-          const isAgent = AGENT_ROLES?.some((e) => e.value === data.value);
-          const isEditor = EDITOR_ROLES?.some((e) => e.value === data.value);
+          const isAgent = AGENT_ROLES?.some((e) => e.value === data.value)
+          const isEditor = EDITOR_ROLES?.some((e) => e.value === data.value)
           const isContentCreator = CONTENT_CREATOR_ROLES?.some(
             (e) => e.value === data.value
-          );
+          )
 
           const badgeVariant = isAgent
             ? "secondary"
             : isEditor || isContentCreator
             ? "danger"
-            : "primary";
+            : "primary"
           return (
             <React.Fragment>
               <Badge variant={badgeVariant} isBordered>
                 {data.label}
               </Badge>
             </React.Fragment>
-          );
+          )
         }),
         status:
           data?.status.charAt(0).toUpperCase() +
@@ -502,12 +501,12 @@ const Users: React.FC = () => {
             setProfiles={setProfiles}
           />
         ),
-      };
-      return tableData;
+      }
+      return tableData
     }),
-  };
+  }
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <Wrapper
@@ -516,6 +515,7 @@ const Users: React.FC = () => {
       loading={loading}
       className="users-container"
     >
+      <DocumentTitleSetter title="Users | CFS Portal" />
       <Title title="Users" subtitle="List of all users.">
         <Button
           variant="contained"
@@ -534,7 +534,7 @@ const Users: React.FC = () => {
         </Grid>
       </Grid>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Users;
+export default Users

@@ -1,10 +1,10 @@
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import React, { useContext, useEffect, useState } from "react";
-import Title from "admin/components/Title/Title";
-import { CrumbTypes } from "../Dashboard/types";
-import { LandingPageData } from "admin/models/landingPageModels";
-import agent from "admin/api/agent";
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { paths } from "constants/routes"
+import React, { useContext, useEffect, useState } from "react"
+import Title from "admin/components/Title/Title"
+import { CrumbTypes } from "../Dashboard/types"
+import { LandingPageData } from "admin/models/landingPageModels"
+import agent from "admin/api/agent"
 import {
   Button,
   Dialog,
@@ -12,15 +12,16 @@ import {
   DialogContent,
   DialogContentText,
   Grid,
-} from "@mui/material";
-import LandingPageCard from "./components/LandingPageCard";
-import ConditionalSpinner from "admin/components/Spinner/ConditionalSpinner";
-import "./style.scss";
-import { UserContext } from "admin/context/UserProvider";
-import { ROLES } from "admin/constants/constants";
-import { RegisteredUserData } from "./LandingPageInfo";
-import Spinner from "library/Spinner/Spinner";
-import { toast } from "react-toastify";
+} from "@mui/material"
+import LandingPageCard from "./components/LandingPageCard"
+import ConditionalSpinner from "admin/components/Spinner/ConditionalSpinner"
+import "./style.scss"
+import { UserContext } from "admin/context/UserProvider"
+import { ROLES } from "admin/constants/constants"
+import { RegisteredUserData } from "./LandingPageInfo"
+import Spinner from "library/Spinner/Spinner"
+import { toast } from "react-toastify"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -33,78 +34,78 @@ const crumbs: CrumbTypes[] = [
     url: paths.landingPage,
     isActive: true,
   },
-];
+]
 
 const LandingPage: React.FC = () => {
-  const [landingPage, setLandingPage] = useState<LandingPageData[]>();
-  const [loading, setLoading] = useState(true);
+  const [landingPage, setLandingPage] = useState<LandingPageData[]>()
+  const [loading, setLoading] = useState(true)
   const [registeredUsers, setRegisteredUsers] = useState<
     RegisteredUserData[] | undefined
-  >();
-  const [registeredUsersLoading, setRegisteredUsersLoading] = useState(true);
-  const [actionDialog, setActionDialog] = useState(false);
+  >()
+  const [registeredUsersLoading, setRegisteredUsersLoading] = useState(true)
+  const [actionDialog, setActionDialog] = useState(false)
   const [dialogData, setDialogData] = useState({
     status: "",
     title: "",
     userGuid: "",
     pageId: "",
-  });
-  const [actionSpinner, setActionSpinner] = useState(false);
+  })
+  const [actionSpinner, setActionSpinner] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await agent.LandingPage.list();
+      const data = await agent.LandingPage.list()
 
       const filteredLandingPageData = data?.map((lpData) => {
         const isActivated = registeredUsers?.some(
           (e) => e.userGuid === userGuid && e.pageId === lpData.pageCustomId
-        );
+        )
         return {
           ...lpData,
           isActivated,
-        };
-      });
+        }
+      })
 
-      console.log(filteredLandingPageData);
-      setLandingPage(filteredLandingPageData);
-      setLoading(false);
-    };
+      console.log(filteredLandingPageData)
+      setLandingPage(filteredLandingPageData)
+      setLoading(false)
+    }
 
-    fetchData();
-  }, [registeredUsers]);
+    fetchData()
+  }, [registeredUsers])
 
-  const userCtx = useContext(UserContext);
-  const LOGGED_IN_ROLE = userCtx.user?.role;
-  const userGuid = userCtx.user?.userGuid;
+  const userCtx = useContext(UserContext)
+  const LOGGED_IN_ROLE = userCtx.user?.role
+  const userGuid = userCtx.user?.userGuid
 
   useEffect(() => {
     const fetchData = async () => {
       const data =
-        await agent.LandingPageRegisteredUsers.listAllRegisteredUsers();
-      setRegisteredUsers(data);
-      setRegisteredUsersLoading(false);
-    };
+        await agent.LandingPageRegisteredUsers.listAllRegisteredUsers()
+      setRegisteredUsers(data)
+      setRegisteredUsersLoading(false)
+    }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const activateHandler = async () => {
-    setActionSpinner(true);
+    setActionSpinner(true)
     setTimeout(() => {
       agent.LandingPageRegisteredUsers.activate(
         dialogData.pageId,
         userGuid ?? ""
-      );
+      )
 
       setLandingPage(
         landingPage?.map((item) => {
           if (item.pageCustomId === dialogData.pageId) {
-            return { ...item, isActivated: true };
+            return { ...item, isActivated: true }
           } else {
-            return item;
+            return item
           }
         })
-      );
+      )
       toast.info(`Landing Page Activated`, {
         position: "top-right",
         autoClose: 5000,
@@ -114,31 +115,31 @@ const LandingPage: React.FC = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-      });
-      setActionSpinner(false);
-      setActionDialog(false);
-    }, 1000);
-  };
+      })
+      setActionSpinner(false)
+      setActionDialog(false)
+    }, 1000)
+  }
 
   const deactivateHandler = async () => {
-    setActionSpinner(true);
+    setActionSpinner(true)
     setTimeout(() => {
       agent.LandingPageRegisteredUsers.deactivate(
         dialogData.pageId,
         userGuid ?? ""
-      );
+      )
       setLandingPage(
         landingPage?.map((item) => {
           if (item.pageCustomId === dialogData.pageId) {
-            return { ...item, isActivated: false };
+            return { ...item, isActivated: false }
           } else {
-            return item;
+            return item
           }
         })
-      );
+      )
 
-      setActionSpinner(false);
-      setActionDialog(false);
+      setActionSpinner(false)
+      setActionDialog(false)
       toast.info(`Landing Page Deactivated`, {
         position: "top-right",
         autoClose: 5000,
@@ -148,9 +149,9 @@ const LandingPage: React.FC = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-      });
-    }, 1000);
-  };
+      })
+    }, 1000)
+  }
 
   return (
     <Wrapper
@@ -159,6 +160,7 @@ const LandingPage: React.FC = () => {
       loading={false}
       className="landing-pages-wrapper"
     >
+      <DocumentTitleSetter title="Landing Pages | CFS Portal" />
       <Title title="Landing Pages" subtitle="Track the landing page data." />
       {actionSpinner ? <Spinner variant="fixed" /> : null}
       <ConditionalSpinner isLoading={registeredUsersLoading || loading}>
@@ -167,7 +169,7 @@ const LandingPage: React.FC = () => {
             const subTitle =
               LOGGED_IN_ROLE === ROLES.ROLE_MASTER_ADMIN
                 ? `Registered Agents: ${data?.noOfRegisteredUsers}`
-                : `Number of visits: 0`;
+                : `Number of visits: 0`
 
             const activate = () => {
               setDialogData({
@@ -175,10 +177,10 @@ const LandingPage: React.FC = () => {
                 pageId: data.pageCustomId,
                 title: data.name,
                 userGuid: userGuid ?? "",
-              });
+              })
 
-              setActionDialog(true);
-            };
+              setActionDialog(true)
+            }
 
             const deactivate = () => {
               setDialogData({
@@ -186,10 +188,10 @@ const LandingPage: React.FC = () => {
                 pageId: data.pageCustomId,
                 title: data.name,
                 userGuid: userGuid ?? "",
-              });
+              })
 
-              setActionDialog(true);
-            };
+              setActionDialog(true)
+            }
 
             return (
               <Grid item sm={12} md={12} lg={12} key={data.pageCustomId}>
@@ -206,7 +208,7 @@ const LandingPage: React.FC = () => {
                   deactivateHandler={deactivate}
                 />
               </Grid>
-            );
+            )
           })}
         </Grid>
       </ConditionalSpinner>
@@ -237,7 +239,7 @@ const LandingPage: React.FC = () => {
         </DialogActions>
       </Dialog>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage

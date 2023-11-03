@@ -1,23 +1,24 @@
-import { Grid, Button as MUIButton } from "@mui/material";
-import { CrumbTypes } from "admin/pages/Dashboard/types";
-import { paths } from "constants/routes";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { Formik } from "formik";
-import Spinner from "library/Spinner/Spinner";
-import * as Yup from "yup";
-import React, { useContext, useEffect, useState } from "react";
-import "./ContractForm.scss";
-import FormikTextInput from "library/Formik/FormikInput";
-import Select, { GroupBase, StylesConfig } from "react-select";
-import { CFS_STATES } from "constants/constants";
-import Button from "library/Button/Button";
-import agent from "admin/api/agent";
-import { toast } from "react-toastify";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import { UserContext } from "admin/context/UserProvider";
-import ErrorText from "pages/PortalRegistration/components/ErrorText";
-import MultiSelectInputV2 from "library/MultiSelectInput/MultiSelectInputV2";
-import moment from "moment";
+import { Grid, Button as MUIButton } from "@mui/material"
+import { CrumbTypes } from "admin/pages/Dashboard/types"
+import { paths } from "constants/routes"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { Formik } from "formik"
+import Spinner from "library/Spinner/Spinner"
+import * as Yup from "yup"
+import React, { useContext, useEffect, useState } from "react"
+import "./ContractForm.scss"
+import FormikTextInput from "library/Formik/FormikInput"
+import Select, { GroupBase, StylesConfig } from "react-select"
+import { CFS_STATES } from "constants/constants"
+import Button from "library/Button/Button"
+import agent from "admin/api/agent"
+import { toast } from "react-toastify"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import { UserContext } from "admin/context/UserProvider"
+import ErrorText from "pages/PortalRegistration/components/ErrorText"
+import MultiSelectInputV2 from "library/MultiSelectInput/MultiSelectInputV2"
+import moment from "moment"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const LIFE_INSURANCE = [
   "Foresters",
@@ -27,7 +28,7 @@ const LIFE_INSURANCE = [
   "North American",
   "National Life Group",
   "Symetra",
-];
+]
 
 const ANNUITIES = [
   "American Equity",
@@ -35,10 +36,10 @@ const ANNUITIES = [
   "F&G Annuities",
   "Global Atlantic",
   "Nassau RE",
-];
+]
 const ContractForm: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  const today = moment();
+  const [loading, setLoading] = useState(false)
+  const today = moment()
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First name is required."),
@@ -54,7 +55,7 @@ const ContractForm: React.FC = () => {
     carrier: Yup.array()
       .min(1, "Pick at least 1 Insurance Carrier")
       .required("Insurance Carrier is required."),
-  });
+  })
 
   const crumbs: CrumbTypes[] = [
     {
@@ -63,23 +64,23 @@ const ContractForm: React.FC = () => {
       isActive: false,
     },
     {
-      title: "Licensing",
-      url: paths.licensing,
+      title: "Contracting & Appointments",
+      url: paths.contracting,
       isActive: true,
     },
-  ];
+  ]
 
   // React Select
   const reactSelectStyle:
     | StylesConfig<
         {
-          value: string;
-          label: string;
+          value: string
+          label: string
         },
         false,
         GroupBase<{
-          value: string;
-          label: string;
+          value: string
+          label: string
         }>
       >
     | undefined = {
@@ -103,7 +104,7 @@ const ContractForm: React.FC = () => {
         fontFamily: '"Montserrat", sans-serif',
 
         cursor: isDisabled ? "not-allowed" : "default",
-      };
+      }
     },
     placeholder: (styles) => ({
       ...styles,
@@ -113,13 +114,13 @@ const ContractForm: React.FC = () => {
       opacity: "0.7",
       fontFamily: '"Montserrat", sans-serif',
     }),
-  };
+  }
 
-  const userCtx = useContext(UserContext) as any;
+  const userCtx = useContext(UserContext) as any
   const { profile, loading: profileLoading } = useFetchUserProfile(
     userCtx?.user?.userGuid ?? ""
-  );
-  const [thumbnailPreview, setThumbnailPreview] = useState("");
+  )
+  const [thumbnailPreview, setThumbnailPreview] = useState("")
   const [initialValues, setInitialValues] = useState({
     firstName: "",
     lastName: "",
@@ -134,7 +135,7 @@ const ContractForm: React.FC = () => {
     carrier: [],
     annuity: [],
     dateOfBirth: "",
-  });
+  })
 
   useEffect(() => {
     setInitialValues({
@@ -151,20 +152,20 @@ const ContractForm: React.FC = () => {
       carrier: [],
       annuity: [],
       dateOfBirth: "",
-    });
-  }, [profile]);
+    })
+  }, [profile])
 
   const handleFocusBack = () => {
-    setThumbnailPreview("");
-    window.removeEventListener("focus", handleFocusBack);
-  };
+    setThumbnailPreview("")
+    window.removeEventListener("focus", handleFocusBack)
+  }
   const clickedFileInput = () => {
-    window.addEventListener("focus", handleFocusBack);
-  };
+    window.addEventListener("focus", handleFocusBack)
+  }
 
-  const curr = new Date();
-  curr.setDate(curr.getDate() + 3);
-  const currentDate = curr.toISOString().substring(0, 10);
+  const curr = new Date()
+  curr.setDate(curr.getDate() + 3)
+  const currentDate = curr.toISOString().substring(0, 10)
 
   return (
     <Wrapper
@@ -173,6 +174,7 @@ const ContractForm: React.FC = () => {
       loading={false}
       className="users-container"
     >
+      <DocumentTitleSetter title="Contracting & Appointments | CFS Portal" />
       <div className="contract-form-container">
         {loading ? <Spinner variant="fixed" /> : null}
         <h2>Contracting & Appointments</h2>
@@ -195,9 +197,9 @@ const ContractForm: React.FC = () => {
             initialValues={initialValues}
             enableReinitialize
             onSubmit={async (data) => {
-              setLoading(true);
+              setLoading(true)
               try {
-                const response = await agent.Contracting.requestContract(data);
+                const response = await agent.Contracting.requestContract(data)
 
                 if (response) {
                   toast.info(`Contract request has been submitted.`, {
@@ -209,12 +211,12 @@ const ContractForm: React.FC = () => {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
-                  });
-                  setLoading(false);
-                  console.log(response);
+                  })
+                  setLoading(false)
+                  console.log(response)
                 }
               } catch (error) {
-                setLoading(false);
+                setLoading(false)
               }
             }}
             validationSchema={validationSchema}
@@ -331,18 +333,18 @@ const ContractForm: React.FC = () => {
                             keyword: carrier,
                             label: carrier,
                             value: carrier,
-                          };
+                          }
                         })}
                         onChange={(e) => {
-                          const modifiedValue = e?.map((val) => val.keyword);
-                          setFieldValue("carrier", modifiedValue);
+                          const modifiedValue = e?.map((val) => val.keyword)
+                          setFieldValue("carrier", modifiedValue)
                         }}
                         onBlur={(e) => {
                           if (values.carrier.length === 0) {
                             setTouched({
                               ...touched,
                               carrier: [],
-                            });
+                            })
                           }
                         }}
                         error={
@@ -356,7 +358,7 @@ const ContractForm: React.FC = () => {
                             keyword: data,
                             label: data,
                             value: data,
-                          };
+                          }
                         })}
                       />
 
@@ -375,18 +377,18 @@ const ContractForm: React.FC = () => {
                             keyword: carrier,
                             label: carrier,
                             value: carrier,
-                          };
+                          }
                         })}
                         onChange={(e) => {
-                          const modifiedValue = e?.map((val) => val.keyword);
-                          setFieldValue("annuity", modifiedValue);
+                          const modifiedValue = e?.map((val) => val.keyword)
+                          setFieldValue("annuity", modifiedValue)
                         }}
                         onBlur={(e) => {
                           if (values.annuity.length === 0) {
                             setTouched({
                               ...touched,
                               annuity: [],
-                            });
+                            })
                           }
                         }}
                         error={false}
@@ -396,7 +398,7 @@ const ContractForm: React.FC = () => {
                             keyword: data,
                             label: data,
                             value: data,
-                          };
+                          }
                         })}
                       />
                     </Grid>
@@ -417,20 +419,17 @@ const ContractForm: React.FC = () => {
                             setFieldValue(
                               "licensePic",
                               event.currentTarget.files![0]
-                            );
-                            const fileReader = new FileReader();
+                            )
+                            const fileReader = new FileReader()
                             fileReader.onload = () => {
                               if (fileReader.readyState === 2) {
                                 setThumbnailPreview(
                                   fileReader.result?.toString() ?? ""
-                                );
+                                )
                               }
-                            };
-                            fileReader.readAsDataURL(event.target.files![0]);
-                            window.removeEventListener(
-                              "focus",
-                              handleFocusBack
-                            );
+                            }
+                            fileReader.readAsDataURL(event.target.files![0])
+                            window.removeEventListener("focus", handleFocusBack)
                           }}
                           onClick={clickedFileInput}
                         />
@@ -474,14 +473,14 @@ const ContractForm: React.FC = () => {
                   {/* <pre>{JSON.stringify(values, null, 2)}</pre>
                   <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
-              );
+              )
             }}
           </Formik>
         </div>
       </div>
       {loading ? <Spinner variant="fixed" /> : null}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default ContractForm;
+export default ContractForm

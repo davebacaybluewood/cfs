@@ -1,11 +1,11 @@
-import { paths } from "constants/routes";
-import React, { useEffect, useState } from "react";
-import "../style.scss";
-import { useNavigate, useParams } from "react-router-dom";
-import ENDPOINTS from "constants/endpoints";
-import getUserToken from "helpers/getUserToken";
-import FullwidthBox, { FullwidthBoxData } from "../components/FullwidthBox";
-import Wrapper from "admin/components/Wrapper/Wrapper";
+import { paths } from "constants/routes"
+import React, { useEffect, useState } from "react"
+import "../style.scss"
+import { useNavigate, useParams } from "react-router-dom"
+import ENDPOINTS from "constants/endpoints"
+import getUserToken from "helpers/getUserToken"
+import FullwidthBox, { FullwidthBoxData } from "../components/FullwidthBox"
+import Wrapper from "admin/components/Wrapper/Wrapper"
 import {
   Button,
   Dialog,
@@ -13,23 +13,24 @@ import {
   DialogContent,
   DialogContentText,
   Grid,
-} from "@mui/material";
-import Title from "admin/components/Title/Title";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import FormikTextInput from "library/Formik/FormikInput";
-import { NOTIFICATION_ENUMS } from "constants/constants";
-import { toast } from "react-toastify";
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
+} from "@mui/material"
+import Title from "admin/components/Title/Title"
+import { Formik } from "formik"
+import * as Yup from "yup"
+import FormikTextInput from "library/Formik/FormikInput"
+import { NOTIFICATION_ENUMS } from "constants/constants"
+import { toast } from "react-toastify"
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const AdminWebinars: React.FC = () => {
   const initialValues = {
     calendlyUrl: "",
-  };
+  }
   const validationSchema = Yup.object({
     calendlyUrl: Yup.string().required("Personal Calendar field is required."),
-  });
-  const { status } = useParams();
+  })
+  const { status } = useParams()
   const breadcrumb = [
     {
       title: "Comfort Financial Solutions",
@@ -42,19 +43,19 @@ const AdminWebinars: React.FC = () => {
       url: paths.allAgentWebinars,
       isActive: true,
     },
-  ];
-  const [loading, setLoading] = useState(false);
-  const [webinars, setWebinars] = useState<any>([]);
-  const [openDialog, setOpenDialog] = useState(false);
+  ]
+  const [loading, setLoading] = useState(false)
+  const [webinars, setWebinars] = useState<any>([])
+  const [openDialog, setOpenDialog] = useState(false)
 
   const handleClose = () => {
-    setOpenDialog(false);
-  };
+    setOpenDialog(false)
+  }
 
-  const modifiedStatus = status?.toUpperCase();
+  const modifiedStatus = status?.toUpperCase()
   useEffect(() => {
     const getWebinars = async () => {
-      setLoading(true);
+      setLoading(true)
       const response = await fetch(
         ENDPOINTS.AGENT_WEBINARS_FILTERED.replace(
           ":status",
@@ -67,22 +68,22 @@ const AdminWebinars: React.FC = () => {
           },
           body: JSON.stringify({ status: modifiedStatus }),
         }
-      );
+      )
 
-      const data = await response.json();
+      const data = await response.json()
 
-      setWebinars(data);
-      setLoading(false);
-    };
+      setWebinars(data)
+      setLoading(false)
+    }
 
-    getWebinars();
-  }, [status]);
+    getWebinars()
+  }, [status])
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [dialogData, setDialogData] = useState({
     webinarGuid: "",
     agentId: "",
-  });
+  })
 
   const fullwidthData: FullwidthBoxData[] = webinars?.map((data: any) => {
     return {
@@ -95,13 +96,13 @@ const AdminWebinars: React.FC = () => {
         setDialogData({
           webinarGuid: data.webinarGuid,
           agentId: data.userGuid,
-        });
-        setOpenDialog(true);
+        })
+        setOpenDialog(true)
       },
       status: data.status,
       title: data.title,
-    };
-  });
+    }
+  })
   return (
     <Wrapper
       breadcrumb={breadcrumb}
@@ -109,6 +110,7 @@ const AdminWebinars: React.FC = () => {
       error={false}
       className="admin-webinar-container"
     >
+      <DocumentTitleSetter title="Agent Webinars | CFS Portal" />
       <Title title="Agent Webinars" subtitle="Manage all agent webinars." />
       <NoInformationToDisplay
         showNoInfo={fullwidthData?.length === 0 && !loading}
@@ -129,7 +131,7 @@ const AdminWebinars: React.FC = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={async (values, actions) => {
-            setLoading(true);
+            setLoading(true)
             fetch(
               ENDPOINTS.AGENT_WEBINAR_UPDATE.replace(
                 ":webinarGuid",
@@ -157,19 +159,19 @@ const AdminWebinars: React.FC = () => {
                   draggable: true,
                   progress: undefined,
                   theme: "light",
-                });
-                setOpenDialog(false);
+                })
+                setOpenDialog(false)
                 navigate(
                   paths.allAgentWebinars.replace(
                     ":status",
                     NOTIFICATION_ENUMS.WEBINARS.WEBINAR_APPROVED.toLowerCase()
                   )
-                );
+                )
               })
               .then((result) => {
-                console.log(result);
-                setLoading(false);
-              });
+                console.log(result)
+                setLoading(false)
+              })
           }}
         >
           {({ values, handleSubmit }) => {
@@ -205,12 +207,12 @@ const AdminWebinars: React.FC = () => {
                   </Button>
                 </DialogActions>
               </React.Fragment>
-            );
+            )
           }}
         </Formik>
       </Dialog>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default AdminWebinars;
+export default AdminWebinars

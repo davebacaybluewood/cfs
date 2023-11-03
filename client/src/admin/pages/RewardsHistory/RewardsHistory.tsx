@@ -1,9 +1,10 @@
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import { CrumbTypes } from "../Dashboard/types";
-import Title from "admin/components/Title/Title";
-import "./RewardsHistory.scss";
-import RewardsHistoryTable from "./RewardsHistoryTable";
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { paths } from "constants/routes"
+import { CrumbTypes } from "../Dashboard/types"
+import Title from "admin/components/Title/Title"
+import "./RewardsHistory.scss"
+import RewardsHistoryTable from "./RewardsHistoryTable"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -16,11 +17,12 @@ const crumbs: CrumbTypes[] = [
     url: paths.rewardsHistory,
     isActive: true,
   },
-];
+]
 
 const RewardsHistory: React.FC = () => {
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={false}>
+      <DocumentTitleSetter title="Rewards History | CFS Portal" />
       <div className="rewards-history-container">
         <Title
           title="Rewards Points"
@@ -31,7 +33,7 @@ const RewardsHistory: React.FC = () => {
         </div>
       </div>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default RewardsHistory;
+export default RewardsHistory
