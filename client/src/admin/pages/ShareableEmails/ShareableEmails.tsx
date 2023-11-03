@@ -1,13 +1,14 @@
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import React, { useContext, useEffect, useState } from "react";
-import { CrumbTypes } from "../Dashboard/types";
-import EmailCard from "./EmailCard";
-import Title from "admin/components/Title/Title";
-import { createSearchParams, useNavigate } from "react-router-dom";
-import { UserContext } from "admin/context/UserProvider";
-import agent from "admin/api/agent";
-import { EmailTemplateDataSubscriber } from "admin/models/emailMarketing";
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { paths } from "constants/routes"
+import React, { useContext, useEffect, useState } from "react"
+import { CrumbTypes } from "../Dashboard/types"
+import EmailCard from "./EmailCard"
+import Title from "admin/components/Title/Title"
+import { createSearchParams, useNavigate } from "react-router-dom"
+import { UserContext } from "admin/context/UserProvider"
+import agent from "admin/api/agent"
+import { EmailTemplateDataSubscriber } from "admin/models/emailMarketing"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -20,38 +21,39 @@ const crumbs: CrumbTypes[] = [
     url: paths.settings,
     isActive: true,
   },
-];
+]
 
 const ShareableEmails: React.FC = () => {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const userCtx = useContext(UserContext) as any;
-  const userGuid = userCtx?.user?.userGuid;
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
+  const userCtx = useContext(UserContext) as any
+  const userGuid = userCtx?.user?.userGuid
   const [templates, setTemplates] = useState<
     EmailTemplateDataSubscriber | undefined
-  >();
-  const [name, setName] = useState("");
+  >()
+  const [name, setName] = useState("")
 
   useEffect(() => {
-    setLoading(false);
+    setLoading(false)
     const fetchEmailTemplates = async () => {
-      setLoading(true);
+      setLoading(true)
       const data = await agent.EmailMarketing.getEmailTemplatesBySubscriber(
         userGuid
-      );
+      )
 
-      setTemplates(data);
-      setName(data?.name ?? "");
-    };
+      setTemplates(data)
+      setName(data?.name ?? "")
+    }
 
     if (userGuid) {
-      fetchEmailTemplates();
-      setLoading(false);
+      fetchEmailTemplates()
+      setLoading(false)
     }
-  }, [userGuid]);
+  }, [userGuid])
 
   return (
     <Wrapper breadcrumb={crumbs} loading={loading} error={false}>
+      <DocumentTitleSetter title="Shareable emails | CFS Portal" />
       <Title
         title="Shareable emails"
         subtitle="List of available shareable emails."
@@ -71,10 +73,10 @@ const ShareableEmails: React.FC = () => {
               })
             }
           />
-        );
+        )
       })}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default ShareableEmails;
+export default ShareableEmails
