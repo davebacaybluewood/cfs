@@ -5,9 +5,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AdminSidebar from "./Sidebar/Sidebar";
-import useAutoLogoutOnClose from "hooks/useAutoLogoutOnClose";
-import { useDispatch } from "react-redux";
-import { logout } from "redux/actions/userActions";
 import LogoutOnClose from "helpers/LogoutOnClose";
 
 type GuardedWrapperProps = {
