@@ -1,29 +1,30 @@
 .message-page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 3rem 0;
+	margin: 2rem 0;
+	.message-header {
+		text-align: center;
+		h2 {
+			font: 700 3rem "Montserrat";
+			color: #343a40;
+		}
 
-  img {
-    width: 600px;
-  }
+		p {
+			font: 400 1.2rem "Montserrat";
+			color: #8d99ae;
+		}
+	}
 
-  h2 {
-    font: 700 3rem "Montserrat";
-    color: #343a40;
-  }
+	.message-page-content {
+		img {
+			width: 650px;
+			display: block;
+			margin: auto;
+		}
 
-  p {
-    font: 400 1.2rem "Montserrat";
-    color: #8d99ae;
-  }
-
-  .message-captions {
-    font: 600 1.5rem "Montserrat";
-    line-height: 3rem;
-    text-indent: 10rem;
-    text-align: justify;
-    margin: 2rem 0;
-    color: #6c757d;
-  }
+		p {
+			font: 400 2rem "Montserrat";
+			line-height: 3.5rem;
+			text-align: center;
+			color: #6c757d;
+		}
+	}
 }
