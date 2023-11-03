@@ -245,7 +245,6 @@ const ContractForm: React.FC = () => {
   };
 
   const validationSchema = Yup.object({
-    emailBody: Yup.string().required("Email body is required."),
     subject: Yup.string().required("Subject is required."),
     recipients: Yup.array()
       .min(1, "Pick at least 1 recipients")
@@ -331,7 +330,14 @@ const ContractForm: React.FC = () => {
             }}
             validationSchema={validationSchema}
           >
-            {({ values, handleSubmit, setFieldValue, touched, setTouched }) => {
+            {({
+              values,
+              handleSubmit,
+              setFieldValue,
+              touched,
+              setTouched,
+              errors,
+            }) => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -569,8 +575,8 @@ const ContractForm: React.FC = () => {
                       </Button>
                     </div>
                   </div>
-                  {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-                  {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre>
                 </React.Fragment>
               );
             }}
