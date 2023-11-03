@@ -165,7 +165,7 @@ const useSidebarLinks = (
       ],
     },
     {
-      linkText: "Email Marketing",
+      linkText: "EmailPro",
       link: paths.emailMarketing,
       isActive: currentPage === adminPathsNew.emailMarketing.split("/")[2],
       icon: <MdEmail />,

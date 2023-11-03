@@ -45,7 +45,7 @@ const emailMarketingEmail = (data) => {
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!--<![endif]-->
         <!-- Your title goes here -->
-        <title>Email Marketing</title>
+        <title>EmailPro</title>
         <!-- End title -->
         <!-- Start stylesheet -->
         <style type="text/css">
