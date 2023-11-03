@@ -1,15 +1,16 @@
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import React from "react";
-import { CrumbTypes } from "../Dashboard/types";
-import { paths } from "constants/routes";
-import Title from "admin/components/Title/Title";
-import "./Licensing.scss";
-import { AiOutlineDoubleRight } from "react-icons/ai";
-import { BsLink45Deg } from "react-icons/bs";
-import { BiLinkExternal } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import Badge from "library/Badge/Badge";
-import { Grid, Paper } from "@mui/material";
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import React from "react"
+import { CrumbTypes } from "../Dashboard/types"
+import { paths } from "constants/routes"
+import Title from "admin/components/Title/Title"
+import "./Licensing.scss"
+import { AiOutlineDoubleRight } from "react-icons/ai"
+import { BsLink45Deg } from "react-icons/bs"
+import { BiLinkExternal } from "react-icons/bi"
+import { Link } from "react-router-dom"
+import Badge from "library/Badge/Badge"
+import { Grid, Paper } from "@mui/material"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -22,7 +23,7 @@ const crumbs: CrumbTypes[] = [
     url: paths.licensing,
     isActive: true,
   },
-];
+]
 
 const Licensing: React.FC = () => {
   return (
@@ -32,6 +33,7 @@ const Licensing: React.FC = () => {
       loading={false}
       className="users-container"
     >
+      <DocumentTitleSetter title="Licensing | CFS Portal" />
       <div className="license-container">
         <Title title="Licensing Resources" subtitle="" />
         <Grid container spacing={2}>
@@ -237,7 +239,7 @@ const Licensing: React.FC = () => {
         </Grid>
       </div>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Licensing;
+export default Licensing

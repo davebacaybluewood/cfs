@@ -1,7 +1,8 @@
 import expressAsync from "express-async-handler";
-import { API_RES_OK, API_RES_FAIL } from "../constants/constants.js";
+import { API_RES_OK, API_RES_FAIL, ROLES } from "../constants/constants.js";
 import PortalSubscription from "../models/portalSubscription.js";
 import Agent from "../models/agentModel.js";
+import subscriberServices from "../services/subscriberServices.js";
 
 /* @desc:  Subscribe Free Trial
  * @route: POST /api/portal-subscription/free-trial
@@ -29,8 +30,33 @@ const subscribeFreeTrial = expressAsync(async (req, res) => {
  */
 
 const getAllSubscribeFreeTrial = expressAsync(async (req, res) => {
+  let subscribers;
+  const { userGuid } = req.body;
+  const role = ROLES[req.query.position];
+
   try {
+    switch (role) {
+      case ROLES.ROLE_MASTER_ADMIN:
+        subscribers = await subscriberServices.fetchAllSubscribers();
+        break;
+      case ROLES.ROLE_AGENT:
+        subscribers = await subscriberServices.fetchSubscribersByUser(userGuid);
+        break;
+      default:
+        res.status(401).send(API_RES_FAIL("Unauthorized access"));
+        break;
+    }
+
+    let userGuidList = subscribers.map((sub) => {
+      return sub.userGuid;
+    });
+
     const usersData = await PortalSubscription.aggregate([
+      {
+        $match: {
+          userGuid: { $in: [userGuidList] },
+        },
+      },
       {
         $lookup: {
           from: "agents",
@@ -40,58 +66,72 @@ const getAllSubscribeFreeTrial = expressAsync(async (req, res) => {
         },
       },
       {
-        $unwind: {
-          path: "$agent",
-          preserveNullAndEmptyArrays: true,
+        $lookup: {
+          from: "agents",
+          localField: "uplineUserGuid",
+          foreignField: "userGuid",
+          as: "upline",
         },
       },
       {
-        $project: {
-          _id: 1,
-          userGuid: 1,
-          dateCreated: "$createdAt",
-          expirationDate: {
-            $add: ["$createdAt", 30 * 24 * 60 * 60 * 1000],
+        $set: {
+          firstName: {
+            $first: "$agent.firstName",
           },
+          lastName: {
+            $first: "$agent.lastName",
+          },
+          emailAddress: {
+            $first: "$agent.emailAddress",
+          },
+        },
+      },
+      {
+        $unset: "agent",
+      },
+      {
+        $addFields: {
+          expirationDate: {
+            $dateAdd: { startDate: "$createdAt", unit: "month", amount: 1 },
+          },
+        },
+      },
+      {
+        $addFields: {
           daysRemaining: {
             $max: [
               0,
               {
-                $floor: {
-                  $divide: [
-                    {
-                      $subtract: [
-                        {
-                          $add: ["$createdAt", 30 * 24 * 60 * 60 * 1000],
-                        },
-                        new Date(),
-                      ],
-                    },
-                    24 * 60 * 60 * 1000,
-                  ],
+                $dateDiff: {
+                  startDate: new Date(),
+                  endDate: "$expirationDate",
+                  unit: "day",
                 },
               },
             ],
           },
-          firstName: {
-            $ifNull: ["$agent.firstName", "Agent not found"],
-          },
-          lastName: {
-            $ifNull: ["$agent.lastName", "Agent not found"],
-          },
-          emailAddress: {
-            $ifNull: ["$agent.emailAddress", "Agent not found"],
-          },
         },
+      },
+
+      {
+        $set: {
+          uplineFirstName: { $first: "$upline.firstName" },
+          uplinelastName: { $first: "$upline.lastName" },
+        },
+      },
+      {
+        $unset: ["upline", "__v", "updatedAt"],
       },
     ]);
 
+    console.log("usersData", usersData);
     if (usersData.length === 0) {
       return res.status(404).send(API_RES_FAIL("No agent data found"));
     }
 
     res.json(usersData);
   } catch (error) {
+    console.log(error);
     res.status(500).send(API_RES_FAIL("Server error encountered"));
   }
 });

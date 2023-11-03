@@ -1,5 +1,7 @@
+import { API_RES_FAIL } from "../constants/constants.js";
 import Contacts from "../models/contactModel.js";
 import expressAsync from "express-async-handler";
+import User from "../models/userModel.js";
 
 /**
  * @desc: Fetch all contacts
@@ -45,4 +47,69 @@ const deleteContact = expressAsync(async (req, res) => {
   }
 });
 
-export { getContacts, getSingleContact, deleteContact };
+/**
+ * @desc: Fetch all contacts by User
+ * @route: GET /api/contacts/:userGuid/mailing-list/
+ * @access  Private/Admin
+ */
+const getContactsByUser = expressAsync(async (req, res) => {
+  const userGuid = req.params.userGuid;
+
+  if (!userGuid) {
+    return res.status(400).send(API_RES_FAIL("userGuid is required!"));
+  }
+
+  const contacts = await Contacts.find({ userGuid: userGuid });
+
+  res.json(contacts);
+});
+
+/**
+ * @desc: Create Contact per User
+ * @route: POST /api/contacts/:userGuid/mailing-list/
+ * @access: Private/Admin
+ */
+const createUserContact = expressAsync(async (req, res) => {
+  const { emailAddress } = req.body;
+  const { userGuid } = req.params;
+
+  const user = await User.findOne({ userGuid: userGuid });
+
+  if (!user) res.status(400).send(API_RES_FAIL("User provided not found"));
+
+  try {
+    const contact = new Contacts({
+      emailAddress: emailAddress,
+      userGuid: userGuid,
+    });
+    await contact.save();
+
+    res.json(contact);
+  } catch (error) {
+    res
+      .status(400)
+      .send(API_RES_FAIL("[Contacts] Error encountered: " + error));
+  }
+});
+
+const deleteUserContact = expressAsync(async (req, res) => {
+  const { contactId } = req.params;
+  try {
+    const contact = await Contacts.findOneAndDelete({ _id: contactId });
+
+    res.json(contact);
+  } catch (error) {
+    res
+      .status(400)
+      .send(API_RES_FAIL("[Contacts] Error encountered: " + error));
+  }
+});
+
+export {
+  getContacts,
+  getSingleContact,
+  deleteUserContact,
+  getContactsByUser,
+  createUserContact,
+  deleteContact,
+};

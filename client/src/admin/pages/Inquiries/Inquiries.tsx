@@ -1,12 +1,13 @@
-import { Button, Grid } from "@mui/material";
-import Table from "admin/components/Table/Table";
-import Title from "admin/components/Title/Title";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import React, { useEffect } from "react";
-import { CrumbTypes } from "../Dashboard/types";
-import { useDispatch, useSelector } from "react-redux";
-import { listInquiries } from "redux/actions/inquiryActions";
+import { Button, Grid } from "@mui/material"
+import Table from "admin/components/Table/Table"
+import Title from "admin/components/Title/Title"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { paths } from "constants/routes"
+import React, { useEffect } from "react"
+import { CrumbTypes } from "../Dashboard/types"
+import { useDispatch, useSelector } from "react-redux"
+import { listInquiries } from "redux/actions/inquiryActions"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -19,17 +20,17 @@ const crumbs: CrumbTypes[] = [
     url: paths.inquiries,
     isActive: true,
   },
-];
+]
 
 const Inquiries: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(listInquiries() as any);
-  }, [dispatch]);
+    dispatch(listInquiries() as any)
+  }, [dispatch])
 
-  const inquiryList = useSelector((state: any) => state.inquiryList);
-  const { loading, error, inquiries } = inquiryList;
+  const inquiryList = useSelector((state: any) => state.inquiryList)
+  const { loading, error, inquiries } = inquiryList
 
   const actionButtons = (
     <div className="action-buttons">
@@ -40,7 +41,7 @@ const Inquiries: React.FC = () => {
         Delete
       </Button>
     </div>
-  );
+  )
   const tableDefs = {
     columns: [
       {
@@ -82,9 +83,9 @@ const Inquiries: React.FC = () => {
         emailAddress: inquiry.emailAddress,
         mobileNumber: inquiry.mobileNumber,
         actions: actionButtons,
-      };
+      }
     }),
-  };
+  }
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -92,6 +93,7 @@ const Inquiries: React.FC = () => {
       loading={loading}
       className="contacts-wrapper"
     >
+      <DocumentTitleSetter title="Inquiries | CFS Portal" />
       <Title title="Inquiries" subtitle="Track all Comfort Life Inquiries." />
       <Grid container spacing={2}>
         <Grid item sm={12} md={12} lg={12}>
@@ -103,7 +105,7 @@ const Inquiries: React.FC = () => {
         </Grid>
       </Grid>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Inquiries;
+export default Inquiries

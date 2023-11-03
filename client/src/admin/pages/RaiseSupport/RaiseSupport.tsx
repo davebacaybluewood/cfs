@@ -13,6 +13,8 @@ import useFetchUserProfile from "admin/hooks/useFetchProfile"
 // constants
 import { paths } from "constants/routes"
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
+import TableLoading from "admin/components/Spinner/TableLoading"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -44,6 +46,7 @@ const RaiseSupport: React.FC = () => {
       loading={false}
       className="raise-support-container"
     >
+      <DocumentTitleSetter title="Raise Support | CFS Portal" />
       <div className="raise-support-form-container">
         <h2>Raise Support</h2>
         <div
@@ -59,7 +62,7 @@ const RaiseSupport: React.FC = () => {
               )}
             </>
           ) : (
-            <RaiseSupportFormLoading />
+            <TableLoading />
           )}
         </div>
       </div>
