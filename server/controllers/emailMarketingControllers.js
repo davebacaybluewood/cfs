@@ -101,7 +101,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
       bcc
     )
       .then((request, response) => {
-        response?.send("[Email Marketing] has been successfully submitted.") ??
+        response?.send("[EmailPro] has been successfully submitted.") ??
           "";
       })
       .catch((error) => {

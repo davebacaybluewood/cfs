@@ -66,7 +66,7 @@ const ContractForm: React.FC = () => {
       isActive: false,
     },
     {
-      title: "Email Marketing",
+      title: "EmailPro",
       url: paths.emailMarketing,
       isActive: true,
     },
@@ -395,10 +395,10 @@ const ContractForm: React.FC = () => {
       loading={false}
       className="email-marketing-container"
     >
-      <DocumentTitleSetter title="Email Marketing | CFS Portal" />
+      <DocumentTitleSetter title="EmailPro | CFS Portal" />
       <div className="email-marketing-form-container">
         {loading ? <Spinner variant="fixed" /> : null}
-        <h2>Email Marketing</h2>
+        <h2>EmailPro</h2>
         <div className="email-marketing-form">
           <Formik
             initialValues={initialValues}
