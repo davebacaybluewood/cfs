@@ -6,38 +6,39 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-} from "@mui/material";
-import Title from "admin/components/Title/Title";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import React, { memo, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { CrumbTypes } from "../Dashboard/types";
+} from "@mui/material"
+import Title from "admin/components/Title/Title"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { paths } from "constants/routes"
+import React, { memo, useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { CrumbTypes } from "../Dashboard/types"
 import {
   DataGrid,
   GridColDef,
   GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarFilterButton,
-} from "@mui/x-data-grid";
-import { BiFilterAlt } from "react-icons/bi";
-import EventsData from "admin/models/eventModel";
-import "./Events.scss";
-import { UserContext } from "admin/context/UserProvider";
-import useFetchEvents from "./hooks/useFetchEvents";
-import { HiOutlineTrash } from "react-icons/hi";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
-import Spinner from "library/Spinner/Spinner";
-import { formatISODateOnly } from "helpers/date";
-import { MdOutlineRsvp } from "react-icons/md";
-import { FaCopy, FaPen, FaShare } from "react-icons/fa";
-import agent from "admin/api/agent";
-import { toast } from "react-toastify";
-import Event from "admin/models/eventModel";
-import generateRandomChars from "helpers/generateRandomChars";
-import { useCopyToClipboard } from "../../hooks/useCopyToClipboard";
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
+} from "@mui/x-data-grid"
+import { BiFilterAlt } from "react-icons/bi"
+import EventsData from "admin/models/eventModel"
+import "./Events.scss"
+import { UserContext } from "admin/context/UserProvider"
+import useFetchEvents from "./hooks/useFetchEvents"
+import { HiOutlineTrash } from "react-icons/hi"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import { PROFILE_ROLES } from "pages/PortalRegistration/constants"
+import Spinner from "library/Spinner/Spinner"
+import { formatISODateOnly } from "helpers/date"
+import { MdOutlineRsvp } from "react-icons/md"
+import { FaCopy, FaPen, FaShare } from "react-icons/fa"
+import agent from "admin/api/agent"
+import { toast } from "react-toastify"
+import Event from "admin/models/eventModel"
+import generateRandomChars from "helpers/generateRandomChars"
+import { useCopyToClipboard } from "../../hooks/useCopyToClipboard"
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -50,7 +51,7 @@ const crumbs: CrumbTypes[] = [
     url: paths.newAdminEvents,
     isActive: true,
   },
-];
+]
 const columns: GridColDef[] = [
   {
     field: "title",
@@ -92,28 +93,28 @@ const columns: GridColDef[] = [
     renderCell: (params) => params.value,
     filterable: false,
   },
-];
+]
 
 const Events: React.FC = () => {
-  const navigate = useNavigate();
-  const userCtx = useContext(UserContext) as any;
-  const userGuid = userCtx?.user?.userGuid;
-  const { profile } = useFetchUserProfile(userCtx?.user?.userGuid ?? "");
-  const { eventRows } = useFetchEvents(userGuid);
-  const [clipboardValue, setClipboardValue] = useCopyToClipboard();
+  const navigate = useNavigate()
+  const userCtx = useContext(UserContext) as any
+  const userGuid = userCtx?.user?.userGuid
+  const { profile } = useFetchUserProfile(userCtx?.user?.userGuid ?? "")
+  const { eventRows } = useFetchEvents(userGuid)
+  const [clipboardValue, setClipboardValue] = useCopyToClipboard()
 
-  const [events, setEvents] = useState<EventsData[] | undefined>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [events, setEvents] = useState<EventsData[] | undefined>()
+  const [loading, setLoading] = useState<boolean>(false)
   const [dialogConfig, setDialogConfig] = useState({
     id: "",
     isOpen: false,
     message: "",
-  });
-  const [pageEventRows, setPageEventRows] = useState<Event[] | undefined>();
+  })
+  const [pageEventRows, setPageEventRows] = useState<Event[] | undefined>()
 
   const isAdmin = profile?.roles?.some((f) => {
-    return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
-  });
+    return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value
+  })
   const isAgent = profile?.roles?.some((f) => {
     return (
       f.value === PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value ||
@@ -125,11 +126,11 @@ const Events: React.FC = () => {
       f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
       f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_MARKETING_DIRECTOR.value ||
       f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
-    );
-  });
+    )
+  })
   const isSubscriber = profile?.roles?.some((f) => {
-    return f.value === PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value;
-  });
+    return f.value === PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value
+  })
 
   const isFreeTrial = profile?.roles?.some((f) => {
     return (
@@ -138,25 +139,25 @@ const Events: React.FC = () => {
   });
 
   useEffect(() => {
-    setPageEventRows(eventRows);
-  }, [userGuid, eventRows]);
+    setPageEventRows(eventRows)
+  }, [userGuid, eventRows])
 
   const FilteredGridToolbar = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const open = Boolean(anchorEl)
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
-    };
+      setAnchorEl(event.currentTarget)
+    }
     const handleFilterStatus = (status: string) => {
       setEvents((prevState) => {
-        const filteredData = events?.filter((data) => data.status === status);
+        const filteredData = events?.filter((data) => data.status === status)
 
-        return status === "All" ? events : filteredData;
-      });
-      setAnchorEl(null);
-    };
+        return status === "All" ? events : filteredData
+      })
+      setAnchorEl(null)
+    }
 
-    const status = ["All", "Coming Soon", "Ongoing", "Completed", "Cancelled"];
+    const status = ["All", "Coming Soon", "Ongoing", "Completed", "Cancelled"]
     return (
       <GridToolbarContainer className="custom-toolbar">
         <GridToolbarColumnsButton />
@@ -173,12 +174,12 @@ const Events: React.FC = () => {
               <MenuItem key={s} onClick={() => handleFilterStatus(s)}>
                 {s}
               </MenuItem>
-            );
+            )
           })}
         </Menu>
       </GridToolbarContainer>
-    );
-  };
+    )
+  }
 
   const eventDataRows = pageEventRows?.map((event) => {
     const modifiedData = {
@@ -194,7 +195,7 @@ const Events: React.FC = () => {
       ),
       authorName: event.authorFirstName + " " + event.authorLastName,
       noOfAttendees: event.rsvps.noOfAtendees,
-    };
+    }
 
     const agentAndAdminRows = {
       ...modifiedData,
@@ -214,8 +215,8 @@ const Events: React.FC = () => {
               setClipboardValue(
                 window.location.host +
                   paths.rsvpForm.replace(":eventId", event._id)
-              );
-              toast("Link copied to Clipboard");
+              )
+              toast("Link copied to Clipboard")
             }}
           >
             <span>Copy Link</span> <FaCopy />
@@ -251,7 +252,7 @@ const Events: React.FC = () => {
           ) : null}
         </React.Fragment>
       ),
-    };
+    }
 
     const subscriberRows = {
       ...modifiedData,
@@ -264,37 +265,37 @@ const Events: React.FC = () => {
                 window.location.host +
                   paths.rsvpForm.replace(":eventId", event._id) +
                   `?userGuid=${userGuid}`
-              );
-              toast("Link copied to Clipboard");
+              )
+              toast("Link copied to Clipboard")
             }}
           >
             <span>Copy Link</span> <FaCopy />
           </button>
         </React.Fragment>
       ),
-    };
+    }
 
     return isAdmin || isAgent || isFreeTrial
       ? agentAndAdminRows
       : isSubscriber
       ? subscriberRows
-      : [];
-  });
+      : []
+  })
 
   const deleteHandler = async (eventId: string) => {
-    setLoading(true);
-    const res = await agent.Events.deleteEvent(dialogConfig.id);
+    setLoading(true)
+    const res = await agent.Events.deleteEvent(dialogConfig.id)
 
     if (res) {
       setPageEventRows((prevState) =>
         prevState?.filter((data) => data._id !== eventId)
-      );
-      setLoading(false);
+      )
+      setLoading(false)
       setDialogConfig({
         id: "",
         isOpen: false,
         message: "",
-      });
+      })
       toast.success(`Event has been deleted.`, {
         position: "top-right",
         autoClose: 5000,
@@ -304,9 +305,9 @@ const Events: React.FC = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-      });
+      })
     }
-  };
+  }
 
   return (
     <Wrapper
@@ -315,6 +316,7 @@ const Events: React.FC = () => {
       loading={false}
       className="event-admin-wrapper"
     >
+      <DocumentTitleSetter title="Events | CFS Portal" />
       <div className="events-container">
         <Title title="Events" subtitle="List of amazing events">
           {isAdmin ? (
@@ -388,7 +390,7 @@ const Events: React.FC = () => {
         </DialogActions>
       </Dialog>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default memo(Events);
+export default memo(Events)

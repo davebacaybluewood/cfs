@@ -8,7 +8,7 @@ function DocumentTitleSetter({ title }) {
     return () => {
       document.title = "Comfort Financial Solutions";
     };
-  }, [title]);
+  }, []);
 
   return null; // This component doesn't render anything
 }

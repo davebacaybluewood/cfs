@@ -195,4 +195,74 @@ const subscriberRegistration = async (
   return response;
 };
 
-export default { emailConfirmation, subscriberRegistration };
+const fetchSubscribersByUser = async (userGuid) => {
+  const subscribers = await Hierarchy.aggregate([
+    {
+      $match: { recruiterUserGuid: userGuid },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "userGuid",
+        foreignField: "userGuid",
+        as: "userDoc",
+      },
+    },
+    {
+      $set: {
+        firstName: {
+          $first: "$userDoc.firstName",
+        },
+        lastName: {
+          $first: "$userDoc.lastName",
+        },
+        email: {
+          $first: "$userDoc.email",
+        },
+      },
+    },
+    {
+      $unset: "userDoc",
+    },
+  ]);
+
+  return subscribers;
+};
+
+const fetchAllSubscribers = async () => {
+  const subscribers = await Hierarchy.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "userGuid",
+        foreignField: "userGuid",
+        as: "userDoc",
+      },
+    },
+    {
+      $set: {
+        firstName: {
+          $first: "$userDoc.firstName",
+        },
+        lastName: {
+          $first: "$userDoc.lastName",
+        },
+        email: {
+          $first: "$userDoc.email",
+        },
+      },
+    },
+    {
+      $unset: "userDoc",
+    },
+  ]);
+
+  return subscribers;
+};
+
+export default {
+  emailConfirmation,
+  subscriberRegistration,
+  fetchSubscribersByUser,
+  fetchAllSubscribers,
+};

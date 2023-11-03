@@ -1,109 +1,110 @@
-import { Button, Grid } from "@mui/material";
-import Title from "admin/components/Title/Title";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { ROLES } from "admin/constants/constants";
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
-import SocialIcons from "pages/Agents/SocialIcons";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { listAgents } from "redux/actions/agentActions";
-import { RootState } from "store";
-import { CrumbTypes } from "../../../Dashboard/types";
-import "../../Agents.scss";
-import { AgentStatuses } from "../../types";
-import { paths } from "constants/routes";
+import { Button, Grid } from "@mui/material"
+import Title from "admin/components/Title/Title"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { ROLES } from "admin/constants/constants"
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
+import SocialIcons from "pages/Agents/SocialIcons"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { listAgents } from "redux/actions/agentActions"
+import { RootState } from "store"
+import { CrumbTypes } from "../../../Dashboard/types"
+import "../../Agents.scss"
+import { AgentStatuses } from "../../types"
+import { paths } from "constants/routes"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
-const PAGE_LIMIT = 9;
+const PAGE_LIMIT = 9
 
 type AdminAgentsProps = {
-  title?: string;
-  subtitle?: string;
-  showHeaderButtons?: boolean;
-  agentStatus?: AgentStatuses;
-};
+  title?: string
+  subtitle?: string
+  showHeaderButtons?: boolean
+  agentStatus?: AgentStatuses
+}
 const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
-  const ROLE = ROLES.ROLE_MASTER_ADMIN;
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const ROLE = ROLES.ROLE_MASTER_ADMIN
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  let agentStatus: AgentStatuses | undefined;
+  let agentStatus: AgentStatuses | undefined
   switch (props.agentStatus as AgentStatuses | undefined) {
     case AgentStatuses.ACTIVATED:
-      agentStatus = AgentStatuses.ACTIVATED;
-      break;
+      agentStatus = AgentStatuses.ACTIVATED
+      break
     case AgentStatuses.DEACTIVATED:
-      agentStatus = AgentStatuses.DEACTIVATED;
-      break;
+      agentStatus = AgentStatuses.DEACTIVATED
+      break
     case AgentStatuses.PENDING:
-      agentStatus = AgentStatuses.PENDING;
-      break;
+      agentStatus = AgentStatuses.PENDING
+      break
     case AgentStatuses.DECLINED:
-      agentStatus = AgentStatuses.DECLINED;
-      break;
+      agentStatus = AgentStatuses.DECLINED
+      break
     default:
-      agentStatus = AgentStatuses.ACTIVATED;
+      agentStatus = AgentStatuses.ACTIVATED
   }
 
   useEffect(() => {
-    dispatch(listAgents(ROLE, agentStatus) as any);
-  }, [dispatch]);
+    dispatch(listAgents(ROLE, agentStatus) as any)
+  }, [dispatch])
 
-  const agentSelector = useSelector((state: RootState) => state.agentList);
-  const { agents, loading, error } = agentSelector;
-  const [pageLimit, setPageLimit] = useState(PAGE_LIMIT);
+  const agentSelector = useSelector((state: RootState) => state.agentList)
+  const { agents, loading, error } = agentSelector
+  const [pageLimit, setPageLimit] = useState(PAGE_LIMIT)
 
   const loadMoreHandler = () => {
-    setPageLimit((prevState) => prevState + 6);
-  };
-  const hideLoadMoreButton = pageLimit < agents?.length;
+    setPageLimit((prevState) => prevState + 6)
+  }
+  const hideLoadMoreButton = pageLimit < agents?.length
 
   const cardClickHandler = (id: string) => {
     if (props.agentStatus === AgentStatuses.ACTIVATED) {
-      navigate(paths.adminAgentProfile.replace(":id", id));
+      navigate(paths.adminAgentProfile.replace(":id", id))
     } else if (props.agentStatus === AgentStatuses.DEACTIVATED) {
-      navigate(paths.adminDeactivatedAgentProfile.replace(":id", id));
+      navigate(paths.adminDeactivatedAgentProfile.replace(":id", id))
     } else if (props.agentStatus === AgentStatuses.DECLINED) {
-      navigate(paths.adminDeclinedAgentProfile.replace(":id", id));
+      navigate(paths.adminDeclinedAgentProfile.replace(":id", id))
     } else {
-      navigate(paths.adminAgentRequestProfile.replace(":id", id));
+      navigate(paths.adminAgentRequestProfile.replace(":id", id))
     }
-  };
+  }
 
   let breadCrumb = {
     text: "",
     link: "",
-  };
+  }
   switch (props.agentStatus) {
     case AgentStatuses.ACTIVATED:
       breadCrumb = {
         text: "Activated Agents",
         link: paths.agents,
-      };
-      break;
+      }
+      break
     case AgentStatuses.DEACTIVATED:
       breadCrumb = {
         text: "Deactivated Agents",
         link: paths.deactivatedAgents,
-      };
-      break;
+      }
+      break
     case AgentStatuses.DECLINED:
       breadCrumb = {
         text: "Declined Agents",
         link: paths.declinedAgents,
-      };
-      break;
+      }
+      break
     case AgentStatuses.PENDING:
       breadCrumb = {
         text: "Agent Requests",
         link: paths.agentRequests,
-      };
-      break;
+      }
+      break
     default:
       breadCrumb = {
         text: "Activated Agents",
         link: paths.agents,
-      };
+      }
   }
 
   const crumbs: CrumbTypes[] = [
@@ -117,7 +118,7 @@ const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
       url: breadCrumb.link,
       isActive: true,
     },
-  ];
+  ]
 
   return (
     <Wrapper
@@ -126,6 +127,7 @@ const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
       error={error}
       breadcrumb={crumbs}
     >
+      <DocumentTitleSetter title="Agents | CFS Portal" />
       <Title
         title={`${props.title ?? ""} (${agents?.length})`}
         subtitle={props.subtitle ?? ""}
@@ -176,7 +178,7 @@ const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
                   </Grid>
                 </div>
               </Grid>
-            );
+            )
           })}
         </Grid>
       </NoInformationToDisplay>
@@ -186,12 +188,12 @@ const AdminAgents: React.FC<AdminAgentsProps> = (props) => {
         </Button>
       )}
     </Wrapper>
-  );
-};
+  )
+}
 
 AdminAgents.defaultProps = {
   title: "Agents",
   subtitle: "List of agents",
   showHeaderButtons: true,
-};
-export default AdminAgents;
+}
+export default AdminAgents

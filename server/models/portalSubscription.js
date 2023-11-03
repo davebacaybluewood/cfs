@@ -6,6 +6,9 @@ const portalSubscriptionSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    uplineUserGuid: {
+      type: String,
+    },
   },
   {
     timestamps: true,

@@ -14,14 +14,15 @@ import { AGENT_STATUSES, PROFILE_POSITIONS } from "../constants/constants.js";
  */
 const listProfile = expressAsync(async (req, res) => {
   const profiles = await Agents.find({
-    $or: [
-      { status: AGENT_STATUSES.ACTIVATED },
-      { status: AGENT_STATUSES.DEACTIVATED },
+    $and: [
+      { status: { $in: [AGENT_STATUSES.ACTIVATED, AGENT_STATUSES.DEACTIVATED] } },
+      { status: { $ne: AGENT_STATUSES.ARCHIVED } },
     ],
   }).sort({
     createdAt: -1,
   });
   res.json(profiles);
+  
 });
 
 /**

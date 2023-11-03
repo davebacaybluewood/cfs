@@ -1,12 +1,13 @@
-import { paths } from "constants/routes";
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import React, { useContext, useState } from "react";
-import { CrumbTypes } from "./types";
-import ConditionalBox from "./components/ConditionalBox/ConditionalBox";
-import { UserContext } from "admin/context/UserProvider";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import "./Dashboard.scss";
-import { PopupModal, PopupWidget } from "react-calendly";
+import { paths } from "constants/routes"
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import React, { useContext, useState } from "react"
+import { CrumbTypes } from "./types"
+import ConditionalBox from "./components/ConditionalBox/ConditionalBox"
+import { UserContext } from "admin/context/UserProvider"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import "./Dashboard.scss"
+import { PopupModal, PopupWidget } from "react-calendly"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
 
 const crumbs: CrumbTypes[] = [
   {
@@ -19,7 +20,7 @@ const crumbs: CrumbTypes[] = [
     url: paths.dashboard,
     isActive: true,
   },
-];
+]
 
 /**
  *
@@ -28,15 +29,16 @@ const crumbs: CrumbTypes[] = [
  */
 
 const Dashboard: React.FC = () => {
-  const userCtx = useContext(UserContext) as any;
-  const { profile } = useFetchUserProfile(userCtx?.user?.userGuid ?? "");
-  const USER_POSITION = profile?.position;
-  const USER_ROLE = profile?.roles;
+  const userCtx = useContext(UserContext) as any
+  const { profile } = useFetchUserProfile(userCtx?.user?.userGuid ?? "")
+  const USER_POSITION = profile?.position
+  const USER_ROLE = profile?.roles
 
   // const [showCalendly, setShowCalendly] = useState(true);
 
   return (
     <Wrapper breadcrumb={crumbs} className="dashboard-content">
+      <DocumentTitleSetter title="Dashboard | CFS Portal" />
       <ConditionalBox position={USER_POSITION} roles={USER_ROLE} />
       {/* <PopupModal
         url="https://calendly.com/gocfs/initial-bop-to-existing-agents-in-preparation-of-launching"
@@ -45,7 +47,7 @@ const Dashboard: React.FC = () => {
         rootElement={document.getElementById("root") as any}
       /> */}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard
