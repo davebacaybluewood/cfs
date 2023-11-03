@@ -20,6 +20,12 @@
       -webkit-box-shadow: 0px 10px 36px 0px rgba(0, 0, 0, 0.29);
       -moz-box-shadow: 0px 10px 36px 0px rgba(0, 0, 0, 0.29);
 
+      .form-error {
+        color: #d32f2f;
+        font: 400 1.3rem "Roboto";
+        margin: 0.5rem 0;
+      }
+
       .save-template-error-text {
         display: flex;
         justify-content: end;

@@ -88,6 +88,8 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
       ? "Activate"
       : dialogStatus === AgentStatuses.DEACTIVATED
       ? "Deactivate"
+      : dialogStatus === AgentStatuses.ARCHIVED
+      ? "Archive"
       : dialogStatus === AgentStatuses.DECLINED
       ? "Decline"
       : dialogStatus === AgentStatuses.DELETE
@@ -110,10 +112,16 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
     }
   }
 
+  const handleArchive = async (agentId: string) => {
+    setLoading(true);
+  };
+
   const statusHandler = (agentId: string) => {
     const status =
       dialogStatus === AgentStatuses.ACTIVATED
         ? AgentStatuses.ACTIVATED
+        : dialogStatus === AgentStatuses.ARCHIVED
+        ? AgentStatuses.ARCHIVED
         : dialogStatus === AgentStatuses.DEACTIVATED
         ? AgentStatuses.DEACTIVATED
         : dialogStatus === AgentStatuses.DECLINED
@@ -210,9 +218,17 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            setDialogStatus(AgentStatuses.DELETE)
-            setConfirmationDialog(true)
-            setActiveId(props.userGuid)
+            setDialogStatus(AgentStatuses.ARCHIVED);
+            setConfirmationDialog(true);  
+          }}
+        >
+          Archive
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            setDialogStatus(AgentStatuses.DELETE);
+            setConfirmationDialog(true);
+            setActiveId(props.userGuid);
           }}
           // disabled={props.status === "ACTIVATED"}
         >
