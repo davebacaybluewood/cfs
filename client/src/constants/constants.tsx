@@ -33,6 +33,7 @@ import RSVPForm from "pages/RSVP/RSVPForm";
 import MessagePage from "pages/ThanksPage/MessagePage";
 import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
+import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -165,6 +166,12 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <PortalArticle />,
     path: paths.portalArticle,
+    showHeadline: false,
+    showFooter: true,
+  },
+  {
+    element: <TreeDiagram />,
+    path: '/tree-diagram',
     showHeadline: false,
     showFooter: true,
   },
@@ -325,7 +332,7 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: true,
   },
-];
+]
 
 const CALENDLY = {
   CONSULTATION: "https://calendly.com/gocfs/cfs-consultation",
