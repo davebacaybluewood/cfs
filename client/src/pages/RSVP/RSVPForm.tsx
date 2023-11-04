@@ -13,6 +13,7 @@ import adminAgent from "admin/api/agent";
 import { useParams } from "react-router-dom";
 import Event from "admin/models/eventModel";
 import { formatISODateOnly } from "helpers/date";
+import ErrorText from "pages/PortalRegistration/components/ErrorText";
 
 const RSVPForm: React.FC = () => {
   const { eventId } = useParams();
@@ -34,6 +35,7 @@ const RSVPForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
   const [event, setEvent] = useState<Event | undefined>();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const getSingleEvent = async () => {
@@ -90,7 +92,7 @@ const RSVPForm: React.FC = () => {
                     validationSchema={validationSchema}
                     onSubmit={async (data) => {
                       setLoading(true);
-                      const req = await agent.RSVP.submitRSVP(
+                      const req: any = await agent.RSVP.submitRSVP(
                         data.firstName,
                         data.lastName,
                         data.emailAddress,
@@ -99,8 +101,13 @@ const RSVPForm: React.FC = () => {
                         eventId ?? ""
                       );
 
+                      if (req.status == "error") {
+                        setError(req.message);
+                      } else {
+                        setIsDataSubmitted(true);
+                      }
+
                       setLoading(false);
-                      setIsDataSubmitted(true);
                     }}
                   >
                     {({ values, handleSubmit }) => {
@@ -164,6 +171,7 @@ const RSVPForm: React.FC = () => {
                               </div>
                             </Grid>
                           </Grid>
+                          <ErrorText isError={error !== ""} text={error} />
                           <Button
                             variant="danger"
                             onClick={() => handleSubmit()}

@@ -248,13 +248,22 @@ const RSVP = {
     const endpoint = `/api/rsvp-event/${eventId}`;
 
     try {
-      const res = await requests.post<DefaultResSuccess>(endpoint, {
-        firstName,
-        lastName,
-        emailAddress,
-        phoneNumber,
-        remarks,
-      });
+      const res = await requests
+        .post<DefaultResSuccess>(endpoint, {
+          firstName,
+          lastName,
+          emailAddress,
+          phoneNumber,
+          remarks,
+        })
+        .catch((err) => {
+          let api_res = {
+            message: err.response?.data?.description ?? "Something went wrong",
+            status: "error",
+          };
+
+          return api_res;
+        });
 
       return res;
     } catch (error) {
