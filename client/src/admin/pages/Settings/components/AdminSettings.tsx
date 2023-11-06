@@ -50,8 +50,8 @@ const AdminSettings: React.FC = () => {
 
       if (res) {
         toast.info("You've Successfully Unsubscribed.");
-        sessionStorage.removeItem("userInfo");
-        sessionStorage.removeItem("isAcknowledged");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("isAcknowledged");
         navigate(paths.unsubscribe);
       }
     } catch (error) {

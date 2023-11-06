@@ -37,7 +37,7 @@ export const login =
         payload: data,
       });
 
-      sessionStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error: any) {
       dispatch({
         type: USER_LOGIN_ACTION_TYPES.USER_LOGIN_FAIL,
@@ -50,8 +50,8 @@ export const login =
   };
 
 export const logout = () => (dispatch: any) => {
-  sessionStorage.removeItem("userInfo");
-  sessionStorage.removeItem("isAcknowledged");
+  localStorage.removeItem("userInfo");
+  localStorage.removeItem("isAcknowledged");
   dispatch({
     type: USER_LOGIN_ACTION_TYPES.USER_LOGOUT,
   });

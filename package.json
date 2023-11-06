@@ -60,6 +60,7 @@
     "react-dom-factories": "^1.0.2",
     "react-email-editor": "^1.7.9",
     "react-google-charts": "^4.0.0",
+    "react-organizational-chart": "^2.2.1",
     "react-select": "^5.7.0",
     "react-time-tracker": "^1.0.0",
     "recharts": "^2.7.2",

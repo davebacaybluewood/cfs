@@ -39,7 +39,7 @@ const DynamicWebinarInformation: React.FC = (props) => {
   const [actionLoading, setActionLoading] = useState(false);
   const navigate = useNavigate();
 
-  const agentStorage = sessionStorage.getItem("userInfo");
+  const agentStorage = localStorage.getItem("userInfo");
   const { userGuid } = JSON.parse(agentStorage ?? "");
   const agentInfo = useFetchAgent(userGuid?.toString());
   const agentWebinars = agentInfo.agent?.webinars?.filter(

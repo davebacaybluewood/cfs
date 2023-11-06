@@ -60,6 +60,18 @@ const submitRSVP = expressAsync(async (req, res) => {
 
   if (account.length) {
     userGuid = account[0].userGuid;
+
+    const isEmailExists = await RSVP.findOne({
+      eventId: eventId,
+      userGuid: userGuid,
+    });
+
+    if (isEmailExists) {
+      res
+        .status(400)
+        .json(API_RES_FAIL("Email already used for registration."));
+      return;
+    }
   } else {
     const data = await subscriberServices.subscriberRegistration(
       emailAddress,
@@ -88,7 +100,6 @@ const submitRSVP = expressAsync(async (req, res) => {
   const eventName = event.title;
   const zoomLink = event.meetingLink;
 
-  console.log(event);
   const mailContent = eventInvite({
     password,
     eventName,
