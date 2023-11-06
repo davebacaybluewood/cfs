@@ -114,7 +114,7 @@ const RSVPForm: React.FC = () => {
                       return (
                         <React.Fragment>
                           <Grid container spacing={2}>
-                            <Grid item sm={12} md={6} lg={6}>
+                            <Grid item xs={12} sm={12} md={6} lg={6}>
                               <div className="form-control">
                                 <h5>First Name (Required)</h5>
                                 <FormikTextInput
@@ -125,7 +125,7 @@ const RSVPForm: React.FC = () => {
                                 />
                               </div>
                             </Grid>
-                            <Grid item sm={12} md={6} lg={6} paddingTop={0}>
+                            <Grid item xs={12} sm={12} md={6} lg={6} paddingTop={0}>
                               <div className="form-control">
                                 <h5>Last Name (Required)</h5>
                                 <FormikTextInput
@@ -136,7 +136,7 @@ const RSVPForm: React.FC = () => {
                                 />
                               </div>
                             </Grid>
-                            <Grid item sm={12} lg={12} paddingTop={0}>
+                            <Grid item xs={12} sm={12} lg={12} paddingTop={0}>
                               <div className="form-control">
                                 <h5>Email Address (Required)</h5>
                                 <FormikTextInput
@@ -147,7 +147,7 @@ const RSVPForm: React.FC = () => {
                                 />
                               </div>
                             </Grid>
-                            <Grid item sm={12} lg={12} paddingTop={0}>
+                            <Grid item xs={12} sm={12} lg={12} paddingTop={0}>
                               <div className="form-control">
                                 <h5>Phone Number (Required)</h5>
                                 <FormikTextInput
