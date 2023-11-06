@@ -34,6 +34,7 @@ import MessagePage from "pages/ThanksPage/MessagePage";
 import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
+import Registration from "pages/MicroPages/Mission/Registration/Registration";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -171,7 +172,7 @@ const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     element: <TreeDiagram />,
-    path: '/tree-diagram',
+    path: "/tree-diagram",
     showHeadline: false,
     showFooter: true,
   },
@@ -332,7 +333,16 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: true,
   },
-]
+
+  /* Mission MicroPages */
+  {
+    element: <Registration />,
+    path: paths.registrationMission,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+];
 
 const CALENDLY = {
   CONSULTATION: "https://calendly.com/gocfs/cfs-consultation",

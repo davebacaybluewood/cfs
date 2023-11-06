@@ -1,0 +1,139 @@
+.registration-container {
+	padding: 4rem;
+	background-image: url("../../../../../public/assets/images/mission-micropages/background-mission.png");
+	background-position: center;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	.registration-content {
+		.title-holder {
+			font: 900 4rem "Agrandir";
+			color: #fff;
+			text-align: center;
+		}
+		.form-container {
+			background: rgba(255, 255, 255, 0.4);
+			padding: 4rem 5rem;
+			border-radius: 15px;
+			width: 1000px;
+
+			.left-col-content {
+				h2 {
+					font: 500 2.5rem "Agrandir";
+					color: #212529;
+					margin-top: 2rem;
+				}
+
+				.form-control {
+					margin: 1rem 0;
+					label {
+						font: 600 2rem "Montserrat";
+						color: #212529;
+					}
+					input {
+						background: #fff;
+						padding: 1.5rem 1rem;
+						font: 600 1.5rem "Montserrat";
+					}
+
+					.date-picker-container {
+						input {
+							padding: 0.75rem 0.5rem;
+							font: 600 2rem "Montserrat";
+							border: unset;
+						}
+						.react-datepicker__day {
+							padding: 1rem;
+							font: 300 1.5rem "Montserrat";
+						}
+
+						.react-datepicker__current-month {
+							font: 700 1.5rem "Montserrat";
+						}
+
+						.react-datepicker__day-names {
+							display: flex;
+							justify-content: space-between;
+							font: 300 1.5rem "Montserrat";
+							margin: 1rem 0;
+							margin-bottom: unset;
+						}
+
+						.react-datepicker__navigation {
+							width: 40px;
+							background: unset;
+						}
+					}
+				}
+
+				.two-column-form {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+				}
+
+				button {
+					text-transform: uppercase;
+					background: #212529;
+					color: #fff;
+					font: 600 1.5rem "Montserrat";
+					padding: 1rem 1.2rem;
+					width: 200px;
+					border-radius: 15px;
+					transition: 0.2s;
+
+					&:hover {
+						opacity: 0.7;
+					}
+				}
+			}
+
+			.right-col-content {
+				display: flex;
+				flex-direction: column;
+				img {
+					width: 300px;
+					height: 300px;
+					object-fit: cover;
+					display: block;
+					margin: auto;
+					border-radius: 10px;
+				}
+				.form-actions {
+					margin: 2rem 0;
+					button {
+						background: #212529;
+						color: #fff;
+						font: 600 1.5rem "Montserrat";
+						padding: 1rem 1.2rem;
+						width: 200px;
+						border-radius: 15px;
+						transition: 0.2s;
+						display: block;
+						margin: auto;
+
+						&:hover {
+							opacity: 0.7;
+						}
+					}
+				}
+			}
+		}
+	}
+	pre {
+		color: #fff;
+		font-size: 1.4rem;
+	}
+	.cfs-logo {
+		margin: 2rem 0;
+		display: flex;
+		justify-content: flex-end;
+		width: 100%;
+		img {
+			width: 500px;
+		}
+	}
+}
