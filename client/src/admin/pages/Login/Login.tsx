@@ -132,7 +132,7 @@ const PortalRegistration: React.FC = () => {
                       setLoading(false);
 
                       const storageData = res.user;
-                      sessionStorage.setItem(
+                      localStorage.setItem(
                         "userInfo",
                         JSON.stringify(storageData)
                       );

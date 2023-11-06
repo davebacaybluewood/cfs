@@ -70,7 +70,7 @@ const AgentBox = () => {
 
   const { loading, webinars } = useFetchWebinars();
 
-  const agentStorage = sessionStorage.getItem("userInfo");
+  const agentStorage = localStorage.getItem("userInfo");
   const { userGuid } = JSON.parse(agentStorage ?? "");
   const agentInfo = useFetchAgent(userGuid?.toString());
 

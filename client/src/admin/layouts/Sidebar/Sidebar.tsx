@@ -230,7 +230,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         ) : (
           <div>
             {/* If current role is master admin */}
-            {sessionStorage.userRole ===
+            {localStorage.userRole ===
               PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value &&
               Array.from({ length: linksLengthAdmin }).map(
                 (item, index: number) => (
@@ -242,7 +242,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               )}
 
             {/* If current role is subscriber */}
-            {sessionStorage.userRole ===
+            {localStorage.userRole ===
               PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value &&
               Array.from({ length: linksLengthSub }).map(
                 (item, index: number) => (
@@ -254,7 +254,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               )}
 
             {/* If current role is agent */}
-            {sessionStorage.userRole ===
+            {localStorage.userRole ===
               PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value &&
               Array.from({ length: linksLengthAgent }).map(
                 (item, index: number) => (
