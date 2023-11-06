@@ -35,6 +35,7 @@
     "react": "^18.2.0",
     "react-calendly": "^4.1.1",
     "react-component-export-image": "^1.0.6",
+    "react-datepicker": "^4.21.0",
     "react-dom": "^18.2.0",
     "react-email-editor": "^1.7.8",
     "react-google-charts": "^4.0.0",
