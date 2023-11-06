@@ -1,6 +1,6 @@
-import { Tree, TreeNode } from "react-organizational-chart"
-import "../TreeDiagram.scss"
-import Avatar from "./Avatar"
+import { Tree, TreeNode } from "react-organizational-chart";
+import "../TreeDiagram.scss";
+import Avatar from "./Avatar";
 
 const OrganizationalChart = () => {
   return (
@@ -19,7 +19,7 @@ const OrganizationalChart = () => {
         </TreeNode>
       </Tree>
     </>
-  )
-}
+  );
+};
 
-export default OrganizationalChart
+export default OrganizationalChart;

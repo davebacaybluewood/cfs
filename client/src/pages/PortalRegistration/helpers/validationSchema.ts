@@ -6,7 +6,9 @@ const validationSchema = Yup.object({
   state: Yup.string().required("State field is required."),
   bio: Yup.string().required("Bio field is required."),
   phoneNumber: Yup.string().required("Phone Number field is required."),
-  emailAddress: Yup.string().required("Email Address field is required."),
+  emailAddress: Yup.string()
+    .email("Invalid email address")
+    .required("Email Address field is required."),
   password: Yup.string()
     .required("Password field is required")
     .matches(
