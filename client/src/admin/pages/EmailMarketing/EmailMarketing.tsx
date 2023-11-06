@@ -8,13 +8,13 @@ import {
   Grid,
   Tooltip,
   Typography,
-} from "@mui/material"
-import { CrumbTypes } from "admin/pages/Dashboard/types"
-import { paths } from "constants/routes"
-import Wrapper from "admin/components/Wrapper/Wrapper"
-import { Formik } from "formik"
-import Spinner from "library/Spinner/Spinner"
-import * as Yup from "yup"
+} from "@mui/material";
+import { CrumbTypes } from "admin/pages/Dashboard/types";
+import { paths } from "constants/routes";
+import Wrapper from "admin/components/Wrapper/Wrapper";
+import { Formik } from "formik";
+import Spinner from "library/Spinner/Spinner";
+import * as Yup from "yup";
 import React, {
   useCallback,
   useContext,
@@ -43,21 +43,21 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import EmailEditor, { EditorRef } from "react-email-editor";
 import ReactHtmlParser from "html-react-parser";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter";
 import { Contacts } from "admin/models/contactsModel";
 
 const ContractForm: React.FC = () => {
-  const [loading, setLoading] = useState(false)
-  const [openDrawer, setOpenDrawer] = useState(false)
-  const emailEditorRef = useRef<EditorRef>(null)
-  const [design, setDesign] = useState<any>()
-  const [expanded, setExpanded] = React.useState<string | false>(false)
-  const [saveTemplateError, setSaveTemplateError] = useState<string>("")
+  const [loading, setLoading] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const emailEditorRef = useRef<EditorRef>(null);
+  const [design, setDesign] = useState<any>();
+  const [expanded, setExpanded] = React.useState<string | false>(false);
+  const [saveTemplateError, setSaveTemplateError] = useState<string>("");
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false)
-    }
+      setExpanded(isExpanded ? panel : false);
+    };
 
   const crumbs: CrumbTypes[] = [
     {
@@ -70,7 +70,7 @@ const ContractForm: React.FC = () => {
       url: paths.emailMarketing,
       isActive: true,
     },
-  ]
+  ];
 
   const [initialValues, setInitialValues] = useState({
     recipients: [],
@@ -99,20 +99,20 @@ const ContractForm: React.FC = () => {
       emailBody: emailBody,
       subject: subject,
       settings: settings,
-    }))
+    }));
 
-    emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || ""))
+    emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || ""));
 
-    setOpenDrawer(false)
-  }
+    setOpenDrawer(false);
+  };
 
   useEffect(() => {
     const fetchEmailTemplates = async () => {
-      setLoading(true)
-      const data = await agent.EmailMarketing.getEmailTemplates(userGuid)
+      setLoading(true);
+      const data = await agent.EmailMarketing.getEmailTemplates(userGuid);
 
-      setTemplates(data)
-    }
+      setTemplates(data);
+    };
 
     const fetchMailingList = async () => {
       setLoading(true);
@@ -134,7 +134,7 @@ const ContractForm: React.FC = () => {
       fetchMailingList();
       setLoading(false);
     }
-  }, [userGuid])
+  }, [userGuid]);
 
   const handleCreateContact = async (data: Contacts) => {
     if (data.emailAddress && data.userGuid)
@@ -217,15 +217,15 @@ const ContractForm: React.FC = () => {
                 template.subject,
                 template.design,
                 template.settings
-              )
+              );
             }}
           >
             <span>Import</span> <BsPlusCircle />
           </button>
         </React.Fragment>
       ),
-    }
-  })
+    };
+  });
 
   const columns: GridColDef[] = [
     {
@@ -243,55 +243,56 @@ const ContractForm: React.FC = () => {
       align: "right",
       renderCell: (params) => params.value,
     },
-  ]
+  ];
 
   useEffect(() => {
     const fetchTemplateInfo = async () => {
-      setLoading(true)
+      setLoading(true);
       const data = await agent.EmailMarketing.getSingleTemplate(
         userGuid,
         templateId || ""
-      )
+      );
       setInitialValues({
         emailBody: data.templateBody,
         subject: data.subject,
         recipients: [],
         settings: data.settings,
-      })
-      setDesign(data.design)
+      });
+      setDesign(data.design);
 
       /** Load if edit mode */
       if (Object.keys(data.design)?.length) {
         emailEditorRef.current?.editor?.loadDesign(
           JSON.parse(data.design || "{}")
-        )
+        );
       }
-    }
+    };
     if (userGuid && templateId) {
-      fetchTemplateInfo()
-      setLoading(false)
+      fetchTemplateInfo();
+      setLoading(false);
     }
-  }, [templateId, userGuid])
+  }, [templateId, userGuid]);
 
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
-    const unlayer = emailEditorRef.current?.editor
+    const unlayer = emailEditorRef.current?.editor;
 
     unlayer?.exportHtml(async (htmlData) => {
-      const { design: updatedDesign, html } = htmlData
+      const { design: updatedDesign, html } = htmlData;
 
-      data.design = JSON.stringify(updatedDesign)
-      data.templateBody = html
+      data.design = JSON.stringify(updatedDesign);
+      data.templateBody = html;
+      data.templateStatus = "ACTIVATED";
 
       // check if fields not empty (only templateBody and templateName is needed to validate for this)
-      const isNoEmptyFields = data.templateBody && data.templateName
+      const isNoEmptyFields = data.templateBody && data.templateName;
 
       if (isNoEmptyFields) {
-        setSaveTemplateError("")
-        setLoading(true)
+        setSaveTemplateError("");
+        setLoading(true);
         const response = await agent.EmailMarketing.createEmailTemplate(
           userGuid,
           data
-        )
+        );
 
         if (response) {
           toast.info(`Email Template has been added.`, {
@@ -303,24 +304,24 @@ const ContractForm: React.FC = () => {
             draggable: true,
             progress: undefined,
             theme: "light",
-          })
-          setLoading(false)
+          });
+          setLoading(false);
         }
       } else {
-        setSaveTemplateError("Please complete all fields.")
-        setLoading(false)
+        setSaveTemplateError("Please complete all fields.");
+        setLoading(false);
       }
-    })
-  }
+    });
+  };
 
   const validationSchema = Yup.object({
     subject: Yup.string().required("Subject is required."),
     recipients: Yup.array()
       .min(1, "Pick at least 1 recipients")
       .required("Recipients is required."),
-  })
+  });
 
-  const loadDesign = useCallback(() => {}, [emailEditorRef, design])
+  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
 
   useEffect(() => {}, [design]);
 
@@ -406,23 +407,23 @@ const ContractForm: React.FC = () => {
               const finalData: any = {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
-              }
-              setLoading(true)
+              };
+              setLoading(true);
 
               if (action !== "view") {
-                const unlayer = emailEditorRef.current?.editor
+                const unlayer = emailEditorRef.current?.editor;
                 unlayer?.exportHtml(async (htmlData) => {
-                  const { design: updatedDesign, html } = htmlData
+                  const { design: updatedDesign, html } = htmlData;
 
-                  finalData.design = updatedDesign
-                  finalData.emailBody = html
+                  finalData.design = updatedDesign;
+                  finalData.emailBody = html;
 
                   const response = await agent.EmailMarketing.sendEmail(
                     finalData
-                  )
+                  );
 
                   if (response) {
-                    setLoading(false)
+                    setLoading(false);
                     toast.info(`Email has been submitted.`, {
                       position: "top-right",
                       autoClose: 5000,
@@ -432,19 +433,21 @@ const ContractForm: React.FC = () => {
                       draggable: true,
                       progress: undefined,
                       theme: "light",
-                    })
+                    });
                   } else {
-                    setLoading(false)
+                    setLoading(false);
                   }
-                })
+                });
               } else {
-                finalData.design = design
-                finalData.emailBody = initialValues.emailBody
+                finalData.design = design;
+                finalData.emailBody = initialValues.emailBody;
 
-                const response = await agent.EmailMarketing.sendEmail(finalData)
+                const response = await agent.EmailMarketing.sendEmail(
+                  finalData
+                );
 
                 if (response) {
-                  setLoading(false)
+                  setLoading(false);
                   toast.info(`Email has been submitted.`, {
                     position: "top-right",
                     autoClose: 5000,
@@ -454,9 +457,9 @@ const ContractForm: React.FC = () => {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
-                  })
+                  });
                 } else {
-                  setLoading(false)
+                  setLoading(false);
                 }
               }
             }}
@@ -506,7 +509,7 @@ const ContractForm: React.FC = () => {
                             setTouched({
                               ...touched,
                               recipients: [],
-                            })
+                            });
                           }
                         }}
                         styles={{
@@ -516,7 +519,7 @@ const ContractForm: React.FC = () => {
                               ...defaultStyles,
                               color: "rgba(0, 0, 0, 0.3)",
                               zIndex: 9,
-                            }
+                            };
                           },
 
                           menuPortal: (base) => ({ ...base, zIndex: 9999 }),
@@ -527,7 +530,7 @@ const ContractForm: React.FC = () => {
                               paddingTop: "5px",
                               paddingBottom: "5px",
                               borderColor: "hsl(0, 0%, 80%)",
-                            }
+                            };
                           },
                         }}
                       />
@@ -618,17 +621,17 @@ const ContractForm: React.FC = () => {
                                 if (values.settings.includes("BLOGS")) {
                                   const filteredValues = values.settings.filter(
                                     function (item: string) {
-                                      return item !== "BLOGS"
+                                      return item !== "BLOGS";
                                     }
-                                  )
+                                  );
 
-                                  setFieldValue("settings", filteredValues)
+                                  setFieldValue("settings", filteredValues);
                                 } else {
                                   const filteredValues = [
                                     ...values.settings,
                                     "BLOGS",
-                                  ]
-                                  setFieldValue("settings", filteredValues)
+                                  ];
+                                  setFieldValue("settings", filteredValues);
                                 }
                               }}
                             />
@@ -649,17 +652,17 @@ const ContractForm: React.FC = () => {
                                 ) {
                                   const filteredValues = values.settings.filter(
                                     function (item: string) {
-                                      return item !== "REGISTER_BUTTONS"
+                                      return item !== "REGISTER_BUTTONS";
                                     }
-                                  )
+                                  );
 
-                                  setFieldValue("settings", filteredValues)
+                                  setFieldValue("settings", filteredValues);
                                 } else {
                                   const filteredValues = [
                                     ...values.settings,
                                     "REGISTER_BUTTONS",
-                                  ]
-                                  setFieldValue("settings", filteredValues)
+                                  ];
+                                  setFieldValue("settings", filteredValues);
                                 }
                               }}
                             />
@@ -727,7 +730,7 @@ const ContractForm: React.FC = () => {
                   {/* <pre>{JSON.stringify(values, null, 2)}</pre>
                   <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
-              )
+              );
             }}
           </Formik>
         </div>
@@ -753,7 +756,7 @@ const ContractForm: React.FC = () => {
         </div>
       </DrawerBase>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default ContractForm
+export default ContractForm;
