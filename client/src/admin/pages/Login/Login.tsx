@@ -263,12 +263,16 @@ const PortalRegistration: React.FC = () => {
                   );
                 }}
               </Formik>
-              <div className="login-caption">
+              <div className="login-caption inline-links">
                 <Link
                   to="https://agent.comfortfinancialsolutions.com/Signup/Wizard/0"
                   target="_blank"
                 >
                   Sign up as an Agent
+                </Link>
+                <div className="divider">|</div>
+                <Link to="/portal-registration" target="_blank">
+                  30 Days Free Trial
                 </Link>
               </div>
               <div className="login-caption">
