@@ -353,6 +353,8 @@ const CALENDLY = {
 const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
 const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
 
+const DEFAULT_PFP = "/assets/images/events/mission-micropages/agent-pfp.png";
+
 const TWITTER_LOGO = ({
   width,
   height,
@@ -403,4 +405,5 @@ export {
   SUPPORT_TYPE,
   SUPPORT_STATUS,
   TWITTER_LOGO,
+  DEFAULT_PFP,
 };

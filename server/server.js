@@ -94,7 +94,7 @@ app.use("/api/orders/", orderRoutes);
 app.use("/api/portal-subscription/", portalSubscriptionRoutes);
 app.use("/api/events/", eventRoutes);
 app.use("/api/rsvp-event/", eventsRSVPRoutes);
-app.use("/api/mission", missionRoutes);
+app.use("/api/events/mission", missionRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

@@ -34,7 +34,7 @@ const createMissionAgents = expressAsync(async (req, res) => {
         }
       );
     } catch (error) {
-      profileImgResult = profileImage;
+      profileImgResult = agent.profileImage;
     }
 
     /* Update userGuid */

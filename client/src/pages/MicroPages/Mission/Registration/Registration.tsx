@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MissionPage from "library/MissionWrapper/MissionPage";
 import { Grid } from "@mui/material";
 import DatePicker from "library/DatePicker/DatePicker";
@@ -8,8 +8,14 @@ import * as yup from "yup";
 import Select, { GroupBase, StylesConfig } from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Registration.scss";
-import { CFS_STATES } from "constants/constants";
+import { CFS_STATES, DEFAULT_PFP } from "constants/constants";
 import { Button as MUIButton } from "@mui/material";
+import agent from "api/agent";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import Spinner from "library/Spinner/Spinner";
+import { useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
+import { toast } from "react-toastify";
 
 const Registration: React.FC = () => {
   const [initialValues, setInitialValues] = useState({
@@ -21,25 +27,35 @@ const Registration: React.FC = () => {
     birthDate: "",
     profileImage: "",
   });
-
   const [thumbnailPreview, setThumbnailPreview] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { profile } = useFetchUserProfile(
+    "a694ae6b-7f95-46e9-9fce-f18114cec7b1"
+  );
 
   const validationSchema = yup.object({
-    firstName: yup.string().required("This field is required."),
-    lastName: yup.string().required("This field is required."),
-
-    emailAddress: yup
-      .string()
-      .required("This field is required.")
-      .email("Please input a valid email address."),
     state: yup.string().required("This field is required."),
     zipCode: yup.number().required("This field is required."),
     birthDate: yup.string().required("This field is required."),
-    profileImage: yup.string().required("This field is required"),
   });
 
-  const submitHandler = (data: any) => {
-    console.log("submit", data);
+  const submitHandler = async (data: any) => {
+    try {
+      setLoading(true);
+      await agent.Mission.createMissionAgent(
+        data.emailAddress,
+        data.state,
+        data.zipCode,
+        data.birthDate,
+        data.profileImage
+      );
+      setLoading(false);
+      navigate(paths.unsubscribe);
+    } catch (error) {
+      setLoading(false);
+      toast.error("Invalid Data.");
+    }
   };
 
   // React Select
@@ -95,166 +111,198 @@ const Registration: React.FC = () => {
     window.addEventListener("focus", handleFocusBack);
   };
 
+  const navigate = useNavigate();
   return (
     <MissionPage contentTitle="">
       <div className="registration-container">
         <Formik
           initialValues={initialValues}
-          onSubmit={(data: any) => {
-            console.log("submit: ", data);
+          enableReinitialize
+          onSubmit={async (data: any) => {
+            setLoading(true);
+            await agent.Mission.createMissionAgent(
+              data.emailAddress,
+              data.state,
+              data.zipCode,
+              data.birthDate,
+              data.profileImage
+            );
+            setLoading(false);
+            navigate(paths.unsubscribe);
           }}
           validationSchema={validationSchema}
         >
           {({ errors, values, setFieldValue }) => (
             <React.Fragment>
               <div className="form-container">
-                <Grid container spacing={2} alignItems={"center"}>
-                  <Grid item md={7}>
-                    <div className="left-col-content">
-                      <h2>Registration</h2>
-                      <div className="form-control">
-                        <Grid container spacing={2}>
-                          <Grid item md={6}>
-                            <div className="two-col-form-content ">
-                              <label htmlFor="">First Name</label>
-                              <FormikTextInput
-                                name="firstName"
-                                placeholder="Enter First Name"
-                              />
+                {loading ? (
+                  <Spinner variant="fixed" />
+                ) : (
+                  <React.Fragment>
+                    <Grid container spacing={2} alignItems={"center"}>
+                      <Grid item md={7}>
+                        <div className="left-col-content">
+                          <h2>Registration</h2>
+                          <div className="form-control">
+                            <Grid container spacing={2}>
+                              <Grid item md={6}>
+                                <div className="two-col-form-content ">
+                                  <label htmlFor="">First Name</label>
+                                  <FormikTextInput
+                                    name="firstName"
+                                    placeholder="Enter First Name"
+                                    value={profile?.firstName}
+                                    disabled
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid item md={6}>
+                                <div className="two-col-form-content">
+                                  <label htmlFor="">Last Name</label>
+                                  <FormikTextInput
+                                    name="lastName"
+                                    placeholder="Enter Last Name"
+                                    value={profile?.lastName}
+                                    disabled
+                                  />
+                                </div>
+                              </Grid>
+                            </Grid>
+                          </div>
+                          <div className="form-control">
+                            <label htmlFor="">Email Address</label>
+                            <FormikTextInput
+                              name="emailAddress"
+                              placeholder="Enter Email Address"
+                              value={profile?.emailAddress}
+                              disabled
+                            />
+                          </div>
+                          <div className="form-control ">
+                            <Grid container spacing={2}>
+                              <Grid item md={7}>
+                                <div className="two-col-form-content ">
+                                  <label htmlFor="">State</label>
+                                  <Select
+                                    className="basic-single"
+                                    classNamePrefix="select"
+                                    name="state"
+                                    styles={reactSelectStyle}
+                                    defaultValue={CFS_STATES[0]}
+                                    isDisabled={false}
+                                    isLoading={false}
+                                    isClearable={true}
+                                    isSearchable={true}
+                                    options={CFS_STATES}
+                                    placeholder="Select a state"
+                                    onChange={(value) =>
+                                      setFieldValue("state", value?.value)
+                                    }
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid item md={5}>
+                                <div className="two-col-form-content">
+                                  <label htmlFor="">Zip Code</label>
+                                  <FormikTextInput
+                                    name="zipCode"
+                                    type="number"
+                                    placeholder="Enter Zip Code"
+                                  />
+                                </div>
+                              </Grid>
+                            </Grid>
+                          </div>
+                          <div className="form-control">
+                            <label htmlFor="">Birth Date</label>
+                            <div className="date-picker-container">
+                              <DatePicker name="birthDate" />
                             </div>
-                          </Grid>
-                          <Grid item md={6}>
-                            <div className="two-col-form-content">
-                              <label htmlFor="">Last Name</label>
-                              <FormikTextInput
-                                name="lastName"
-                                placeholder="Enter Last Name"
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </div>
-                      <div className="form-control">
-                        <label htmlFor="">Email Address</label>
-                        <FormikTextInput
-                          name="emailAddress"
-                          placeholder="Enter Email Address"
-                        />
-                      </div>
-                      <div className="form-control ">
-                        <Grid container spacing={2}>
-                          <Grid item md={7}>
-                            <div className="two-col-form-content ">
-                              <label htmlFor="">State</label>
-                              <Select
-                                className="basic-single"
-                                classNamePrefix="select"
-                                name="state"
-                                styles={reactSelectStyle}
-                                defaultValue={CFS_STATES[0]}
-                                isDisabled={false}
-                                isLoading={false}
-                                isClearable={true}
-                                isSearchable={true}
-                                options={CFS_STATES}
-                                placeholder="Select a state"
-                                onChange={(value) =>
-                                  setFieldValue("state", value?.value)
-                                }
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item md={5}>
-                            <div className="two-col-form-content">
-                              <label htmlFor="">Zip Code</label>
-                              <FormikTextInput
-                                name="zipCode"
-                                type="number"
-                                placeholder="Enter Zip Code"
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </div>
-                      <div className="form-control">
-                        <label htmlFor="">Birth Date</label>
-                        <div className="date-picker-container">
-                          <DatePicker name="birthDate" />
+                          </div>
+                          <button
+                            onClick={() => submitHandler(values)}
+                            disabled={
+                              !values.firstName ||
+                              !values.lastName ||
+                              !values.emailAddress ||
+                              !values.state ||
+                              !values.zipCode ||
+                              !values.birthDate
+                            }
+                          >
+                            Join the Mission
+                          </button>
                         </div>
-                      </div>
-                      <button
-                        onClick={() => submitHandler(values)}
-                        disabled={
-                          !values.firstName ||
-                          !values.lastName ||
-                          !values.emailAddress ||
-                          !values.state ||
-                          !values.zipCode ||
-                          !values.birthDate
-                        }
-                      >
-                        Join the Mission
-                      </button>
-                    </div>
-                  </Grid>
-                  <Grid item md={5}>
-                    <div className="right-col-content">
-                      <div className="form-actions">
-                        {thumbnailPreview ||
-                        (typeof values.profileImage === "string" &&
-                          values.profileImage) ? (
-                          <div className="profile-image-holder">
-                            <img
-                              src={
-                                typeof values.profileImage === "string"
-                                  ? values.profileImage
-                                  : thumbnailPreview
-                              }
-                              alt="user-license-pic"
-                            ></img>
-                          </div>
-                        ) : (
-                          <div className="profile-image-holder">
-                            <img src="/assets/images/events/mission-micropages/agent-pfp.png" />
-                          </div>
-                        )}
-                        <MUIButton
-                          variant="contained"
-                          component="label"
-                          className="upload-btn"
-                        >
-                          Upload an Image
-                          <input
-                            type="file"
-                            hidden
-                            accept="image/*"
-                            name="profileImage"
-                            onChange={(event) => {
-                              setFieldValue(
-                                "profileImage",
-                                event.currentTarget.files![0]
-                              );
-                              const fileReader = new FileReader();
-                              fileReader.onload = () => {
-                                if (fileReader.readyState === 2) {
-                                  setThumbnailPreview(
-                                    fileReader.result?.toString() ?? ""
+                      </Grid>
+                      <Grid item md={5}>
+                        <div className="right-col-content">
+                          <div className="form-actions">
+                            {thumbnailPreview ||
+                            (typeof values.profileImage === "string" &&
+                              values.profileImage) ? (
+                              <div className="profile-image-holder">
+                                <img
+                                  src={
+                                    typeof values.profileImage === "string"
+                                      ? values.profileImage
+                                      : thumbnailPreview
+                                  }
+                                  alt="user-license-pic"
+                                ></img>
+                              </div>
+                            ) : (
+                              <div className="profile-image-holder">
+                                <img
+                                  src={
+                                    profile?.avatar !==
+                                    "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps"
+                                      ? profile?.avatar
+                                      : DEFAULT_PFP
+                                  }
+                                />
+                              </div>
+                            )}
+                            <MUIButton
+                              variant="contained"
+                              component="label"
+                              className="upload-btn"
+                            >
+                              Upload an Image
+                              <input
+                                type="file"
+                                hidden
+                                accept="image/*"
+                                name="profileImage"
+                                onChange={(event) => {
+                                  setFieldValue(
+                                    "profileImage",
+                                    event.currentTarget.files![0]
                                   );
-                                }
-                              };
-                              fileReader.readAsDataURL(event.target.files![0]);
-                              window.removeEventListener(
-                                "focus",
-                                handleFocusBack
-                              );
-                            }}
-                            onClick={clickedFileInput}
-                          />
-                        </MUIButton>
-                      </div>
-                    </div>
-                  </Grid>
-                </Grid>
+                                  const fileReader = new FileReader();
+                                  fileReader.onload = () => {
+                                    if (fileReader.readyState === 2) {
+                                      setThumbnailPreview(
+                                        fileReader.result?.toString() ?? ""
+                                      );
+                                    }
+                                  };
+                                  fileReader.readAsDataURL(
+                                    event.target.files![0]
+                                  );
+                                  window.removeEventListener(
+                                    "focus",
+                                    handleFocusBack
+                                  );
+                                }}
+                                onClick={clickedFileInput}
+                              />
+                            </MUIButton>
+                          </div>
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </React.Fragment>
+                )}
               </div>
               {/* Commented for debugging */}
               {/* <pre> {JSON.stringify(values, null, 2)} </pre>
