@@ -1,12 +1,11 @@
 import adminPathsNew from "admin/constants/routes";
-import UserProvider, { UserContext } from "admin/context/UserProvider";
+import UserProvider from "admin/context/UserProvider";
 import classNames from "classnames";
-import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AdminSidebar from "./Sidebar/Sidebar";
-import useGetProfile from "admin/pages/Profile/components/ProfileForm/hooks/useGetProfile";
+import LogoutOnClose from "helpers/LogoutOnClose";
 
 type GuardedWrapperProps = {
   children: React.ReactNode;
@@ -16,7 +15,7 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
   const [toggled, setToggled] = useState(false);
   const navigate = useNavigate();
 
-  const localData = sessionStorage.getItem("userInfo");
+  const localData = localStorage.getItem("userInfo");
 
   useEffect(() => {
     if (!localData) {
@@ -37,8 +36,17 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
     toggled: toggled,
   });
 
+  // const dispatch = useDispatch();
+
+  // const handleLogout = () => {
+  // 	dispatch(logout as any);
+  // };
+
+  // useAutoLogoutOnClose(handleLogout);
+
   return (
     <UserProvider>
+      {/* <LogoutOnClose /> */}
       <div className={adminClassnames}>
         <AdminSidebar
           collapsed={collapsed}

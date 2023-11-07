@@ -4,15 +4,11 @@ const validationSchema = Yup.object({
   firstName: Yup.string().required("First name field is required."),
   lastName: Yup.string().required("Last name field is required."),
   state: Yup.string().required("State field is required."),
-  position: Yup.array()
-    .min(1, "Position field is required.")
-    .required("Position field is required."),
-  roles: Yup.array()
-    .min(1, "Position field is required.")
-    .required("Position field is required."),
   bio: Yup.string().required("Bio field is required."),
   phoneNumber: Yup.string().required("Phone Number field is required."),
-  emailAddress: Yup.string().required("Email Address field is required."),
+  emailAddress: Yup.string()
+    .email("Invalid email address")
+    .required("Email Address field is required."),
   password: Yup.string()
     .required("Password field is required")
     .matches(

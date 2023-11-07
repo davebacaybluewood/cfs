@@ -13,6 +13,7 @@ import adminAgent from "admin/api/agent";
 import { useParams } from "react-router-dom";
 import Event from "admin/models/eventModel";
 import { formatISODateOnly } from "helpers/date";
+import ErrorText from "pages/PortalRegistration/components/ErrorText";
 
 const RSVPForm: React.FC = () => {
   const { eventId } = useParams();
@@ -34,6 +35,7 @@ const RSVPForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
   const [event, setEvent] = useState<Event | undefined>();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const getSingleEvent = async () => {
@@ -90,7 +92,7 @@ const RSVPForm: React.FC = () => {
                     validationSchema={validationSchema}
                     onSubmit={async (data) => {
                       setLoading(true);
-                      const req = await agent.RSVP.submitRSVP(
+                      const req: any = await agent.RSVP.submitRSVP(
                         data.firstName,
                         data.lastName,
                         data.emailAddress,
@@ -99,15 +101,20 @@ const RSVPForm: React.FC = () => {
                         eventId ?? ""
                       );
 
+                      if (req.status == "error") {
+                        setError(req.message);
+                      } else {
+                        setIsDataSubmitted(true);
+                      }
+
                       setLoading(false);
-                      setIsDataSubmitted(true);
                     }}
                   >
                     {({ values, handleSubmit }) => {
                       return (
                         <React.Fragment>
                           <Grid container spacing={2}>
-                            <Grid item sm={12} md={6} lg={6}>
+                            <Grid item xs={12} sm={12} md={6} lg={6}>
                               <div className="form-control">
                                 <h5>First Name (Required)</h5>
                                 <FormikTextInput
@@ -118,7 +125,7 @@ const RSVPForm: React.FC = () => {
                                 />
                               </div>
                             </Grid>
-                            <Grid item sm={12} md={6} lg={6} paddingTop={0}>
+                            <Grid item xs={12} sm={12} md={6} lg={6} paddingTop={0}>
                               <div className="form-control">
                                 <h5>Last Name (Required)</h5>
                                 <FormikTextInput
@@ -129,7 +136,7 @@ const RSVPForm: React.FC = () => {
                                 />
                               </div>
                             </Grid>
-                            <Grid item sm={12} lg={12} paddingTop={0}>
+                            <Grid item xs={12} sm={12} lg={12} paddingTop={0}>
                               <div className="form-control">
                                 <h5>Email Address (Required)</h5>
                                 <FormikTextInput
@@ -140,7 +147,7 @@ const RSVPForm: React.FC = () => {
                                 />
                               </div>
                             </Grid>
-                            <Grid item sm={12} lg={12} paddingTop={0}>
+                            <Grid item xs={12} sm={12} lg={12} paddingTop={0}>
                               <div className="form-control">
                                 <h5>Phone Number (Required)</h5>
                                 <FormikTextInput
@@ -151,7 +158,7 @@ const RSVPForm: React.FC = () => {
                                 />
                               </div>
                             </Grid>
-                            <Grid item sm={12} lg={12}>
+                            <Grid item xs={12} sm={12} lg={12}>
                               <div className="form-control">
                                 <h5>Remarks</h5>
                                 <FormikTextInput
@@ -164,6 +171,7 @@ const RSVPForm: React.FC = () => {
                               </div>
                             </Grid>
                           </Grid>
+                          <ErrorText isError={error !== ""} text={error} />
                           <Button
                             variant="danger"
                             onClick={() => handleSubmit()}

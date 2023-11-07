@@ -6,7 +6,7 @@
     padding: 1rem;
     background-color: #fff;
     margin-top: 5rem;
-    height: 80vh;
+    height: auto;
     position: relative;
     .form-information {
       padding: 2rem;
@@ -80,6 +80,12 @@
 
     .user-form {
       padding: 2rem;
+
+      .form-error {
+        color: #d32f2f;
+        font: 400 1.3rem "Roboto";
+        margin: 0.5rem 0;
+      }
 
       h2 {
         margin-bottom: 2rem;

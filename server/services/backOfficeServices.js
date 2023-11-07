@@ -8,21 +8,22 @@ import Agents from "../models/agentModel.js";
 import { v4 as uuid } from "uuid";
 import { AGENT_ROLES, PROFILE_POSITIONS } from "../constants/constants.js";
 import generateToken from "../utils/generateToken.js";
+import Agent from "../models/agentModel.js";
 
 const BACK_OFFICE_ENDPOINTS = {
   SPECIFIC_AGENT_BY_CODE:
-    "https://test-api.poweredagency.com/agency-management/v1/comfortfinancialsolutions/agents/:agentCode",
-  LOGIN: "https://test-auth.poweredagency.com/connect/token",
+    "https://api.poweredagency.com/agency-management/v1/comfortfinancialsolutions/agents/:agentCode",
+  LOGIN: "https://auth.poweredagency.com/connect/token",
   ACTIVATED_AGENTS:
-    "https://test-api.poweredagency.com/agency-management/v1/comfortfinancialsolutions/agents/recently-activated",
+    "https://api.poweredagency.com/agency-management/v1/comfortfinancialsolutions/agents/recently-activated",
 };
 const DEFAULT_IMAGE =
   "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps";
 
 const backOfficeLogin = async () => {
   const body = new URLSearchParams({
-    client_id: "Gct1Az5AI4uHCYEXWk5o",
-    client_secret: "QslG55ojSUkJqQpIHwbDE360YDVnkmsr",
+    client_id: "F4BFK3GjQTNau95Rk6mP",
+    client_secret: "eUMcJgCqSCEoddkKmaaNVlN57VqhdwQg",
     grant_type: "client_credentials",
     scope: "read:agents tenant:comfortfinancialsolutions",
   });
@@ -52,7 +53,7 @@ const backOfficeAgentInformationByAgentCode = async (
   bearerToken
 ) => {
   const headers = {
-    "Ocp-Apim-Subscription-Key": "9e586c441e624fb084764032235c71a5",
+    "Ocp-Apim-Subscription-Key": "0059c5d0de3f43b480f3a0daec35dc8c",
     Authorization: bearerToken,
   };
 
@@ -73,7 +74,7 @@ const backOfficeAgentInformationByAgentCode = async (
 
 const backOfficeAgents = async (bearerToken) => {
   const headers = {
-    "Ocp-Apim-Subscription-Key": "9e586c441e624fb084764032235c71a5",
+    "Ocp-Apim-Subscription-Key": "0059c5d0de3f43b480f3a0daec35dc8c",
     Authorization: bearerToken,
   };
 
@@ -93,11 +94,20 @@ const loginUsingEmail = async (emailAddress) => {
   /** Get the list of agents from back office */
   const agentsData = await backOfficeAgents(bearerToken);
   const agents = agentsData.items || [];
+  const accountingSystemEmailAddress = agentsData.items?.map(
+    (data) => data.emailAddress
+  );
+
+  const cfsAgents = await Agent.find({});
+  const cfsEmailAddress = cfsAgents.map((data) => data.emailAddress);
+
+  const mergedEmailAddress =
+    accountingSystemEmailAddress.concat(cfsEmailAddress);
 
   /** Validation if the email is existing in the back office */
-  if (agents.length) {
+  if (mergedEmailAddress.length) {
     const agent =
-      agents.find((data) => data.emailAddress === emailAddress) || {};
+      mergedEmailAddress.find((data) => data === emailAddress) || {};
 
     if (Object.keys(agent).length > 0) {
       const verificationCode = generateString(6);
@@ -125,8 +135,12 @@ const loginUsingEmail = async (emailAddress) => {
         throw new Error("Error occured in submission.");
       }
 
+      const agentCodeData = agents.find(
+        (data) => data.emailAddress === emailAddress
+      );
+
       return {
-        agentCode: agent.agentCode,
+        agentCode: agentCodeData.agentCode,
       };
     } else {
       return false;

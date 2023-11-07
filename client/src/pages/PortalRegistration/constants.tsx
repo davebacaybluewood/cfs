@@ -22,6 +22,10 @@ export const PROFILE_POSITIONS = {
     value: "POSITION_MASTER_ADMIN",
     label: "Master Admin",
   },
+  FREE_30DAYS_TRIAL: {
+    value: "POSITION_FREE_30DAYS_TRIAL",
+    label: "Free 30 days trial",
+  },
 };
 
 /**
@@ -95,6 +99,12 @@ export const PROFILE_ROLES = {
       label: "Subscriber",
     },
   },
+  FREE_30DAYS_TRIAL: {
+    ROLE_FREE_30DAYS_TRIAL: {
+      value: "ROLE_FREE_30DAYS_TRIAL",
+      label: "Free 30days Trial",
+    },
+  },
 };
 const POSITIONS = [
   {
@@ -108,6 +118,10 @@ const POSITIONS = [
   {
     value: PROFILE_POSITIONS.CONTENT_CREATOR.value,
     label: PROFILE_POSITIONS.CONTENT_CREATOR.label,
+  },
+  {
+    value: PROFILE_POSITIONS.MASTER_ADMIN.value,
+    label: PROFILE_POSITIONS.MASTER_ADMIN.label,
   },
   {
     value: PROFILE_POSITIONS.MASTER_ADMIN.value,

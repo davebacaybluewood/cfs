@@ -180,7 +180,7 @@ const updateProfileSettings = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const preCreateProfile = expressAsync(async (req, res, next) => {
-  const { emailAddress, password } = req.body;
+  const { emailAddress, password, roles, position } = req.body;
   const userModel = await User.findOne({ email: emailAddress });
   const preProfileModel = await PreProfile.findOne({
     emailAddress: emailAddress,
@@ -226,8 +226,8 @@ const preCreateProfile = expressAsync(async (req, res, next) => {
         discordId: "",
         password: password,
         languages: [],
-        position: [],
-        roles: [],
+        position: position,
+        roles: roles,
         specialties: [],
       };
 
@@ -396,7 +396,7 @@ const registerPreProfile = expressAsync(async (req, res) => {
       emailAddress: req.body.emailAddress,
     });
     const profile = new Agents(preProfile);
-    const user = new User({});
+
     await profile.save();
 
     res.json(profile);

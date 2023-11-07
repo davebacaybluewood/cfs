@@ -1,22 +1,15 @@
 import { Grid, Button as MUIButton } from "@mui/material";
 import FormikTextInput from "library/Formik/FormikInput";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import MultiSelectInputWithCreate from "library/MultiSelectInput/MultiSelectInputWithCreate";
 import { langOptions } from "pages/Agents/AgentsLanding/utils";
 import MultiSelectInputV2 from "library/MultiSelectInput/MultiSelectInputV2";
 import { AGENT_SPECIALTIES } from "constants/constants";
-import {
-  AGENT_ROLES,
-  CONTENT_CREATOR_ROLES,
-  EDITOR_ROLES,
-  POSITIONS,
-  PROFILE_POSITIONS,
-} from "../constants";
 import { FaInfoCircle } from "react-icons/fa";
 import { DEFAULT_IMAGE } from "admin/constants/constants";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
-import { SelectType, ValuesType } from "../models";
+import { ValuesType } from "../models";
 import ErrorText from "./ErrorText";
 import { FormikTouched } from "formik";
 import US_STATES from "constants/statesAndLocation";
@@ -39,23 +32,8 @@ interface PersonalInfoProps {
 }
 
 const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
-  const [roles, setRoles] = useState<SelectType[] | undefined>();
-  const [roleValue, setRoleValue] = useState<SelectType[]>();
+  console.log(props.values);
   const [thumbnailPreview, setThumbnailPreview] = useState("");
-
-  const onChangePositionHandler = (event: any) => {
-    const value = event;
-    setRoleValue(undefined);
-    props.setFieldValue("position", [value]);
-    props.setFieldValue("roles", []);
-    setRoles(
-      value === "ROLE_AGENT"
-        ? AGENT_ROLES
-        : value === "ROLE_EDITOR"
-        ? EDITOR_ROLES
-        : CONTENT_CREATOR_ROLES
-    );
-  };
 
   const handleFocusBack = () => {
     setThumbnailPreview("");
@@ -64,32 +42,6 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
   const clickedFileInput = () => {
     window.addEventListener("focus", handleFocusBack);
   };
-
-  useEffect(() => {
-    if (
-      props.values.position?.some(
-        (e) => e.value === PROFILE_POSITIONS.AGENT.value
-      )
-    ) {
-      setRoles(AGENT_ROLES);
-    } else if (
-      props.values.position?.some(
-        (e) => e.value === PROFILE_POSITIONS.CONTENT_CREATOR.value
-      )
-    ) {
-      setRoles(CONTENT_CREATOR_ROLES);
-    } else {
-      setRoles(EDITOR_ROLES);
-    }
-  }, [props.values.position]);
-
-  useEffect(() => {
-    setRoleValue(props.values.roles);
-  }, [props.values.roles]);
-
-  const filteredPosition = POSITIONS.filter(
-    (data) => data.value !== PROFILE_POSITIONS.MASTER_ADMIN.value
-  );
 
   return (
     <Grid container spacing={2}>
@@ -112,97 +64,6 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
           placeholder="Enter your last name"
         />
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        <label className="form-label">Position</label>
-        <Select
-          classNamePrefix="select"
-          onChange={onChangePositionHandler}
-          onBlur={(e) => {
-            if (!props.values.position.length) {
-              props.setTouched({ ...props.touched, position: true as any });
-            }
-          }}
-          isSearchable={true}
-          name="position"
-          placeholder="Choose a position"
-          options={filteredPosition.map((st: any) => {
-            return {
-              label: st.label,
-              value: st.value,
-            };
-          })}
-          styles={{
-            control: (baseStyles, state) => ({
-              ...baseStyles,
-              fontSize: "13px",
-              paddingTop: "5px",
-              paddingBottom: "5px",
-              border:
-                !props.values.position.length && !!props.touched.position
-                  ? "1px solid #d32f2f"
-                  : undefined,
-            }),
-
-            placeholder: (baseStyles) => ({
-              ...baseStyles,
-              color: "rgba(0, 0, 0, 0.3)",
-            }),
-          }}
-          value={props.values.position![0]}
-        />
-        <ErrorText
-          isError={!props.values.position.length && !!props.touched.position}
-          text="Position field is required."
-        />
-      </Grid>
-      {props.values.position.length ? (
-        <Grid item xs={12} sm={12} md={12} lg={12}>
-          <label className="form-label">Role</label>
-          <Select
-            classNamePrefix="select"
-            onChange={(event) => {
-              props.setFieldValue("roles", [event]);
-            }}
-            onBlur={(e) => {
-              if (!props.values.roles.length) {
-                props.setTouched({ ...props.touched, roles: true as any });
-              }
-            }}
-            isSearchable={true}
-            placeholder="Choose a role"
-            name="role"
-            defaultValue={roleValue}
-            value={roleValue}
-            options={roles?.map((st) => {
-              return {
-                label: st?.label,
-                value: st?.value,
-              };
-            })}
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                fontSize: "13px",
-                paddingTop: "5px",
-                paddingBottom: "5px",
-                border:
-                  !props.values.roles.length && !!props.touched.roles
-                    ? "1px solid #d32f2f"
-                    : undefined,
-              }),
-
-              placeholder: (baseStyles) => ({
-                ...baseStyles,
-                color: "rgba(0, 0, 0, 0.3)",
-              }),
-            }}
-          />
-          <ErrorText
-            isError={!props.values.roles.length && !!props.touched.roles}
-            text="Role field is required."
-          />
-        </Grid>
-      ) : null}
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <label className="form-label">Resident License Number (Optional)</label>
         <FormikTextInput

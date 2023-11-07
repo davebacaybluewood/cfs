@@ -19,14 +19,11 @@ import {
   FaTwitterSquare,
   FaUserAlt,
   FaUserShield,
-  FaUserTag,
 } from "react-icons/fa";
 import Badge from "library/Badge/Badge";
 import checkBlankValue from "helpers/checkBlankValue";
 import { BLANK_VALUE } from "constants/constants";
 import { ValuesType } from "../models";
-import { PayPalButtons } from "@paypal/react-paypal-js";
-import PayPalPayment from "./PayPalPayment";
 
 interface AccountSummaryProps {
   values: ValuesType;
@@ -90,13 +87,14 @@ const AccountSummary: React.FC<AccountSummaryProps> = (props) => {
     },
     {
       title: "Position",
-      subTitle: props.values.position[0].label,
+      subTitle: "Free 30days Trial",
       icon: <FaUserShield />,
-    },
-    {
-      title: "Role",
-      subTitle: props.values.roles[0].label,
-      icon: <FaUserTag />,
+      grid: {
+        xs: 12,
+        sm: 12,
+        md: 12,
+        lg: 12,
+      },
     },
     {
       title: "Resident License Number",
@@ -260,8 +258,6 @@ const AccountSummary: React.FC<AccountSummaryProps> = (props) => {
       </div>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <p className="register-label">Register by clicking these buttons</p>
-          <PayPalPayment payload={props.values} />
           <button className="primary-cfs-btn" onClick={() => props.onSubmit()}>
             Register
           </button>

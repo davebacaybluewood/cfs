@@ -51,7 +51,12 @@ const Appointments: React.FC = () => {
       loading={loading}
       className="appointment-container"
     >
-      <DocumentTitleSetter title="Appoinments | CFS Portal" />
+      {typeId === "webinar" ? (
+        <DocumentTitleSetter title="Webinar Calendars | CFS Portal" />
+      ) : (
+        <DocumentTitleSetter title="PAW | CFS Portal" />
+      )}
+
       <Title
         title={pageTitle + " Appointments"}
         subtitle="View all appointments."

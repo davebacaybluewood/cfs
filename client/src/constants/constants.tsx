@@ -33,6 +33,7 @@ import RSVPForm from "pages/RSVP/RSVPForm";
 import MessagePage from "pages/ThanksPage/MessagePage";
 import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
+import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 
 type ReactRoutesType = RouteProps & {
 	showFooter?: boolean;
@@ -151,6 +152,7 @@ const filteredAdminRoutes: ReactRoutesType[] = adminRoutes.map((data) => {
 });
 
 const REACT_ROUTES: ReactRoutesType[] = [
+<<<<<<< HEAD
 	...filteredAdminRoutes,
 	{
 		element: <Home key="main-index" />,
@@ -326,6 +328,189 @@ const REACT_ROUTES: ReactRoutesType[] = [
 		showFooter: true,
 	},
 ];
+=======
+  ...filteredAdminRoutes,
+  {
+    element: <Home key="main-index" />,
+    path: paths.index,
+    showPartners: true,
+  },
+  {
+    element: <Home key="index" />,
+    path: paths.home,
+    showPartners: true,
+  },
+  {
+    element: <PortalArticle />,
+    path: paths.portalArticle,
+    showHeadline: false,
+    showFooter: true,
+  },
+  {
+    element: <TreeDiagram />,
+    path: '/tree-diagram',
+    showHeadline: false,
+    showFooter: true,
+  },
+  {
+    element: <FamilyProtection />,
+    path: paths.family_protection,
+  },
+  {
+    element: <BusinessProtection />,
+    path: paths.individual_protection,
+    showHeadline: false,
+    theme: "SKY",
+  },
+  {
+    element: <AgentSupport />,
+    path: paths.join_our_team,
+    showHeadline: false,
+    theme: "RED",
+  },
+  {
+    element: <BlogPage />,
+    path: paths.resources,
+  },
+  {
+    element: <AboutUs />,
+    path: paths.about_us,
+  },
+  {
+    element: <Solutions />,
+    path: paths.solutions,
+  },
+  {
+    element: <Events />,
+    path: paths.events,
+    showHeadline: true,
+  },
+  {
+    element: <ContactPage />,
+    path: paths.contact_us,
+  },
+  {
+    element: <SingleBlogPage />,
+    path: paths.single_blog,
+    showNavbar: true,
+    showHeadline: false,
+    showFooter: true,
+  },
+  {
+    element: <PortalRegistration />,
+    path: paths.portalRegistration,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    path: paths.cfsPages,
+    element: <LandingPages key="main" />,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    path: paths.cfsPagesWithAgent,
+    element: <LandingPages key="agent" />,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    path: paths.agent_with_id,
+    element: <Agents />,
+  },
+  {
+    path: paths.webinarAppointment,
+    element: <AgentAppointment showForm={false} />,
+  },
+  {
+    path: paths.webinarForm,
+    element: <AgentWebinar showCalendly={false} />,
+  },
+  {
+    element: <Calculator />,
+    path: "/calculator",
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <PreLicensing />,
+    path: "/pre-licensing",
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <Annuity />,
+    path: "/annuity",
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <Portal />,
+    path: paths.portal,
+  },
+  {
+    element: <TestimonialForm />,
+    path: paths.testimonialForm,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <RSVPForm />,
+    path: paths.rsvpForm,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <Pricing />,
+    path: paths.pricing,
+    showHeadline: false,
+    showFooter: true,
+    showNavbar: true,
+  },
+  {
+    element: <Subscribe />,
+    path: paths.subscriberRegistration,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <SubscribeSuccess />,
+    path: paths.subscribeSuccess,
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  },
+  {
+    element: <MessagePage />,
+    path: paths.unsubscribe,
+    showHeadline: true,
+    showFooter: true,
+    showNavbar: true,
+  },
+  {
+    element: <InvalidRoutePage />,
+    path: paths.invalid,
+    showHeadline: false,
+    showFooter: true,
+  },
+  {
+    element: <InvalidRoute />,
+    path: "*",
+    showNavbar: true,
+    showHeadline: false,
+    showFooter: true,
+  },
+]
+>>>>>>> d7a57d79e84e122fcc700f9454553fd4c1f6cabb
 
 const CALENDLY = {
 	CONSULTATION: "https://calendly.com/gocfs/cfs-consultation",

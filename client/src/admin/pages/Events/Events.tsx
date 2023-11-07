@@ -132,6 +132,12 @@ const Events: React.FC = () => {
     return f.value === PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value
   })
 
+  const isFreeTrial = profile?.roles?.some((f) => {
+    return (
+      f.value === PROFILE_ROLES.FREE_30DAYS_TRIAL.ROLE_FREE_30DAYS_TRIAL.value
+    );
+  });
+
   useEffect(() => {
     setPageEventRows(eventRows)
   }, [userGuid, eventRows])
@@ -215,30 +221,35 @@ const Events: React.FC = () => {
           >
             <span>Copy Link</span> <FaCopy />
           </button>
-          <button
-            className="select-btn"
-            disabled={isAgent && userGuid !== event.userGuid}
-            onClick={() =>
-              navigate(
-                paths.newAdminEventsForm + `?action=edit&eventId=${event._id}`
-              )
-            }
-          >
-            <span>Edit</span> <FaPen />
-          </button>
-          <button
-            className="select-btn danger"
-            disabled={isAgent && userGuid !== event.userGuid}
-            onClick={() =>
-              setDialogConfig({
-                id: event._id,
-                isOpen: true,
-                message: "Are you sure you want to delete this event?",
-              })
-            }
-          >
-            <span>Delete</span> <HiOutlineTrash />
-          </button>
+          {isAdmin ? (
+            <React.Fragment>
+              <button
+                className="select-btn"
+                disabled={isAgent && userGuid !== event.userGuid}
+                onClick={() =>
+                  navigate(
+                    paths.newAdminEventsForm +
+                      `?action=edit&eventId=${event._id}`
+                  )
+                }
+              >
+                <span>Edit</span> <FaPen />
+              </button>
+              <button
+                className="select-btn danger"
+                disabled={isAgent && userGuid !== event.userGuid}
+                onClick={() =>
+                  setDialogConfig({
+                    id: event._id,
+                    isOpen: true,
+                    message: "Are you sure you want to delete this event?",
+                  })
+                }
+              >
+                <span>Delete</span> <HiOutlineTrash />
+              </button>
+            </React.Fragment>
+          ) : null}
         </React.Fragment>
       ),
     }
@@ -264,7 +275,7 @@ const Events: React.FC = () => {
       ),
     }
 
-    return isAdmin || isAgent
+    return isAdmin || isAgent || isFreeTrial
       ? agentAndAdminRows
       : isSubscriber
       ? subscriberRows

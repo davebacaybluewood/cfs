@@ -102,7 +102,7 @@ const MailLibraryForm: React.FC = () => {
       }
     };
 
-    if (userGuid) {
+    if (userGuid && action === "edit") {
       fetchTemplateInfo();
       setLoading(false);
     }
@@ -152,6 +152,7 @@ const MailLibraryForm: React.FC = () => {
 
         data.templateBody = html;
         data.design = JSON.stringify(design);
+        data.templateStatus = "ACTIVATED";
 
         const response = await agent.EmailMarketing.createEmailTemplate(
           userGuid,

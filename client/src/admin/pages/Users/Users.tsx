@@ -87,14 +87,14 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
     dialogStatus === AgentStatuses.ACTIVATED
       ? "Activate"
       : dialogStatus === AgentStatuses.DEACTIVATED
-      ? "Deactivate"
-      : dialogStatus === AgentStatuses.ARCHIVED
-      ? "Archive"
-      : dialogStatus === AgentStatuses.DECLINED
-      ? "Decline"
-      : dialogStatus === AgentStatuses.DELETE
-      ? "Delete"
-      : ""
+        ? "Deactivate"
+        : dialogStatus === AgentStatuses.ARCHIVED
+          ? "Archive"
+          : dialogStatus === AgentStatuses.DECLINED
+            ? "Decline"
+            : dialogStatus === AgentStatuses.DELETE
+              ? "Delete"
+              : ""
 
   const handleDelete = async (id: string) => {
     setLoading(true)
@@ -114,6 +114,9 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
 
   const handleArchive = async (agentId: string) => {
     setLoading(true);
+    setConfirmationDialog(true);
+    setDialogStatus(AgentStatuses.ARCHIVED);
+    statusHandler(activeId);    
   };
 
   const statusHandler = (agentId: string) => {
@@ -121,12 +124,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
       dialogStatus === AgentStatuses.ACTIVATED
         ? AgentStatuses.ACTIVATED
         : dialogStatus === AgentStatuses.ARCHIVED
-        ? AgentStatuses.ARCHIVED
-        : dialogStatus === AgentStatuses.DEACTIVATED
-        ? AgentStatuses.DEACTIVATED
-        : dialogStatus === AgentStatuses.DECLINED
-        ? AgentStatuses.DECLINED
-        : AgentStatuses.ACTIVATED
+          ? AgentStatuses.ARCHIVED
+          : dialogStatus === AgentStatuses.DEACTIVATED
+            ? AgentStatuses.DEACTIVATED
+            : dialogStatus === AgentStatuses.DECLINED
+              ? AgentStatuses.DECLINED
+              : AgentStatuses.ACTIVATED
 
     setLoading(true)
     fetch(ENDPOINTS.AGENT_UPDATE_STATUS.replace(":agentId", props.id), {
@@ -219,7 +222,8 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
         <MenuItem
           onClick={() => {
             setDialogStatus(AgentStatuses.ARCHIVED);
-            setConfirmationDialog(true);  
+            setConfirmationDialog(true);
+            setActiveId(props.userGuid);
           }}
         >
           Archive
@@ -230,7 +234,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
             setConfirmationDialog(true);
             setActiveId(props.userGuid);
           }}
-          // disabled={props.status === "ACTIVATED"}
+        // disabled={props.status === "ACTIVATED"}
         >
           Delete
         </MenuItem>
@@ -254,11 +258,16 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
             No
           </Button>
           <Button
-            onClick={() =>
-              dialogStatus === AgentStatuses.DELETE
-                ? handleDelete(activeId)
-                : statusHandler(props.userGuid)
-            }
+            onClick={() => {
+              if (dialogStatus === AgentStatuses.DELETE) {
+                handleDelete(activeId);
+              } else if (dialogStatus === AgentStatuses.ARCHIVED) {
+                console.log(props.id);
+                handleArchive(props.id);
+              } else {
+                statusHandler(props.userGuid);
+              }
+            }}
             autoFocus
             style={{ fontSize: "13px" }}
           >
@@ -339,7 +348,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = (props) => {
                             }
                             value={displayCalendlyToggle}
                             name="displayCalendly"
-                            // checked={values.displayCalendly}
+                          // checked={values.displayCalendly}
                           />
                         }
                         label="Display Calendly Section"
@@ -459,8 +468,8 @@ const Users: React.FC = () => {
           const badgeVariant = isAgent
             ? "secondary"
             : isEditor || isContentCreator
-            ? "danger"
-            : "primary"
+              ? "danger"
+              : "primary"
           return (
             <React.Fragment>
               <Badge variant={badgeVariant}>{data.label}</Badge>
@@ -477,8 +486,8 @@ const Users: React.FC = () => {
           const badgeVariant = isAgent
             ? "secondary"
             : isEditor || isContentCreator
-            ? "danger"
-            : "primary"
+              ? "danger"
+              : "primary"
           return (
             <React.Fragment>
               <Badge variant={badgeVariant} isBordered>
