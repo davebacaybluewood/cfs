@@ -144,6 +144,15 @@ const agentSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    zipCode: {
+      type: String,
+    },
+    birthDate: {
+      type: Date,
+    },
+    profileImage: {
+      type: String,
+    },
   },
   {
     timestamps: true,

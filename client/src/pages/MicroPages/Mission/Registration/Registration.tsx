@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MissionPage from "library/MissionPage/MissionPage";
+import MissionPage from "library/MissionWrapper/MissionPage";
 import { Grid } from "@mui/material";
 import DatePicker from "library/DatePicker/DatePicker";
 import FormikTextInput from "library/Formik/FormikInput";
@@ -13,19 +13,21 @@ import { Button as MUIButton } from "@mui/material";
 
 const Registration: React.FC = () => {
   const [initialValues, setInitialValues] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     emailAddress: "",
     state: CFS_STATES[0].value,
     zipCode: "",
     birthDate: "",
-    profileImage:
-      "https://images.pexels.com/photos/1851243/pexels-photo-1851243.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    profileImage: "",
   });
 
   const [thumbnailPreview, setThumbnailPreview] = useState("");
 
   const validationSchema = yup.object({
-    fullName: yup.string().required("This field is required."),
+    firstName: yup.string().required("This field is required."),
+    lastName: yup.string().required("This field is required."),
+
     emailAddress: yup
       .string()
       .required("This field is required.")
@@ -111,11 +113,26 @@ const Registration: React.FC = () => {
                     <div className="left-col-content">
                       <h2>Registration</h2>
                       <div className="form-control">
-                        <label htmlFor="">Full Name</label>
-                        <FormikTextInput
-                          name="fullName"
-                          placeholder="Enter Full Name"
-                        />
+                        <Grid container spacing={2}>
+                          <Grid item md={6}>
+                            <div className="two-col-form-content ">
+                              <label htmlFor="">First Name</label>
+                              <FormikTextInput
+                                name="firstName"
+                                placeholder="Enter First Name"
+                              />
+                            </div>
+                          </Grid>
+                          <Grid item md={6}>
+                            <div className="two-col-form-content">
+                              <label htmlFor="">Last Name</label>
+                              <FormikTextInput
+                                name="lastName"
+                                placeholder="Enter Last Name"
+                              />
+                            </div>
+                          </Grid>
+                        </Grid>
                       </div>
                       <div className="form-control">
                         <label htmlFor="">Email Address</label>
@@ -168,7 +185,8 @@ const Registration: React.FC = () => {
                       <button
                         onClick={() => submitHandler(values)}
                         disabled={
-                          !values.fullName ||
+                          !values.firstName ||
+                          !values.lastName ||
                           !values.emailAddress ||
                           !values.state ||
                           !values.zipCode ||
@@ -196,12 +214,9 @@ const Registration: React.FC = () => {
                             ></img>
                           </div>
                         ) : (
-                          <>
-                            <img
-                              src="https://images.pexels.com/photos/1851243/pexels-photo-1851243.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                              alt="https://images.pexels.com/photos/1851243/pexels-photo-1851243.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                            />
-                          </>
+                          <div className="profile-image-holder">
+                            <img src="/assets/images/events/mission-micropages/agent-pfp.png" />
+                          </div>
                         )}
                         <MUIButton
                           variant="contained"

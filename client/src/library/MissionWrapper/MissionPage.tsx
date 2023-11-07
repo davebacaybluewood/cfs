@@ -1,16 +1,14 @@
 import React from "react";
 import { MAIN_IMAGES } from "constants/constants";
-import "./MissionPage.scss";
-import { Container } from "@mui/material";
+import "./MissionWrapper.scss";
 
-interface MissionPageProps {
+interface MissionWrapperProps {
   title?: string;
-  showLogo?: boolean;
   children: React.ReactNode | JSX.Element;
   contentTitle: string;
 }
 
-const MissionPage: React.FC<MissionPageProps> = (props) => {
+const MissionWrapper: React.FC<MissionWrapperProps> = (props) => {
   return (
     <React.Fragment>
       <div className="mission-page-wrapper">
@@ -21,19 +19,13 @@ const MissionPage: React.FC<MissionPageProps> = (props) => {
             {props.children}
           </div>
         </div>
-        {props.showLogo ? (
-          <div className="cfs-logo-holder">
-            <img src={MAIN_IMAGES.MAIN_LOGO} alt={MAIN_IMAGES.MAIN_LOGO} />
-          </div>
-        ) : null}
       </div>
     </React.Fragment>
   );
 };
 
-MissionPage.defaultProps = {
+MissionWrapper.defaultProps = {
   title: "AGENT OF AGENTS",
-  showLogo: true,
 };
 
-export default MissionPage;
+export default MissionWrapper;

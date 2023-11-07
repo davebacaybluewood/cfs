@@ -272,12 +272,19 @@ const RSVP = {
   },
 };
 
+const Mission = {
+createMissionAgent: async () => {
+
+}
+}
+
 const agent = {
   BlogAndResource,
   Subscription,
   Inquiry,
   Subscriber,
   RSVP,
+  Mission
 };
 
 export default agent;

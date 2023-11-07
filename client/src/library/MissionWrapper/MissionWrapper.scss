@@ -1,5 +1,5 @@
 .mission-page-wrapper {
-  background-image: url("../../../public/assets/images/mission-micropages/background-mission.png");
+  background-image: url("../../../public/assets/images/events/mission-micropages/rewards-interface-BG.png");
   background-position: center;
   height: 100vh;
   display: flex;
@@ -27,15 +27,6 @@
         font: 700 3rem "Agrandir";
         color: #212529;
       }
-    }
-  }
-  .cfs-logo-holder {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    img {
-      width: 300px;
-      padding: 1rem 25rem;
     }
   }
 }
