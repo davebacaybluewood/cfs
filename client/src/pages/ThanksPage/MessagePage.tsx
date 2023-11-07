@@ -1,6 +1,7 @@
 import React from "react";
 import "./MessagePage.scss";
 import { Container } from "@mui/material";
+import { MAIN_IMAGES } from "constants/constants";
 
 const MessagePage: React.FC = () => {
 	return (
@@ -8,7 +9,7 @@ const MessagePage: React.FC = () => {
 			<div className="message-page-container">
 				<div className="message-header">
 					<h2>Unsubscribe</h2>
-					<p>Lorem ipsum dolor sit amet.</p>
+					<img src={MAIN_IMAGES.MAIN_LOGO} alt={MAIN_IMAGES.MAIN_LOGO} />
 				</div>
 				<div className="message-page-content">
 					<img src="/assets/images/templates/logout-img.png" alt="" />

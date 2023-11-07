@@ -68,7 +68,6 @@ const AdminSettings: React.FC = () => {
 				<FiSettings />
 				<h2>Unsubscribe</h2>
 			</div>
-			<p className="subtitle">Lorem ipsum dolor sit amet.</p>
 
 			<div className="settings-actions-btn">
 				<MUIButton variant="contained" onClick={() => setOpen(true)}>
