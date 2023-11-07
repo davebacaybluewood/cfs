@@ -35,6 +35,7 @@ import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 import Registration from "pages/MicroPages/Mission/Registration/Registration";
+import MissionPage from "library/MissionPage/MissionPage";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;

@@ -1,0 +1,41 @@
+.mission-page-wrapper {
+  background-image: url("../../../public/assets/images/mission-micropages/background-mission.png");
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .title-holder {
+    font: 900 6rem "Agrandir";
+    color: #fff;
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .mission-page-content-container {
+    .mission-page-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 2rem 5rem;
+      border-radius: 10px;
+      background: rgb(237, 237, 237, 0.4);
+
+      h2 {
+        font: 700 3rem "Agrandir";
+        color: #212529;
+      }
+    }
+  }
+  .cfs-logo-holder {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    img {
+      width: 300px;
+      padding: 1rem 25rem;
+    }
+  }
+}
