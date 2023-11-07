@@ -25,7 +25,7 @@ const Registration: React.FC = () => {
     state: CFS_STATES[0].value,
     zipCode: "",
     birthDate: "",
-    profileImage: "",
+    profileImage: DEFAULT_PFP,
   });
   const [thumbnailPreview, setThumbnailPreview] = useState("");
   const [loading, setLoading] = useState(false);
@@ -51,7 +51,7 @@ const Registration: React.FC = () => {
         data.profileImage
       );
       setLoading(false);
-      navigate(paths.unsubscribe);
+      navigate(paths.missions);
     } catch (error) {
       setLoading(false);
       toast.error("Invalid Data.");
@@ -128,7 +128,7 @@ const Registration: React.FC = () => {
               data.profileImage
             );
             setLoading(false);
-            navigate(paths.unsubscribe);
+            navigate(paths.missions);
           }}
           validationSchema={validationSchema}
         >

@@ -36,6 +36,7 @@ import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 import Registration from "pages/MicroPages/Mission/Registration/Registration";
 import MissionPage from "library/MissionWrapper/MissionPage";
+import Missions from "pages/Missions&Events/Missions";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -339,6 +340,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <Registration />,
     path: paths.registrationMission,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    element: <Missions />,
+    path: paths.missions,
     showNavbar: false,
     showHeadline: false,
     showFooter: false,

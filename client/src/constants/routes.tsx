@@ -63,6 +63,9 @@ const paths = {
   subscribeSuccess: "/subscribe/success",
   unsubscribe: "/unsubscribe",
   invalid: "/invalid",
+
+  /* Missions Page */
+  missions: "/missions/events",
 };
 
 export { paths };
