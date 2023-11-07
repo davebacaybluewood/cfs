@@ -181,12 +181,6 @@ const Registration: React.FC = () => {
                   </Grid>
                   <Grid item md={5}>
                     <div className="right-col-content">
-                      {/* <div className="profile-image-holder">
-                        <img
-                          src={values.profileImage}
-                          alt={values.profileImage}
-                        />
-                      </div> */}
                       <div className="form-actions">
                         {thumbnailPreview ||
                         (typeof values.profileImage === "string" &&
@@ -214,10 +208,11 @@ const Registration: React.FC = () => {
                           component="label"
                           className="upload-btn"
                         >
-                          Upload File
+                          Upload an Image
                           <input
                             type="file"
                             hidden
+                            accept="image/*"
                             name="profileImage"
                             onChange={(event) => {
                               setFieldValue(
