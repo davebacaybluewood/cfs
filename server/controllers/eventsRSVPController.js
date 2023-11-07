@@ -106,6 +106,7 @@ const submitRSVP = expressAsync(async (req, res) => {
     emailAddress,
     zoomLink,
     hasAccount: account.length,
+    firstName,
   });
 
   try {
