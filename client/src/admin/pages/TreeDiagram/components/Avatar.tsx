@@ -1,8 +1,11 @@
 import React from "react"
+import AvatarBadge from "./AvatarBadge"
+import "../TreeDiagram.scss"
 
 type AvatarProps = {
   name: string
   gender: "male" | "female"
+  type: "agent" | "subscriber" | "free-trial"
 }
 
 const MALE_IMG_URLS = [
@@ -15,13 +18,13 @@ const FEMALE_IMG_URLS = [
   "/assets/images/tree-diagram/user4.png",
 ]
 
-const Avatar = ({ name, gender }: AvatarProps) => {
+const Avatar = ({ name, gender, type }: AvatarProps) => {
   const RANDOM_ZERO_AND_ONE = Math.floor(Math.random() * 2)
   return (
     <div className="node">
-      <div>
+      <div style={{ position: "relative" }}>
         <img
-          style={{ width: "80px" }}
+          style={{ width: "70px" }}
           src={
             gender === "male"
               ? MALE_IMG_URLS[RANDOM_ZERO_AND_ONE]
@@ -30,6 +33,7 @@ const Avatar = ({ name, gender }: AvatarProps) => {
           alt="user"
         />
         <h2>{name}</h2>
+        <AvatarBadge type={type} />
       </div>
     </div>
   )

@@ -8,3 +8,12 @@
 .user-icon {
   font-size: 6rem !important;
 }
+
+.node {
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.node:hover {
+  transform: scale(1.05);
+}

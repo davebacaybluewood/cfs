@@ -1,52 +1,52 @@
-import { RouteProps } from "react-router-dom";
-import US_STATES from "./statesAndLocation";
-import InvalidRoutePage from "pages/SingleBlogPage/InvalidRoutePage";
-import AboutUs from "pages/AboutUs/AboutUs";
-import AgentSupport from "pages/AgentSupport/AgentSupport";
-import BlogPage from "pages/BlogPage/BlogPage";
-import BusinessProtection from "pages/BusinessProtection/BusinessProtection";
-import ContactPage from "pages/ContactPage/ContactPage";
-import FamilyProtection from "pages/FamilyProtection/FamilyProtection";
-import Home from "pages/Home/Home";
-import SingleBlogPage from "pages/SingleBlogPage/SingleBlogPage";
-import Solutions from "pages/Solutions/Solutions";
-import { adminRoutes } from "admin/constants/constants";
-import { paths } from "./routes";
-import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
-import Events from "pages/Events/Events";
-import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
-import LandingPages from "pages/LandingPages/LandingPages";
-import Agents from "pages/Agents/Agents";
-import { ToastOptions } from "react-toastify";
-import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
-import Calculator from "admin/pages/CommissionSimulation/Calculator";
-import AgentWebinar from "pages/Agents/AgentWebinar";
-import AgentAppointment from "pages/Agents/AgentAppointment";
-import Portal from "pages/Portal/Portal";
-import TestimonialForm from "pages/TestimonialForm/TestimonialForm";
-import PreLicensing from "pages/Contract/components/PreLicensing";
-import Annuity from "pages/Contract/components/Annuity";
-import Pricing from "pages/Pricing/Pricing";
-import Subscribe from "pages/Subscribers/Subscribe";
-import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
-import RSVPForm from "pages/RSVP/RSVPForm";
-import MessagePage from "pages/ThanksPage/MessagePage";
-import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
-import PortalArticle from "pages/PortalArticle/PortalArticle";
-import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
+import { RouteProps } from "react-router-dom"
+import US_STATES from "./statesAndLocation"
+import InvalidRoutePage from "pages/SingleBlogPage/InvalidRoutePage"
+import AboutUs from "pages/AboutUs/AboutUs"
+import AgentSupport from "pages/AgentSupport/AgentSupport"
+import BlogPage from "pages/BlogPage/BlogPage"
+import BusinessProtection from "pages/BusinessProtection/BusinessProtection"
+import ContactPage from "pages/ContactPage/ContactPage"
+import FamilyProtection from "pages/FamilyProtection/FamilyProtection"
+import Home from "pages/Home/Home"
+import SingleBlogPage from "pages/SingleBlogPage/SingleBlogPage"
+import Solutions from "pages/Solutions/Solutions"
+import { adminRoutes } from "admin/constants/constants"
+import { paths } from "./routes"
+import PortalRegistration from "pages/PortalRegistration/PortalRegistration"
+import Events from "pages/Events/Events"
+import InvalidRoute from "layout/InvalidRoute/InvalidRoute"
+import LandingPages from "pages/LandingPages/LandingPages"
+import Agents from "pages/Agents/Agents"
+import { ToastOptions } from "react-toastify"
+import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation"
+import Calculator from "admin/pages/CommissionSimulation/Calculator"
+import AgentWebinar from "pages/Agents/AgentWebinar"
+import AgentAppointment from "pages/Agents/AgentAppointment"
+import Portal from "pages/Portal/Portal"
+import TestimonialForm from "pages/TestimonialForm/TestimonialForm"
+import PreLicensing from "pages/Contract/components/PreLicensing"
+import Annuity from "pages/Contract/components/Annuity"
+import Pricing from "pages/Pricing/Pricing"
+import Subscribe from "pages/Subscribers/Subscribe"
+import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess"
+import RSVPForm from "pages/RSVP/RSVPForm"
+import MessagePage from "pages/ThanksPage/MessagePage"
+import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding"
+import PortalArticle from "pages/PortalArticle/PortalArticle"
+import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram"
 
 type ReactRoutesType = RouteProps & {
-  showFooter?: boolean;
-  showNavbar?: boolean;
-  showHeadline?: boolean;
-  theme?: "SKY" | "RED" | "NAVY";
-  showPartners?: boolean;
-};
+  showFooter?: boolean
+  showNavbar?: boolean
+  showHeadline?: boolean
+  theme?: "SKY" | "RED" | "NAVY"
+  showPartners?: boolean
+}
 
-const COMPANY_NAME = "Comfort Financial Solutions";
+const COMPANY_NAME = "Comfort Financial Solutions"
 
 //const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
-const MAIN_LOCALHOST = "http://lcoalhost:3000";
+const MAIN_LOCALHOST = "http://lcoalhost:3000"
 
 const SOCIAL_MEDIA_LINKS = {
   FACEBOOK: "https://www.facebook.com/gocfspro",
@@ -58,7 +58,7 @@ const SOCIAL_MEDIA_LINKS = {
   PINTEREST: "https://www.pinterest.ph/",
   TIKTOK: "https://www.tiktok.com/en/",
   YOUTUBE: "https://www.youtube.com/",
-};
+}
 
 const COMPANY_CONTACT_INFO = {
   EMAIL: "support@gocfs.pro",
@@ -66,19 +66,19 @@ const COMPANY_CONTACT_INFO = {
   STATE_NV: "Las Vegas, NV",
   STATE_CA: "Los Angeles, CA",
   STATE_NY: "New York, NY",
-};
+}
 
 const MAIN_IMAGES = {
   WHITE_LOGO: "/assets/images/logos/logo-white.png",
   MAIN_LOGO: "/assets/images/logos/cfs-main-logo.png",
-};
+}
 
 const CFS_STATES = US_STATES.map((data) => {
   return {
     label: data.name,
     value: data.name,
-  };
-});
+  }
+})
 
 const NOTIFICATION_ENUMS = {
   WEBINARS: {
@@ -96,17 +96,17 @@ const NOTIFICATION_ENUMS = {
     BLOGS_PUBLISHED: "BLOGS_PUBLISHED",
     BLOGS_DECLINED: "BLOGS_DECLINED",
   },
-};
-const CURRENT_DOMAIN = window.location.origin;
+}
+const CURRENT_DOMAIN = window.location.origin
 
 const AGENT_SPECIALTIES = [
   "Wealth Builder",
   "Financial Freedom",
   "Long Term Care",
   "Legacy Builder",
-];
+]
 
-const BLANK_VALUE = "—";
+const BLANK_VALUE = "—"
 
 const eventSteps = [
   {
@@ -129,7 +129,7 @@ const eventSteps = [
     subTitle: "Mark your calendars!",
     description: "",
   },
-];
+]
 
 export const toastConfigs: ToastOptions<{}> | undefined = {
   position: "top-right",
@@ -140,7 +140,7 @@ export const toastConfigs: ToastOptions<{}> | undefined = {
   draggable: true,
   progress: undefined,
   theme: "light",
-};
+}
 
 const filteredAdminRoutes: ReactRoutesType[] = adminRoutes.map((data) => {
   return {
@@ -148,8 +148,8 @@ const filteredAdminRoutes: ReactRoutesType[] = adminRoutes.map((data) => {
     showFooter: false,
     showHeadline: false,
     showNavbar: false,
-  };
-});
+  }
+})
 
 const REACT_ROUTES: ReactRoutesType[] = [
   ...filteredAdminRoutes,
@@ -171,9 +171,10 @@ const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     element: <TreeDiagram />,
-    path: '/tree-diagram',
+    path: "/mission/hierarchy",
     showHeadline: false,
-    showFooter: true,
+    showFooter: false,
+    showNavbar: false,
   },
   {
     element: <FamilyProtection />,
@@ -337,10 +338,10 @@ const REACT_ROUTES: ReactRoutesType[] = [
 const CALENDLY = {
   CONSULTATION: "https://calendly.com/gocfs/cfs-consultation",
   WEEKLY: "https://calendly.com/gocfs/one-time-weekly-meeting",
-};
+}
 
-const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
-const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
+const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" }
+const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" }
 
 const TWITTER_LOGO = ({
   width,
@@ -373,8 +374,8 @@ const TWITTER_LOGO = ({
         d="M18.205 2.25h3.308l-7.227 8.26l8.502 11.24H16.13l-5.214-6.817L4.95 21.75H1.64l7.73-8.835L1.215 2.25H8.04l4.713 6.231l5.45-6.231Zm-1.161 17.52h1.833L7.045 4.126H5.078L17.044 19.77Z"
       />
     </svg>
-  );
-};
+  )
+}
 export {
   COMPANY_NAME,
   SOCIAL_MEDIA_LINKS,
@@ -392,4 +393,4 @@ export {
   SUPPORT_TYPE,
   SUPPORT_STATUS,
   TWITTER_LOGO,
-};
+}

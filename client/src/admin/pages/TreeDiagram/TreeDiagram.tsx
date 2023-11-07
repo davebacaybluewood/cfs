@@ -1,32 +1,41 @@
-import { Container } from "@mui/material"
+import { Container, Stack } from "@mui/material"
 import OrganizationalChart from "./components/OrganizationalChart"
+import TeamDetails from "./components/TeamDetails"
 
 const TreeDiagram = () => {
+  
+
+
   return (
     <main style={{ padding: "4rem 0" }}>
       <Container>
-        <h1 style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          Team Builder Interface
-        </h1>
-        <OrganizationalChart />
-        <div
-          style={{
-            background: "#00004d",
-            color: "white",
-            width: "auto",
-            padding: "3em",
-            display: "inline-block",
-            borderRadius: "7px",
-            marginTop: "4rem",
-          }}
+        <Stack
+          flexDirection={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
         >
-          <h1 style={{ marginBottom: "1rem" }}>Team</h1>
-
           <div>
-            <h2 style={{ fontWeight: "300" }}>Agents: 2</h2>
-            <h2 style={{ fontWeight: "300" }}>Subscribers: 2</h2>
-            <h2 style={{ fontWeight: "300" }}>30-Day Trial: 2</h2>
+            <h1>AGENT OF AGENTS</h1>
+            <p
+              style={{
+                color: "gray",
+                fontWeight: 300,
+                fontSize: "14px",
+                marginTop: "0.5rem",
+              }}
+            >
+              Building Connections: Agents, Subscribers, and Free Trial Users
+            </p>
           </div>
+          <TeamDetails />
+        </Stack>
+        <OrganizationalChart />
+        <div style={{ textAlign: "right", marginTop: "6rem" }}>
+          <img
+            style={{ width: "150px" }}
+            src="/assets/images/logos/cfs-logo.png"
+            alt=""
+          />
         </div>
       </Container>
     </main>
