@@ -1,6 +1,6 @@
 export const data = [
   {
-    name: "Vanessa Stuart",
+    name: "Vanessa Stuart (You)",
     gender: "female",
     type: "agent",
     children: [
@@ -15,7 +15,7 @@ export const data = [
             type: "agent",
             children: [
               {
-                name: "Alishia Keys",
+                name: "Alishia Keys Alishia Keys",
                 gender: "female",
                 type: "agent",
                 children: [
@@ -116,7 +116,7 @@ export const data = [
                     ],
                   },
                   {
-                    name: "Adam Johnson",
+                    name: "Adam Johnson Adam Johnson",
                     gender: "male",
                     type: "subscriber",
                   },

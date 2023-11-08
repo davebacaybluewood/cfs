@@ -90,7 +90,7 @@ const TreeDiagram: React.FC = () => {
             style={{
               color: "gray",
               fontWeight: 300,
-              fontSize: "14px",
+              fontSize: "16px",
               marginTop: "0.5rem",
             }}
           >

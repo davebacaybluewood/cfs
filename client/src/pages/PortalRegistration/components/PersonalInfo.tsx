@@ -32,7 +32,6 @@ interface PersonalInfoProps {
 }
 
 const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
-  console.log(props.values);
   const [thumbnailPreview, setThumbnailPreview] = useState("");
 
   const handleFocusBack = () => {
@@ -42,6 +41,14 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
   const clickedFileInput = () => {
     window.addEventListener("focus", handleFocusBack);
   };
+
+  const languageValue = props.values.languages?.map((data) => {
+    return {
+      keyword: data,
+      label: data,
+      value: data,
+    };
+  });
 
   return (
     <Grid container spacing={2}>
@@ -104,11 +111,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
               props.setTouched({ ...props.touched, specialties: true });
             }
           }}
-          error={
-            props.values.specialties.length === 0 && props.touched.specialties
-              ? true
-              : false
-          }
+          error={false}
+          // error={
+          //   props.values.specialties.length === 0 && props.touched.specialties
+          //     ? true
+          //     : false
+          // }
           placeholder="Select a specialty item to add"
           value={props.values.specialties.map((data) => {
             return {
@@ -119,12 +127,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
           })}
         />
 
-        <ErrorText
+        {/* <ErrorText
           isError={
             props.values.specialties.length === 0 && !!props.touched.specialties
           }
           text="Specialties field is required."
-        />
+        /> */}
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <label className="form-label">Languages (Optional)</label>
@@ -146,13 +154,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
             props.setFieldValue("languages", modifiedValue);
           }}
           placeholder="Select an language item to add"
-          value={props.values.languages?.map((data) => {
-            return {
-              keyword: data,
-              label: data,
-              value: data,
-            };
-          })}
+          value={languageValue}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={12}>
