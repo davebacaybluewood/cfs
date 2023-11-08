@@ -15,14 +15,15 @@ import { AGENT_STATUSES, PROFILE_POSITIONS } from "../constants/constants.js";
 const listProfile = expressAsync(async (req, res) => {
   const profiles = await Agents.find({
     $and: [
-      { status: { $in: [AGENT_STATUSES.ACTIVATED, AGENT_STATUSES.DEACTIVATED] } },
+      {
+        status: { $in: [AGENT_STATUSES.ACTIVATED, AGENT_STATUSES.DEACTIVATED] },
+      },
       { status: { $ne: AGENT_STATUSES.ARCHIVED } },
     ],
   }).sort({
     createdAt: -1,
   });
   res.json(profiles);
-  
 });
 
 /**
@@ -180,7 +181,7 @@ const updateProfileSettings = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const preCreateProfile = expressAsync(async (req, res, next) => {
-  const { emailAddress, password, roles, position } = req.body;
+  const { emailAddress, password, roles, position, languages } = req.body;
   const userModel = await User.findOne({ email: emailAddress });
   const preProfileModel = await PreProfile.findOne({
     emailAddress: emailAddress,
@@ -225,7 +226,7 @@ const preCreateProfile = expressAsync(async (req, res, next) => {
         weChat: "",
         discordId: "",
         password: password,
-        languages: [],
+        languages: languages,
         position: position,
         roles: roles,
         specialties: [],
@@ -305,6 +306,14 @@ const savePreProfile = expressAsync(async (req, res) => {
         req.body.licenseNumber
       );
       profile.address = undefinedValidator(profile.address, req.body.address);
+      profile.address1 = undefinedValidator(
+        profile.address1,
+        req.body.address1
+      );
+      profile.address2 = undefinedValidator(
+        profile.address2,
+        req.body.address2
+      );
 
       profile.bio = undefinedValidator(profile.bio, req.body.bio);
       profile.phoneNumber = undefinedValidator(

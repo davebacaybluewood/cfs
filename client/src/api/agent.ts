@@ -243,7 +243,8 @@ const RSVP = {
     emailAddress: string,
     phoneNumber: string,
     remarks: string,
-    eventId: string
+    eventId: string,
+    recruiterUserGuid?: string | undefined
   ) => {
     const endpoint = `/api/rsvp-event/${eventId}`;
 
@@ -255,6 +256,7 @@ const RSVP = {
           emailAddress,
           phoneNumber,
           remarks,
+          recruiterUserGuid,
         })
         .catch((err) => {
           let api_res = {

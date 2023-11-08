@@ -4,6 +4,7 @@ const eventInvite = ({
   zoomLink,
   eventName,
   hasAccount,
+  firstName,
 }) => {
   return `<!-- Free to use, HTML email template designed & built by FullSphere. Learn more about us at www.fullsphere.co.uk -->
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -160,7 +161,7 @@ const eventInvite = ({
               width="570"
             >
               <p style="padding-bottom: 0px; margin-top: 0">
-                Hi Dave, you are invited in the <b>${eventName}</b>.
+                Hi ${firstName}, you are invited in the <b>${eventName}</b>.
               </p>
         
               <div>
