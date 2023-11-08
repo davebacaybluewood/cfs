@@ -139,8 +139,13 @@ const AccountSummary: React.FC<AccountSummaryProps> = (props) => {
       icon: <FaComments />,
     },
     {
-      title: "Business Address",
-      subTitle: checkBlankValue(props.values.address),
+      title: "Address Line 1",
+      subTitle: checkBlankValue(props.values.address1),
+      icon: <FaMapMarked />,
+    },
+    {
+      title: "Address Line 2",
+      subTitle: checkBlankValue(props.values.address2),
       icon: <FaMapMarked />,
     },
     {

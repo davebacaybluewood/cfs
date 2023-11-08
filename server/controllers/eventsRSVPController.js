@@ -10,7 +10,7 @@ import eventInvite from "../emailTemplates/eventInvite.js";
 import EventsRSVP from "../models/eventsRSVPModel.js";
 
 const getEventRVPS = expressAsync(async (req, res) => {
-  const { eventId } = req.params;
+  const { eventId, isAdmin } = req.params;
   const rsvps = await EventsRSVP.aggregate([
     { $match: { eventId: eventId } },
     {
@@ -45,7 +45,14 @@ const getEventRVPS = expressAsync(async (req, res) => {
 });
 
 const submitRSVP = expressAsync(async (req, res) => {
-  const { firstName, lastName, phoneNumber, emailAddress, remarks } = req.body;
+  const {
+    firstName,
+    lastName,
+    phoneNumber,
+    emailAddress,
+    remarks,
+    recruiterUserGuid,
+  } = req.body;
   const { eventId } = req.params;
 
   if (!firstName || !emailAddress || !lastName || !phoneNumber || !eventId) {
@@ -80,7 +87,7 @@ const submitRSVP = expressAsync(async (req, res) => {
       firstName,
       phoneNumber,
       "",
-      "",
+      recruiterUserGuid,
       true
     );
 
@@ -91,6 +98,7 @@ const submitRSVP = expressAsync(async (req, res) => {
     userGuid,
     remarks,
     eventId,
+    recruiterUserGuid,
   });
   await rsvp.save();
 
