@@ -21,6 +21,15 @@ const agentMissionRegistration = expressAsync(async (req, res) => {
       res.status(400).json(API_RES_FAIL("Error Occured"));
     }
 
+    /* Checks if Fields are empty */
+
+    const validation = !state || !zipCode || !birthDate;
+
+    if (validation) {
+      res.status(400).json(API_RES_FAIL("Fields are required"));
+      return;
+    }
+
     /** Upload image to cloudinary */
     let profileImgResult;
     try {
