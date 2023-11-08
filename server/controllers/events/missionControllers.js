@@ -41,7 +41,9 @@ const createMissionAgents = expressAsync(async (req, res) => {
     agent.state = state;
     agent.zipCode = zipCode;
     agent.birthDate = birthDate;
-    agent.profileImage = profileImgResult.secure_url;
+    agent.profileImage = profileImgResult?.secure_url
+      ? profileImgResult?.secure_url
+      : profileImgResult;
 
     await agent.save();
 
