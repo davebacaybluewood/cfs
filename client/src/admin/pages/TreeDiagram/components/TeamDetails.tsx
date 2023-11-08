@@ -1,7 +1,17 @@
 import React from "react"
 import "../TreeDiagram.scss"
 
-const TeamDetails = ({ totalAgents, totalSubscribers, totalTrial }) => {
+interface TeamDetailsProps {
+  totalAgents: number
+  totalSubscribers: number
+  totalTrial: number
+}
+
+const TeamDetails = ({
+  totalAgents,
+  totalSubscribers,
+  totalTrial,
+}: TeamDetailsProps) => {
   return (
     <div className="team-details">
       <div className="type-counts-parent">

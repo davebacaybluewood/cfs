@@ -49,7 +49,14 @@ const OrganizationalChart = ({ data }) => {
   }
 
   return (
-    <main style={{ marginTop: "3rem" }}>
+    <main
+      style={{
+        padding: "4rem 3rem",
+        margin: "3rem",
+        background: "rgba(255,255,255, 0.6)",
+        borderRadius: "20px",
+      }}
+    >
       <Tree
         label={
           <img
@@ -61,7 +68,14 @@ const OrganizationalChart = ({ data }) => {
       >
         {renderTree(data, 1)}
       </Tree>
-      <div style={{ textAlign: "center", marginTop: "4rem" }}>
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: "4rem",
+          position: "relative",
+          zIndex: 999,
+        }}
+      >
         {renderLevels < maxLevels && (
           <Tooltip title={<h1>Click to expand tree</h1>}>
             <button className="plusBtn" onClick={handleExpand}>

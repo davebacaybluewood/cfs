@@ -3,6 +3,7 @@ import OrganizationalChart from "./components/OrganizationalChart"
 import TeamDetails from "./components/TeamDetails"
 import { useState, useEffect } from "react"
 import { data } from "./treeTestData"
+import "./TreeDiagram.scss"
 
 type DataType = {
   name: string
@@ -42,47 +43,58 @@ const TreeDiagram: React.FC = () => {
   }, [data])
 
   return (
-    <main style={{ padding: "4rem 0" }}>
-      <Container>
-        <div
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <img
-            style={{ width: "800px", opacity: 0.03 }}
-            src="/assets/images/logos/cfs-logo.png"
-            alt=""
-          />
+    <main
+      style={{
+        padding: "4rem 0",
+        backgroundImage:
+          "url('/assets/images/tree-diagram/rewards-interface.png')",
+        minHeight: "100vh",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
+        <h1 style={{ color: "white", fontSize: "42px" }}>AGENT OF AGENTS</h1>
+      </div>
+      <hr style={{ margin: "3rem" }} />
+      <div
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <img
+          style={{ width: "800px", opacity: 0.3 }}
+          src="/assets/images/tree-diagram/Agent.png"
+          alt=""
+        />
+      </div>
+      <Stack
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ padding: "0 3rem" }}
+      >
+        <div style={{ color: "white" }}>
+          <h1>TEAM BUILDER INTERFACE</h1>
+          <p
+            style={{
+              color: "gray",
+              fontWeight: 300,
+              fontSize: "14px",
+              marginTop: "0.5rem",
+            }}
+          >
+            Building Connections: Agents, Subscribers, and Free Trial Users
+          </p>
         </div>
-        <Stack
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <div>
-            <h1>AGENT OF AGENTS</h1>
-            <p
-              style={{
-                color: "gray",
-                fontWeight: 300,
-                fontSize: "14px",
-                marginTop: "0.5rem",
-              }}
-            >
-              Building Connections: Agents, Subscribers, and Free Trial Users
-            </p>
-          </div>
-          <TeamDetails
-            totalAgents={totalAgents}
-            totalSubscribers={totalSubscribers}
-            totalTrial={totalTrial}
-          />
-        </Stack>
-      </Container>
+        <TeamDetails
+          totalAgents={totalAgents}
+          totalSubscribers={totalSubscribers}
+          totalTrial={totalTrial}
+        />
+      </Stack>
+
       <OrganizationalChart data={data} />
       <div style={{ textAlign: "center", marginTop: "9rem" }}>
         <img
