@@ -30,7 +30,7 @@ const Registration: React.FC = () => {
   const [thumbnailPreview, setThumbnailPreview] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const userGuid = "a694ae6b-7f95-46e9-9fce-f18114cec7b1"; // Testing purposes only, this is not the final approach.
+  const userGuid = "32de48c3-3982-4ae4-be4a-14466d3550c2"; // Testing purposes only, this is not the final approach.
 
   const { profile } = useFetchUserProfile(userGuid);
 
@@ -296,8 +296,8 @@ const Registration: React.FC = () => {
                 )}
               </div>
               {/* Commented for debugging */}
-              <pre> {JSON.stringify(values, null, 2)} </pre>
-              <pre> {JSON.stringify(errors, null, 2)} </pre>
+              {/* <pre> {JSON.stringify(values, null, 2)} </pre>
+              <pre> {JSON.stringify(errors, null, 2)} </pre> */}
             </React.Fragment>
           )}
         </Formik>
