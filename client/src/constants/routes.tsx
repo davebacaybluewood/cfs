@@ -20,6 +20,7 @@ const paths = {
   pricing: "/pricing",
   rsvpForm: "/rsvp-form/:eventId",
   portalArticle: '/article/portal',
+  rewards: '/rewards',
 
   /* Contract */
   preLicensing: '/pre-licensing',

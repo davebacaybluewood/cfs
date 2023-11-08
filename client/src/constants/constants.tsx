@@ -34,6 +34,7 @@ import MessagePage from "pages/ThanksPage/MessagePage";
 import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
+import Rewards from "admin/pages/Rewards/Rewards";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -174,6 +175,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     path: '/tree-diagram',
     showHeadline: false,
     showFooter: true,
+  },
+  {
+    element: <Rewards />,
+    path: paths.rewards,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
   },
   {
     element: <FamilyProtection />,
