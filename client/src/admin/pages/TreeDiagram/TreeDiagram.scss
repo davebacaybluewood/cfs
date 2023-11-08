@@ -1,6 +1,9 @@
-// main {
-//   background: url("/assets/images/tree-diagram/rewards-interface.png");
-// }
+@font-face {
+  font-family: "SpecialAgent";
+  src: local("SpecialAgent"),
+    url("../../../../public/assets/fonts/specialagentxtraexpandital.ttf")
+      format("woff");
+}
 
 .diagram-component {
   width: 100%;

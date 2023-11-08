@@ -52,7 +52,16 @@ const TreeDiagram: React.FC = () => {
       }}
     >
       <div style={{ textAlign: "center" }}>
-        <h1 style={{ color: "white", fontSize: "42px" }}>AGENT OF AGENTS</h1>
+        <h1
+          style={{
+            color: "white",
+            fontSize: "60px",
+            fontFamily: "SpecialAgent",
+            fontWeight: 100,
+          }}
+        >
+          AGENT OF AGENTS
+        </h1>
       </div>
       <hr style={{ margin: "3rem" }} />
       <div
