@@ -22,13 +22,24 @@ const ContactInfo: React.FC<ContactInfoProps> = (props) => {
         />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        <label className="form-label">Business Address (Optional)</label>
+        <label className="form-label">Address Line 1 (Required)</label>
         <FormikTextInput
-          name="address"
-          value={props.values.address}
+          name="address1"
+          value={props.values.address1}
           variant="outlined"
           type="text"
-          placeholder="Enter your business address"
+          placeholder="Enter your address line 1"
+          isTextArea
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
+        <label className="form-label">Address Line 2 (Optional)</label>
+        <FormikTextInput
+          name="address2"
+          value={props.values.address2}
+          variant="outlined"
+          type="text"
+          placeholder="Enter your address line 2"
           isTextArea
         />
       </Grid>

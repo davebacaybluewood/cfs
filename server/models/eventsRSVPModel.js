@@ -5,6 +5,9 @@ const eventsRSVPModel = mongoose.Schema(
     userGuid: {
       type: String,
     },
+    recruiterUserGuid: {
+      type: String,
+    },
     eventId: {
       type: String,
       required: true,
