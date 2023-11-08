@@ -1,13 +1,13 @@
 import React from "react";
-import "./TwoContentCard.scss";
+import "./MissionCard.scss";
 
-interface TwoContentCardProps {
+interface MissionCardProps {
   title: string;
   description: string;
   element?: JSX.Element | string;
 }
 
-const TwoContentCard: React.FC<TwoContentCardProps> = (props) => {
+const MissionCard: React.FC<MissionCardProps> = (props) => {
   return (
     <div className="two-content-container">
       <div className="two-content-container-captions">
@@ -19,4 +19,4 @@ const TwoContentCard: React.FC<TwoContentCardProps> = (props) => {
   );
 };
 
-export default TwoContentCard;
+export default MissionCard;

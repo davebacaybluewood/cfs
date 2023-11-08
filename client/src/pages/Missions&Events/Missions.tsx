@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, Grid } from "@mui/material";
-import TwoContentCard from "library/TwoContentCard/TwoContentCard";
+import { Grid } from "@mui/material";
+import MissionCard from "library/MissionCard/MissionCard";
 import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
@@ -117,10 +117,8 @@ const Missions: React.FC = () => {
 
   return (
     <div className="missions-page-main-container">
-      {/* <Container> */}
       <Helmet>
-        <meta charSet="utf-8" />
-        <title>Comfort Financial Solutions | Missions & Events</title>
+        <title>Missions & Events | Comfort Financial Solutions</title>
         <link rel="canonical" href="gocfs.pro/missions/events" />
       </Helmet>
       <div className="mission-page-content">
@@ -137,7 +135,7 @@ const Missions: React.FC = () => {
             <h3 className="page-subtitle">List of Missions</h3>
 
             {content.map((item) => (
-              <TwoContentCard
+              <MissionCard
                 title={item.title}
                 description={item.description}
                 element={item.progress}

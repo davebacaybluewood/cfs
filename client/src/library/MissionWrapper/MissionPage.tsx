@@ -1,5 +1,4 @@
 import React from "react";
-import { MAIN_IMAGES } from "constants/constants";
 import "./MissionWrapper.scss";
 
 interface MissionWrapperProps {

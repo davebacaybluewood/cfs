@@ -150,9 +150,6 @@ const agentSchema = mongoose.Schema(
     birthDate: {
       type: Date,
     },
-    profileImage: {
-      type: String,
-    },
   },
   {
     timestamps: true,

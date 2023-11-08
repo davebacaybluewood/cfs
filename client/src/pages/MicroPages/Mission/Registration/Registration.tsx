@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MissionPage from "library/MissionWrapper/MissionPage";
 import { Grid } from "@mui/material";
 import DatePicker from "library/DatePicker/DatePicker";
@@ -8,7 +8,7 @@ import * as yup from "yup";
 import Select, { GroupBase, StylesConfig } from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Registration.scss";
-import { CFS_STATES, DEFAULT_PFP } from "constants/constants";
+import { CFS_STATES, DEFAULT_AA_AVATAR } from "constants/constants";
 import { Button as MUIButton } from "@mui/material";
 import agent from "api/agent";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
@@ -25,14 +25,14 @@ const Registration: React.FC = () => {
     state: CFS_STATES[0].value,
     zipCode: "",
     birthDate: "",
-    profileImage: DEFAULT_PFP,
+    profileImage: DEFAULT_AA_AVATAR,
   });
   const [thumbnailPreview, setThumbnailPreview] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { profile } = useFetchUserProfile(
-    "a694ae6b-7f95-46e9-9fce-f18114cec7b1"
-  );
+  const userGuid = "a694ae6b-7f95-46e9-9fce-f18114cec7b1"; // Testing purposes only, this is not the final approach.
+
+  const { profile } = useFetchUserProfile(userGuid);
 
   const validationSchema = yup.object({
     state: yup.string().required("This field is required."),
@@ -41,8 +41,8 @@ const Registration: React.FC = () => {
   });
 
   const submitHandler = async (data: any) => {
+    setLoading(true);
     try {
-      setLoading(true);
       await agent.Mission.createMissionAgent(
         data.emailAddress,
         data.state,
@@ -57,7 +57,6 @@ const Registration: React.FC = () => {
       toast.error("Invalid Data.");
     }
   };
-
   // React Select
   const reactSelectStyle:
     | StylesConfig<
@@ -221,14 +220,7 @@ const Registration: React.FC = () => {
                           </div>
                           <button
                             onClick={() => submitHandler(values)}
-                            disabled={
-                              !values.firstName ||
-                              !values.lastName ||
-                              !values.emailAddress ||
-                              !values.state ||
-                              !values.zipCode ||
-                              !values.birthDate
-                            }
+                            disabled={!!Object.keys(errors).length}
                           >
                             Join the Mission
                           </button>
@@ -254,10 +246,9 @@ const Registration: React.FC = () => {
                               <div className="profile-image-holder">
                                 <img
                                   src={
-                                    profile?.avatar !==
-                                    "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps"
+                                    profile?.avatar !== DEFAULT_AA_AVATAR
                                       ? profile?.avatar
-                                      : DEFAULT_PFP
+                                      : DEFAULT_AA_AVATAR
                                   }
                                 />
                               </div>
@@ -305,8 +296,8 @@ const Registration: React.FC = () => {
                 )}
               </div>
               {/* Commented for debugging */}
-              {/* <pre> {JSON.stringify(values, null, 2)} </pre>
-              <pre> {JSON.stringify(errors, null, 2)} </pre> */}
+              <pre> {JSON.stringify(values, null, 2)} </pre>
+              <pre> {JSON.stringify(errors, null, 2)} </pre>
             </React.Fragment>
           )}
         </Formik>
