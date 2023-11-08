@@ -11,7 +11,7 @@ const MenuProps = {
   disableEnforceFocus: true,
   disableAutoFocus: true,
 };
-const langOptions = ["Chinese", "Spanish"];
+const langOptions = ["English", "Chinese", "Spanish"];
 const specialtiesOptions = ["Item 1", "Item 2"];
 
 export {
