@@ -34,6 +34,7 @@ import MessagePage from "pages/ThanksPage/MessagePage";
 import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
+import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
 import Rewards from "events/mission/Rewards/Rewards";
 
 type ReactRoutesType = RouteProps & {
@@ -72,6 +73,11 @@ const COMPANY_CONTACT_INFO = {
 const MAIN_IMAGES = {
 	WHITE_LOGO: "/assets/images/logos/logo-white.png",
 	MAIN_LOGO: "/assets/images/logos/cfs-main-logo.png",
+};
+
+const AGENT_MISSION_IMAGES = {
+	BACKGROUND: "/assets/images/agent-mission/modal-bg.png",
+	AGENT: "/assets/images/agent-mission/agent.png",
 };
 
 const CFS_STATES = US_STATES.map((data) => {
@@ -177,11 +183,18 @@ const REACT_ROUTES: ReactRoutesType[] = [
 		showFooter: true,
 	},
 	{
-		element: <Rewards />,
-		path: paths.rewards,
-		showNavbar: false,
-		showHeadline: false,
+		element: (
+			<AgentMissionModal
+				openModal={true}
+				showModal={() => { }}
+				onClick={() => { }}
+				agentName="Black Noir"
+			/>
+		),
+		path: paths.tmpModal,
 		showFooter: false,
+		showHeadline: false,
+		showNavbar: false,
 	},
 	{
 		element: <FamilyProtection />,
@@ -328,6 +341,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
 		showNavbar: true,
 	},
 	{
+		element: <Rewards />,
+		path: paths.rewards,
+		showNavbar: false,
+		showHeadline: false,
+		showFooter: false,
+	},
+	{
 		element: <InvalidRoutePage />,
 		path: paths.invalid,
 		showHeadline: false,
@@ -400,4 +420,5 @@ export {
 	SUPPORT_TYPE,
 	SUPPORT_STATUS,
 	TWITTER_LOGO,
+	AGENT_MISSION_IMAGES,
 };
