@@ -1,0 +1,68 @@
+.missions-page-main-container {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  padding: 0 7rem 0 1rem;
+  color: #fff;
+  background-image: url("../../../public/assets/images/agent-mission/rewards-interface-BG.png");
+  background-position: center;
+
+  .mission-page-content {
+    .MuiGrid-container {
+      margin: 2rem 0;
+    }
+
+    .mission-page-captions-header {
+      text-align: center;
+      margin: 2rem 0;
+      h2 {
+        font: 700 3rem "Montserrat";
+      }
+      p {
+        font: 500 1rem "Montserrat";
+        color: rgba(252, 246, 246, 0.5);
+      }
+      .divider {
+        background-color: #eee;
+        width: 200px;
+        height: 3px;
+        margin: 2rem auto;
+      }
+    }
+
+    .title-label {
+      font: 700 2.5rem "Montserrat";
+    }
+
+    .page-subtitle {
+      font: 400 1.1rem "Montserrat";
+      margin-bottom: 2rem;
+    }
+    .MuiAccordionSummary-content {
+      h3 {
+        font: 700 1.5rem "Montserrat";
+      }
+    }
+    .MuiAccordionDetails-root {
+      font: 400 1.3rem "Montserrat";
+    }
+    .MuiButtonBase-root {
+      padding: 1rem;
+    }
+    .MuiPaper-root {
+      border-radius: 10px;
+      margin: 0.5rem 0;
+    }
+    .MuiBox-root {
+      p {
+        color: #fff;
+        font-weight: 500;
+      }
+    }
+  }
+}
+.footer {
+  .footer__header {
+    padding: unset;
+  }
+}
