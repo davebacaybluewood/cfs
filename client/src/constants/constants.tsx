@@ -34,7 +34,7 @@ import MessagePage from "pages/ThanksPage/MessagePage";
 import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
-import Rewards from "admin/pages/Rewards/Rewards";
+import Rewards from "events/mission/Rewards/Rewards";
 
 type ReactRoutesType = RouteProps & {
 	showFooter?: boolean;

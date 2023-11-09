@@ -13,12 +13,12 @@ $h2-size: 5rem;
 
 .main-wrapper {
     height: 100vh;
+    overflow-y: scroll;
 
     overflow: visible;
     > main {
         height: 100%;
         background-color: rgb(5, 4, 43);
-        overflow: visible;
     }
 }
 
@@ -119,6 +119,11 @@ $h2-size: 5rem;
         border: 2px solid rgb(131, 131, 148);
     }
 
+    &-rewards-text {
+        text-align: center;
+        font-size: 2rem;
+    }
+
     &-list {
         display: flex;
         flex-wrap: wrap;
@@ -148,7 +153,8 @@ $h2-size: 5rem;
             box-sizing: border-box;
 
             img {
-                width: 250px;
+                width: 100%;
+                max-width: 250px;
                 height: auto;
             }
 
@@ -174,7 +180,8 @@ $h2-size: 5rem;
 
 @media (max-width: $media-tablet) {
     .container {
-        padding: 60px 0 150px 0;
+        padding: 150px 0;
+        box-sizing: content-box;
 
         &-wrapper {
             padding: 0 25px;
@@ -182,9 +189,12 @@ $h2-size: 5rem;
 
         &-circle {
             left: -30%;
+            opacity: 0;
         }
 
         &-list {
+            min-width: auto;
+
             .item {
                 width: calc(100%/2);
             }
@@ -194,24 +204,34 @@ $h2-size: 5rem;
 
 @media (max-width: $media-mobile) {
     .container {
-        padding: 60px;
+        display: block;
+        height: auto;
+        padding: 50px 0;
+
+        &:has(.no-rewards) {
+            min-height: auto;
+        }
 
         &-wrapper {
             h1 {
+                position: relative;
+                z-index: 5;
                 font-size: clamp(3rem, 1.5946rem + 9.1778vw, 5rem);
             }
     
             h2 {
+                position: relative;
+                z-index: 5;
                 font-size: clamp(2rem, 1.5315rem + 3.0593vw, 3rem);
+            }
+
+            h3 {
+                font-size: 20px;
             }
         }
 
         &-contents {
             margin-bottom: 155px;
-        }
-
-        &-circle {
-            opacity: 0;
         }
 
         &-logo {
@@ -221,9 +241,24 @@ $h2-size: 5rem;
         }
 
         &-list {
+            position: relative;
             min-width: auto;
+            z-index: 5;
+
             .item {
                 width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 280px) {
+    .container {
+        &-list {
+            .item {
+                button {
+                    min-width: auto;
+                }
             }
         }
     }

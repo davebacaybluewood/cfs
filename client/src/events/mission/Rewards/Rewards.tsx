@@ -14,6 +14,7 @@ interface IRewards {
 const Rewards: React.FC = () => {
     const navigate = useNavigate();
     const ref = useRef<HTMLUListElement>(null);
+    const DEFAULT_IMAGE = "/assets/images/events/items/AmazonGC_1000x1000.png"
 
     return (
         <Container>
@@ -23,15 +24,16 @@ const Rewards: React.FC = () => {
                     <h2>Rewards Interface</h2>
                     <ul className="container-list" ref={ref}>
                         {
-                            rewardItems.map((item: IRewards, index: number) => (
+                            rewardItems.length ? rewardItems.map((item: IRewards, index: number) => (
                                 <li className="item" key={index}>
-                                    <img src={item.path ? item.path : '/assets/images/events/default-item.png'} alt="" />
+                                    <img src={item.path ? `/assets/images/events/items/${item.path}` : DEFAULT_IMAGE } alt="" />
                                     <h3>{item.name}</h3>
                                     <button onClick={() =>
                                         navigate(`${paths.rewards}/${item.id}`)
                                     }>Claim Reward</button>
                                 </li>
                             ))
+                            : <li className="item no-rewards"><p className="container-rewards-text">No Rewards Available</p></li>
                         }
                     </ul>
                 </div>
