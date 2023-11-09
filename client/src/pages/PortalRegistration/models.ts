@@ -24,6 +24,8 @@ export interface ValuesType {
   weChat: string;
   discordId: string;
   state: string;
+  address1: string;
+  address2: string;
 }
 
 export type PersonalInfoType = Omit<
