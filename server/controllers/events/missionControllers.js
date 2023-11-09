@@ -12,15 +12,6 @@ import Agent from "../../models/agentModel.js";
 const agentMissionRegistration = expressAsync(async (req, res) => {
   const { emailAddress, state, zipCode, birthDate } = req.body;
   try {
-    /** Check if the email is existing. */
-    const agent = await Agent.findOne({
-      emailAddress,
-    });
-
-    if (!agent.emailAddress) {
-      res.status(400).json(API_RES_FAIL("Error Occured"));
-    }
-
     /* Checks if Fields are empty */
 
     const validation = !state || !zipCode || !birthDate;
@@ -28,6 +19,15 @@ const agentMissionRegistration = expressAsync(async (req, res) => {
     if (validation) {
       res.status(400).json(API_RES_FAIL("Fields are required"));
       return;
+    }
+
+    /** Check if the email is existing. */
+    const agent = await Agent.findOne({
+      emailAddress,
+    });
+
+    if (!agent.emailAddress) {
+      res.status(400).json(API_RES_FAIL("Error Occured"));
     }
 
     /** Upload image to cloudinary */
