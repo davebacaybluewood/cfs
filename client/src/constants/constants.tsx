@@ -177,6 +177,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
 		showFooter: true,
 	},
 	{
+		element: <Rewards />,
+		path: paths.rewards,
+		showNavbar: false,
+		showHeadline: false,
+		showFooter: false,
+	},
+	{
 		element: <FamilyProtection />,
 		path: paths.family_protection,
 	},

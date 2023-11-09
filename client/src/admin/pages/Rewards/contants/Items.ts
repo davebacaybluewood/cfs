@@ -15,8 +15,23 @@ export const rewardItems = [
       path: ""
     },
     {
-      id: '0004CFS',
+      id: '0003CFS',
       name: "Smoking Gun",
       path: ""
-    }
+    },
+    {
+      id: '0003CFS',
+      name: "Smoking Gun",
+      path: ""
+    },
+    {
+      id: '0003CFS',
+      name: "Smoking Gun",
+      path: ""
+    },
+    {
+      id: '0003CFS',
+      name: "Smoking Gun",
+      path: ""
+    },
   ]

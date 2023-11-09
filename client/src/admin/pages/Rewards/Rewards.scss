@@ -1,6 +1,6 @@
 $PUBLIC_ASSET: "../../../../public/assets";
 $media-tablet: 1024px;
-$media-mobile: 768px;
+$media-mobile: 767px;
 
 $h1-size: 8rem;
 $h2-size: 5rem;
@@ -11,18 +11,33 @@ $h2-size: 5rem;
     url("#{$PUBLIC_ASSET}/fonts/specialagentxtraexpandital.ttf") format("truetype");
 }
 
+.main-wrapper {
+    height: 100vh;
+
+    overflow: visible;
+    > main {
+        height: 100%;
+        background-color: rgb(5, 4, 43);
+        overflow: visible;
+    }
+}
+
 .container {
-    position: relative;
     display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
-    // background: url("#{$PUBLIC_ASSET}/images/events/rewards-interface-BG.png");
     background-color: rgb(5, 4, 43);
+    padding: 60px 0;
     box-sizing: border-box;
     min-height: 900px;
-    height: 100vh;
+    height: 100%;
     color: #fff;
     z-index: 1;
+
+    &:has(.item:nth-child(7)) {
+        height: auto;
+    }
 
     &::before {
         content: "";
@@ -43,6 +58,7 @@ $h2-size: 5rem;
         content: "";
         background: url("#{$PUBLIC_ASSET}/images/events/Agent.png") no-repeat center;
         background-size: clamp(500px, 80%, 700px) auto;
+        background-attachment: fixed;
         position: absolute;
         left: 0;
         right: 0;
@@ -57,6 +73,7 @@ $h2-size: 5rem;
         content: "";
         background: url("#{$PUBLIC_ASSET}/images/events/Design.png") no-repeat left;
         background-size: clamp(700px, 80%, 800px) auto;
+        background-attachment: fixed;
         position: absolute;
         top: 0;
         left: -15%;
@@ -109,9 +126,10 @@ $h2-size: 5rem;
         list-style-type: none;
         width: 100%;
         height: 100%;
+        min-width: 870px;
+        max-width: 900px;
         padding: 50px 15px;
         overflow-y: scroll;
-        max-height: 350px;
         margin-top: 15px;
         border-radius: 25px;
         box-sizing: border-box;
@@ -126,6 +144,8 @@ $h2-size: 5rem;
             display: inline-block;
             width: calc(100%/3);
             text-align: center;
+            padding: 0 15px;
+            box-sizing: border-box;
 
             img {
                 width: 250px;
@@ -154,6 +174,8 @@ $h2-size: 5rem;
 
 @media (max-width: $media-tablet) {
     .container {
+        padding: 60px 0 150px 0;
+
         &-wrapper {
             padding: 0 25px;
         }
@@ -172,14 +194,20 @@ $h2-size: 5rem;
 
 @media (max-width: $media-mobile) {
     .container {
+        padding: 60px;
+
         &-wrapper {
             h1 {
-                font-size: 6rem;
+                font-size: clamp(3rem, 1.5946rem + 9.1778vw, 5rem);
             }
     
             h2 {
-                font-size: 3rem;
+                font-size: clamp(2rem, 1.5315rem + 3.0593vw, 3rem);
             }
+        }
+
+        &-contents {
+            margin-bottom: 155px;
         }
 
         &-circle {
@@ -193,6 +221,7 @@ $h2-size: 5rem;
         }
 
         &-list {
+            min-width: auto;
             .item {
                 width: 100%;
             }
