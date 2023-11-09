@@ -23,6 +23,7 @@ const paths = {
 
   /* Mission Micro Pages */
   registrationMission: "events/mission/registration",
+  rewards: "/rewards",
 
   /* Contract */
   preLicensing: "/pre-licensing",
@@ -66,6 +67,8 @@ const paths = {
 
   /* Missions Page */
   missions: "/missions/events",
+  /*Agent of Agents */
+  tmpModal: "/agent-mission-modal",
 };
 
 export { paths };

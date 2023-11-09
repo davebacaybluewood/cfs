@@ -34,6 +34,7 @@ import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 import Registration from "pages/MicroPages/Mission/Registration/Registration";
 import Missions from "pages/Missions&Events/Missions";
+import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -71,6 +72,11 @@ const COMPANY_CONTACT_INFO = {
 const MAIN_IMAGES = {
   WHITE_LOGO: "/assets/images/logos/logo-white.png",
   MAIN_LOGO: "/assets/images/logos/cfs-main-logo.png",
+};
+
+const AGENT_MISSION_IMAGES = {
+  BACKGROUND: "/assets/images/agent-mission/modal-bg.png",
+  AGENT: "/assets/images/agent-mission/agent.png",
 };
 
 const CFS_STATES = US_STATES.map((data) => {
@@ -174,6 +180,20 @@ const REACT_ROUTES: ReactRoutesType[] = [
     path: "/tree-diagram",
     showHeadline: false,
     showFooter: true,
+  },
+  {
+    element: (
+      <AgentMissionModal
+        openModal={true}
+        showModal={() => {}}
+        onClick={() => {}}
+        agentName="Black Noir"
+      />
+    ),
+    path: paths.tmpModal,
+    showFooter: false,
+    showHeadline: false,
+    showNavbar: false,
   },
   {
     element: <FamilyProtection />,
@@ -357,8 +377,7 @@ const CALENDLY = {
 const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
 const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
 
-const DEFAULT_AA_AVATAR =
-  "/assets/images/events/mission-micropages/agent-black.png";
+const DEFAULT_AA_AVATAR = "/assets/images/agent-mission/agent-black.png";
 
 const TWITTER_LOGO = ({
   width,
@@ -411,4 +430,5 @@ export {
   SUPPORT_STATUS,
   TWITTER_LOGO,
   DEFAULT_AA_AVATAR,
+  AGENT_MISSION_IMAGES,
 };
