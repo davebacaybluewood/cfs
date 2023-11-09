@@ -18,7 +18,6 @@ import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
 import LandingPages from "pages/LandingPages/LandingPages";
 import Agents from "pages/Agents/Agents";
 import { ToastOptions } from "react-toastify";
-import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
 import Calculator from "admin/pages/CommissionSimulation/Calculator";
 import AgentWebinar from "pages/Agents/AgentWebinar";
 import AgentAppointment from "pages/Agents/AgentAppointment";
@@ -31,9 +30,12 @@ import Subscribe from "pages/Subscribers/Subscribe";
 import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
 import RSVPForm from "pages/RSVP/RSVPForm";
 import MessagePage from "pages/ThanksPage/MessagePage";
-import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
+import Registration from "pages/MicroPages/Mission/Registration/Registration";
+import Missions from "pages/Missions&Events/Missions";
+import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
+import Rewards from "events/mission/Rewards/Rewards";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -71,6 +73,11 @@ const COMPANY_CONTACT_INFO = {
 const MAIN_IMAGES = {
   WHITE_LOGO: "/assets/images/logos/logo-white.png",
   MAIN_LOGO: "/assets/images/logos/cfs-main-logo.png",
+};
+
+const AGENT_MISSION_IMAGES = {
+  BACKGROUND: "/assets/images/agent-mission/modal-bg.png",
+  AGENT: "/assets/images/agent-mission/agent.png",
 };
 
 const CFS_STATES = US_STATES.map((data) => {
@@ -171,9 +178,23 @@ const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     element: <TreeDiagram />,
-    path: '/tree-diagram',
+    path: "/tree-diagram",
     showHeadline: false,
     showFooter: true,
+  },
+  {
+    element: (
+      <AgentMissionModal
+        openModal={true}
+        showModal={() => {}}
+        onClick={() => {}}
+        agentName="Black Noir"
+      />
+    ),
+    path: paths.tmpModal,
+    showFooter: false,
+    showHeadline: false,
+    showNavbar: false,
   },
   {
     element: <FamilyProtection />,
@@ -332,7 +353,22 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: true,
   },
-]
+  /* Mission MicroPages */
+  {
+    element: <Registration />,
+    path: paths.registrationMission,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    element: <Missions />,
+    path: paths.missions,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+];
 
 const CALENDLY = {
   CONSULTATION: "https://calendly.com/gocfs/cfs-consultation",
@@ -341,6 +377,8 @@ const CALENDLY = {
 
 const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
 const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
+
+const DEFAULT_AA_AVATAR = "/assets/images/agent-mission/agent-black.png";
 
 const TWITTER_LOGO = ({
   width,
@@ -392,4 +430,6 @@ export {
   SUPPORT_TYPE,
   SUPPORT_STATUS,
   TWITTER_LOGO,
+  DEFAULT_AA_AVATAR,
+  AGENT_MISSION_IMAGES,
 };

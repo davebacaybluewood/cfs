@@ -274,12 +274,42 @@ const RSVP = {
   },
 };
 
+const Mission = {
+  createMissionAgent: async (
+    emailAddress: string,
+    state: string,
+    zipCode: string,
+    birthDate: Date,
+    profileImage: string
+  ) => {
+    axios.interceptors.request.use((config) => {
+      const token = getUserToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers["Content-Type"] = "multipart/form-data";
+      }
+      return config;
+    });
+
+    const endpoint = `/api/events/mission/registration`;
+    const res = await requests.post(endpoint, {
+      emailAddress,
+      state,
+      zipCode,
+      birthDate,
+      profileImage,
+    });
+    return res;
+  },
+};
+
 const agent = {
   BlogAndResource,
   Subscription,
   Inquiry,
   Subscriber,
   RSVP,
+  Mission,
 };
 
 export default agent;
