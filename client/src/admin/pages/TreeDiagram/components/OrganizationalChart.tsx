@@ -33,11 +33,15 @@ const OrganizationalChart = ({ data }) => {
     }
 
     return data.map((item, index) => (
-      // <Tree></Tree>
       <TreeNode
         key={index}
         label={
-          <Avatar name={item.name} gender={item.gender} type={item.type} />
+          <Avatar
+            name={item.name}
+            gender={item.gender}
+            type={item.type}
+            profileImg={item.profileImg}
+          />
         }
       >
         {item.children && renderTree(item.children, level + 1)}

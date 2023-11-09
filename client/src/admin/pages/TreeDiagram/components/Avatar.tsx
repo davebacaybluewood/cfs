@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import AvatarBadge from "./AvatarBadge"
 import "../TreeDiagram.scss"
 
@@ -6,6 +6,7 @@ type AvatarProps = {
   name: string
   gender: "male" | "female"
   type: "agent" | "subscriber" | "free-trial"
+  profileImg?: string
 }
 
 const MALE_IMG_URLS = [
@@ -18,19 +19,40 @@ const FEMALE_IMG_URLS = [
   "/assets/images/tree-diagram/user4.png",
 ]
 
-const Avatar = ({ name, gender, type }: AvatarProps) => {
+const Avatar = ({ name, gender, type, profileImg }: AvatarProps) => {
+  const shortenName = (name) => {
+    const splitName = name.split(" ")
+    const firstName = splitName[0]
+    const lastName = splitName[1]
+    return `${firstName} ${lastName ? lastName.slice(0, 1) + "." : ""}`
+  }
   const RANDOM_ZERO_AND_ONE = Math.floor(Math.random() * 2)
   return (
     <div className="node">
       <div style={{ position: "relative" }}>
-        <img
-          style={{ width: "70px" }}
-          src={
-            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
-          alt="user"
-        />
-        <h2>{name}</h2>
+        {profileImg ? (
+          <img
+            src={profileImg}
+            alt=""
+            style={{
+              width: "90px",
+              height: "90px",
+              objectFit: "cover",
+              borderRadius: "10px",
+            }}
+          />
+        ) : (
+          <img
+            style={{ width: "70px" }}
+            src={
+              gender === "male"
+                ? MALE_IMG_URLS[RANDOM_ZERO_AND_ONE]
+                : FEMALE_IMG_URLS[RANDOM_ZERO_AND_ONE]
+            }
+            alt="user"
+          />
+        )}
+        <h2>{name && shortenName(name)}</h2>
         <AvatarBadge type={type} />
       </div>
     </div>

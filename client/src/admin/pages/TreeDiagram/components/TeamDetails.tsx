@@ -15,18 +15,18 @@ const TeamDetails = ({
   return (
     <div className="team-details">
       <div className="type-counts-parent">
-        <div className="type-count-parent border-r">
+        <div className="type-count-parent">
           <div
-            className="type-count"
+            className="round-marker"
             style={{
               background: "black",
             }}
           ></div>
           <h3>Agents: {totalAgents}</h3>
         </div>
-        <div className="type-count-parent border-r">
+        <div className="type-count-parent">
           <div
-            className="type-count"
+            className="round-marker"
             style={{
               background: "purple",
             }}
@@ -35,7 +35,7 @@ const TeamDetails = ({
         </div>
         <div className="type-count-parent">
           <div
-            className="type-count"
+            className="round-marker"
             style={{
               background: "orange",
             }}

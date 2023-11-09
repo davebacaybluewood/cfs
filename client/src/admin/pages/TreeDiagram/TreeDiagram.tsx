@@ -49,6 +49,9 @@ const TreeDiagram: React.FC = () => {
         backgroundImage:
           "url('/assets/images/tree-diagram/rewards-interface.png')",
         minHeight: "100vh",
+        width: "max-content",
+        minWidth: "100vw",
+        position: "relative",
       }}
     >
       <div style={{ textAlign: "center" }}>
@@ -73,7 +76,7 @@ const TreeDiagram: React.FC = () => {
         }}
       >
         <img
-          style={{ width: "800px", opacity: 0.3 }}
+          style={{ maxWidth: "500px", opacity: 0.3 }}
           src="/assets/images/tree-diagram/Agent.png"
           alt=""
         />
