@@ -18,7 +18,6 @@ import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
 import LandingPages from "pages/LandingPages/LandingPages";
 import Agents from "pages/Agents/Agents";
 import { ToastOptions } from "react-toastify";
-import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
 import Calculator from "admin/pages/CommissionSimulation/Calculator";
 import AgentWebinar from "pages/Agents/AgentWebinar";
 import AgentAppointment from "pages/Agents/AgentAppointment";
@@ -31,10 +30,12 @@ import Subscribe from "pages/Subscribers/Subscribe";
 import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
 import RSVPForm from "pages/RSVP/RSVPForm";
 import MessagePage from "pages/ThanksPage/MessagePage";
-import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
+import Registration from "pages/MicroPages/Mission/Registration/Registration";
+import Missions from "pages/Missions&Events/Missions";
 import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
+import Rewards from "events/mission/Rewards/Rewards";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -352,6 +353,21 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: true,
   },
+  /* Mission MicroPages */
+  {
+    element: <Registration />,
+    path: paths.registrationMission,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    element: <Missions />,
+    path: paths.missions,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
 ];
 
 const CALENDLY = {
@@ -361,6 +377,8 @@ const CALENDLY = {
 
 const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
 const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
+
+const DEFAULT_AA_AVATAR = "/assets/images/agent-mission/agent-black.png";
 
 const TWITTER_LOGO = ({
   width,
@@ -412,5 +430,6 @@ export {
   SUPPORT_TYPE,
   SUPPORT_STATUS,
   TWITTER_LOGO,
+  DEFAULT_AA_AVATAR,
   AGENT_MISSION_IMAGES,
 };
