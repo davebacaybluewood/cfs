@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "SpecialAgent";
+  src: local("SpecialAgent"),
+    url("../../../../public/assets/fonts/specialagentxtraexpandital.ttf")
+      format("woff");
+}
+
+.agent-mission-modal {
+  .MuiPaper-root {
+    outline: none;
+    background-color: #cdcdd5;
+    transition: all 150ms ease-in;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+}
