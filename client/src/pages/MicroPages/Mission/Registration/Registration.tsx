@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MissionPage from "library/MissionWrapper/MissionPage";
+import MissionWrapper from "library/MissionWrapper/MissionWrapper";
 import { Grid } from "@mui/material";
 import DatePicker from "library/DatePicker/DatePicker";
 import FormikTextInput from "library/Formik/FormikInput";
@@ -112,7 +112,7 @@ const Registration: React.FC = () => {
 
   const navigate = useNavigate();
   return (
-    <MissionPage contentTitle="">
+    <MissionWrapper contentTitle="">
       <div className="registration-container">
         <Formik
           initialValues={initialValues}
@@ -302,7 +302,7 @@ const Registration: React.FC = () => {
           )}
         </Formik>
       </div>
-    </MissionPage>
+    </MissionWrapper>
   );
 };
 
