@@ -35,6 +35,7 @@ import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 import Registration from "pages/MicroPages/Mission/Registration/Registration";
 import Missions from "pages/Missions&Events/Missions";
 import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
+import Rewards from "events/mission/Rewards/Rewards";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;

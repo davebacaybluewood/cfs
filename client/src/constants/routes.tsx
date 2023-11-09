@@ -23,7 +23,7 @@ const paths = {
 
   /* Mission Micro Pages */
   registrationMission: "events/mission/registration",
-  rewards: "/rewards",
+  rewards: "/events/mission/rewards",
 
   /* Contract */
   preLicensing: "/pre-licensing",
