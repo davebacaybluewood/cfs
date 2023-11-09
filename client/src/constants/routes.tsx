@@ -1,4 +1,4 @@
-import adminPaths from 'admin/constants/routes'
+import adminPaths from "admin/constants/routes";
 
 const paths = {
   ...adminPaths,
@@ -19,27 +19,28 @@ const paths = {
   testimonialForm: "/testimonial-form/:userGuid",
   pricing: "/pricing",
   rsvpForm: "/rsvp-form/:eventId",
-  portalArticle: '/article/portal',
+  portalArticle: "/article/portal",
+  rewards: "/rewards",
 
   /* Contract */
-  preLicensing: '/pre-licensing',
-  anunity: '/annuity',
+  preLicensing: "/pre-licensing",
+  anunity: "/annuity",
 
   /** Webinar */
-  agent_with_id: '/agents/:id',
-  agent_check_status: '/agents/status/:id',
-  webinarForm: '/webinar/:videoId/:agentId',
-  webinarAppointment: '/webinar/:videoId/:agentId/:submissionId',
-  agentRegistration: '/portal-registration',
-  agentRegistrationSuccess: '/portal-registration-success/:agentId',
+  agent_with_id: "/agents/:id",
+  agent_check_status: "/agents/status/:id",
+  webinarForm: "/webinar/:videoId/:agentId",
+  webinarAppointment: "/webinar/:videoId/:agentId/:submissionId",
+  agentRegistration: "/portal-registration",
+  agentRegistrationSuccess: "/portal-registration-success/:agentId",
 
   /** Page Success */
-  pageSuccess: '/success-page/:pageId',
+  pageSuccess: "/success-page/:pageId",
 
   /** Landing Pages */
-  cfsPages: '/page/:pageId',
-  cfsPagesWithAgent: '/page/:pageId/:agentGuid',
-  portalRegistration: '/portal-registration',
+  cfsPages: "/page/:pageId",
+  cfsPagesWithAgent: "/page/:pageId/:agentGuid",
+  portalRegistration: "/portal-registration",
 
   /** ADMIN PATHS */
   adminDashboard: "/portal/dashboard",
@@ -60,6 +61,10 @@ const paths = {
   subscribeSuccess: "/subscribe/success",
   unsubscribe: "/unsubscribe",
   invalid: "/invalid",
-};
 
-export { paths }
+  /*Agent of Agents */
+  tmpModal: "/agent-mission-modal",
+  treeDiagram: "/mission/hierarchy",
+}
+
+export { paths };

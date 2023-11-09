@@ -1,4 +1,4 @@
-import { Container, Stack } from "@mui/material"
+import { Stack } from "@mui/material"
 import OrganizationalChart from "./components/OrganizationalChart"
 import TeamDetails from "./components/TeamDetails"
 import { useState, useEffect } from "react"

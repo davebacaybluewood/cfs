@@ -19,9 +19,11 @@ export const data = [
             type: "agent",
             children: [
               {
-                name: "Alishia Keys Alishia Keys",
+                name: "Alishia Keys",
                 gender: "female",
                 type: "agent",
+                profileImg:
+                  "https://www.shape.com/thmb/-HvSEYiZM0t7Xkd59W8TaK-2V08=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Alicia-Keys-Beauty-Standards-GettyImages-1395577675-2000-42cbade5a1bf4993a304f58ddbcd84aa.jpg",
                 children: [
                   {
                     name: "Jason Teves",
@@ -124,9 +126,11 @@ export const data = [
                     ],
                   },
                   {
-                    name: "Adam Johnson Adam Johnson",
+                    name: "Adam Johnson",
                     gender: "male",
                     type: "subscriber",
+                    profileImg:
+                      "https://plus.unsplash.com/premium_photo-1689632031083-518b012767a4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                   },
                   {
                     name: "Sophia Martinez",
@@ -137,6 +141,8 @@ export const data = [
                     name: "Ethan Williams",
                     gender: "male",
                     type: "subscriber",
+                    profileImg:
+                      "https://images.unsplash.com/photo-1590086782792-42dd2350140d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                   },
                 ],
               },
@@ -144,6 +150,8 @@ export const data = [
                 name: "Brad Traversy",
                 gender: "male",
                 type: "subscriber",
+                profileImg:
+                  "https://images.unsplash.com/photo-1530268729831-4b0b9e170218?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
               },
             ],
           },
