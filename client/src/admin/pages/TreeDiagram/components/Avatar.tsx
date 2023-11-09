@@ -1,31 +1,33 @@
-import React, { useState, useEffect } from "react"
 import AvatarBadge from "./AvatarBadge"
 import "../TreeDiagram.scss"
 
 type AvatarProps = {
   name: string
-  gender: "male" | "female"
-  type: "agent" | "subscriber" | "free-trial"
+  gender: string
+  type: string
   profileImg?: string
 }
 
 const MALE_IMG_URLS = [
-  "/assets/images/tree-diagram/user2.png",
-  "/assets/images/tree-diagram/user3.png",
+  "/assets/images/agent-mission/tree-diagram/user2.png",
+  "/assets/images/agent-mission/tree-diagram/user3.png",
 ]
 
 const FEMALE_IMG_URLS = [
-  "/assets/images/tree-diagram/user1.png",
-  "/assets/images/tree-diagram/user4.png",
+  "/assets/images/agent-mission/tree-diagram/user1.png",
+  "/assets/images/agent-mission/tree-diagram/user4.png",
 ]
 
 const Avatar = ({ name, gender, type, profileImg }: AvatarProps) => {
-  const shortenName = (name) => {
+  // function to shorten name
+  const shortenName = (name: string) => {
     const splitName = name.split(" ")
     const firstName = splitName[0]
     const lastName = splitName[1]
     return `${firstName} ${lastName ? lastName.slice(0, 1) + "." : ""}`
   }
+
+  // get random number 0 and 1 to randomly display one out of two male/female avatars
   const RANDOM_ZERO_AND_ONE = Math.floor(Math.random() * 2)
   return (
     <div className="node">

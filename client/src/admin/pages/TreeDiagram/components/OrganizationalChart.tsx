@@ -5,18 +5,26 @@ import { BsPlusCircleFill } from "react-icons/bs"
 import { Tooltip } from "@mui/material"
 import "../TreeDiagram.scss"
 
-const OrganizationalChart = ({ data }) => {
+type DataType = {
+  name: string
+  gender: string
+  type: string
+  profileImg?: string
+  children?: DataType[]
+}
+
+const OrganizationalChart = ({ data }: { data: DataType[] }) => {
   const [renderLevels, setRenderLevels] = useState(3)
   const [maxLevels, setMaxLevels] = useState(0)
 
   useEffect(() => {
     // Find the maximum number of levels available in the data
-    const findMaxLevels = (data, level = 1) => {
+    const findMaxLevels = (data: DataType[], level = 1) => {
       if (data && data.length > 0) {
         if (level > maxLevels) {
           setMaxLevels(level)
         }
-        data.forEach((item) => {
+        data.forEach((item: DataType) => {
           if (item.children) {
             findMaxLevels(item.children, level + 1)
           }
@@ -27,7 +35,7 @@ const OrganizationalChart = ({ data }) => {
     findMaxLevels(data)
   }, [data, maxLevels])
 
-  const renderTree = (data, level) => {
+  const renderTree = (data: DataType[], level) => {
     if (level > renderLevels) {
       return null
     }

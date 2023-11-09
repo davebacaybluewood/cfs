@@ -9,6 +9,7 @@ type DataType = {
   name: string
   gender: string
   type: string
+  profileImg?: string
   children?: DataType[]
 }
 
@@ -40,14 +41,14 @@ const TreeDiagram: React.FC = () => {
     setTotalAgents(totalType("agent", data))
     setTotalSubscribers(totalType("subscriber", data))
     setTotalTrial(totalType("free-trial", data))
-  }, [data])
+  }, [])
 
   return (
     <main
       style={{
         padding: "4rem 0",
         backgroundImage:
-          "url('/assets/images/tree-diagram/rewards-interface.png')",
+          "url('/assets/images/agent-mission/tree-diagram/rewards-interface.png')",
         minHeight: "100vh",
         width: "max-content",
         minWidth: "100vw",
@@ -77,7 +78,7 @@ const TreeDiagram: React.FC = () => {
       >
         <img
           style={{ maxWidth: "500px", opacity: 0.3 }}
-          src="/assets/images/tree-diagram/Agent.png"
+          src="/assets/images/agent-mission/tree-diagram/opaque-agent.png"
           alt=""
         />
       </div>
