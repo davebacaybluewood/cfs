@@ -1,0 +1,32 @@
+.mission-page-wrapper {
+  background-image: url("../../../public/assets/images/agent-mission/rewards-interface-BG.png");
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .title-holder {
+    font: 900 6rem "Agrandir";
+    color: #fff;
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .mission-page-content-container {
+    .mission-page-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 2rem;
+      border-radius: 10px;
+      background: rgb(237, 237, 237, 0.4);
+
+      h2 {
+        font: 700 3rem "Agrandir";
+        color: #212529;
+      }
+    }
+  }
+}
