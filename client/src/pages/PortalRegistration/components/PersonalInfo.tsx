@@ -5,7 +5,7 @@ import Select from "react-select";
 import MultiSelectInputWithCreate from "library/MultiSelectInput/MultiSelectInputWithCreate";
 import { langOptions } from "pages/Agents/AgentsLanding/utils";
 import MultiSelectInputV2 from "library/MultiSelectInput/MultiSelectInputV2";
-import { AGENT_SPECIALTIES } from "constants/constants";
+import { AGENT_SPECIALTIES, CFS_NATIONALITIES } from "constants/constants";
 import { FaInfoCircle } from "react-icons/fa";
 import { DEFAULT_IMAGE } from "admin/constants/constants";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
@@ -13,6 +13,8 @@ import { ValuesType } from "../models";
 import ErrorText from "./ErrorText";
 import { FormikTouched } from "formik";
 import US_STATES from "constants/statesAndLocation";
+import DatePicker from "library/DatePicker/DatePicker";
+import NATIONALITIES from "constants/nationalities";
 
 interface PersonalInfoProps {
   values: ValuesType;
@@ -135,6 +137,55 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
         /> */}
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
+        <label className="form-label">Nationality</label>
+        <Select
+          className="basic-single"
+          classNamePrefix="select"
+          onChange={(event) => {
+            props.setFieldValue("nationality", event!.value);
+          }}
+          onBlur={(e) => {
+            if (!props.values.nationality) {
+              props.setTouched({ ...props.touched, nationality: true });
+            }
+          }}
+          placeholder="Select your nationality"
+          isSearchable={true}
+          name="nationality"
+          options={CFS_NATIONALITIES}
+          styles={{
+            control: (baseStyles, state) => {
+              return {
+                ...baseStyles,
+                border:
+                  !props.values.nationality && !!props.touched.nationality
+                    ? "1px solid #d32f2f"
+                    : undefined,
+                fontSize: "13px",
+                paddingTop: "5px",
+                paddingBottom: "5px",
+              };
+            },
+            placeholder: (baseStyles) => ({
+              ...baseStyles,
+              color: "rgba(0, 0, 0, 0.3)",
+            }),
+          }}
+          value={
+            props.values.nationality
+              ? {
+                  label: props.values.nationality,
+                  value: props.values.nationality,
+                }
+              : undefined
+          }
+        />
+        <ErrorText
+          isError={!props.values.state && !!props.touched.state}
+          text="State field is required."
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
         <label className="form-label">Languages (Optional)</label>
         <MultiSelectInputWithCreate
           options={langOptions.map((language) => {
@@ -210,6 +261,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
           isError={!props.values.state && !!props.touched.state}
           text="State field is required."
         />
+      </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
+        <label className="form-label">Birth Date</label>
+        <div className="date-picker-container">
+          <DatePicker name="birthDate" />
+        </div>
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <label className="form-label">

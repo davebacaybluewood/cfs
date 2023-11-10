@@ -26,6 +26,8 @@ export interface ValuesType {
   state: string;
   address1: string;
   address2: string;
+  nationality: string;
+  birthDate: string;
 }
 
 export type PersonalInfoType = Omit<
