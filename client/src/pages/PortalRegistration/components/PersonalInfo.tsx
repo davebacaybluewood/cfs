@@ -14,7 +14,6 @@ import ErrorText from "./ErrorText";
 import { FormikTouched } from "formik";
 import US_STATES from "constants/statesAndLocation";
 import DatePicker from "library/DatePicker/DatePicker";
-import NATIONALITIES from "constants/nationalities";
 
 interface PersonalInfoProps {
   values: ValuesType;
