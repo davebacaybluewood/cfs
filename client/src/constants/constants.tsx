@@ -36,6 +36,7 @@ import Registration from "pages/MicroPages/Mission/Registration/Registration";
 import Missions from "pages/Missions&Events/Missions";
 import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
 import Rewards from "events/mission/Rewards/Rewards";
+import NATIONALITIES from "./nationalities";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -45,10 +46,10 @@ type ReactRoutesType = RouteProps & {
   showPartners?: boolean;
 };
 
-const COMPANY_NAME = "Comfort Financial Solutions";
+const COMPANY_NAME = "Comfort Financial Solutions"
 
 //const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
-const MAIN_LOCALHOST = "http://lcoalhost:3000";
+const MAIN_LOCALHOST = "http://lcoalhost:3000"
 
 const SOCIAL_MEDIA_LINKS = {
   FACEBOOK: "https://www.facebook.com/gocfspro",
@@ -87,6 +88,13 @@ const CFS_STATES = US_STATES.map((data) => {
   };
 });
 
+const CFS_NATIONALITIES = NATIONALITIES.map((data) => {
+  return {
+    label: data.Nationality,
+    value: data.Nationality,
+  };
+});
+
 const NOTIFICATION_ENUMS = {
   WEBINARS: {
     WEBINAR_REQUEST: "WEBINAR_REQUEST",
@@ -113,7 +121,7 @@ const AGENT_SPECIALTIES = [
   "Legacy Builder",
 ];
 
-const BLANK_VALUE = "—";
+const BLANK_VALUE = "—"
 
 const eventSteps = [
   {
@@ -196,6 +204,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showNavbar: false,
   },
+  {
+    element: <TreeDiagram />,
+    path: paths.treeDiagram,   
+    showHeadline: false,
+    showFooter: false,
+    showNavbar: false,
+  }, 
   {
     element: <FamilyProtection />,
     path: paths.family_protection,
@@ -375,8 +390,8 @@ const CALENDLY = {
   WEEKLY: "https://calendly.com/gocfs/one-time-weekly-meeting",
 };
 
-const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
-const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
+const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" }
+const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" }
 
 const DEFAULT_AA_AVATAR = "/assets/images/agent-mission/agent-black.png";
 
@@ -418,6 +433,7 @@ export {
   SOCIAL_MEDIA_LINKS,
   MAIN_IMAGES,
   CFS_STATES,
+  CFS_NATIONALITIES,
   AGENT_SPECIALTIES,
   CURRENT_DOMAIN,
   NOTIFICATION_ENUMS,
