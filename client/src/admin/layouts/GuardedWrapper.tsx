@@ -15,13 +15,13 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
   const [toggled, setToggled] = useState(false);
   const navigate = useNavigate();
 
-  const localData = localStorage.getItem("userInfo");
-
   useEffect(() => {
-    if (!localData) {
+    const isAuthenticated = "token" in JSON.parse(localStorage.getItem("userInfo") ?? "{}");
+    
+    if (!isAuthenticated) {
       navigate(adminPathsNew.login);
     }
-  }, [localData]);
+  }, []);
 
   const handleCollapsedChange = () => {
     setCollapsed(!collapsed);
