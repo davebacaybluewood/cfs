@@ -55,6 +55,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     weChat: "",
     discordId: "",
     state: "",
+    zipCode: "",
     firstName: "",
     nationality: "",
     birthDate: "",
