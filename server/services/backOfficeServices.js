@@ -216,16 +216,56 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
         role: "ROLE_AGENT",
       };
     } else {
-      const user = await User.find({
+      const user = await User.findOne({
         email: emailAddress,
       });
-      token = generateToken(user[0]._id);
+
+      const agentProfile = await Agent.findOne({ emailAddress });
+
+      /** Login using CFS credentials */
+      const bearerToken = await backOfficeLogin();
+
+      /** Get the list of agents from back office */
+      const agentsData = await backOfficeAgents(bearerToken);
+      const agents = agentsData.items || [];
+      const accountingSystemEmailAddress = agents?.map(
+        (data) => data.emailAddress
+      );
+
+      let isNotAdmin = false;
+
+      if (
+        agentProfile.position.some(
+          (e) =>
+            e.value === PROFILE_POSITIONS.SUBSCRIBER.value ||
+            e.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+        )
+      ) {
+        isNotAdmin = true;
+      }
+
+      if (accountingSystemEmailAddress.includes(emailAddress) && isNotAdmin) {
+        agentProfile.roles = [AGENT_ROLES[0]];
+        agentProfile.position = [PROFILE_POSITIONS.AGENT];
+        user.roles = [AGENT_ROLES[0]];
+        user.position = [PROFILE_POSITIONS.AGENT];
+
+        try {
+          await user.save();
+          await agentProfile.save();
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      }
+
+      token = generateToken(user._id);
 
       response = {
-        _id: user[0]._id,
-        name: user[0].name,
-        userGuid: user[0].userGuid,
-        email: user[0].email,
+        _id: user._id,
+        name: user.name,
+        userGuid: user.userGuid,
+        email: user.email,
         token: token,
         role: "ROLE_AGENT",
       };
@@ -237,4 +277,9 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
   }
 };
 
-export default { backOfficeLogin, loginUsingEmail, loginUsingCode };
+export default {
+  backOfficeLogin,
+  loginUsingEmail,
+  loginUsingCode,
+  backOfficeAgents,
+};

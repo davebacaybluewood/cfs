@@ -174,6 +174,10 @@ const PROFILE_POSITIONS = {
     value: "POSITION_MASTER_ADMIN",
     label: "Master Admin",
   },
+  FREE_30DAYS_TRIAL: {
+    value: "POSITION_FREE_30DAYS_TRIAL",
+    label: "Free 30 days trial",
+  },
 };
 
 const POINTS_TYPE = {
