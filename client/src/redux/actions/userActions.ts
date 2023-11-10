@@ -36,7 +36,6 @@ export const login =
         type: USER_LOGIN_ACTION_TYPES.USER_LOGIN_SUCCESS,
         payload: data,
       });
-
       localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error: any) {
       dispatch({

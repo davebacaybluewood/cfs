@@ -16,7 +16,7 @@ export const UserContext = createContext<UserContextData>({
 
 function setSessionStorage(key, value) {
   try {
-    window.localStorage.setItem(key, JSON.stringify(value));
+      window.localStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
     // catch possible errors:
     // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
@@ -43,7 +43,9 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   );
   const localData = localStorage.getItem("userInfo");
   useEffect(() => {
-    setSessionStorage("userInfo", data);
+    if (!("error" in data)) {
+      setSessionStorage("userInfo", data);
+    }
   }, [data]);
 
   return (
