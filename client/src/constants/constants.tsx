@@ -36,6 +36,7 @@ import Registration from "pages/MicroPages/Mission/Registration/Registration";
 import Missions from "pages/Missions&Events/Missions";
 import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
 import Rewards from "events/mission/Rewards/Rewards";
+import NATIONALITIES from "./nationalities";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -84,6 +85,13 @@ const CFS_STATES = US_STATES.map((data) => {
   return {
     label: data.name,
     value: data.name,
+  };
+});
+
+const CFS_NATIONALITIES = NATIONALITIES.map((data) => {
+  return {
+    label: data.Nationality,
+    value: data.Nationality,
   };
 });
 
@@ -425,6 +433,7 @@ export {
   SOCIAL_MEDIA_LINKS,
   MAIN_IMAGES,
   CFS_STATES,
+  CFS_NATIONALITIES,
   AGENT_SPECIALTIES,
   CURRENT_DOMAIN,
   NOTIFICATION_ENUMS,

@@ -82,6 +82,12 @@ const preProfileSchema = mongoose.Schema(
     specialties: {
       type: [String],
     },
+    nationality: {
+      type: String,
+    },
+    birthdate: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

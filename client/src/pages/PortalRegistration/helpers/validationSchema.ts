@@ -17,6 +17,7 @@ const validationSchema = Yup.object({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null as any], "Passwords must match")
     .required("Confirm password field is required"),
+  nationality: Yup.string().required("Nationality is required."),
 });
 
 export default validationSchema;
