@@ -153,6 +153,9 @@ const agentSchema = mongoose.Schema(
     zipCode: {
       type: String,
     },
+    nationality: {
+      type: String,
+    },
     birthDate: {
       type: Date,
     },

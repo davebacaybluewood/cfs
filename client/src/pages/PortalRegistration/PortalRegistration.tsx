@@ -56,6 +56,8 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     discordId: "",
     state: "",
     firstName: "",
+    nationality: "",
+    birthDate: "",
   });
 
   const stageHeader =
@@ -227,6 +229,8 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                   weChat: values.weChat,
                   discordId: values.discordId,
                   state: values.state,
+                  nationality: values.nationality,
+                  birthDate: values.birthDate,
                 },
                 config
               );

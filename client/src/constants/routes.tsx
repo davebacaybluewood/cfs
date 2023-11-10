@@ -69,6 +69,7 @@ const paths = {
   missions: "/missions/events",
   /*Agent of Agents */
   tmpModal: "/agent-mission-modal",
-};
+  treeDiagram: "/mission/hierarchy",
+}
 
 export { paths };

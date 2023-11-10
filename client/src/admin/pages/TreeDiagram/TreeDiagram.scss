@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "SpecialAgent";
+  src: local("SpecialAgent"),
+    url("../../../../public/assets/fonts/specialagentxtraexpandital.ttf")
+      format("woff");
+}
+
 .diagram-component {
   width: 100%;
   height: 100vh;
@@ -7,4 +14,64 @@
 
 .user-icon {
   font-size: 6rem !important;
+}
+
+.node {
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.node:hover {
+  transform: scale(1.05);
+}
+
+.plusBtn {
+  transition: 300ms;
+}
+
+.plusBtn:hover {
+  transform: scale(1.05);
+}
+
+.team-details {
+  color: black;
+  width: auto;
+  display: inline-block;
+  border-radius: 7px;
+  margin-top: 2rem;
+
+  .type-counts-parent {
+    display: flex;
+    gap: 10px;
+
+    .type-count-parent {
+      font-weight: 400;
+      background-color: #f7f7f7;
+      padding: 10px 2rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 7px;
+
+      .round-marker {
+        width: 8px;
+        height: 8px;
+        border-radius: 50px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.avatar-badge {
+  margin-top: 0.3rem;
+  bottom: 2.5rem;
+  color: white;
+  padding: 8px 10px;
+  width: auto;
+  text-transform: uppercase;
+  max-width: 100px;
+  margin: auto;
+  font-size: 12px;
+  border-radius: 7px;
 }
