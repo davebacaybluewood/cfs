@@ -21,10 +21,12 @@ import {
   FaUserShield,
   FaFlag,
 } from "react-icons/fa";
+import { MdOutlineDateRange } from "react-icons/md";
 import Badge from "library/Badge/Badge";
 import checkBlankValue from "helpers/checkBlankValue";
 import { BLANK_VALUE } from "constants/constants";
 import { ValuesType } from "../models";
+import { formatISODateOnly } from "helpers/dateFormatter";
 
 interface AccountSummaryProps {
   values: ValuesType;
@@ -85,6 +87,17 @@ const AccountSummary: React.FC<AccountSummaryProps> = (props) => {
         md: 12,
         lg: 12,
       },
+    },
+    {
+      title: "Birth Date",
+      subTitle: formatISODateOnly(props.values.birthDate),
+      grid: {
+        xs: 12,
+        sm: 12,
+        md: 12,
+        lg: 12,
+      },
+      icon: <MdOutlineDateRange />,
     },
     {
       title: "Position",
