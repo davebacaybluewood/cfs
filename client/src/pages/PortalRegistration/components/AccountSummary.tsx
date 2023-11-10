@@ -19,6 +19,7 @@ import {
   FaTwitterSquare,
   FaUserAlt,
   FaUserShield,
+  FaFlag,
 } from "react-icons/fa";
 import Badge from "library/Badge/Badge";
 import checkBlankValue from "helpers/checkBlankValue";
@@ -124,6 +125,17 @@ const AccountSummary: React.FC<AccountSummaryProps> = (props) => {
         lg: 12,
       },
       icon: <FaStar />,
+    },
+    {
+      title: "Nationality",
+      subTitle: props.values.nationality,
+      grid: {
+        xs: 12,
+        sm: 12,
+        md: 12,
+        lg: 12,
+      },
+      icon: <FaFlag />,
     },
     {
       title: "Languages",
