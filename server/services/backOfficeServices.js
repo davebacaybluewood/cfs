@@ -140,7 +140,7 @@ const loginUsingEmail = async (emailAddress) => {
       );
 
       return {
-        agentCode: agentCodeData.agentCode,
+        agentCode: agentCodeData?.agentCode || "",
       };
     } else {
       return false;
