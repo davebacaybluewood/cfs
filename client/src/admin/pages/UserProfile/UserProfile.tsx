@@ -20,7 +20,7 @@ const crumbs: CrumbTypes[] = [
 const UserProfile: React.FC = () => {
   const localData = localStorage.getItem("userInfo") as any;
   const parsedLocalData = JSON.parse(localData as any);
-  const userGuid = parsedLocalData.userGuid;
+  const userGuid = parsedLocalData ? parsedLocalData.userGuid : null;
 
   const { profile, loading } = useFetchUserProfile(userGuid ?? "");
 
