@@ -185,12 +185,6 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showFooter: true,
   },
   {
-    element: <TreeDiagram />,
-    path: "/tree-diagram",
-    showHeadline: false,
-    showFooter: true,
-  },
-  {
     element: (
       <AgentMissionModal
         openModal={true}

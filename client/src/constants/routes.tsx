@@ -1,4 +1,4 @@
-import adminPaths from "admin/constants/routes";
+import adminPaths from "admin/constants/routes"
 
 const paths = {
   ...adminPaths,
@@ -67,9 +67,10 @@ const paths = {
 
   /* Missions Page */
   missions: "/missions/events",
+
   /*Agent of Agents */
   tmpModal: "/agent-mission-modal",
-  treeDiagram: "/mission/hierarchy",
+  treeDiagram: "events/mission/hierarchy",
 }
 
-export { paths };
+export { paths }

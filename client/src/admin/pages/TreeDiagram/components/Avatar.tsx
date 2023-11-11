@@ -3,22 +3,13 @@ import "../TreeDiagram.scss"
 
 type AvatarProps = {
   name: string
-  gender: string
   type: string
   profileImg?: string
 }
 
-const MALE_IMG_URLS = [
-  "/assets/images/agent-mission/tree-diagram/user2.png",
-  "/assets/images/agent-mission/tree-diagram/user3.png",
-]
+const PLACEHOLDER_AVATAR = "/assets/images/agent-mission/agent.png"
 
-const FEMALE_IMG_URLS = [
-  "/assets/images/agent-mission/tree-diagram/user1.png",
-  "/assets/images/agent-mission/tree-diagram/user4.png",
-]
-
-const Avatar = ({ name, gender, type, profileImg }: AvatarProps) => {
+const Avatar = ({ name, type, profileImg }: AvatarProps) => {
   // function to shorten name
   const shortenName = (name: string) => {
     const splitName = name.split(" ")
@@ -27,8 +18,6 @@ const Avatar = ({ name, gender, type, profileImg }: AvatarProps) => {
     return `${firstName} ${lastName ? lastName.slice(0, 1) + "." : ""}`
   }
 
-  // get random number 0 and 1 to randomly display one out of two male/female avatars
-  const RANDOM_ZERO_AND_ONE = Math.floor(Math.random() * 2)
   return (
     <div className="node">
       <div style={{ position: "relative" }}>
@@ -45,12 +34,8 @@ const Avatar = ({ name, gender, type, profileImg }: AvatarProps) => {
           />
         ) : (
           <img
-            style={{ width: "70px" }}
-            src={
-              gender === "male"
-                ? MALE_IMG_URLS[RANDOM_ZERO_AND_ONE]
-                : FEMALE_IMG_URLS[RANDOM_ZERO_AND_ONE]
-            }
+            style={{ width: "135px", height: "90px", objectFit: "cover" }}
+            src={PLACEHOLDER_AVATAR}
             alt="user"
           />
         )}
