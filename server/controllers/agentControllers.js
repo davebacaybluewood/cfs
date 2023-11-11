@@ -401,6 +401,7 @@ const createAgent = expressAsync(async (req, res) => {
           : agentImgResult.secure_url,
       avatar_cloudinary_id: agentImgResult.public_id,
       position: req.body?.position,
+      zipCode: req.body?.zipCode,
       nationality: req.body?.nationality,
       birthDate: req.body?.birthDate,
     });

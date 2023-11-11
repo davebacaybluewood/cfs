@@ -1,20 +1,19 @@
-import { Grid, Button as MUIButton } from "@mui/material"
-import FormikTextInput from "library/Formik/FormikInput"
-import React, { useState } from "react"
-import Select from "react-select"
-import MultiSelectInputWithCreate from "library/MultiSelectInput/MultiSelectInputWithCreate"
-import { langOptions } from "pages/Agents/AgentsLanding/utils"
-import MultiSelectInputV2 from "library/MultiSelectInput/MultiSelectInputV2"
-import { AGENT_SPECIALTIES, CFS_NATIONALITIES } from "constants/constants"
-import { FaInfoCircle } from "react-icons/fa"
-import { DEFAULT_IMAGE } from "admin/constants/constants"
-import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip"
-import { ValuesType } from "../models"
-import ErrorText from "./ErrorText"
-import { FormikTouched } from "formik"
-import US_STATES from "constants/statesAndLocation"
-import DatePicker from "library/DatePicker/DatePicker"
-import NATIONALITIES from "constants/nationalities"
+import { Grid, Button as MUIButton } from "@mui/material";
+import FormikTextInput from "library/Formik/FormikInput";
+import React, { useState } from "react";
+import Select from "react-select";
+import MultiSelectInputWithCreate from "library/MultiSelectInput/MultiSelectInputWithCreate";
+import { langOptions } from "pages/Agents/AgentsLanding/utils";
+import MultiSelectInputV2 from "library/MultiSelectInput/MultiSelectInputV2";
+import { AGENT_SPECIALTIES, CFS_NATIONALITIES } from "constants/constants";
+import { FaInfoCircle } from "react-icons/fa";
+import { DEFAULT_IMAGE } from "admin/constants/constants";
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import { ValuesType } from "../models";
+import ErrorText from "./ErrorText";
+import { FormikTouched } from "formik";
+import US_STATES from "constants/statesAndLocation";
+import DatePicker from "library/DatePicker/DatePicker";
 
 interface PersonalInfoProps {
   values: ValuesType
@@ -71,6 +70,15 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
           variant="outlined"
           type="text"
           placeholder="Enter your last name"
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
+        <label className="form-label">Phone Number</label>
+        <FormikTextInput
+          name="phoneNumber"
+          value={props.values.phoneNumber}
+          variant="outlined"
+          placeholder="Enter your phone number"
         />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -180,10 +188,6 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
               : undefined
           }
         />
-        <ErrorText
-          isError={!props.values.state && !!props.touched.state}
-          text="State field is required."
-        />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <label className="form-label">Languages (Optional)</label>
@@ -206,60 +210,6 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
           }}
           placeholder="Select an language item to add"
           value={languageValue}
-        />
-      </Grid>
-      <Grid item xs={12} sm={12} md={12}>
-        <label className="form-label">State</label>
-        <Select
-          className="basic-single"
-          classNamePrefix="select"
-          onChange={(event) => {
-            props.setFieldValue("state", event!.value)
-          }}
-          onBlur={(e) => {
-            if (!props.values.state) {
-              props.setTouched({ ...props.touched, state: true })
-            }
-          }}
-          placeholder="Select a state"
-          isSearchable={true}
-          name="state"
-          options={US_STATES.map((st) => {
-            return {
-              label: st.name,
-              value: st.name,
-            }
-          })}
-          styles={{
-            control: (baseStyles, state) => {
-              return {
-                ...baseStyles,
-                border:
-                  !props.values.state && !!props.touched.state
-                    ? "1px solid #d32f2f"
-                    : undefined,
-                fontSize: "13px",
-                paddingTop: "5px",
-                paddingBottom: "5px",
-              }
-            },
-            placeholder: (baseStyles) => ({
-              ...baseStyles,
-              color: "rgba(0, 0, 0, 0.3)",
-            }),
-          }}
-          value={
-            props.values.state
-              ? {
-                  label: props.values.state,
-                  value: props.values.state,
-                }
-              : undefined
-          }
-        />
-        <ErrorText
-          isError={!props.values.state && !!props.touched.state}
-          text="State field is required."
         />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
