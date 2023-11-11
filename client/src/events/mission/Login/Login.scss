@@ -70,6 +70,7 @@
     border-radius: 3px;
     padding: 10px;
     width: 100%;
+    height: 56px;
     border: none;
     font-size: 1.3rem;
     color: #ffffff;
@@ -96,6 +97,7 @@
   }
 
   .recaptcha {
+    padding: 15px 0;
     margin-bottom: 1rem;
     align-items: center;
     display: flex;
@@ -105,26 +107,32 @@
   .text-field-container {
     display: flex;
     align-items: center;
-    width: 100%;
-    
+    width: 100%;    
   }
 
   .text-field-icon {
     margin-right: 8px;
     display: flex;
     align-items: center;
-    padding: 0;
+    justify-content: center;
+    padding: 5px;
+    font-size: 24px;
+  }
+  
+  .MuiBox-root {
+    width: 100%;
   }
   
 
-  .MuiInputBase-input {
-    padding-top: 10px;
-    padding-right: 10px;
-  }
-
   .MuiInputAdornment-root {
     display: flex;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
+    width: 32px;
+  }
+
+  .MuiInputBase-input {
+    display: flex;
+    padding-bottom: 20px;
   }
 
   .error-alert {

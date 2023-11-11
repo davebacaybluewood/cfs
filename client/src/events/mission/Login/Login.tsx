@@ -135,10 +135,10 @@ const AALogin: React.FC = () => {
                         position="start"
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                       >
-                        <AccountCircle style={{ fontSize: '24px' }} />
+                        <AccountCircle style={{ fontSize: '24px', padding: '0' }} />
                       </InputAdornment>
                     ),
-                    style: { fontSize: '14px' },
+                    style: { fontSize: '14px', margin: '1px' },
                   }}
                 />
 
@@ -164,10 +164,10 @@ const AALogin: React.FC = () => {
                         position="start"
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                       >
-                        <Lock style={{ fontSize: '24px' }} />
+                        <Lock style={{ fontSize: '24px', padding: '0' }} />
                       </InputAdornment>
                     ),
-                    style: { fontSize: '14px' },
+                    style: { fontSize: '14px', margin: '1px' },
                   }}
                 />
 
