@@ -16,40 +16,40 @@ import US_STATES from "constants/statesAndLocation";
 import DatePicker from "library/DatePicker/DatePicker";
 
 interface PersonalInfoProps {
-  values: ValuesType;
+  values: ValuesType
   setFieldValue: (
     field: string,
     value: any,
     shouldValidate?: boolean | undefined
-  ) => void;
-  touched: FormikTouched<ValuesType>;
+  ) => void
+  touched: FormikTouched<ValuesType>
   setTouched: (
     touched: FormikTouched<ValuesType>,
     shouldValidate?: boolean | undefined
-  ) => void;
-  changeStage: (newStage: number) => void;
-  isValid: boolean;
-  onSubmit: (values: ValuesType, nextStage: number) => Promise<void>;
+  ) => void
+  changeStage: (newStage: number) => void
+  isValid: boolean
+  onSubmit: (values: ValuesType, nextStage: number) => Promise<void>
 }
 
 const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
-  const [thumbnailPreview, setThumbnailPreview] = useState("");
+  const [thumbnailPreview, setThumbnailPreview] = useState("")
 
   const handleFocusBack = () => {
-    setThumbnailPreview("");
-    window.removeEventListener("focus", handleFocusBack);
-  };
+    setThumbnailPreview("")
+    window.removeEventListener("focus", handleFocusBack)
+  }
   const clickedFileInput = () => {
-    window.addEventListener("focus", handleFocusBack);
-  };
+    window.addEventListener("focus", handleFocusBack)
+  }
 
   const languageValue = props.values.languages?.map((data) => {
     return {
       keyword: data,
       label: data,
       value: data,
-    };
-  });
+    }
+  })
 
   return (
     <Grid container spacing={2}>
@@ -92,7 +92,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
         />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        <label className="form-label">Biography</label>
+        <label className="form-label">Biography (Optional)</label>
         <FormikTextInput
           name="bio"
           value={props.values.bio}
@@ -110,15 +110,15 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
               keyword: specialty,
               label: specialty,
               value: specialty,
-            };
+            }
           })}
           onChange={(e) => {
-            const modifiedValue = e?.map((val) => val.keyword);
-            props.setFieldValue("specialties", modifiedValue);
+            const modifiedValue = e?.map((val) => val.keyword)
+            props.setFieldValue("specialties", modifiedValue)
           }}
           onBlur={(e) => {
             if (props.values.specialties.length === 0) {
-              props.setTouched({ ...props.touched, specialties: true });
+              props.setTouched({ ...props.touched, specialties: true })
             }
           }}
           error={false}
@@ -133,7 +133,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
               keyword: data,
               label: data,
               value: data,
-            };
+            }
           })}
         />
 
@@ -150,11 +150,11 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
           className="basic-single"
           classNamePrefix="select"
           onChange={(event) => {
-            props.setFieldValue("nationality", event!.value);
+            props.setFieldValue("nationality", event!.value)
           }}
           onBlur={(e) => {
             if (!props.values.nationality) {
-              props.setTouched({ ...props.touched, nationality: true });
+              props.setTouched({ ...props.touched, nationality: true })
             }
           }}
           placeholder="Select your nationality"
@@ -172,7 +172,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
                 fontSize: "13px",
                 paddingTop: "5px",
                 paddingBottom: "5px",
-              };
+              }
             },
             placeholder: (baseStyles) => ({
               ...baseStyles,
@@ -197,22 +197,21 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
               keyword: language,
               label: language,
               value: language,
-            };
+            }
           })}
           onChange={(e) => {
-            const modifiedValue = e?.map((val) => val.keyword);
-            props.setFieldValue("languages", modifiedValue);
+            const modifiedValue = e?.map((val) => val.keyword)
+            props.setFieldValue("languages", modifiedValue)
           }}
           onCreate={(e) => {
-            const modifiedValue = e?.map((val) => val.keyword);
-            console.log(e);
-            props.setFieldValue("languages", modifiedValue);
+            const modifiedValue = e?.map((val) => val.keyword)
+            console.log(e)
+            props.setFieldValue("languages", modifiedValue)
           }}
           placeholder="Select an language item to add"
           value={languageValue}
         />
       </Grid>
-
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <label className="form-label">Birth Date</label>
         <div className="date-picker-container">
@@ -267,15 +266,15 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
               hidden
               name="avatar"
               onChange={(event) => {
-                props.setFieldValue("avatar", event.currentTarget.files![0]);
-                const fileReader = new FileReader();
+                props.setFieldValue("avatar", event.currentTarget.files![0])
+                const fileReader = new FileReader()
                 fileReader.onload = () => {
                   if (fileReader.readyState === 2) {
-                    setThumbnailPreview(fileReader.result?.toString() ?? "");
+                    setThumbnailPreview(fileReader.result?.toString() ?? "")
                   }
-                };
-                fileReader.readAsDataURL(event.target.files![0]);
-                window.removeEventListener("focus", handleFocusBack);
+                }
+                fileReader.readAsDataURL(event.target.files![0])
+                window.removeEventListener("focus", handleFocusBack)
               }}
               onClick={clickedFileInput}
             />
@@ -299,7 +298,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
         <button
           className="primary-cfs-btn"
           onClick={() => {
-            props.onSubmit(props.values, 3);
+            props.onSubmit(props.values, 3)
           }}
           disabled={props.isValid}
         >
@@ -313,7 +312,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
         </button>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default PersonalInfo;
+export default PersonalInfo
