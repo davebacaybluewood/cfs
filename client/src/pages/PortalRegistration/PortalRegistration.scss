@@ -58,6 +58,15 @@
     display: flex;
     align-items: center;
 
+    .zipCode {
+      .MuiOutlinedInput-root {
+        input {
+          // display: none;
+          padding: 1.4rem 1rem;
+        }
+      }
+    }
+
     .date-picker-container {
       input {
         padding: 1rem 0.5rem;

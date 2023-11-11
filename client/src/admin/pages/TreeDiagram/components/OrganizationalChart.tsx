@@ -7,7 +7,6 @@ import "../TreeDiagram.scss"
 
 type DataType = {
   name: string
-  gender: string
   type: string
   profileImg?: string
   children?: DataType[]
@@ -46,7 +45,6 @@ const OrganizationalChart = ({ data }: { data: DataType[] }) => {
         label={
           <Avatar
             name={item.name}
-            gender={item.gender}
             type={item.type}
             profileImg={item.profileImg}
           />
