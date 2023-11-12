@@ -418,6 +418,9 @@ const ContractForm: React.FC = () => {
                   finalData.design = updatedDesign;
                   finalData.emailBody = html;
 
+                  finalData.recipients =
+                    finalData.recipients?.map((email) => email.label) || [];
+
                   const response = await agent.EmailMarketing.sendEmail(
                     finalData
                   );

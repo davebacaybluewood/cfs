@@ -80,6 +80,12 @@ const agentSchema = mongoose.Schema(
     address: {
       type: String,
     },
+    address1: {
+      type: String,
+    },
+    address2: {
+      type: String,
+    },
     calendlyLink: {
       type: String,
     },
@@ -143,6 +149,15 @@ const agentSchema = mongoose.Schema(
     displayCalendly: {
       type: Boolean,
       default: false,
+    },
+    zipCode: {
+      type: String,
+    },
+    nationality: {
+      type: String,
+    },
+    birthDate: {
+      type: Date,
     },
   },
   {

@@ -19,11 +19,15 @@ import {
   FaTwitterSquare,
   FaUserAlt,
   FaUserShield,
+  FaFlag,
+  FaLocationArrow,
 } from "react-icons/fa";
+import { MdOutlineDateRange } from "react-icons/md";
 import Badge from "library/Badge/Badge";
 import checkBlankValue from "helpers/checkBlankValue";
 import { BLANK_VALUE } from "constants/constants";
 import { ValuesType } from "../models";
+import { formatISODateOnly } from "helpers/dateFormatter";
 
 interface AccountSummaryProps {
   values: ValuesType;
@@ -86,6 +90,17 @@ const AccountSummary: React.FC<AccountSummaryProps> = (props) => {
       },
     },
     {
+      title: "Birth Date",
+      subTitle: formatISODateOnly(props.values.birthDate),
+      grid: {
+        xs: 12,
+        sm: 12,
+        md: 12,
+        lg: 12,
+      },
+      icon: <MdOutlineDateRange />,
+    },
+    {
       title: "Position",
       subTitle: "Free 30days Trial",
       icon: <FaUserShield />,
@@ -126,6 +141,17 @@ const AccountSummary: React.FC<AccountSummaryProps> = (props) => {
       icon: <FaStar />,
     },
     {
+      title: "Nationality",
+      subTitle: props.values.nationality,
+      grid: {
+        xs: 12,
+        sm: 12,
+        md: 12,
+        lg: 12,
+      },
+      icon: <FaFlag />,
+    },
+    {
       title: "Languages",
       subTitle: props.values.languages.length
         ? props.values.languages.map((data) => <Badge>{data}</Badge>)
@@ -139,14 +165,36 @@ const AccountSummary: React.FC<AccountSummaryProps> = (props) => {
       icon: <FaComments />,
     },
     {
-      title: "Business Address",
-      subTitle: checkBlankValue(props.values.address),
+      title: "Address Line 1",
+      subTitle: checkBlankValue(props.values.address1),
+      icon: <FaMapMarked />,
+    },
+    {
+      title: "Address Line 2",
+      subTitle: checkBlankValue(props.values.address2),
       icon: <FaMapMarked />,
     },
     {
       title: "State",
       subTitle: props.values.state,
       icon: <FaMapMarkerAlt />,
+      grid: {
+        xs: 6,
+        sm: 6,
+        md: 6,
+        lg: 6,
+      },
+    },
+    {
+      title: "Zip Code",
+      subTitle: props.values.zipCode,
+      icon: <FaLocationArrow />,
+      grid: {
+        xs: 6,
+        sm: 6,
+        md: 6,
+        lg: 6,
+      },
     },
   ];
 

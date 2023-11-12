@@ -58,6 +58,45 @@
     display: flex;
     align-items: center;
 
+    .zipCode {
+      .MuiOutlinedInput-root {
+        input {
+          // display: none;
+          padding: 1.4rem 1rem;
+        }
+      }
+    }
+
+    .date-picker-container {
+      input {
+        padding: 1rem 0.5rem;
+        font: 600 1.5rem "Montserrat";
+        border: 1px solid #999999;
+        border-radius: 5px;
+      }
+      .react-datepicker__day {
+        padding: 1rem;
+        font: 300 1.5rem "Montserrat";
+      }
+
+      .react-datepicker__current-month {
+        font: 700 1.5rem "Montserrat";
+      }
+
+      .react-datepicker__day-names {
+        display: flex;
+        justify-content: space-between;
+        font: 300 1.5rem "Montserrat";
+        margin: 1rem;
+        margin-bottom: unset;
+      }
+
+      .react-datepicker__navigation {
+        width: 40px;
+        background: unset;
+      }
+    }
+
     .social-grids {
       label {
         svg {
@@ -282,6 +321,8 @@
 
   .form-error {
     font-size: 1.3rem;
+    color: #d32f2f;
+    margin-top: 0.5rem;
   }
   .register-label {
     text-align: center;

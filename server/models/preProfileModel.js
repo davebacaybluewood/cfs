@@ -44,6 +44,12 @@ const preProfileSchema = mongoose.Schema(
     address: {
       type: String,
     },
+    address1: {
+      type: String,
+    },
+    address2: {
+      type: String,
+    },
     twitter: {
       type: String,
     },
@@ -75,6 +81,12 @@ const preProfileSchema = mongoose.Schema(
     },
     specialties: {
       type: [String],
+    },
+    nationality: {
+      type: String,
+    },
+    birthdate: {
+      type: Date,
     },
   },
   {

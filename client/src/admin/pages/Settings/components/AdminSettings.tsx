@@ -11,6 +11,8 @@ import agent from "admin/api/agent";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "admin/context/UserProvider";
 import { paths } from "constants/routes";
+import Title from "admin/components/Title/Title";
+import { FiSettings } from "react-icons/fi";
 
 const AdminSettings: React.FC = () => {
 	const [open, setOpen] = useState(false);
@@ -62,10 +64,11 @@ const AdminSettings: React.FC = () => {
 
 	return (
 		<div className="admin-settings-container">
-			<div className="title-content">
-				<h2>Unsubcribe</h2>
-				<p>Lorem ipsum dolor sit amet.</p>
+			<div className="title-header">
+				<FiSettings />
+				<h2>Unsubscribe</h2>
 			</div>
+
 			<div className="settings-actions-btn">
 				<MUIButton variant="contained" onClick={() => setOpen(true)}>
 					Unsubscibe

@@ -4,7 +4,6 @@ const validationSchema = Yup.object({
   firstName: Yup.string().required("First name field is required."),
   lastName: Yup.string().required("Last name field is required."),
   state: Yup.string().required("State field is required."),
-  bio: Yup.string().required("Bio field is required."),
   phoneNumber: Yup.string().required("Phone Number field is required."),
   emailAddress: Yup.string()
     .email("Invalid email address")
@@ -18,6 +17,7 @@ const validationSchema = Yup.object({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null as any], "Passwords must match")
     .required("Confirm password field is required"),
+  nationality: Yup.string().required("Nationality is required."),
 });
 
 export default validationSchema;
