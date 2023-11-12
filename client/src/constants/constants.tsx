@@ -37,6 +37,7 @@ import Missions from "pages/Missions&Events/Missions";
 import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
 import Rewards from "events/mission/Rewards/Rewards";
 import NATIONALITIES from "./nationalities";
+import MyWebPage from "pages/MyWebPage/MyWebPage";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -46,10 +47,10 @@ type ReactRoutesType = RouteProps & {
   showPartners?: boolean;
 };
 
-const COMPANY_NAME = "Comfort Financial Solutions"
+const COMPANY_NAME = "Comfort Financial Solutions";
 
 //const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
-const MAIN_LOCALHOST = "http://lcoalhost:3000"
+const MAIN_LOCALHOST = "http://lcoalhost:3000";
 
 const SOCIAL_MEDIA_LINKS = {
   FACEBOOK: "https://www.facebook.com/gocfspro",
@@ -121,7 +122,7 @@ const AGENT_SPECIALTIES = [
   "Legacy Builder",
 ];
 
-const BLANK_VALUE = "—"
+const BLANK_VALUE = "—";
 
 const eventSteps = [
   {
@@ -206,11 +207,11 @@ const REACT_ROUTES: ReactRoutesType[] = [
   },
   {
     element: <TreeDiagram />,
-    path: paths.treeDiagram,   
+    path: paths.treeDiagram,
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
-  }, 
+  },
   {
     element: <FamilyProtection />,
     path: paths.family_protection,
@@ -383,6 +384,15 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: false,
   },
+
+  /* My Web Page */
+  {
+    element: <MyWebPage />,
+    path: paths.myWebPage,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
 ];
 
 const CALENDLY = {
@@ -390,8 +400,8 @@ const CALENDLY = {
   WEEKLY: "https://calendly.com/gocfs/one-time-weekly-meeting",
 };
 
-const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" }
-const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" }
+const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
+const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
 
 const DEFAULT_AA_AVATAR = "/assets/images/agent-mission/agent-black.png";
 

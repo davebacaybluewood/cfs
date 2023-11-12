@@ -68,6 +68,9 @@ const paths = {
   missions: "/missions/events",
   tmpModal: "/agent-mission-modal",
   treeDiagram: "/mission/hierarchy",
+
+  /* My WebPage */
+  myWebPage: "/myWebPage",
 };
 
 export { paths };
