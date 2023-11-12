@@ -1,0 +1,49 @@
+.my-webpage-container {
+	.half-bg {
+		background: url("https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+		background-position: center;
+		background-size: cover;
+		height: 30vh;
+	}
+	.profile-section-container {
+		margin: -7rem 0 2rem 0;
+		z-index: 9999;
+		display: flex;
+		align-items: center;
+
+		img {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+
+		.MuiGrid-grid-xs-9,
+		.MuiGrid-grid-sm-9 .MuiGrid-grid-md-9,
+		.MuiGrid-grid-lg-9,
+		.MuiGrid-grid-xl-9 {
+			margin: 8rem 0 2rem -10rem;
+		}
+
+		.profile-captions {
+			h2 {
+				font: 800 2rem "Montserrat";
+				margin: 1rem 0;
+				color: #353738;
+			}
+			.agent-description {
+				font: 600 1.3rem "Montserrat";
+				color: #353738;
+				margin: 1rem 0;
+			}
+			.social-container {
+				display: flex;
+				gap: 20px;
+
+				svg {
+					font-size: 1.5rem;
+				}
+			}
+		}
+	}
+}
