@@ -71,7 +71,7 @@ const authUser = expressAsync(async (req, res) => {
     (e) => e.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
   );
 
-  if (noOfDays.remainingDays === 27 && isFreeTrialUser) {
+  if (noOfDays?.remainingDays === 27 && isFreeTrialUser) {
     agent.roles = [SUBSCRIBER_ROLES[0]];
     agent.position = [PROFILE_POSITIONS.SUBSCRIBER];
     user.roles = [SUBSCRIBER_ROLES[0]];

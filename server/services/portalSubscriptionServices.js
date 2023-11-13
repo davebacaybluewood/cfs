@@ -11,19 +11,26 @@ const getTrialNumberOfDays = async (userGuid) => {
     userGuid: userGuid,
   });
 
-  const subscribedDate = new Date(subscription.createdAt);
-  const expirationDate = new Date(
-    subscribedDate.setDate(subscribedDate.getDate() + 30)
-  );
-  const currentDate = new Date();
+  if (subscription) {
+    const subscribedDate = new Date(subscription.createdAt);
+    const expirationDate = new Date(
+      subscribedDate.setDate(subscribedDate.getDate() + 30)
+    );
+    const currentDate = new Date();
 
-  const oneDay = 24 * 60 * 60 * 1000;
-  const diffDays = Math.round(
-    Math.abs((expirationDate - currentDate) / oneDay)
-  );
+    const oneDay = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round(
+      Math.abs((expirationDate - currentDate) / oneDay)
+    );
+    return {
+      remainingDays: diffDays,
+      expirationDate,
+    };
+  }
+
   return {
-    remainingDays: diffDays,
-    expirationDate,
+    remainingDays: 0,
+    expirationDate: new Date(),
   };
 };
 
