@@ -70,14 +70,13 @@ const MyWebPage: React.FC = () => {
 
 	return (
 		<MyWebPageWrapper showNavBar showFooter>
-			<div className="my-webpage-container">
-				<div className="half-bg" />
-
-				<Container>
-					<div className="profile-section-container">
-						{loading ? (
-							<Spinner variant="fixed" />
-						) : (
+			{loading ? (
+				<Spinner variant="fixed" />
+			) : (
+				<div className="my-webpage-container">
+					<div className="half-bg" />
+					<Container>
+						<div className="profile-section-container">
 							<Grid container spacing={2}>
 								<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
 									<img src={defaultAvatar} alt={defaultAvatar} />
@@ -96,59 +95,59 @@ const MyWebPage: React.FC = () => {
 									</div>
 								</Grid>
 							</Grid>
-						)}
-					</div>
-				</Container>
-				<div className="tri-col">
-					<Container>
-						<Grid container spacing={2}>
-							<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
-								<div className="left-col">
-									<div className="contact">
-										<FaPhone /> <span>{phoneNumber}</span>
-									</div>
-									<div className="contact">
-										<MdEmail />{" "}
-										<span>
-											<a href={`mailto:${email}`} className="mailto">
-												{email}
-											</a>
-										</span>
-									</div>
-									<Button variant="primary">
-										{" "}
-										<BsChatRightTextFill /> <span>Chat</span>{" "}
-									</Button>
-								</div>
-							</Grid>
-							<Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-								<div className="middle-col">
-									<div className="middle-col-content">
-										<h2>Main Feed</h2>
-									</div>
-								</div>
-							</Grid>
-							<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
-								<div className="right-col">
-									<div className="right-col-content">
-										<h3>Agent Calculator</h3>
-										<div className="icon-holder">
-											<BsCalculator />
+						</div>
+					</Container>
+					<div className="tri-col">
+						<Container>
+							<Grid container spacing={2}>
+								<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
+									<div className="left-col">
+										<div className="contact">
+											<FaPhone /> <span>{phoneNumber}</span>
 										</div>
-										<p>Lorem ipsum dolor sit.</p>
-										<Button onClick={() => navigate("/calculator")}>
-											Calculate{" "}
+										<div className="contact">
+											<MdEmail />{" "}
 											<span>
-												<AiOutlineArrowRight />
+												<a href={`mailto:${email}`} className="mailto">
+													{email}
+												</a>
 											</span>
+										</div>
+										<Button variant="primary">
+											{" "}
+											<BsChatRightTextFill /> <span>Chat</span>{" "}
 										</Button>
 									</div>
-								</div>
+								</Grid>
+								<Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+									<div className="middle-col">
+										<div className="middle-col-content">
+											<h2>Main Feed</h2>
+										</div>
+									</div>
+								</Grid>
+								<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
+									<div className="right-col">
+										<div className="right-col-content">
+											<h3>Agent Calculator</h3>
+											<div className="icon-holder">
+												<BsCalculator />
+											</div>
+											<p>Lorem ipsum dolor sit.</p>
+											<Button onClick={() => navigate("/calculator")}>
+												Calculate{" "}
+												<span>
+													<AiOutlineArrowRight />
+												</span>
+											</Button>
+										</div>
+									</div>
+								</Grid>
 							</Grid>
-						</Grid>
-					</Container>
+						</Container>
+					</div>
 				</div>
-			</div>
+			)}
 		</MyWebPageWrapper>
 	);
 };
