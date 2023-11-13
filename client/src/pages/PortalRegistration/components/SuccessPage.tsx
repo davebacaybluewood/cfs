@@ -22,8 +22,9 @@ const SuccessPage: React.FC = () => {
       />
       <h2>Agent Registration Success</h2>
       <p>
-        Thank you for registering with Comfort Financial Solutions. <br /> It
-        will take 3-5 business days to process your request.
+        Thank you for signing up for our 30-day free trial! Keep an eye on your
+        email for important updates about your registration. If you have any
+        questions or need assistance, feel free to reach out
       </p>
 
       <div className="faq-accordions">
