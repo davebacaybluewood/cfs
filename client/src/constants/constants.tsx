@@ -39,7 +39,6 @@ import Rewards from "events/Mission/Rewards/Rewards";
 import NATIONALITIES from "./nationalities";
 import AALogin from "../events/Mission/Login/Login";
 
-
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
   showNavbar?: boolean;
