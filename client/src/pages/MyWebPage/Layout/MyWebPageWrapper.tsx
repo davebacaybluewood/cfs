@@ -17,7 +17,7 @@ const MyWebPageWrapper: React.FC<MyWebPageWrapperProps> = (props) => {
 			<main className="mywebpage-content">{props.children}</main>
 			<div className="footer">
 				{props.showFooter ? (
-					/* <Footer/> */ <h2 style={{ textAlign: "center" }}>Footer</h2> //Not final
+					/* <Footer/> */ <h2 style={{ textAlign: "center" }}></h2> //Not final
 				) : null}
 			</div>
 			{props.loading ? <Spinner variant="fixed" /> : null}
