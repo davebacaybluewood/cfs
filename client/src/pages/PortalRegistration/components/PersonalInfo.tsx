@@ -103,7 +103,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
 				/>
 			</Grid>
 			<Grid item xs={12} sm={12} md={12} lg={12}>
-				<label className="form-label">Specialties</label>
+				<label className="form-label">Specialties(Optional)</label>
 				<MultiSelectInputV2
 					options={AGENT_SPECIALTIES.map((specialty) => {
 						return {
@@ -145,7 +145,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
         /> */}
 			</Grid>
 			<Grid item xs={12} sm={12} md={12} lg={12}>
-				<label className="form-label">Nationality(Optional)</label>
+				<label className="form-label">Nationality</label>
 				<Select
 					className="basic-single"
 					classNamePrefix="select"
