@@ -450,7 +450,6 @@ const ContractForm: React.FC = () => {
                   design: JSON.stringify(design),
                   settings: data.settings,
                 };
-                // EDIT THIS TO CALL UPDATE API INSTEAD OF CREATE API
                 saveTemplateHandler(finalPayloadData);
                 return;
               }
