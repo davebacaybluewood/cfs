@@ -35,8 +35,9 @@ import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 import Registration from "pages/MicroPages/Mission/Registration/Registration";
 import Missions from "pages/Missions&Events/Missions";
 import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
-import Rewards from "events/mission/Rewards/Rewards";
+import Rewards from "events/Mission/Rewards/Rewards";
 import NATIONALITIES from "./nationalities";
+import AALogin from "../events/Mission/Login/Login";
 import ClaimReward from "pages/Events/Mission/ClaimReward";
 
 type ReactRoutesType = RouteProps & {
@@ -80,6 +81,7 @@ const MAIN_IMAGES = {
 const AGENT_MISSION_IMAGES = {
   BACKGROUND: "/assets/images/agent-mission/modal-bg.png",
   AGENT: "/assets/images/agent-mission/agent.png",
+  USER: "/assets/images/agent-mission/circle-user-solid.png",
 };
 
 const CFS_STATES = US_STATES.map((data) => {
@@ -381,6 +383,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <Missions />,
     path: paths.missions,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+  {
+    element: <AALogin />,
+    path: paths.aaLogin,
     showNavbar: false,
     showHeadline: false,
     showFooter: false,
