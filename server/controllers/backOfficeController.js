@@ -3,7 +3,7 @@ import backOfficeServices from "../services/backOfficeServices.js";
 const loginUsingCode = async (req, res, next) => {
   const { verificationCode, emailAddress, agentCode } = req.body;
 
-  if (!verificationCode || !emailAddress || !agentCode) {
+  if (!verificationCode || !emailAddress) {
     res.status(401).json("Unauthorized");
     return;
   }

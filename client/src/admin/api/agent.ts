@@ -367,6 +367,13 @@ const TrialSubscription = {
     const res = requests.get<string>(`/api/portal-subscription/free-trial`);
     return res;
   },
+  getTrialNumberOfDays: (userGuid: string) => {
+    const res = requests.get<{
+      remainingDays: number;
+      expirationDate: string;
+    }>(`/api/portal-subscription/free-trial/${userGuid}`);
+    return res;
+  },
 };
 
 const Events = {

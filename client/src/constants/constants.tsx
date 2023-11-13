@@ -35,8 +35,10 @@ import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 import Registration from "pages/MicroPages/Mission/Registration/Registration";
 import Missions from "pages/Missions&Events/Missions";
 import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
-import Rewards from "events/mission/Rewards/Rewards";
+import Rewards from "events/Mission/Rewards/Rewards";
 import NATIONALITIES from "./nationalities";
+import AALogin from "../events/Mission/Login/Login";
+import ClaimReward from "pages/Events/Mission/ClaimReward";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -46,10 +48,10 @@ type ReactRoutesType = RouteProps & {
   showPartners?: boolean;
 };
 
-const COMPANY_NAME = "Comfort Financial Solutions"
+const COMPANY_NAME = "Comfort Financial Solutions";
 
 //const MAIN_LOCALHOST = "https://www.comfortfinancialsolutions.com";
-const MAIN_LOCALHOST = "http://lcoalhost:3000"
+const MAIN_LOCALHOST = "http://lcoalhost:3000";
 
 const SOCIAL_MEDIA_LINKS = {
   FACEBOOK: "https://www.facebook.com/gocfspro",
@@ -79,6 +81,7 @@ const MAIN_IMAGES = {
 const AGENT_MISSION_IMAGES = {
   BACKGROUND: "/assets/images/agent-mission/modal-bg.png",
   AGENT: "/assets/images/agent-mission/agent.png",
+  USER: "/assets/images/agent-mission/circle-user-solid.png",
 };
 
 const CFS_STATES = US_STATES.map((data) => {
@@ -121,7 +124,7 @@ const AGENT_SPECIALTIES = [
   "Legacy Builder",
 ];
 
-const BLANK_VALUE = "—"
+const BLANK_VALUE = "—";
 
 const eventSteps = [
   {
@@ -199,12 +202,19 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showNavbar: false,
   },
   {
+    element: <ClaimReward />,
+    path: paths.aaClaimReward,
+    showFooter: false,
+    showHeadline: false,
+    showNavbar: false,
+  },
+  {
     element: <TreeDiagram />,
-    path: paths.treeDiagram,   
+    path: paths.treeDiagram,
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
-  }, 
+  },
   {
     element: <FamilyProtection />,
     path: paths.family_protection,
@@ -377,6 +387,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: false,
   },
+  {
+    element: <AALogin />,
+    path: paths.aaLogin,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
 ];
 
 const CALENDLY = {
@@ -384,8 +401,8 @@ const CALENDLY = {
   WEEKLY: "https://calendly.com/gocfs/one-time-weekly-meeting",
 };
 
-const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" }
-const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" }
+const SUPPORT_TYPE = { FEATURE: "feature", BUG: "bug", OTHER: "other" };
+const SUPPORT_STATUS = { PENDING: "PENDING", RESOLVED: "RESOLVED" };
 
 const DEFAULT_AA_AVATAR = "/assets/images/agent-mission/agent-black.png";
 

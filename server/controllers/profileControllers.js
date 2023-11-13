@@ -407,7 +407,6 @@ const registerPreProfile = expressAsync(async (req, res) => {
     const profile = new Agents(preProfile);
 
     await profile.save();
-
     res.json(profile);
   } catch (err) {
     console.log(err);

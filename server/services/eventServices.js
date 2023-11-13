@@ -30,7 +30,7 @@ const createEvent = async (req, res, next) => {
 
     thumbnail = eventImage.secure_url;
   } catch (error) {
-    return false;
+    thumbnail = "";
   }
 
   const agentModel = await Agent.find({ userGuid });

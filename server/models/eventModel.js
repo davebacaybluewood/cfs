@@ -4,7 +4,6 @@ const eventsSchema = mongoose.Schema(
   {
     thumbnail: {
       type: String,
-      required: true,
     },
     userGuid: {
       type: String,

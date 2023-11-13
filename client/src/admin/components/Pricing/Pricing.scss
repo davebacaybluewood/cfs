@@ -1,0 +1,138 @@
+.pricing-wrapper-admin {
+  .portal-btn {
+    padding: 1.3rem 3rem;
+    color: white;
+    background-color: #ed3e4b;
+    border-radius: 5rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    box-shadow: none;
+    border: none;
+
+    span {
+      text-transform: capitalize;
+    }
+    &:hover {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  .header {
+    padding: 4rem 0;
+    h1 {
+      font-family: "Agrandir";
+      font-size: 4rem;
+    }
+  }
+
+  .pricing-card {
+    padding: 0.5rem;
+    padding-top: 2.1rem;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+
+    .MuiGrid-item {
+      padding-top: 0;
+    }
+
+    .card-captions {
+      padding: 2rem;
+      background-color: white;
+      h3 {
+        font-family: "Agrandir", sans-serif;
+        font-size: 3rem;
+        margin-top: 0;
+      }
+      p {
+        font-size: 1.3rem;
+        font-weight: 300;
+        line-height: 2rem;
+      }
+    }
+
+    .price {
+      h5 {
+        font-size: 3rem;
+        font-weight: 800;
+        font-family: "Agrandir", sans-serif;
+      }
+      span {
+        font-size: 1.2rem;
+        font-style: italic;
+        border-bottom: 1px dotted #fff;
+        color: #fff;
+      }
+    }
+
+    .cfs-btn {
+      button {
+        margin-bottom: 0;
+        padding: 0.5rem 1rem;
+
+        svg {
+          position: relative;
+          top: 2px;
+        }
+      }
+    }
+  }
+
+  .pricing-card-light {
+    background-color: #f6f9fc;
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+
+    .card-captions {
+      h3 {
+        color: #333;
+      }
+      p {
+        color: #333;
+      }
+    }
+  }
+
+  .pricing-card-dark {
+    background-color: #00004d;
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+
+    .card-captions {
+      background-color: #00004d;
+      h3 {
+        color: #fff;
+      }
+      p {
+        color: #fff;
+      }
+    }
+
+    .price {
+      text-align: center;
+      align-items: center;
+
+      h5 {
+        color: #fff;
+      }
+      p {
+        color: #fff;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .pricing-card {
+    .price {
+      width: "90vw";
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .MuiGrid-root {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+}

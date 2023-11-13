@@ -72,6 +72,7 @@ const adminPaths = {
   orderHistory: adminCfsRoute + "merchandises/order-history",
   trialSubscription: adminCfsRoute + "trial-subscription",
   rsvpLanding: adminCfsRoute + "events/rsvp/:eventId",
+  aaLogin: "/events/mission/login",
 } as const;
 
 export default adminPaths;

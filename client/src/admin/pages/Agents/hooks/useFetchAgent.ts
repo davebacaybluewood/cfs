@@ -51,8 +51,6 @@ const useFetchAgent = (userGuid: string) => {
       });
   }, [userGuid]);
 
-  console.log(agent);
-
   return {
     agent: agent,
     loading,

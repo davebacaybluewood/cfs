@@ -3,6 +3,7 @@ import { API_RES_OK, API_RES_FAIL, ROLES } from "../constants/constants.js";
 import PortalSubscription from "../models/portalSubscription.js";
 import Agent from "../models/agentModel.js";
 import subscriberServices from "../services/subscriberServices.js";
+import portalSubscriptionServices from "../services/portalSubscriptionServices.js";
 
 /* @desc:  Subscribe Free Trial
  * @route: POST /api/portal-subscription/free-trial
@@ -124,7 +125,6 @@ const getAllSubscribeFreeTrial = expressAsync(async (req, res) => {
       },
     ]);
 
-    console.log("usersData", usersData);
     if (usersData.length === 0) {
       return res.status(404).send(API_RES_FAIL("No agent data found"));
     }
@@ -136,4 +136,12 @@ const getAllSubscribeFreeTrial = expressAsync(async (req, res) => {
   }
 });
 
-export { subscribeFreeTrial, getAllSubscribeFreeTrial };
+const getTrialNumberOfDays = async (req, res) => {
+  const data = await portalSubscriptionServices.getTrialNumberOfDays(
+    req.params.userGuid
+  );
+
+  res.json(data);
+};
+
+export { subscribeFreeTrial, getAllSubscribeFreeTrial, getTrialNumberOfDays };
