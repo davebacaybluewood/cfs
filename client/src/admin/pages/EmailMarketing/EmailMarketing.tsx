@@ -302,13 +302,14 @@ const ContractForm: React.FC = () => {
       if (isNoEmptyFields) {
         setSaveTemplateError("");
         setLoading(true);
-        const response = await agent.EmailMarketing.createEmailTemplate(
+        const response = await agent.EmailMarketing.updateEmailTemplate(
           userGuid,
+          templateId,
           data
         );
 
         if (response) {
-          toast.info(`Email Template has been added.`, {
+          toast.info(`Email Template has been updated.`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -449,6 +450,7 @@ const ContractForm: React.FC = () => {
                   design: JSON.stringify(design),
                   settings: data.settings,
                 };
+                // EDIT THIS TO CALL UPDATE API INSTEAD OF CREATE API
                 saveTemplateHandler(finalPayloadData);
                 return;
               }
@@ -757,7 +759,7 @@ const ContractForm: React.FC = () => {
                     <div className="actions">
                       {action === "edit" ? (
                         <Button variant="danger" onClick={() => handleSubmit()}>
-                          Edit Template
+                          Save Template
                         </Button>
                       ) : (
                         <React.Fragment>
