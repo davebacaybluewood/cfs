@@ -9,10 +9,13 @@ import {
   AGENT_STATUSES,
   API_RES_FAIL,
   API_RES_OK,
+  FREE_30DAYS_TRIAL_ROLES,
+  SUBSCRIBER_ROLES,
 } from "../constants/constants.js";
 import Agent from "../models/agentModel.js";
 import backOfficeServices from "../services/backOfficeServices.js";
 import { AGENT_ROLES, PROFILE_POSITIONS } from "../constants/constants.js";
+import portalSubscriptionServices from "../services/portalSubscriptionServices.js";
 
 /**
  * @desc:  Auth the user & get token
@@ -59,6 +62,23 @@ const authUser = expressAsync(async (req, res) => {
       console.log(error);
       return false;
     }
+  }
+
+  const noOfDays = await portalSubscriptionServices.getTrialNumberOfDays(
+    agent.userGuid
+  );
+  const isFreeTrialUser = agent.position.some(
+    (e) => e.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+  );
+
+  if (noOfDays.remainingDays === 27 && isFreeTrialUser) {
+    agent.roles = [SUBSCRIBER_ROLES[0]];
+    agent.position = [PROFILE_POSITIONS.SUBSCRIBER];
+    user.roles = [SUBSCRIBER_ROLES[0]];
+    user.position = [PROFILE_POSITIONS.SUBSCRIBER];
+
+    await user.save();
+    await agent.save();
   }
 
   if (user && (await user.matchPassword(password)) && isValidStatus) {

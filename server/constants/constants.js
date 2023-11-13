@@ -153,6 +153,13 @@ const CONTENT_CREATOR_ROLES = [
   },
 ];
 
+const FREE_30DAYS_TRIAL_ROLES = [
+  {
+    value: "ROLE_FREE_30DAYS_TRIAL",
+    label: "Free 30days Trial ",
+  },
+];
+
 const PROFILE_POSITIONS = {
   AGENT: {
     value: "POSITION_AGENT",
@@ -236,4 +243,5 @@ export {
   DEFAULT_IMAGE,
   POINTS_TYPE,
   TICKET_STATUS,
+  FREE_30DAYS_TRIAL_ROLES,
 };
