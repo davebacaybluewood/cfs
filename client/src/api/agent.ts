@@ -301,6 +301,31 @@ const Mission = {
     });
     return res;
   },
+  claimReward: async (rewardId: string, data) => {
+    const endpoint = `/api/event-orders/claim-reward/${rewardId}`;
+    const { userGuid, addressLine1, addressLine2, state, zipCode, notes } =
+      data;
+
+    const res = await requests
+      .post<DefaultResSuccess>(endpoint, {
+        userGuid,
+        addressLine1,
+        addressLine2,
+        state,
+        zipCode,
+        notes,
+      })
+      .catch((err) => {
+        let api_res = {
+          message: err.response?.data?.description ?? "Something went wrong",
+          status: "error",
+        };
+
+        return api_res;
+      });
+
+    return res;
+  },
 };
 
 const agent = {

@@ -1,4 +1,4 @@
-import adminPaths from "admin/constants/routes"
+import adminPaths from "admin/constants/routes";
 
 const paths = {
   ...adminPaths,
@@ -71,6 +71,7 @@ const paths = {
   /*Agent of Agents */
   tmpModal: "/agent-mission-modal",
   treeDiagram: "events/mission/hierarchy",
-}
+  aaClaimReward: "/events/mission/claim/:rewardId",
+};
 
-export { paths }
+export { paths };

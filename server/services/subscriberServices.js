@@ -195,6 +195,7 @@ const subscriberRegistration = async (
   return response;
 };
 
+import { status } from "../constants/constants.js";
 const fetchSubscribersByUser = async (userGuid) => {
   const subscribers = await Hierarchy.aggregate([
     {
@@ -209,21 +210,41 @@ const fetchSubscribersByUser = async (userGuid) => {
       },
     },
     {
-      $set: {
-        firstName: {
-          $first: "$userDoc.firstName",
-        },
-        lastName: {
-          $first: "$userDoc.lastName",
-        },
-        email: {
-          $first: "$userDoc.email",
-        },
+      $unwind: "$userDoc"
+    },
+    {
+      $lookup: {
+        from: "agents",
+        localField: "userGuid",
+        foreignField: "userGuid",
+        as: "agentDoc",
+      },
+    },
+    {
+      $unwind: "$agentDoc"
+    },
+    {
+      $match: { "agentDoc.status": status.ACTIVATED }
+    },
+    {
+      $project: {
+        _id: 1,
+        userGuid: 1,
+        recruiterUserGuid: 1,
+        hierarchyId: 1,
+        hierarchyCode: 1,
+        parent: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        firstName: "$userDoc.firstName",
+        lastName: "$userDoc.lastName",
+        email: "$userDoc.email",
+        status: "$agentDoc.status"
       },
     },
     {
       $unset: "userDoc",
-    },
+    }
   ]);
 
   return subscribers;
