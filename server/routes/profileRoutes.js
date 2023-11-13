@@ -28,8 +28,6 @@ router
   .get(protect, adminAuth, listProfile)
   .post(multer.single("avatar"), preCreateProfile, fetchPreProfile)
   .put(multer.single("avatar"), savePreProfile);
-router
-  .route("/position-roles/:userGuid")
-  .put(protect, adminAuth, updatePositionAndRole);
+router.route("/position-roles/:userGuid").put(protect, updatePositionAndRole);
 
 export default router;

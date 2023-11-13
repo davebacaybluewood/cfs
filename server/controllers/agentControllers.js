@@ -11,6 +11,7 @@ import sendEmail from "../utils/sendNodeMail.js";
 import agentApproved from "../emailTemplates/agent-approved.js";
 import PreProfile from "../models/preProfileModel.js";
 import { AGENT_ROLES } from "../constants/constants.js";
+import { registerUserHierarchyAndPoints } from "../services/userServices.js";
 
 /**
  * @desc: Fetch all agents
@@ -421,37 +422,11 @@ const createAgent = expressAsync(async (req, res) => {
       };
       const user = new User(userData);
       await user.save();
+
+      await registerUserHierarchyAndPoints(req, res, userGuid);
       await PreProfile.deleteOne({
         emailAddress: req.body?.emailAddress,
       });
-
-      // const mailSubject = "Registration Complete";
-      // const mailContent = agentRegistrationSuccess({
-      //   agentId: agent?._id,
-      //   specialties: agent?.specialties,
-      // });
-
-      // let sendHTMLEmail;
-      // try {
-      //   sendHTMLEmail = sendEmail(
-      //     agent?.emailAddress,
-      //     mailSubject,
-      //     mailContent,
-      //     []
-      //   )
-      //     .then((request, response) => {
-      //       response?.send(response.message);
-      //     })
-      //     .catch((error) => {
-      //       res.status(500);
-      //       console.log(error);
-      //       throw new Error("Error occured in submission.");
-      //     });
-      // } catch (error) {
-      //   res.status(500);
-      //   console.log(error);
-      //   throw new Error("Error occured in submission.");
-      // }
 
       res.status(201).json(agent);
     } else {
