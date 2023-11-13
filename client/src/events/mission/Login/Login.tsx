@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { paths } from "constants/routes";
 import { USER_LOGIN_ACTION_TYPES } from "constants/redux-constants";
 import "./Login.scss";
-import adminPathsNew from "admin/constants/routes";
 import { AccountCircle, Lock } from "@mui/icons-material";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -60,7 +59,7 @@ const AALogin: React.FC = () => {
         type: USER_LOGIN_ACTION_TYPES.USER_LOGIN_SUCCESS,
         payload: storageData,
       });
-      navigate(adminPathsNew.newAdminEvents);
+      navigate(paths.missions);
     }
   }, [navigate, userInfo]);
 
