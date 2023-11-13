@@ -83,16 +83,13 @@ const MailLibraryForm: React.FC = () => {
         userGuid,
         templateId || ""
       );
-
       setInitialValues({
-        emailBody: data.templateBody ?? "",
-        subject: data.subject ?? "",
-        templateName: data.templateName ?? "",
-        settings: data.settings ?? [],
-        status: data.status,
+        emailBody: data.templateBody,
+        subject: data.subject,
+        recipients: [],
+        settings: data.settings,
       });
       setDesign(data.design);
-      setEditButtonVisibility(data.userGuid === userGuid);
 
       /** Load if edit mode */
       if (Object.keys(data.design)?.length) {
@@ -101,12 +98,11 @@ const MailLibraryForm: React.FC = () => {
         );
       }
     };
-
-    if (userGuid && action === "edit") {
+    if (userGuid && templateId) {
       fetchTemplateInfo();
       setLoading(false);
     }
-  }, [action, templateId, userGuid]);
+  }, [templateId, userGuid]);
 
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     const unlayer = emailEditorRef.current?.editor;
