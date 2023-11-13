@@ -83,10 +83,42 @@ const MailLibraryForm: React.FC = () => {
         userGuid,
         templateId || ""
       );
+
+      setInitialValues({
+        emailBody: data.templateBody ?? "",
+        subject: data.subject ?? "",
+        templateName: data.templateName ?? "",
+        settings: data.settings ?? [],
+        status: data.status,
+      });
+      setDesign(data.design);
+      setEditButtonVisibility(data.userGuid === userGuid);
+
+      /** Load if edit mode */
+      if (Object.keys(data.design)?.length) {
+        emailEditorRef.current?.editor?.loadDesign(
+          JSON.parse(data.design || "{}")
+        );
+      }
+    };
+
+    if (userGuid && action === "edit") {
+      fetchTemplateInfo();
+      setLoading(false);
+    }
+  }, [action, templateId, userGuid]);
+  useEffect(() => {
+    const fetchTemplateInfo = async () => {
+      setLoading(true);
+      const data = await agent.EmailMarketing.getSingleTemplate(
+        userGuid,
+        templateId || ""
+      );
+
       setInitialValues({
         emailBody: data.templateBody,
         subject: data.subject,
-        recipients: [],
+        templateName: data.templateName,
         settings: data.settings,
       });
       setDesign(data.design);
@@ -261,13 +293,15 @@ const MailLibraryForm: React.FC = () => {
                     >
                       <label>Email Body (Required)</label>
 
-                      <EmailEditor
-                        ref={emailEditorRef}
-                        onReady={loadDesign}
-                        style={{
-                          height: "500px",
-                        }}
-                      />
+                      <React.Fragment>
+                        <EmailEditor
+                          ref={emailEditorRef}
+                          onReady={loadDesign}
+                          style={{
+                            height: "500px",
+                          }}
+                        />
+                      </React.Fragment>
                     </Grid>
                     <Grid
                       item
