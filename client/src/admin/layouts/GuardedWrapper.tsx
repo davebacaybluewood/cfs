@@ -1,11 +1,12 @@
 import adminPathsNew from "admin/constants/routes";
-import UserProvider from "admin/context/UserProvider";
+import UserProvider, { UserContext } from "admin/context/UserProvider";
 import classNames from "classnames";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AdminSidebar from "./Sidebar/Sidebar";
-import LogoutOnClose from "helpers/LogoutOnClose";
+import UpgradeToPro from "admin/components/UpgradeToPro/UpgradeToPro";
+import useUserRole from "hooks/useUserRole";
 
 type GuardedWrapperProps = {
   children: React.ReactNode;
@@ -16,8 +17,9 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isAuthenticated = "token" in JSON.parse(localStorage.getItem("userInfo") ?? "{}");
-    
+    const isAuthenticated =
+      "token" in JSON.parse(localStorage.getItem("userInfo") ?? "{}");
+
     if (!isAuthenticated) {
       navigate(adminPathsNew.login);
     }
@@ -36,14 +38,6 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
     toggled: toggled,
   });
 
-  // const dispatch = useDispatch();
-
-  // const handleLogout = () => {
-  // 	dispatch(logout as any);
-  // };
-
-  // useAutoLogoutOnClose(handleLogout);
-
   return (
     <UserProvider>
       {/* <LogoutOnClose /> */}
@@ -57,6 +51,7 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
         <main>{props.children}</main>
       </div>
       <ToastContainer />
+      <UpgradeToPro />
     </UserProvider>
   );
 };

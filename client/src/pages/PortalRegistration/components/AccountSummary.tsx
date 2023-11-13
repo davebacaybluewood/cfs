@@ -20,6 +20,7 @@ import {
   FaUserAlt,
   FaUserShield,
   FaFlag,
+  FaLocationArrow,
 } from "react-icons/fa";
 import { MdOutlineDateRange } from "react-icons/md";
 import Badge from "library/Badge/Badge";
@@ -177,6 +178,23 @@ const AccountSummary: React.FC<AccountSummaryProps> = (props) => {
       title: "State",
       subTitle: props.values.state,
       icon: <FaMapMarkerAlt />,
+      grid: {
+        xs: 6,
+        sm: 6,
+        md: 6,
+        lg: 6,
+      },
+    },
+    {
+      title: "Zip Code",
+      subTitle: props.values.zipCode,
+      icon: <FaLocationArrow />,
+      grid: {
+        xs: 6,
+        sm: 6,
+        md: 6,
+        lg: 6,
+      },
     },
   ];
 

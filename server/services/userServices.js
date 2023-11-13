@@ -1,7 +1,15 @@
 import PreProfile from "../models/preProfileModel.js";
 import Agent from "../models/agentModel.js";
 import User from "../models/userModel.js";
-import { AGENT_STATUSES, ROLES } from "../constants/constants.js";
+import {
+  AGENT_STATUSES,
+  ROLES,
+  PROFILE_POSITIONS,
+  POINTS_TYPE,
+} from "../constants/constants.js";
+import Hierarchy from "../models/hierarchyModel.js";
+import Points from "../models/pointsModel.js";
+import generateString from "../utils/generateString.js";
 
 const registerPaidUser = async (req, res) => {
   try {
@@ -56,4 +64,102 @@ const registerPaidUser = async (req, res) => {
   }
 };
 
-export { registerPaidUser };
+const registerUserHierarchyAndPoints = async (req, res, userGuid) => {
+  const { recruiterUserGuid } = req.body;
+
+  const agentProfile = await Agent.findOne({ userGuid });
+  const isSubscriber = agentProfile?.position?.some((f) => {
+    return f.value === PROFILE_POSITIONS.SUBSCRIBER.value;
+  });
+
+  const isFreeTrial = agentProfile?.position?.some((f) => {
+    return f.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value;
+  });
+  /** Generate points */
+  const expirationDate = new Date(
+    new Date().setFullYear(new Date().getFullYear() + 1)
+  );
+
+  if (isSubscriber || isFreeTrial) {
+    const newPoints = {
+      expirationDate,
+      userGuid: agentProfile.userGuid,
+      points: POINTS_TYPE.FREE_TRIAL_REGISTRATION_SUCCESS.POINTS,
+      type: POINTS_TYPE.FREE_TRIAL_REGISTRATION_SUCCESS.NAME,
+    };
+    await Points.create(newPoints);
+  }
+
+  if (recruiterUserGuid) {
+    const newPoints = {
+      expirationDate,
+      userGuid: recruiterUserGuid,
+      points: POINTS_TYPE.FREE_TRIAL_REGISTRATION_SUCCESS.POINTS,
+      type: POINTS_TYPE.FREE_TRIAL_REGISTRATION_SUCCESS.NAME,
+    };
+    await Points.create(newPoints);
+  }
+
+  /** Generation of hierarchy */
+  if (recruiterUserGuid) {
+    const hierarchy = await Hierarchy.find({
+      recruiterUserGuid,
+    });
+
+    if (!hierarchy.length) {
+      const hierarchyId = generateString(6);
+      const newHierarchyId = generateString(6);
+      const hierarchyCode = generateString(6);
+      const newHierarchy = [
+        {
+          userGuid: recruiterUserGuid,
+          parent: "",
+          hierarchyId: hierarchyId,
+          hierarchyCode: hierarchyCode,
+        },
+        {
+          userGuid: agentProfile.userGuid,
+          parent: hierarchyId,
+          hierarchyId: newHierarchyId,
+          hierarchyCode: hierarchyCode,
+          recruiterUserGuid: recruiterUserGuid,
+        },
+      ];
+
+      await Hierarchy.insertMany(newHierarchy);
+    } else {
+      /** Get the hierarchy code */
+      const hierarchyCode = hierarchy[0].hierarchyCode;
+
+      /** Get the most recent hierarchy code */
+      const recentHierarchy = await Hierarchy.find({
+        hierarchyCode,
+        userGuid: recruiterUserGuid,
+      }).sort({ _id: -1 });
+      const recentHierarchyData = recentHierarchy[0];
+
+      const newHierarchyId = generateString(6);
+      const newHierarchy = {
+        userGuid: agentProfile.userGuid,
+        parent: recentHierarchyData.hierarchyId,
+        hierarchyId: newHierarchyId,
+        hierarchyCode: hierarchyCode,
+        recruiterUserGuid: recruiterUserGuid,
+      };
+      await Hierarchy.create(newHierarchy);
+    }
+  } else {
+    const hierarchyId = generateString(6);
+    const hierarchyCode = generateString(6);
+
+    const newHierarchy = {
+      userGuid: agentProfile.userGuid,
+      parent: "",
+      hierarchyId: hierarchyId,
+      hierarchyCode: hierarchyCode,
+    };
+    await Hierarchy.create(newHierarchy);
+  }
+};
+
+export { registerPaidUser, registerUserHierarchyAndPoints };

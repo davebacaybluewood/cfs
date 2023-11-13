@@ -1,4 +1,3 @@
-import Banner from "library/Banner/Banner";
 import React from "react";
 import {
   Table,
@@ -19,48 +18,16 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import "./Pricing.scss";
 import Button from "library/Button/Button";
-import { useNavigate } from "react-router-dom";
 import { BsChevronDoubleRight } from "react-icons/bs";
 import { paths } from "constants/routes";
+import { useNavigate } from "react-router-dom";
 
 const pricingUserData: { [key: string]: any } = {
-  Subscriber: {
-    "Main Features": {
-      "Finance News and Updates": true,
-      "Articles and Blogs": true,
-      "Training And Webinars": true,
-      "Onsite Networking Events": false,
-      "Awards And Recognition": false,
-      "Pre Licensing Assistance": false,
-      "Post Licensing Assistance": false,
-    },
-    "CFS Tools And Systems": {
-      "Registration And Account Management Dashboard": false,
-      "Personal Webpage": false,
-      "Appointment System": false,
-    },
-    "Client Care Hub": {
-      "CFS Email Editor": false,
-      "CFS LeadGeneration System": false,
-    },
-    "CFS Content Library": {
-      "Social Media Materials": false,
-      "Email Template": false,
-    },
-    "Advance Training": {
-      "Corporate Training": false,
-      "Systems Training": false,
-      "Product Training": false,
-      "Marketing Training": false,
-      "Sales Training": false,
-      "Continueing Classes": false,
-    },
-  },
   Agent: {
     "Main Features": {
       "Finance News and Updates": true,
       "Articles and Blogs": true,
-      "Training And Webinars": true,
+      "Training and Webinars": true,
       "Onsite Networking Events": true,
       "Awards And Recognition": true,
       "Pre Licensing Assistance": true,
@@ -73,19 +40,19 @@ const pricingUserData: { [key: string]: any } = {
     },
     "Client Care Hub": {
       "CFS Email Editor": true,
-      "CFS LeadGeneration System": true,
+      "CFS Lead Generation System": true,
     },
     "CFS Content Library": {
-      "Social Media Materials": false,
-      "Email Template": false,
+      "Social Media Materials": true,
+      "Email Template": true,
     },
     "Advance Training": {
-      "Corporate Training": false,
+      "Corporate Training": true,
       "Systems Training": true,
       "Product Training": true,
       "Marketing Training": true,
       "Sales Training": true,
-      "Continuing Classes": false,
+      "Continuing Classes": true,
     },
   },
 };
@@ -98,7 +65,7 @@ const categories: string[] = [
   "Advance Training",
 ];
 
-const userTypes: string[] = ["Agent", "Subscriber"];
+const userTypes: string[] = ["Agent"];
 
 const subcategories: { [key: string]: string[] } = {
   "Main Features": [
@@ -127,16 +94,10 @@ const subcategories: { [key: string]: string[] } = {
   ],
 };
 
-const Pricing: React.FC = () => {
+const Pricing = () => {
   const navigate = useNavigate();
-
   return (
-    <div className="pricing-wrapper">
-      <Banner
-        bigTitle="Pricing"
-        title="Explore our insurance plans and affordable pricing"
-        hasBorder={true}
-      />
+    <div className="pricing-wrapper-admin">
       <Container>
         <div className="header">
           <h1>
@@ -145,34 +106,7 @@ const Pricing: React.FC = () => {
           </h1>
         </div>
         <Grid container spacing={2}>
-          <Grid item md={6}>
-            <div className="pricing-card pricing-card-light">
-              <Grid container spacing={2} alignItems="center">
-                <Grid item md={7}>
-                  <div className="card-captions">
-                    <h3>Subscriber</h3>
-                    <p>
-                      Access a complete payments platform with simple,
-                      pay-as-you-go pricing. No setup fees, monthly fees, or
-                      hidden fees.
-                    </p>
-                    <Button
-                      variant="danger"
-                      onClick={() => navigate(paths.subscriberRegistration)}
-                    >
-                      Get Started <BsChevronDoubleRight />
-                    </Button>
-                  </div>
-                </Grid>
-                <Grid item md={5} alignContent="center" textAlign="center">
-                  <div className="price">
-                    <h5>FREE</h5>
-                  </div>
-                </Grid>
-              </Grid>
-            </div>
-          </Grid>
-          <Grid item md={6}>
+          <Grid item md={12}>
             <div className="pricing-card pricing-card-dark">
               <Grid container spacing={2} alignItems="center">
                 <Grid item md={7}>

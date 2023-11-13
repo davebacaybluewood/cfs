@@ -7,7 +7,6 @@ import "./TreeDiagram.scss"
 
 type DataType = {
   name: string
-  gender: string
   type: string
   profileImg?: string
   children?: DataType[]

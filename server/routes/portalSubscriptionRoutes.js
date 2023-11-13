@@ -2,6 +2,7 @@ import express from "express";
 import {
   subscribeFreeTrial,
   getAllSubscribeFreeTrial,
+  getTrialNumberOfDays,
 } from "../controllers/portalSubscriptionController.js";
 import {
   protect,
@@ -39,5 +40,7 @@ router
     },
     getAllSubscribeFreeTrial
   );
+
+router.route("/free-trial/:userGuid").get(protect, getTrialNumberOfDays);
 
 export default router;

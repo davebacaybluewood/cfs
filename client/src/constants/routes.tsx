@@ -21,10 +21,6 @@ const paths = {
   rsvpForm: "/rsvp-form/:eventId",
   portalArticle: "/article/portal",
 
-  /* Mission Micro Pages */
-  registrationMission: "events/mission/registration",
-  rewards: "/events/mission/rewards",
-
   /* Contract */
   preLicensing: "/pre-licensing",
   anunity: "/annuity",
@@ -65,11 +61,13 @@ const paths = {
   unsubscribe: "/unsubscribe",
   invalid: "/invalid",
 
-  /* Missions Page */
-  missions: "/missions/events",
-  /*Agent of Agents */
+  /* Mission Micro Pages */
+  missions: "/events/mission/",
+  registrationMission: "events/mission/registration",
+  rewards: "/events/mission/rewards",
+  treeDiagram: "/events/mission/hierarchy",
+  aaClaimReward: "/events/mission/claim/:rewardId",
   tmpModal: "/agent-mission-modal",
-  treeDiagram: "/mission/hierarchy",
-}
+};
 
 export { paths };

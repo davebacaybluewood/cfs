@@ -153,6 +153,13 @@ const CONTENT_CREATOR_ROLES = [
   },
 ];
 
+const FREE_30DAYS_TRIAL_ROLES = [
+  {
+    value: "ROLE_FREE_30DAYS_TRIAL",
+    label: "Free 30days Trial ",
+  },
+];
+
 const PROFILE_POSITIONS = {
   AGENT: {
     value: "POSITION_AGENT",
@@ -174,6 +181,10 @@ const PROFILE_POSITIONS = {
     value: "POSITION_MASTER_ADMIN",
     label: "Master Admin",
   },
+  FREE_30DAYS_TRIAL: {
+    value: "POSITION_FREE_30DAYS_TRIAL",
+    label: "Free 30 days trial",
+  },
 };
 
 const POINTS_TYPE = {
@@ -183,6 +194,10 @@ const POINTS_TYPE = {
   },
   SUBSCRIBER_REGISTRATION_SUCCESS: {
     NAME: "SUBSCRIBER_REGISTRATION_SUCCESS",
+    POINTS: 100,
+  },
+  FREE_TRIAL_REGISTRATION_SUCCESS: {
+    NAME: "FREE_TRIAL_REGISTRATION_SUCCESS",
     POINTS: 100,
   },
 };
@@ -228,4 +243,5 @@ export {
   DEFAULT_IMAGE,
   POINTS_TYPE,
   TICKET_STATUS,
+  FREE_30DAYS_TRIAL_ROLES,
 };

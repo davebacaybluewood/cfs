@@ -107,6 +107,34 @@ const MailLibraryForm: React.FC = () => {
       setLoading(false);
     }
   }, [action, templateId, userGuid]);
+  useEffect(() => {
+    const fetchTemplateInfo = async () => {
+      setLoading(true);
+      const data = await agent.EmailMarketing.getSingleTemplate(
+        userGuid,
+        templateId || ""
+      );
+
+      setInitialValues({
+        emailBody: data.templateBody,
+        subject: data.subject,
+        templateName: data.templateName,
+        settings: data.settings,
+      });
+      setDesign(data.design);
+
+      /** Load if edit mode */
+      if (Object.keys(data.design)?.length) {
+        emailEditorRef.current?.editor?.loadDesign(
+          JSON.parse(data.design || "{}")
+        );
+      }
+    };
+    if (userGuid && templateId) {
+      fetchTemplateInfo();
+      setLoading(false);
+    }
+  }, [templateId, userGuid]);
 
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     const unlayer = emailEditorRef.current?.editor;
@@ -265,13 +293,15 @@ const MailLibraryForm: React.FC = () => {
                     >
                       <label>Email Body (Required)</label>
 
-                      <EmailEditor
-                        ref={emailEditorRef}
-                        onReady={loadDesign}
-                        style={{
-                          height: "500px",
-                        }}
-                      />
+                      <React.Fragment>
+                        <EmailEditor
+                          ref={emailEditorRef}
+                          onReady={loadDesign}
+                          style={{
+                            height: "500px",
+                          }}
+                        />
+                      </React.Fragment>
                     </Grid>
                     <Grid
                       item
