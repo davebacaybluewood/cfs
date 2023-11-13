@@ -35,10 +35,10 @@ import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 import Registration from "pages/MicroPages/Mission/Registration/Registration";
 import Missions from "pages/Missions&Events/Missions";
 import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
-import Rewards from "events/Mission/Rewards/Rewards";
+// import Rewards from "events/Mission/Rewards/Rewards";
 import NATIONALITIES from "./nationalities";
-import AALogin from "../events/Mission/Login/Login";
 import ClaimReward from "pages/Events/Mission/ClaimReward";
+import AALogin from "events/mission/Login/Login";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
