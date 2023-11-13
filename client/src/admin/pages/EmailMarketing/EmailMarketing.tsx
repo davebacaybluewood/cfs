@@ -137,18 +137,18 @@ const ContractForm: React.FC = () => {
   }, [userGuid]);
 
   const handleCreateContact = async (data: Contacts) => {
-    setRecipientLoading(true);
     if (data.emailAddress && data.userGuid)
       await agent.Contacts.create(data)
         .then((c) => {
+          setRecipientLoading(true);
           setTimeout(() => {
             const newContact = createOption(c.data.emailAddress, c.data._id);
 
+            setRecipientLoading(false);
             setContacts((prev) => [...prev, newContact]);
             setContactsValue((prev) => [...prev, newContact]);
           }, 1000);
 
-          setRecipientLoading(false);
           toast.info(`New Contact added. ${c.data.emailAddress}`, {
             position: "top-right",
             autoClose: 5000,
@@ -172,7 +172,6 @@ const ContractForm: React.FC = () => {
             errMsg = err.response?.data?.description;
           }
 
-          setRecipientLoading(false);
           toast.error(errMsg, {
             position: "top-right",
             autoClose: 5000,
@@ -487,7 +486,6 @@ const ContractForm: React.FC = () => {
                         isMulti
                         options={contacts}
                         isLoading={recipientLoading}
-                        isDisabled={recipientLoading}
                         value={contactsValue}
                         components={{ Option: RemoveContactButton }}
                         placeholder="Select a recipient item to add"
