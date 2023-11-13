@@ -11,8 +11,6 @@ import { MdEmail } from "react-icons/md";
 import Button from "library/Button/Button";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { paths } from "constants/routes";
-import { MAIN_IMAGES } from "constants/constants";
 
 const MyWebPage: React.FC = () => {
 	const userGuid = "c29875fc-d064-46ca-8b00-507ef315c62f"; //Static, not final
