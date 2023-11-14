@@ -82,15 +82,16 @@ const ContractForm: React.FC = () => {
     templateName: "",
     status: "",
   });
+
   const [templates, setTemplates] = useState<any>([]);
   const userCtx = useContext(UserContext) as any;
   const search = useLocation().search;
-  const templateId = new URLSearchParams(search).get("templateId");
   const action = new URLSearchParams(search).get("action");
   const userGuid = userCtx?.user?.userGuid;
   const [contacts, setContacts] = useState<any>([]);
   const [contactsValue, setContactsValue] = useState<any>([]);
   const [recipientLoading, setRecipientLoading] = useState(false);
+  const [templateId, setTemplateId] = useState(new URLSearchParams(search).get("templateId"));
 
   const populateForm = (
     emailBody: string,
@@ -291,6 +292,7 @@ const ContractForm: React.FC = () => {
 
     unlayer?.exportHtml(async (htmlData) => {
       const { design: updatedDesign, html } = htmlData;
+      let action = new URLSearchParams(window.location.search).get("action");
 
       data.design = JSON.stringify(updatedDesign);
       data.templateBody = html;
@@ -302,13 +304,26 @@ const ContractForm: React.FC = () => {
       if (isNoEmptyFields) {
         setSaveTemplateError("");
         setLoading(true);
-        const response = await agent.EmailMarketing.createEmailTemplate(
-          userGuid,
-          data
-        );
+        let response;
+        if (action !== 'edit') {
+          response = await agent.EmailMarketing.createEmailTemplate(
+            userGuid,
+            data
+          );
+          let params = new URLSearchParams(search);
+          params.set("templateId", templateId!);
+          window.history.replaceState(null, "", `${search}?templateId=${response.data._id}`);
+          setTemplateId(response.data._id);
+        } else {
+          response = await agent.EmailMarketing.updateEmailTemplate(
+            userGuid,
+            templateId,
+            data
+          );
+        }
 
         if (response) {
-          toast.info(`Email Template has been added.`, {
+          toast.info(`Email Template has been saved.`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -437,8 +452,8 @@ const ContractForm: React.FC = () => {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
               };
+              let action = new URLSearchParams(window.location.search).get("action");
               setLoading(true);
-
               if (action === "edit") {
                 const finalPayloadData = {
                   templateName: data.templateName,
@@ -757,11 +772,11 @@ const ContractForm: React.FC = () => {
                     <div className="actions">
                       {action === "edit" ? (
                         <Button variant="danger" onClick={() => handleSubmit()}>
-                          Edit Template
+                          Save Template
                         </Button>
                       ) : (
                         <React.Fragment>
-                          {action !== "view" ? (
+                          {!templateId ? (
                             <React.Fragment>
                               <Button
                                 variant="default"
@@ -793,10 +808,24 @@ const ContractForm: React.FC = () => {
                                   })
                                 }
                               >
-                                Save as template
+                                Save as template 
                               </Button>
                             </React.Fragment>
-                          ) : null}
+                          ) : (
+                            <Button
+                                variant="danger"
+                                onClick={() => {
+                                  let params = new URLSearchParams(window.location.search);
+                                  params.set("action", "edit");
+                                  if (!window.location.search.includes("&action=edit")) {
+                                    window.history.replaceState(null, "", `${window.location.search}&action=edit`);
+                                  }
+                                  handleSubmit()
+                                }}
+                              >
+                              Update Template
+                            </Button>
+                          )}
                           <Button
                             variant="danger"
                             onClick={() => handleSubmit()}
