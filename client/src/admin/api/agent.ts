@@ -175,7 +175,7 @@ const EmailMarketing = {
   },
   updateEmailTemplate: (
     userGuid: string,
-    templateId: string,
+    templateId: string | null,
     params: EmailTemplateParameter
   ) => {
     const res = requests.put<string>(
