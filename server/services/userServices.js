@@ -10,6 +10,7 @@ import {
 import Hierarchy from "../models/hierarchyModel.js";
 import Points from "../models/pointsModel.js";
 import generateString from "../utils/generateString.js";
+import backOfficeServices from "./backOfficeServices.js";
 
 const registerPaidUser = async (req, res) => {
   try {
@@ -66,6 +67,19 @@ const registerPaidUser = async (req, res) => {
 
 const registerUserHierarchyAndPoints = async (req, res, userGuid) => {
   const { recruiterUserGuid } = req.body;
+
+  // const recruiterInfo = await Agent.findOne({ userGuid: recruiterUserGuid });
+  // const token = await backOfficeServices.backOfficeLogin();
+  // const agents = await backOfficeServices.backOfficeAgents(token);
+
+  // const agentItems = agents.items || [];
+  // const accountingSystemEmailAddress = agentItems?.filter(
+  //   (data) => data.emailAddress
+  // );
+  // console.log({
+  //   recruiterInfo,
+  //   accountingSystemEmailAddress,
+  // });
 
   const agentProfile = await Agent.findOne({ userGuid });
   const isSubscriber = agentProfile?.position?.some((f) => {
