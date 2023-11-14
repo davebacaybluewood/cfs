@@ -22,6 +22,11 @@ const getEventRVPS = expressAsync(async (req, res) => {
       },
     },
     {
+      $match: {
+        "eventDoc.status": { $ne: "UNSUBSCRIBED" },
+      },
+    },
+    {
       $set: {
         authorFirstName: {
           $first: "$eventDoc.firstName",
