@@ -292,6 +292,7 @@ const ContractForm: React.FC = () => {
 
     unlayer?.exportHtml(async (htmlData) => {
       const { design: updatedDesign, html } = htmlData;
+      let action = new URLSearchParams(window.location.search).get("action");
 
       data.design = JSON.stringify(updatedDesign);
       data.templateBody = html;
@@ -451,8 +452,8 @@ const ContractForm: React.FC = () => {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
               };
+              let action = new URLSearchParams(window.location.search).get("action");
               setLoading(true);
-
               if (action === "edit") {
                 const finalPayloadData = {
                   templateName: data.templateName,
@@ -816,17 +817,9 @@ const ContractForm: React.FC = () => {
                                 onClick={() => {
                                   let params = new URLSearchParams(window.location.search);
                                   params.set("action", "edit");
-                                  window.history.replaceState(null, "", `${window.location.search}&action=edit`);
-                                  toast.info(`You are now in edit mode.`, {
-                                    position: "top-right",
-                                    autoClose: 5000,
-                                    hideProgressBar: false,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
-                                    progress: undefined,
-                                    theme: "light",
-                                  });
+                                  if (!window.location.search.includes("&action=edit")) {
+                                    window.history.replaceState(null, "", `${window.location.search}&action=edit`);
+                                  }
                                   handleSubmit()
                                 }}
                               >
