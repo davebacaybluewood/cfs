@@ -164,8 +164,8 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
 
   const emailTemplate = new EmailTemplate(newTemplate);
 
-  await emailTemplate.save();
-  res.status(201).json("[Email Template] succcessfully added.");
+  const result = await emailTemplate.save();
+  res.status(201).json({ message: "[Email Template] succcessfully added.", data: result });
 });
 
 /**

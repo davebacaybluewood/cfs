@@ -82,15 +82,16 @@ const ContractForm: React.FC = () => {
     templateName: "",
     status: "",
   });
+
   const [templates, setTemplates] = useState<any>([]);
   const userCtx = useContext(UserContext) as any;
   const search = useLocation().search;
-  const templateId = new URLSearchParams(search).get("templateId");
   const action = new URLSearchParams(search).get("action");
   const userGuid = userCtx?.user?.userGuid;
   const [contacts, setContacts] = useState<any>([]);
   const [contactsValue, setContactsValue] = useState<any>([]);
   const [recipientLoading, setRecipientLoading] = useState(false);
+  const [templateId, setTemplateId] = useState(new URLSearchParams(search).get("templateId"));
 
   const populateForm = (
     emailBody: string,
@@ -302,14 +303,26 @@ const ContractForm: React.FC = () => {
       if (isNoEmptyFields) {
         setSaveTemplateError("");
         setLoading(true);
-        const response = await agent.EmailMarketing.updateEmailTemplate(
-          userGuid,
-          templateId,
-          data
-        );
+        let response;
+        if (action !== 'edit') {
+          response = await agent.EmailMarketing.createEmailTemplate(
+            userGuid,
+            data
+          );
+          let params = new URLSearchParams(search);
+          params.set("templateId", templateId!);
+          window.history.replaceState(null, "", `${search}?templateId=${response.data._id}`);
+          setTemplateId(response.data._id);
+        } else {
+          response = await agent.EmailMarketing.updateEmailTemplate(
+            userGuid,
+            templateId,
+            data
+          );
+        }
 
         if (response) {
-          toast.info(`Email Template has been updated.`, {
+          toast.info(`Email Template has been saved.`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -762,7 +775,7 @@ const ContractForm: React.FC = () => {
                         </Button>
                       ) : (
                         <React.Fragment>
-                          {action !== "view" ? (
+                          {!templateId ? (
                             <React.Fragment>
                               <Button
                                 variant="default"
@@ -794,10 +807,32 @@ const ContractForm: React.FC = () => {
                                   })
                                 }
                               >
-                                Save as template
+                                Save as template 
                               </Button>
                             </React.Fragment>
-                          ) : null}
+                          ) : (
+                            <Button
+                                variant="danger"
+                                onClick={() => {
+                                  let params = new URLSearchParams(window.location.search);
+                                  params.set("action", "edit");
+                                  window.history.replaceState(null, "", `${window.location.search}&action=edit`);
+                                  toast.info(`You are now in edit mode.`, {
+                                    position: "top-right",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                    theme: "light",
+                                  });
+                                  handleSubmit()
+                                }}
+                              >
+                              Update Template
+                            </Button>
+                          )}
                           <Button
                             variant="danger"
                             onClick={() => handleSubmit()}
