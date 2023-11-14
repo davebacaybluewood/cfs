@@ -1,10 +1,10 @@
 .my-webpage-container {
   .half-bg {
-    background: #00004d;
+    background: url("https://images.pexels.com/photos/5673488/pexels-photo-5673488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
-    height: 40vh;
+    height: 45vh;
   }
 
   .profile-section-container {
@@ -114,12 +114,33 @@
       }
     }
     .middle-col {
-      background: #2596be;
+      background: #eee;
       border-radius: 10px;
       padding: 2rem 1rem;
       .middle-col-content {
-        h2 {
-          text-align: center;
+        .navbar-main-feed {
+          display: flex;
+          justify-content: space-between;
+
+          .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 0 1rem;
+
+            &:hover {
+              cursor: pointer;
+            }
+
+            svg {
+              font: 700 1.5rem "Montserrat";
+            }
+          }
+
+          .nav-tab-active {
+            &:hover {
+              display: none;
+            }
+          }
         }
       }
     }

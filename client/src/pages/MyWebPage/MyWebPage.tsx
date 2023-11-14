@@ -4,19 +4,27 @@ import { Container, Grid } from "@mui/material";
 import "./MyWebPage.scss";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import Spinner from "library/Spinner/Spinner";
-import { FaFacebook, FaLinkedin, FaPhone, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaHome,
+  FaLinkedin,
+  FaPhone,
+  FaTwitter,
+  FaCalendar,
+} from "react-icons/fa";
 import { HiLocationMarker } from "react-icons/hi";
 import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
-import { MdEmail } from "react-icons/md";
+import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md";
 import Button from "library/Button/Button";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 const MyWebPage: React.FC = () => {
+  const [content, setContent] = useState("home");
+
   const userGuid = "c29875fc-d064-46ca-8b00-507ef315c62f"; //Static, not final
   const { profile, loading } = useFetchUserProfile(userGuid);
-
   const navigate = useNavigate();
 
   /* Agent Information */
@@ -65,6 +73,24 @@ const MyWebPage: React.FC = () => {
     },
   ];
 
+  const navLinks = [
+    {
+      icon: <FaHome />,
+      onClick: () => setContent("home"),
+      link: "Home",
+    },
+    {
+      icon: <FaCalendar />,
+      onClick: () => setContent("events"),
+      link: "Events",
+    },
+    {
+      icon: <MdOutlineLibraryBooks />,
+      onClick: () => setContent("blogs"),
+      link: "Blogs",
+    },
+  ];
+
   if (loading) {
     <Spinner variant="relative" />;
   }
@@ -87,7 +113,7 @@ const MyWebPage: React.FC = () => {
             <div className="profile-section-container">
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
-                  <img src={defaultAvatar} alt={defaultAvatar} />
+                  <img src={avatar} alt={avatar} />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={9} xl={9}>
                   <div className="profile-captions">
@@ -130,7 +156,36 @@ const MyWebPage: React.FC = () => {
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <div className="middle-col">
                     <div className="middle-col-content">
-                      <h2>Main Feed</h2>
+                      <div className="navbar-main-feed">
+                        {navLinks.map((nav) => (
+                          <div className="nav-tab" onClick={nav.onClick}>
+                            {nav.icon}
+                            <div className="navlink-title">{nav.link}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="tabs-content">
+                        {content === "home" ? (
+                          /* These are all dummy, this must render the rightful component for each page. */
+                          <h2
+                            style={{ textAlign: "center", padding: "1rem 0" }}
+                          >
+                            Home
+                          </h2>
+                        ) : content === "events" ? (
+                          <h2
+                            style={{ textAlign: "center", padding: "1rem 0" }}
+                          >
+                            Events
+                          </h2>
+                        ) : (
+                          <h2
+                            style={{ textAlign: "center", padding: "1rem 0" }}
+                          >
+                            Blogs
+                          </h2>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </Grid>
