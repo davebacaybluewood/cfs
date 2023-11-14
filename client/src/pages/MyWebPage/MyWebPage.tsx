@@ -170,19 +170,19 @@ const MyWebPage: React.FC = () => {
                         {content === "home" ? (
                           /* These are all dummy, this must render the rightful component for each page. */
                           <h2
-                            style={{ textAlign: "center", padding: "1rem 0" }}
+                            style={{ textAlign: "center", padding: "10rem 0" }}
                           >
                             Home
                           </h2>
                         ) : content === "events" ? (
                           <h2
-                            style={{ textAlign: "center", padding: "1rem 0" }}
+                            style={{ textAlign: "center", padding: "10rem 0" }}
                           >
                             Events
                           </h2>
                         ) : (
                           <h2
-                            style={{ textAlign: "center", padding: "1rem 0" }}
+                            style={{ textAlign: "center", padding: "10rem 0" }}
                           >
                             Blogs
                           </h2>
