@@ -127,6 +127,10 @@
             align-items: center;
             gap: 0 1rem;
 
+            .navlink-title {
+              font: 700 1.5rem "Montserrat";
+            }
+
             &:hover {
               cursor: pointer;
             }

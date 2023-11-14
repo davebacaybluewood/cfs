@@ -23,6 +23,7 @@ import ComponentValidator from "library/ComponentValidator/ComponentValidator";
 import { AgentStatuses } from "admin/pages/Agents/types";
 import { RolesAndPositionType } from "admin/hooks/useFetchProfile";
 import { PROFILE_POSITIONS } from "pages/PortalRegistration/constants";
+import { paths } from "constants/routes";
 
 type AboutProfileProps = {
   specialties: string[];
@@ -138,7 +139,7 @@ const AboutProfile: React.FC<AboutProfileProps> = (props) => {
               </span>
               <span className="list-value">
                 <a
-                  href={`${CURRENT_DOMAIN}/agents/${props.agentGuid}`}
+                  href={`${paths.myWebPage}/`.replace(":user", props.agentGuid)}
                   target="_blank"
                 >
                   Visit Link <FaExternalLinkAlt />

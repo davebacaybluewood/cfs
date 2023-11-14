@@ -17,13 +17,15 @@ import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
 import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md";
 import Button from "library/Button/Button";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { paths } from "constants/routes";
 
 const MyWebPage: React.FC = () => {
-  const [content, setContent] = useState("home");
+  const { user } = useParams();
 
-  const userGuid = "c29875fc-d064-46ca-8b00-507ef315c62f"; //Static, not final
+  const [content, setContent] = useState("home");
+  const userGuid = `${user}`;
   const { profile, loading } = useFetchUserProfile(userGuid);
   const navigate = useNavigate();
 
