@@ -161,7 +161,7 @@ const emailChangePasswordSuccess = (email, id, name) => {
               font-size: 20px;
             "
           >
-            Hi Dave!
+            Hi ${name}!
           </h5>
           <p
             style="

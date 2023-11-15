@@ -14,7 +14,7 @@ import { ValuesType } from "./models";
 import validationSchema from "./helpers/validationSchema";
 import "./PortalRegistration.scss";
 import classNames from "classnames";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
 import { PROFILE_POSITIONS, PROFILE_ROLES } from "./constants";
 
@@ -26,6 +26,8 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const search = useLocation().search;
+  const recruiterUserGuid = new URLSearchParams(search).get("userGuid");
   const [initialValues, setInitialValues] = useState<ValuesType>({
     emailAddress: "",
     password: "",
@@ -233,6 +235,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                   nationality: values.nationality,
                   birthDate: values.birthDate,
                   zipCode: values.zipCode,
+                  recruiterUserGuid: recruiterUserGuid,
                 },
                 config
               );

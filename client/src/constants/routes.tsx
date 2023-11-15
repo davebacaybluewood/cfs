@@ -63,11 +63,12 @@ const paths = {
 
   /* Mission Micro Pages */
   /*Agent of Agents */
+  missions: "/events/mission/",
   registrationMission: "events/mission/registration",
   rewards: "/events/mission/rewards",
-  missions: "/missions/events",
+  treeDiagram: "/events/mission/hierarchy",
+  aaClaimReward: "/events/mission/claim/:rewardId",
   tmpModal: "/agent-mission-modal",
-  treeDiagram: "/mission/hierarchy",
 
   /* My WebPage */
   myWebPage: "/agent/:user",

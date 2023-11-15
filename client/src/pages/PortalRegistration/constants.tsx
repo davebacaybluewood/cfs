@@ -230,12 +230,6 @@ const USER_FAQ = [
     ),
   },
   {
-    title: "How long is the approval process for newly registered accounts?",
-    id: "panel2",
-    description:
-      "The approval process takes 3-5 working days for newly registered accounts.",
-  },
-  {
     title: "How can I login to the CFS Portal?",
     id: "panel3",
     description: (

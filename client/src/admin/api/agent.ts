@@ -175,7 +175,7 @@ const EmailMarketing = {
   },
   updateEmailTemplate: (
     userGuid: string,
-    templateId: string,
+    templateId: string | null,
     params: EmailTemplateParameter
   ) => {
     const res = requests.put<string>(
@@ -365,6 +365,13 @@ const RaiseSupport = {
 const TrialSubscription = {
   getTrialSubscriptions: () => {
     const res = requests.get<string>(`/api/portal-subscription/free-trial`);
+    return res;
+  },
+  getTrialNumberOfDays: (userGuid: string) => {
+    const res = requests.get<{
+      remainingDays: number;
+      expirationDate: string;
+    }>(`/api/portal-subscription/free-trial/${userGuid}`);
     return res;
   },
 };

@@ -38,6 +38,8 @@ import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
 import Rewards from "events/mission/Rewards/Rewards";
 import NATIONALITIES from "./nationalities";
 import MyWebPage from "pages/MyWebPage/MyWebPage";
+import AALogin from "../events/mission/Login/Login";
+import ClaimReward from "pages/Events/Mission/ClaimReward";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -80,6 +82,7 @@ const MAIN_IMAGES = {
 const AGENT_MISSION_IMAGES = {
   BACKGROUND: "/assets/images/agent-mission/modal-bg.png",
   AGENT: "/assets/images/agent-mission/agent.png",
+  USER: "/assets/images/agent-mission/circle-user-solid.png",
 };
 
 const CFS_STATES = US_STATES.map((data) => {
@@ -195,6 +198,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
       />
     ),
     path: paths.tmpModal,
+    showFooter: false,
+    showHeadline: false,
+    showNavbar: false,
+  },
+  {
+    element: <ClaimReward />,
+    path: paths.aaClaimReward,
     showFooter: false,
     showHeadline: false,
     showNavbar: false,
@@ -383,6 +393,10 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <MyWebPage />,
     path: paths.myWebPage,
+  },
+  {
+    element: <AALogin />,
+    path: paths.aaLogin,
     showNavbar: false,
     showHeadline: false,
     showFooter: false,

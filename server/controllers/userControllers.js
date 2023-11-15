@@ -9,8 +9,13 @@ import {
   AGENT_STATUSES,
   API_RES_FAIL,
   API_RES_OK,
+  FREE_30DAYS_TRIAL_ROLES,
+  SUBSCRIBER_ROLES,
 } from "../constants/constants.js";
 import Agent from "../models/agentModel.js";
+import backOfficeServices from "../services/backOfficeServices.js";
+import { AGENT_ROLES, PROFILE_POSITIONS } from "../constants/constants.js";
+import portalSubscriptionServices from "../services/portalSubscriptionServices.js";
 
 /**
  * @desc:  Auth the user & get token
@@ -23,6 +28,58 @@ const authUser = expressAsync(async (req, res) => {
   const agent = await Agent.findOne({ emailAddress: email });
   const isValidStatus =
     agent.status === "ACTIVATED" || agent.status === "DEACTIVATED";
+
+  /** Login using CFS credentials */
+  const bearerToken = await backOfficeServices.backOfficeLogin();
+
+  /** Get the list of agents from back office */
+  const agentsData = await backOfficeServices.backOfficeAgents(bearerToken);
+  const agents = agentsData.items || [];
+  const accountingSystemEmailAddress = agents?.map((data) => data.emailAddress);
+
+  let isNotAdmin = false;
+
+  if (
+    agent.position.some(
+      (e) =>
+        e.value === PROFILE_POSITIONS.SUBSCRIBER.value ||
+        e.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+    )
+  ) {
+    isNotAdmin = true;
+  }
+
+  if (accountingSystemEmailAddress.includes(email) && isNotAdmin) {
+    agent.roles = [AGENT_ROLES[0]];
+    agent.position = [PROFILE_POSITIONS.AGENT];
+    user.roles = [AGENT_ROLES[0]];
+    user.position = [PROFILE_POSITIONS.AGENT];
+
+    try {
+      await user.save();
+      await agent.save();
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  const noOfDays = await portalSubscriptionServices.getTrialNumberOfDays(
+    agent.userGuid
+  );
+  const isFreeTrialUser = agent.position.some(
+    (e) => e.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+  );
+
+  if (noOfDays?.remainingDays <= 0 && isFreeTrialUser) {
+    agent.roles = [SUBSCRIBER_ROLES[0]];
+    agent.position = [PROFILE_POSITIONS.SUBSCRIBER];
+    user.roles = [SUBSCRIBER_ROLES[0]];
+    user.position = [PROFILE_POSITIONS.SUBSCRIBER];
+
+    await user.save();
+    await agent.save();
+  }
 
   if (user && (await user.matchPassword(password)) && isValidStatus) {
     res.json({

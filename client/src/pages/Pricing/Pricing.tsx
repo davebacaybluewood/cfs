@@ -347,7 +347,7 @@ const Pricing: React.FC = () => {
                                 fontSize: "1rem",
                                 display: "flex",
                                 justifyContent: "center",
-                                textAlign: "center"
+                                textAlign: "center",
                               }}
                             >
                               {mainCategory}
