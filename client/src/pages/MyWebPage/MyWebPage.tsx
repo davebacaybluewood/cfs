@@ -11,6 +11,7 @@ import {
   FaPhone,
   FaTwitter,
   FaCalendar,
+  FaAddressCard,
 } from "react-icons/fa";
 import { HiLocationMarker } from "react-icons/hi";
 import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
@@ -164,7 +165,7 @@ const MyWebPage: React.FC = () => {
                       </span>
                     </div>
                     <div className="contact">
-                      <FaPhone /> <span>{licenseNumber}</span>
+                      <FaAddressCard /> <span>{licenseNumber}</span>
                     </div>
                     <Button variant="primary">
                       {" "}
