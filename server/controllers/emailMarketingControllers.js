@@ -165,7 +165,9 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
   const emailTemplate = new EmailTemplate(newTemplate);
 
   const result = await emailTemplate.save();
-  res.status(201).json({ message: "[Email Template] succcessfully added.", data: result });
+  res
+    .status(201)
+    .json({ message: "[Email Template] succcessfully added.", data: result });
 });
 
 /**
@@ -389,7 +391,7 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
 
   const emailTemplateData = await EmailTemplate.find({
     _id: mongoose.Types.ObjectId(templateId),
-    userGuid: userGuid,
+    // userGuid: userGuid,
   });
 
   const emailTemplate = emailTemplateData[0];
