@@ -20,6 +20,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { paths } from "constants/routes";
+import { COMPANY_NAME } from "constants/constants";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
@@ -101,10 +102,7 @@ const MyWebPage: React.FC = () => {
     <MyWebPageWrapper showNavBar showFooter>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>
-          Comfort Financial Solutions |{" "}
-          {`${profile?.firstName} ${profile?.lastName}`}
-        </title>
+        <title>Profile | {COMPANY_NAME}</title>
       </Helmet>
       {loading ? (
         <Spinner variant="fixed" />
