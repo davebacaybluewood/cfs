@@ -62,12 +62,16 @@ const paths = {
   invalid: "/invalid",
 
   /* Mission Micro Pages */
+  /*Agent of Agents */
   missions: "/events/mission/",
   registrationMission: "events/mission/registration",
   rewards: "/events/mission/rewards",
   treeDiagram: "/events/mission/hierarchy",
   aaClaimReward: "/events/mission/claim/:rewardId",
   tmpModal: "/agent-mission-modal",
+
+  /* My WebPage */
+  myWebPage: "/agent/:user",
 };
 
 export { paths };

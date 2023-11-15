@@ -37,6 +37,7 @@ import Missions from "pages/Missions&Events/Missions";
 import AgentMissionModal from "pages/Events/Mission/AgentMissionModal";
 import Rewards from "events/mission/Rewards/Rewards";
 import NATIONALITIES from "./nationalities";
+import MyWebPage from "pages/MyWebPage/MyWebPage";
 import AALogin from "../events/mission/Login/Login";
 import ClaimReward from "pages/Events/Mission/ClaimReward";
 
@@ -383,6 +384,15 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <Missions />,
     path: paths.missions,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
+  },
+
+  /* My Web Page */
+  {
+    element: <MyWebPage />,
+    path: paths.myWebPage,
     showNavbar: false,
     showHeadline: false,
     showFooter: false,
