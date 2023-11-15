@@ -531,7 +531,7 @@ const ContractForm: React.FC = () => {
               handleSubmit,
               setFieldValue,
               touched,
-              setTouched,
+              setFieldTouched,
               errors,
             }) => {
               return (
@@ -556,6 +556,8 @@ const ContractForm: React.FC = () => {
                               emailAddress: input,
                             };
                             handleCreateContact(data);
+                            setFieldTouched("recipients", false);
+                            setFieldValue("recipients", data);
                           }}
                           onChange={(e) => {
                             const modifiedValue = e?.map((contact) => {
@@ -568,12 +570,8 @@ const ContractForm: React.FC = () => {
                             setContactsValue(modifiedValue);
                           }}
                           onBlur={(e) => {
-                            if (values.recipients.length === 0) {
-                              setTouched({
-                                ...touched,
-                                recipients: [],
-                              });
-                            }
+                            if (values.recipients.length <= 0)
+                              setFieldTouched("recipients", true);
                           }}
                           styles={{
                             clearIndicator: ClearIndicatorStyles,
