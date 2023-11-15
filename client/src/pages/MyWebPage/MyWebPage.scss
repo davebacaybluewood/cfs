@@ -96,23 +96,26 @@
           }
         }
       }
-      button {
-        margin: 1rem 0;
+      .left-col-actions {
         display: flex;
-        align-items: center;
-        width: 150px;
-        padding: 1rem;
-        justify-content: center;
-        transition: 0.2s;
-        gap: 0 10px;
-        span {
-          font: 500 1.5rem "Montserrat";
-        }
+        flex-direction: row;
+        button {
+          margin: 1rem 0.5rem;
+          display: flex;
+          align-items: center;
+          padding: 1rem;
+          justify-content: center;
+          transition: 0.2s;
+          span {
+            font: 500 1.3rem "Montserrat";
+            margin-left: 0.5rem;
+          }
 
-        &:hover {
-          color: #353738;
-          background: transparent;
-          border: 1px solid #00004d;
+          &:hover {
+            color: #353738;
+            background: transparent;
+            border: 1px solid #00004d;
+          }
         }
       }
     }
@@ -120,33 +123,39 @@
       background: #fff;
       box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
       border-radius: 5px;
-      .middle-col-content {
-        .navbar-main-feed {
+
+      .navbar-main-feed {
+        display: flex;
+        justify-content: space-between;
+        padding: 2rem 0;
+        background: #eee;
+
+        .active-nav {
+          border-bottom: 2px solid #00004d;
+        }
+
+        .active-nav > h2 {
+          font: 700 1.5rem "Montserrat" !important;
+        }
+
+        .nav-tab {
           display: flex;
-          justify-content: space-between;
-          padding: 2rem 0;
-          background: #eee;
+          align-items: center;
+          padding: 0 2rem;
+          margin: 0 1rem;
 
-          .nav-tab {
-            display: flex;
-            align-items: center;
-            padding: 0 2rem;
-            margin: 0 1rem;
+          .navlink-title {
+            font: 300 1.5rem "Montserrat";
+            margin: 0 0 1rem 0;
+          }
 
-            .navlink-title {
-              font: 300 1.5rem "Montserrat";
-              margin: 0 0 1rem 0;
-            }
-
-            &:hover {
-              cursor: pointer;
-            }
-
-            svg {
-              font: 700 1.5rem "Montserrat";
-            }
+          &:hover {
+            cursor: pointer;
           }
         }
+      }
+      .middle-col-content {
+        //TODO put design here
       }
     }
     .right-col {
