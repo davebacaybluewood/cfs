@@ -19,78 +19,92 @@ import Button from "library/Button/Button";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { paths } from "constants/routes";
-import { COMPANY_NAME } from "constants/constants";
+import { FiSend } from "react-icons/fi";
+import { GrSend } from "react-icons/gr";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
-
   const [content, setContent] = useState("home");
-  const userGuid = `${user}`;
-  const { profile, loading } = useFetchUserProfile(userGuid);
   const navigate = useNavigate();
 
-  /* Agent Information */
+  /* General Agent Information */
+  const userGuid = `${user}`;
+  const { profile, loading } = useFetchUserProfile(userGuid);
+
+  /*Personal information */
   const defaultAvatar =
     "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps";
   const avatar =
     profile?.avatar.toString() === "" || loading
       ? defaultAvatar
       : profile?.avatar.toString();
-  const fullName = `${profile?.firstName} ${profile?.lastName}`;
+  const fullName = loading
+    ? "CFS Agent"
+    : `${profile?.firstName} ${profile?.lastName}`;
   const address =
-    profile?.state?.toString() === ""
-      ? /* "Profile Address" not final*/ "Paul and Mary Moore, 1313 E Main St, Portage MI 49024-2001" //Not Final, for testing purposes
-      : profile?.state?.toString();
-  const facebook =
-    profile?.facebook.toString() === ""
-      ? "Facebook"
-      : profile?.facebook.toString();
-  const linkedIn =
-    profile?.linkedIn.toString() === ""
-      ? "LinkedIn"
-      : profile?.linkedIn.toString();
-  const twitter =
-    profile?.twitter.toString() === ""
-      ? "Twitter"
-      : profile?.twitter.toString();
+    profile?.state?.toString() === "" ? "-" : profile?.state?.toString();
   const phoneNumber = profile?.phoneNumber.toString();
   const email = profile?.emailAddress;
+
+  /* Professional Information */
+  const licenseNumber = profile?.licenseNumber?.toString();
+
+  /* Socials */
+  const facebook = profile?.facebook.toString();
+  const linkedIn = profile?.linkedIn.toString();
+  const twitter = profile?.twitter.toString();
 
   const links = [
     {
       icon: <HiLocationMarker />,
-      title: address,
+      title: "Address",
+      link: address,
     },
     {
       icon: <FaFacebook />,
-      title: facebook,
+      title: "Facebook",
+      link: facebook,
     },
     {
       icon: <FaLinkedin />,
-      title: linkedIn,
+      title: "LinkedIn",
+      link: linkedIn,
     },
     {
       icon: <FaTwitter />,
-      title: twitter,
+      title: "Twitter",
+      link: twitter,
     },
   ];
 
   const navLinks = [
     {
       icon: <FaHome />,
-      onClick: () => setContent("home"),
+      onClick: () => {
+        setContent("home");
+      },
       link: "Home",
     },
     {
       icon: <FaCalendar />,
-      onClick: () => setContent("events"),
+      onClick: () => {
+        setContent("events");
+      },
       link: "Events",
     },
     {
+      icon: <GrSend />,
+      onClick: () => {
+        setContent("testimonial");
+      },
+      link: "Testimonial",
+    },
+    {
       icon: <MdOutlineLibraryBooks />,
-      onClick: () => setContent("blogs"),
-      link: "Blogs",
+      onClick: () => {
+        setContent("articles");
+      },
+      link: "Articles",
     },
   ];
 
@@ -101,8 +115,7 @@ const MyWebPage: React.FC = () => {
   return (
     <MyWebPageWrapper showNavBar showFooter>
       <Helmet>
-        <meta charSet="utf-8" />
-        <title>Profile | {COMPANY_NAME}</title>
+        <title>Profile | {fullName}</title>
       </Helmet>
       {loading ? (
         <Spinner variant="fixed" />
@@ -122,7 +135,9 @@ const MyWebPage: React.FC = () => {
                     <div className="social-container">
                       {links.map((item) => (
                         <div className="social-content">
-                          {item.icon} <span>{item.title}</span>
+                          <a href={item.link} target="_blank">
+                            {item.icon} <span>{item.title}</span>
+                          </a>
                         </div>
                       ))}
                     </div>
@@ -147,45 +162,71 @@ const MyWebPage: React.FC = () => {
                         </a>
                       </span>
                     </div>
+                    <div className="contact">
+                      <FaPhone /> <span>{licenseNumber}</span>
+                    </div>
                     <Button variant="primary">
                       {" "}
-                      <BsChatRightTextFill /> <span>Chat</span>{" "}
+                      <BsChatRightTextFill /> <span>Contact Me</span>{" "}
+                    </Button>
+                    <Button variant="danger">
+                      {" "}
+                      <FiSend /> <span>Testimonial</span>{" "}
                     </Button>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <div className="middle-col">
                     <div className="middle-col-content">
-                      <div className="navbar-main-feed">
-                        {navLinks.map((nav) => (
-                          <div className="nav-tab" onClick={nav.onClick}>
-                            {nav.icon}
-                            <div className="navlink-title">{nav.link}</div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="tabs-content">
-                        {content === "home" ? (
-                          /* These are all dummy, this must render the rightful component for each page. */
-                          <h2
-                            style={{ textAlign: "center", padding: "10rem 0" }}
-                          >
-                            Home
-                          </h2>
-                        ) : content === "events" ? (
-                          <h2
-                            style={{ textAlign: "center", padding: "10rem 0" }}
-                          >
-                            Events
-                          </h2>
-                        ) : (
-                          <h2
-                            style={{ textAlign: "center", padding: "10rem 0" }}
-                          >
-                            Blogs
-                          </h2>
-                        )}
-                      </div>
+                      <React.Fragment>
+                        <div className="navbar-main-feed">
+                          {navLinks.map((nav) => (
+                            <div className="nav-tab" onClick={nav.onClick}>
+                              <div className="navlink-title">{nav.link}</div>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="tabs-content">
+                          {content === "home" ? (
+                            /* These are all dummy, this must render the rightful component for each page. */
+                            <h2
+                              style={{
+                                textAlign: "center",
+                                padding: "10rem 0",
+                              }}
+                            >
+                              Home
+                            </h2>
+                          ) : content === "events" ? (
+                            <h2
+                              style={{
+                                textAlign: "center",
+                                padding: "10rem 0",
+                              }}
+                            >
+                              Events
+                            </h2>
+                          ) : content === "articles" ? (
+                            <h2
+                              style={{
+                                textAlign: "center",
+                                padding: "10rem 0",
+                              }}
+                            >
+                              Articles
+                            </h2>
+                          ) : content === "testimonial" ? (
+                            <h2
+                              style={{
+                                textAlign: "center",
+                                padding: "10rem 0",
+                              }}
+                            >
+                              Testimonials
+                            </h2>
+                          ) : null}
+                        </div>
+                      </React.Fragment>
                     </div>
                   </div>
                 </Grid>

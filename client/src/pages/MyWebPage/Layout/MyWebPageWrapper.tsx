@@ -13,21 +13,10 @@ interface MyWebPageWrapperProps {
 }
 
 const MyWebPageWrapper: React.FC<MyWebPageWrapperProps> = (props) => {
-  const userInfo = localStorage.getItem("userInfo");
-
-  useEffect(() => {
-    const isLoggedIn = () => {
-      if (!userInfo) {
-        navigate(paths.login);
-      }
-    };
-    isLoggedIn();
-  }, [userInfo]);
-
-  const navigate = useNavigate();
   return (
     <div className="my-webpage-wrapper">
-      {/* <div className="navbar">{props.showNavBar ? <Navbar /> : null}</div> commented for future use*/}
+      {/* <div className="navbar">{props.showNavBar ? <Navbar /> : null}</div>{" "} */}
+      {/**commented for future use */}
       <main className="mywebpage-content">{props.children}</main>
       <div className="footer">
         {props.showFooter ? (

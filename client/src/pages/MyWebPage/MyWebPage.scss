@@ -41,29 +41,27 @@
         padding: 2rem 0 0 0;
       }
       .agent-description {
-        font: 600 1.3rem "Montserrat";
+        font: 400 1.5rem "Montserrat";
         color: #353738;
-        margin: 1rem 0;
+        margin: 1.5rem 0;
       }
       .social-container {
         display: flex;
         gap: 20px;
 
         .social-content {
-          display: flex;
-          align-items: center;
-          gap: 0 3px;
-          color: #5e6572;
+          a {
+            display: flex;
+            align-items: center;
+            gap: 0 1rem;
+            color: #5e6572;
 
-          span {
-            font: 400 1rem "Montserrat";
-            white-space: nowrap;
-            width: 50px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          svg {
-            font-size: 1.5rem;
+            span {
+              font: 400 1.5rem "Montserrat";
+            }
+            svg {
+              font-size: 1.5rem;
+            }
           }
         }
       }
@@ -82,22 +80,27 @@
 
         svg {
           color: #5e6572;
-          font-size: 1.3rem;
+          font-size: 2rem;
         }
         span {
-          font: 500 1.3rem "Montserrat";
+          font: 500 1.5rem "Montserrat";
           color: #5e6572;
           .mailto {
-            font: 500 1.3rem "Montserrat";
+            font: 500 1.5rem "Montserrat";
             color: #353738;
+            transition: 0.2s;
+
+            &:hover {
+              opacity: 0.7;
+            }
           }
         }
       }
       button {
-        margin: 3rem 0;
+        margin: 1rem 0;
         display: flex;
         align-items: center;
-        width: 200px;
+        width: 150px;
         padding: 1rem;
         justify-content: center;
         transition: 0.2s;
@@ -116,21 +119,23 @@
     .middle-col {
       background: #fff;
       box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
-
       border-radius: 5px;
-      padding: 2rem 1rem;
       .middle-col-content {
         .navbar-main-feed {
           display: flex;
           justify-content: space-between;
+          padding: 2rem 0;
+          background: #eee;
 
           .nav-tab {
             display: flex;
             align-items: center;
-            gap: 0 1rem;
+            padding: 0 2rem;
+            margin: 0 1rem;
 
             .navlink-title {
-              font: 700 1.5rem "Montserrat";
+              font: 300 1.5rem "Montserrat";
+              margin: 0 0 1rem 0;
             }
 
             &:hover {
@@ -139,12 +144,6 @@
 
             svg {
               font: 700 1.5rem "Montserrat";
-            }
-          }
-
-          .nav-tab-active {
-            &:hover {
-              display: none;
             }
           }
         }
