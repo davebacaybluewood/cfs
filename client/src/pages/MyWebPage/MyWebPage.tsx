@@ -40,7 +40,7 @@ const MyWebPage: React.FC = () => {
     profile?.avatar.toString() === "" || loading
       ? defaultAvatar
       : profile?.avatar.toString();
-  const fullName = loading
+  const Agent = loading
     ? "CFS Agent"
     : `${profile?.firstName} ${profile?.lastName}`;
   const address =
@@ -117,7 +117,7 @@ const MyWebPage: React.FC = () => {
   return (
     <MyWebPageWrapper showNavBar showFooter>
       <Helmet>
-        <title>Profile | {fullName}</title>
+        <title>Profile | {Agent}</title>
       </Helmet>
       {loading ? (
         <Spinner variant="fixed" />
@@ -132,7 +132,7 @@ const MyWebPage: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={9} xl={9}>
                   <div className="profile-captions">
-                    <h2>{fullName}</h2>
+                    <h2>{Agent}</h2>
                     <p className="agent-description">{profile?.bio}</p>
                     <div className="social-container">
                       {links.map((item) => (

@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
-import Navbar from "./Navbar/Navbar";
+import React from "react";
 import "./MyWebPageWrapper.scss";
 import Spinner from "library/Spinner/Spinner";
-import { useNavigate } from "react-router-dom";
-import { paths } from "constants/routes";
 
 interface MyWebPageWrapperProps {
   showNavBar: boolean;

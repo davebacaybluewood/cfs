@@ -393,6 +393,9 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <MyWebPage />,
     path: paths.myWebPage,
+    showNavbar: false,
+    showHeadline: false,
+    showFooter: false,
   },
   {
     element: <AALogin />,
