@@ -27,6 +27,8 @@ import { paths } from "constants/routes";
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
   const [content, setContent] = useState("home");
+  const [active, setActive] = useState(false);
+
   const navigate = useNavigate();
 
   /* General Agent Information */
@@ -84,28 +86,37 @@ const MyWebPage: React.FC = () => {
       icon: <FaHome />,
       onClick: () => {
         setContent("home");
+        setActive(true);
       },
+      className: active === true && content === "home" ? "active-nav" : "",
       link: "Home",
     },
     {
       icon: <FaCalendar />,
       onClick: () => {
         setContent("events");
+        setActive(true);
       },
+      className: active === true && content === "events" ? "active-nav" : "",
       link: "Events",
     },
     {
       icon: <GrSend />,
       onClick: () => {
         setContent("testimonial");
+        setActive(true);
       },
+      className:
+        active === true && content === "testimonial" ? "active-nav" : "",
       link: "Testimonial",
     },
     {
       icon: <MdOutlineLibraryBooks />,
       onClick: () => {
         setContent("articles");
+        setActive(true);
       },
+      className: active === true && content === "articles" ? "active-nav" : "",
       link: "Articles",
     },
   ];
@@ -167,78 +178,57 @@ const MyWebPage: React.FC = () => {
                     <div className="contact">
                       <FaAddressCard /> <span>{licenseNumber}</span>
                     </div>
-                    <Button variant="primary">
-                      {" "}
-                      <BsChatRightTextFill /> <span>Contact Me</span>{" "}
-                    </Button>
-                    <Button variant="danger">
-                      {" "}
-                      <FiSend />{" "}
-                      <span
-                        onClick={() =>
-                          window.open(
-                            paths.testimonialForm.replace(":userGuid", userGuid)
-                          )
-                        }
-                      >
-                        Testimonial
-                      </span>{" "}
-                    </Button>
+                    <div className="left-col-actions">
+                      <Button variant="primary">
+                        {" "}
+                        <BsChatRightTextFill /> <span>Contact Me</span>{" "}
+                      </Button>
+                      <Button variant="danger">
+                        {" "}
+                        <FiSend />{" "}
+                        <span
+                          onClick={() =>
+                            window.open(
+                              paths.testimonialForm.replace(
+                                ":userGuid",
+                                userGuid
+                              )
+                            )
+                          }
+                        >
+                          Testimonial
+                        </span>{" "}
+                      </Button>
+                    </div>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <div className="middle-col">
-                    <div className="middle-col-content">
-                      <React.Fragment>
-                        <div className="navbar-main-feed">
-                          {navLinks.map((nav) => (
-                            <div className="nav-tab" onClick={nav.onClick}>
-                              <div className="navlink-title">{nav.link}</div>
-                            </div>
-                          ))}
-                        </div>
-                        <div className="tabs-content">
-                          {content === "home" ? (
-                            /* These are all dummy, this must render the rightful component for each page. */
-                            <h2
-                              style={{
-                                textAlign: "center",
-                                padding: "10rem 0",
-                              }}
-                            >
-                              Home
-                            </h2>
-                          ) : content === "events" ? (
-                            <h2
-                              style={{
-                                textAlign: "center",
-                                padding: "10rem 0",
-                              }}
-                            >
-                              Events
-                            </h2>
-                          ) : content === "articles" ? (
-                            <h2
-                              style={{
-                                textAlign: "center",
-                                padding: "10rem 0",
-                              }}
-                            >
-                              Articles
-                            </h2>
-                          ) : content === "testimonial" ? (
-                            <h2
-                              style={{
-                                textAlign: "center",
-                                padding: "10rem 0",
-                              }}
-                            >
-                              Testimonials
-                            </h2>
-                          ) : null}
-                        </div>
-                      </React.Fragment>
-                    </div>
+                    <React.Fragment>
+                      <div className="navbar-main-feed">
+                        {navLinks.map((nav) => (
+                          <div
+                            className={`nav-tab ${nav.className}`}
+                            onClick={nav.onClick}
+                          >
+                            <h2 className="navlink-title">{nav.link}</h2>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="tabs-content">
+                        {content === "home" ? (
+                          /* These are all dummy, this must render the rightful component for each page. */
+                          <h2>Home</h2>
+                        ) : content === "events" ? (
+                          <h2>Events</h2>
+                        ) : content === "articles" ? (
+                          <h2>Articles</h2>
+                        ) : content === "testimonial" ? (
+                          <h2>Testimonials</h2>
+                        ) : null}
+                      </div>
+                    </React.Fragment>
+                    <div className="middle-col-content"></div>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
