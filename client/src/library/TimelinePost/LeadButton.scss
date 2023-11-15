@@ -1,0 +1,18 @@
+/* LeadButton.css */
+
+button {
+  color: black;
+  background: #f2f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  padding: 6px 12px;
+  transition: 400ms;
+}
+
+/* Apply styles when hovered */
+button:hover {
+  background: #0e1f51;
+  color: white;
+}

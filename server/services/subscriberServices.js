@@ -205,9 +205,9 @@ const fetchSubscribersByUser = async (userGuid) => {
         from: "users",
         localField: "userGuid",
         foreignField: "userGuid",
-        as: "userDoc",
+        as: "userDoc", 
       },
-    },
+    }, 
     {
       $set: {
         firstName: {
