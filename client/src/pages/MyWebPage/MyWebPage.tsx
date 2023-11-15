@@ -176,7 +176,7 @@ const MyWebPage: React.FC = () => {
                       <FiSend />{" "}
                       <span
                         onClick={() =>
-                          navigate(
+                          window.open(
                             paths.testimonialForm.replace(":userGuid", userGuid)
                           )
                         }
