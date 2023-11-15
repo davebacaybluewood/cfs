@@ -21,6 +21,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FiSend } from "react-icons/fi";
 import { GrSend } from "react-icons/gr";
+import { paths } from "constants/routes";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
@@ -171,7 +172,16 @@ const MyWebPage: React.FC = () => {
                     </Button>
                     <Button variant="danger">
                       {" "}
-                      <FiSend /> <span>Testimonial</span>{" "}
+                      <FiSend />{" "}
+                      <span
+                        onClick={() =>
+                          navigate(
+                            paths.testimonialForm.replace(":userGuid", userGuid)
+                          )
+                        }
+                      >
+                        Testimonial
+                      </span>{" "}
                     </Button>
                   </div>
                 </Grid>
