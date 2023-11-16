@@ -10,8 +10,7 @@ const PostButtons = () => {
       <LeadButton text={"Earn rewards"} />
       <LeadButton text={"30 Days Trial"} /> */}
       <button className="lead-button">
-        <CiShare2 />{" "}
-        <span style={{ marginLeft: "5px" }}>Share on Facebook</span>
+        <CiShare2 /> <span style={{ marginLeft: "5px" }}>Share</span>
       </button>
     </Stack>
   )
