@@ -1,31 +1,32 @@
-import Wrapper from "admin/components/Wrapper/Wrapper";
-import { paths } from "constants/routes";
-import Title from "admin/components/Title/Title";
-import { CrumbTypes } from "admin/pages/Dashboard/types";
-import RSVPTable from "./RSVPTable";
-import { useEffect, useState } from "react";
-import Event from "admin/models/eventModel";
-import { useParams } from "react-router-dom";
-import agent from "admin/api/agent";
-import React from "react";
+import Wrapper from "admin/components/Wrapper/Wrapper"
+import { paths } from "constants/routes"
+import Title from "admin/components/Title/Title"
+import { CrumbTypes } from "admin/pages/Dashboard/types"
+import RSVPTable from "./RSVPTable"
+import { useEffect, useState } from "react"
+import Event from "admin/models/eventModel"
+import { useParams } from "react-router-dom"
+import agent from "admin/api/agent"
+import React from "react"
 
 const RSVPLanding: React.FC = () => {
-  const { eventId } = useParams();
-  const [event, setEvent] = useState<Event | undefined>();
-  const [loading, setLoading] = useState(false);
+  const { eventId } = useParams()
+  const [event, setEvent] = useState<Event | undefined>()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     const getEvent = async () => {
-      const res = await agent.Events.getSingleEvent(eventId ?? "");
-      setEvent(res);
-    };
+      const res = await agent.Events.getSingleEvent(eventId ?? "")
+      console.log(res)
+      setEvent(res)
+    }
 
     if (eventId) {
-      getEvent();
-      setLoading(false);
+      getEvent()
+      setLoading(false)
     }
-  }, [eventId]);
+  }, [eventId])
 
   const crumbs: CrumbTypes[] = [
     {
@@ -43,7 +44,7 @@ const RSVPLanding: React.FC = () => {
       url: paths.rsvpLanding,
       isActive: true,
     },
-  ];
+  ]
 
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
@@ -61,7 +62,7 @@ const RSVPLanding: React.FC = () => {
         )}
       </div>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default RSVPLanding;
+export default RSVPLanding

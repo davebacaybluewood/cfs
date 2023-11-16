@@ -9,6 +9,7 @@ import undefinedValidator from "./helpers/undefinedValidator.js";
 import Agent from "../models/agentModel.js";
 import Hierarchy from "../models/hierarchyModel.js";
 import generateString from "../utils/generateString.js";
+import { PROFILE_POSITIONS } from "../constants/constants.js";
 
 /**
  * @desc: Send an email marketing
@@ -101,8 +102,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
       bcc
     )
       .then((request, response) => {
-        response?.send("[EmailPro] has been successfully submitted.") ??
-          "";
+        response?.send("[EmailPro] has been successfully submitted.") ?? "";
       })
       .catch((error) => {
         res.status(500);
@@ -164,8 +164,8 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
 
   const emailTemplate = new EmailTemplate(newTemplate);
 
-  await emailTemplate.save();
-  res.status(201).json("[Email Template] succcessfully added.");
+  const result = await emailTemplate.save();
+  res.status(201).json({ message: "[Email Template] succcessfully added.", data: result });
 });
 
 /**
@@ -248,11 +248,19 @@ const getEmailTemplates = expressAsync(async (req, res, next) => {
     return f.value === "ROLE_MASTER_ADMIN";
   });
 
+  const isFreeTrial = agentInfo?.position?.some((f) => {
+    return f.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value;
+  });
+
+  const isAgent = agentInfo?.position?.some((f) => {
+    return f.value === PROFILE_POSITIONS.AGENT.value;
+  });
+
   const filteredEmailTemplates = emailTemplates.filter((data) => {
     const personalEmailTempaltes =
       data.isAddedByMarketing || data.userGuid === agentInfo.userGuid;
 
-    if (isAdmin) {
+    if (isAdmin || isAgent || isFreeTrial) {
       return data;
     } else {
       return personalEmailTempaltes;

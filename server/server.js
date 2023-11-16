@@ -39,6 +39,7 @@ import path from "path";
 import { ApolloServer, gql } from "apollo-server-express";
 import cors from "cors";
 import missionRoutes from "./routes/events/missionRoutes.js";
+import eventOrderRoutes from "./routes/eventOrderRoutes.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -95,6 +96,7 @@ app.use("/api/portal-subscription/", portalSubscriptionRoutes);
 app.use("/api/events/", eventRoutes);
 app.use("/api/rsvp-event/", eventsRSVPRoutes);
 app.use("/api/events/mission", missionRoutes);
+app.use("/api/event-orders/", eventOrderRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

@@ -218,9 +218,9 @@ const useSidebarLinks = (
       role: [PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value],
     },
     {
-      linkText: "Subscribers",
-      link: paths.mySubscribers,
-      isActive: currentPage === adminPathsNew.mySubscribers.split("/")[2],
+      linkText: "Leads",
+      link: paths.myLeads,
+      isActive: currentPage === adminPathsNew.myLeads.split("/")[2],
       icon: <FaBookmark />,
       role: [
         PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,

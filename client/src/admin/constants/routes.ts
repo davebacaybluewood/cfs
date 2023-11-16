@@ -64,7 +64,7 @@ const adminPaths = {
   mailingList: adminCfsRoute + "mailing-list",
   mailLibrary: adminCfsRoute + "emailpro-templates",
   mailLibraryForm: adminCfsRoute + "email-library-form",
-  mySubscribers: adminCfsRoute + "subscribers",
+  myLeads: adminCfsRoute + "leads",
   merchandises: adminCfsRoute + "merchandises",
   merchandiseForm: adminCfsRoute + "merchandises/form",
   rewardsHistory: adminCfsRoute + "rewards/history",
@@ -72,6 +72,7 @@ const adminPaths = {
   orderHistory: adminCfsRoute + "merchandises/order-history",
   trialSubscription: adminCfsRoute + "trial-subscription",
   rsvpLanding: adminCfsRoute + "events/rsvp/:eventId",
+  aaLogin: "/events/mission/login",
 } as const;
 
 export default adminPaths;

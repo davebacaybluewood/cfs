@@ -18,18 +18,23 @@ const ConditionalBox: React.FC<ConditionalBoxProps> = (props) => {
   );
 
   const isAgent = props.position?.some((e) => e.value === "POSITION_AGENT");
+  const isFreeTrial = props.position?.some(
+    (e) => e.value === "POSITION_FREE_30DAYS_TRIAL"
+  );
 
   const isEditor = props.position?.some((e) => e.value === "POSITION_EDITOR");
   const isContentCreator = props.position?.some(
     (e) => e.value === "POSITION_CONTENT_CREATOR"
   );
 
-  const isSubscriber = props.position?.some((e) => e.value === "POSITION_SUBSCRIBER");
+  const isSubscriber = props.position?.some(
+    (e) => e.value === "POSITION_SUBSCRIBER"
+  );
 
   return (
     <div>
       {isAdmin && <AdminBox />}
-      {isAgent && <AgentBox />}
+      {isAgent || (isFreeTrial && <AgentBox />)}
       {(isContentCreator || isEditor) && <EditorBox />}
       {isSubscriber && <SubscriberBox />}
     </div>

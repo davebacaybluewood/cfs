@@ -1,7 +1,7 @@
-import "./LeadButton.scss"
+import "./Timeline.scss"
 
 const LeadButton = ({ text }) => {
-  return <button>{text}</button>
+  return <button className="lead-button">{text}</button>
 }
 
 export default LeadButton

@@ -1,6 +1,6 @@
 /* LeadButton.css */
 
-button {
+.lead-button {
   color: black;
   background: #f2f0f0;
   display: flex;
@@ -12,7 +12,13 @@ button {
 }
 
 /* Apply styles when hovered */
-button:hover {
+.lead-button:hover {
   background: #0e1f51;
   color: white;
+}
+
+.position-top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

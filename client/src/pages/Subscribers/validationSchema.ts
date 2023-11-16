@@ -1,8 +1,12 @@
 import * as Yup from "yup";
 
 const validationSchemaEmail = Yup.object({
-  firstName: Yup.string().required("First name field is required."),
-  lastName: Yup.string().required("Last name field is required."),
+  firstName: Yup.string()
+    .required("First name field is required.")
+    .matches(/^(\S+$)/g, "Must not be an empty space."),
+  lastName: Yup.string()
+    .required("Last name field is required.")
+    .matches(/^(\S+$)/g, "Must not be an empty space."),
   email: Yup.string()
     .email("Invalid email address")
     .required("Email Address field is required."),

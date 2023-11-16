@@ -14,7 +14,7 @@ import { ValuesType } from "./models";
 import validationSchema from "./helpers/validationSchema";
 import "./PortalRegistration.scss";
 import classNames from "classnames";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
 import { PROFILE_POSITIONS, PROFILE_ROLES } from "./constants";
 
@@ -26,6 +26,8 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const search = useLocation().search;
+  const recruiterUserGuid = new URLSearchParams(search).get("userGuid");
   const [initialValues, setInitialValues] = useState<ValuesType>({
     emailAddress: "",
     password: "",
@@ -55,6 +57,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     weChat: "",
     discordId: "",
     state: "",
+    zipCode: "",
     firstName: "",
     nationality: "",
     birthDate: "",
@@ -231,6 +234,8 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                   state: values.state,
                   nationality: values.nationality,
                   birthDate: values.birthDate,
+                  zipCode: values.zipCode,
+                  recruiterUserGuid: recruiterUserGuid,
                 },
                 config
               );
@@ -267,8 +272,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
               errors.lastName ||
               errors.position ||
               errors.roles ||
-              errors.bio ||
-              errors.state
+              errors.bio
                 ? true
                 : false;
 
@@ -323,6 +327,9 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                     isValid={contactInfoValidity}
                     values={values}
                     onSubmit={updatePreProfile}
+                    setFieldValue={setFieldValue}
+                    touched={touched}
+                    setTouched={setTouched}
                   />
                 )}
                 {stage === 4 && (
@@ -342,10 +349,10 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                   />
                 )}
                 {stage === 6 && <SuccessPage />}
-                {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                <pre>{JSON.stringify(initialValues, null, 2)}</pre>
-                <pre>{JSON.stringify(errors, null, 2)}</pre>
-                <pre>{JSON.stringify(touched, null, 2)}</pre> */}
+                {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+                {/* <pre>{JSON.stringify(initialValues, null, 2)}</pre>  */}
+                {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                {/* <pre>{JSON.stringify(touched, null, 2)}</pre> */}
               </div>
             );
           }}

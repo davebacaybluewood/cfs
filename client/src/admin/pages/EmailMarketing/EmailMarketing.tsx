@@ -45,6 +45,8 @@ import ReactHtmlParser from "html-react-parser";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter";
 import { Contacts } from "admin/models/contactsModel";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -77,28 +79,35 @@ const ContractForm: React.FC = () => {
     emailBody: "",
     subject: "",
     settings: [""],
+    templateName: "",
+    status: "",
   });
+
   const [templates, setTemplates] = useState<any>([]);
   const userCtx = useContext(UserContext) as any;
   const search = useLocation().search;
-  const templateId = new URLSearchParams(search).get("templateId");
   const action = new URLSearchParams(search).get("action");
   const userGuid = userCtx?.user?.userGuid;
   const [contacts, setContacts] = useState<any>([]);
   const [contactsValue, setContactsValue] = useState<any>([]);
   const [recipientLoading, setRecipientLoading] = useState(false);
+  const [templateId, setTemplateId] = useState(new URLSearchParams(search).get("templateId"));
 
   const populateForm = (
     emailBody: string,
     subject: string,
     design: string,
-    settings: string[]
+    settings: string[],
+    templateName: string,
+    status: string
   ) => {
     setInitialValues((prevState) => ({
       recipients: prevState.recipients,
       emailBody: emailBody,
       subject: subject,
       settings: settings,
+      templateName: templateName,
+      status: status,
     }));
 
     emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || ""));
@@ -137,18 +146,18 @@ const ContractForm: React.FC = () => {
   }, [userGuid]);
 
   const handleCreateContact = async (data: Contacts) => {
+    setRecipientLoading(true);
     if (data.emailAddress && data.userGuid)
       await agent.Contacts.create(data)
         .then((c) => {
-          setRecipientLoading(true);
           setTimeout(() => {
             const newContact = createOption(c.data.emailAddress, c.data._id);
 
-            setRecipientLoading(false);
             setContacts((prev) => [...prev, newContact]);
             setContactsValue((prev) => [...prev, newContact]);
           }, 1000);
 
+          setRecipientLoading(false);
           toast.info(`New Contact added. ${c.data.emailAddress}`, {
             position: "top-right",
             autoClose: 5000,
@@ -172,6 +181,7 @@ const ContractForm: React.FC = () => {
             errMsg = err.response?.data?.description;
           }
 
+          setRecipientLoading(false);
           toast.error(errMsg, {
             position: "top-right",
             autoClose: 5000,
@@ -216,7 +226,9 @@ const ContractForm: React.FC = () => {
                 template.templateBody,
                 template.subject,
                 template.design,
-                template.settings
+                template.settings,
+                template.templateName,
+                template.status
               );
             }}
           >
@@ -257,6 +269,8 @@ const ContractForm: React.FC = () => {
         subject: data.subject,
         recipients: [],
         settings: data.settings,
+        templateName: data.templateName,
+        status: data.status,
       });
       setDesign(data.design);
 
@@ -278,6 +292,7 @@ const ContractForm: React.FC = () => {
 
     unlayer?.exportHtml(async (htmlData) => {
       const { design: updatedDesign, html } = htmlData;
+      let action = new URLSearchParams(window.location.search).get("action");
 
       data.design = JSON.stringify(updatedDesign);
       data.templateBody = html;
@@ -289,13 +304,26 @@ const ContractForm: React.FC = () => {
       if (isNoEmptyFields) {
         setSaveTemplateError("");
         setLoading(true);
-        const response = await agent.EmailMarketing.createEmailTemplate(
-          userGuid,
-          data
-        );
+        let response;
+        if (action !== 'edit') {
+          response = await agent.EmailMarketing.createEmailTemplate(
+            userGuid,
+            data
+          );
+          let params = new URLSearchParams(search);
+          params.set("templateId", templateId!);
+          window.history.replaceState(null, "", `${search}?templateId=${response.data._id}`);
+          setTemplateId(response.data._id);
+        } else {
+          response = await agent.EmailMarketing.updateEmailTemplate(
+            userGuid,
+            templateId,
+            data
+          );
+        }
 
         if (response) {
-          toast.info(`Email Template has been added.`, {
+          toast.info(`Email Template has been saved.`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -314,12 +342,21 @@ const ContractForm: React.FC = () => {
     });
   };
 
-  const validationSchema = Yup.object({
-    subject: Yup.string().required("Subject is required."),
-    recipients: Yup.array()
-      .min(1, "Pick at least 1 recipients")
-      .required("Recipients is required."),
-  });
+  let validationSchema;
+
+  if (action === "edit") {
+    validationSchema = Yup.object({
+      subject: Yup.string().required("Subject is required."),
+      templateName: Yup.string().required("Template name is required."),
+    });
+  } else {
+    validationSchema = Yup.object({
+      subject: Yup.string().required("Subject is required."),
+      recipients: Yup.array()
+        .min(1, "Pick at least 1 recipients")
+        .required("Recipients is required."),
+    });
+  }
 
   const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
 
@@ -388,6 +425,13 @@ const ContractForm: React.FC = () => {
     keyword: "",
   });
 
+  const { profile, loading: profileLoading } = useFetchUserProfile(
+    userCtx?.user?.userGuid ?? ""
+  );
+  const isAdmin = profile?.roles?.some((f) => {
+    return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
+  });
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -408,7 +452,21 @@ const ContractForm: React.FC = () => {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
               };
+              let action = new URLSearchParams(window.location.search).get("action");
               setLoading(true);
+              if (action === "edit") {
+                const finalPayloadData = {
+                  templateName: data.templateName,
+                  templateBody: data.emailBody,
+                  templateStatus: data.status,
+                  isAddedByMarketing: !!isAdmin,
+                  subject: data.subject,
+                  design: JSON.stringify(design),
+                  settings: data.settings,
+                };
+                saveTemplateHandler(finalPayloadData);
+                return;
+              }
 
               if (action !== "view") {
                 const unlayer = emailEditorRef.current?.editor;
@@ -473,78 +531,97 @@ const ContractForm: React.FC = () => {
               handleSubmit,
               setFieldValue,
               touched,
-              setTouched,
+              setFieldTouched,
               errors,
             }) => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} md={12} lg={12}>
-                      <label htmlFor="">Recipients (Required)</label>
+                    {action !== "edit" ? (
+                      <Grid item xs={12} md={12} lg={12}>
+                        <label htmlFor="">Recipients (Required)</label>
 
-                      <CreatableSelect
-                        isMulti
-                        options={contacts}
-                        isLoading={recipientLoading}
-                        value={contactsValue}
-                        components={{ Option: RemoveContactButton }}
-                        placeholder="Select a recipient item to add"
-                        onCreateOption={(input) => {
-                          let data = {
-                            _id: "",
-                            userGuid: userGuid,
-                            emailAddress: input,
-                          };
-                          handleCreateContact(data);
-                        }}
-                        onChange={(e) => {
-                          const modifiedValue = e?.map((contact) => {
-                            return {
-                              label: contact.label,
-                              value: contact.value,
+                        <CreatableSelect
+                          isMulti
+                          options={contacts}
+                          isLoading={recipientLoading}
+                          isDisabled={recipientLoading}
+                          value={contactsValue}
+                          components={{ Option: RemoveContactButton }}
+                          placeholder="Select a recipient item to add"
+                          onCreateOption={(input) => {
+                            let data = {
+                              _id: "",
+                              userGuid: userGuid,
+                              emailAddress: input,
                             };
-                          });
-                          setFieldValue("recipients", modifiedValue);
-                          setContactsValue(modifiedValue);
-                        }}
-                        onBlur={(e) => {
-                          if (values.recipients.length === 0) {
-                            setTouched({
-                              ...touched,
-                              recipients: [],
+                            handleCreateContact(data);
+                            setFieldTouched("recipients", false);
+                            setFieldValue("recipients", data);
+                          }}
+                          onChange={(e) => {
+                            const modifiedValue = e?.map((contact) => {
+                              return {
+                                label: contact.label,
+                                value: contact.value,
+                              };
                             });
+                            setFieldValue("recipients", modifiedValue);
+                            setContactsValue(modifiedValue);
+                          }}
+                          onBlur={(e) => {
+                            if (values.recipients.length <= 0)
+                              setFieldTouched("recipients", true);
+                          }}
+                          styles={{
+                            clearIndicator: ClearIndicatorStyles,
+                            placeholder: (defaultStyles) => {
+                              return {
+                                ...defaultStyles,
+                                color: "rgba(0, 0, 0, 0.3)",
+                                zIndex: 9,
+                              };
+                            },
+
+                            menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                            control: (baseStyles, state) => {
+                              return {
+                                ...baseStyles,
+                                fontSize: "13px",
+                                paddingTop: "5px",
+                                paddingBottom: "5px",
+                                borderColor: "hsl(0, 0%, 80%)",
+                              };
+                            },
+                          }}
+                        />
+
+                        <ErrorText
+                          isError={
+                            values.recipients.length === 0 &&
+                            !!touched.recipients
                           }
-                        }}
-                        styles={{
-                          clearIndicator: ClearIndicatorStyles,
-                          placeholder: (defaultStyles) => {
-                            return {
-                              ...defaultStyles,
-                              color: "rgba(0, 0, 0, 0.3)",
-                              zIndex: 9,
-                            };
-                          },
-
-                          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                          control: (baseStyles, state) => {
-                            return {
-                              ...baseStyles,
-                              fontSize: "13px",
-                              paddingTop: "5px",
-                              paddingBottom: "5px",
-                              borderColor: "hsl(0, 0%, 80%)",
-                            };
-                          },
-                        }}
-                      />
-
-                      <ErrorText
-                        isError={
-                          values.recipients.length === 0 && !!touched.recipients
-                        }
-                        text="Recipients field is required."
-                      />
-                    </Grid>
+                          text="Recipients field is required."
+                        />
+                      </Grid>
+                    ) : null}
+                    {action === "edit" ? (
+                      <Grid
+                        item
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        className="form-card-container"
+                      >
+                        <label>Template Name(Required)</label>
+                        <FormikTextInput
+                          placeholder="Enter your template name here"
+                          variant="outlined"
+                          name="templateName"
+                          value={values.templateName}
+                        />
+                      </Grid>
+                    ) : null}
                     <Grid
                       item
                       sm={12}
@@ -682,52 +759,79 @@ const ContractForm: React.FC = () => {
 
                   <div className="form-actions">
                     {action !== "view" ? (
-                      <div className="template-library-btn">
-                        <button onClick={() => setOpenDrawer(true)}>
-                          Template Library
-                        </button>
-                      </div>
+                      action !== "edit" ? (
+                        <div className="template-library-btn">
+                          <button onClick={() => setOpenDrawer(true)}>
+                            Template Library
+                          </button>
+                        </div>
+                      ) : null
                     ) : null}
                     <div className="actions">
-                      {action !== "view" ? (
+                      {action === "edit" ? (
+                        <Button variant="danger" onClick={() => handleSubmit()}>
+                          Save Template
+                        </Button>
+                      ) : (
                         <React.Fragment>
+                          {!templateId ? (
+                            <React.Fragment>
+                              <Button
+                                variant="default"
+                                onClick={async () =>
+                                  saveTemplateHandler({
+                                    templateName: values.subject,
+                                    templateBody: values.emailBody,
+                                    templateStatus: "DRAFT",
+                                    isAddedByMarketing: true,
+                                    subject: values.subject,
+                                    design: JSON.stringify(design),
+                                    settings: values.settings,
+                                  })
+                                }
+                              >
+                                Save as draft
+                              </Button>
+                              <Button
+                                variant="default"
+                                onClick={async () =>
+                                  saveTemplateHandler({
+                                    templateName: values.subject,
+                                    templateBody: values.emailBody,
+                                    templateStatus: "ACTIVATED",
+                                    isAddedByMarketing: true,
+                                    subject: values.subject,
+                                    design: JSON.stringify(design),
+                                    settings: values.settings,
+                                  })
+                                }
+                              >
+                                Save as template 
+                              </Button>
+                            </React.Fragment>
+                          ) : (
+                            <Button
+                                variant="danger"
+                                onClick={() => {
+                                  let params = new URLSearchParams(window.location.search);
+                                  params.set("action", "edit");
+                                  if (!window.location.search.includes("&action=edit")) {
+                                    window.history.replaceState(null, "", `${window.location.search}&action=edit`);
+                                  }
+                                  handleSubmit()
+                                }}
+                              >
+                              Update Template
+                            </Button>
+                          )}
                           <Button
-                            variant="default"
-                            onClick={async () =>
-                              saveTemplateHandler({
-                                templateName: values.subject,
-                                templateBody: values.emailBody,
-                                templateStatus: "DRAFT",
-                                isAddedByMarketing: true,
-                                subject: values.subject,
-                                design: JSON.stringify(design),
-                                settings: values.settings,
-                              })
-                            }
+                            variant="danger"
+                            onClick={() => handleSubmit()}
                           >
-                            Save as draft
-                          </Button>
-                          <Button
-                            variant="default"
-                            onClick={async () =>
-                              saveTemplateHandler({
-                                templateName: values.subject,
-                                templateBody: values.emailBody,
-                                templateStatus: "ACTIVATED",
-                                isAddedByMarketing: true,
-                                subject: values.subject,
-                                design: JSON.stringify(design),
-                                settings: values.settings,
-                              })
-                            }
-                          >
-                            Save as template
+                            Send
                           </Button>
                         </React.Fragment>
-                      ) : null}
-                      <Button variant="danger" onClick={() => handleSubmit()}>
-                        Send
-                      </Button>
+                      )}
                     </div>
                   </div>
                   {/* <pre>{JSON.stringify(values, null, 2)}</pre>

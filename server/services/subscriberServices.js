@@ -15,6 +15,7 @@ import Profile from "../models/agentModel.js";
 import Hierarchy from "../models/hierarchyModel.js";
 import Points from "../models/pointsModel.js";
 import Agent from "../models/agentModel.js";
+import { status } from "../constants/constants.js";
 
 const emailConfirmation = async (emailAddress) => {
   const isEmailExist = await User.find({
@@ -209,16 +210,37 @@ const fetchSubscribersByUser = async (userGuid) => {
       },
     }, 
     {
-      $set: {
-        firstName: {
-          $first: "$userDoc.firstName",
-        },
-        lastName: {
-          $first: "$userDoc.lastName",
-        },
-        email: {
-          $first: "$userDoc.email",
-        },
+      $unwind: "$userDoc",
+    },
+    {
+      $lookup: {
+        from: "agents",
+        localField: "userGuid",
+        foreignField: "userGuid",
+        as: "agentDoc",
+      },
+    },
+    {
+      $unwind: "$agentDoc",
+    },
+    {
+      $match: { "agentDoc.status": status.ACTIVATED },
+    },
+    {
+      $project: {
+        _id: 1,
+        userGuid: 1,
+        recruiterUserGuid: 1,
+        hierarchyId: 1,
+        hierarchyCode: 1,
+        parent: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        position: "$userDoc.position",
+        firstName: "$userDoc.firstName",
+        lastName: "$userDoc.lastName",
+        email: "$userDoc.email",
+        status: "$agentDoc.status",
       },
     },
     {
@@ -226,7 +248,21 @@ const fetchSubscribersByUser = async (userGuid) => {
     },
   ]);
 
-  return subscribers;
+  const filteredSubscriber = subscribers.map((data) => {
+    const isFreeTrial = data.position?.some(
+      (e) => e.value === "POSITION_FREE_30DAYS_TRIAL"
+    );
+
+    const isSubscriber = data.position?.some(
+      (e) => e.value === "POSITION_SUBSCRIBER"
+    );
+    return {
+      ...data,
+      type: isSubscriber ? "SUBSCRIBER" : "FREE 30DAYS TRIAL",
+    };
+  });
+
+  return filteredSubscriber;
 };
 
 const fetchAllSubscribers = async () => {

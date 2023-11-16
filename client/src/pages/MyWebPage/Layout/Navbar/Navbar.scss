@@ -1,0 +1,46 @@
+.my-webpage-navbar {
+	padding: 2rem;
+	.navbar-content {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		img {
+			width: 150px;
+		}
+		.search-bar {
+			position: relative;
+
+			svg {
+				position: absolute;
+				top: 15px;
+				font-size: 1.4rem;
+				color: #696262;
+				padding: 0 1rem;
+			}
+			input {
+				padding: 1.3rem 3rem;
+				width: 700px;
+				border-radius: 10px;
+				border: 1px solid #eee;
+				transition: 0.2s;
+
+				&:focus,
+				&:hover {
+					outline: none;
+					border: 1px solid #000;
+				}
+			}
+		}
+		button {
+			border: 1px solid #00004d;
+			color: #00004d;
+			padding: 0.7rem 2rem;
+			transition: 0.2s;
+
+			&:hover {
+				color: #fff;
+				background: #00004d;
+			}
+		}
+	}
+}

@@ -66,6 +66,12 @@ const Sidebar: React.FC<SidebarProps> = ({
     return f.value === PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value;
   });
 
+  const isFreeTrial = profile?.roles?.some((f) => {
+    return (
+      f.value === PROFILE_ROLES.FREE_30DAYS_TRIAL.ROLE_FREE_30DAYS_TRIAL.value
+    );
+  });
+
   const profileName = profile?.name
     ? profile?.name
     : `${profile?.firstName} ${profile?.lastName}`;
@@ -136,7 +142,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   return <Badge variant={badgeVariant}>{data.label}</Badge>;
                 })}
               </div>
-              {isAdmin || isSubscriber ? null : (
+              {isAdmin || isSubscriber || isFreeTrial ? null : (
                 <div>
                   {profile?.roles?.map((data) => {
                     const isAgent = AGENT_ROLES?.some(

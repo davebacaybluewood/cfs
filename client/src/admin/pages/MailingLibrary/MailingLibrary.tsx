@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from "react"
-import Wrapper from "admin/components/Wrapper/Wrapper"
-import { CrumbTypes } from "../Dashboard/types"
-import { paths } from "constants/routes"
-import Title from "admin/components/Title/Title"
+import React, { useContext, useEffect, useState } from "react";
+import Wrapper from "admin/components/Wrapper/Wrapper";
+import { CrumbTypes } from "../Dashboard/types";
+import { paths } from "constants/routes";
+import Title from "admin/components/Title/Title";
 import {
   DataGrid,
   GridColDef,
   GridToolbar,
   GridToolbarContainer,
-} from "@mui/x-data-grid"
-import { BsPlusCircle } from "react-icons/bs"
-import { createSearchParams, useNavigate } from "react-router-dom"
+} from "@mui/x-data-grid";
+import { BsPlusCircle } from "react-icons/bs";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import {
   Button,
   IconButton,
@@ -18,20 +18,20 @@ import {
   MenuItem,
   Skeleton,
   Tooltip,
-} from "@mui/material"
-import agent from "admin/api/agent"
-import { UserContext } from "admin/context/UserProvider"
-import nameFallback from "helpers/nameFallback"
-import { formatISODateOnly } from "helpers/date"
-import { AiFillCheckCircle, AiOutlineCheckCircle } from "react-icons/ai"
-import { toast } from "react-toastify"
-import classNames from "classnames"
-import { HiOutlineTrash } from "react-icons/hi"
-import { RiExternalLinkFill } from "react-icons/ri"
-import Spinner from "library/Spinner/Spinner"
-import { BiFilterAlt } from "react-icons/bi"
-import "./MailingLibrary.scss"
-import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
+} from "@mui/material";
+import agent from "admin/api/agent";
+import { UserContext } from "admin/context/UserProvider";
+import nameFallback from "helpers/nameFallback";
+import { formatISODateOnly } from "helpers/date";
+import { AiFillCheckCircle, AiOutlineCheckCircle } from "react-icons/ai";
+import { toast } from "react-toastify";
+import classNames from "classnames";
+import { HiOutlineTrash } from "react-icons/hi";
+import { RiExternalLinkFill } from "react-icons/ri";
+import Spinner from "library/Spinner/Spinner";
+import { BiFilterAlt } from "react-icons/bi";
+import "./MailingLibrary.scss";
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -44,16 +44,16 @@ const crumbs: CrumbTypes[] = [
     url: paths.mailLibrary,
     isActive: true,
   },
-]
+];
 
 const MailLibrary: React.FC = () => {
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
-  const [fixedLoading, setFixedLoading] = useState(false)
-  const userCtx = useContext(UserContext) as any
-  const userGuid = userCtx?.user?.userGuid
-  const [templates, setTemplates] = useState<any>([])
-  const [originalTemplates, setOriginalTemplates] = useState<any>([])
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [fixedLoading, setFixedLoading] = useState(false);
+  const userCtx = useContext(UserContext) as any;
+  const userGuid = userCtx?.user?.userGuid;
+  const [templates, setTemplates] = useState<any>([]);
+  const [originalTemplates, setOriginalTemplates] = useState<any>([]);
 
   const TextOverFlow = ({ value }) => {
     return (
@@ -62,8 +62,8 @@ const MailLibrary: React.FC = () => {
           {value}
         </span>
       </Tooltip>
-    )
-  }
+    );
+  };
 
   const columns: GridColDef[] = [
     {
@@ -103,7 +103,7 @@ const MailLibrary: React.FC = () => {
       align: "right",
       renderCell: (params) => params.value,
     },
-  ]
+  ];
 
   const activationHandler = async (
     templateName: string,
@@ -115,7 +115,7 @@ const MailLibrary: React.FC = () => {
     design: string,
     settings: string[]
   ) => {
-    setFixedLoading(true)
+    setFixedLoading(true);
     const body = {
       templateName,
       templateBody,
@@ -124,12 +124,12 @@ const MailLibrary: React.FC = () => {
       subject,
       design,
       settings,
-    }
+    };
     const res = await agent.EmailMarketing.updateEmailTemplate(
       userGuid,
       templateId,
       body
-    )
+    );
     if (res) {
       toast.info(`Template Updated`, {
         position: "top-right",
@@ -140,8 +140,8 @@ const MailLibrary: React.FC = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-      })
-      setFixedLoading(false)
+      });
+      setFixedLoading(false);
 
       setTemplates((prevRows) => {
         return prevRows.map((row, index) => {
@@ -151,35 +151,35 @@ const MailLibrary: React.FC = () => {
                   ...row,
                   status: templateStatus,
                 }
-              : row
+              : row;
 
-          console.log(newData)
-          return newData
-        })
-      })
+          console.log(newData);
+          return newData;
+        });
+      });
     }
-  }
+  };
 
   useEffect(() => {
     const fetchEmailTemplates = async () => {
-      setLoading(true)
-      const data = await agent.EmailMarketing.getEmailTemplates(userGuid)
+      setLoading(true);
+      const data = await agent.EmailMarketing.getEmailTemplates(userGuid);
 
-      setTemplates(data)
-      setOriginalTemplates(data)
-    }
+      setTemplates(data);
+      setOriginalTemplates(data);
+    };
 
     if (userGuid) {
-      fetchEmailTemplates()
-      setLoading(false)
+      fetchEmailTemplates();
+      setLoading(false);
     }
-  }, [userGuid])
+  }, [userGuid]);
 
   const templateList = templates?.map((template) => {
-    const deactivateButtonIsDisabled = template.userGuid !== userGuid
+    const deactivateButtonIsDisabled = template.userGuid !== userGuid;
     const btnClassnames = classNames("select-btn", {
       danger: template.status === "ACTIVATED",
-    })
+    });
 
     return {
       id: template._id,
@@ -235,7 +235,7 @@ const MailLibrary: React.FC = () => {
                 search: createSearchParams({
                   templateId: template._id,
                 }).toString(),
-              })
+              });
             }}
           >
             <span>Import</span> <BsPlusCircle />
@@ -249,12 +249,12 @@ const MailLibrary: React.FC = () => {
             }}
             onClick={() => {
               navigate({
-                pathname: paths.mailLibraryForm,
+                pathname: paths.emailMarketing,
                 search: createSearchParams({
                   action: "edit",
                   templateId: template._id,
                 }).toString(),
-              })
+              });
             }}
           >
             <span>View</span> <RiExternalLinkFill />
@@ -317,8 +317,8 @@ const MailLibrary: React.FC = () => {
           )}
         </React.Fragment>
       ),
-    }
-  })
+    };
+  });
 
   const templateSkeleton = Array.from({ length: 5 }).map((row, index) => {
     return {
@@ -328,27 +328,27 @@ const MailLibrary: React.FC = () => {
       createdBy: <Skeleton variant="rectangular" width={180} height={20} />,
       createdAt: <Skeleton variant="rectangular" width={180} height={20} />,
       status: <Skeleton variant="rectangular" width={180} height={20} />,
-    }
-  })
+    };
+  });
 
-  const filteredRows = templates.length > 0 ? templateList : templateSkeleton
+  const filteredRows = templates.length > 0 ? templateList : templateSkeleton;
 
   // This will be refactor september
   const FilteredGridToolbar = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-    const open = Boolean(anchorEl)
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget)
-    }
+      setAnchorEl(event.currentTarget);
+    };
     const filterHandler = (status: string) => {
       setTemplates((prevState) => {
         const filteredData = originalTemplates?.filter(
           (data) => data.status === status
-        )
-        return status === "ALL" ? originalTemplates : filteredData
-      })
-      setAnchorEl(null)
-    }
+        );
+        return status === "ALL" ? originalTemplates : filteredData;
+      });
+      setAnchorEl(null);
+    };
     return (
       <GridToolbarContainer className="custom-toolbar">
         <GridToolbar />
@@ -367,11 +367,11 @@ const MailLibrary: React.FC = () => {
           </MenuItem>
         </Menu>
       </GridToolbarContainer>
-    )
-  }
+    );
+  };
 
   if (loading) {
-    return <Spinner variant="relative" />
+    return <Spinner variant="relative" />;
   }
 
   return (
@@ -402,7 +402,7 @@ const MailLibrary: React.FC = () => {
       </div>
       {fixedLoading ? <Spinner variant="fixed" /> : null}
     </Wrapper>
-  )
-}
+  );
+};
 
-export default MailLibrary
+export default MailLibrary;

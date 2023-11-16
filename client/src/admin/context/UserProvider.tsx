@@ -1,22 +1,22 @@
-import { AgentData } from "admin/pages/Agents/hooks/useFetchAgent";
-import ENDPOINTS from "constants/endpoints";
-import getUserToken from "helpers/getUserToken";
-import React, { createContext, useEffect, useState } from "react";
+import { AgentData } from "admin/pages/Agents/hooks/useFetchAgent"
+import ENDPOINTS from "constants/endpoints"
+import getUserToken from "helpers/getUserToken"
+import React, { createContext, useEffect, useState } from "react"
 
 type UserContextData = {
-  loading: boolean;
-  error: boolean | null;
-  user: AgentData | undefined;
-};
+  loading: boolean
+  error: boolean | null
+  user: AgentData | undefined
+}
 export const UserContext = createContext<UserContextData>({
   error: false,
   loading: false,
   user: undefined,
-});
+})
 
 function setSessionStorage(key, value) {
   try {
-      window.localStorage.setItem(key, JSON.stringify(value));
+    window.localStorage.setItem(key, JSON.stringify(value))
   } catch (e) {
     // catch possible errors:
     // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
@@ -25,11 +25,11 @@ function setSessionStorage(key, value) {
 
 function getSessionStorage(key, initialValue) {
   try {
-    const value = window.localStorage.getItem(key);
-    return value ? JSON.parse(value) : initialValue;
+    const value = window.localStorage.getItem(key)
+    return value ? JSON.parse(value) : initialValue
   } catch (e) {
     // if error, return initial value
-    return initialValue;
+    return initialValue
   }
 }
 
@@ -40,11 +40,11 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = (props) => {
       error: null,
       user: undefined,
     })
-  );
-  const localData = localStorage.getItem("userInfo");
+  )
+  const localData = localStorage.getItem("userInfo")
   useEffect(() => {
     if (!("error" in data)) {
-      setSessionStorage("userInfo", data);
+      setSessionStorage("userInfo", data)
     }
   }, [data]);
 
@@ -54,7 +54,7 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = (props) => {
     >
       {props.children}
     </UserContext.Provider>
-  );
-};
+  )
+}
 
-export default UserProvider;
+export default UserProvider
