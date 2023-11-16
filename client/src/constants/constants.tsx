@@ -40,7 +40,6 @@ import NATIONALITIES from "./nationalities"
 import MyWebPage from "pages/MyWebPage/MyWebPage"
 import AALogin from "../events/mission/Login/Login"
 import ClaimReward from "pages/Events/Mission/ClaimReward"
-import ProfilePage from "pages/ProfilePage/ProfilePage"
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean
@@ -216,11 +215,6 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showHeadline: false,
     showFooter: false,
     showNavbar: false,
-  },
-  {
-    element: <ProfilePage />,
-    path: "/profile/test",
-    showHeadline: false,
   },
   {
     element: <FamilyProtection />,
