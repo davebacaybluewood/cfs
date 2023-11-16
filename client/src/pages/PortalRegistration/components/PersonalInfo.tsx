@@ -135,6 +135,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
 							value: data,
 						};
 					})}
+					closeMenuOnSelect={true}
 				/>
 
 				{/* <ErrorText

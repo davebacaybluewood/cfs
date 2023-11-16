@@ -278,6 +278,7 @@ const AgentRegistration = () => {
                                 : false
                             }
                             placeholder="Select an item to add"
+                            closeMenuOnSelect={true}
                           />
                         </Grid>
                         {values.specialties.length === 0 &&

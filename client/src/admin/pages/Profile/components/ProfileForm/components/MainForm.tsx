@@ -232,6 +232,7 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                         ? true
                         : false
                     }
+                    closeMenuOnSelect={true}
                     placeholder="Select an item to add"
                   />
                 </Grid>
