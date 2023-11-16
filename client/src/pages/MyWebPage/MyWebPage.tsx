@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
 import { Container, Grid } from "@mui/material";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
@@ -23,13 +23,30 @@ import { FiSend } from "react-icons/fi";
 import { GrSend } from "react-icons/gr";
 import { paths } from "constants/routes";
 import { CiGift, CiTrophy, CiVault } from "react-icons/ci";
-import "./MyWebPage.scss";
 import Timeline from "pages/MyWebPage/Timeline";
+import agent from "admin/api/agent";
+import "./MyWebPage.scss";
+import TimelinePost, {
+  TimelinePostProps,
+} from "library/TimelinePost/TimelinePost";
+import Event, { EventBody, ResponseMessage } from "admin/models/eventModel";
+import agentLinks from "./helpers/agentLinks";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
   const [content, setContent] = useState("home");
   const [active, setActive] = useState(false);
+  const [events, setEvents] = useState<Event[] | undefined>();
+
+  /* Fetch Events */
+  useEffect(() => {
+    const getEvents = async () => {
+      const eventData = await agent.Events.getEvents(`${user}`);
+      setEvents(eventData);
+    };
+
+    getEvents();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -60,28 +77,7 @@ const MyWebPage: React.FC = () => {
   const linkedIn = profile?.linkedIn.toString();
   const twitter = profile?.twitter.toString();
 
-  const links = [
-    {
-      icon: <HiLocationMarker />,
-      title: "Address",
-      link: address,
-    },
-    {
-      icon: <FaFacebook />,
-      title: "Facebook",
-      link: facebook,
-    },
-    {
-      icon: <FaLinkedin />,
-      title: "LinkedIn",
-      link: linkedIn,
-    },
-    {
-      icon: <FaTwitter />,
-      title: "Twitter",
-      link: twitter,
-    },
-  ];
+  const links = agentLinks(address, facebook, linkedIn, twitter);
 
   const navLinks = [
     {
@@ -122,6 +118,18 @@ const MyWebPage: React.FC = () => {
       link: "Articles",
     },
   ];
+
+  const filteredEvents: TimelinePostProps[] | undefined = events?.map((ev) => {
+    return {
+      tag: "Event",
+      content: ev.shortDescription ?? "",
+      userName: `${ev.authorFirstName} ${ev.authorLastName}` ?? "",
+      datePosted: ev.createdAt ?? "",
+      imgContent: ev.thumbnail ?? "",
+      title: ev.title ?? "",
+      eventDate: ev.eventDate ?? "",
+    };
+  });
 
   if (loading) {
     <Spinner variant="relative" />;
@@ -218,10 +226,11 @@ const MyWebPage: React.FC = () => {
                         ))}
                       </div>
                       <div className="tabs-content">
-                        <Timeline content={content} />
+                        {content === "events" && (
+                          <Timeline data={filteredEvents} />
+                        )}
                       </div>
                     </React.Fragment>
-                    <div className="middle-col-content"></div>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>

@@ -1,33 +1,25 @@
-import TimelinePost from "library/TimelinePost/TimelinePost"
-import { fakePosts } from "./fakePosts"
+import TimelinePost, {
+  TimelinePostProps,
+} from "library/TimelinePost/TimelinePost";
+import React from "react";
 
-const Timeline = ({ content }: { content?: string }) => {
-  return (
-    <div style={{ flexGrow: 1, width: "100%" }}>
-      {fakePosts
-        .filter((item) => {
-          if (content === "events") {
-            return item.tag === "event"
-          } else if (content === "articles") {
-            return item.tag === "article"
-          } else {
-            return item
-          }
-        })
-        .map((item, index) => (
-          <TimelinePost
-            profileImg={item.profileImg}
-            title={item.title}
-            userName={item.userName}
-            datePosted={item.datePosted}
-            content={item.content}
-            imgContent={item.imgContent}
-            eventDate={item.eventDate}
-            tag={item.tag}
-          />
-        ))}
-    </div>
-  )
+interface TimelineData {
+  data: TimelinePostProps[] | undefined;
 }
+const Timeline: React.FC<TimelineData> = (props) => {
+  const { data } = props;
 
-export default Timeline
+  return (
+    <React.Fragment>
+      <div className="events-container">
+        <div className="event-content">
+          {data?.map((post) => {
+            return <TimelinePost {...post}>{post.children}</TimelinePost>;
+          })}
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
+
+export default Timeline;
