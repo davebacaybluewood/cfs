@@ -197,12 +197,9 @@ const subscriberRegistration = async (
 };
 
 const fetchSubscribersByUser = async (userGuid) => {
-  const userHierarchy = await Hierarchy.findOne({ userGuid });
-  const hierarchyCode = userHierarchy.hierarchyCode;
-
   const subscribers = await Hierarchy.aggregate([
     {
-      $match: { hierarchyCode },
+      $match: { recruiterUserGuid: userGuid },
     },
     {
       $lookup: {
@@ -265,11 +262,7 @@ const fetchSubscribersByUser = async (userGuid) => {
     };
   });
 
-  const removedConsumerUser = filteredSubscriber.filter((data) => {
-    return data.userGuid !== userGuid;
-  });
-
-  return removedConsumerUser;
+  return filteredSubscriber;
 };
 
 const fetchAllSubscribers = async () => {
