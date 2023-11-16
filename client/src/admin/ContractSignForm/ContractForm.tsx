@@ -360,6 +360,7 @@ const ContractForm: React.FC = () => {
                             value: data,
                           }
                         })}
+                        closeMenuOnSelect={true}
                       />
 
                       <ErrorText
@@ -392,6 +393,7 @@ const ContractForm: React.FC = () => {
                           }
                         }}
                         error={false}
+                        closeMenuOnSelect={true}
                         placeholder="Select a annuity item to add"
                         value={values.annuity.map((data) => {
                           return {

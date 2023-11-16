@@ -9,6 +9,7 @@ export type OptionTypes = {
   keyword: string;
 };
 export interface MultiSelectInputProps {
+  closeMenuOnSelect: boolean | undefined;
   options: OptionTypes[];
   onChange: (e: any) => void;
   placeholder?: string;
@@ -69,7 +70,7 @@ const MultiSelectInput: React.FC<MultiSelectInputProps> = (props) => {
 
   return (
     <Select
-      closeMenuOnSelect={false}
+      closeMenuOnSelect={props.closeMenuOnSelect}
       onBlur={props.onBlur}
       // components={{ ClearIndicator }}
       isDisabled={props.disabled}
