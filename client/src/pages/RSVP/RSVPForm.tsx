@@ -45,7 +45,6 @@ const RSVPForm: React.FC = () => {
   useEffect(() => {
     const getSingleEvent = async () => {
       const res = await adminAgent.Events.getSingleEvent(eventId ?? "");
-      console.log(res);
       setEvent(res);
     };
 
