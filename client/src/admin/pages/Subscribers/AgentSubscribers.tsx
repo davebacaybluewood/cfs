@@ -72,7 +72,7 @@ const AgentSubscribers: React.FC = () => {
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <DocumentTitleSetter title="Subscribers | CFS Portal" />
       <div className="agent-subscribers-container">
-        <Title title="Subscribers" subtitle="List of subscribers">
+        <Title title="Leads" subtitle="List of your leads">
           <Button onClick={() => handleCopyToClipboard()} variant="contained">
             Copy Subscriber Registration Link
           </Button>
