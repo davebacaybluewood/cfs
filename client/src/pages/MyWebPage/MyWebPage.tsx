@@ -23,7 +23,7 @@ import { Helmet } from "react-helmet"
 import { FiSend } from "react-icons/fi"
 import { GrSend } from "react-icons/gr"
 import { paths } from "constants/routes"
-import Timeline from "library/TimelinePost/Timeline"
+import Timeline from "pages/MyWebPage/Timeline"
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams()

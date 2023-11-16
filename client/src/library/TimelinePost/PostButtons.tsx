@@ -1,5 +1,5 @@
 import LeadButton from "./LeadButton"
-import "./Timeline.scss"
+import "./TimelinePost.scss"
 import { Stack } from "@mui/material"
 import { CiShare2 } from "react-icons/ci"
 

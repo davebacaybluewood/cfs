@@ -1,9 +1,7 @@
 import TimelinePost from "library/TimelinePost/TimelinePost"
-import React, { useEffect, useState } from "react"
 import { fakePosts } from "./fakePosts"
 
 const Timeline = ({ content }: { content?: string }) => {
-  const [loading, setLoading] = useState(false)
   return (
     <div style={{ flexGrow: 1, width: "100%" }}>
       {fakePosts
