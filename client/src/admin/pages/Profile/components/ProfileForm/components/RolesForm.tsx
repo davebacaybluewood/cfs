@@ -358,6 +358,7 @@ const RolesForm: React.FC<RolesFormProps> = (props) => {
                             value: data.value,
                           };
                         })}
+                        closeMenuOnSelect={true}
                       />
 
                       <ErrorText
