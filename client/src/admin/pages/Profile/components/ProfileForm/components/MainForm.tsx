@@ -173,9 +173,9 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
-                  <h5 className="form-label">
+                  <h2 className="form-label">
                     Languages (You can choose more than one)
-                  </h5>
+                  </h2>
                   <MultiSelectInputWithCreate
                     value={values.languages?.map((data) => {
                       return {
@@ -204,9 +204,9 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
-                  <h5 className="form-label">
+                  <h2 className="form-label">
                     Specialties (You can choose more than one)
-                  </h5>
+                  </h2>
                   <MultiSelectInputV2
                     variant="filled"
                     value={values.specialties?.map((data) => {
