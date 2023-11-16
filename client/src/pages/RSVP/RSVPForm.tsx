@@ -59,6 +59,12 @@ const RSVPForm: React.FC = () => {
         <Grid container style={{ height: "100%" }}>
           <Grid sm={12} md={4} lg={4}>
             <div className="form-information">
+              <img
+                className="cfs-logo"
+                src="/assets/images/logos/small-logo.png"
+                alt="small-cfs"
+              />
+              <h5>Comfort Financial Solutions</h5>
               {event ? (
                 <React.Fragment>
                   <img src={event?.thumbnail} alt="event-img" />
