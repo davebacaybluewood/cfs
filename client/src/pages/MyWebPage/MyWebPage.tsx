@@ -18,11 +18,12 @@ import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
 import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md";
 import Button from "library/Button/Button";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FiSend } from "react-icons/fi";
 import { GrSend } from "react-icons/gr";
 import { paths } from "constants/routes";
+import { CiGift, CiStar, CiTrophy, CiVault } from "react-icons/ci";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
@@ -233,6 +234,38 @@ const MyWebPage: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className="right-col">
+                    <div className="right-col-actions">
+                      <Button
+                        onClick={() =>
+                          window.open(
+                            "https://agent.comfortfinancialsolutions.com/signup"
+                          )
+                        }
+                      >
+                        <div className="icon-holder">
+                          <CiTrophy />
+                        </div>
+                        Become an Agent
+                      </Button>
+                      <Button
+                        onClick={() =>
+                          window.open(paths.subscriberRegistration)
+                        }
+                      >
+                        <div className="icon-holder">
+                          <CiGift />
+                        </div>
+                        Subscribe to earn points
+                      </Button>
+                      <Button
+                        onClick={() => window.open(paths.portalRegistration)}
+                      >
+                        <div className="icon-holder">
+                          <CiVault />
+                        </div>
+                        Portal Free 30 days trial
+                      </Button>
+                    </div>
                     <div className="right-col-content">
                       <h3>Agent Calculator</h3>
                       <div className="icon-holder">
