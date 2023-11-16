@@ -3,16 +3,7 @@ import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
 import { Container, Grid } from "@mui/material";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import Spinner from "library/Spinner/Spinner";
-import {
-  FaFacebook,
-  FaHome,
-  FaLinkedin,
-  FaPhone,
-  FaTwitter,
-  FaCalendar,
-  FaAddressCard,
-} from "react-icons/fa";
-import { HiLocationMarker } from "react-icons/hi";
+import { FaHome, FaPhone, FaCalendar, FaAddressCard } from "react-icons/fa";
 import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
 import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md";
 import Button from "library/Button/Button";
@@ -26,10 +17,8 @@ import { CiGift, CiTrophy, CiVault } from "react-icons/ci";
 import Timeline from "pages/MyWebPage/Timeline";
 import agent from "admin/api/agent";
 import "./MyWebPage.scss";
-import TimelinePost, {
-  TimelinePostProps,
-} from "library/TimelinePost/TimelinePost";
-import Event, { EventBody, ResponseMessage } from "admin/models/eventModel";
+import { TimelinePostProps } from "library/TimelinePost/TimelinePost";
+import Event from "admin/models/eventModel";
 import agentLinks from "./helpers/agentLinks";
 
 const MyWebPage: React.FC = () => {
