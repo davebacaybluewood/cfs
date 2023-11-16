@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
 import { Container, Grid } from "@mui/material";
-import "./MyWebPage.scss";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import Spinner from "library/Spinner/Spinner";
 import {
@@ -18,12 +17,13 @@ import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
 import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md";
 import Button from "library/Button/Button";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FiSend } from "react-icons/fi";
 import { GrSend } from "react-icons/gr";
 import { paths } from "constants/routes";
-import { CiGift, CiStar, CiTrophy, CiVault } from "react-icons/ci";
+import { CiGift, CiTrophy, CiVault } from "react-icons/ci";
+import "./MyWebPage.scss";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
