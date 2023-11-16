@@ -81,6 +81,7 @@ const ContractForm: React.FC = () => {
     settings: [""],
     templateName: "",
     status: "",
+    createdById: "",
   });
 
   const [templates, setTemplates] = useState<any>([]);
@@ -99,7 +100,8 @@ const ContractForm: React.FC = () => {
     design: string,
     settings: string[],
     templateName: string,
-    status: string
+    status: string,
+    createdById: string
   ) => {
     setInitialValues((prevState) => ({
       recipients: prevState.recipients,
@@ -108,6 +110,7 @@ const ContractForm: React.FC = () => {
       settings: settings,
       templateName: templateName,
       status: status,
+      createdById: userGuid,
     }));
 
     emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || ""));
@@ -228,7 +231,8 @@ const ContractForm: React.FC = () => {
                 template.design,
                 template.settings,
                 template.templateName,
-                template.status
+                template.status,
+                template.createdById
               );
             }}
           >
@@ -271,6 +275,7 @@ const ContractForm: React.FC = () => {
         settings: data.settings,
         templateName: data.templateName,
         status: data.status,
+        createdById: data.userGuid,
       });
       setDesign(data.design);
 
@@ -305,7 +310,7 @@ const ContractForm: React.FC = () => {
         setSaveTemplateError("");
         setLoading(true);
         let response;
-        if (action !== 'edit') {
+        if (action !== "edit") {
           response = await agent.EmailMarketing.createEmailTemplate(
             userGuid,
             data
@@ -531,7 +536,7 @@ const ContractForm: React.FC = () => {
               handleSubmit,
               setFieldValue,
               touched,
-              setTouched,
+              setFieldTouched,
               errors,
             }) => {
               return (
@@ -556,6 +561,8 @@ const ContractForm: React.FC = () => {
                               emailAddress: input,
                             };
                             handleCreateContact(data);
+                            setFieldTouched("recipients", false);
+                            setFieldValue("recipients", data);
                           }}
                           onChange={(e) => {
                             const modifiedValue = e?.map((contact) => {
@@ -568,12 +575,8 @@ const ContractForm: React.FC = () => {
                             setContactsValue(modifiedValue);
                           }}
                           onBlur={(e) => {
-                            if (values.recipients.length === 0) {
-                              setTouched({
-                                ...touched,
-                                recipients: [],
-                              });
-                            }
+                            if (values.recipients.length <= 0)
+                              setFieldTouched("recipients", true);
                           }}
                           styles={{
                             clearIndicator: ClearIndicatorStyles,
@@ -771,9 +774,14 @@ const ContractForm: React.FC = () => {
                     ) : null}
                     <div className="actions">
                       {action === "edit" ? (
-                        <Button variant="danger" onClick={() => handleSubmit()}>
-                          Save Template
-                        </Button>
+                        values.createdById === userGuid && (
+                          <Button
+                            variant="danger"
+                            onClick={() => handleSubmit()}
+                          >
+                            Save Template
+                          </Button>
+                        )
                       ) : (
                         <React.Fragment>
                           {!templateId ? (
