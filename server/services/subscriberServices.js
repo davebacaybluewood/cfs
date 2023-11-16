@@ -241,6 +241,7 @@ const fetchSubscribersByUser = async (userGuid) => {
         lastName: "$userDoc.lastName",
         email: "$userDoc.email",
         status: "$agentDoc.status",
+        nationality: "$agentDoc.nationality"
       },
     },
     {
