@@ -1,130 +1,150 @@
-import React, { useState } from "react"
-import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
-import { Container, Grid } from "@mui/material"
-import useFetchUserProfile from "admin/hooks/useFetchProfile"
-import Spinner from "library/Spinner/Spinner"
-import {
-  FaFacebook,
-  FaHome,
-  FaLinkedin,
-  FaPhone,
-  FaTwitter,
-  FaCalendar,
-  FaAddressCard,
-} from "react-icons/fa"
-import { HiLocationMarker } from "react-icons/hi"
-import { BsCalculator, BsChatRightTextFill } from "react-icons/bs"
-import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md"
-import Button from "library/Button/Button"
-import { AiOutlineArrowRight } from "react-icons/ai"
-import { useNavigate, useParams } from "react-router-dom"
-import { Helmet } from "react-helmet"
-import { FiSend } from "react-icons/fi"
-import { GrSend } from "react-icons/gr"
-import { paths } from "constants/routes"
-import { CiGift, CiTrophy, CiVault } from "react-icons/ci"
-import "./MyWebPage.scss"
-import Timeline from "pages/MyWebPage/Timeline"
+import React, { useState, useEffect } from "react";
+import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
+import { Container, Grid } from "@mui/material";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import Spinner from "library/Spinner/Spinner";
+import { FaHome, FaPhone, FaCalendar, FaAddressCard } from "react-icons/fa";
+import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
+import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md";
+import Button from "library/Button/Button";
+import { AiOutlineArrowRight } from "react-icons/ai";
+import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { FiSend } from "react-icons/fi";
+import { GrSend } from "react-icons/gr";
+import { paths } from "constants/routes";
+import { CiGift, CiTrophy, CiVault } from "react-icons/ci";
+import Timeline from "pages/MyWebPage/Timeline";
+import adminAgent from "admin/api/agent";
+import { TimelinePostProps } from "library/TimelinePost/TimelinePost";
+import Event from "admin/models/eventModel";
+import agentLinks from "./helpers/agentLinks";
+import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
+import "./MyWebPage.scss";
 
 const MyWebPage: React.FC = () => {
-  const { user } = useParams()
-  const [content, setContent] = useState("home")
-  const [active, setActive] = useState(false)
+  const { user } = useParams();
+  const [content, setContent] = useState("home");
+  const [active, setActive] = useState(false);
+  const [events, setEvents] = useState<Event[] | undefined>();
 
-  const navigate = useNavigate()
+  /* Content Headers */
+  const HOME = "home";
+  const EVENTS = "events";
+  const TESTIMONIAL = "testimonial";
+  const ARTICLES = "articles";
+
+  /* Fetch Events */
+  useEffect(() => {
+    const getEvents = async () => {
+      const eventData = await adminAgent.Events.getEvents(`${user}`);
+      setEvents(eventData);
+    };
+
+    getEvents();
+  }, []);
+
+  /* Fetch Blogs */
+  const { blogs } = useFetchBlogs();
+
+  const navigate = useNavigate();
 
   /* General Agent Information */
-  const userGuid = `${user}`
-  const { profile, loading } = useFetchUserProfile(userGuid)
+  const userGuid = `${user}`;
+  const { profile, loading } = useFetchUserProfile(userGuid);
 
   /*Personal information */
   const defaultAvatar =
-    "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps"
+    "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps";
   const avatar =
     profile?.avatar.toString() === "" || loading
       ? defaultAvatar
-      : profile?.avatar.toString()
+      : profile?.avatar.toString();
   const Agent = loading
     ? "CFS Agent"
-    : `${profile?.firstName} ${profile?.lastName}`
+    : `${profile?.firstName} ${profile?.lastName}`;
   const address =
-    profile?.state?.toString() === "" ? "-" : profile?.state?.toString()
-  const phoneNumber = profile?.phoneNumber.toString()
-  const email = profile?.emailAddress
+    profile?.state?.toString() === "" ? "-" : profile?.state?.toString();
+  const phoneNumber = profile?.phoneNumber.toString();
+  const email = profile?.emailAddress;
 
   /* Professional Information */
-  const licenseNumber = profile?.licenseNumber?.toString()
+  const licenseNumber = profile?.licenseNumber?.toString();
 
   /* Socials */
-  const facebook = profile?.facebook.toString()
-  const linkedIn = profile?.linkedIn.toString()
-  const twitter = profile?.twitter.toString()
+  const facebook = profile?.facebook.toString();
+  const linkedIn = profile?.linkedIn.toString();
+  const twitter = profile?.twitter.toString();
 
-  const links = [
-    {
-      icon: <HiLocationMarker />,
-      title: "Address",
-      link: address,
-    },
-    {
-      icon: <FaFacebook />,
-      title: "Facebook",
-      link: facebook,
-    },
-    {
-      icon: <FaLinkedin />,
-      title: "LinkedIn",
-      link: linkedIn,
-    },
-    {
-      icon: <FaTwitter />,
-      title: "Twitter",
-      link: twitter,
-    },
-  ]
+  const links = agentLinks(address, facebook, linkedIn, twitter);
 
   const navLinks = [
     {
       icon: <FaHome />,
       onClick: () => {
-        setContent("home")
-        setActive(true)
+        setContent(HOME);
+        setActive(true);
       },
-      className: active === true && content === "home" ? "active-nav" : "",
+      className: active === true && content === HOME ? "active-nav" : "",
       link: "Home",
     },
     {
       icon: <FaCalendar />,
       onClick: () => {
-        setContent("events")
-        setActive(true)
+        setContent(EVENTS);
+        setActive(true);
       },
-      className: active === true && content === "events" ? "active-nav" : "",
+      className: active === true && content === EVENTS ? "active-nav" : "",
       link: "Events",
     },
     {
       icon: <GrSend />,
       onClick: () => {
-        setContent("testimonial")
-        setActive(true)
+        setContent(TESTIMONIAL);
+        setActive(true);
       },
-      className:
-        active === true && content === "testimonial" ? "active-nav" : "",
+      className: active === true && content === TESTIMONIAL ? "active-nav" : "",
       link: "Testimonial",
     },
     {
       icon: <MdOutlineLibraryBooks />,
       onClick: () => {
-        setContent("articles")
-        setActive(true)
+        setContent(ARTICLES);
+        setActive(true);
       },
-      className: active === true && content === "articles" ? "active-nav" : "",
+      className: active === true && content === ARTICLES ? "active-nav" : "",
       link: "Articles",
     },
-  ]
+  ];
+
+  /*Events */
+  const filteredEvents: TimelinePostProps[] | undefined = events?.map((ev) => {
+    return {
+      tag: "Event",
+      content: ev.shortDescription ?? "",
+      userName: `${ev.authorFirstName} ${ev.authorLastName}` ?? "",
+      datePosted: ev.createdAt ?? "",
+      imgContent: ev.thumbnail ?? "",
+      title: ev.title ?? "",
+      eventDate: ev.eventDate ?? "",
+    };
+  });
+
+  /* Blogs */
+  const filteredBlogs: TimelinePostProps[] | undefined = blogs?.map((blog) => {
+    return {
+      tag: "Article",
+      content: (blog.content ?? "")
+        .replace(/<[^>]*>/g, "")
+        .replace("&quot;", " "),
+      title: blog.title ?? "",
+      datePosted: blog.createdAt?.toString() ?? "",
+      imgContent: blog.thumbnail ?? "",
+    };
+  });
 
   if (loading) {
-    ;<Spinner variant="relative" />
+    <Spinner variant="relative" />;
   }
 
   return (
@@ -218,20 +238,15 @@ const MyWebPage: React.FC = () => {
                         ))}
                       </div>
                       <div className="tabs-content">
-                        <Timeline content={content} />
-                        {/* /* These are all dummy, this must render the rightful component for each page. */}
-                        {/* {content === "home" ? (
-                          <Timeline content={content} />
-                        ) : content === "events" ? (
-                          <Timeline content={content} />
-                        ) : content === "articles" ? (
-                          <Timeline content={content} />
-                        ) : content === "testimonial" ? (
-                          <Timeline content={content} />
-                        ) : null} */}
+                        {content === EVENTS ? (
+                          <Timeline data={filteredEvents} />
+                        ) : (
+                          content === ARTICLES && (
+                            <Timeline data={filteredBlogs} />
+                          )
+                        )}
                       </div>
                     </React.Fragment>
-                    <div className="middle-col-content"></div>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
@@ -289,7 +304,7 @@ const MyWebPage: React.FC = () => {
         </div>
       )}
     </MyWebPageWrapper>
-  )
-}
+  );
+};
 
-export default MyWebPage
+export default MyWebPage;

@@ -15,7 +15,7 @@ export type BlogValueType = {
   author: string;
   authorName?: string;
   singleAuthorName?: string;
-  createdAt?: Date;
+  createdAt?: Date | string;
   dateCreated?: Date;
   thumbnailAlt?: string;
 };

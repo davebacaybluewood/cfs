@@ -24,6 +24,7 @@ interface Event {
   design: string;
   rsvps: RSVP;
   meetingLink: string;
+  createdAt?: string;
 }
 
 export interface EventBody {
