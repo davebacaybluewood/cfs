@@ -11,8 +11,8 @@ const Timeline: React.FC<TimelineData> = (props) => {
 
   return (
     <React.Fragment>
-      <div className="events-container">
-        <div className="event-content">
+      <div className="content-container">
+        <div className="content-content">
           {data?.map((post) => {
             return <TimelinePost {...post}>{post.children}</TimelinePost>;
           })}
