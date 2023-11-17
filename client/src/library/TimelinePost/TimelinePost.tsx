@@ -7,10 +7,9 @@ interface TimelinePostProps {
   profileImg?: string
   title: string
   userName?: string
-  datePosted?: string
+  date?: string
   content: string
   imgContent?: string
-  eventDate?: string
   tag?: string
 }
 
@@ -18,10 +17,9 @@ const TimelinePost = ({
   profileImg,
   title,
   userName,
-  datePosted,
+  date,
   content,
   imgContent,
-  eventDate,
   tag,
 }: TimelinePostProps) => {
   const [isContentFull, setIsContentFull] = useState(false)
@@ -37,7 +35,11 @@ const TimelinePost = ({
 
         <Stack flexDirection="column" gap={1} sx={{ position: "relative" }}>
           {tag && (
-            <div className={`${tag === "article" && "position-top-left"} tag`}>
+            <div
+              className={`${
+                tag === "article" || (tag === "blog" && "position-top-left")
+              } tag`}
+            >
               {tag.toUpperCase()}
             </div>
           )}
@@ -50,13 +52,18 @@ const TimelinePost = ({
 
             <h2 style={{ color: "gray" }}>·</h2>
             <TimeAgo
-              date={datePosted ? datePosted : eventDate}
+              date={date}
               style={{ color: "gray", fontWeight: 400, fontSize: "13px" }}
             />
           </Stack>
 
           <p className="content">
-            {isContentFull ? content : content.slice(0, 300)}
+            {isContentFull
+              ? content.replace(/<[^>]*>/g, "").replace("&quot;", " ")
+              : content
+                  .replace(/<[^>]*>/g, "")
+                  .replace("&quot;", " ")
+                  .slice(0, 300)}
 
             {!isContentFull && content.length > 300 ? (
               <span className="see-more" onClick={() => setIsContentFull(true)}>

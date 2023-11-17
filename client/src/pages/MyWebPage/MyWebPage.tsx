@@ -24,7 +24,7 @@ import { GrSend } from "react-icons/gr"
 import { paths } from "constants/routes"
 import { CiGift, CiTrophy, CiVault } from "react-icons/ci"
 import "./MyWebPage.scss"
-import Timeline from "pages/MyWebPage/Timeline"
+import Timeline from "./Timeline"
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams()
@@ -218,7 +218,7 @@ const MyWebPage: React.FC = () => {
                         ))}
                       </div>
                       <div className="tabs-content">
-                        <Timeline content={content} />
+                        <Timeline content={content} userGuid={userGuid} />
                         {/* /* These are all dummy, this must render the rightful component for each page. */}
                         {/* {content === "home" ? (
                           <Timeline content={content} />
