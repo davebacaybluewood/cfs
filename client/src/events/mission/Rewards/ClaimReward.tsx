@@ -14,7 +14,6 @@ import agent from "api/agent";
 import Spinner from "library/Spinner/Spinner";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { rewardItems } from "events/mission/Rewards/contants/Items";
-import "./main.scss";
 
 const ClaimReward: React.FC = () => {
   const userGuid = "242123bb-831a-4833-ba47-6af569a7e913"; //to apply => useContext(UserContext)?.user?.userGuid;
@@ -60,12 +59,12 @@ const ClaimReward: React.FC = () => {
         <div className="container-wrapper">
           <h1>Agent of Agents</h1>
           <div className="container-contents">
-            <Grid container className="container-reward">
-              <Grid item xs={8}>
-                <h2 className="container-reward-title">Claim Reward</h2>
+            <Grid container className="container-claim">
+              <Grid item xs={12}>
+                <h2 className="container-claim-title">Claim Reward</h2>
               </Grid>
-              <Grid item xs={6}>
-                <Grid container className="container-reward-form">
+              <Grid item xs={12} md={6} lg={6}>
+                <Grid container className="container-claim-form">
                   <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -220,14 +219,14 @@ const ClaimReward: React.FC = () => {
                           <Grid
                             item
                             xs={12}
-                            className="container-reward-form-button"
+                            className="container-claim-form-button"
                           >
                             <ErrorText isError={error !== ""} text={error} />
                           </Grid>
                           <Grid
                             item
                             xs={12}
-                            className="container-reward-form-button"
+                            className="container-claim-form-button"
                           >
                             <Button
                               variant="contained"
@@ -242,7 +241,7 @@ const ClaimReward: React.FC = () => {
                   </Formik>
                 </Grid>
               </Grid>
-              <Grid item xs={6} className="reward-item">
+              <Grid item xs={12} md={6} lg={6} className="reward-item">
                 <img
                   src={`/assets/images/events/items/${product.path}`}
                   alt="reward"
