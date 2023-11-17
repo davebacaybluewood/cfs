@@ -1,0 +1,68 @@
+import React from "react";
+import { FaHome, FaCalendar } from "react-icons/fa";
+import { GrSend } from "react-icons/gr";
+import { MdOutlineLibraryBooks } from "react-icons/md";
+
+export type ContentTypes = "home" | "events" | "testimonial" | "articles";
+
+interface FeedTabsProps {
+  setContent: React.Dispatch<React.SetStateAction<ContentTypes>>;
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  active: boolean;
+  content: ContentTypes;
+}
+const FeedTabs: React.FC<FeedTabsProps> = (props) => {
+  const { setActive, setContent, active, content } = props;
+
+  const navLinks = [
+    {
+      icon: <FaHome />,
+      onClick: () => {
+        setContent("home");
+        setActive(true);
+      },
+      className: active === true && content === "home" ? "active-nav" : "",
+      link: "Home",
+    },
+    {
+      icon: <FaCalendar />,
+      onClick: () => {
+        setContent("events");
+        setActive(true);
+      },
+      className: active === true && content === "events" ? "active-nav" : "",
+      link: "Events",
+    },
+    {
+      icon: <GrSend />,
+      onClick: () => {
+        setContent("testimonial");
+        setActive(true);
+      },
+      className:
+        active === true && content === "testimonial" ? "active-nav" : "",
+      link: "Testimonial",
+    },
+    {
+      icon: <MdOutlineLibraryBooks />,
+      onClick: () => {
+        setContent("articles");
+        setActive(true);
+      },
+      className: active === true && content === "articles" ? "active-nav" : "",
+      link: "Articles",
+    },
+  ];
+
+  return (
+    <div className="navbar-main-feed">
+      {navLinks.map((nav) => (
+        <div className={`nav-tab ${nav.className}`} onClick={nav.onClick}>
+          <h2 className="navlink-title">{nav.link}</h2>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default FeedTabs;

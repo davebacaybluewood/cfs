@@ -117,7 +117,7 @@ const useFetchUserProfile = (userGuid: string) => {
   }, [userGuid]);
 
   return {
-    profile: profile ? profile : undefined,
+    profile: profile,
     loading,
   };
 };
