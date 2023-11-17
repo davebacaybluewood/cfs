@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from "react";
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
 import { Container, Grid } from "@mui/material";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import Spinner from "library/Spinner/Spinner";
-import {
-  FaFacebook,
-  FaHome,
-  FaLinkedin,
-  FaPhone,
-  FaTwitter,
-  FaCalendar,
-  FaAddressCard,
-} from "react-icons/fa";
-import { HiLocationMarker } from "react-icons/hi";
+import { FaPhone, FaAddressCard } from "react-icons/fa";
 import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
-import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md";
+import { MdEmail } from "react-icons/md";
 import Button from "library/Button/Button";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FiSend } from "react-icons/fi";
-import { GrSend } from "react-icons/gr";
 import { paths } from "constants/routes";
 import { CiGift, CiTrophy, CiVault } from "react-icons/ci";
 import Timeline from "pages/MyWebPage/Timeline";
@@ -29,9 +18,9 @@ import { TimelinePostProps } from "library/TimelinePost/TimelinePost";
 import Event from "admin/models/eventModel";
 import agentLinks from "./helpers/agentLinks";
 import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
-import "./MyWebPage.scss";
 import useAgentData from "./useAgentData";
 import FeedTabs, { ContentTypes } from "./FeedTabs";
+import "./MyWebPage.scss";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
