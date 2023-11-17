@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
-import { Container, Grid } from "@mui/material";
-import "./MyWebPage.scss";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import Spinner from "library/Spinner/Spinner";
+import React, { useState } from "react"
+import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
+import { Container, Grid } from "@mui/material"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import Spinner from "library/Spinner/Spinner"
 import {
   FaFacebook,
   FaHome,
@@ -12,51 +11,54 @@ import {
   FaTwitter,
   FaCalendar,
   FaAddressCard,
-} from "react-icons/fa";
-import { HiLocationMarker } from "react-icons/hi";
-import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
-import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md";
-import Button from "library/Button/Button";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { useNavigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { FiSend } from "react-icons/fi";
-import { GrSend } from "react-icons/gr";
-import { paths } from "constants/routes";
+} from "react-icons/fa"
+import { HiLocationMarker } from "react-icons/hi"
+import { BsCalculator, BsChatRightTextFill } from "react-icons/bs"
+import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md"
+import Button from "library/Button/Button"
+import { AiOutlineArrowRight } from "react-icons/ai"
+import { useNavigate, useParams } from "react-router-dom"
+import { Helmet } from "react-helmet"
+import { FiSend } from "react-icons/fi"
+import { GrSend } from "react-icons/gr"
+import { paths } from "constants/routes"
+import { CiGift, CiTrophy, CiVault } from "react-icons/ci"
+import "./MyWebPage.scss"
+import Timeline from "pages/MyWebPage/Timeline"
 
 const MyWebPage: React.FC = () => {
-  const { user } = useParams();
-  const [content, setContent] = useState("home");
-  const [active, setActive] = useState(false);
+  const { user } = useParams()
+  const [content, setContent] = useState("home")
+  const [active, setActive] = useState(false)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   /* General Agent Information */
-  const userGuid = `${user}`;
-  const { profile, loading } = useFetchUserProfile(userGuid);
+  const userGuid = `${user}`
+  const { profile, loading } = useFetchUserProfile(userGuid)
 
   /*Personal information */
   const defaultAvatar =
-    "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps";
+    "https://res.cloudinary.com/dfm2vczpy/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688418199/cfs-image_rkkknx.jpg?_s=public-apps"
   const avatar =
     profile?.avatar.toString() === "" || loading
       ? defaultAvatar
-      : profile?.avatar.toString();
+      : profile?.avatar.toString()
   const Agent = loading
     ? "CFS Agent"
-    : `${profile?.firstName} ${profile?.lastName}`;
+    : `${profile?.firstName} ${profile?.lastName}`
   const address =
-    profile?.state?.toString() === "" ? "-" : profile?.state?.toString();
-  const phoneNumber = profile?.phoneNumber.toString();
-  const email = profile?.emailAddress;
+    profile?.state?.toString() === "" ? "-" : profile?.state?.toString()
+  const phoneNumber = profile?.phoneNumber.toString()
+  const email = profile?.emailAddress
 
   /* Professional Information */
-  const licenseNumber = profile?.licenseNumber?.toString();
+  const licenseNumber = profile?.licenseNumber?.toString()
 
   /* Socials */
-  const facebook = profile?.facebook.toString();
-  const linkedIn = profile?.linkedIn.toString();
-  const twitter = profile?.twitter.toString();
+  const facebook = profile?.facebook.toString()
+  const linkedIn = profile?.linkedIn.toString()
+  const twitter = profile?.twitter.toString()
 
   const links = [
     {
@@ -79,14 +81,14 @@ const MyWebPage: React.FC = () => {
       title: "Twitter",
       link: twitter,
     },
-  ];
+  ]
 
   const navLinks = [
     {
       icon: <FaHome />,
       onClick: () => {
-        setContent("home");
-        setActive(true);
+        setContent("home")
+        setActive(true)
       },
       className: active === true && content === "home" ? "active-nav" : "",
       link: "Home",
@@ -94,8 +96,8 @@ const MyWebPage: React.FC = () => {
     {
       icon: <FaCalendar />,
       onClick: () => {
-        setContent("events");
-        setActive(true);
+        setContent("events")
+        setActive(true)
       },
       className: active === true && content === "events" ? "active-nav" : "",
       link: "Events",
@@ -103,8 +105,8 @@ const MyWebPage: React.FC = () => {
     {
       icon: <GrSend />,
       onClick: () => {
-        setContent("testimonial");
-        setActive(true);
+        setContent("testimonial")
+        setActive(true)
       },
       className:
         active === true && content === "testimonial" ? "active-nav" : "",
@@ -113,16 +115,16 @@ const MyWebPage: React.FC = () => {
     {
       icon: <MdOutlineLibraryBooks />,
       onClick: () => {
-        setContent("articles");
-        setActive(true);
+        setContent("articles")
+        setActive(true)
       },
       className: active === true && content === "articles" ? "active-nav" : "",
       link: "Articles",
     },
-  ];
+  ]
 
   if (loading) {
-    <Spinner variant="relative" />;
+    ;<Spinner variant="relative" />
   }
 
   return (
@@ -216,16 +218,17 @@ const MyWebPage: React.FC = () => {
                         ))}
                       </div>
                       <div className="tabs-content">
-                        {content === "home" ? (
-                          /* These are all dummy, this must render the rightful component for each page. */
-                          <h2>Home</h2>
+                        <Timeline content={content} />
+                        {/* /* These are all dummy, this must render the rightful component for each page. */}
+                        {/* {content === "home" ? (
+                          <Timeline content={content} />
                         ) : content === "events" ? (
-                          <h2>Events</h2>
+                          <Timeline content={content} />
                         ) : content === "articles" ? (
-                          <h2>Articles</h2>
+                          <Timeline content={content} />
                         ) : content === "testimonial" ? (
-                          <h2>Testimonials</h2>
-                        ) : null}
+                          <Timeline content={content} />
+                        ) : null} */}
                       </div>
                     </React.Fragment>
                     <div className="middle-col-content"></div>
@@ -233,6 +236,38 @@ const MyWebPage: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className="right-col">
+                    <div className="right-col-actions">
+                      <Button
+                        onClick={() =>
+                          window.open(
+                            "https://agent.comfortfinancialsolutions.com/signup"
+                          )
+                        }
+                      >
+                        <div className="icon-holder">
+                          <CiTrophy />
+                        </div>
+                        Become an Agent
+                      </Button>
+                      <Button
+                        onClick={() =>
+                          window.open(paths.subscriberRegistration)
+                        }
+                      >
+                        <div className="icon-holder">
+                          <CiGift />
+                        </div>
+                        Subscribe to earn points
+                      </Button>
+                      <Button
+                        onClick={() => window.open(paths.portalRegistration)}
+                      >
+                        <div className="icon-holder">
+                          <CiVault />
+                        </div>
+                        Portal Free 30 days trial
+                      </Button>
+                    </div>
                     <div className="right-col-content">
                       <h3>Agent Calculator</h3>
                       <div className="icon-holder">
@@ -254,7 +289,7 @@ const MyWebPage: React.FC = () => {
         </div>
       )}
     </MyWebPageWrapper>
-  );
-};
+  )
+}
 
-export default MyWebPage;
+export default MyWebPage

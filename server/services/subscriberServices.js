@@ -206,9 +206,9 @@ const fetchSubscribersByUser = async (userGuid) => {
         from: "users",
         localField: "userGuid",
         foreignField: "userGuid",
-        as: "userDoc",
+        as: "userDoc", 
       },
-    },
+    }, 
     {
       $unwind: "$userDoc",
     },
@@ -241,6 +241,8 @@ const fetchSubscribersByUser = async (userGuid) => {
         lastName: "$userDoc.lastName",
         email: "$userDoc.email",
         status: "$agentDoc.status",
+        nationality: "$agentDoc.nationality",
+        birthdate: "$agentDoc.birthDate"
       },
     },
     {

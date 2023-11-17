@@ -1,0 +1,25 @@
+.success-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .success-image {
+        width: 800px;
+
+        @media (min-width: 390px) {
+            max-width: 400px;
+          }
+    }
+
+    .sucess-title {
+        font-size: x-large;
+        padding: 10px;
+    }
+
+    .sucess-message {
+        font-size: small;
+        text-align: center;
+        padding: 10px;
+        padding-bottom: 20px;
+    }
+}
