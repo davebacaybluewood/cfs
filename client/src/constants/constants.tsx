@@ -34,12 +34,12 @@ import PortalArticle from "pages/PortalArticle/PortalArticle";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 import Registration from "pages/MicroPages/Mission/Registration/Registration";
 import Missions from "pages/Missions&Events/Missions";
-import AgentMissionModal from "events/mission/Rewards/AgentMissionModal";
+import AgentMissionModal from "events/mission/components/modal/AgentMissionModal";
 import Rewards from "events/mission/Rewards/Rewards";
 import NATIONALITIES from "./nationalities";
 import MyWebPage from "pages/MyWebPage/MyWebPage";
 import AALogin from "../events/mission/Login/Login";
-import ClaimReward from "events/mission/Rewards/ClaimReward";
+import ClaimReward from "events/mission/ClaimReward/ClaimReward";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
