@@ -27,6 +27,7 @@ import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import { UserContext } from "admin/context/UserProvider";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { FaEllipsisV } from "react-icons/fa";
+import Settings from "admin/pages/Settings/Settings";
 
 export type HeaderButtonConfigs = {
   isProfileView?: boolean;
@@ -221,8 +222,8 @@ const HeaderButtons: React.FC<
               <MenuItem onClick={() => setShowBusinessCard(true)}>
                 Business Card
               </MenuItem>
-              <MenuItem onClick={() => setShowBusinessCard(true)}>
-                Profile Settings
+              <MenuItem onClick={() => navigate(paths.settings)}>
+                Profile Settings  
               </MenuItem>
             </React.Fragment>
           ) : null}

@@ -14,6 +14,7 @@ import { useLocation, useParams } from "react-router-dom";
 import Event from "admin/models/eventModel";
 import { formatISODateOnly } from "helpers/date";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
+import { Skeleton } from "@mui/material";
 
 const RSVPForm: React.FC = () => {
   const { eventId } = useParams();
@@ -58,10 +59,15 @@ const RSVPForm: React.FC = () => {
         <Grid container style={{ height: "100%" }}>
           <Grid sm={12} md={4} lg={4}>
             <div className="form-information">
-              <img src="/assets/images/logos/small-logo.png" alt="small-cfs" />
+              <img
+                className="cfs-logo"
+                src="/assets/images/logos/small-logo.png"
+                alt="small-cfs"
+              />
               <h5>Comfort Financial Solutions</h5>
               {event ? (
                 <React.Fragment>
+                  <img src={event?.thumbnail} alt="event-img" />
                   <h2>{event?.title}</h2>
 
                   <ul className="basic-info">
@@ -73,7 +79,34 @@ const RSVPForm: React.FC = () => {
 
                   <p>{event?.shortDescription}</p>
                 </React.Fragment>
-              ) : null}
+              ) : (
+                <>
+                  <Skeleton
+                    variant="rectangular"
+                    width={200}
+                    height={130}
+                    sx={{ marginBottom: "1rem" }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    width={150}
+                    height={30}
+                    sx={{ marginBottom: "1rem" }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    width={150}
+                    height={25}
+                    sx={{ marginBottom: "1rem" }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    width={150}
+                    height={25}
+                    sx={{ marginBottom: "1rem" }}
+                  />
+                </>
+              )}
             </div>
           </Grid>
           <Grid sm={12} md={4} lg={6}>

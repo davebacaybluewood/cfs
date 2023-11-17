@@ -141,7 +141,7 @@
       .navbar-main-feed {
         display: flex;
         justify-content: space-between;
-        padding: 2rem 0;
+        padding: 2rem;
         background: #eee;
 
         .active-nav {
@@ -155,8 +155,6 @@
         .nav-tab {
           display: flex;
           align-items: center;
-          padding: 0 2rem;
-          margin: 0 1rem;
 
           .navlink-title {
             font: 300 1.5rem "Montserrat";
@@ -167,9 +165,6 @@
             cursor: pointer;
           }
         }
-      }
-      .middle-col-content {
-        //TODO put design here
       }
     }
     .right-col {

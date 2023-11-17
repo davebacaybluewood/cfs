@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
 import { Container, Grid } from "@mui/material";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
@@ -20,22 +20,33 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FiSend } from "react-icons/fi";
+import { GrSend } from "react-icons/gr";
 import { paths } from "constants/routes";
 import { CiGift, CiTrophy, CiVault } from "react-icons/ci";
-import "./MyWebPage.scss";
 import Timeline from "pages/MyWebPage/Timeline";
-import FeedTabs, { ContentTypes } from "./FeedTabs";
+import adminAgent from "admin/api/agent";
+import { TimelinePostProps } from "library/TimelinePost/TimelinePost";
+import Event from "admin/models/eventModel";
+import agentLinks from "./helpers/agentLinks";
+import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
+import "./MyWebPage.scss";
 import useAgentData from "./useAgentData";
+import FeedTabs, { ContentTypes } from "./FeedTabs";
 
 const MyWebPage: React.FC = () => {
+  const { user } = useParams();
   const [content, setContent] = useState<ContentTypes>("home");
   const [active, setActive] = useState(false);
+  const [events, setEvents] = useState<Event[] | undefined>();
 
-  const navigate = useNavigate();
-  const { user: userParams } = useParams();
+  /* Content Headers */
+  const HOME = "home";
+  const EVENTS = "events";
+  const TESTIMONIAL = "testimonial";
+  const ARTICLES = "articles";
 
   /* General Agent Information */
-  const userGuid = `${userParams}`;
+  const userGuid = `${user}`;
   const {
     Agent,
     address,
@@ -51,28 +62,48 @@ const MyWebPage: React.FC = () => {
     loading,
   } = useAgentData(userGuid);
 
-  const links = [
-    {
-      icon: <HiLocationMarker />,
-      title: "Address",
-      link: address,
-    },
-    {
-      icon: <FaFacebook />,
-      title: "Facebook",
-      link: facebook,
-    },
-    {
-      icon: <FaLinkedin />,
-      title: "LinkedIn",
-      link: linkedIn,
-    },
-    {
-      icon: <FaTwitter />,
-      title: "Twitter",
-      link: twitter,
-    },
-  ];
+  /* Fetch Events */
+  useEffect(() => {
+    const getEvents = async () => {
+      const eventData = await adminAgent.Events.getEvents(`${user}`);
+      setEvents(eventData);
+    };
+
+    getEvents();
+  }, []);
+
+  /* Fetch Blogs */
+  const { blogs } = useFetchBlogs();
+
+  const navigate = useNavigate();
+
+  const links = agentLinks(address, facebook, linkedIn, twitter);
+
+  /*Events */
+  const filteredEvents: TimelinePostProps[] | undefined = events?.map((ev) => {
+    return {
+      tag: "Event",
+      content: ev.shortDescription ?? "",
+      userName: `${ev.authorFirstName} ${ev.authorLastName}` ?? "",
+      datePosted: ev.createdAt ?? "",
+      imgContent: ev.thumbnail ?? "",
+      title: ev.title ?? "",
+      eventDate: ev.eventDate ?? "",
+    };
+  });
+
+  /* Blogs */
+  const filteredBlogs: TimelinePostProps[] | undefined = blogs?.map((blog) => {
+    return {
+      tag: "Article",
+      content: (blog.content ?? "")
+        .replace(/<[^>]*>/g, "")
+        .replace("&quot;", " "),
+      title: blog.title ?? "",
+      datePosted: blog.createdAt?.toString() ?? "",
+      imgContent: blog.thumbnail ?? "",
+    };
+  });
 
   if (loading) {
     <Spinner variant="relative" />;
@@ -161,10 +192,15 @@ const MyWebPage: React.FC = () => {
                         />
                       </div>
                       <div className="tabs-content">
-                        <Timeline content={content} />
+                        {content === EVENTS ? (
+                          <Timeline data={filteredEvents} />
+                        ) : (
+                          content === ARTICLES && (
+                            <Timeline data={filteredBlogs} />
+                          )
+                        )}
                       </div>
                     </React.Fragment>
-                    <div className="middle-col-content"></div>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>

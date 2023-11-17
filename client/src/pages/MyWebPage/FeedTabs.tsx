@@ -5,7 +5,7 @@ import { MdOutlineLibraryBooks } from "react-icons/md";
 
 export type ContentTypes = "home" | "events" | "testimonial" | "articles";
 
-interface FeedTabsProps {
+export interface FeedTabsProps {
   setContent: React.Dispatch<React.SetStateAction<ContentTypes>>;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
   active: boolean;
@@ -55,13 +55,13 @@ const FeedTabs: React.FC<FeedTabsProps> = (props) => {
   ];
 
   return (
-    <div className="navbar-main-feed">
+    <React.Fragment>
       {navLinks.map((nav) => (
         <div className={`nav-tab ${nav.className}`} onClick={nav.onClick}>
           <h2 className="navlink-title">{nav.link}</h2>
         </div>
       ))}
-    </div>
+    </React.Fragment>
   );
 };
 
