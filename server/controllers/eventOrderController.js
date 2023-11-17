@@ -35,6 +35,12 @@ const claimReward = async (req, res) => {
     return;
   }
 
+  const recipient = await User.find({ userGuid: req.body.userGuid });
+  if (!recipient.length) {
+    res.status(400).json(API_RES_FAIL("[Event Order] Agent not found"));
+    return;
+  }
+
   try {
     const orders = new EventOrders({
       rewardId: rewardId,
@@ -50,7 +56,6 @@ const claimReward = async (req, res) => {
 
     if (orders) {
       const mailSubject = "Agent of Agents | Claim Reward";
-      const recipient = await User.find({ userGuid: req.body.userGuid });
 
       const admin = await User.find({
         isAdmin: true,
@@ -121,17 +126,11 @@ const claimReward = async (req, res) => {
               resultMsg.push(msg);
             })
             .catch((error) => {
-              console.log("failed sending");
               res.status(500);
               console.log(error);
               throw new Error("Error occured in submission.");
             });
         });
-
-        // Promise.all(emailPromise).then(() => {
-
-        //   res.send({ message: resultMsg, success: true });
-        // });
       } catch (error) {
         res.status(500);
         console.log(error);
