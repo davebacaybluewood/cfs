@@ -6,6 +6,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { USER_FAQ } from "../constants";
+import "./components.scss";
 
 const SuccessPage: React.FC = () => {
   const [expanded, setExpanded] = React.useState();
@@ -20,8 +21,8 @@ const SuccessPage: React.FC = () => {
         alt="success-indicator"
         className="success-image"
       />
-      <h2>Agent Registration Success</h2>
-      <p>
+      <h2 className="sucess-title">Agent Registration Success</h2>
+      <p className="sucess-message">
         Thank you for signing up for our 30-day free trial! Keep an eye on your
         email for important updates about your registration. If you have any
         questions or need assistance, feel free to reach out
