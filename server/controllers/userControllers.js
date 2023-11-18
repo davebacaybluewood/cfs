@@ -16,6 +16,8 @@ import Agent from "../models/agentModel.js";
 import backOfficeServices from "../services/backOfficeServices.js";
 import { AGENT_ROLES, PROFILE_POSITIONS } from "../constants/constants.js";
 import portalSubscriptionServices from "../services/portalSubscriptionServices.js";
+import Hierarchy from "../models/hierarchyModel.js";
+import generateString from "../utils/generateString.js";
 
 /**
  * @desc:  Auth the user & get token

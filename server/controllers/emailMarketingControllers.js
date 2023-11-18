@@ -24,6 +24,26 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
 
   const blogs = await BlogsAndResource.find().limit(5).sort({ $natural: -1 });
   const agent = await Agents.find({ userGuid: req.body.userGuid });
+  const isAgent = agent.position?.some((e) => e.value === "POSITION_AGENT");
+
+  let userGuid;
+  if (isAgent) {
+    userGuid = agent[0].userGuid;
+  } else {
+    const hierarchy = await Hierarchy.findOne({ userGuid: req.body.userGuid });
+
+    if (hierarchy) {
+      const hierarchyCode = hierarchy.hierarchyCode;
+      const agentHierarchy = await Hierarchy.findOne({
+        hierarchyCode,
+        parent: "",
+      });
+
+      userGuid = agentHierarchy.userGuid;
+    } else {
+      userGuid = "";
+    }
+  }
 
   const agentInfo = {
     name: agent[0].firstName
@@ -32,7 +52,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
     bio: agent[0].bio,
     phoneNumber: agent[0].phoneNumber,
     emailAddress: agent[0].emailAddress,
-    userGuid: agent[0].userGuid,
+    userGuid: userGuid,
     avatar: agent[0].avatar
       ? agent[0].avatar
       : "https://www.gocfs.pro/assets/others/no-image.png",
@@ -88,7 +108,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
     agentInfo: agentInfo,
     body: req.body.emailBody,
     blogEmail: settings.includes("BLOGS") ? blogEmail.join("") : null,
-    userGuid: req.body.userGuid,
+    userGuid: userGuid,
   });
 
   const bcc = contractEmail;

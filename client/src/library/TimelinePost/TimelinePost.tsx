@@ -1,17 +1,17 @@
-import { useState } from "react"
-import { Stack } from "@mui/material"
-import PostButtons from "./PostButtons"
-import TimeAgo from "react-timeago"
+import { useState } from "react";
+import { Stack } from "@mui/material";
+import PostButtons from "./PostButtons";
+// import TimeAgo from "react-timeago"
 
 interface TimelinePostProps {
-  profileImg?: string
-  title: string
-  userName?: string
-  datePosted?: string
-  content: string
-  imgContent?: string
-  eventDate?: string
-  tag?: string
+  profileImg?: string;
+  title: string;
+  userName?: string;
+  datePosted?: string;
+  content: string;
+  imgContent?: string;
+  eventDate?: string;
+  tag?: string;
 }
 
 const TimelinePost = ({
@@ -24,7 +24,7 @@ const TimelinePost = ({
   eventDate,
   tag,
 }: TimelinePostProps) => {
-  const [isContentFull, setIsContentFull] = useState(false)
+  const [isContentFull, setIsContentFull] = useState(false);
 
   return (
     <div className={`timeline-post`}>
@@ -49,10 +49,10 @@ const TimelinePost = ({
             {userName && <h2 className="username">@{userName}</h2>}
 
             <h2 style={{ color: "gray" }}>·</h2>
-            <TimeAgo
+            {/* <TimeAgo
               date={datePosted ? datePosted : eventDate}
               style={{ color: "gray", fontWeight: 400, fontSize: "13px" }}
-            />
+            /> */}
           </Stack>
 
           <p className="content">
@@ -68,7 +68,7 @@ const TimelinePost = ({
         </Stack>
       </Stack>
     </div>
-  )
-}
+  );
+};
 
-export default TimelinePost
+export default TimelinePost;
