@@ -1,18 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
 import { Container, Grid } from "@mui/material"
 import useFetchUserProfile from "admin/hooks/useFetchProfile"
 import Spinner from "library/Spinner/Spinner"
-import {
-  FaFacebook,
-  FaHome,
-  FaLinkedin,
-  FaPhone,
-  FaTwitter,
-  FaCalendar,
-  FaAddressCard,
-} from "react-icons/fa"
-import { HiLocationMarker } from "react-icons/hi"
+import { FaHome, FaPhone, FaCalendar, FaAddressCard } from "react-icons/fa"
 import { BsCalculator, BsChatRightTextFill } from "react-icons/bs"
 import { MdEmail, MdOutlineLibraryBooks } from "react-icons/md"
 import Button from "library/Button/Button"
@@ -23,13 +14,39 @@ import { FiSend } from "react-icons/fi"
 import { GrSend } from "react-icons/gr"
 import { paths } from "constants/routes"
 import { CiGift, CiTrophy, CiVault } from "react-icons/ci"
+import Timeline from "pages/MyWebPage/Timeline"
+import adminAgent from "admin/api/agent"
+// import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
+import Event from "admin/models/eventModel"
+import agentLinks from "./helpers/agentLinks"
+import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs"
 import "./MyWebPage.scss"
-import Timeline from "./Timeline"
+// import Timeline from "./Timeline"
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams()
   const [content, setContent] = useState("home")
   const [active, setActive] = useState(false)
+  const [events, setEvents] = useState<Event[] | undefined>()
+
+  /* Content Headers */
+  const HOME = "home"
+  const EVENTS = "events"
+  const TESTIMONIAL = "testimonial"
+  const ARTICLES = "articles"
+
+  /* Fetch Events */
+  useEffect(() => {
+    const getEvents = async () => {
+      const eventData = await adminAgent.Events.getEvents(`${user}`)
+      setEvents(eventData)
+    }
+
+    getEvents()
+  }, [])
+
+  /* Fetch Blogs */
+  const { blogs } = useFetchBlogs()
 
   const navigate = useNavigate()
 
@@ -60,68 +77,72 @@ const MyWebPage: React.FC = () => {
   const linkedIn = profile?.linkedIn.toString()
   const twitter = profile?.twitter.toString()
 
-  const links = [
-    {
-      icon: <HiLocationMarker />,
-      title: "Address",
-      link: address,
-    },
-    {
-      icon: <FaFacebook />,
-      title: "Facebook",
-      link: facebook,
-    },
-    {
-      icon: <FaLinkedin />,
-      title: "LinkedIn",
-      link: linkedIn,
-    },
-    {
-      icon: <FaTwitter />,
-      title: "Twitter",
-      link: twitter,
-    },
-  ]
+  const links = agentLinks(address, facebook, linkedIn, twitter)
 
   const navLinks = [
     {
       icon: <FaHome />,
       onClick: () => {
-        setContent("home")
+        setContent(HOME)
         setActive(true)
       },
-      className: active === true && content === "home" ? "active-nav" : "",
+      className: active === true && content === HOME ? "active-nav" : "",
       link: "Home",
     },
     {
       icon: <FaCalendar />,
       onClick: () => {
-        setContent("events")
+        setContent(EVENTS)
         setActive(true)
       },
-      className: active === true && content === "events" ? "active-nav" : "",
+      className: active === true && content === EVENTS ? "active-nav" : "",
       link: "Events",
     },
     {
       icon: <GrSend />,
       onClick: () => {
-        setContent("testimonial")
+        setContent(TESTIMONIAL)
         setActive(true)
       },
-      className:
-        active === true && content === "testimonial" ? "active-nav" : "",
+      className: active === true && content === TESTIMONIAL ? "active-nav" : "",
       link: "Testimonial",
     },
     {
       icon: <MdOutlineLibraryBooks />,
       onClick: () => {
-        setContent("articles")
+        setContent(ARTICLES)
         setActive(true)
       },
-      className: active === true && content === "articles" ? "active-nav" : "",
+      className: active === true && content === ARTICLES ? "active-nav" : "",
       link: "Articles",
     },
   ]
+
+  /*Events */
+  // const filteredEvents: TimelinePostProps[] | undefined = events?.map((ev) => {
+  //   return {
+  //     tag: "Event",
+  //     content: ev.shortDescription ?? "",
+  //     userName: `${ev.authorFirstName} ${ev.authorLastName}` ?? "",
+  //     datePosted: ev.createdAt ?? "",
+  //     imgContent: ev.thumbnail ?? "",
+  //     title: ev.title ?? "",
+  //     eventDate: ev.eventDate ?? "",
+  //   }
+  // })
+
+  /* Blogs */
+  // const filteredBlogs: TimelinePostProps[] | undefined = blogs?.map((blog) => {
+  //   return {
+  //     tag: "Article",
+  //     content: (blog.content ?? "")
+  //       .replace(/<[^>]*>/g, "")
+  //       .replace("&quot;", " "),
+  //     title: blog.title ?? "",
+  //     datePosted: blog.createdAt?.toString() ?? "",
+  //     imgContent: blog.thumbnail ?? "",
+  //   }
+  // })
 
   if (loading) {
     ;<Spinner variant="relative" />
@@ -232,7 +253,6 @@ const MyWebPage: React.FC = () => {
                         ) : null} */}
                       </div>
                     </React.Fragment>
-                    <div className="middle-col-content"></div>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>

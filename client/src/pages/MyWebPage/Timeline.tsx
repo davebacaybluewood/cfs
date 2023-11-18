@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import TimelinePost from "library/TimelinePost/TimelinePost"
+import TimelinePost, {
+  TimelinePostProps,
+} from "library/TimelinePost/TimelinePost"
 import ENDPOINTS from "constants/endpoints"
 import { default as ApiAgent } from "api/agent"
 import { default as AdminAgent } from "admin/api/agent"
 import TimelineLoading from "./TimelineLoading"
+import { TestiMonialTypes } from "admin/pages/Profile/components/Testimonials/Testimonials"
+import { BlogData } from "pages/BlogPage/models"
+import Event from "admin/models/eventModel"
 
 const Timeline = ({
   content,
@@ -13,9 +18,13 @@ const Timeline = ({
   content?: string
   userGuid: string
 }) => {
-  const [testimonials, setTestimonials] = useState<any>([])
+  const [testimonials, setTestimonials] = useState<TestiMonialTypes[]>([])
+  // i'm getting type error when adding type on blogs
+  // const [blogs, setBlogs] = useState<BlogData[]>([])
   const [blogs, setBlogs] = useState<any>([])
-  const [events, setEvents] = useState<any>([])
+  const [events, setEvents] = useState<Event[]>([])
+  // also getting typescript error when adding type
+  // const [posts, setPosts] = useState<TimelinePostProps[] | null>([])
   const [posts, setPosts] = useState<any>([])
   const [loading, setLoading] = useState(false)
 
@@ -37,7 +46,9 @@ const Timeline = ({
         modifiedLimit
       )
 
-      setBlogs(data?.blogs)
+      if (data !== undefined) {
+        setBlogs(data?.blogs)
+      }
     }
     fetchBlogs()
 
@@ -52,7 +63,7 @@ const Timeline = ({
   }, [])
 
   useEffect(() => {
-    const mergedArrays = [...testimonials, ...blogs, ...events]
+    const mergedArrays = [...events, ...testimonials, ...blogs]
 
     if (mergedArrays) {
       // create new variable with the mapped values
@@ -76,11 +87,13 @@ const Timeline = ({
             tag: "testimonial",
             content: item.comment,
           }
-          return testimonialObject
+          return item.isDisplayed ? testimonialObject : {}
 
           // check if object is an event
         } else if (item.hasOwnProperty("eventDate")) {
           const eventObject = {
+            id: item._id,
+            userGuid: item.userGuid,
             title: item.title,
             tag: "event",
             date: item.eventDate,
@@ -96,9 +109,7 @@ const Timeline = ({
 
       if (mapArray) setPosts(mapArray)
     }
-
-    console.log(blogs)
-  }, [testimonials, blogs, events])
+  }, [blogs, events, testimonials])
 
   return (
     <div style={{ flexGrow: 1, width: "100%" }}>
@@ -118,22 +129,43 @@ const Timeline = ({
                 return item
               }
             })
-            .map((item, index) => (
-              <TimelinePost
-                key={index}
-                profileImg={item.profileImg}
-                title={item.title}
-                userName={item.userName}
-                date={item.date}
-                content={item.content}
-                imgContent={item.imgContent}
-                tag={item.tag}
-              />
-            ))}
+            .sort((a, b) => a.date - b.date)
+            .map(
+              (item: TimelinePostProps, index: number) =>
+                item.title && (
+                  <TimelinePost
+                    key={index}
+                    id={item.id}
+                    userGuid={item.userGuid}
+                    profileImg={item.profileImg}
+                    title={item.title}
+                    userName={item.userName}
+                    date={item.date}
+                    content={item.content}
+                    imgContent={item.imgContent}
+                    tag={item.tag}
+                  />
+                )
+            )}
         </>
       )}
     </div>
   )
 }
+// const Timeline: React.FC<TimelineData> = (props) => {
+//   const { data } = props;
+
+//   return (
+//     <React.Fragment>
+//       <div className="content-container">
+//         <div className="content-content">
+//           {data?.map((post) => {
+//             return <TimelinePost {...post}>{post.children}</TimelinePost>;
+//           })}
+//         </div>
+//       </div>
+//     </React.Fragment>
+//   );
+// };
 
 export default Timeline

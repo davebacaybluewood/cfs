@@ -2,18 +2,25 @@ import { useState } from "react"
 import { Stack } from "@mui/material"
 import PostButtons from "./PostButtons"
 import TimeAgo from "react-timeago"
+import { useNavigate } from "react-router-dom"
 
-interface TimelinePostProps {
+export interface TimelinePostProps {
+  id?: string
+  userGuid?: string
   profileImg?: string
   title: string
   userName?: string
-  date?: string
+  date: string
   content: string
   imgContent?: string
+  eventDate?: string
   tag?: string
+  children?: JSX.Element
 }
 
 const TimelinePost = ({
+  id,
+  userGuid,
   profileImg,
   title,
   userName,
@@ -23,14 +30,14 @@ const TimelinePost = ({
   tag,
 }: TimelinePostProps) => {
   const [isContentFull, setIsContentFull] = useState(false)
-  const baseUrl =
-    window.location.protocol +
-    "//" +
-    window.location.host +
-    "/" +
-    "blogs" +
-    "/" +
-    title.split(" ").join("-").toLowerCase()
+  const navigate = useNavigate()
+  const baseUrl = window.location.protocol + "//" + window.location.host
+  const shareUrl =
+    tag === "article" || tag === "blog"
+      ? `${baseUrl}/blogs/${title.split(" ").join("-").toLowerCase()}`
+      : tag === "event"
+      ? `${baseUrl}/rsvp-form/${id}?userGuid=${userGuid}`
+      : ""
 
   return (
     <div className={`timeline-post`}>
@@ -45,17 +52,34 @@ const TimelinePost = ({
           {tag && (
             <div
               className={`${
-                tag === "article" || (tag === "blog" && "position-top-left")
+                (tag === "article" || tag === "blog") && "position-top-left"
               } tag`}
             >
               {tag.toUpperCase()}
             </div>
           )}
+
           {imgContent && (
             <img style={{ width: "100%" }} src={imgContent} alt="" />
           )}
           <Stack flexDirection={"row"} gap={1} sx={{ textAlign: "left" }}>
-            <h2>{title}</h2>
+            {tag === "blog" || tag === "article" ? (
+              <h2
+                className="blog-title"
+                onClick={() =>
+                  navigate(
+                    "/" +
+                      "blogs" +
+                      "/" +
+                      title.split(" ").join("-").toLowerCase()
+                  )
+                }
+              >
+                {title}
+              </h2>
+            ) : (
+              <h2>{title}</h2>
+            )}
             {userName && <h2 className="username">@{userName}</h2>}
 
             <h2 style={{ color: "gray" }}>·</h2>
@@ -79,8 +103,8 @@ const TimelinePost = ({
               </span>
             ) : null}
           </p>
-          {tag === "article" || tag === "blog" ? (
-            <PostButtons shareUrl={baseUrl} />
+          {tag === "article" || tag === "blog" || tag === "event" ? (
+            <PostButtons shareUrl={shareUrl} />
           ) : null}
         </Stack>
       </Stack>
