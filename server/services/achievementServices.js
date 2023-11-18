@@ -21,7 +21,10 @@ export const fetchUnitedNations = async (userGuid) => {
       $unwind: "$agentDoc",
     },
     {
-      $match: { "agentDoc.status": status.ACTIVATED, "agentDoc.nationality": { $exists: true } },
+      $match: {
+        "agentDoc.status": status.ACTIVATED,
+        "agentDoc.nationality": { $exists: true },
+      },
     },
     {
       $project: {
@@ -89,4 +92,18 @@ export const fetchOneYearTeam = async (userGuid) => {
   ]);
 
   return uniqBy(documents, KEY_CONDITION);
+};
+
+export const checkMasterAgent = async (recruiterId) => {
+  const recruiterHierarchy = await Hierarchy.findOne({
+    recruiterUserGuid: recruiterId,
+  });
+
+  const agentTree = await Hierarchy.aggregate([
+    {
+      $match: { hierarchyCode: recruiterHierarchy.hierarchyCode },
+    },
+  ]);
+
+  return agentTree;
 };

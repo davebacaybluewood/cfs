@@ -2,7 +2,9 @@ import expressAsync from "express-async-handler";
 import {
   fetchUnitedNations,
   fetchOneYearTeam,
+  checkMasterAgent,
 } from "../services/achievementServices.js";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * @desc:  Get achievement by UserGuid
@@ -15,7 +17,11 @@ const getUnitedNations = expressAsync(async (req, res) => {
   const total = req.query.total ?? null;
   const DEFAULT_TOTAL_LEADS = 4;
 
-  const uniqueByNation = await fetchUnitedNations(req.user.userGuid);
+  const uniqueByNation = await fetchUnitedNations(
+    "ecd43397-6eab-41fc-ad8b-cd7810b75e6d"
+  );
+
+  console.log(uniqueByNation);
 
   if (uniqueByNation) {
     const totalLeads = uniqueByNation.length;
@@ -53,4 +59,26 @@ const getOneYearTeam = expressAsync(async (req, res) => {
     res.status(200).json({ msg: "No leads found" });
   }
 });
-export { getUnitedNations, getOneYearTeam };
+
+const getMasterAgent = expressAsync(async (req, res) => {
+  const ACHIEVEMENT_COUNT = 100;
+
+  if (!req.params.userGuid) {
+    res.status(400).send(API_RES_FAIL("[Mission] Params is required!"));
+    return;
+  }
+
+  const agents = await checkMasterAgent(req.params.userGuid);
+
+  if (!agents.length) {
+    res.status(400).send(API_RES_FAIL("[Mission] Master Agent not evaluated"));
+    return;
+  }
+  const totalLeads = agents.length;
+
+  res.status(200).json({
+    total: totalLeads,
+    isCompleted: totalLeads >= ACHIEVEMENT_COUNT,
+  });
+});
+export { getUnitedNations, getOneYearTeam, getMasterAgent };
