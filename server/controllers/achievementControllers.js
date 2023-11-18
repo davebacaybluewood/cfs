@@ -2,6 +2,7 @@ import expressAsync from "express-async-handler";
 import {
   fetchUnitedNations,
   fetchOneYearTeam,
+  fetchQuickDraw
 } from "../services/achievementServices.js";
 
 /**
@@ -37,6 +38,7 @@ const getUnitedNations = expressAsync(async (req, res) => {
  */
 
 const getOneYearTeam = expressAsync(async (req, res) => {
+    // 12 leads per year, 1 lead each month of the year
   const DEFAULT_TOTAL_LEADS = 12;
 
   const subscribers = await fetchOneYearTeam(req.user.userGuid);
@@ -53,4 +55,28 @@ const getOneYearTeam = expressAsync(async (req, res) => {
     res.status(200).json({ msg: "No leads found" });
   }
 });
-export { getUnitedNations, getOneYearTeam };
+
+/**
+ * @desc:  Gets first team to recruit 10 agents within a week
+ * @route: GET /api/achievements/one-year-team
+ * @access: Private
+ */
+
+const getQuickDraw = expressAsync(async (req, res) => {
+    // 10 leads weekly
+    const DEFAULT_TOTAL_LEADS = 10;
+  
+    const leads = await fetchQuickDraw(req.user.userGuid);
+  
+    if (leads) {
+      res.status(200).json({
+        week: leads._id.week,
+        total: leads.total,
+        isCompleted: leads.total >= DEFAULT_TOTAL_LEADS,
+      });
+    } else {
+      res.status(200).json({ msg: "No leads found" });
+    }
+  });
+
+export { getUnitedNations, getOneYearTeam, getQuickDraw };

@@ -21,7 +21,10 @@ export const fetchUnitedNations = async (userGuid) => {
       $unwind: "$agentDoc",
     },
     {
-      $match: { "agentDoc.status": status.ACTIVATED, "agentDoc.nationality": { $exists: true } },
+      $match: {
+        "agentDoc.status": status.ACTIVATED,
+        "agentDoc.nationality": { $exists: true },
+      },
     },
     {
       $project: {
@@ -62,6 +65,7 @@ export const fetchOneYearTeam = async (userGuid) => {
     },
     {
       $match: {
+        "agentDoc.status": status.ACTIVATED,
         "agentDoc.birthDate": {
           $exists: true,
           $ne: "",
@@ -89,4 +93,46 @@ export const fetchOneYearTeam = async (userGuid) => {
   ]);
 
   return uniqBy(documents, KEY_CONDITION);
+};
+
+export const fetchQuickDraw = async (userGuid) => {
+  const recruiter = await Hierarchy.findOne({ userGuid: userGuid });
+
+  /* filter collection to get the total of leads per week
+  *  sort the collection to get the first team */
+  const leads = await Hierarchy.aggregate([
+    {
+      $match: {
+        hierarchyCode: recruiter.hierarchyCode,
+        recruiterUserGuid: { $exists: true },
+      },
+    },
+    {
+      $addFields: {
+        currentWeek: {
+          $week: "$createdAt",
+        },
+        dayOfWeek: {
+          $dayOfWeek: "$createdAt",
+        },
+      },
+    },
+    {
+      $group: {
+        _id: { week: "$currentWeek" },
+        total: { $count: { } }
+      },
+    },
+    {
+      $sort: {
+        createdAt: 1,
+        total: -1
+      }
+    },
+    {
+      $limit: 1
+    }
+  ]);
+  // first index is the first team that has the highest recruitment.
+  return leads.shift();
 };
