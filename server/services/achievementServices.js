@@ -133,6 +133,6 @@ export const fetchQuickDraw = async (userGuid) => {
       $limit: 1
     }
   ]);
-  // first index is the first team that has the highest recruitment.
+  // first index is the first team that has the highest recruitment on the current week.
   return leads.shift();
 };
