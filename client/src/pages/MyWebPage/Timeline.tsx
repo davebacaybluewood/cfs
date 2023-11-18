@@ -96,6 +96,8 @@ const Timeline = ({
 
       if (mapArray) setPosts(mapArray)
     }
+
+    console.log(blogs)
   }, [testimonials, blogs, events])
 
   return (

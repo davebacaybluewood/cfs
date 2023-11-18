@@ -23,6 +23,14 @@ const TimelinePost = ({
   tag,
 }: TimelinePostProps) => {
   const [isContentFull, setIsContentFull] = useState(false)
+  const baseUrl =
+    window.location.protocol +
+    "//" +
+    window.location.host +
+    "/" +
+    "blogs" +
+    "/" +
+    title.split(" ").join("-").toLowerCase()
 
   return (
     <div className={`timeline-post`}>
@@ -71,7 +79,9 @@ const TimelinePost = ({
               </span>
             ) : null}
           </p>
-          <PostButtons />
+          {tag === "article" || tag === "blog" ? (
+            <PostButtons shareUrl={baseUrl} />
+          ) : null}
         </Stack>
       </Stack>
     </div>

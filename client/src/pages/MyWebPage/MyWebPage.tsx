@@ -148,8 +148,8 @@ const MyWebPage: React.FC = () => {
                     <h2>{Agent}</h2>
                     <p className="agent-description">{profile?.bio}</p>
                     <div className="social-container">
-                      {links.map((item) => (
-                        <div className="social-content">
+                      {links.map((item, index) => (
+                        <div className="social-content" key={index}>
                           <a href={item.link} target="_blank">
                             {item.icon} <span>{item.title}</span>
                           </a>
@@ -208,8 +208,9 @@ const MyWebPage: React.FC = () => {
                   <div className="middle-col">
                     <React.Fragment>
                       <div className="navbar-main-feed">
-                        {navLinks.map((nav) => (
+                        {navLinks.map((nav, index) => (
                           <div
+                            key={index}
                             className={`nav-tab ${nav.className}`}
                             onClick={nav.onClick}
                           >
