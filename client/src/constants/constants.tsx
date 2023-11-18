@@ -38,7 +38,7 @@ import AgentMissionModal from "events/mission/components/modal/AgentMissionModal
 import Rewards from "events/mission/Rewards/Rewards";
 import NATIONALITIES from "./nationalities";
 import MyWebPage from "pages/MyWebPage/MyWebPage";
-import AALogin from "../events/mission/Login/Login";
+import AALogin from "../events/mission/AALogin/AALogin";
 import ClaimReward from "events/mission/ClaimReward/ClaimReward";
 
 type ReactRoutesType = RouteProps & {
