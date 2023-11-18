@@ -36,7 +36,11 @@ const Rewards: React.FC = () => {
                   />
                   <h3>{item.name}</h3>
                   <button
-                    onClick={() => navigate(`${paths.rewards}/${item.id}`)}
+                    onClick={() =>
+                      navigate(
+                        paths.aaClaimReward.replace(":rewardId", item.id)
+                      )
+                    }
                   >
                     Claim Reward
                   </button>
