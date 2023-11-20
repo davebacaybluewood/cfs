@@ -1,70 +1,120 @@
-import { useState } from "react";
-import { Stack } from "@mui/material";
-import PostButtons from "./PostButtons";
-import TimeAgo from "react-timeago";
+import { useState } from "react"
+import { Stack } from "@mui/material"
+import PostButtons from "./PostButtons"
+import TimeAgo from "react-timeago"
+import { useNavigate } from "react-router-dom"
+import { paths } from "constants/routes"
 
 export interface TimelinePostProps {
-  profileImg?: string;
-  title: string;
-  userName?: string;
-  datePosted: string;
-  content: string;
-  imgContent?: string;
-  eventDate?: string;
-  tag?: string;
-  children?: JSX.Element;
+  id?: string
+  userGuid?: string
+  profileImg?: string
+  title: string
+  userName?: string
+  date: string
+  content: string
+  imgContent?: string
+  eventDate?: string
+  tag?: "blog" | "article" | "event" | "testimonial"
+  children?: JSX.Element
 }
 
-const TimelinePost: React.FC<TimelinePostProps> = (props) => {
-  const [isContentFull, setIsContentFull] = useState(false);
+const TimelinePost = ({
+  id,
+  userGuid,
+  profileImg,
+  title,
+  userName,
+  date,
+  content,
+  imgContent,
+  tag,
+}: TimelinePostProps) => {
+  const [isContentFull, setIsContentFull] = useState(false)
+  const navigate = useNavigate()
+  const baseUrl = window.location.protocol + "//" + window.location.host
+  const shareUrl =
+    tag === "article" || tag === "blog"
+      ? `${baseUrl}/blogs/${title
+          .split(" ")
+          .join("-")
+          .toLowerCase()}?userGuid=${userGuid}`
+      : tag === "event"
+      ? `${baseUrl}/rsvp-form/${id}?userGuid=${userGuid}`
+      : ""
 
   return (
     <div className={`timeline-post`}>
       <Stack flexDirection={"row"} gap={2}>
-        {props.profileImg && (
+        {profileImg && (
           <div>
-            <img className="profile-image" src={props.profileImg} alt="" />
+            <img className="profile-image" src={profileImg} alt="" />
           </div>
         )}
 
         <Stack flexDirection="column" gap={1} sx={{ position: "relative" }}>
-          {props.tag && (
+          {tag && (
             <div
               className={`${
-                props.tag === "article" && "position-top-left"
+                (tag === "article" ||
+                  tag === "blog" ||
+                  (tag === "event" && imgContent)) &&
+                "position-top-left"
               } tag`}
             >
-              {props.tag.toUpperCase()}
+              {tag.toUpperCase()}
             </div>
           )}
-          {props.imgContent && (
-            <img style={{ width: "100%" }} src={props.imgContent} alt="" />
+
+          {imgContent && (
+            <img style={{ width: "100%" }} src={imgContent} alt="" />
           )}
           <Stack flexDirection={"row"} gap={1} sx={{ textAlign: "left" }}>
-            <h2>{props.title}</h2>
-            {props.userName && <h2 className="username">@{props.userName}</h2>}
+            {tag === "blog" || tag === "article" ? (
+              <h2
+                className="blog-title"
+                onClick={() =>
+                  navigate(
+                    paths.single_blog.replace(
+                      ":blogTitle",
+                      title.split(" ").join("-").toLowerCase()
+                    )
+                  )
+                }
+              >
+                {title}
+              </h2>
+            ) : (
+              <h2>{title}</h2>
+            )}
+            {userName && <h2 className="username">@{userName}</h2>}
 
             <h2 style={{ color: "gray" }}>·</h2>
             <TimeAgo
-              date={props.datePosted}
+              date={date}
               style={{ color: "gray", fontWeight: 400, fontSize: "13px" }}
             />
           </Stack>
 
           <p className="content">
-            {isContentFull ? props.content : props.content?.slice(0, 300)}
-            {!isContentFull && (props.content?.length ?? 0) > 300 ? (
+            {isContentFull
+              ? content.replace(/<[^>]*>/g, "").replace("&quot;", " ")
+              : content
+                  .replace(/<[^>]*>/g, "")
+                  .replace("&quot;", " ")
+                  .slice(0, 300)}
+
+            {!isContentFull && content.length > 300 ? (
               <span className="see-more" onClick={() => setIsContentFull(true)}>
                 See more
               </span>
             ) : null}
           </p>
-          <div className="hasChildren">{props.children}</div>
-          <PostButtons />
+          <PostButtons shareUrl={shareUrl} />
         </Stack>
       </Stack>
     </div>
-  );
-};
+  )
+}
 
-export default TimelinePost;
+export default TimelinePost
