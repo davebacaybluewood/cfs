@@ -7,7 +7,7 @@ export const fetchUnitedNations = async (userGuid) => {
 
   const subscribers = await Hierarchy.aggregate([
     {
-      $match: { recruiterUserGuid: userGuid },
+      $match: { recruiterUserGuid: "fe8009f7-87ea-44c0-a156-e4a50221e101" },
     },
     {
       $lookup: {
@@ -95,15 +95,67 @@ export const fetchOneYearTeam = async (userGuid) => {
 };
 
 export const checkMasterAgent = async (recruiterId) => {
-  const recruiterHierarchy = await Hierarchy.findOne({
-    recruiterUserGuid: recruiterId,
+  const MISSION_DURATION = 30;
+
+  const recruiter = await Hierarchy.findOne({
+    userGuid: recruiterId,
   });
 
-  const agentTree = await Hierarchy.aggregate([
-    {
-      $match: { hierarchyCode: recruiterHierarchy.hierarchyCode },
-    },
-  ]);
+  const addDays = (date, days) => {
+    date.setDate(date.getDate() + days);
+    return date;
+  };
 
-  return agentTree;
+  //TEMP: Use createdAt timestamp as basis for the A&A Registration
+  const durationStart = recruiter.createdAt.toISOString().substring(0, 10);
+  const durationEnd = addDays(recruiter.createdAt, MISSION_DURATION)
+    .toISOString()
+    .substring(0, 10);
+
+  if (!recruiter) {
+    return;
+  }
+
+  console.log(recruiterId);
+  try {
+    const recruitedAgents = await Hierarchy.aggregate([
+      { $match: { userGuid: recruiterId } },
+      {
+        $graphLookup: {
+          from: "hierarchies",
+          startWith: "$userGuid",
+          connectFromField: "userGuid",
+          connectToField: "recruiterUserGuid",
+          as: "hierarchy",
+        },
+      },
+      {
+        $addFields: {
+          downlines: {
+            $filter: {
+              input: "$hierarchy",
+              as: "child",
+              cond: {
+                $and: [
+                  { $gte: ["$$child.createdAt", durationStart] },
+                  { $lt: ["$$child.createdAt", durationEnd] },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          downlines: 1,
+        },
+      },
+    ]);
+
+    return recruitedAgents;
+  } catch (ex) {
+    throw new Error(ex);
+    console.log(ex);
+  }
 };

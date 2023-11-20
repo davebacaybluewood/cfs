@@ -60,6 +60,11 @@ const getOneYearTeam = expressAsync(async (req, res) => {
   }
 });
 
+/**
+ * @desc:  Check if Agent achieved to recruit 100 downlines including direct and indirect
+ * @route: GET /api/achievements/master-agent/:userGuid
+ * @access: Private
+ */
 const getMasterAgent = expressAsync(async (req, res) => {
   const ACHIEVEMENT_COUNT = 100;
 
@@ -68,17 +73,15 @@ const getMasterAgent = expressAsync(async (req, res) => {
     return;
   }
 
-  const agents = await checkMasterAgent(req.params.userGuid);
+  const agentsData = await checkMasterAgent(req.params.userGuid);
+  const recruitedAgents = agentsData[0].downlines;
 
-  if (!agents.length) {
-    res.status(400).send(API_RES_FAIL("[Mission] Master Agent not evaluated"));
-    return;
-  }
-  const totalLeads = agents.length;
+  const totalLeads = recruitedAgents.length;
 
   res.status(200).json({
     total: totalLeads,
     isCompleted: totalLeads >= ACHIEVEMENT_COUNT,
+    data: recruitedAgents,
   });
 });
 export { getUnitedNations, getOneYearTeam, getMasterAgent };
