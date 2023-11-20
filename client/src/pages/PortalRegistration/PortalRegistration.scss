@@ -23,11 +23,17 @@
 			padding: 0 6rem;
 			h1 {
 				color: white;
-				font-size: 9rem;
+				font-size: 7rem;
 				line-height: 8rem;
 				font-family: "Agrandir";
-				@media (min-width: 390px) {
+				@media (max-width: 1621px) {
 					font-size: 6rem;
+				  }
+				@media (max-width: 1552px) {
+					font-size: 4rem;
+				  }
+				@media (max-width: 390px) {
+					font-size: 3rem;
 				  }
 			}
 			.left-header {
@@ -37,6 +43,15 @@
 			p {
 				font-size: 5rem;
 				font-weight: 300;
+				@media (max-width: 1621px) {
+					font-size: 4rem;
+				  }
+				@media (max-width: 1552px) {
+					font-size: 3rem;
+				  }
+				@media (max-width: 390px) {
+					font-size: 2rem;
+				  }
 			}
 
 			h1,
@@ -335,17 +350,6 @@
 	}
 }
 
-@media only screen and (max-width: 1300px) {
-	.portal-registration-container {
-		.captions {
-			h1 {
-				font-size: 5rem !important;
-				line-height: 5rem !important;
-			}
-		}
-	}
-}
-
 @media (max-width: 900px) {
 	.portal-registration-container {
 		.left-col {
@@ -388,46 +392,46 @@
 	}
 }
 
-@media screen and (max-width: 1024px) {
-	.left-col {
-		.captions {
-			h1 {
-				font-size: 5.7rem !important;
-				margin-bottom: 2rem !important;
-			}
+// @media screen and (max-width: 1024px) {
+// 	.left-col {
+// 		.captions {
+// 			h1 {
+// 				font-size: 4rem !important;
+// 				margin-bottom: 2rem !important;
+// 			}
 
-			p {
-				font-size: 2rem !important;
-			}
-		}
-	}
-}
+// 			p {
+// 				font-size: 2rem !important;
+// 			}
+// 		}
+// 	}
+// }
 
-@media screen and (max-width: 768px) {
-	.left-col {
-		.captions {
-			h1 {
-				font-size: 5rem !important;
-				margin-bottom: 2rem !important;
-			}
+// @media screen and (max-width: 768px) {
+// 	.left-col {
+// 		.captions {
+// 			h1 {
+// 				font-size: 4rem !important;
+// 				margin-bottom: 2rem !important;
+// 			}
 
-			p {
-				font-size: 2rem !important;
-			}
-		}
-	}
-}
+// 			p {
+// 				font-size: 2rem !important;
+// 			}
+// 		}
+// 	}
+// }
 
-@media screen and (max-width: 390px) {
-	.left-col {
-		.captions {
-			h1 {
-				font-size: 4rem !important;
-			}
+// @media screen and (max-width: 390px) {
+// 	.left-col {
+// 		.captions {
+// 			h1 {
+// 				font-size: 4rem !important;
+// 			}
 
-			p {
-				font-size: 2rem !important;
-			}
-		}
-	}
-}
+// 			p {
+// 				font-size: 2rem !important;
+// 			}
+// 		}
+// 	}
+// }
