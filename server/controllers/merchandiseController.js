@@ -7,6 +7,7 @@ import sendEmail from "../utils/sendNodeMail.js";
 import merchandiseAdminNotif from "../emailTemplates/merchandiseAdminNotif.js";
 import merchandiseSubscriberNotif from "../emailTemplates/merchandiseSubscriberNotif.js";
 import RedeemedPoints from "../models/redeemedPointsModel.js";
+import fs from 'fs';
 
 function isFieldEmpty(field) {
   return field === undefined || field === null || field === "";
@@ -20,27 +21,22 @@ function isFieldEmpty(field) {
 const createMerchandise = expressAsync(async (req, res) => {
   const { name, points } = req.body;
 
-  // Check if any of the required fields are empty
-  if (isFieldEmpty(name) || isFieldEmpty(points)) {
-    res.status(400).json({
-      error: "required_validation",
-      message: "Fields are required.",
-    });
-    return;
-  }
-
-  /** Upload avatar to cloudinary */
-  let profileImgResult;
   try {
-    profileImgResult = await cloudinary.v2.uploader.upload(req.file?.path, {
-      folder: "merchandises",
-      use_filename: true,
-    });
-  } catch (error) {
-    throw new Error("Error occured in adding merchandise.");
-  }
+    if (isFieldEmpty(name) || isFieldEmpty(points)) {
+      throw new Error("Fields are required.");
+    }
 
-  try {
+    let profileImgResult;
+    try {
+      profileImgResult = await cloudinary.v2.uploader.upload(req.file?.path, {
+        folder: "merchandises",
+        use_filename: true,
+      });
+    } catch (error) {
+      console.error("Cloudinary Upload Error:", error);
+      throw new Error("Error uploading merchandise image.");
+    }
+
     const newMerchandise = new Merchandise({
       name,
       points,
@@ -50,8 +46,24 @@ const createMerchandise = expressAsync(async (req, res) => {
 
     const createdMerchandise = await newMerchandise.save();
     res.status(201).json(createdMerchandise);
+
+    fs.unlink(req.file?.path, (err) => {
+      if (err) {
+        console.error("Error deleting temporary file:", err);
+      }
+    });
   } catch (error) {
-    throw new Error("Error occured in adding merchandise.");
+    console.error(error);
+    res.status(500).json({
+      error: "internal_server_error",
+      message: "Error occurred in adding merchandise.",
+    });
+
+    fs.unlink(req.file?.path, (err) => {
+      if (err) {
+        console.error("Error deleting temporary file:", err);
+      }
+    });
   }
 });
 
@@ -155,8 +167,8 @@ const updateMerchandiseDetails = expressAsync(async (req, res) => {
       typeof req.body.image === "string"
         ? req.body.image
         : merchandiseImage.secure_url
-        ? merchandiseImage.secure_url
-        : merchandise.image;
+          ? merchandiseImage.secure_url
+          : merchandise.image;
 
     const updatedMerchandise = await merchandise.save();
     res.json(updatedMerchandise);

@@ -25,7 +25,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
   }
 
   .login-caption {
@@ -61,9 +60,9 @@
     }
   }
 
-
   button {
-    background: url("../../../../public/assets/images/agent-mission/modal-bg.png") no-repeat center center;
+    background: url("../../../../public/assets/images/agent-mission/modal-bg.png")
+      no-repeat center center;
     background-size: cover;
     margin-bottom: 1rem;
     cursor: pointer;
@@ -107,7 +106,7 @@
   .text-field-container {
     display: flex;
     align-items: center;
-    width: 100%;    
+    width: 100%;
   }
 
   .text-field-icon {
@@ -118,11 +117,19 @@
     padding: 5px;
     font-size: 24px;
   }
-  
-  .MuiBox-root {
-    width: 100%;
+
+  .MuiInputBase-root {
+    background-color: white;
+
+    &:hover {
+      background-color: white;
+    }
   }
-  
+
+  .MuiInputBase-root {
+    .MuiInputBase-input {
+    }
+  }
 
   .MuiInputAdornment-root {
     display: flex;

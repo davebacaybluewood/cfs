@@ -156,8 +156,8 @@ const getEvents = async (userGuid) => {
       $or: [{ postedBy: PROFILE_POSITIONS.MASTER_ADMIN.value }, { userGuid }],
     });
     events = agentEvents?.map((data) => {
-      data.authorFirstName = agentModel[0].firstName;
-      data.authorLastName = agentModel[0].lastName;
+      data.authorFirstName = "CFS Admin";
+      data.authorLastName = "";
 
       return data;
     });

@@ -1,13 +1,12 @@
-import { paths } from "constants/routes"
-import Wrapper from "admin/components/Wrapper/Wrapper"
-import React, { useContext, useState } from "react"
-import { CrumbTypes } from "./types"
-import ConditionalBox from "./components/ConditionalBox/ConditionalBox"
-import { UserContext } from "admin/context/UserProvider"
-import useFetchUserProfile from "admin/hooks/useFetchProfile"
-import "./Dashboard.scss"
-import { PopupModal, PopupWidget } from "react-calendly"
-import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
+import { paths } from "constants/routes";
+import Wrapper from "admin/components/Wrapper/Wrapper";
+import React, { useContext } from "react";
+import { CrumbTypes } from "./types";
+import ConditionalBox from "./components/ConditionalBox/ConditionalBox";
+import { UserContext } from "admin/context/UserProvider";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter";
+import "./Dashboard.scss";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -20,7 +19,7 @@ const crumbs: CrumbTypes[] = [
     url: paths.dashboard,
     isActive: true,
   },
-]
+];
 
 /**
  *
@@ -29,10 +28,10 @@ const crumbs: CrumbTypes[] = [
  */
 
 const Dashboard: React.FC = () => {
-  const userCtx = useContext(UserContext) as any
-  const { profile } = useFetchUserProfile(userCtx?.user?.userGuid ?? "")
-  const USER_POSITION = profile?.position
-  const USER_ROLE = profile?.roles
+  const userCtx = useContext(UserContext) as any;
+  const { profile } = useFetchUserProfile(userCtx?.user?.userGuid ?? "");
+  const USER_POSITION = profile?.position;
+  const USER_ROLE = profile?.roles;
 
   // const [showCalendly, setShowCalendly] = useState(true);
 
@@ -47,7 +46,7 @@ const Dashboard: React.FC = () => {
         rootElement={document.getElementById("root") as any}
       /> */}
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

@@ -34,7 +34,7 @@ const ConditionalBox: React.FC<ConditionalBoxProps> = (props) => {
   return (
     <div>
       {isAdmin && <AdminBox />}
-      {isAgent || (isFreeTrial && <AgentBox />)}
+      {isAgent || isFreeTrial ? <AgentBox /> : null}
       {(isContentCreator || isEditor) && <EditorBox />}
       {isSubscriber && <SubscriberBox />}
     </div>

@@ -13,9 +13,9 @@ import { login } from "redux/actions/userActions";
 import { useDispatch } from "react-redux";
 import { paths } from "constants/routes";
 import { USER_LOGIN_ACTION_TYPES } from "constants/redux-constants";
-import "./Login.scss";
 import { AccountCircle, Lock } from "@mui/icons-material";
 import ReCAPTCHA from "react-google-recaptcha";
+import "./AALogin.scss";
 
 type LoginWithValues = {
   emailAddress: string;

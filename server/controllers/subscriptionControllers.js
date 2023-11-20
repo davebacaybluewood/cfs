@@ -1,5 +1,7 @@
 import expressAsync from "express-async-handler";
 import Subscriptions from "../models/subscriptionModel.js";
+import portalSubscriptionServices from "../services/portalSubscriptionServices.js";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * @desc: Create a subscription
@@ -70,4 +72,23 @@ const deleteSubscription = expressAsync(async (req, res) => {
   }
 });
 
-export { createSubscription, getSubscriptions, deleteSubscription };
+const getTrialHierarchyCode = async (req, res) => {
+  const data = await portalSubscriptionServices.getTrialHierarchyCode(
+    req,
+    res,
+    req.params.userGuid
+  );
+
+  if (data) {
+    res.json(data);
+  } else {
+    res.json(API_RES_FAIL("No data"));
+  }
+};
+
+export {
+  createSubscription,
+  getSubscriptions,
+  deleteSubscription,
+  getTrialHierarchyCode,
+};
