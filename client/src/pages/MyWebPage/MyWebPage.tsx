@@ -1,41 +1,43 @@
-import React, { useState, useEffect } from "react";
-import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
-import { Container, Grid } from "@mui/material";
-import Spinner from "library/Spinner/Spinner";
-import { FaPhone, FaAddressCard } from "react-icons/fa";
-import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
-import { MdEmail } from "react-icons/md";
-import Button from "library/Button/Button";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { useNavigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { FiSend } from "react-icons/fi";
-import { paths } from "constants/routes";
-import { CiGift, CiTrophy, CiVault } from "react-icons/ci";
-import Timeline from "pages/MyWebPage/Timeline";
-import adminAgent from "admin/api/agent";
-import { TimelinePostProps } from "library/TimelinePost/TimelinePost";
-import Event from "admin/models/eventModel";
-import agentLinks from "./helpers/agentLinks";
-import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
-import useAgentData from "./useAgentData";
-import FeedTabs, { ContentTypes } from "./FeedTabs";
-import "./MyWebPage.scss";
+import React, { useState, useEffect } from "react"
+import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
+import { Container, Grid } from "@mui/material"
+import Spinner from "library/Spinner/Spinner"
+import { FaPhone, FaAddressCard } from "react-icons/fa"
+import { BsCalculator, BsChatRightTextFill } from "react-icons/bs"
+import { MdEmail } from "react-icons/md"
+import Button from "library/Button/Button"
+import { AiOutlineArrowRight } from "react-icons/ai"
+import { useNavigate, useParams } from "react-router-dom"
+import { Helmet } from "react-helmet"
+import { FiSend } from "react-icons/fi"
+import { paths } from "constants/routes"
+import { CiGift, CiTrophy, CiVault } from "react-icons/ci"
+import Timeline from "pages/MyWebPage/Timeline"
+import adminAgent from "admin/api/agent"
+import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
+import Event from "admin/models/eventModel"
+import agentLinks from "./helpers/agentLinks"
+import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs"
+import useAgentData from "./useAgentData"
+import FeedTabs, { ContentTypes } from "./FeedTabs"
+import "./MyWebPage.scss"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
 
 const MyWebPage: React.FC = () => {
-  const { user } = useParams();
-  const [content, setContent] = useState<ContentTypes>("home");
-  const [active, setActive] = useState(false);
-  const [events, setEvents] = useState<Event[] | undefined>();
+  const { user } = useParams()
+  const [content, setContent] = useState<ContentTypes>("home")
+  const [active, setActive] = useState(false)
+  const [events, setEvents] = useState<Event[] | undefined>()
 
   /* Content Headers */
-  const HOME = "home";
-  const EVENTS = "events";
-  const TESTIMONIAL = "testimonial";
-  const ARTICLES = "articles";
+  const HOME = "home"
+  const EVENTS = "events"
+  const TESTIMONIAL = "testimonial"
+  const ARTICLES = "articles"
 
   /* General Agent Information */
-  const userGuid = `${user}`;
+  const userGuid = `${user}`
+  const { profile } = useFetchUserProfile(userGuid)
   const {
     Agent,
     address,
@@ -49,54 +51,28 @@ const MyWebPage: React.FC = () => {
     twitter,
     bio,
     loading,
-  } = useAgentData(userGuid);
+  } = useAgentData(userGuid)
 
   /* Fetch Events */
   useEffect(() => {
     const getEvents = async () => {
-      const eventData = await adminAgent.Events.getEvents(`${user}`);
-      setEvents(eventData);
-    };
+      const eventData = await adminAgent.Events.getEvents(`${user}`)
+      setEvents(eventData)
+    }
 
-    getEvents();
-  }, []);
+    getEvents()
+  }, [])
 
   /* Fetch Blogs */
-  const { blogs } = useFetchBlogs();
+  const { blogs } = useFetchBlogs()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const links = agentLinks(address, facebook, linkedIn, twitter);
+  const links = agentLinks(address, facebook, linkedIn, twitter)
 
-  /*Events */
-  const filteredEvents: TimelinePostProps[] | undefined = events?.map((ev) => {
-    return {
-      tag: "Event",
-      content: ev.shortDescription ?? "",
-      userName: `${ev.authorFirstName} ${ev.authorLastName}` ?? "",
-      datePosted: ev.createdAt ?? "",
-      imgContent: ev.thumbnail ?? "",
-      title: ev.title ?? "",
-      eventDate: ev.eventDate ?? "",
-    };
-  });
-
-  /* Blogs */
-  const filteredBlogs: TimelinePostProps[] | undefined = blogs?.map((blog) => {
-    return {
-      tag: "Article",
-      content: (blog.content ?? "")
-        .replace(/<[^>]*>/g, "")
-        .replace("&quot;", " "),
-      title: blog.title ?? "",
-      datePosted: blog.createdAt?.toString() ?? "",
-      imgContent: blog.thumbnail ?? "",
-    };
-  });
-
-  if (loading) {
-    <Spinner variant="relative" />;
-  }
+  // if (loading) {
+  //   ;<Spinner variant="relative" />
+  // }
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
@@ -119,8 +95,8 @@ const MyWebPage: React.FC = () => {
                     <h2>{Agent}</h2>
                     <p className="agent-description">{bio}</p>
                     <div className="social-container">
-                      {links.map((item) => (
-                        <div className="social-content">
+                      {links.map((item, index) => (
+                        <div className="social-content" key={index}>
                           <a href={item.link} target="_blank">
                             {item.icon} <span>{item.title}</span>
                           </a>
@@ -181,13 +157,22 @@ const MyWebPage: React.FC = () => {
                         />
                       </div>
                       <div className="tabs-content">
-                        {content === EVENTS ? (
-                          <Timeline data={filteredEvents} />
-                        ) : (
-                          content === ARTICLES && (
-                            <Timeline data={filteredBlogs} />
-                          )
-                        )}
+                        <Timeline
+                          content={content}
+                          userGuid={userGuid}
+                          testimonials={profile?.testimonials}
+                        />
+
+                        {/* /* These are all dummy, this must render the rightful component for each page. */}
+                        {/* {content === "home" ? (
+                          <Timeline content={content} />
+                        ) : content === "events" ? (
+                          <Timeline content={content} />
+                        ) : content === "articles" ? (
+                          <Timeline content={content} />
+                        ) : content === "testimonial" ? (
+                          <Timeline content={content} />
+                        ) : null} */}
                       </div>
                     </React.Fragment>
                   </div>
@@ -247,7 +232,7 @@ const MyWebPage: React.FC = () => {
         </div>
       )}
     </MyWebPageWrapper>
-  );
-};
+  )
+}
 
-export default MyWebPage;
+export default MyWebPage
