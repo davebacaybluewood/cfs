@@ -3,6 +3,7 @@ import { Stack } from "@mui/material"
 import PostButtons from "./PostButtons"
 import TimeAgo from "react-timeago"
 import { useNavigate } from "react-router-dom"
+import { paths } from "constants/routes"
 
 export interface TimelinePostProps {
   id?: string
@@ -14,7 +15,7 @@ export interface TimelinePostProps {
   content: string
   imgContent?: string
   eventDate?: string
-  tag?: string
+  tag?: "blog" | "article" | "event" | "testimonial"
   children?: JSX.Element
 }
 
@@ -34,7 +35,10 @@ const TimelinePost = ({
   const baseUrl = window.location.protocol + "//" + window.location.host
   const shareUrl =
     tag === "article" || tag === "blog"
-      ? `${baseUrl}/blogs/${title.split(" ").join("-").toLowerCase()}`
+      ? `${baseUrl}/blogs/${title
+          .split(" ")
+          .join("-")
+          .toLowerCase()}?userGuid=${userGuid}`
       : tag === "event"
       ? `${baseUrl}/rsvp-form/${id}?userGuid=${userGuid}`
       : ""
@@ -52,7 +56,10 @@ const TimelinePost = ({
           {tag && (
             <div
               className={`${
-                (tag === "article" || tag === "blog") && "position-top-left"
+                (tag === "article" ||
+                  tag === "blog" ||
+                  (tag === "event" && imgContent)) &&
+                "position-top-left"
               } tag`}
             >
               {tag.toUpperCase()}
@@ -68,10 +75,10 @@ const TimelinePost = ({
                 className="blog-title"
                 onClick={() =>
                   navigate(
-                    "/" +
-                      "blogs" +
-                      "/" +
+                    paths.single_blog.replace(
+                      ":blogTitle",
                       title.split(" ").join("-").toLowerCase()
+                    )
                   )
                 }
               >
@@ -103,9 +110,7 @@ const TimelinePost = ({
               </span>
             ) : null}
           </p>
-          {tag === "article" || tag === "blog" || tag === "event" ? (
-            <PostButtons shareUrl={shareUrl} />
-          ) : null}
+          <PostButtons shareUrl={shareUrl} />
         </Stack>
       </Stack>
     </div>

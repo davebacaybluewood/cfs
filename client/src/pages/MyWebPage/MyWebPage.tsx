@@ -118,36 +118,6 @@ const MyWebPage: React.FC = () => {
     },
   ]
 
-  /*Events */
-  // const filteredEvents: TimelinePostProps[] | undefined = events?.map((ev) => {
-  //   return {
-  //     tag: "Event",
-  //     content: ev.shortDescription ?? "",
-  //     userName: `${ev.authorFirstName} ${ev.authorLastName}` ?? "",
-  //     datePosted: ev.createdAt ?? "",
-  //     imgContent: ev.thumbnail ?? "",
-  //     title: ev.title ?? "",
-  //     eventDate: ev.eventDate ?? "",
-  //   }
-  // })
-
-  /* Blogs */
-  // const filteredBlogs: TimelinePostProps[] | undefined = blogs?.map((blog) => {
-  //   return {
-  //     tag: "Article",
-  //     content: (blog.content ?? "")
-  //       .replace(/<[^>]*>/g, "")
-  //       .replace("&quot;", " "),
-  //     title: blog.title ?? "",
-  //     datePosted: blog.createdAt?.toString() ?? "",
-  //     imgContent: blog.thumbnail ?? "",
-  //   }
-  // })
-
-  if (loading) {
-    ;<Spinner variant="relative" />
-  }
-
   return (
     <MyWebPageWrapper showNavBar showFooter>
       <Helmet>
@@ -240,7 +210,12 @@ const MyWebPage: React.FC = () => {
                         ))}
                       </div>
                       <div className="tabs-content">
-                        <Timeline content={content} userGuid={userGuid} />
+                        <Timeline
+                          content={content}
+                          userGuid={userGuid}
+                          testimonials={profile?.testimonials}
+                        />
+
                         {/* /* These are all dummy, this must render the rightful component for each page. */}
                         {/* {content === "home" ? (
                           <Timeline content={content} />
