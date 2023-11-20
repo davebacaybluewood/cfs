@@ -829,29 +829,30 @@ const ContractForm: React.FC = () => {
                               </Button>
                             </React.Fragment>
                           ) : (
-                            <Button
-                              variant="danger"
-                              onClick={() => {
-                                let params = new URLSearchParams(
-                                  window.location.search
-                                );
-                                params.set("action", "edit");
-                                if (
-                                  !window.location.search.includes(
-                                    "&action=edit"
-                                  )
-                                ) {
-                                  window.history.replaceState(
-                                    null,
-                                    "",
-                                    `${window.location.search}&action=edit`
-                                  );
-                                }
-                                handleSubmit();
-                              }}
-                            >
-                              Update Template
-                            </Button>
+                            // <Button
+                            //   variant="danger"
+                            //   onClick={() => {
+                            //     let params = new URLSearchParams(
+                            //       window.location.search
+                            //     );
+                            //     params.set("action", "edit");
+                            //     if (
+                            //       !window.location.search.includes(
+                            //         "&action=edit"
+                            //       )
+                            //     ) {
+                            //       window.history.replaceState(
+                            //         null,
+                            //         "",
+                            //         `${window.location.search}&action=edit`
+                            //       );
+                            //     }
+                            //     handleSubmit();
+                            //   }}
+                            // >
+                            //   Update Template
+                            // </Button>
+                            <React.Fragment />
                           )}
                           <Button
                             variant="danger"

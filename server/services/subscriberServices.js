@@ -206,9 +206,9 @@ const fetchSubscribersByUser = async (userGuid) => {
         from: "users",
         localField: "userGuid",
         foreignField: "userGuid",
-        as: "userDoc", 
+        as: "userDoc",
       },
-    }, 
+    },
     {
       $unwind: "$userDoc",
     },
@@ -242,7 +242,7 @@ const fetchSubscribersByUser = async (userGuid) => {
         email: "$userDoc.email",
         status: "$agentDoc.status",
         nationality: "$agentDoc.nationality",
-        birthdate: "$agentDoc.birthDate"
+        birthdate: "$agentDoc.birthDate",
       },
     },
     {
@@ -258,9 +258,13 @@ const fetchSubscribersByUser = async (userGuid) => {
     const isSubscriber = data.position?.some(
       (e) => e.value === "POSITION_SUBSCRIBER"
     );
+
+    const isAgent = data.position?.some((e) => e.value === "POSITION_AGENT");
+
     return {
       ...data,
       type: isSubscriber ? "SUBSCRIBER" : "FREE 30DAYS TRIAL",
+      isSubscribed: isAgent,
     };
   });
 

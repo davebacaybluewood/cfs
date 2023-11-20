@@ -12,6 +12,7 @@ export interface SubscribersData {
   lastName: string;
   email: string;
   type: string;
+  isSubscribed: string;
 }
 
 export interface SubscriberMainData {

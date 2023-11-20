@@ -36,14 +36,13 @@ const ForgotPasswordForm: React.FC = () => {
         enableReinitialize
         onSubmit={async (data) => {
           setLoading(true);
-          const res = await agent.Profile.changePassword(
-            passwordId,
-            data.password,
-            data.confirmPassword
-          );
 
-          if (res) {
-            setLoading(false);
+          try {
+            const res = await agent.Profile.changePassword(
+              passwordId,
+              data.password,
+              data.confirmPassword
+            );
             toast.info(`Change Password Success`, {
               position: "top-right",
               autoClose: 5000,
@@ -54,8 +53,9 @@ const ForgotPasswordForm: React.FC = () => {
               progress: undefined,
               theme: "light",
             });
+            setLoading(false);
             navigate(paths.login);
-          } else {
+          } catch (error) {
             setLoading(false);
             setError(true);
           }
@@ -130,16 +130,16 @@ const ForgotPasswordForm: React.FC = () => {
       </Formik>
     );
   }
-
   return (
     <Formik
       initialValues={initialValues}
       enableReinitialize
       onSubmit={async (data) => {
         setLoading(true);
-        const res = await agent.Profile.forgotPassword(data.emailAddress);
+        setError(false);
 
-        if (res) {
+        try {
+          await agent.Profile.forgotPassword(data.emailAddress);
           setLoading(false);
           toast.info(`Email sent to your email address`, {
             position: "top-right",
@@ -151,6 +151,9 @@ const ForgotPasswordForm: React.FC = () => {
             progress: undefined,
             theme: "light",
           });
+        } catch (error) {
+          setError(true);
+          setLoading(false);
         }
       }}
       validationSchema={validationWithCodeSchema}
@@ -180,7 +183,7 @@ const ForgotPasswordForm: React.FC = () => {
                   severity="error"
                   className="error-alert"
                 >
-                  Invalid Email & Password
+                  Invalid Email
                 </Alert>
               ) : null}
 

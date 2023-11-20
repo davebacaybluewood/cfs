@@ -42,7 +42,7 @@ const PortalRegistration: React.FC = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state: any) => state.userLogin);
   const urlLocation = useLocation();
-  const { error, userInfo } = userLogin;
+  const { error, userInfo, loading: userLoading } = userLogin;
 
   const searchUrlForParameters = new URLSearchParams(urlLocation.search);
   const isVerificationParamter =
@@ -289,6 +289,7 @@ const PortalRegistration: React.FC = () => {
           )}
         </div>
       </div>
+      {userLoading ? <Spinner variant="fixed" /> : null}
     </div>
   );
 };
