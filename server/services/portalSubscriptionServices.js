@@ -43,8 +43,6 @@ const getTrialHierarchyCode = async (req, res, userGuid) => {
     return;
   }
 
-  console.log("tets");
-
   /** Free trial | Subscriber User */
   const hierarchy = await Hierarchy.findOne({ userGuid });
 
