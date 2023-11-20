@@ -116,7 +116,6 @@ export const checkMasterAgent = async (recruiterId) => {
     return;
   }
 
-  console.log(recruiterId);
   try {
     const recruitedAgents = await Hierarchy.aggregate([
       { $match: { userGuid: recruiterId } },

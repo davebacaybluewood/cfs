@@ -17,11 +17,7 @@ const getUnitedNations = expressAsync(async (req, res) => {
   const total = req.query.total ?? null;
   const DEFAULT_TOTAL_LEADS = 4;
 
-  const uniqueByNation = await fetchUnitedNations(
-    "ecd43397-6eab-41fc-ad8b-cd7810b75e6d"
-  );
-
-  console.log(uniqueByNation);
+  const uniqueByNation = await fetchUnitedNations(req.user.userGuid);
 
   if (uniqueByNation) {
     const totalLeads = uniqueByNation.length;
