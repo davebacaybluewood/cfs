@@ -12,6 +12,9 @@
 		float: left;
 		width: 50%;
 		height: 100%;
+		@media (max-width: 390px) {
+			width: 100%;
+		  }
 
 		.captions {
 			display: flex;
@@ -33,7 +36,7 @@
 					font-size: 4rem;
 				  }
 				@media (max-width: 390px) {
-					font-size: 3rem;
+					font-size: 3rem !important;
 				  }
 			}
 			.left-header {
