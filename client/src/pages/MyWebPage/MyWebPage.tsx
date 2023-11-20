@@ -70,9 +70,9 @@ const MyWebPage: React.FC = () => {
 
   const links = agentLinks(address, facebook, linkedIn, twitter)
 
-  if (loading) {
-    ;<Spinner variant="relative" />
-  }
+  // if (loading) {
+  //   ;<Spinner variant="relative" />
+  // }
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
