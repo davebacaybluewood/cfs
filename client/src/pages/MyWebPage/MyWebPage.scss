@@ -75,9 +75,7 @@
       .contact-container {
         margin-bottom: 2rem;
         padding: 1rem;
-        box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
         border-radius: 20px;
-        background-color: #fff;
         .contact {
           display: flex;
           align-items: center;
@@ -86,11 +84,11 @@
 
           svg {
             color: #5e6572;
-            font-size: 2rem;
+            font-size: 1.5rem;
             background: #fff;
-            padding: 1rem;
+            padding: 0.5rem;
             border-radius: 50%;
-            border: 1px dotted #00004d;
+            border: 1px dotted #4287f5;
           }
           span {
             font: 500 1.5rem "Montserrat";
@@ -113,7 +111,7 @@
           margin: 0.5rem;
           display: flex;
           align-items: center;
-          padding: 1.5rem 1rem;
+          padding: 1rem;
           justify-content: center;
           transition: 0.2s;
           gap: 0 15px;
@@ -122,7 +120,7 @@
             font-size: 1.7rem;
           }
           span {
-            font: 500 2rem "Montserrat";
+            font: 400 1.7rem "Montserrat";
           }
 
           &:hover {
@@ -210,7 +208,7 @@
         .icon-holder {
           svg {
             font-size: 10rem;
-            margin: 3rem 0 1rem 0;
+            margin: 2rem 0;
           }
         }
         p {

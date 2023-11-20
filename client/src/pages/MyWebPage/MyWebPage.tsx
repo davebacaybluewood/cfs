@@ -31,7 +31,7 @@ const MyWebPage: React.FC = () => {
   /* Content Headers */
   const HOME = "home";
   const EVENTS = "events";
-  const TESTIMONIAL = "testimonial";
+  const RECOMMENDATION = "reccomendation";
   const ARTICLES = "articles";
 
   /* General Agent Information */
@@ -167,7 +167,7 @@ const MyWebPage: React.FC = () => {
                         }
                       >
                         {" "}
-                        <FiSend /> <span>Testimonial</span>{" "}
+                        <FiSend /> <span>Recommendation</span>{" "}
                       </Button>
                     </div>
                   </div>
@@ -183,10 +183,10 @@ const MyWebPage: React.FC = () => {
                       <div className="tabs-content">
                         {content === EVENTS ? (
                           <Timeline data={filteredEvents} />
+                        ) : content === ARTICLES ? (
+                          <Timeline data={filteredBlogs} />
                         ) : (
-                          content === ARTICLES && (
-                            <Timeline data={filteredBlogs} />
-                          )
+                          content === RECOMMENDATION && <h2>Reccomendation</h2>
                         )}
                       </div>
                     </React.Fragment>
@@ -231,7 +231,6 @@ const MyWebPage: React.FC = () => {
                       <div className="icon-holder">
                         <BsCalculator />
                       </div>
-                      <p>Lorem ipsum dolor sit.</p>
                       <Button onClick={() => navigate("/calculator")}>
                         Calculate{" "}
                         <span>
