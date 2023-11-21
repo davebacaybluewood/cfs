@@ -43,6 +43,7 @@ const MyWebPage: React.FC = () => {
     twitter,
     bio,
     loading,
+    languages
   } = useAgentData(userGuid);
 
 
@@ -58,7 +59,7 @@ const MyWebPage: React.FC = () => {
   const navigate = useNavigate();
 
   const links = agentLinks(address, facebook, linkedIn, twitter);
-  const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '')
+  const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '', languages ?? [])
 
 
 

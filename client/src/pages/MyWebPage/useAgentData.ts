@@ -16,6 +16,7 @@ const useAgentData = (userGuid: string) => {
     profile?.state?.toString() === "" ? "-" : profile?.state?.toString();
   const phoneNumber = profile?.phoneNumber.toString();
   const email = profile?.emailAddress;
+  const languages = profile?.languages 
 
   /* Professional Information */
   const licenseNumber = profile?.licenseNumber?.toString();
@@ -39,6 +40,7 @@ const useAgentData = (userGuid: string) => {
     twitter,
     loading,
     bio,
+    languages
   };
 };
 

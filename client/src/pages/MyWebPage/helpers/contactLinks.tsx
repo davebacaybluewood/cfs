@@ -1,8 +1,8 @@
-import { FaPhone, FaAddressCard } from 'react-icons/fa'
+import { FaPhone, FaAddressCard, FaLanguage } from 'react-icons/fa'
 import { HiLocationMarker } from 'react-icons/hi'
 import { MdEmail } from 'react-icons/md'
 
-const contactLinks = (address: string, phoneNumber: string, email: string, licenseNumber: string) => {
+const contactLinks = (address: string, phoneNumber: string, email: string, licenseNumber: string, languages: string[]) => {
     return [
         {
             icon: <HiLocationMarker />,
@@ -19,6 +19,10 @@ const contactLinks = (address: string, phoneNumber: string, email: string, licen
         {
             icon: <FaAddressCard />,
             text: licenseNumber
+        },
+        {
+            icon: <FaLanguage />,
+            text: languages
         },
     ]
 }
