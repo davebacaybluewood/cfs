@@ -2,16 +2,13 @@ import React, { useState, useEffect } from "react";
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
 import { Container, Grid } from "@mui/material";
 import Spinner from "library/Spinner/Spinner";
-import { FaPhone, FaAddressCard } from "react-icons/fa";
 import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
-import { MdEmail } from "react-icons/md";
 import Button from "library/Button/Button";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FiSend } from "react-icons/fi";
 import { paths } from "constants/routes";
-import { CiGift, CiMonitor, CiTrophy, CiVault } from "react-icons/ci";
 import Timeline from "pages/MyWebPage/Timeline";
 import adminAgent from "admin/api/agent";
 import Event from "admin/models/eventModel";
@@ -20,7 +17,6 @@ import useAgentData from "./useAgentData";
 import FeedTabs, { ContentTypes } from "./FeedTabs";
 import "./MyWebPage.scss";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import { HiLocationMarker } from "react-icons/hi";
 import contactLinks from "./helpers/contactLinks";
 import { routeLinks } from "./helpers/routeLinks";
 
@@ -30,11 +26,6 @@ const MyWebPage: React.FC = () => {
   const [active, setActive] = useState(false);
   const [events, setEvents] = useState<Event[] | undefined>();
 
-  /* Content Headers */
-  const HOME = "home";
-  const EVENTS = "events";
-  const RECOMMENDATION = "reccomendation";
-  const ARTICLES = "articles";
 
   /* General Agent Information */
   const userGuid = `${user}`;
