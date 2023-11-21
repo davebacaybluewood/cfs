@@ -3,7 +3,7 @@ import { FaHome, FaCalendar } from "react-icons/fa";
 import { GrSend } from "react-icons/gr";
 import { MdOutlineLibraryBooks } from "react-icons/md";
 
-export type ContentTypes = "home" | "events" | "reccomendation" | "articles";
+export type ContentTypes = "home" | "events" | "testimonial" | "articles";
 
 export interface FeedTabsProps {
   setContent: React.Dispatch<React.SetStateAction<ContentTypes>>;
@@ -36,11 +36,11 @@ const FeedTabs: React.FC<FeedTabsProps> = (props) => {
     {
       icon: <GrSend />,
       onClick: () => {
-        setContent("reccomendation");
+        setContent("testimonial");
         setActive(true);
       },
       className:
-        active === true && content === "reccomendation" ? "active-nav" : "",
+        active === true && content === "testimonial" ? "active-nav" : "",
       link: "Recommendation",
     },
     {

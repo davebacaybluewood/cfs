@@ -11,17 +11,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FiSend } from "react-icons/fi";
 import { paths } from "constants/routes";
-import { CiGift, CiTrophy, CiVault } from "react-icons/ci";
+import { CiGift, CiMonitor, CiTrophy, CiVault } from "react-icons/ci";
 import Timeline from "pages/MyWebPage/Timeline";
 import adminAgent from "admin/api/agent";
-import { TimelinePostProps } from "library/TimelinePost/TimelinePost";
 import Event from "admin/models/eventModel";
 import agentLinks from "./helpers/agentLinks";
-import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchBlogs";
 import useAgentData from "./useAgentData";
 import FeedTabs, { ContentTypes } from "./FeedTabs";
 import "./MyWebPage.scss";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import { HiLocationMarker } from "react-icons/hi";
+import contactLinks from "./helpers/contactLinks";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
@@ -53,7 +53,7 @@ const MyWebPage: React.FC = () => {
     loading,
   } = useAgentData(userGuid);
 
-  /* Fetch Events */
+
   useEffect(() => {
     const getEvents = async () => {
       const eventData = await adminAgent.Events.getEvents(`${user}`);
@@ -63,16 +63,12 @@ const MyWebPage: React.FC = () => {
     getEvents();
   }, []);
 
-  /* Fetch Blogs */
-  const { blogs } = useFetchBlogs();
-
   const navigate = useNavigate();
 
   const links = agentLinks(address, facebook, linkedIn, twitter);
+  const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '')
 
-  // if (loading) {
-  //   ;<Spinner variant="relative" />
-  // }
+
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
@@ -114,20 +110,9 @@ const MyWebPage: React.FC = () => {
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className="left-col">
                     <div className="contact-container">
-                      <div className="contact">
-                        <FaPhone /> <span>{phoneNumber}</span>
-                      </div>
-                      <div className="contact">
-                        <MdEmail />{" "}
-                        <span>
-                          <a href={`mailto:${email}`} className="mailto">
-                            {email}
-                          </a>
-                        </span>
-                      </div>
-                      <div className="contact">
-                        <FaAddressCard /> <span>{licenseNumber}</span>
-                      </div>
+                      {contactLink.map((con) => (
+                        <div className="contact">{con.icon} <span>{con.text}</span>  </div>
+                      ))}
                     </div>
                     <div className="left-col-actions">
                       <Button variant="primary">
@@ -179,7 +164,7 @@ const MyWebPage: React.FC = () => {
                         <div className="icon-holder">
                           <CiTrophy />
                         </div>
-                        Become an Agent
+                        Be a CFS Agent
                       </Button>
                       <Button
                         onClick={() =>
@@ -189,7 +174,7 @@ const MyWebPage: React.FC = () => {
                         <div className="icon-holder">
                           <CiGift />
                         </div>
-                        Subscribe to earn points
+                        Earn Points as a CFS Subscriber
                       </Button>
                       <Button
                         onClick={() => window.open(paths.portalRegistration)}
@@ -197,7 +182,13 @@ const MyWebPage: React.FC = () => {
                         <div className="icon-holder">
                           <CiVault />
                         </div>
-                        Portal Free 30 days trial
+                        Try CFS for 30-days
+                      </Button>
+                      <Button>
+                        <div className="icon-holder">
+                          <CiMonitor />
+                        </div>
+                        Join our webinar <br /> to learn more
                       </Button>
                     </div>
                     <div className="right-col-content">
