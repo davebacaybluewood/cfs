@@ -22,6 +22,7 @@ import "./MyWebPage.scss";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { HiLocationMarker } from "react-icons/hi";
 import contactLinks from "./helpers/contactLinks";
+import { routeLinks } from "./helpers/routeLinks";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
@@ -154,42 +155,17 @@ const MyWebPage: React.FC = () => {
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className="right-col">
                     <div className="right-col-actions">
-                      <Button
-                        onClick={() =>
-                          window.open(
-                            "https://agent.comfortfinancialsolutions.com/signup"
-                          )
-                        }
-                      >
-                        <div className="icon-holder">
-                          <CiTrophy />
-                        </div>
-                        Be a CFS Agent
-                      </Button>
-                      <Button
-                        onClick={() =>
-                          window.open(paths.subscriberRegistration)
-                        }
-                      >
-                        <div className="icon-holder">
-                          <CiGift />
-                        </div>
-                        Earn Points as a CFS Subscriber
-                      </Button>
-                      <Button
-                        onClick={() => window.open(paths.portalRegistration)}
-                      >
-                        <div className="icon-holder">
-                          <CiVault />
-                        </div>
-                        Try CFS for 30-days
-                      </Button>
-                      <Button>
-                        <div className="icon-holder">
-                          <CiMonitor />
-                        </div>
-                        Join our webinar <br /> to learn more
-                      </Button>
+                      {routeLinks.map((route) => (
+                        <>
+                          <Button onClick={route.onclick}>
+                            <div className="icon-holder">
+                              {route.icon}
+                            </div>
+                            {route.text}
+                          </Button>
+                        </>
+                      ))}
+
                     </div>
                     <div className="right-col-content">
                       <h3>Agent Calculator</h3>
