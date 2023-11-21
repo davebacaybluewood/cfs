@@ -116,13 +116,13 @@
           padding: 1.5rem 1rem;
           justify-content: center;
           transition: 0.2s;
-          gap: 0 15px;
+          gap: 0 10px;
 
           svg {
             font-size: 1.7rem;
           }
           span {
-            font: 500 2rem "Montserrat";
+            font: 500 1.5rem "Montserrat";
           }
 
           &:hover {
@@ -130,6 +130,11 @@
             background: transparent;
             border: 1px solid #00004d;
           }
+        }
+
+        .business-card-wrapper {
+          width: 100% !important;
+          margin-top: 10rem;
         }
       }
     }

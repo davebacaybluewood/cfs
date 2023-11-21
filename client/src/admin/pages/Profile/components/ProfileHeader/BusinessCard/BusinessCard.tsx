@@ -1,25 +1,25 @@
-import { exportComponentAsJPEG } from "react-component-export-image";
-import React, { useRef } from "react";
-import { QRCode } from "react-qrcode-logo";
-import { MAIN_IMAGES } from "constants/constants";
-import "./BusinessCard.scss";
+import { exportComponentAsJPEG } from "react-component-export-image"
+import React, { useRef } from "react"
+import { QRCode } from "react-qrcode-logo"
+import { MAIN_IMAGES } from "constants/constants"
+import "./BusinessCard.scss"
 
 interface BusinessCardProps {
-  name: string;
-  phoneNumber: string;
-  url?: string;
-  state: string;
-  licenseNumber: string;
-  userGuid: string;
-  email: string;
-  position: string;
+  name: string
+  phoneNumber: string
+  url?: string
+  state: string
+  licenseNumber: string
+  userGuid: string
+  email: string
+  position: string
 }
 const BusinessCard: React.FC<BusinessCardProps> = (props) => {
-  const businessCardRef = useRef();
+  const businessCardRef = useRef()
 
-  const emailAddressLength = props.email?.length;
+  const emailAddressLength = props.email?.length
 
-  const textSize = emailAddressLength > 20 ? "1rem" : "1.2rem";
+  const textSize = emailAddressLength > 20 ? "1rem" : "1.2rem"
 
   return (
     <div className="business-card-wrapper">
@@ -50,7 +50,7 @@ const BusinessCard: React.FC<BusinessCardProps> = (props) => {
                 bgColor="transparent"
                 fgColor="#FFFFFF"
               />
-              <img src={MAIN_IMAGES.MAIN_LOGO} />
+              <img src={MAIN_IMAGES.MAIN_LOGO} alt="cfs" />
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@ const BusinessCard: React.FC<BusinessCardProps> = (props) => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BusinessCard;
+export default BusinessCard

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
-import { Container, Grid } from "@mui/material"
+import { Box, Container, Grid, Modal, Typography } from "@mui/material"
 import Spinner from "library/Spinner/Spinner"
 import { FaPhone, FaAddressCard } from "react-icons/fa"
 import { BsCalculator, BsChatRightTextFill } from "react-icons/bs"
@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet"
 import { FiSend } from "react-icons/fi"
 import { paths } from "constants/routes"
 import { CiGift, CiTrophy, CiVault } from "react-icons/ci"
+import { TiBusinessCard } from "react-icons/ti"
 import Timeline from "pages/MyWebPage/Timeline"
 import adminAgent from "admin/api/agent"
 import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
@@ -22,12 +23,18 @@ import useAgentData from "./useAgentData"
 import FeedTabs, { ContentTypes } from "./FeedTabs"
 import "./MyWebPage.scss"
 import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import BusinessCard from "admin/pages/Profile/components/ProfileHeader/BusinessCard/BusinessCard"
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams()
   const [content, setContent] = useState<ContentTypes>("home")
   const [active, setActive] = useState(false)
   const [events, setEvents] = useState<Event[] | undefined>()
+  const [open, setOpen] = React.useState(false)
+
+  // Business Card Modal Function
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   /* Content Headers */
   const HOME = "home"
@@ -52,6 +59,10 @@ const MyWebPage: React.FC = () => {
     bio,
     loading,
   } = useAgentData(userGuid)
+
+  useEffect(() => {
+    console.log(profile)
+  }, [profile])
 
   /* Fetch Events */
   useEffect(() => {
@@ -145,6 +156,63 @@ const MyWebPage: React.FC = () => {
                         {" "}
                         <FiSend /> <span>Testimonial</span>{" "}
                       </Button>
+                      <Button variant="default" onClick={() => setOpen(true)}>
+                        {" "}
+                        <TiBusinessCard />
+                        <span>Business Card</span>{" "}
+                      </Button>
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box
+                          sx={{
+                            position: "absolute" as "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            width: 400,
+                            bgcolor: "background.paper",
+                            // border: "2px solid #000",
+                            boxShadow: 24,
+                            p: 4,
+                          }}
+                        >
+                          <Typography
+                            id="modal-modal-title"
+                            variant="h6"
+                            component="h2"
+                          >
+                            Download Contact Card
+                          </Typography>
+                          <Typography
+                            id="modal-modal-description"
+                            sx={{ mt: 0.2, mb: 2 }}
+                          >
+                            Expand your professional network by downloading the
+                            contact card from this profile. Click the 'Download'
+                            button to collect valuable contacts effortlessly.
+                          </Typography>
+
+                          <BusinessCard
+                            email={profile?.emailAddress ?? ""}
+                            name={
+                              `${profile?.firstName} ${profile?.lastName}` ?? ""
+                            }
+                            position={
+                              profile?.role === "ROLE_MASTER_ADMIN"
+                                ? "ROLE: MASTER ADMIN"
+                                : profile?.role ?? ""
+                            }
+                            licenseNumber={profile?.licenseNumber ?? ""}
+                            phoneNumber={profile?.phoneNumber ?? ""}
+                            state={profile?.state ?? ""}
+                            userGuid={profile?.userGuid ?? ""}
+                          />
+                        </Box>
+                      </Modal>
                     </div>
                   </div>
                 </Grid>
@@ -162,17 +230,6 @@ const MyWebPage: React.FC = () => {
                           userGuid={userGuid}
                           testimonials={profile?.testimonials}
                         />
-
-                        {/* /* These are all dummy, this must render the rightful component for each page. */}
-                        {/* {content === "home" ? (
-                          <Timeline content={content} />
-                        ) : content === "events" ? (
-                          <Timeline content={content} />
-                        ) : content === "articles" ? (
-                          <Timeline content={content} />
-                        ) : content === "testimonial" ? (
-                          <Timeline content={content} />
-                        ) : null} */}
                       </div>
                     </React.Fragment>
                   </div>
