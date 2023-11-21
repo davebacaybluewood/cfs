@@ -16,6 +16,8 @@ import Agent from "../models/agentModel.js";
 import backOfficeServices from "../services/backOfficeServices.js";
 import { AGENT_ROLES, PROFILE_POSITIONS } from "../constants/constants.js";
 import portalSubscriptionServices from "../services/portalSubscriptionServices.js";
+import Hierarchy from "../models/hierarchyModel.js";
+import generateString from "../utils/generateString.js";
 
 /**
  * @desc:  Auth the user & get token
@@ -199,43 +201,44 @@ const checkEmail = expressAsync(async (req, res) => {
     email: emailAddress,
   });
 
-  if (agent?.length === 0) {
-    throw new Error("No email address registed.");
+  if (!agent) {
+    res.status(401).json(API_RES_FAIL("No email address registered."));
+    return;
   } else {
-    if (agent?.length === 0) {
-      throw new Error("No email address registed.");
-    } else {
-      agent.idPassword = idPassword;
-      let sendHTMLEmail;
-      let mailSubject = "Change Password Confirmation";
-      let mailAttachments = [];
-      let mailContent = emailChangePasswordMail(
+    const user = await User.findOne({
+      email: emailAddress,
+    });
+    console.log(user);
+    user.idPassword = idPassword;
+    await user.save();
+    let sendHTMLEmail;
+    let mailSubject = "Change Password Confirmation";
+    let mailAttachments = [];
+    let mailContent = emailChangePasswordMail(
+      agent?.email,
+      agent?.name,
+      idPassword
+    );
+    try {
+      sendHTMLEmail = sendEmail(
         agent?.email,
-        agent?.name,
-        idPassword
-      );
-      try {
-        sendHTMLEmail = sendEmail(
-          agent?.email,
-          mailSubject,
-          mailContent,
-          mailAttachments
-        )
-          .then((request, response) => {
-            agent.save();
-            res.status(201).json("Ok");
-            response?.send(response?.message);
-          })
-          .catch((error) => {
-            res.status(500);
-            console.log(error);
-            throw new Error("Error occured in submission.");
-          });
-      } catch (error) {
-        res.status(500);
-        console.log(error);
-        throw new Error("Error occured in submission.");
-      }
+        mailSubject,
+        mailContent,
+        mailAttachments
+      )
+        .then((request, response) => {
+          res.status(201).json("Ok");
+          response?.send(response?.message);
+        })
+        .catch((error) => {
+          res.status(500);
+          console.log(error);
+          res.json(API_RES_FAIL("Error occured in submission."));
+        });
+    } catch (error) {
+      res.status(500);
+      console.log(error);
+      res.json(API_RES_FAIL("Error occured in submission."));
     }
   }
 });

@@ -226,3 +226,68 @@ export const fetchSmokingGun = async (userGuid) => {
   // first index is the first team that has the highest recruitment on the current week.
   return leads.shift();
 }
+
+export const checkMasterAgent = async (recruiterId) => {
+  const MISSION_DURATION = 30;
+
+  const recruiter = await Hierarchy.findOne({
+    userGuid: recruiterId,
+  });
+
+  const addDays = (date, days) => {
+    date.setDate(date.getDate() + days);
+    return date;
+  };
+
+  //TEMP: Use createdAt timestamp as basis for the A&A Registration
+  const durationStart = recruiter.createdAt.toISOString().substring(0, 10);
+  const durationEnd = addDays(recruiter.createdAt, MISSION_DURATION)
+    .toISOString()
+    .substring(0, 10);
+
+  if (!recruiter) {
+    return;
+  }
+
+  try {
+    const recruitedAgents = await Hierarchy.aggregate([
+      { $match: { userGuid: recruiterId } },
+      {
+        $graphLookup: {
+          from: "hierarchies",
+          startWith: "$userGuid",
+          connectFromField: "userGuid",
+          connectToField: "recruiterUserGuid",
+          as: "hierarchy",
+        },
+      },
+      {
+        $addFields: {
+          downlines: {
+            $filter: {
+              input: "$hierarchy",
+              as: "child",
+              cond: {
+                $and: [
+                  { $gte: ["$$child.createdAt", durationStart] },
+                  { $lt: ["$$child.createdAt", durationEnd] },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          downlines: 1,
+        },
+      },
+    ]);
+
+    return recruitedAgents;
+  } catch (ex) {
+    throw new Error(ex);
+    console.log(ex);
+  }
+};

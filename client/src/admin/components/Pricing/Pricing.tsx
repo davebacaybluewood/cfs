@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -21,6 +21,10 @@ import Button from "library/Button/Button";
 import { BsChevronDoubleRight } from "react-icons/bs";
 import { paths } from "constants/routes";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "admin/context/UserProvider";
+import { SubscriptionData } from "admin/models/subscriptionModel";
+import agent from "admin/api/agent";
+import Spinner from "library/Spinner/Spinner";
 
 const pricingUserData: { [key: string]: any } = {
   Agent: {
@@ -95,7 +99,29 @@ const subcategories: { [key: string]: string[] } = {
 };
 
 const Pricing = () => {
+  const [agentInfo, setAgentInfo] = useState<SubscriptionData | undefined>();
+  const [loading, setLoading] = useState<boolean>();
   const navigate = useNavigate();
+  const userCtx = useContext(UserContext) as any;
+  const userGuid = userCtx?.user?.userGuid;
+
+  useEffect(() => {
+    setLoading(true);
+    const getData = async () => {
+      const res = await agent.Subscriptions.getAgentCode("1");
+
+      if (res) {
+        setAgentInfo(res);
+        setLoading(false);
+      } else {
+        setAgentInfo(undefined);
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, [userGuid]);
+
   return (
     <div className="pricing-wrapper-admin">
       <Container>
@@ -125,8 +151,45 @@ const Pricing = () => {
                           "_blank"
                         )
                       }
+                      style={{
+                        paddingLeft: 25,
+                        paddingRight: 25,
+                      }}
+                      disabled={loading}
                     >
-                      Get Started <BsChevronDoubleRight />
+                      {loading ? (
+                        <span>Loading...</span>
+                      ) : (
+                        <React.Fragment>
+                          <span
+                            style={{
+                              fontWeight: 900,
+                            }}
+                          >
+                            BECOME AN AGENT
+                          </span>
+                          {agentInfo?.agentCode ? (
+                            <div
+                              style={{
+                                marginTop: 5,
+                                fontWeight: 300,
+                              }}
+                            >
+                              Use
+                              <span
+                                style={{
+                                  marginLeft: 4,
+                                  borderBottom: "1px dotted #fff",
+                                  fontWeight: 900,
+                                }}
+                              >
+                                {agentInfo?.agentCode}
+                              </span>{" "}
+                              as referral code
+                            </div>
+                          ) : null}
+                        </React.Fragment>
+                      )}
                     </Button>
                   </div>
                 </Grid>
@@ -223,20 +286,54 @@ const Pricing = () => {
                       <TableCell></TableCell>
                       {userTypes.map((userType) => (
                         <TableCell key={userType} align="center">
-                          <button
-                            className="portal-btn"
-                            onClick={() => {
-                              userType === "Agent"
-                                ? window.open(
-                                    "https://agent.comfortfinancialsolutions.com/signup",
-                                    "_blank"
-                                  )
-                                : navigate(paths.subscriberRegistration);
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              window.open(
+                                "https://agent.comfortfinancialsolutions.com/signup",
+                                "_blank"
+                              )
+                            }
+                            style={{
+                              paddingLeft: 25,
+                              paddingRight: 25,
                             }}
+                            disabled={loading}
                           >
-                            Join as {userType === "Agent" ? "an" : "a"}{" "}
-                            <span>{userType}</span>
-                          </button>
+                            {loading ? (
+                              <span>Loading...</span>
+                            ) : (
+                              <React.Fragment>
+                                <span
+                                  style={{
+                                    fontWeight: 900,
+                                  }}
+                                >
+                                  BECOME AN AGENT
+                                </span>
+                                {agentInfo?.agentCode ? (
+                                  <div
+                                    style={{
+                                      marginTop: 5,
+                                      fontWeight: 300,
+                                    }}
+                                  >
+                                    Use
+                                    <span
+                                      style={{
+                                        marginLeft: 4,
+                                        borderBottom: "1px dotted #fff",
+                                        fontWeight: 900,
+                                      }}
+                                    >
+                                      {agentInfo?.agentCode}
+                                    </span>{" "}
+                                    as referral code
+                                  </div>
+                                ) : null}
+                              </React.Fragment>
+                            )}
+                          </Button>
                         </TableCell>
                       ))}
                     </TableRow>

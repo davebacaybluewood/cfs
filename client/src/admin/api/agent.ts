@@ -28,6 +28,7 @@ import { OrdersData } from "admin/models/ordersModels";
 import Event, { EventBody, ResponseMessage } from "admin/models/eventModel";
 import { RSVPData } from "admin/models/rsvpModel";
 import { Contacts as ContactsData } from "admin/models/contactsModel";
+import { SubscriptionData } from "admin/models/subscriptionModel";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -376,6 +377,15 @@ const TrialSubscription = {
   },
 };
 
+const Subscriptions = {
+  getAgentCode: (userGuid: string) => {
+    const res = requests.get<SubscriptionData>(
+      `/api/subscriptions/hierarchy-code/${userGuid}`
+    );
+    return res;
+  },
+};
+
 const Events = {
   getEvents: (userGuid: string) => {
     const res = requests.get<Event[]>(`/api/events?userGuid=${userGuid}`);
@@ -468,6 +478,7 @@ const agent = {
   Events,
   RSVP,
   Contacts,
+  Subscriptions,
 };
 
 export default agent;

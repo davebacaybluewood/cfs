@@ -92,7 +92,9 @@ const ContractForm: React.FC = () => {
   const [contacts, setContacts] = useState<any>([]);
   const [contactsValue, setContactsValue] = useState<any>([]);
   const [recipientLoading, setRecipientLoading] = useState(false);
-  const [templateId, setTemplateId] = useState(new URLSearchParams(search).get("templateId"));
+  const [templateId, setTemplateId] = useState(
+    new URLSearchParams(search).get("templateId")
+  );
 
   const populateForm = (
     emailBody: string,
@@ -153,12 +155,10 @@ const ContractForm: React.FC = () => {
     if (data.emailAddress && data.userGuid)
       await agent.Contacts.create(data)
         .then((c) => {
-          setTimeout(() => {
-            const newContact = createOption(c.data.emailAddress, c.data._id);
+          const newContact = createOption(c.data.emailAddress, c.data._id);
 
-            setContacts((prev) => [...prev, newContact]);
-            setContactsValue((prev) => [...prev, newContact]);
-          }, 1000);
+          setContacts((prev) => [...prev, newContact]);
+          setContactsValue((prev) => [...prev, newContact]);
 
           setRecipientLoading(false);
           toast.info(`New Contact added. ${c.data.emailAddress}`, {
@@ -317,7 +317,11 @@ const ContractForm: React.FC = () => {
           );
           let params = new URLSearchParams(search);
           params.set("templateId", templateId!);
-          window.history.replaceState(null, "", `${search}?templateId=${response.data._id}`);
+          window.history.replaceState(
+            null,
+            "",
+            `${search}?templateId=${response.data._id}`
+          );
           setTemplateId(response.data._id);
         } else {
           response = await agent.EmailMarketing.updateEmailTemplate(
@@ -457,7 +461,9 @@ const ContractForm: React.FC = () => {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
               };
-              let action = new URLSearchParams(window.location.search).get("action");
+              let action = new URLSearchParams(window.location.search).get(
+                "action"
+              );
               setLoading(true);
               if (action === "edit") {
                 const finalPayloadData = {
@@ -552,6 +558,7 @@ const ContractForm: React.FC = () => {
                           isLoading={recipientLoading}
                           isDisabled={recipientLoading}
                           value={contactsValue}
+                          name="recipients"
                           components={{ Option: RemoveContactButton }}
                           placeholder="Select a recipient item to add"
                           onCreateOption={(input) => {
@@ -561,8 +568,10 @@ const ContractForm: React.FC = () => {
                               emailAddress: input,
                             };
                             handleCreateContact(data);
-                            setFieldTouched("recipients", false);
-                            setFieldValue("recipients", data);
+                            setFieldValue("recipients", [
+                              ...values.recipients,
+                              data,
+                            ]);
                           }}
                           onChange={(e) => {
                             const modifiedValue = e?.map((contact) => {
@@ -816,23 +825,34 @@ const ContractForm: React.FC = () => {
                                   })
                                 }
                               >
-                                Save as template 
+                                Save as template
                               </Button>
                             </React.Fragment>
                           ) : (
-                            <Button
-                                variant="danger"
-                                onClick={() => {
-                                  let params = new URLSearchParams(window.location.search);
-                                  params.set("action", "edit");
-                                  if (!window.location.search.includes("&action=edit")) {
-                                    window.history.replaceState(null, "", `${window.location.search}&action=edit`);
-                                  }
-                                  handleSubmit()
-                                }}
-                              >
-                              Update Template
-                            </Button>
+                            // <Button
+                            //   variant="danger"
+                            //   onClick={() => {
+                            //     let params = new URLSearchParams(
+                            //       window.location.search
+                            //     );
+                            //     params.set("action", "edit");
+                            //     if (
+                            //       !window.location.search.includes(
+                            //         "&action=edit"
+                            //       )
+                            //     ) {
+                            //       window.history.replaceState(
+                            //         null,
+                            //         "",
+                            //         `${window.location.search}&action=edit`
+                            //       );
+                            //     }
+                            //     handleSubmit();
+                            //   }}
+                            // >
+                            //   Update Template
+                            // </Button>
+                            <React.Fragment />
                           )}
                           <Button
                             variant="danger"

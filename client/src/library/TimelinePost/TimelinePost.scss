@@ -6,8 +6,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 7px;
-  padding: 6px 12px;
+  border-radius: 15px;
+  padding: 6px 8px;
   transition: 400ms;
 }
 
@@ -33,6 +33,10 @@
     object-fit: cover;
     width: 4.5rem;
     height: 4.5rem;
+  }
+
+  .blog-title {
+    cursor: pointer;
   }
 
   .tag {

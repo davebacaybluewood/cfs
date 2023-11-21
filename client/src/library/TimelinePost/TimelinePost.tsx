@@ -2,29 +2,46 @@ import { useState } from "react"
 import { Stack } from "@mui/material"
 import PostButtons from "./PostButtons"
 import TimeAgo from "react-timeago"
+import { useNavigate } from "react-router-dom"
+import { paths } from "constants/routes"
 
-interface TimelinePostProps {
+export interface TimelinePostProps {
+  id?: string
+  userGuid?: string
   profileImg?: string
   title: string
   userName?: string
-  datePosted?: string
+  date: string
   content: string
   imgContent?: string
   eventDate?: string
-  tag?: string
+  tag?: "blog" | "article" | "event" | "testimonial"
+  children?: JSX.Element
 }
 
 const TimelinePost = ({
+  id,
+  userGuid,
   profileImg,
   title,
   userName,
-  datePosted,
+  date,
   content,
   imgContent,
-  eventDate,
   tag,
 }: TimelinePostProps) => {
   const [isContentFull, setIsContentFull] = useState(false)
+  const navigate = useNavigate()
+  const baseUrl = window.location.protocol + "//" + window.location.host
+  const shareUrl =
+    tag === "article" || tag === "blog"
+      ? `${baseUrl}/blogs/${title
+          .split(" ")
+          .join("-")
+          .toLowerCase()}?userGuid=${userGuid}`
+      : tag === "event"
+      ? `${baseUrl}/rsvp-form/${id}?userGuid=${userGuid}`
+      : ""
 
   return (
     <div className={`timeline-post`}>
@@ -37,26 +54,55 @@ const TimelinePost = ({
 
         <Stack flexDirection="column" gap={1} sx={{ position: "relative" }}>
           {tag && (
-            <div className={`${tag === "article" && "position-top-left"} tag`}>
+            <div
+              className={`${
+                (tag === "article" ||
+                  tag === "blog" ||
+                  (tag === "event" && imgContent)) &&
+                "position-top-left"
+              } tag`}
+            >
               {tag.toUpperCase()}
             </div>
           )}
+
           {imgContent && (
             <img style={{ width: "100%" }} src={imgContent} alt="" />
           )}
           <Stack flexDirection={"row"} gap={1} sx={{ textAlign: "left" }}>
-            <h2>{title}</h2>
+            {tag === "blog" || tag === "article" ? (
+              <h2
+                className="blog-title"
+                onClick={() =>
+                  navigate(
+                    paths.single_blog.replace(
+                      ":blogTitle",
+                      title.split(" ").join("-").toLowerCase()
+                    )
+                  )
+                }
+              >
+                {title}
+              </h2>
+            ) : (
+              <h2>{title}</h2>
+            )}
             {userName && <h2 className="username">@{userName}</h2>}
 
             <h2 style={{ color: "gray" }}>·</h2>
             <TimeAgo
-              date={datePosted ? datePosted : eventDate}
+              date={date}
               style={{ color: "gray", fontWeight: 400, fontSize: "13px" }}
             />
           </Stack>
 
           <p className="content">
-            {isContentFull ? content : content.slice(0, 300)}
+            {isContentFull
+              ? content.replace(/<[^>]*>/g, "").replace("&quot;", " ")
+              : content
+                  .replace(/<[^>]*>/g, "")
+                  .replace("&quot;", " ")
+                  .slice(0, 300)}
 
             {!isContentFull && content.length > 300 ? (
               <span className="see-more" onClick={() => setIsContentFull(true)}>
@@ -64,7 +110,7 @@ const TimelinePost = ({
               </span>
             ) : null}
           </p>
-          <PostButtons />
+          <PostButtons shareUrl={shareUrl} />
         </Stack>
       </Stack>
     </div>

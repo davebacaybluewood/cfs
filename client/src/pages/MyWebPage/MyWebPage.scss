@@ -72,26 +72,37 @@
     background: #f8f4f4;
 
     .left-col {
-      .contact {
-        display: flex;
-        align-items: center;
-        gap: 0 1.5rem;
-        margin: 1.5rem 0;
+      .contact-container {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+        border-radius: 20px;
+        background-color: #fff;
+        .contact {
+          display: flex;
+          align-items: center;
+          gap: 0 1.5rem;
+          margin: 1.5rem 0;
 
-        svg {
-          color: #5e6572;
-          font-size: 2rem;
-        }
-        span {
-          font: 500 1.5rem "Montserrat";
-          color: #5e6572;
-          .mailto {
+          svg {
+            color: #5e6572;
+            font-size: 2rem;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 50%;
+            border: 1px dotted #00004d;
+          }
+          span {
             font: 500 1.5rem "Montserrat";
-            color: #353738;
-            transition: 0.2s;
+            color: #5e6572;
+            .mailto {
+              font: 500 1.5rem "Montserrat";
+              color: #353738;
+              transition: 0.2s;
 
-            &:hover {
-              opacity: 0.7;
+              &:hover {
+                opacity: 0.7;
+              }
             }
           }
         }
@@ -105,9 +116,13 @@
           padding: 1.5rem 1rem;
           justify-content: center;
           transition: 0.2s;
+          gap: 0 15px;
+
+          svg {
+            font-size: 1.7rem;
+          }
           span {
-            font: 500 1.3rem "Montserrat";
-            margin-left: 0.5rem;
+            font: 500 2rem "Montserrat";
           }
 
           &:hover {
@@ -126,7 +141,7 @@
       .navbar-main-feed {
         display: flex;
         justify-content: space-between;
-        padding: 2rem 0;
+        padding: 2rem;
         background: #eee;
 
         .active-nav {
@@ -140,8 +155,6 @@
         .nav-tab {
           display: flex;
           align-items: center;
-          padding: 0 2rem;
-          margin: 0 1rem;
 
           .navlink-title {
             font: 300 1.5rem "Montserrat";
@@ -152,9 +165,6 @@
             cursor: pointer;
           }
         }
-      }
-      .middle-col-content {
-        //TODO put design here
       }
     }
     .right-col {
