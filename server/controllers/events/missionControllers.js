@@ -1,4 +1,4 @@
-import Mission from "../../models/events/missionModel.js";
+import Mission from "../../models/events/agentOfAgents/missionModel.js";
 import expressAsync from "express-async-handler";
 import cloudinaryImport from "../../utils/cloudinary.js";
 import { API_RES_FAIL, API_RES_OK } from "../../constants/constants.js";

@@ -21,6 +21,7 @@ import useFetchBlogs from "admin/pages/FileMaintenance/pages/Webinars/hooks/useF
 import useAgentData from "./useAgentData";
 import FeedTabs, { ContentTypes } from "./FeedTabs";
 import "./MyWebPage.scss";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
@@ -36,6 +37,7 @@ const MyWebPage: React.FC = () => {
 
   /* General Agent Information */
   const userGuid = `${user}`;
+  const { profile } = useFetchUserProfile(userGuid);
   const {
     Agent,
     address,
@@ -68,35 +70,9 @@ const MyWebPage: React.FC = () => {
 
   const links = agentLinks(address, facebook, linkedIn, twitter);
 
-  /*Events */
-  const filteredEvents: TimelinePostProps[] | undefined = events?.map((ev) => {
-    return {
-      tag: "Event",
-      content: ev.shortDescription ?? "",
-      userName: `${ev.authorFirstName} ${ev.authorLastName}` ?? "",
-      datePosted: ev.createdAt ?? "",
-      imgContent: ev.thumbnail ?? "",
-      title: ev.title ?? "",
-      eventDate: ev.eventDate ?? "",
-    };
-  });
-
-  /* Blogs */
-  const filteredBlogs: TimelinePostProps[] | undefined = blogs?.map((blog) => {
-    return {
-      tag: "Article",
-      content: (blog.content ?? "")
-        .replace(/<[^>]*>/g, "")
-        .replace("&quot;", " "),
-      title: blog.title ?? "",
-      datePosted: blog.createdAt?.toString() ?? "",
-      imgContent: blog.thumbnail ?? "",
-    };
-  });
-
-  if (loading) {
-    <Spinner variant="relative" />;
-  }
+  // if (loading) {
+  //   ;<Spinner variant="relative" />
+  // }
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
@@ -119,8 +95,8 @@ const MyWebPage: React.FC = () => {
                     <h2>{Agent}</h2>
                     <p className="agent-description">{bio}</p>
                     <div className="social-container">
-                      {links.map((item) => (
-                        <div className="social-content">
+                      {links.map((item, index) => (
+                        <div className="social-content" key={index}>
                           <a href={item.link} target="_blank">
                             {item.icon} <span>{item.title}</span>
                           </a>
@@ -181,13 +157,11 @@ const MyWebPage: React.FC = () => {
                         />
                       </div>
                       <div className="tabs-content">
-                        {content === EVENTS ? (
-                          <Timeline data={filteredEvents} />
-                        ) : content === ARTICLES ? (
-                          <Timeline data={filteredBlogs} />
-                        ) : (
-                          content === RECOMMENDATION && <h2>Reccomendation</h2>
-                        )}
+                        <Timeline
+                          content={content}
+                          userGuid={userGuid}
+                          testimonials={profile?.testimonials}
+                        />
                       </div>
                     </React.Fragment>
                   </div>
