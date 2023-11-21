@@ -18,7 +18,7 @@ import FeedTabs, { ContentTypes } from "./FeedTabs";
 import "./MyWebPage.scss";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import contactLinks from "./helpers/contactLinks";
-import { routeLinks } from "./helpers/routeLinks";
+import RouteLinks from "./helpers/routeLinks";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
@@ -108,8 +108,9 @@ const MyWebPage: React.FC = () => {
                     </div>
                     <div className="left-col-actions">
                       <Button variant="primary">
-                        {" "}
-                        <BsChatRightTextFill /> <span>Contact Me</span>{" "}
+                        <div className="button-content">
+                          <BsChatRightTextFill /> <span>Contact Me</span>
+                        </div>
                       </Button>
                       <Button
                         variant="danger"
@@ -119,8 +120,10 @@ const MyWebPage: React.FC = () => {
                           )
                         }
                       >
-                        {" "}
-                        <FiSend /> <span>Recommendation</span>{" "}
+
+                        <div className="button-content">
+                          <FiSend /> <span>Recommendation</span>
+                        </div>
                       </Button>
                     </div>
                   </div>
@@ -146,17 +149,7 @@ const MyWebPage: React.FC = () => {
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className="right-col">
                     <div className="right-col-actions">
-                      {routeLinks.map((route) => (
-                        <>
-                          <Button onClick={route.onclick}>
-                            <div className="icon-holder">
-                              {route.icon}
-                            </div>
-                            {route.text}
-                          </Button>
-                        </>
-                      ))}
-
+                      <RouteLinks />
                     </div>
                     <div className="right-col-content">
                       <h3>Agent Calculator</h3>
