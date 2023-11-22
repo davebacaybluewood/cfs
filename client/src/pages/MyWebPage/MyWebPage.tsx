@@ -30,17 +30,7 @@ const MyWebPage: React.FC = () => {
   const [content, setContent] = useState<ContentTypes>("home")
   const [active, setActive] = useState(false)
   const [events, setEvents] = useState<Event[] | undefined>()
-  const [open, setOpen] = React.useState(false)
-
-  // Business Card Modal Function
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
-  /* Content Headers */
-  const HOME = "home"
-  const EVENTS = "events"
-  const TESTIMONIAL = "testimonial"
-  const ARTICLES = "articles"
+  const [modalOpen, setModalOpen] = useState(true)
 
   /* General Agent Information */
   const userGuid = `${user}`
@@ -60,10 +50,6 @@ const MyWebPage: React.FC = () => {
     loading,
   } = useAgentData(userGuid)
 
-  useEffect(() => {
-    console.log(profile)
-  }, [profile])
-
   /* Fetch Events */
   useEffect(() => {
     const getEvents = async () => {
@@ -80,10 +66,6 @@ const MyWebPage: React.FC = () => {
   const navigate = useNavigate()
 
   const links = agentLinks(address, facebook, linkedIn, twitter)
-
-  // if (loading) {
-  //   ;<Spinner variant="relative" />
-  // }
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
@@ -108,7 +90,7 @@ const MyWebPage: React.FC = () => {
                     <div className="social-container">
                       {links.map((item, index) => (
                         <div className="social-content" key={index}>
-                          <a href={item.link} target="_blank">
+                          <a href={item.link} target="_blank" rel="noreferrer">
                             {item.icon} <span>{item.title}</span>
                           </a>
                         </div>
@@ -156,14 +138,18 @@ const MyWebPage: React.FC = () => {
                         {" "}
                         <FiSend /> <span>Testimonial</span>{" "}
                       </Button>
-                      <Button variant="default" onClick={() => setOpen(true)}>
+                      <Button
+                        variant="default"
+                        onClick={() => setModalOpen(true)}
+                      >
                         {" "}
                         <TiBusinessCard />
                         <span>Business Card</span>{" "}
                       </Button>
                       <Modal
-                        open={open}
-                        onClose={handleClose}
+                        sx={{ background: "rgba(0, 0, 0, 0.7)" }}
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                       >
@@ -173,44 +159,59 @@ const MyWebPage: React.FC = () => {
                             top: "50%",
                             left: "50%",
                             transform: "translate(-50%, -50%)",
-                            width: 400,
+                            width: "336px",
                             bgcolor: "background.paper",
-                            // border: "2px solid #000",
+                            border: "2px solid #00004d",
                             boxShadow: 24,
                             p: 4,
+                            borderRadius: "10px",
                           }}
                         >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <BusinessCard
+                              email={profile?.emailAddress ?? ""}
+                              name={
+                                `${profile?.firstName} ${profile?.lastName}` ??
+                                ""
+                              }
+                              position={
+                                profile?.role === "ROLE_MASTER_ADMIN"
+                                  ? "ROLE: MASTER ADMIN"
+                                  : profile?.role ?? ""
+                              }
+                              licenseNumber={profile?.licenseNumber ?? ""}
+                              phoneNumber={profile?.phoneNumber ?? ""}
+                              state={profile?.state ?? ""}
+                              userGuid={profile?.userGuid ?? ""}
+                            />
+                          </div>
+                          <hr
+                            style={{
+                              borderTop: "1px solid lightgray",
+                              margin: "1rem auto",
+                            }}
+                          />
                           <Typography
                             id="modal-modal-title"
                             variant="h6"
                             component="h2"
                           >
-                            Download Contact Card
+                            Download Business Card
                           </Typography>
                           <Typography
                             id="modal-modal-description"
                             sx={{ mt: 0.2, mb: 2 }}
                           >
                             Expand your professional network by downloading the
-                            contact card from this profile. Click the 'Download'
-                            button to collect valuable contacts effortlessly.
+                            business card from this profile. Click the
+                            'Download' button to collect valuable contacts
+                            effortlessly.
                           </Typography>
-
-                          <BusinessCard
-                            email={profile?.emailAddress ?? ""}
-                            name={
-                              `${profile?.firstName} ${profile?.lastName}` ?? ""
-                            }
-                            position={
-                              profile?.role === "ROLE_MASTER_ADMIN"
-                                ? "ROLE: MASTER ADMIN"
-                                : profile?.role ?? ""
-                            }
-                            licenseNumber={profile?.licenseNumber ?? ""}
-                            phoneNumber={profile?.phoneNumber ?? ""}
-                            state={profile?.state ?? ""}
-                            userGuid={profile?.userGuid ?? ""}
-                          />
                         </Box>
                       </Modal>
                     </div>

@@ -1,5 +1,5 @@
 import { exportComponentAsJPEG } from "react-component-export-image"
-import React, { useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { QRCode } from "react-qrcode-logo"
 import { MAIN_IMAGES } from "constants/constants"
 import "./BusinessCard.scss"
@@ -15,7 +15,7 @@ interface BusinessCardProps {
   position: string
 }
 const BusinessCard: React.FC<BusinessCardProps> = (props) => {
-  const businessCardRef = useRef()
+  const businessCardRef = useRef<HTMLInputElement>()
 
   const emailAddressLength = props.email?.length
 
