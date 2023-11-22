@@ -90,7 +90,7 @@ export const fetchOneYearTeam = async (userGuid) => {
       },
     },
   ]);
-  console.log(documents)
+
   return uniqBy(documents, KEY_CONDITION);
 };
 
