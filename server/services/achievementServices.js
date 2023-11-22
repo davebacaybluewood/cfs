@@ -158,3 +158,55 @@ export const checkMasterAgent = async (recruiterId) => {
     console.log(ex);
   }
 };
+
+export const getDownlinesByDateRange = async (
+  recruiterId,
+  dateStart,
+  dateEnd
+) => {
+  if (!recruiterId) {
+    return;
+  }
+
+  try {
+    const recruitedAgents = await Hierarchy.aggregate([
+      { $match: { userGuid: recruiterId } },
+      {
+        $graphLookup: {
+          from: "hierarchies",
+          startWith: "$userGuid",
+          connectFromField: "userGuid",
+          connectToField: "recruiterUserGuid",
+          as: "hierarchy",
+        },
+      },
+      {
+        $addFields: {
+          downlines: {
+            $filter: {
+              input: "$hierarchy",
+              as: "child",
+              cond: {
+                $and: [
+                  { $gte: ["$$child.createdAt", dateStart] },
+                  { $lt: ["$$child.createdAt", dateEnd] },
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          downlines: 1,
+        },
+      },
+    ]);
+
+    return recruitedAgents;
+  } catch (ex) {
+    throw new Error(ex);
+    console.log(ex);
+  }
+};

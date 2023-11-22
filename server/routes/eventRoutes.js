@@ -10,7 +10,7 @@ router
   .post(protect, multerConfig.single("thumbnail"), async (req, res, next) => {
     await eventControllers.createEvent(req, res, next);
   })
-  .get(protect, async (req, res, next) => {
+  .get(async (req, res, next) => {
     await eventControllers.getEvents(req, res, next);
   });
 

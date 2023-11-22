@@ -41,7 +41,7 @@ const FeedTabs: React.FC<FeedTabsProps> = (props) => {
       },
       className:
         active === true && content === "testimonial" ? "active-nav" : "",
-      link: "Testimonial",
+      link: "Recommendation",
     },
     {
       icon: <MdOutlineLibraryBooks />,

@@ -3,7 +3,9 @@ import {
   fetchUnitedNations,
   fetchOneYearTeam,
   checkMasterAgent,
+  getDownlinesByDateRange,
 } from "../services/achievementServices.js";
+import Hierarchy from "../models/hierarchyModel.js";
 import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
@@ -80,4 +82,52 @@ const getMasterAgent = expressAsync(async (req, res) => {
     data: recruitedAgents,
   });
 });
-export { getUnitedNations, getOneYearTeam, getMasterAgent };
+
+/**
+ * @desc:  Check if Agent achieved to recruit 30 downlines including direct and indirect
+ * @route: GET /api/achievements/machine-gunner/:userGuid
+ * @access: Private
+ */
+const getMachineGunner = expressAsync(async (req, res) => {
+  if (!req.params.userGuid) {
+    res.status(400).send(API_RES_FAIL("[Mission] Params is required!"));
+    return;
+  }
+
+  const ACHIEVEMENT_COUNT = 30;
+  const MISSION_DAYS_DURATION = 30;
+
+  const recruiter = await Hierarchy.findOne({
+    userGuid: req.params.userGuid,
+  });
+
+  if (!recruiter) {
+    res.status(400).send(API_RES_FAIL("[Mission] Agent userGuid not found"));
+    return;
+  }
+
+  const addDays = (date, days) => {
+    date.setDate(date.getDate() + days);
+    return date;
+  };
+
+  const durationStart = recruiter.createdAt.toISOString().substring(0, 10);
+  const durationEnd = addDays(recruiter.createdAt, MISSION_DAYS_DURATION)
+    .toISOString()
+    .substring(0, 10);
+
+  const recruitedAgents = await getDownlinesByDateRange(
+    recruiter.userGuid,
+    durationStart,
+    durationEnd
+  );
+
+  const totalLeads = recruitedAgents[0]?.downlines?.length;
+
+  res.status(200).json({
+    total: totalLeads,
+    isCompleted: totalLeads >= ACHIEVEMENT_COUNT,
+    data: recruitedAgents,
+  });
+});
+export { getUnitedNations, getOneYearTeam, getMasterAgent, getMachineGunner };
