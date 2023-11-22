@@ -1,119 +1,38 @@
-import React from "react";
-import { Grid } from "@mui/material";
+import { listAchievements } from "redux/actions/achievementActions";
 import MissionCard from "library/MissionCard/MissionCard";
-import { styled } from "@mui/material/styles";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
-import MuiAccordionSummary, {
-  AccordionSummaryProps,
-} from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import LinearProgress, {
-  LinearProgressProps,
-} from "@mui/material/LinearProgress";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { faqs } from "./faqs";
+import { listRewards } from "redux/actions/rewardActions";
+import { useDispatch, useSelector } from "react-redux";
+import Progress from "./components/Progress";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { Grid } from "@mui/material";
+import Box from "@mui/material/Box";
+import FAQ from "./components/FAQ";
+import { RootState } from "store";
 import "./Missions.scss";
 
 const Missions: React.FC = () => {
-  const LinearProgressWithLabel = (
-    props: LinearProgressProps & { value: number }
-  ) => {
-    return (
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Box sx={{ width: "100%", mr: 1 }}>
-          <LinearProgress variant="determinate" {...props} />
-        </Box>
-        <Box sx={{ minWidth: 35 }}>
-          <Typography variant="body2" color="text.secondary">{`${Math.round(
-            props.value
-          )}%`}</Typography>
-        </Box>
-      </Box>
-    );
-  };
+  const data = useSelector((state: RootState) => state.achievements);
+  const rewards = useSelector((state: RootState) => state.rewards);
+  const dispatch = useDispatch();
 
-  const Accordion = styled((props: AccordionProps) => (
-    <MuiAccordion disableGutters elevation={0} square {...props} />
-  ))(({ theme }) => ({
-    border: `1px solid ${theme.palette.divider}`,
-    "&:not(:last-child)": {
-      borderBottom: 0,
-    },
-    "&:before": {
-      display: "none",
-    },
-  }));
+  useEffect(() => {
+    dispatch(listAchievements() as any);
+    dispatch(listRewards() as any);
 
-  const AccordionSummary = styled((props: AccordionSummaryProps) => (
-    <MuiAccordionSummary
-      expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
-      {...props}
-    />
-  ))(({ theme }) => ({
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? "rgba(255, 255, 255, .05)"
-        : "rgba(0, 0, 0, .03)",
-    flexDirection: "row-reverse",
-    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-      transform: "rotate(90deg)",
-    },
-    "& .MuiAccordionSummary-content": {
-      marginLeft: theme.spacing(1),
-    },
-  }));
+  }, [dispatch]);
 
-  const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-    padding: theme.spacing(2),
-    borderTop: "1px solid rgba(0, 0, 0, .125)",
-  }));
-
-  // Content Array
-  const content = [
-    {
-      title: "Mission Statement",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut veniam at blanditiis dicta aperiam dolorum suscipit voluptas aliquam. Placeat aperiam natus inventore iure a debitis quaerat voluptatum labore odio eos.",
-      progress: (
-        <Box sx={{ width: "100%" }}>
-          <LinearProgressWithLabel value={54} />
-        </Box>
-      ),
-    },
-    {
-      title: "Mission Statement2",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut veniam at blanditiis dicta aperiam dolorum suscipit voluptas aliquam. Placeat aperiam natus inventore iure a debitis quaerat voluptatum labore odio eos.",
-      progress: (
-        <Box sx={{ width: "100%" }}>
-          <LinearProgressWithLabel value={42} />
-        </Box>
-      ),
-    },
-    {
-      title: "Mission Statement3",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut veniam at blanditiis dicta aperiam dolorum suscipit voluptas aliquam. Placeat aperiam natus inventore iure a debitis quaerat voluptatum labore odio eos.",
-      progress: (
-        <Box sx={{ width: "100%" }}>
-          <LinearProgressWithLabel value={80} />
-        </Box>
-      ),
-    },
-    {
-      title: "Mission Statement4",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut veniam at blanditiis dicta aperiam dolorum suscipit voluptas aliquam. Placeat aperiam natus inventore iure a debitis quaerat voluptatum labore odio eos.",
-      progress: (
-        <Box sx={{ width: "100%" }}>
-          <LinearProgressWithLabel value={78} />
-        </Box>
-      ),
-    },
-  ];
+  const getStatus = (doc: any, content: any) => {
+    const status = {
+      todo: "todo",
+      inProgress: "in-progress",
+      completed: "completed",
+    };
+  
+    if (content && content.name == 'One Year Team') {
+      return content.progress == 0 ? status.todo : doc.achievements.oneYearTeam.isCompleted ? status.completed : status.inProgress
+    }
+  }
 
   return (
     <div className="missions-page-main-container">
@@ -134,11 +53,19 @@ const Missions: React.FC = () => {
             <h2 className="title-label">Missions</h2>
             <h3 className="page-subtitle">List of Missions</h3>
 
-            {content.map((item) => (
+            {data && data.content.map((item, index) => (
               <MissionCard
                 title={item.title}
                 description={item.description}
-                element={item.progress}
+                status={getStatus(data, item)}
+                item={item.id}
+                rewards={rewards}
+                element={
+                  <Box sx={{ width: "100%" }}>
+                    <Progress value={Number(item.progress.toFixed())} />
+                  </Box>
+                }
+                key={index}
               />
             ))}
             <div className="empty-container"></div>
@@ -146,21 +73,10 @@ const Missions: React.FC = () => {
           <Grid item md={4}>
             <h2 className="title-label">FAQs</h2>
             <h3 className="page-subtitle">Frequently asked questions.</h3>
-            {faqs.map((faq) => (
-              <Accordion>
-                <AccordionSummary
-                  aria-controls="panel1d-content"
-                  id="panel1d-header"
-                >
-                  <h3>{faq.header}</h3>
-                </AccordionSummary>
-                <AccordionDetails>{faq.content}</AccordionDetails>
-              </Accordion>
-            ))}
+            <FAQ></FAQ>
           </Grid>
         </Grid>
       </div>
-      {/* </Container> */}
     </div>
   );
 };

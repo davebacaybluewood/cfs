@@ -23,6 +23,8 @@ import {
   agentListSingleReducer,
   createAgentReducer,
 } from "redux/reducers/agentReducers";
+import { achivementReducers } from "redux/reducers/achievementReducers";
+import { rewardReducers } from "redux/reducers/rewardReducers";
 
 const reducer = combineReducers({
   eventList: eventListReducer,
@@ -43,6 +45,8 @@ const reducer = combineReducers({
   agentList: agentListReducer,
   agentSingle: agentListSingleReducer,
   agentAdd: createAgentReducer,
+  achievements: achivementReducers,
+  rewards: rewardReducers,
 });
 
 export type RootState = ReturnType<typeof reducer>;

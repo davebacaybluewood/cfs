@@ -16,7 +16,7 @@ import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { rewardItems } from "events/mission/Rewards/contants/Items";
 
 const ClaimReward: React.FC = () => {
-  const userGuid = "242123bb-831a-4833-ba47-6af569a7e913"; //to apply => useContext(UserContext)?.user?.userGuid;
+  const userGuid = "19cd813a-a01e-433c-8b89-8991ae595d71"; //to apply => useContext(UserContext)?.user?.userGuid;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
