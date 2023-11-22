@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MissionWrapper from "library/MissionWrapper/MissionWrapper";
 import { Grid } from "@mui/material";
 import DatePicker from "library/DatePicker/DatePicker";
@@ -30,9 +30,24 @@ const Registration: React.FC = () => {
   const [thumbnailPreview, setThumbnailPreview] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const userGuid = "32de48c3-3982-4ae4-be4a-14466d3550c2"; // Testing purposes only, this is not the final approach.
+  const userGuid = "c29875fc-d064-46ca-8b00-507ef315c62f"; // Testing purposes only, this is not the final approach.
 
   const { profile } = useFetchUserProfile(userGuid);
+
+  useEffect(() => {
+    setLoading(true);
+    const checkRegistration = async () => {
+      const res = await agent.Mission.checkMissionRegistration(userGuid);
+
+      if (res.status === "SUCCESS") {
+        navigate(paths.missions);
+      }
+
+      setLoading(false);
+    };
+
+    checkRegistration();
+  }, [userGuid]);
 
   const validationSchema = yup.object({
     state: yup.string().required("This field is required."),

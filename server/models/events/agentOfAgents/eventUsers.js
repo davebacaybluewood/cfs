@@ -10,6 +10,7 @@ const eventUsersSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+eventUsersSchema.index({ userGuid: 1 }, { unique: true });
 const EventUsers = mongoose.model("EventUsers", eventUsersSchema);
 
 export default EventUsers;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import MissionCard from "library/MissionCard/MissionCard";
 import { styled } from "@mui/material/styles";
@@ -16,8 +16,26 @@ import Box from "@mui/material/Box";
 import { faqs } from "./faqs";
 import { Helmet } from "react-helmet";
 import "./Missions.scss";
+import agent from "api/agent";
+import { useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
 
 const Missions: React.FC = () => {
+  const navigate = useNavigate();
+  const userGuid = "c29875fc-d064-46ca-8b00-507ef315c62f"; // Testing purposes only, this is not the final approach.
+
+  useEffect(() => {
+    const checkRegistration = async () => {
+      const res = await agent.Mission.checkMissionRegistration(userGuid);
+
+      if (res.status === "error") {
+        navigate(paths.registrationMission);
+      }
+    };
+
+    checkRegistration();
+  }, [userGuid]);
+
   const LinearProgressWithLabel = (
     props: LinearProgressProps & { value: number }
   ) => {
