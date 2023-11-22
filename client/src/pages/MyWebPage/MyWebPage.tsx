@@ -15,7 +15,6 @@ import Event from "admin/models/eventModel";
 import agentLinks from "./helpers/agentLinks";
 import useAgentData from "./useAgentData";
 import FeedTabs, { ContentTypes } from "./FeedTabs";
-import "./MyWebPage.scss";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import contactLinks from "./helpers/contactLinks";
 import RouteLinks from "./helpers/routeLinks";
@@ -23,13 +22,12 @@ import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard";
 import { toast } from "react-toastify";
 import { FaShareSquare } from "react-icons/fa";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import "./MyWebPage.scss";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
   const [content, setContent] = useState<ContentTypes>("home");
-  const [active, setActive] = useState(false);
   const [events, setEvents] = useState<Event[] | undefined>();
-
 
   /* General Agent Information */
   const userGuid = `${user}`;
@@ -49,7 +47,6 @@ const MyWebPage: React.FC = () => {
     loading,
     languages
   } = useAgentData(userGuid);
-
 
   useEffect(() => {
     const getEvents = async () => {
@@ -72,13 +69,8 @@ const MyWebPage: React.FC = () => {
     toast("Link copied to Clipboard");
   }
 
-
-
-
   const links = agentLinks(address, facebook, linkedIn, twitter);
   const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '', languages ?? [])
-
-
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
@@ -170,7 +162,7 @@ const MyWebPage: React.FC = () => {
                     <React.Fragment>
                       <div className="navbar-main-feed">
                         <FeedTabs
-                          {...{ active, content, setActive, setContent }}
+                          {...{ content, setContent }}
                         />
                       </div>
                       <div className="tabs-content">
