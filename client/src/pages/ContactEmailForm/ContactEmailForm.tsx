@@ -34,10 +34,9 @@ const ContactEmailForm: React.FC = () => {
   }
 
   const validationSchema = Yup.object({
-    fullName: Yup.string().required("Fullname field is required."),
     content: Yup.string().required("Content field is required."),
     emailAddress: Yup.string().required("Email Address field is required."),
-    subject: Yup.string().required("SUbject field is required."),
+    subject: Yup.string().required("Subject field is required."),
   })
 
   const { userGuid } = useParams()
@@ -170,10 +169,10 @@ const ContactEmailForm: React.FC = () => {
                         },
                         body: JSON.stringify({
                           // data to be submitted
-                          name: data.fullName,
+                          fromEmail: data.emailAddress,
+                          toEmail: agentInfo.email,
                           subject: data.subject,
                           content: data.content,
-                          emailAddress: data.emailAddress,
                         }),
                       }
                     )
@@ -209,21 +208,29 @@ const ContactEmailForm: React.FC = () => {
                   return (
                     <React.Fragment>
                       <div className="form-control">
-                        <h5>Name *</h5>
-                        <FormikTextInput
-                          name="fullName"
-                          placeholder="Enter your name here"
-                          value={values.fullName}
-                          variant="outlined"
-                        />
-                      </div>
-                      <div className="form-control">
-                        <h5>Email Address *</h5>
+                        <h5>Sender Email *</h5>
                         <FormikTextInput
                           name="emailAddress"
                           placeholder="Enter your email address here"
                           value={values.emailAddress}
                           variant="outlined"
+                        />
+                      </div>
+                      <div className="form-control">
+                        <h5>Send to: *</h5>
+                        <input
+                          style={{
+                            width: "95%",
+                            padding: "16px 12px",
+                            border: "1px solid lightgray",
+                            borderRadius: "5px",
+                          }}
+                          disabled
+                          value={
+                            agentInfo.email
+                              ? agentInfo.email
+                              : "Receiver email address..."
+                          }
                         />
                       </div>
                       <div className="form-control">

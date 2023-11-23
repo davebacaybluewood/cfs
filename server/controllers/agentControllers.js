@@ -13,6 +13,7 @@ import PreProfile from "../models/preProfileModel.js";
 import { AGENT_ROLES } from "../constants/constants.js";
 import { registerUserHierarchyAndPoints } from "../services/userServices.js";
 import PortalSubscription from "../models/portalSubscription.js";
+import nodemailer from "nodemailer";
 
 /**
  * @desc: Fetch all agents
@@ -447,21 +448,32 @@ const createAgent = expressAsync(async (req, res) => {
   }
 });
 
-const sendContactEmail = expressAsync((req, res, next) => {
-  // const mailContent = contractingEmail({
-  //   name:
-  //     req.body.name,
-  //   state: req.body.state,
-  //   email: req.body.email,
-  //   remarks: req.body.remarks,
-  //   phoneNumber: req.body.phoneNumber,
-  //   licenseNumber: req.body.licenseNumber,
-  //   ssnNumber: req.body.ssnNumber,
-  //   carrier: req.body.carrier,
-  //   annuity: req.body.annuity,
-  //   dateOfBirth: req.body.dateOfBirth,
-  // }); 
-  res.send(req.body.content)
+const sendContactEmail = expressAsync((req, res) => {
+  const { subject, content, fromEmail, toEmail } = req.body
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.MAIL_CONFIGS_EMAIL,
+      pass: process.env.MAIL_CONFIGS_PASSWORD,
+    },
+  });
+
+  // Email content
+  const mailOptions = {
+    from: fromEmail,
+    to: toEmail,
+    subject: subject,
+    content: content,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.error(error);
+    }
+    res.send('Email sent: ' + info.response)
+  });
+
 })
 
 // @desc    Add new testimonial

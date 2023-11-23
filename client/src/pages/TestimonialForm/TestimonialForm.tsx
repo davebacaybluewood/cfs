@@ -1,28 +1,28 @@
-import { Container, Grid } from "@mui/material";
-import SimpleNavbar from "layout/SimpleNavbar/SimpleNavbar";
-import React, { useState } from "react";
-import "./TestimonialForm.scss";
-import { BsFillPinFill, BsFillTelephoneFill } from "react-icons/bs";
-import { MdOutlineAlternateEmail } from "react-icons/md";
+import { Container, Grid } from "@mui/material"
+import SimpleNavbar from "layout/SimpleNavbar/SimpleNavbar"
+import React, { useState } from "react"
+import "./TestimonialForm.scss"
+import { BsFillPinFill, BsFillTelephoneFill } from "react-icons/bs"
+import { MdOutlineAlternateEmail } from "react-icons/md"
 import {
   AiFillFacebook,
   AiFillInstagram,
   AiFillLinkedin,
   AiFillTwitterSquare,
-} from "react-icons/ai";
-import { Formik } from "formik";
-import FormikTextInput from "library/Formik/FormikInput";
-import * as Yup from "yup";
+} from "react-icons/ai"
+import { Formik } from "formik"
+import FormikTextInput from "library/Formik/FormikInput"
+import * as Yup from "yup"
 import useFetchUserProfile, {
   TestimonialType,
-} from "admin/hooks/useFetchProfile";
-import Button from "library/Button/Button";
-import { toast } from "react-toastify";
-import ENDPOINTS from "constants/endpoints";
-import { useParams } from "react-router-dom";
-import Spinner from "library/Spinner/Spinner";
-import nameFallback from "helpers/nameFallback";
-import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
+} from "admin/hooks/useFetchProfile"
+import Button from "library/Button/Button"
+import { toast } from "react-toastify"
+import ENDPOINTS from "constants/endpoints"
+import { useParams } from "react-router-dom"
+import Spinner from "library/Spinner/Spinner"
+import nameFallback from "helpers/nameFallback"
+import InvalidRoute from "layout/InvalidRoute/InvalidRoute"
 
 const TestimonialForm: React.FC = () => {
   const initialValues: TestimonialType = {
@@ -30,21 +30,21 @@ const TestimonialForm: React.FC = () => {
     fullName: "",
     title: "",
     testimonial: "",
-  };
+  }
 
   const validationSchema = Yup.object({
     fullName: Yup.string().required("Fullname field is required."),
     testimonial: Yup.string().required("Testimonial field is required."),
     emailAddress: Yup.string().required("Email Address field is required."),
     title: Yup.string().required("Title field is required."),
-  });
+  })
 
-  const [loading, setLoading] = useState(false);
-  const { userGuid } = useParams();
+  const [loading, setLoading] = useState(false)
+  const { userGuid } = useParams()
 
   const { profile, loading: profileLoading } = useFetchUserProfile(
     userGuid ?? ""
-  );
+  )
 
   const agentInfo = {
     name: nameFallback(profile?.name, profile?.firstName, profile?.lastName),
@@ -56,10 +56,10 @@ const TestimonialForm: React.FC = () => {
     twitter: profile?.twitter,
     instagram: profile?.instagram,
     linkedIn: profile?.linkedIn,
-  };
+  }
 
   if (!profile && !profileLoading) {
-    return <InvalidRoute />;
+    return <InvalidRoute />
   }
   return (
     <div className="testimonial-form-container">
@@ -156,7 +156,7 @@ const TestimonialForm: React.FC = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={async (data, actions) => {
-                  setLoading(true);
+                  setLoading(true)
                   try {
                     await fetch(
                       ENDPOINTS.AGENT_TESTIMONIALS.replace(
@@ -176,9 +176,9 @@ const TestimonialForm: React.FC = () => {
                           emailAddress: data.emailAddress,
                         }),
                       }
-                    );
-                    actions.resetForm();
-                    setLoading(false);
+                    )
+                    actions.resetForm()
+                    setLoading(false)
 
                     toast.success(`Testimonial Submitted`, {
                       position: "top-right",
@@ -189,7 +189,7 @@ const TestimonialForm: React.FC = () => {
                       draggable: true,
                       progress: undefined,
                       theme: "light",
-                    });
+                    })
                   } catch (err) {
                     toast.error(`Error Occured`, {
                       position: "top-right",
@@ -200,8 +200,8 @@ const TestimonialForm: React.FC = () => {
                       draggable: true,
                       progress: undefined,
                       theme: "light",
-                    });
-                    setLoading(false);
+                    })
+                    setLoading(false)
                   }
                 }}
               >
@@ -250,7 +250,7 @@ const TestimonialForm: React.FC = () => {
                         Submit Testimonial
                       </Button>
                     </React.Fragment>
-                  );
+                  )
                 }}
               </Formik>
             </div>
@@ -259,7 +259,7 @@ const TestimonialForm: React.FC = () => {
       </Container>
       {loading ? <Spinner variant="fixed" /> : null}
     </div>
-  );
-};
+  )
+}
 
-export default TestimonialForm;
+export default TestimonialForm
