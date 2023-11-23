@@ -78,7 +78,7 @@
     }
   }
 
-  @media (min-width: 900px) and (max-width: 1299px) {
+  @media (min-width: 1124px) and (max-width: 1299px) {
     .merchandise-image {
       height: 80px;
     }
@@ -96,6 +96,46 @@
 
     .claim-btn {
       font-size: .9em;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1123px) {
+    .merchandise-image {
+      height: 80px;
+    }
+
+    .merchandise-captions {
+      h2 {
+        font-size: .9em;
+      }
+
+      p {
+        font-size: .5rem;
+      }
+    }
+
+    .claim-btn {
+      font-size: .9em;
+    }
+  }
+
+  @media (min-width: 900px) and (max-width: 1023px) {
+    .merchandise-image {
+      height: 80px;
+    }
+
+    .merchandise-captions {
+      h2 {
+        font-size: .8em;
+      }    
+
+      p {
+        font-size: .8rem;
+      }
+    }    
+
+    .claim-btn {
+      font-size: .7em;
     }
   }
 
