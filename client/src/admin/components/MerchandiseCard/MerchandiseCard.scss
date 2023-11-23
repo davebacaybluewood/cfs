@@ -6,6 +6,11 @@
 
   .merchandise-image {
     padding: 2rem;
+    height: 202px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     img {
       width: 100%;
       border-radius: 9px;
@@ -20,7 +25,9 @@
       font-weight: 700;
       font-family: "Montserrat", sans-serif;
       margin-bottom: 0.1rem;
+      white-space: nowrap;
     }
+
     p {
       font-size: 1.2rem;
       font-weight: 400;
@@ -41,4 +48,56 @@
       }
     }
   }
+
+  @media (min-width: 1400px) and (max-width: 1440px) {
+    .merchandise-image {
+      height: 160px;
+    }
+
+    .merchandise-captions {
+      h2 {
+        font-size: 1.3em;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  @media (min-width: 1300px) and (max-width: 1399px) {
+    .merchandise-image {
+      height: 120px;
+    }
+
+    .merchandise-captions {
+      h2 {
+        font-size: 1.2em;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  @media (min-width: 900px) and (max-width: 1299px) {
+    .merchandise-image {
+      height: 80px;
+    }
+
+    .merchandise-captions {
+      h2 {
+        font-size: 1.1em;
+        white-space: nowrap;
+      }
+
+      p {
+        font-size: .5rem;
+      }
+    }
+
+    .claim-btn {
+      font-size: .9em;
+    }
+  }
+
+  
 }
