@@ -1,7 +1,7 @@
 import { paths } from 'constants/routes'
 import Button from 'library/Button/Button'
 import React from 'react'
-import { CiTrophy, CiGift, CiVault } from 'react-icons/ci'
+import { CiTrophy, CiGift, CiVault, CiMonitor } from 'react-icons/ci'
 import { useParams } from 'react-router-dom'
 
 const RouteLinks: React.FC = () => {
@@ -24,11 +24,11 @@ const RouteLinks: React.FC = () => {
             onclick: () => window.open(`${paths.portalRegistration}?userGuid=${user}`),
             text: 'Try CFS for 30-days'
         },
-        // {
-        //     icon: <CiMonitor />,
-        //     onclick: () => window.open(paths.portalRegistration),
-        //     text: <>Join our webinar <br /> to learn more</>
-        // },
+        {
+            icon: <CiMonitor />,
+            onclick: () => window.open(paths.webinarPage.replace(':user', user ?? '')),
+            text: <>Join our webinar <br /> to learn more</>
+        },
         /*   Doesn't have a function yet, get from marketing.*/
     ]
     return (

@@ -72,6 +72,7 @@ const paths = {
 
   /* My WebPage */
   myWebPage: "/agent/:user",
+  webinarPage: "/agent/:user/webinars"
 };
 
 export { paths };

@@ -1,37 +1,41 @@
-import React, { useState, useEffect } from "react";
-import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
-import { Box, Container, Grid, Button as MUIButton, Modal, Typography } from "@mui/material";
-import Spinner from "library/Spinner/Spinner";
-import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
-import Button from "library/Button/Button";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { TiBusinessCard } from "react-icons/ti" 
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { FiSend } from "react-icons/fi";
-import { paths } from "constants/routes";
-import Timeline from "pages/MyWebPage/Timeline";
-import adminAgent from "admin/api/agent";
-import Event from "admin/models/eventModel";
-import agentLinks from "./helpers/agentLinks";
-import useAgentData from "./useAgentData";
-import FeedTabs, { ContentTypes } from "./FeedTabs";
-import "./MyWebPage.scss";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import contactLinks from "./helpers/contactLinks";
-import RouteLinks from "./helpers/routeLinks";
-import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard";
-import { toast } from "react-toastify";
-import { FaShareSquare } from "react-icons/fa";
-import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
-import BusinessCard from "admin/pages/Profile/components/ProfileHeader/BusinessCard/BusinessCard";
+import React, { useState, useEffect } from "react"
+import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
+import { Container, Grid, Button as MUIButton } from "@mui/material"
+import Spinner from "library/Spinner/Spinner"
+import { BsCalculator, BsChatRightTextFill } from "react-icons/bs"
+import Button from "library/Button/Button"
+import { AiOutlineArrowRight } from "react-icons/ai"
+import { TiBusinessCard } from "react-icons/ti"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { Helmet } from "react-helmet"
+import { FiSend } from "react-icons/fi"
+import { paths } from "constants/routes"
+import Timeline from "pages/MyWebPage/Timeline"
+import adminAgent from "admin/api/agent"
+import Event from "admin/models/eventModel"
+import agentLinks from "./helpers/agentLinks"
+import useAgentData from "./useAgentData"
+import FeedTabs, { ContentTypes } from "./FeedTabs"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import contactLinks from "./helpers/contactLinks"
+import RouteLinks from "./helpers/routeLinks"
+import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard"
+import { toast } from "react-toastify"
+import { FaShareSquare } from "react-icons/fa"
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip"
+import { MdOutlineQrCode2 } from "react-icons/md"
+import { QRCode } from "react-qrcode-logo"
+import "./MyWebPage.scss"
+import BusinessCardModal from "./components/BusinessCardModal"
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams()
   const [content, setContent] = useState<ContentTypes>("home")
-  const [active, setActive] = useState(false)
   const [events, setEvents] = useState<Event[] | undefined>()
+  const [openQr, setOpenQr] = useState(false)
   const [modalOpen, setModalOpen] = useState(true)
+  const navigate = useNavigate()
+  const [clipboardValue, setClipboardValue] = useCopyToClipboard()
 
   /* General Agent Information */
   const userGuid = `${user}`
@@ -58,23 +62,26 @@ const MyWebPage: React.FC = () => {
       setEvents(eventData)
     }
 
-    getEvents();
-  }, []);
-
-  const navigate = useNavigate();
-  const [clipboardValue, setClipboardValue] = useCopyToClipboard();
+    getEvents()
+  }, [])
 
   const location = useLocation()
 
+  const agentURL = window.location.host + location.pathname
+
   function handleCopyToClipboard() {
-    setClipboardValue(
-      window.location.host + location.pathname
-    );
-    toast("Link copied to Clipboard");
+    setClipboardValue(agentURL)
+    toast("Link copied to Clipboard")
   }
 
-  const links = agentLinks(address, facebook, linkedIn, twitter);
-  const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '', languages ?? [])
+  const links = agentLinks(address, facebook, linkedIn, twitter)
+  const contactLink = contactLinks(
+    address ?? "",
+    phoneNumber ?? "",
+    email ?? "",
+    licenseNumber ?? "",
+    languages ?? []
+  )
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
@@ -119,7 +126,10 @@ const MyWebPage: React.FC = () => {
                           }
                         >
                           <div onClick={() => handleCopyToClipboard()}>
-                            <span> <FaShareSquare /> </span>
+                            <span>
+                              {" "}
+                              <FaShareSquare />{" "}
+                            </span>
                           </div>
                         </HtmlTooltip>
                       </div>
@@ -140,6 +150,41 @@ const MyWebPage: React.FC = () => {
                           {con.icon} <span>{con.text}</span>{" "}
                         </div>
                       ))}
+                    </div>
+                    <div className="qr-code">
+                      <Button
+                        variant="secondary"
+                        onClick={() =>
+                          !openQr ? setOpenQr(true) : setOpenQr(false)
+                        }
+                      >
+                        <div className="button-content">
+                          <MdOutlineQrCode2 />{" "}
+                          {!openQr ? "Scan QR Code" : "Close"}{" "}
+                        </div>
+                      </Button>
+                      {openQr ? (
+                        <HtmlTooltip
+                          title={
+                            <div
+                              style={{
+                                fontSize: "1.3rem",
+                              }}
+                            >
+                              {`Scan: ${agentURL}`}
+                            </div>
+                          }
+                        >
+                          <div className="qr-code-content">
+                            <QRCode
+                              value={`https://gocfs.pro/${user ?? ""}`}
+                              size={99}
+                              bgColor="transparent"
+                              fgColor="#000000"
+                            />
+                          </div>
+                        </HtmlTooltip>
+                      ) : null}
                     </div>
                     <div className="left-col-actions">
                       <Button variant="primary">
@@ -169,74 +214,11 @@ const MyWebPage: React.FC = () => {
                           <span>Business Card</span>{" "}
                         </div>
                       </Button>
-                      <Modal
-                        sx={{ background: "rgba(0, 0, 0, 0.7)" }}
-                        open={modalOpen}
-                        onClose={() => setModalOpen(false)}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box
-                          sx={{
-                            position: "absolute" as "absolute",
-                            top: "50%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                            width: "336px",
-                            bgcolor: "background.paper",
-                            border: "2px solid #00004d",
-                            boxShadow: 24,
-                            p: 4,
-                            borderRadius: "10px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <BusinessCard
-                              email={profile?.emailAddress ?? ""}
-                              name={
-                                `${profile?.firstName} ${profile?.lastName}` ??
-                                ""
-                              }
-                              position={
-                                profile?.role === "ROLE_MASTER_ADMIN"
-                                  ? "ROLE: MASTER ADMIN"
-                                  : profile?.role ?? ""
-                              }
-                              licenseNumber={profile?.licenseNumber ?? ""}
-                              phoneNumber={profile?.phoneNumber ?? ""}
-                              state={profile?.state ?? ""}
-                              userGuid={profile?.userGuid ?? ""}
-                            />
-                          </div>
-                          <hr
-                            style={{
-                              borderTop: "1px solid lightgray",
-                              margin: "1rem auto",
-                            }}
-                          />
-                          <Typography
-                            id="modal-modal-title"
-                            variant="h6"
-                            component="h2"
-                          >
-                            Download Business Card
-                          </Typography>
-                          <Typography
-                            id="modal-modal-description"
-                            sx={{ mt: 0.2, mb: 2 }}
-                          >
-                            Expand your professional network by downloading the
-                            business card from this profile. Click the
-                            'Download' button to collect valuable contacts
-                            effortlessly.
-                          </Typography>
-                        </Box>
-                      </Modal>
+                      <BusinessCardModal
+                        modalOpen={modalOpen}
+                        setModalOpen={setModalOpen}
+                        profile={profile}
+                      />
                     </div>
                   </div>
                 </Grid>
@@ -244,9 +226,7 @@ const MyWebPage: React.FC = () => {
                   <div className="middle-col">
                     <React.Fragment>
                       <div className="navbar-main-feed">
-                        <FeedTabs
-                          {...{ active, content, setActive, setContent }}
-                        />
+                        <FeedTabs {...{ content, setContent }} />
                       </div>
                       <div className="tabs-content">
                         <Timeline

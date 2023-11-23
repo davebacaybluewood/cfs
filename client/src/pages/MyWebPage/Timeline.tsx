@@ -4,7 +4,7 @@ import TimelinePost, {
 } from "library/TimelinePost/TimelinePost"
 import { default as ApiAgent } from "api/agent"
 import { default as AdminAgent } from "admin/api/agent"
-import TimelineLoading from "./TimelineLoading"
+import TimelineLoading from "./components/TimelineLoading"
 import { BlogData } from "pages/BlogPage/models"
 import Event from "admin/models/eventModel"
 
@@ -73,7 +73,7 @@ const Timeline = ({
             const testimonialObject = {
               title: item.title,
               date: item.updatedAt,
-              tag: "testimonial",
+              tag: "reccomendation",
               content: item.comment,
             }
 
@@ -117,8 +117,8 @@ const Timeline = ({
                   return item.tag === "event"
                 } else if (content === "articles") {
                   return item.tag === "article" || item.tag === "blog"
-                } else if (content === "testimonial") {
-                  return item.tag === "testimonial"
+                } else if (content === "reccomendation") {
+                  return item.tag === "reccomendation"
                 } else {
                   return item
                 }
