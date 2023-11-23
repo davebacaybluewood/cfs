@@ -40,6 +40,7 @@ import NATIONALITIES from "./nationalities";
 import MyWebPage from "pages/MyWebPage/MyWebPage";
 import AALogin from "../events/mission/AALogin/AALogin";
 import ClaimReward from "events/mission/ClaimReward/ClaimReward";
+import WebinarPage from "pages/MyWebPage/components/WebinarPage";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -192,8 +193,8 @@ const REACT_ROUTES: ReactRoutesType[] = [
     element: (
       <AgentMissionModal
         openModal={true}
-        showModal={() => {}}
-        onClick={() => {}}
+        showModal={() => { }}
+        onClick={() => { }}
         agentName="Black Noir"
       />
     ),
@@ -403,6 +404,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showNavbar: false,
     showHeadline: false,
     showFooter: false,
+  },
+  {
+    element: <WebinarPage />,
+    path: paths.webinarPage,
+    showNavbar: true,
+    showHeadline: false,
+    showFooter: true,
   },
   {
     element: <AALogin />,

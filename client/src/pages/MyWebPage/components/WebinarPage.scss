@@ -1,0 +1,36 @@
+.webinar-mywebpage-container {
+
+    .header-content {
+        height: 20svh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        background: url('../../../../public/assets/images/headline-images/blog-contact-headline');
+        color: #fff;
+        background-size: cover;
+        background-attachment: fixed;
+
+        h2 {
+            font: 600 5rem "Agrandir";
+        }
+
+        p {
+            font: 300 1.3rem "Montserrat";
+            width: 560px;
+            text-align: center;
+        }
+    }
+
+    .webinar-page-content {
+        padding: 4rem 0;
+
+        .loading {
+            height: 50vh;
+        }
+
+        .simple-card-container {
+            box-shadow: none;
+        }
+    }
+}

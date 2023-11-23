@@ -29,12 +29,10 @@ import "./MyWebPage.scss";
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
   const [content, setContent] = useState<ContentTypes>("home");
-  const [active, setActive] = useState(false);
   const [events, setEvents] = useState<Event[] | undefined>();
   const [openQr, setOpenQr] = useState(false)
   const navigate = useNavigate();
   const [clipboardValue, setClipboardValue] = useCopyToClipboard();
-
 
   /* General Agent Information */
   const userGuid = `${user}`;
@@ -54,7 +52,6 @@ const MyWebPage: React.FC = () => {
     loading,
     languages
   } = useAgentData(userGuid);
-
 
   useEffect(() => {
     const getEvents = async () => {
@@ -78,9 +75,9 @@ const MyWebPage: React.FC = () => {
     toast("Link copied to Clipboard");
   }
 
-
   const links = agentLinks(address, facebook, linkedIn, twitter);
   const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '', languages ?? [])
+
   return (
     <MyWebPageWrapper showNavBar showFooter>
       <Helmet>
@@ -199,7 +196,7 @@ const MyWebPage: React.FC = () => {
                     <React.Fragment>
                       <div className="navbar-main-feed">
                         <FeedTabs
-                          {...{ active, content, setActive, setContent }}
+                          {...{ content, setContent }}
                         />
                       </div>
                       <div className="tabs-content">
