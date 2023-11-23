@@ -274,7 +274,9 @@ const redeemMerchandise = expressAsync(async (req, res, next) => {
 
 const emailRedeemMerchNotif = expressAsync(async (req, res) => {
   const mailSubject = "Merchandise Ship Request";
-  const { emailAddress, name, note, shipAddr } = req.body;
+  const { emailAddress, name } = req.body;
+  const shipAddr = req.body.address;
+  const note = req.body.remarks;
   const { merchandiseId } = req.params;
 
   const subscriber = await User.findOne({ userGuid: req.body.userGuid });
