@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Button as MUIButton } from "@mui/material";
 import Spinner from "library/Spinner/Spinner";
 import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
 import Button from "library/Button/Button";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FiSend } from "react-icons/fi";
 import { paths } from "constants/routes";
@@ -19,6 +19,10 @@ import "./MyWebPage.scss";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import contactLinks from "./helpers/contactLinks";
 import RouteLinks from "./helpers/routeLinks";
+import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard";
+import { toast } from "react-toastify";
+import { FaShareSquare } from "react-icons/fa";
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
@@ -57,6 +61,19 @@ const MyWebPage: React.FC = () => {
   }, []);
 
   const navigate = useNavigate();
+  const [clipboardValue, setClipboardValue] = useCopyToClipboard();
+
+  const location = useLocation()
+
+  function handleCopyToClipboard() {
+    setClipboardValue(
+      window.location.host + location.pathname
+    );
+    toast("Link copied to Clipboard");
+  }
+
+
+
 
   const links = agentLinks(address, facebook, linkedIn, twitter);
   const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '', languages ?? [])
@@ -84,13 +101,32 @@ const MyWebPage: React.FC = () => {
                     <h2>{Agent}</h2>
                     <p className="agent-description">{bio}</p>
                     <div className="social-container">
-                      {links.map((item, index) => (
-                        <div className="social-content" key={index}>
-                          <a href={item.link} target="_blank">
-                            {item.icon} <span>{item.title}</span>
-                          </a>
-                        </div>
-                      ))}
+                      <div className="social-links">
+                        {links.map((item, index) => (
+                          <div className="social-content" key={index}>
+                            <a href={item.link} target="_blank">
+                              {item.icon} <span>{item.title}</span>
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="copy">
+                        <HtmlTooltip
+                          title={
+                            <div
+                              style={{
+                                fontSize: "1.3rem",
+                              }}
+                            >
+                              Copy Link to Clipboard
+                            </div>
+                          }
+                        >
+                          <div onClick={() => handleCopyToClipboard()}>
+                            <span> <FaShareSquare /> </span>
+                          </div>
+                        </HtmlTooltip>
+                      </div>
                     </div>
                   </div>
                 </Grid>
