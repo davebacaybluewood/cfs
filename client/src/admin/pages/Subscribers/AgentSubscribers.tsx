@@ -72,36 +72,13 @@ const AgentSubscribers: React.FC = () => {
       email: subscriber.email,
       createdAt: formatISODateOnly(subscriber.createdAt ?? ""),
       type:
-        subscriber.type === "SUBSCRIBER" ? (
-          <div>
-            <span>Subscriber</span> <FaCheckCircle />
-          </div>
-        ) : (
-          <HtmlTooltip
-            title={
-              <div
-                style={{
-                  fontSize: "1.3rem",
-                }}
-              >
-                This user is already <br /> upgraded to an Agent
-              </div>
-            }
-          >
-            <div>
-              <span>Free 30 days Trial</span>
-              <FaCheckCircle
-                style={{
-                  color: "#00a152",
-                  fontSize: 15,
-                  position: "relative",
-                  top: 3,
-                  left: 5,
-                }}
-              />
-            </div>
-          </HtmlTooltip>
-        ),
+        !subscriber.isSubscribed && subscriber.type === "SUBSCRIBER"
+          ? "Subscriber"
+          : !subscriber.isSubscribed && subscriber.type === "FREE 30DAYS TRIAL"
+          ? "Free 30days Trial"
+          : subscriber.previousRole === "POSITION_FREE_30DAYS_TRIAL"
+          ? "Free 30days Trial"
+          : "Subscriber",
     };
   });
 

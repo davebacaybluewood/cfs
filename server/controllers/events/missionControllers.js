@@ -1,4 +1,4 @@
-import Mission from "../../models/events/agentOfAgents/missionModel.js";
+import EventUser from "../../models/events/agentOfAgents/eventUsers.js";
 import expressAsync from "express-async-handler";
 import cloudinaryImport from "../../utils/cloudinary.js";
 import { API_RES_FAIL, API_RES_OK } from "../../constants/constants.js";
@@ -6,7 +6,7 @@ import Agent from "../../models/agentModel.js";
 
 /**
  * @desc: CREATE  mission agent
- * @route: POST /api/mission
+ * @route: POST /api/mission/registration
  * @acess: Private
  */
 const agentMissionRegistration = expressAsync(async (req, res) => {
@@ -26,8 +26,9 @@ const agentMissionRegistration = expressAsync(async (req, res) => {
       emailAddress,
     });
 
-    if (!agent.emailAddress) {
-      res.status(400).json(API_RES_FAIL("Error Occured"));
+    if (!agent) {
+      res.status(400).json(API_RES_FAIL("[Agents] Agent not found"));
+      return;
     }
 
     /** Upload image to cloudinary */
@@ -56,19 +57,52 @@ const agentMissionRegistration = expressAsync(async (req, res) => {
     agent.avatar = avatar;
 
     await agent.save();
-    const mission = new Mission({
+    const eventUser = new EventUser({
       userGuid: agent.userGuid,
     });
 
-    if (mission) {
-      await mission.save();
-      res.json(API_RES_OK("[Agents] Registration Success"));
+    if (eventUser) {
+      await eventUser.save();
+      res.status(200).json(API_RES_OK("[Agents] Registration Success"));
     }
   } catch (error) {
     console.log(error);
-    res.status(404);
-    throw new Error("Error Occured");
+    res.status(400).json(API_RES_FAIL(error));
   }
 });
 
-export { agentMissionRegistration };
+/**
+ * @desc: Check agent mission registration
+ * @route: GET /api/mission
+ * @acCess: Private
+ */
+
+const getAgentMissionRegistration = expressAsync(async (req, res) => {
+  const { userGuid } = req.params;
+
+  if (!req.params.userGuid) {
+    res
+      .status(400)
+      .json(
+        API_RES_FAIL(
+          "[Agents] Failed  to get mission registration. UserGuid is required"
+        )
+      );
+    return;
+  }
+
+  try {
+    const registration = await EventUser.findOne({ userGuid: userGuid });
+
+    if (registration)
+      res.status(200).json(API_RES_OK("Agent already registered"));
+    else {
+      res.status(400).json(API_RES_FAIL("Not yet registered"));
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(API_RES_FAIL(error));
+  }
+});
+
+export { agentMissionRegistration, getAgentMissionRegistration };
