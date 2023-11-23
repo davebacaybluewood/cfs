@@ -15,7 +15,7 @@ export interface TimelinePostProps {
   content: string
   imgContent?: string
   eventDate?: string
-  tag?: "blog" | "article" | "event" | "testimonial"
+  tag?: "blog" | "article" | "event" | "reccomendation"
   children?: JSX.Element
 }
 
@@ -36,12 +36,12 @@ const TimelinePost = ({
   const shareUrl =
     tag === "article" || tag === "blog"
       ? `${baseUrl}/blogs/${title
-          .split(" ")
-          .join("-")
-          .toLowerCase()}?userGuid=${userGuid}`
+        .split(" ")
+        .join("-")
+        .toLowerCase()}?userGuid=${userGuid}`
       : tag === "event"
-      ? `${baseUrl}/rsvp-form/${id}?userGuid=${userGuid}`
-      : ""
+        ? `${baseUrl}/rsvp-form/${id}?userGuid=${userGuid}`
+        : ""
 
   return (
     <div className={`timeline-post`}>
@@ -55,12 +55,11 @@ const TimelinePost = ({
         <Stack flexDirection="column" gap={1} sx={{ position: "relative" }}>
           {tag && (
             <div
-              className={`${
-                (tag === "article" ||
+              className={`${(tag === "article" ||
                   tag === "blog" ||
                   (tag === "event" && imgContent)) &&
                 "position-top-left"
-              } tag`}
+                } tag`}
             >
               {tag.toUpperCase()}
             </div>
@@ -100,9 +99,9 @@ const TimelinePost = ({
             {isContentFull
               ? content.replace(/<[^>]*>/g, "").replace("&quot;", " ")
               : content
-                  .replace(/<[^>]*>/g, "")
-                  .replace("&quot;", " ")
-                  .slice(0, 300)}
+                .replace(/<[^>]*>/g, "")
+                .replace("&quot;", " ")
+                .slice(0, 300)}
 
             {!isContentFull && content.length > 300 ? (
               <span className="see-more" onClick={() => setIsContentFull(true)}>
