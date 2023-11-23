@@ -242,8 +242,8 @@ const updateAgent = expressAsync(async (req, res) => {
         typeof req.body.avatar === "string"
           ? req.body.avatar
           : agentImgResult.secure_url
-          ? agentImgResult.secure_url
-          : agent.avatar;
+            ? agentImgResult.secure_url
+            : agent.avatar;
       agent.avatar_cloudinary_id = agentImgResult.public_id
         ? agentImgResult.public_id
         : agent.avatar_cloudinary_id;
@@ -446,6 +446,23 @@ const createAgent = expressAsync(async (req, res) => {
     throw new Error("Error occured in adding agent.");
   }
 });
+
+const sendContactEmail = expressAsync((req, res, next) => {
+  // const mailContent = contractingEmail({
+  //   name:
+  //     req.body.name,
+  //   state: req.body.state,
+  //   email: req.body.email,
+  //   remarks: req.body.remarks,
+  //   phoneNumber: req.body.phoneNumber,
+  //   licenseNumber: req.body.licenseNumber,
+  //   ssnNumber: req.body.ssnNumber,
+  //   carrier: req.body.carrier,
+  //   annuity: req.body.annuity,
+  //   dateOfBirth: req.body.dateOfBirth,
+  // }); 
+  res.send(req.body.content)
+})
 
 // @desc    Add new testimonial
 // @route   POST /api/agents/:id/testimonials
@@ -660,4 +677,5 @@ export {
   updateAgentWebinar,
   getAllActiveWebinar,
   registerAccount,
+  sendContactEmail
 };

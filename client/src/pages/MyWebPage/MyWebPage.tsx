@@ -1,39 +1,38 @@
-import React, { useState, useEffect } from "react";
-import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
-import { Container, Grid, Button as MUIButton } from "@mui/material";
-import Spinner from "library/Spinner/Spinner";
-import { BsCalculator, BsChatRightTextFill } from "react-icons/bs";
-import Button from "library/Button/Button";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { FiSend } from "react-icons/fi";
-import { paths } from "constants/routes";
-import Timeline from "pages/MyWebPage/Timeline";
-import adminAgent from "admin/api/agent";
-import Event from "admin/models/eventModel";
-import agentLinks from "./helpers/agentLinks";
-import useAgentData from "./useAgentData";
-import FeedTabs, { ContentTypes } from "./FeedTabs";
-import "./MyWebPage.scss";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import contactLinks from "./helpers/contactLinks";
-import RouteLinks from "./helpers/routeLinks";
-import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard";
-import { toast } from "react-toastify";
-import { FaShareSquare } from "react-icons/fa";
-import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import React, { useState, useEffect } from "react"
+import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
+import { Container, Grid, Button as MUIButton } from "@mui/material"
+import Spinner from "library/Spinner/Spinner"
+import { BsCalculator, BsChatRightTextFill } from "react-icons/bs"
+import Button from "library/Button/Button"
+import { AiOutlineArrowRight } from "react-icons/ai"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { Helmet } from "react-helmet"
+import { FiSend } from "react-icons/fi"
+import { paths } from "constants/routes"
+import Timeline from "pages/MyWebPage/Timeline"
+import adminAgent from "admin/api/agent"
+import Event from "admin/models/eventModel"
+import agentLinks from "./helpers/agentLinks"
+import useAgentData from "./useAgentData"
+import FeedTabs, { ContentTypes } from "./FeedTabs"
+import "./MyWebPage.scss"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import contactLinks from "./helpers/contactLinks"
+import RouteLinks from "./helpers/routeLinks"
+import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard"
+import { toast } from "react-toastify"
+import { FaShareSquare } from "react-icons/fa"
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip"
 
 const MyWebPage: React.FC = () => {
-  const { user } = useParams();
-  const [content, setContent] = useState<ContentTypes>("home");
-  const [active, setActive] = useState(false);
-  const [events, setEvents] = useState<Event[] | undefined>();
-
+  const { user } = useParams()
+  const [content, setContent] = useState<ContentTypes>("home")
+  const [active, setActive] = useState(false)
+  const [events, setEvents] = useState<Event[] | undefined>()
 
   /* General Agent Information */
-  const userGuid = `${user}`;
-  const { profile } = useFetchUserProfile(userGuid);
+  const userGuid = `${user}`
+  const { profile } = useFetchUserProfile(userGuid)
   const {
     Agent,
     address,
@@ -47,38 +46,36 @@ const MyWebPage: React.FC = () => {
     twitter,
     bio,
     loading,
-    languages
-  } = useAgentData(userGuid);
-
+    languages,
+  } = useAgentData(userGuid)
 
   useEffect(() => {
     const getEvents = async () => {
-      const eventData = await adminAgent.Events.getEvents(`${user}`);
-      setEvents(eventData);
-    };
+      const eventData = await adminAgent.Events.getEvents(`${user}`)
+      setEvents(eventData)
+    }
 
-    getEvents();
-  }, []);
+    getEvents()
+  }, [])
 
-  const navigate = useNavigate();
-  const [clipboardValue, setClipboardValue] = useCopyToClipboard();
+  const navigate = useNavigate()
+  const [clipboardValue, setClipboardValue] = useCopyToClipboard()
 
   const location = useLocation()
 
   function handleCopyToClipboard() {
-    setClipboardValue(
-      window.location.host + location.pathname
-    );
-    toast("Link copied to Clipboard");
+    setClipboardValue(window.location.host + location.pathname)
+    toast("Link copied to Clipboard")
   }
 
-
-
-
-  const links = agentLinks(address, facebook, linkedIn, twitter);
-  const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '', languages ?? [])
-
-
+  const links = agentLinks(address, facebook, linkedIn, twitter)
+  const contactLink = contactLinks(
+    address ?? "",
+    phoneNumber ?? "",
+    email ?? "",
+    licenseNumber ?? "",
+    languages ?? []
+  )
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
@@ -123,7 +120,10 @@ const MyWebPage: React.FC = () => {
                           }
                         >
                           <div onClick={() => handleCopyToClipboard()}>
-                            <span> <FaShareSquare /> </span>
+                            <span>
+                              {" "}
+                              <FaShareSquare />{" "}
+                            </span>
                           </div>
                         </HtmlTooltip>
                       </div>
@@ -140,11 +140,23 @@ const MyWebPage: React.FC = () => {
                   <div className="left-col">
                     <div className="contact-container">
                       {contactLink.map((con) => (
-                        <div className="contact">{con.icon} <span>{con.text}</span>  </div>
+                        <div className="contact">
+                          {con.icon} <span>{con.text}</span>{" "}
+                        </div>
                       ))}
                     </div>
                     <div className="left-col-actions">
-                      <Button variant="primary">
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          window.open(
+                            paths.contactEmailForm.replace(
+                              ":userGuid",
+                              userGuid
+                            )
+                          )
+                        }
+                      >
                         <div className="button-content">
                           <BsChatRightTextFill /> <span>Contact Me</span>
                         </div>
@@ -157,7 +169,6 @@ const MyWebPage: React.FC = () => {
                           )
                         }
                       >
-
                         <div className="button-content">
                           <FiSend /> <span>Recommendation</span>
                         </div>
@@ -208,7 +219,7 @@ const MyWebPage: React.FC = () => {
         </div>
       )}
     </MyWebPageWrapper>
-  );
-};
+  )
+}
 
-export default MyWebPage;
+export default MyWebPage
