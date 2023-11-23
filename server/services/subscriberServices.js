@@ -197,78 +197,78 @@ const subscriberRegistration = async (
 };
 
 const fetchSubscribersByUser = async (userGuid) => {
-  const subscribers = await Hierarchy.aggregate([
-    {
-      $match: { recruiterUserGuid: userGuid },
-    },
-    {
-      $lookup: {
-        from: "users",
-        localField: "userGuid",
-        foreignField: "userGuid",
-        as: "userDoc",
+  try {
+    const subscribers = await Hierarchy.aggregate([
+      {
+        $match: { recruiterUserGuid: userGuid },
       },
-    },
-    {
-      $unwind: "$userDoc",
-    },
-    {
-      $lookup: {
-        from: "agents",
-        localField: "userGuid",
-        foreignField: "userGuid",
-        as: "agentDoc",
+      {
+        $lookup: {
+          from: "users",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "userDoc",
+        },
       },
-    },
-    {
-      $unwind: "$agentDoc",
-    },
-    {
-      $match: { "agentDoc.status": status.ACTIVATED },
-    },
-    {
-      $project: {
-        _id: 1,
-        userGuid: 1,
-        recruiterUserGuid: 1,
-        hierarchyId: 1,
-        hierarchyCode: 1,
-        parent: 1,
-        createdAt: 1,
-        updatedAt: 1,
-        position: "$userDoc.position",
-        firstName: "$userDoc.firstName",
-        lastName: "$userDoc.lastName",
-        email: "$userDoc.email",
-        status: "$agentDoc.status",
-        nationality: "$agentDoc.nationality",
-        birthdate: "$agentDoc.birthDate",
+      {
+        $unwind: "$userDoc",
       },
-    },
-    {
-      $unset: "userDoc",
-    },
-  ]);
+      {
+        $lookup: {
+          from: "agents",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "agentDoc",
+        },
+      },
+      {
+        $unwind: "$agentDoc",
+      },
+      {
+        $match: { "agentDoc.status": status.ACTIVATED },
+      },
+      {
+        $project: {
+          _id: 1,
+          userGuid: 1,
+          recruiterUserGuid: 1,
+          hierarchyId: 1,
+          hierarchyCode: 1,
+          parent: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          position: "$userDoc.position",
+          firstName: "$userDoc.firstName",
+          lastName: "$userDoc.lastName",
+          email: "$userDoc.email",
+          status: "$agentDoc.status",
+          nationality: "$agentDoc.nationality",
+          birthdate: "$agentDoc.birthDate",
+        },
+      },
+      {
+        $unset: "userDoc",
+      },
+    ]);
 
-  const filteredSubscriber = subscribers.map((data) => {
-    const isFreeTrial = data.position?.some(
-      (e) => e.value === "POSITION_FREE_30DAYS_TRIAL"
-    );
+    const filteredSubscriber = subscribers.map((data) => {
+      const isAgent = data.position?.some((e) => e.value === "POSITION_AGENT");
+      const isSubscriber = data.position?.some(
+        (e) => e.value === "POSITION_SUBSCRIBER"
+      );
 
-    const isSubscriber = data.position?.some(
-      (e) => e.value === "POSITION_SUBSCRIBER"
-    );
+      return {
+        ...data,
+        type: isSubscriber ? "SUBSCRIBER" : "FREE 30DAYS TRIAL",
+        previousRole: data.previousRole || "",
+        isSubscribed: isAgent,
+      };
+    });
 
-    const isAgent = data.position?.some((e) => e.value === "POSITION_AGENT");
-
-    return {
-      ...data,
-      type: isSubscriber ? "SUBSCRIBER" : "FREE 30DAYS TRIAL",
-      isSubscribed: isAgent,
-    };
-  });
-
-  return filteredSubscriber;
+    return filteredSubscriber;
+  } catch (error) {
+    res.status(500).json(API_RES_FAIL("Error Occured"));
+  }
 };
 
 const fetchAllSubscribers = async () => {

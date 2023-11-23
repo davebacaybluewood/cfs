@@ -159,6 +159,9 @@ const agentSchema = mongoose.Schema(
     birthDate: {
       type: Date,
     },
+    previousRole: {
+      type: String,
+    },
   },
   {
     timestamps: true,
