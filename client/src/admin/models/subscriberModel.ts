@@ -13,6 +13,7 @@ export interface SubscribersData {
   email: string;
   type: string;
   isSubscribed: string;
+  previousRole?: string;
 }
 
 export interface SubscriberMainData {
