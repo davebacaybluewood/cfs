@@ -15,7 +15,6 @@ import Event from "admin/models/eventModel";
 import agentLinks from "./helpers/agentLinks";
 import useAgentData from "./useAgentData";
 import FeedTabs, { ContentTypes } from "./FeedTabs";
-import "./MyWebPage.scss";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import contactLinks from "./helpers/contactLinks";
 import RouteLinks from "./helpers/routeLinks";
@@ -23,13 +22,17 @@ import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard";
 import { toast } from "react-toastify";
 import { FaShareSquare } from "react-icons/fa";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import { MdOutlineQrCode2 } from "react-icons/md";
+import { QRCode } from "react-qrcode-logo";
+import "./MyWebPage.scss";
 
 const MyWebPage: React.FC = () => {
   const { user } = useParams();
   const [content, setContent] = useState<ContentTypes>("home");
-  const [active, setActive] = useState(false);
   const [events, setEvents] = useState<Event[] | undefined>();
-
+  const [openQr, setOpenQr] = useState(false)
+  const navigate = useNavigate();
+  const [clipboardValue, setClipboardValue] = useCopyToClipboard();
 
   /* General Agent Information */
   const userGuid = `${user}`;
@@ -50,7 +53,6 @@ const MyWebPage: React.FC = () => {
     languages
   } = useAgentData(userGuid);
 
-
   useEffect(() => {
     const getEvents = async () => {
       const eventData = await adminAgent.Events.getEvents(`${user}`);
@@ -60,25 +62,21 @@ const MyWebPage: React.FC = () => {
     getEvents();
   }, []);
 
-  const navigate = useNavigate();
-  const [clipboardValue, setClipboardValue] = useCopyToClipboard();
+
 
   const location = useLocation()
 
+  const agentURL = window.location.host + location.pathname
+
   function handleCopyToClipboard() {
     setClipboardValue(
-      window.location.host + location.pathname
+      agentURL
     );
     toast("Link copied to Clipboard");
   }
 
-
-
-
   const links = agentLinks(address, facebook, linkedIn, twitter);
   const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '', languages ?? [])
-
-
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
@@ -143,6 +141,34 @@ const MyWebPage: React.FC = () => {
                         <div className="contact">{con.icon} <span>{con.text}</span>  </div>
                       ))}
                     </div>
+                    <div className="qr-code">
+                      <Button variant="secondary" onClick={() => !openQr ? setOpenQr(true) : setOpenQr(false)}>
+                        <div className="button-content">
+                          <MdOutlineQrCode2 /> {!openQr ? 'Scan QR Code' : 'Close'} </div>
+                      </Button>
+                      {openQr ? (
+                        <HtmlTooltip
+                          title={
+                            <div
+                              style={{
+                                fontSize: "1.3rem",
+                              }}
+                            >
+                              {`Scan: ${agentURL}`}
+                            </div>
+                          }
+                        >
+                          <div className="qr-code-content">
+                            <QRCode
+                              value={`https://gocfs.pro/${user ?? ''}`}
+                              size={99}
+                              bgColor="transparent"
+                              fgColor="#000000"
+                            />
+                          </div>
+                        </HtmlTooltip>
+                      ) : null}
+                    </div>
                     <div className="left-col-actions">
                       <Button variant="primary">
                         <div className="button-content">
@@ -170,7 +196,7 @@ const MyWebPage: React.FC = () => {
                     <React.Fragment>
                       <div className="navbar-main-feed">
                         <FeedTabs
-                          {...{ active, content, setActive, setContent }}
+                          {...{ content, setContent }}
                         />
                       </div>
                       <div className="tabs-content">
