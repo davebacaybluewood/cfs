@@ -1,13 +1,12 @@
 import { Container, Grid } from '@mui/material'
 import useFetchWebinars, { WebinarValuesType } from 'admin/pages/FileMaintenance/pages/Webinars/hooks/useFetchWebinars'
-import { MAIN_IMAGES } from 'constants/constants'
 import CardContent from 'library/CardContent/CardContent'
 import Spinner from 'library/Spinner/Spinner'
 import React from 'react'
 import { Helmet } from "react-helmet";
-import './WebinarPage.scss'
 import { useNavigate, useParams } from 'react-router-dom'
 import { paths } from 'constants/routes'
+import './WebinarPage.scss'
 
 
 
