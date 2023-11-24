@@ -17,21 +17,26 @@ export interface TimelinePostProps {
   eventDate?: string
   tag?: "blog" | "article" | "event" | "reccomendation"
   children?: JSX.Element
+  onClick?: () => void;
 }
 
-const TimelinePost = ({
-  id,
-  userGuid,
-  profileImg,
-  title,
-  userName,
-  date,
-  content,
-  imgContent,
-  tag,
-}: TimelinePostProps) => {
-  const [isContentFull, setIsContentFull] = useState(false)
+const TimelinePost: React.FC<TimelinePostProps> = (props) => {
+  const {
+    id,
+    userGuid,
+    profileImg,
+    title,
+    userName,
+    date,
+    content,
+    imgContent,
+    tag,
+    onClick
+  } = props;
   const navigate = useNavigate()
+  const [isContentFull, setIsContentFull] = useState(false)
+
+
   const baseUrl = window.location.protocol + "//" + window.location.host
   const shareUrl =
     tag === "article" || tag === "blog"
@@ -44,7 +49,7 @@ const TimelinePost = ({
         : ""
 
   return (
-    <div className={`timeline-post`}>
+    <div className={`timeline-post`} onClick={onClick}>
       <Stack flexDirection={"row"} gap={2}>
         {profileImg && (
           <div>
@@ -56,8 +61,8 @@ const TimelinePost = ({
           {tag && (
             <div
               className={`${(tag === "article" ||
-                  tag === "blog" ||
-                  (tag === "event" && imgContent)) &&
+                tag === "blog" ||
+                (tag === "event" && imgContent)) &&
                 "position-top-left"
                 } tag`}
             >
@@ -102,6 +107,7 @@ const TimelinePost = ({
                 .replace(/<[^>]*>/g, "")
                 .replace("&quot;", " ")
                 .slice(0, 300)}
+
 
             {!isContentFull && content.length > 300 ? (
               <span className="see-more" onClick={() => setIsContentFull(true)}>

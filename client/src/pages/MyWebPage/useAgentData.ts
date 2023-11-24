@@ -26,6 +26,7 @@ const useAgentData = (userGuid: string) => {
   const linkedIn = profile?.linkedIn.toString();
   const twitter = profile?.twitter.toString();
   const bio = profile?.bio.toString();
+  const testimonials = profile?.testimonials;
 
   return {
     defaultAvatar,
@@ -40,7 +41,8 @@ const useAgentData = (userGuid: string) => {
     twitter,
     loading,
     bio,
-    languages
+    languages,
+    testimonials
   };
 };
 

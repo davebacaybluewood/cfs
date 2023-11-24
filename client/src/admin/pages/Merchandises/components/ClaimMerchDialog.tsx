@@ -22,6 +22,7 @@ import Title from "admin/components/Title/Title";
 import { PointsData } from "admin/models/pointsModels";
 import { ProfileData } from "admin/hooks/useFetchProfile";
 import Spinner from "library/Spinner/Spinner";
+import { toast } from "react-toastify";
 
 type props = {
   openDialog: boolean;
@@ -163,14 +164,29 @@ const ClaimMerchDialog = ({
                 }
               );
 
-              if (setActivePoints && pointsData) {
-                setActivePoints(
-                  pointsData.totalPoints - activeMerchandise.points
-                );
+              console.log(req);
+
+              if (!req.success) {
+                toast.error(`Error encountered.`, {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
+              } else {
+                if (setActivePoints && pointsData) {
+                  setActivePoints(
+                    pointsData.totalPoints - activeMerchandise.points
+                  );
+                }
+                setShowSuccessMsg(true);
               }
 
               setLoading(false);
-              setShowSuccessMsg(true);
             }}
             validationSchema={validationSchema}
           >
