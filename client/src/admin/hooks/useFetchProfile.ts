@@ -16,6 +16,7 @@ export type TestimonialData = {
   title: string;
   name: string;
   comment: string;
+  isDisplayed?: boolean;
 };
 
 export type ProfileData = {
@@ -48,14 +49,7 @@ export type ProfileData = {
   isDeclined: false;
   createdAt: string;
   updatedAt: string;
-  testimonials?:
-    | {
-        title: string;
-        name: string;
-        comment: string;
-        isDisplayed: boolean;
-      }[]
-    | undefined;
+  testimonials?: TestimonialData[] | undefined;
   calendlyLink: string;
   roles: RolesAndPositionType[];
   position: RolesAndPositionType[];
@@ -97,7 +91,7 @@ export const profileInitialValues = {
 };
 const useFetchUserProfile = (userGuid: string) => {
   const [profile, setProfile] = useState<ProfileData | undefined>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);

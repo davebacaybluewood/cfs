@@ -1,15 +1,27 @@
 import React from "react";
 import "./MyWebPageWrapper.scss";
 import Spinner from "library/Spinner/Spinner";
+import { ProfileData } from "admin/hooks/useFetchProfile";
+import { useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
 
 interface MyWebPageWrapperProps {
   showNavBar: boolean;
   showFooter: boolean;
   children: React.ReactNode;
   loading?: boolean;
+  profile: ProfileData | undefined;
 }
 
 const MyWebPageWrapper: React.FC<MyWebPageWrapperProps> = (props) => {
+  const navigate = useNavigate();
+
+  console.log(props.loading);
+
+  if (!props.profile && !props.loading) {
+    navigate("invalid-agent");
+  }
+
   return (
     <div className="my-webpage-wrapper">
       {/* <div className="navbar">{props.showNavBar ? <Navbar /> : null}</div>{" "} */}

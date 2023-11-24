@@ -46,7 +46,8 @@ const Merchandises = () => {
       f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_ASSOCIATE.value ||
       f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
       f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
-      f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
+      f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value ||
+      f.value === PROFILE_ROLES.FREE_30DAYS_TRIAL.ROLE_FREE_30DAYS_TRIAL.value
     );
   });
 
