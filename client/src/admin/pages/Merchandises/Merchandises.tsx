@@ -1,14 +1,14 @@
-import Wrapper from "admin/components/Wrapper/Wrapper"
-import { UserContext } from "admin/context/UserProvider"
-import useFetchUserProfile from "admin/hooks/useFetchProfile"
-import { PROFILE_ROLES } from "pages/PortalRegistration/constants"
-import React, { useContext } from "react"
-import { CrumbTypes } from "../Dashboard/types"
-import { paths } from "constants/routes"
-import MerchandiseAdmin from "./components/MerchandiseAdmin"
-import MerchandiseAgent from "./components/MerchandiseAgent"
-import MerchandiseSubscriber from "./components/MerchandiseSubscriber"
-import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
+import Wrapper from "admin/components/Wrapper/Wrapper";
+import { UserContext } from "admin/context/UserProvider";
+import useFetchUserProfile from "admin/hooks/useFetchProfile";
+import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
+import React, { useContext } from "react";
+import { CrumbTypes } from "../Dashboard/types";
+import { paths } from "constants/routes";
+import MerchandiseAdmin from "./components/MerchandiseAdmin";
+import MerchandiseAgent from "./components/MerchandiseAgent";
+import MerchandiseSubscriber from "./components/MerchandiseSubscriber";
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -17,25 +17,25 @@ const crumbs: CrumbTypes[] = [
     isActive: false,
   },
   {
-    title: "Merchandises",
-    url: paths.merchandises,
+    title: "MyRewards",
+    url: paths.myRewards,
     isActive: true,
   },
-]
+];
 
 const Merchandises = () => {
-  const userCtx = useContext(UserContext) as any
+  const userCtx = useContext(UserContext) as any;
   const { profile, loading } = useFetchUserProfile(
     userCtx?.user?.userGuid ?? ""
-  )
+  );
 
   const isAdmin = profile?.roles?.some((f) => {
-    return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value
-  })
+    return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
+  });
 
   const isSubscriber = profile?.roles?.some((f) => {
-    return f.value === PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value
-  })
+    return f.value === PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value;
+  });
 
   const isAgent = profile?.roles.some((f) => {
     return (
@@ -47,8 +47,8 @@ const Merchandises = () => {
       f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
       f.value === PROFILE_ROLES.AGENT.ROLE_SENIOR_EXECUTIVE_MARKETING.value ||
       f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
-    )
-  })
+    );
+  });
 
   return (
     <Wrapper loading={loading} breadcrumb={crumbs}>
@@ -61,7 +61,7 @@ const Merchandises = () => {
         <MerchandiseSubscriber />
       ) : null}
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Merchandises
+export default Merchandises;

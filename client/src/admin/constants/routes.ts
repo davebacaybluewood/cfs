@@ -65,7 +65,7 @@ const adminPaths = {
   mailLibrary: adminCfsRoute + "emailpro-templates",
   mailLibraryForm: adminCfsRoute + "email-library-form",
   myLeads: adminCfsRoute + "leads",
-  merchandises: adminCfsRoute + "merchandises",
+  myRewards: adminCfsRoute + "myrewards",
   merchandiseForm: adminCfsRoute + "merchandises/form",
   rewardsHistory: adminCfsRoute + "rewards/history",
   shareableEmails: adminCfsRoute + "shareable-emails",

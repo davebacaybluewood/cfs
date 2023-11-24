@@ -67,7 +67,9 @@ const RSVPForm: React.FC = () => {
               <h5>Comfort Financial Solutions</h5>
               {event ? (
                 <React.Fragment>
-                  <img src={event?.thumbnail} alt="event-img" />
+                  {event?.thumbnail ? (
+                    <img src={event?.thumbnail} alt="event-img" />
+                  ) : null}
                   <h2>{event?.title}</h2>
 
                   <ul className="basic-info">

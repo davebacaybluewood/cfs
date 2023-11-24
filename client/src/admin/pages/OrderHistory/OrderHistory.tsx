@@ -17,12 +17,12 @@ const crumbs: CrumbTypes[] = [
     isActive: false,
   },
   {
-    title: "Merchandise",
-    url: paths.merchandises,
+    title: "My Rewards",
+    url: paths.myRewards,
     isActive: false,
   },
   {
-    title: "Merchandise History",
+    title: "Rewards History",
     url: paths.rewardsHistory,
     isActive: true,
   },
