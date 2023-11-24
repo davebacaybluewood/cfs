@@ -1,7 +1,12 @@
 import { Box, Modal, Typography } from "@mui/material"
 import BusinessCard from "admin/pages/Profile/components/ProfileHeader/BusinessCard/BusinessCard"
 
-const BusinessCardModal = ({ modalOpen, setModalOpen, profile }) => {
+const BusinessCardModal = ({
+  modalOpen,
+  setModalOpen,
+  contactLink,
+  userGuid,
+}) => {
   return (
     <Modal
       sx={{ background: "rgba(0, 0, 0, 0.7)" }}
@@ -31,17 +36,17 @@ const BusinessCardModal = ({ modalOpen, setModalOpen, profile }) => {
           }}
         >
           <BusinessCard
-            email={profile?.emailAddress ?? ""}
-            name={`${profile?.firstName} ${profile?.lastName}` ?? ""}
+            email={contactLink?.emailAddress ?? ""}
+            name={`${contactLink?.firstName} ${contactLink?.lastName}` ?? ""}
             position={
-              profile?.role === "ROLE_MASTER_ADMIN"
+              contactLink?.role === "ROLE_MASTER_ADMIN"
                 ? "ROLE: MASTER ADMIN"
-                : profile?.role ?? ""
+                : contactLink?.role ?? ""
             }
-            licenseNumber={profile?.licenseNumber ?? ""}
-            phoneNumber={profile?.phoneNumber ?? ""}
-            state={profile?.state ?? ""}
-            userGuid={profile?.userGuid ?? ""}
+            licenseNumber={contactLink?.licenseNumber ?? ""}
+            phoneNumber={contactLink?.phoneNumber ?? ""}
+            state={contactLink?.state ?? ""}
+            userGuid={userGuid ?? ""}
           />
         </div>
         <hr
