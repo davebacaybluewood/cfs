@@ -28,15 +28,17 @@ import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
 import { formatISODateOnly } from "helpers/date"
 
 const MyWebPage: React.FC = () => {
-  const { user: userGuid } = useParams()
-  const location = useLocation()
   const [content, setContent] = useState<ContentTypes>("home")
   const [timelineData, setTimelineData] = useState<
     TimelinePostProps[] | undefined
   >()
   const [openQr, setOpenQr] = useState(false)
   const [clipboardValue, setClipboardValue] = useCopyToClipboard()
+  const [isSticky, setSticky] = useState(false)
+
+  const { user: userGuid } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const {
     Agent,
@@ -133,6 +135,31 @@ const MyWebPage: React.FC = () => {
     }
   }, [content, eventRows, blogs])
 
+  // Make left and right sidebar sticky when scrolled
+  useEffect(() => {
+    const handleScroll = () => {
+      const timeline = document.querySelector(".left-col")
+      const sidebar = document.querySelector(".right-col")
+
+      if (timeline && sidebar) {
+        const timelineRect = timeline.getBoundingClientRect()
+        const sidebarRect = sidebar.getBoundingClientRect()
+
+        // Adjust this value based on when you want the sidebar to become sticky
+        const threshold = timelineRect.top + 50
+
+        setSticky(window.scrollY >= threshold)
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
   return (
     <MyWebPageWrapper showNavBar showFooter>
       <Helmet>
@@ -193,7 +220,7 @@ const MyWebPage: React.FC = () => {
             <Container>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-                  <div className="left-col">
+                  <div className={`left-col ${isSticky ? "sticky" : ""}`}>
                     <div className="contact-container">
                       {contactLink.map((con) => (
                         <div className="contact">
@@ -271,7 +298,7 @@ const MyWebPage: React.FC = () => {
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <div className="middle-col">
+                  <div className={`middle-col`}>
                     <React.Fragment>
                       <div className="navbar-main-feed">
                         <FeedTabs {...{ content, setContent }} />
@@ -286,7 +313,7 @@ const MyWebPage: React.FC = () => {
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-                  <div className="right-col">
+                  <div className={`right-col ${isSticky ? "sticky" : ""}`}>
                     <div className="right-col-actions">
                       <RouteLinks />
                     </div>
