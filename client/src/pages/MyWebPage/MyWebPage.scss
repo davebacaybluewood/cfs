@@ -133,7 +133,22 @@
         }
       }
 
-      .left-col-actions {
+      .qr-code {
+        button {
+          background: #4287f5;
+          border: 1px solid transparent;
+
+        }
+
+        .qr-code-content {
+          display: flex;
+          justify-content: center;
+          border-radius: 5px;
+        }
+      }
+
+      .left-col-actions,
+      .qr-code {
         button {
           width: 250px;
           padding: 1rem;

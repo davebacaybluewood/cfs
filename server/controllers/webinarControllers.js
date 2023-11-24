@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import WebinarAppointment from "../models/webinarAppointmentModel.js";
 import fetch from "node-fetch";
 import AgentAppointment from "../models/agentAppointment.js";
-import { AGENT_STATUSES, NOTIFICATION_ENUMS } from "../constants/constants.js";
+import { AGENT_STATUSES, API_RES_FAIL, NOTIFICATION_ENUMS } from "../constants/constants.js";
 
 /**
  * @desc: Fetch all webinars
@@ -27,16 +27,20 @@ const getAllWebinars = expressAsync(async (req, res) => {
 const getSingleWebinar = expressAsync(async (req, res) => {
   const webinarGuid = req.query.isGuid;
 
-  let webinar;
-  if (webinarGuid) {
-    webinar = await Webinars.find({
-      webinarGuid: req.params.id,
-    });
-  } else {
-    webinar = await Webinars.findById(req.params.id);
-  }
+  try {
+    let webinar;
+    if (webinarGuid) {
+      webinar = await Webinars.find({
+        webinarGuid: req.params.id,
+      });
+    } else {
+      webinar = await Webinars.findById(req.params.id);
+    }
 
-  res.json(webinar);
+    res.json(webinar);
+  } catch (error) {
+    res.status(500).json(API_RES_FAIL("Error Occured"))
+  }
 });
 
 // @desc    Create a webinar
