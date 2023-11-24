@@ -28,14 +28,15 @@ import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
 import { formatISODateOnly } from "helpers/date"
 
 const MyWebPage: React.FC = () => {
-  const { user: userGuid } = useParams()
   const [content, setContent] = useState<ContentTypes>("home")
   const [timelineData, setTimelineData] = useState<
     TimelinePostProps[] | undefined
   >()
   const [openQr, setOpenQr] = useState(false)
-  const [isSticky, setSticky] = useState(false)
   const [clipboardValue, setClipboardValue] = useCopyToClipboard()
+  const [isSticky, setSticky] = useState(false)
+
+  const { user: userGuid } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -263,7 +264,17 @@ const MyWebPage: React.FC = () => {
                       ) : null}
                     </div>
                     <div className="left-col-actions">
-                      <Button variant="primary">
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          window.open(
+                            paths.contactEmailForm.replace(
+                              ":userGuid",
+                              userGuid ?? ""
+                            )
+                          )
+                        }
+                      >
                         <div className="button-content">
                           <BsChatRightTextFill /> <span>Contact Me</span>
                         </div>

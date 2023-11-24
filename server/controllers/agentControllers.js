@@ -13,6 +13,7 @@ import PreProfile from "../models/preProfileModel.js";
 import { AGENT_ROLES } from "../constants/constants.js";
 import { registerUserHierarchyAndPoints } from "../services/userServices.js";
 import PortalSubscription from "../models/portalSubscription.js";
+import nodemailer from "nodemailer";
 
 /**
  * @desc: Fetch all agents
@@ -242,8 +243,8 @@ const updateAgent = expressAsync(async (req, res) => {
         typeof req.body.avatar === "string"
           ? req.body.avatar
           : agentImgResult.secure_url
-          ? agentImgResult.secure_url
-          : agent.avatar;
+            ? agentImgResult.secure_url
+            : agent.avatar;
       agent.avatar_cloudinary_id = agentImgResult.public_id
         ? agentImgResult.public_id
         : agent.avatar_cloudinary_id;
@@ -446,6 +447,38 @@ const createAgent = expressAsync(async (req, res) => {
     throw new Error("Error occured in adding agent.");
   }
 });
+
+// @desc    Send Email
+// @route   POST /api/agents/:id/contact
+// @access  Private
+const sendContactEmail = expressAsync((req, res) => {
+  const { subject, content, fromEmail, toEmail } = req.body
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.MAIL_CONFIGS_EMAIL,
+      pass: process.env.MAIL_CONFIGS_PASSWORD,
+    },
+  });
+
+  // Email content
+  const mailOptions = {
+    from: fromEmail,
+    to: toEmail,
+    subject: subject,
+    text: content + `\n\nSent by ${fromEmail}`,
+  };
+
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.error(error);
+    }
+    res.send('Email sent: ' + info.response)
+  });
+
+})
 
 // @desc    Add new testimonial
 // @route   POST /api/agents/:id/testimonials
@@ -660,4 +693,5 @@ export {
   updateAgentWebinar,
   getAllActiveWebinar,
   registerAccount,
+  sendContactEmail
 };
