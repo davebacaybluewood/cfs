@@ -16,6 +16,7 @@ export type TestimonialData = {
   title: string;
   name: string;
   comment: string;
+  isDisplayed?: boolean;
 };
 
 export type ProfileData = {
@@ -48,14 +49,7 @@ export type ProfileData = {
   isDeclined: false;
   createdAt: string;
   updatedAt: string;
-  testimonials?:
-    | {
-        title: string;
-        name: string;
-        comment: string;
-        isDisplayed: boolean;
-      }[]
-    | undefined;
+  testimonials?: TestimonialData[] | undefined;
   calendlyLink: string;
   roles: RolesAndPositionType[];
   position: RolesAndPositionType[];

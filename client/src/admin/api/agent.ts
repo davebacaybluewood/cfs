@@ -318,16 +318,19 @@ const Merchandise = {
     merchandiseId: string,
     body: MerchandiseRedeemBody
   ) => {
-    const res = await requests.post<MerchandiseResData>(
-      `/api/merchandise/redeem-merch/${merchandiseId}`,
-      body
-    );
+    const res = await requests
+      .post<MerchandiseResData>(
+        `/api/merchandise/redeem-merch/${merchandiseId}`,
+        body
+      )
+      .catch((error) => {
+        return {
+          message: error?.response?.data,
+          success: false,
+        };
+      });
 
-    if (res.success) {
-      return res;
-    } else {
-      return false;
-    }
+    return res;
   },
 };
 

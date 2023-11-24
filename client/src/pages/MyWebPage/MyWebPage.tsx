@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
-import { Container, Grid, Button as MUIButton } from "@mui/material"
+import { Container, Grid } from "@mui/material"
 import Spinner from "library/Spinner/Spinner"
-import { BsCalculator, BsChatRightTextFill } from "react-icons/bs"
+import { BsChatRightTextFill } from "react-icons/bs"
 import Button from "library/Button/Button"
-import { AiOutlineArrowRight } from "react-icons/ai"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { Helmet } from "react-helmet"
 import { FiSend } from "react-icons/fi"
 import { paths } from "constants/routes"
 import Timeline from "pages/MyWebPage/Timeline"
-import adminAgent from "admin/api/agent"
-import Event from "admin/models/eventModel"
 import agentLinks from "./helpers/agentLinks"
 import useAgentData from "./useAgentData"
 import FeedTabs, { ContentTypes } from "./FeedTabs"
@@ -25,24 +22,27 @@ import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip"
 import { MdOutlineQrCode2 } from "react-icons/md"
 import { QRCode } from "react-qrcode-logo"
 import "./MyWebPage.scss"
+import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource"
+import useFetchEvents from "admin/pages/Events/hooks/useFetchEvents"
+import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
+import { formatISODateOnly } from "helpers/date"
 
 const MyWebPage: React.FC = () => {
-  const { user } = useParams()
+  const { user: userGuid } = useParams()
   const [content, setContent] = useState<ContentTypes>("home")
-  const [events, setEvents] = useState<Event[] | undefined>()
+  const [timelineData, setTimelineData] = useState<
+    TimelinePostProps[] | undefined
+  >()
   const [openQr, setOpenQr] = useState(false)
-  const navigate = useNavigate()
-  const [clipboardValue, setClipboardValue] = useCopyToClipboard()
   const [isSticky, setSticky] = useState(false)
+  const [clipboardValue, setClipboardValue] = useCopyToClipboard()
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  /* General Agent Information */
-  const userGuid = `${user}`
-  const { profile } = useFetchUserProfile(userGuid)
   const {
     Agent,
     address,
     avatar,
-    defaultAvatar,
     email,
     facebook,
     licenseNumber,
@@ -52,21 +52,92 @@ const MyWebPage: React.FC = () => {
     bio,
     loading,
     languages,
-  } = useAgentData(userGuid)
+    testimonials,
+  } = useAgentData(userGuid ?? "")
+
+  const links = agentLinks(address, facebook, linkedIn, twitter)
+  const contactLink = contactLinks(
+    address ?? "",
+    phoneNumber ?? "",
+    email ?? "",
+    licenseNumber ?? "",
+    languages ?? []
+  )
+  const agentURL = window.location.host + location.pathname
+
+  const { blogs, loading: blogLoading } = useFetchBlogResource(0, 5)
+  const { eventRows, loading: eventLoading } = useFetchEvents(userGuid ?? "")
+
+  function handleCopyToClipboard() {
+    setClipboardValue(agentURL)
+    toast("Link copied to Clipboard")
+  }
+
+  const filteredEvents: TimelinePostProps[] | undefined = eventRows?.map(
+    (data) => {
+      const eventClickedHandler = (eventId: string) => {
+        navigate(paths.rsvpForm.replace(":eventId", eventId))
+      }
+      return {
+        content: data.shortDescription,
+        date: data.eventDate,
+        title: data.title,
+        eventDate: data.eventDate,
+        id: data._id,
+        imgContent: data.thumbnail,
+        onClick: () => eventClickedHandler(data._id),
+        tag: "event",
+        userGuid: userGuid,
+      }
+    }
+  )
+
+  const filteredBlogs: TimelinePostProps[] | undefined = blogs?.map((data) => {
+    const blogClickedHandler = (blogId: string) => {
+      navigate(paths.single_blog.replace(":blogTitle", blogId))
+    }
+    return {
+      content: data.content,
+      date: formatISODateOnly(data.createdAt ?? ""),
+      title: data.title,
+      eventDate: data.createdAt,
+      id: data._id,
+      imgContent: data.thumbnail,
+      onClick: () => blogClickedHandler(data.title),
+      tag: "blog",
+      userGuid: userGuid,
+    }
+  })
+
+  const filteredTestimonials: TimelinePostProps[] | undefined =
+    testimonials?.map((data) => {
+      return {
+        content: data.comment,
+        title: data.title,
+        date: data.name,
+        id: data.title,
+        tag: "reccomendation",
+        userGuid: userGuid,
+      }
+    })
 
   useEffect(() => {
-    const getEvents = async () => {
-      const eventData = await adminAgent.Events.getEvents(`${user}`)
-      setEvents(eventData)
+    if (content === "events") {
+      setTimelineData(filteredEvents)
+    } else if (content === "articles") {
+      setTimelineData(filteredBlogs)
+    } else if (content === "reccomendation") {
+      setTimelineData(filteredTestimonials)
+    } else {
+      const mergedData = [...(filteredEvents ?? []), ...(filteredBlogs ?? [])]
+      setTimelineData(mergedData)
     }
+  }, [content, eventRows, blogs])
 
-    getEvents()
-  }, [])
-
-  // Sticky on Scroll
+  // Make left and right sidebar sticky when scrolled
   useEffect(() => {
     const handleScroll = () => {
-      const timeline = document.querySelector(".middle-col")
+      const timeline = document.querySelector(".left-col")
       const sidebar = document.querySelector(".right-col")
 
       if (timeline && sidebar) {
@@ -87,24 +158,6 @@ const MyWebPage: React.FC = () => {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
-
-  const location = useLocation()
-
-  const agentURL = window.location.host + location.pathname
-
-  function handleCopyToClipboard() {
-    setClipboardValue(agentURL)
-    toast("Link copied to Clipboard")
-  }
-
-  const links = agentLinks(address, facebook, linkedIn, twitter)
-  const contactLink = contactLinks(
-    address ?? "",
-    phoneNumber ?? "",
-    email ?? "",
-    licenseNumber ?? "",
-    languages ?? []
-  )
 
   return (
     <MyWebPageWrapper showNavBar showFooter>
@@ -183,7 +236,7 @@ const MyWebPage: React.FC = () => {
                       >
                         <div className="button-content">
                           <MdOutlineQrCode2 />{" "}
-                          {!openQr ? "Scan QR Code" : "Close"}{" "}
+                          <span>{!openQr ? "Scan QR Code" : "Close"}</span>{" "}
                         </div>
                       </Button>
                       {openQr ? (
@@ -200,7 +253,7 @@ const MyWebPage: React.FC = () => {
                         >
                           <div className="qr-code-content">
                             <QRCode
-                              value={`https://gocfs.pro/${user ?? ""}`}
+                              value={`https://gocfs.pro/${userGuid}`}
                               size={99}
                               bgColor="transparent"
                               fgColor="#000000"
@@ -219,7 +272,10 @@ const MyWebPage: React.FC = () => {
                         variant="danger"
                         onClick={() =>
                           window.open(
-                            paths.testimonialForm.replace(":userGuid", userGuid)
+                            paths.testimonialForm.replace(
+                              ":userGuid",
+                              userGuid ?? ""
+                            )
                           )
                         }
                       >
@@ -238,9 +294,8 @@ const MyWebPage: React.FC = () => {
                       </div>
                       <div className="tabs-content">
                         <Timeline
-                          content={content}
-                          userGuid={userGuid}
-                          testimonials={profile?.testimonials}
+                          data={timelineData}
+                          loading={eventLoading || blogLoading}
                         />
                       </div>
                     </React.Fragment>
@@ -251,7 +306,7 @@ const MyWebPage: React.FC = () => {
                     <div className="right-col-actions">
                       <RouteLinks />
                     </div>
-                    <div className="right-col-content">
+                    {/* <div className="right-col-content">
                       <h3>Agent Calculator</h3>
                       <div className="icon-holder">
                         <BsCalculator />
@@ -262,7 +317,7 @@ const MyWebPage: React.FC = () => {
                           <AiOutlineArrowRight />
                         </span>
                       </Button>
-                    </div>
+                    </div> */}
                   </div>
                 </Grid>
               </Grid>
