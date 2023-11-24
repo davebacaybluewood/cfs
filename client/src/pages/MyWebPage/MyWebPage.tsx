@@ -1,39 +1,41 @@
-import React, { useEffect, useState } from "react";
-import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
-import { Container, Grid } from "@mui/material";
-import Spinner from "library/Spinner/Spinner";
-import { BsChatRightTextFill } from "react-icons/bs";
-import Button from "library/Button/Button";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { FiSend } from "react-icons/fi";
-import { paths } from "constants/routes";
-import Timeline from "pages/MyWebPage/Timeline";
-import agentLinks from "./helpers/agentLinks";
-import useAgentData from "./useAgentData";
-import FeedTabs, { ContentTypes } from "./FeedTabs";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import contactLinks from "./helpers/contactLinks";
-import RouteLinks from "./helpers/routeLinks";
-import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard";
-import { toast } from "react-toastify";
-import { FaShareSquare } from "react-icons/fa";
-import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
-import { MdOutlineQrCode2 } from "react-icons/md";
-import { QRCode } from "react-qrcode-logo";
-import "./MyWebPage.scss";
-import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
-import useFetchEvents from "admin/pages/Events/hooks/useFetchEvents";
-import { TimelinePostProps } from "library/TimelinePost/TimelinePost";
-import { formatISODateOnly } from "helpers/date";
+import React, { useEffect, useState } from "react"
+import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
+import { Container, Grid } from "@mui/material"
+import Spinner from "library/Spinner/Spinner"
+import { BsChatRightTextFill } from "react-icons/bs"
+import Button from "library/Button/Button"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { Helmet } from "react-helmet"
+import { FiSend } from "react-icons/fi"
+import { paths } from "constants/routes"
+import Timeline from "pages/MyWebPage/Timeline"
+import agentLinks from "./helpers/agentLinks"
+import useAgentData from "./useAgentData"
+import FeedTabs, { ContentTypes } from "./FeedTabs"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import contactLinks from "./helpers/contactLinks"
+import RouteLinks from "./helpers/routeLinks"
+import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard"
+import { toast } from "react-toastify"
+import { FaShareSquare } from "react-icons/fa"
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip"
+import { MdOutlineQrCode2 } from "react-icons/md"
+import { QRCode } from "react-qrcode-logo"
+import "./MyWebPage.scss"
+import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource"
+import useFetchEvents from "admin/pages/Events/hooks/useFetchEvents"
+import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
+import { formatISODateOnly } from "helpers/date"
 
 const MyWebPage: React.FC = () => {
-  const { user: userGuid } = useParams();
+  const { user: userGuid } = useParams()
   const location = useLocation()
-  const [content, setContent] = useState<ContentTypes>("home");
-  const [timelineData, setTimelineData] = useState<TimelinePostProps[] | undefined>()
+  const [content, setContent] = useState<ContentTypes>("home")
+  const [timelineData, setTimelineData] = useState<
+    TimelinePostProps[] | undefined
+  >()
   const [openQr, setOpenQr] = useState(false)
-  const [clipboardValue, setClipboardValue] = useCopyToClipboard();
+  const [clipboardValue, setClipboardValue] = useCopyToClipboard()
   const navigate = useNavigate()
 
   const {
@@ -49,39 +51,45 @@ const MyWebPage: React.FC = () => {
     bio,
     loading,
     languages,
-    testimonials
-  } = useAgentData(userGuid ?? "");
+    testimonials,
+  } = useAgentData(userGuid ?? "")
 
-  const links = agentLinks(address, facebook, linkedIn, twitter);
-  const contactLink = contactLinks(address ?? '', phoneNumber ?? '', email ?? '', licenseNumber ?? '', languages ?? [])
+  const links = agentLinks(address, facebook, linkedIn, twitter)
+  const contactLink = contactLinks(
+    address ?? "",
+    phoneNumber ?? "",
+    email ?? "",
+    licenseNumber ?? "",
+    languages ?? []
+  )
   const agentURL = window.location.host + location.pathname
 
   const { blogs, loading: blogLoading } = useFetchBlogResource(0, 5)
   const { eventRows, loading: eventLoading } = useFetchEvents(userGuid ?? "")
 
   function handleCopyToClipboard() {
-    setClipboardValue(
-      agentURL
-    );
-    toast("Link copied to Clipboard");
+    setClipboardValue(agentURL)
+    toast("Link copied to Clipboard")
   }
 
-  const filteredEvents: TimelinePostProps[] | undefined = eventRows?.map((data) => {
-    const eventClickedHandler = (eventId: string) => {
-      navigate(paths.rsvpForm.replace(":eventId", eventId))
+  const filteredEvents: TimelinePostProps[] | undefined = eventRows?.map(
+    (data) => {
+      const eventClickedHandler = (eventId: string) => {
+        navigate(paths.rsvpForm.replace(":eventId", eventId))
+      }
+      return {
+        content: data.shortDescription,
+        date: data.eventDate,
+        title: data.title,
+        eventDate: data.eventDate,
+        id: data._id,
+        imgContent: data.thumbnail,
+        onClick: () => eventClickedHandler(data._id),
+        tag: "event",
+        userGuid: userGuid,
+      }
     }
-    return {
-      content: data.shortDescription,
-      date: data.eventDate,
-      title: data.title,
-      eventDate: data.eventDate,
-      id: data._id,
-      imgContent: data.thumbnail,
-      onClick: () => eventClickedHandler(data._id),
-      tag: "event",
-      userGuid: userGuid,
-    }
-  })
+  )
 
   const filteredBlogs: TimelinePostProps[] | undefined = blogs?.map((data) => {
     const blogClickedHandler = (blogId: string) => {
@@ -100,16 +108,17 @@ const MyWebPage: React.FC = () => {
     }
   })
 
-  const filteredTestimonials: TimelinePostProps[] | undefined = testimonials?.map((data) => {
-    return {
-      content: data.comment,
-      title: data.title,
-      date: data.name,
-      id: data.title,
-      tag: "reccomendation",
-      userGuid: userGuid,
-    }
-  })
+  const filteredTestimonials: TimelinePostProps[] | undefined =
+    testimonials?.map((data) => {
+      return {
+        content: data.comment,
+        title: data.title,
+        date: data.name,
+        id: data.title,
+        tag: "reccomendation",
+        userGuid: userGuid,
+      }
+    })
 
   useEffect(() => {
     if (content === "events") {
@@ -119,7 +128,7 @@ const MyWebPage: React.FC = () => {
     } else if (content === "reccomendation") {
       setTimelineData(filteredTestimonials)
     } else {
-      const mergedData = [...filteredEvents ?? [], ...filteredBlogs ?? []]
+      const mergedData = [...(filteredEvents ?? []), ...(filteredBlogs ?? [])]
       setTimelineData(mergedData)
     }
   }, [content, eventRows, blogs])
@@ -167,7 +176,10 @@ const MyWebPage: React.FC = () => {
                           }
                         >
                           <div onClick={() => handleCopyToClipboard()}>
-                            <span> <FaShareSquare /> </span>
+                            <span>
+                              {" "}
+                              <FaShareSquare />{" "}
+                            </span>
                           </div>
                         </HtmlTooltip>
                       </div>
@@ -184,13 +196,22 @@ const MyWebPage: React.FC = () => {
                   <div className="left-col">
                     <div className="contact-container">
                       {contactLink.map((con) => (
-                        <div className="contact">{con.icon} <span>{con.text}</span>  </div>
+                        <div className="contact">
+                          {con.icon} <span>{con.text}</span>{" "}
+                        </div>
                       ))}
                     </div>
                     <div className="qr-code">
-                      <Button variant="secondary" onClick={() => !openQr ? setOpenQr(true) : setOpenQr(false)}>
+                      <Button
+                        variant="secondary"
+                        onClick={() =>
+                          !openQr ? setOpenQr(true) : setOpenQr(false)
+                        }
+                      >
                         <div className="button-content">
-                          <MdOutlineQrCode2 /> <span>{!openQr ? 'Scan QR Code' : 'Close'}</span> </div>
+                          <MdOutlineQrCode2 />{" "}
+                          <span>{!openQr ? "Scan QR Code" : "Close"}</span>{" "}
+                        </div>
                       </Button>
                       {openQr ? (
                         <HtmlTooltip
@@ -216,7 +237,17 @@ const MyWebPage: React.FC = () => {
                       ) : null}
                     </div>
                     <div className="left-col-actions">
-                      <Button variant="primary">
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          window.open(
+                            paths.contactEmailForm.replace(
+                              ":userGuid",
+                              userGuid ?? ""
+                            )
+                          )
+                        }
+                      >
                         <div className="button-content">
                           <BsChatRightTextFill /> <span>Contact Me</span>
                         </div>
@@ -225,11 +256,13 @@ const MyWebPage: React.FC = () => {
                         variant="danger"
                         onClick={() =>
                           window.open(
-                            paths.testimonialForm.replace(":userGuid", userGuid ?? "")
+                            paths.testimonialForm.replace(
+                              ":userGuid",
+                              userGuid ?? ""
+                            )
                           )
                         }
                       >
-
                         <div className="button-content">
                           <FiSend /> <span>Recommendation</span>
                         </div>
@@ -241,9 +274,7 @@ const MyWebPage: React.FC = () => {
                   <div className="middle-col">
                     <React.Fragment>
                       <div className="navbar-main-feed">
-                        <FeedTabs
-                          {...{ content, setContent }}
-                        />
+                        <FeedTabs {...{ content, setContent }} />
                       </div>
                       <div className="tabs-content">
                         <Timeline
@@ -277,10 +308,9 @@ const MyWebPage: React.FC = () => {
             </Container>
           </div>
         </div>
-      )
-      }
-    </MyWebPageWrapper >
-  );
-};
+      )}
+    </MyWebPageWrapper>
+  )
+}
 
-export default MyWebPage;
+export default MyWebPage
