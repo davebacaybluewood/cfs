@@ -154,7 +154,7 @@ const getEvents = async (userGuid) => {
   if (position === PROFILE_POSITIONS.AGENT.value) {
     const agentEvents = await Events.find({
       $or: [{ postedBy: PROFILE_POSITIONS.MASTER_ADMIN.value }, { userGuid }],
-    });
+    }).sort({ createdAt: -1 });
     events = agentEvents?.map((data) => {
       data.authorFirstName = "CFS Admin";
       data.authorLastName = "";
@@ -167,7 +167,7 @@ const getEvents = async (userGuid) => {
         { postedBy: PROFILE_POSITIONS.MASTER_ADMIN.value },
         { userGuid: recruiterUserGuid },
       ],
-    });
+    }).sort({ createdAt: -1 });
 
     events = subscriberEvents?.map((data) => {
       data.authorFirstName = "Admin";
@@ -198,7 +198,7 @@ const getEvents = async (userGuid) => {
       {
         $unset: "eventDoc",
       },
-    ]);
+    ]).sort({ createdAt: -1 });
   }
 
   const filteredEvents = events.map((data) => {
