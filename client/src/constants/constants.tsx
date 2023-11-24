@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { RouteProps } from "react-router-dom"
 import US_STATES from "./statesAndLocation"
 import InvalidRoutePage from "pages/SingleBlogPage/InvalidRoutePage"
@@ -24,7 +23,6 @@ import AgentWebinar from "pages/Agents/AgentWebinar"
 import AgentAppointment from "pages/Agents/AgentAppointment"
 import Portal from "pages/Portal/Portal"
 import TestimonialForm from "pages/TestimonialForm/TestimonialForm"
-import ContactEmailForm from "pages/ContactEmailForm/ContactEmailForm"
 import PreLicensing from "pages/Contract/components/PreLicensing"
 import Annuity from "pages/Contract/components/Annuity"
 import Pricing from "pages/Pricing/Pricing"
@@ -42,51 +40,8 @@ import NATIONALITIES from "./nationalities"
 import MyWebPage from "pages/MyWebPage/MyWebPage"
 import AALogin from "../events/mission/AALogin/AALogin"
 import ClaimReward from "events/mission/ClaimReward/ClaimReward"
-=======
-import { RouteProps } from "react-router-dom";
-import US_STATES from "./statesAndLocation";
-import InvalidRoutePage from "pages/SingleBlogPage/InvalidRoutePage";
-import AboutUs from "pages/AboutUs/AboutUs";
-import AgentSupport from "pages/AgentSupport/AgentSupport";
-import BlogPage from "pages/BlogPage/BlogPage";
-import BusinessProtection from "pages/BusinessProtection/BusinessProtection";
-import ContactPage from "pages/ContactPage/ContactPage";
-import FamilyProtection from "pages/FamilyProtection/FamilyProtection";
-import Home from "pages/Home/Home";
-import SingleBlogPage from "pages/SingleBlogPage/SingleBlogPage";
-import Solutions from "pages/Solutions/Solutions";
-import { adminRoutes } from "admin/constants/constants";
-import { paths } from "./routes";
-import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
-import Events from "pages/Events/Events";
-import InvalidRoute from "layout/InvalidRoute/InvalidRoute";
-import LandingPages from "pages/LandingPages/LandingPages";
-import Agents from "pages/Agents/Agents";
-import { ToastOptions } from "react-toastify";
-import Calculator from "admin/pages/CommissionSimulation/Calculator";
-import AgentWebinar from "pages/Agents/AgentWebinar";
-import AgentAppointment from "pages/Agents/AgentAppointment";
-import Portal from "pages/Portal/Portal";
-import TestimonialForm from "pages/TestimonialForm/TestimonialForm";
-import PreLicensing from "pages/Contract/components/PreLicensing";
-import Annuity from "pages/Contract/components/Annuity";
-import Pricing from "pages/Pricing/Pricing";
-import Subscribe from "pages/Subscribers/Subscribe";
-import SubscribeSuccess from "pages/Subscribers/SubscribeSuccess";
-import RSVPForm from "pages/RSVP/RSVPForm";
-import MessagePage from "pages/ThanksPage/MessagePage";
-import PortalArticle from "pages/PortalArticle/PortalArticle";
-import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
-import Registration from "events/mission/Registration/Registration";
-import Missions from "events/mission/Mission/Missions";
-import AgentMissionModal from "events/mission/components/modal/AgentMissionModal";
-import Rewards from "events/mission/Rewards/Rewards";
-import NATIONALITIES from "./nationalities";
-import MyWebPage from "pages/MyWebPage/MyWebPage";
-import AALogin from "../events/mission/AALogin/AALogin";
-import ClaimReward from "events/mission/ClaimReward/ClaimReward";
-import WebinarPage from "pages/MyWebPage/components/WebinarPage";
->>>>>>> f677dde94dfe163efc97759a8f91f28437cad9c4
+import WebinarPage from "pages/MyWebPage/components/WebinarPage"
+import ContactEmailForm from "pages/ContactEmailForm/ContactEmailForm"
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean
@@ -239,8 +194,8 @@ const REACT_ROUTES: ReactRoutesType[] = [
     element: (
       <AgentMissionModal
         openModal={true}
-        showModal={() => { }}
-        onClick={() => { }}
+        showModal={() => {}}
+        onClick={() => {}}
         agentName="Black Noir"
       />
     ),
