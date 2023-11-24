@@ -81,7 +81,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
       {isUpToDate && props.headerConfigs.isProfileView ? (
         <Indicator
           description="You must update your license number, first name, last name, and state to view your profile."
-          header="Your profile is up to date"
+          header="Update your Profile"
           buttonConfigs={{
             onClick: () => navigate(paths.profileForm),
             text: "Edit Profile",
