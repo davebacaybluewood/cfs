@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material"
+import { CircularProgress, Container, Grid } from "@mui/material"
 import SimpleNavbar from "layout/SimpleNavbar/SimpleNavbar"
 import React, { useState } from "react"
 import "./ContactEmailForm.scss"
@@ -28,7 +28,6 @@ const ContactEmailForm: React.FC = () => {
 
   const initialValues: any = {
     emailAddress: "",
-    fullName: "",
     subject: "",
     content: "",
   }
@@ -155,6 +154,7 @@ const ContactEmailForm: React.FC = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={async (data, actions) => {
+                  // console.log(data.content)
                   setLoading(true)
                   try {
                     await fetch(
@@ -179,7 +179,7 @@ const ContactEmailForm: React.FC = () => {
                     actions.resetForm()
                     setLoading(false)
 
-                    toast.success(`contact Submitted`, {
+                    toast.success(`Email Sent`, {
                       position: "top-right",
                       autoClose: 5000,
                       hideProgressBar: false,
@@ -210,6 +210,7 @@ const ContactEmailForm: React.FC = () => {
                       <div className="form-control">
                         <h5>Sender Email *</h5>
                         <FormikTextInput
+                          disabled={loading}
                           name="emailAddress"
                           placeholder="Enter your email address here"
                           value={values.emailAddress}
@@ -240,21 +241,41 @@ const ContactEmailForm: React.FC = () => {
                           placeholder="Enter your subject here"
                           value={values.subject}
                           variant="outlined"
+                          disabled={loading}
                         />
                       </div>
                       <div className="form-control">
                         <h5>Body *</h5>
                         <FormikTextInput
-                          name="contact"
-                          placeholder="Enter your contact here"
-                          value={values.contact}
+                          name="content"
+                          placeholder="Enter your content here"
+                          value={values.content}
                           variant="outlined"
                           isTextArea
+                          disabled={loading}
                         />
                       </div>
 
-                      <Button variant="danger" onClick={() => handleSubmit()}>
-                        Send Email
+                      <Button
+                        disabled={loading}
+                        variant="danger"
+                        onClick={() => handleSubmit()}
+                        type="submit"
+                      >
+                        {loading ? (
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "8px",
+                              alignItems: "center",
+                            }}
+                          >
+                            <CircularProgress color="inherit" size={"2rem"} />
+                            <span>Sending...</span>
+                          </div>
+                        ) : (
+                          "Send Email"
+                        )}
                       </Button>
                     </React.Fragment>
                   )
@@ -264,7 +285,6 @@ const ContactEmailForm: React.FC = () => {
           </Grid>
         </Grid>
       </Container>
-      {loading ? <Spinner variant="fixed" /> : null}
     </div>
   )
 }

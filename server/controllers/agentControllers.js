@@ -448,6 +448,9 @@ const createAgent = expressAsync(async (req, res) => {
   }
 });
 
+// @desc    Send Email
+// @route   POST /api/agents/:id/contact
+// @access  Private
 const sendContactEmail = expressAsync((req, res) => {
   const { subject, content, fromEmail, toEmail } = req.body
 
@@ -464,8 +467,9 @@ const sendContactEmail = expressAsync((req, res) => {
     from: fromEmail,
     to: toEmail,
     subject: subject,
-    content: content,
+    text: content + `\n\nSent by ${fromEmail}`,
   };
+
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
