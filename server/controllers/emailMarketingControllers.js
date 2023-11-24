@@ -7,9 +7,10 @@ import EmailTemplate from "../models/emailTemplate.js";
 import mongoose from "mongoose";
 import undefinedValidator from "./helpers/undefinedValidator.js";
 import Agent from "../models/agentModel.js";
+import User from "../models/userModel.js";
 import Hierarchy from "../models/hierarchyModel.js";
 import generateString from "../utils/generateString.js";
-import { PROFILE_POSITIONS } from "../constants/constants.js";
+import { API_RES_FAIL, PROFILE_POSITIONS } from "../constants/constants.js";
 
 /**
  * @desc: Send an email marketing
@@ -301,30 +302,43 @@ const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
   const { userGuid } = req.params;
   const { status } = req.query;
 
-  if (!userGuid) {
-    throw new Error("Error occured in fetching.");
+  if (!userGuid) throw new Error("UserGuid not provided.");
+  if (!status) throw new Error("Template status not provided.");
+
+  try {
+    /** Find the hierarchy */
+    const hierarchy = await Hierarchy.find({ userGuid });
+    const hierachyCode = hierarchy[0].hierachyCode;
+
+    /** Get the head of hierarchy to get the user guid */
+    const hierarchyHead = await Hierarchy.find({ hierachyCode });
+    const userGuidHead = hierarchyHead[0].userGuid;
+
+    /** Get the head information */
+    const agents = await Agents.find({ userGuid: userGuidHead });
+
+    /** Get all admin userGuid */
+    let adminUsers = await User.find(
+      { isAdmin: true },
+      { userGuid: 1, _id: 0 }
+    );
+    adminUsers = adminUsers.map((user) => user.userGuid).flat();
+
+    const templates = await EmailTemplate.find({
+      userGuid: {
+        $in: [...adminUsers, userGuidHead],
+      },
+      status,
+    });
+
+    res.json({
+      templates,
+      name: agents[0].firstName + " " + agents[0].lastName,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(API_RES_FAIL(err));
   }
-
-  /** Find the hierarchy */
-  const hierarchy = await Hierarchy.find({ userGuid });
-  const hierachyCode = hierarchy[0].hierachyCode;
-
-  /** Get the head of hierarchy to get the user guid */
-  const hierarchyHead = await Hierarchy.find({ hierachyCode });
-  const userGuidHead = hierarchyHead[0].userGuid;
-
-  /** Get the head information */
-  const agents = await Agents.find({ userGuid: userGuidHead });
-
-  const templates = await EmailTemplate.find({
-    userGuid: userGuidHead,
-    status,
-  });
-
-  res.json({
-    templates,
-    name: agents[0].firstName + " " + agents[0].lastName,
-  });
 });
 
 /**
