@@ -7,7 +7,8 @@ import sendEmail from "../utils/sendNodeMail.js";
 import merchandiseAdminNotif from "../emailTemplates/merchandiseAdminNotif.js";
 import merchandiseSubscriberNotif from "../emailTemplates/merchandiseSubscriberNotif.js";
 import RedeemedPoints from "../models/redeemedPointsModel.js";
-import fs from 'fs';
+import fs from "fs";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 function isFieldEmpty(field) {
   return field === undefined || field === null || field === "";
@@ -167,8 +168,8 @@ const updateMerchandiseDetails = expressAsync(async (req, res) => {
       typeof req.body.image === "string"
         ? req.body.image
         : merchandiseImage.secure_url
-          ? merchandiseImage.secure_url
-          : merchandise.image;
+        ? merchandiseImage.secure_url
+        : merchandise.image;
 
     const updatedMerchandise = await merchandise.save();
     res.json(updatedMerchandise);
@@ -273,11 +274,13 @@ const redeemMerchandise = expressAsync(async (req, res, next) => {
 
 const emailRedeemMerchNotif = expressAsync(async (req, res) => {
   const mailSubject = "Merchandise Ship Request";
-  const note = req.body.remarks;
+  const { emailAddress, name } = req.body;
   const shipAddr = req.body.address;
+  const note = req.body.remarks;
   const { merchandiseId } = req.params;
 
-  const subscriber = await User.find({ userGuid: req.body.userGuid });
+  const subscriber = await User.findOne({ userGuid: req.body.userGuid });
+  subscriber.email = emailAddress;
 
   const admin = await User.find({
     isAdmin: true,
@@ -302,12 +305,13 @@ const emailRedeemMerchNotif = expressAsync(async (req, res) => {
   shipDate = addDays(shipDate, 2);
   let resultMsg = [];
 
-  const recipients = [...subscriber, ...admin];
+  const recipients = [subscriber, ...admin];
 
   try {
     const emailPromise = recipients.map((user) => {
-      const subscriberName = subscriber[0].name;
+      const subscriberName = name;
       let recipientEmail = user.email;
+
       let mailContent;
 
       if (user.isAdmin) {
@@ -351,7 +355,7 @@ const emailRedeemMerchNotif = expressAsync(async (req, res) => {
       res.send({ message: resultMsg, success: true });
     });
   } catch (error) {
-    res.status(500);
+    res.status(500).send(API_RES_FAIL(error));
     console.log(error);
     throw new Error("Error occured in submission.");
   }

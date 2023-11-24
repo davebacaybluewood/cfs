@@ -22,6 +22,7 @@ const ENDPOINTS = {
   AGENT_COUNTS: "/api/agents/agent-counts/all",
   AGENT_TESTIMONIALS: "/api/agents/:agentId/testimonials",
   AGENT_TESTIMONIALS_STATUS: "/api/agents/:agentId/testimonials/update",
+  CONTACT_EMAIL_FORM: "/api/agents/:agentId/contact",
   WEBINARS: "/api/webinars",
   WEBINAR_SINGLE: "/api/webinars/:webinarId",
   AGENT_WEBINAR_SINGLE:
@@ -78,6 +79,6 @@ const ENDPOINTS = {
 
   /* Trial Subscription */
   TRIAL_SUBSCRIPTION_ROOT: "/api/portal-subscription/free-trial",
-};
+}
 
-export default ENDPOINTS;
+export default ENDPOINTS

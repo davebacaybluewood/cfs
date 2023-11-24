@@ -17,18 +17,11 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import Spinner from "library/Spinner/Spinner";
 import ComponentValidator from "library/ComponentValidator/ComponentValidator";
-import { TestimonialType } from "admin/hooks/useFetchProfile";
+import { TestimonialData, TestimonialType } from "admin/hooks/useFetchProfile";
 import { AiOutlineLink } from "react-icons/ai";
 
 type TestimonialProps = {
-  testimonials:
-    | {
-        title: string;
-        name: string;
-        comment: string;
-        isDisplayed: boolean;
-      }[]
-    | undefined;
+  testimonials: TestimonialData[] | undefined;
   userGuid: string;
   agentId: string;
 };

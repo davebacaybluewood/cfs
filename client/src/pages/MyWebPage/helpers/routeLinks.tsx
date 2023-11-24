@@ -12,23 +12,23 @@ const RouteLinks: React.FC = () => {
             onclick: () => window.open(
                 "https://agent.comfortfinancialsolutions.com/signup"
             ),
-            text: 'Be a CFS Agent'
+            text: <>Be a <br /> CFS Agent</>
         },
         {
             icon: <CiGift />,
             onclick: () => window.open(`${paths.subscriberRegistration}?userGuid=${user}`),
-            text: 'Earn Points as a CFS Subscriber'
+            text: <>Earn Points <br /> as a CFS Subscriber</>
         },
         {
             icon: <CiVault />,
             onclick: () => window.open(`${paths.portalRegistration}?userGuid=${user}`),
-            text: 'Try CFS for 30-days'
+            text: <>Try CFS <br /> for 30-days</>
         },
-        {
-            icon: <CiMonitor />,
-            onclick: () => window.open(paths.webinarPage.replace(':user', user ?? '')),
-            text: <>Join our webinar <br /> to learn more</>
-        },
+        // {
+        //     icon: <CiMonitor />,
+        //     onclick: () => window.open(paths.webinarPage.replace(':user', user ?? '')),
+        //     text: <>Join our webinar <br /> to learn more</>
+        // },
         /*   Doesn't have a function yet, get from marketing.*/
     ]
     return (
