@@ -242,9 +242,9 @@ const useSidebarLinks = (
       ],
     },
     {
-      linkText: "Merchandises",
-      link: paths.merchandises,
-      isActive: currentPage === adminPathsNew.merchandises.split("/")[2],
+      linkText: "My Rewards",
+      link: paths.myRewards,
+      isActive: currentPage === adminPathsNew.myRewards.split("/")[2],
       icon: <FaCube />,
       role: [
         PROFILE_ROLES.AGENT.ROLE_ASSOCIATE.value,

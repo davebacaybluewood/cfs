@@ -58,12 +58,12 @@ const MerchandiseForm: React.FC = () => {
       isActive: false,
     },
     {
-      title: "Merchandises",
-      url: paths.merchandises,
+      title: "My Rewards",
+      url: paths.myRewards,
       isActive: false,
     },
     {
-      title: "Add Merchandise Form",
+      title: "Add Rewards Form",
       url: paths.merchandiseForm,
       isActive: true,
     },
@@ -100,7 +100,7 @@ const MerchandiseForm: React.FC = () => {
                   image: data.image,
                   points: parseFloat(data.points),
                 });
-                toast.info(`Merchandise has been added`, {
+                toast.info(`Reward has been added`, {
                   position: "top-right",
                   autoClose: 5000,
                   hideProgressBar: false,
@@ -111,7 +111,7 @@ const MerchandiseForm: React.FC = () => {
                   theme: "light",
                 });
                 setLoading(false);
-                navigate(paths.merchandises);
+                navigate(paths.myRewards);
               };
 
               const editMerchandise = async () => {
@@ -120,7 +120,7 @@ const MerchandiseForm: React.FC = () => {
                   image: data.image,
                   points: parseFloat(data.points),
                 });
-                toast.info(`Merchandise has been edited`, {
+                toast.info(`Reward has been edited`, {
                   position: "top-right",
                   autoClose: 5000,
                   hideProgressBar: false,
@@ -131,7 +131,7 @@ const MerchandiseForm: React.FC = () => {
                   theme: "light",
                 });
                 setLoading(false);
-                navigate(paths.merchandises);
+                navigate(paths.myRewards);
               };
 
               if (action === "edit") {

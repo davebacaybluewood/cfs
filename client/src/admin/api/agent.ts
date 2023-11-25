@@ -391,8 +391,12 @@ const Subscriptions = {
 
 const Events = {
   getEvents: (userGuid: string) => {
-    const res = requests.get<Event[]>(`/api/events?userGuid=${userGuid}`);
-    return res;
+    try {
+      const res = requests.get<Event[]>(`/api/events?userGuid=${userGuid}`);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   },
   getSingleEvent: (eventId: string) => {
     const res = requests.get<Event | undefined>(`/api/events/${eventId}`);

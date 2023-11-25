@@ -4,7 +4,13 @@ import BusinessCard from "admin/pages/Profile/components/ProfileHeader/BusinessC
 const BusinessCardModal = ({
   modalOpen,
   setModalOpen,
-  contactLink,
+  emailAddress,
+  firstName,
+  lastName,
+  position,
+  licenseNumber,
+  phoneNumber,
+  state,
   userGuid,
 }) => {
   return (
@@ -36,16 +42,18 @@ const BusinessCardModal = ({
           }}
         >
           <BusinessCard
-            email={contactLink?.emailAddress ?? ""}
-            name={`${contactLink?.firstName} ${contactLink?.lastName}` ?? ""}
+            email={emailAddress}
+            name={`${firstName} ${lastName}` ?? ""}
             position={
-              contactLink?.role === "ROLE_MASTER_ADMIN"
+              position === "ROLE_MASTER_ADMIN"
                 ? "ROLE: MASTER ADMIN"
-                : contactLink?.role ?? ""
+                : position === "POSITION_AGENT"
+                ? "ROLE: AGENT"
+                : position ?? ""
             }
-            licenseNumber={contactLink?.licenseNumber ?? ""}
-            phoneNumber={contactLink?.phoneNumber ?? ""}
-            state={contactLink?.state ?? ""}
+            licenseNumber={licenseNumber ?? ""}
+            phoneNumber={phoneNumber ?? ""}
+            state={state ?? ""}
             userGuid={userGuid ?? ""}
           />
         </div>

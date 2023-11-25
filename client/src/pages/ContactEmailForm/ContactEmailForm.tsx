@@ -34,7 +34,15 @@ const ContactEmailForm: React.FC = () => {
 
   const validationSchema = Yup.object({
     content: Yup.string().required("Content field is required."),
-    emailAddress: Yup.string().required("Email Address field is required."),
+    emailAddress: Yup.string()
+    .required("Email Address field is required.")
+    .test(
+      "not-same-as-send-to",
+      "Sender Email must be different from Send to",
+      function (value) {
+        return value !== agentInfo.email;
+      }
+    ),
     subject: Yup.string().required("Subject field is required."),
   })
 

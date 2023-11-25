@@ -91,7 +91,7 @@ export const profileInitialValues = {
 };
 const useFetchUserProfile = (userGuid: string) => {
   const [profile, setProfile] = useState<ProfileData | undefined>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);

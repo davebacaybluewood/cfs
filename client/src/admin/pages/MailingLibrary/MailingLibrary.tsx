@@ -377,7 +377,7 @@ const MailLibrary: React.FC = () => {
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <DocumentTitleSetter title="EmailPro Templates | CFS Portal" />
-      <div className="mailing-library-container" style={{ padding: "2rem" }}>
+      <div className="mailing-library-container">
         <Title title="EmailPro Templates" subtitle="">
           <Button
             onClick={() => navigate(paths.mailLibraryForm)}

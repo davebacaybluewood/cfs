@@ -17,8 +17,7 @@ const getEvents = async (req, res, next) => {
       res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
     }
   } catch (error) {
-    res.status(500).json(API_RES_FAIL("[Events] Error Occured"));
-
+    res.status(400).json(API_RES_FAIL("[Events] Error Occured"));
   }
 };
 

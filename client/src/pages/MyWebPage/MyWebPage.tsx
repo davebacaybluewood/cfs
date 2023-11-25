@@ -10,8 +10,6 @@ import { FiSend } from "react-icons/fi"
 import { TiBusinessCard } from "react-icons/ti"
 import { paths } from "constants/routes"
 import Timeline from "pages/MyWebPage/Timeline"
-import adminAgent from "admin/api/agent"
-import Event from "admin/models/eventModel"
 import agentLinks from "./helpers/agentLinks"
 import useAgentData from "./useAgentData"
 import FeedTabs, { ContentTypes } from "./FeedTabs"
@@ -32,16 +30,18 @@ import { formatISODateOnly } from "helpers/date"
 import BusinessCardModal from "./components/BusinessCardModal"
 
 const MyWebPage: React.FC = () => {
-  const { user: userGuid } = useParams()
-  const location = useLocation()
   const [content, setContent] = useState<ContentTypes>("home")
   const [timelineData, setTimelineData] = useState<
     TimelinePostProps[] | undefined
   >()
   const [openQr, setOpenQr] = useState(false)
   const [clipboardValue, setClipboardValue] = useCopyToClipboard()
+  const [isSticky, setSticky] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+
+  const { user: userGuid } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const {
     Agent,
@@ -57,6 +57,7 @@ const MyWebPage: React.FC = () => {
     loading,
     languages,
     testimonials,
+    profile,
   } = useAgentData(userGuid ?? "")
 
   const links = agentLinks(address, facebook, linkedIn, twitter)
@@ -67,6 +68,11 @@ const MyWebPage: React.FC = () => {
     licenseNumber ?? "",
     languages ?? []
   )
+
+  useEffect(() => {
+    console.log(profile)
+  }, [profile])
+
   const agentURL = window.location.host + location.pathname
 
   const { blogs, loading: blogLoading } = useFetchBlogResource(0, 5)
@@ -138,8 +144,33 @@ const MyWebPage: React.FC = () => {
     }
   }, [content, eventRows, blogs])
 
+  // Make left and right sidebar sticky when scrolled
+  useEffect(() => {
+    const handleScroll = () => {
+      const timeline = document.querySelector(".left-col")
+      const sidebar = document.querySelector(".right-col")
+
+      if (timeline && sidebar) {
+        const timelineRect = timeline.getBoundingClientRect()
+        const sidebarRect = sidebar.getBoundingClientRect()
+
+        // Adjust this value based on when you want the sidebar to become sticky
+        const threshold = timelineRect.top + 50
+
+        setSticky(window.scrollY >= threshold)
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
   return (
-    <MyWebPageWrapper showNavBar showFooter>
+    <MyWebPageWrapper showNavBar showFooter profile={profile} loading={loading}>
       <Helmet>
         <title>Profile | {Agent}</title>
       </Helmet>
@@ -198,7 +229,7 @@ const MyWebPage: React.FC = () => {
             <Container>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-                  <div className="left-col">
+                  <div className={`left-col ${isSticky ? "sticky" : ""}`}>
                     <div className="contact-container">
                       {contactLink.map((con) => (
                         <div className="contact">
@@ -232,8 +263,8 @@ const MyWebPage: React.FC = () => {
                         >
                           <div className="qr-code-content">
                             <QRCode
-                              value={`https://gocfs.pro/${userGuid}`}
-                              size={99}
+                              value={`https://www.gocfs.pro/agent/${userGuid}`}
+                              size={120}
                               bgColor="transparent"
                               fgColor="#000000"
                             />
@@ -285,14 +316,20 @@ const MyWebPage: React.FC = () => {
                       <BusinessCardModal
                         modalOpen={modalOpen}
                         setModalOpen={setModalOpen}
-                        contactLink={contactLink}
-                        userGuid={userGuid}
+                        emailAddress={profile?.emailAddress}
+                        firstName={profile?.firstName}
+                        lastName={profile?.lastName}
+                        position={profile?.position[0].value}
+                        licenseNumber={profile?.licenseNumber}
+                        phoneNumber={profile?.phoneNumber}
+                        state={profile?.state}
+                        userGuid={profile?.userGuid}
                       />
                     </div>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <div className="middle-col">
+                  <div className={`middle-col`}>
                     <React.Fragment>
                       <div className="navbar-main-feed">
                         <FeedTabs {...{ content, setContent }} />
@@ -307,7 +344,7 @@ const MyWebPage: React.FC = () => {
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-                  <div className="right-col">
+                  <div className={`right-col ${isSticky ? "sticky" : ""}`}>
                     <div className="right-col-actions">
                       <RouteLinks />
                     </div>
