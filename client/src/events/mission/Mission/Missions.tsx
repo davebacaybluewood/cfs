@@ -10,17 +10,31 @@ import Box from "@mui/material/Box";
 import FAQ from "./components/FAQ";
 import { RootState } from "store";
 import "./Missions.scss";
+import agent from "api/agent";
+import { useNavigate } from "react-router-dom";
+import { paths } from "constants/routes";
 
 const Missions: React.FC = () => {
   const data = useSelector((state: RootState) => state.achievements);
   const rewards = useSelector((state: RootState) => state.rewards);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userGuid = "c29875fc-d064-46ca-8b00-507ef315c62f"; // Testing purposes only, this is not the final approach.
 
   useEffect(() => {
-    dispatch(listAchievements() as any);
-    dispatch(listRewards() as any);
+    const checkRegistration = async () => {
+      const res = await agent.Mission.checkMissionRegistration(userGuid);
 
-  }, [dispatch]);
+      if (res.status === "error") {
+        navigate(paths.registrationMission);
+      } else {
+        dispatch(listAchievements() as any);
+        dispatch(listRewards() as any);
+      }
+    };
+
+    checkRegistration();
+  }, [userGuid, dispatch]);
 
   const getStatus = (doc: any, content: any) => {
     const status = {

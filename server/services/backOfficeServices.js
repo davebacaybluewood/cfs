@@ -244,11 +244,23 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
         isNotAdmin = true;
       }
 
+      const isFreeTrial = agentProfile.position.some(
+        (e) => e.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+      );
+      const isSubscriber = agentProfile.position.some(
+        (e) => e.value === PROFILE_POSITIONS.SUBSCRIBER.value
+      );
+
       if (accountingSystemEmailAddress.includes(emailAddress) && isNotAdmin) {
         agentProfile.roles = [AGENT_ROLES[0]];
         agentProfile.position = [PROFILE_POSITIONS.AGENT];
         user.roles = [AGENT_ROLES[0]];
         user.position = [PROFILE_POSITIONS.AGENT];
+        agentProfile.previousRole = isFreeTrial
+          ? PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+          : isSubscriber
+          ? PROFILE_POSITIONS.SUBSCRIBER.value
+          : PROFILE_POSITIONS.AGENT.value;
 
         try {
           await user.save();

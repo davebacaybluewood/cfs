@@ -34,6 +34,7 @@ type AboutProfileProps = {
   contactNumber: string;
   emailAdress: string;
   address: string;
+  address2?: string;
   linkedIn: string;
   facebook: string;
   twitter: string;
@@ -82,24 +83,6 @@ const AboutProfile: React.FC<AboutProfileProps> = (props) => {
             </span>
             <span className="list-value">{props.licenseNumber} </span>
           </li>
-          {props.state ? (
-            <li>
-              <span className="list-label">
-                <FaMapMarker />
-                State:{" "}
-              </span>
-              <span className="list-value">{props.state} </span>
-            </li>
-          ) : null}
-          {props.address ? (
-            <li>
-              <span className="list-label">
-                <FaRegMap />
-                Address:{" "}
-              </span>
-              <span className="list-value">{props.address} </span>
-            </li>
-          ) : null}
           {props.languages?.length ? (
             <li>
               <span className="list-label">
@@ -124,6 +107,33 @@ const AboutProfile: React.FC<AboutProfileProps> = (props) => {
               ))}
             </span>
           </li>
+          {props.address ? (
+            <li>
+              <span className="list-label">
+                <FaRegMap />
+                Address 1:{" "}
+              </span>
+              <span className="list-value">{props.address} </span>
+            </li>
+          ) : null}
+          {props.state ? (
+            <li>
+              <span className="list-label">
+                <FaMapMarker />
+                State:{" "}
+              </span>
+              <span className="list-value">{props.state} </span>
+            </li>
+          ) : null}
+          {props.address2 ? (
+            <li>
+              <span className="list-label">
+                <FaRegMap />
+                Address 2:{" "}
+              </span>
+              <span className="list-value">{props.address2} </span>
+            </li>
+          ) : null}
         </ul>
       </div>
       <div className="about-info">
@@ -135,7 +145,7 @@ const AboutProfile: React.FC<AboutProfileProps> = (props) => {
             <li>
               <span className="list-label">
                 <FaGlobeAmericas />
-                Personal Website:{" "}
+                MyWebpage:{" "}
               </span>
               <span className="list-value">
                 <a

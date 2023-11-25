@@ -318,16 +318,19 @@ const Merchandise = {
     merchandiseId: string,
     body: MerchandiseRedeemBody
   ) => {
-    const res = await requests.post<MerchandiseResData>(
-      `/api/merchandise/redeem-merch/${merchandiseId}`,
-      body
-    );
+    const res = await requests
+      .post<MerchandiseResData>(
+        `/api/merchandise/redeem-merch/${merchandiseId}`,
+        body
+      )
+      .catch((error) => {
+        return {
+          message: error?.response?.data,
+          success: false,
+        };
+      });
 
-    if (res.success) {
-      return res;
-    } else {
-      return false;
-    }
+    return res;
   },
 };
 
@@ -388,8 +391,12 @@ const Subscriptions = {
 
 const Events = {
   getEvents: (userGuid: string) => {
-    const res = requests.get<Event[]>(`/api/events?userGuid=${userGuid}`);
-    return res;
+    try {
+      const res = requests.get<Event[]>(`/api/events?userGuid=${userGuid}`);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   },
   getSingleEvent: (eventId: string) => {
     const res = requests.get<Event | undefined>(`/api/events/${eventId}`);
