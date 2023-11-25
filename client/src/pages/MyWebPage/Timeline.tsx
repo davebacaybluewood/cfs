@@ -1,25 +1,25 @@
-import TimelinePost, { TimelinePostProps } from "library/TimelinePost/TimelinePost"
-import TimelineLoading from "./TimelineLoading"
+import TimelinePost, {
+  TimelinePostProps,
+} from "library/TimelinePost/TimelinePost"
+import TimelineLoading from "./components/TimelineLoading"
 
 interface TimelineProps {
-  userGuid?: string;
+  userGuid?: string
   data: TimelinePostProps[] | undefined
-  loading?: boolean;
+  loading?: boolean
 }
 const Timeline: React.FC<TimelineProps> = (props) => {
-  const { userGuid, data, loading } = props;
+  const { userGuid, data, loading } = props
 
   return (
     <div style={{ flexGrow: 1, width: "100%" }}>
       {loading ? (
         <TimelineLoading />
-      ) : data?.map((timeline) => {
-        return (
-          <TimelinePost
-            {...timeline}
-          />
-        )
-      })}
+      ) : (
+        data?.map((timeline) => {
+          return <TimelinePost {...timeline} />
+        })
+      )}
     </div>
   )
 }

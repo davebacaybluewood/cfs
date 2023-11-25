@@ -1,44 +1,47 @@
-import React, { useEffect, useState } from "react";
-import MyWebPageWrapper from "./Layout/MyWebPageWrapper";
-import { Container, Grid } from "@mui/material";
-import Spinner from "library/Spinner/Spinner";
-import { BsChatRightTextFill } from "react-icons/bs";
-import Button from "library/Button/Button";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { FiSend } from "react-icons/fi";
-import { paths } from "constants/routes";
-import Timeline from "pages/MyWebPage/Timeline";
-import agentLinks from "./helpers/agentLinks";
-import useAgentData from "./useAgentData";
-import FeedTabs, { ContentTypes } from "./FeedTabs";
-import useFetchUserProfile from "admin/hooks/useFetchProfile";
-import contactLinks from "./helpers/contactLinks";
-import RouteLinks from "./helpers/routeLinks";
-import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard";
-import { toast } from "react-toastify";
-import { FaShareSquare } from "react-icons/fa";
-import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
-import { MdOutlineQrCode2 } from "react-icons/md";
-import { QRCode } from "react-qrcode-logo";
-import "./MyWebPage.scss";
-import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource";
-import useFetchEvents from "admin/pages/Events/hooks/useFetchEvents";
-import { TimelinePostProps } from "library/TimelinePost/TimelinePost";
-import { formatISODateOnly } from "helpers/date";
+import React, { useEffect, useState } from "react"
+import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
+import { Container, Grid } from "@mui/material"
+import Spinner from "library/Spinner/Spinner"
+import { BsChatRightTextFill } from "react-icons/bs"
+import Button from "library/Button/Button"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { Helmet } from "react-helmet"
+import { FiSend } from "react-icons/fi"
+import { TiBusinessCard } from "react-icons/ti"
+import { paths } from "constants/routes"
+import Timeline from "pages/MyWebPage/Timeline"
+import agentLinks from "./helpers/agentLinks"
+import useAgentData from "./useAgentData"
+import FeedTabs, { ContentTypes } from "./FeedTabs"
+import useFetchUserProfile from "admin/hooks/useFetchProfile"
+import contactLinks from "./helpers/contactLinks"
+import RouteLinks from "./helpers/routeLinks"
+import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard"
+import { toast } from "react-toastify"
+import { FaShareSquare } from "react-icons/fa"
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip"
+import { MdOutlineQrCode2 } from "react-icons/md"
+import { QRCode } from "react-qrcode-logo"
+import "./MyWebPage.scss"
+import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource"
+import useFetchEvents from "admin/pages/Events/hooks/useFetchEvents"
+import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
+import { formatISODateOnly } from "helpers/date"
+import BusinessCardModal from "./components/BusinessCardModal"
 
 const MyWebPage: React.FC = () => {
-  const [content, setContent] = useState<ContentTypes>("home");
+  const [content, setContent] = useState<ContentTypes>("home")
   const [timelineData, setTimelineData] = useState<
     TimelinePostProps[] | undefined
-  >();
-  const [openQr, setOpenQr] = useState(false);
-  const [clipboardValue, setClipboardValue] = useCopyToClipboard();
-  const [isSticky, setSticky] = useState(false);
+  >()
+  const [openQr, setOpenQr] = useState(false)
+  const [clipboardValue, setClipboardValue] = useCopyToClipboard()
+  const [isSticky, setSticky] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
-  const { user: userGuid } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { user: userGuid } = useParams()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const {
     Agent,
@@ -55,31 +58,36 @@ const MyWebPage: React.FC = () => {
     languages,
     testimonials,
     profile,
-  } = useAgentData(userGuid ?? "");
+  } = useAgentData(userGuid ?? "")
 
-  const links = agentLinks(address, facebook, linkedIn, twitter);
+  const links = agentLinks(address, facebook, linkedIn, twitter)
   const contactLink = contactLinks(
     address ?? "",
     phoneNumber ?? "",
     email ?? "",
     licenseNumber ?? "",
     languages ?? []
-  );
-  const agentURL = window.location.host + location.pathname;
+  )
 
-  const { blogs, loading: blogLoading } = useFetchBlogResource(0, 5);
-  const { eventRows, loading: eventLoading } = useFetchEvents(userGuid ?? "");
+  useEffect(() => {
+    console.log(profile)
+  }, [profile])
+
+  const agentURL = window.location.host + location.pathname
+
+  const { blogs, loading: blogLoading } = useFetchBlogResource(0, 5)
+  const { eventRows, loading: eventLoading } = useFetchEvents(userGuid ?? "")
 
   function handleCopyToClipboard() {
-    setClipboardValue(agentURL);
-    toast("Link copied to Clipboard");
+    setClipboardValue(agentURL)
+    toast("Link copied to Clipboard")
   }
 
   const filteredEvents: TimelinePostProps[] | undefined = eventRows?.map(
     (data) => {
       const eventClickedHandler = (eventId: string) => {
-        navigate(paths.rsvpForm.replace(":eventId", eventId));
-      };
+        navigate(paths.rsvpForm.replace(":eventId", eventId))
+      }
       return {
         content: data.shortDescription,
         date: data.eventDate,
@@ -90,14 +98,14 @@ const MyWebPage: React.FC = () => {
         onClick: () => eventClickedHandler(data._id),
         tag: "event",
         userGuid: userGuid,
-      };
+      }
     }
-  );
+  )
 
   const filteredBlogs: TimelinePostProps[] | undefined = blogs?.map((data) => {
     const blogClickedHandler = (blogId: string) => {
-      navigate(paths.single_blog.replace(":blogTitle", blogId));
-    };
+      navigate(paths.single_blog.replace(":blogTitle", blogId))
+    }
     return {
       content: data.content,
       date: formatISODateOnly(data.createdAt ?? ""),
@@ -108,8 +116,8 @@ const MyWebPage: React.FC = () => {
       onClick: () => blogClickedHandler(data.title),
       tag: "blog",
       userGuid: userGuid,
-    };
-  });
+    }
+  })
 
   const filteredTestimonials: TimelinePostProps[] | undefined =
     testimonials?.map((data) => {
@@ -120,46 +128,46 @@ const MyWebPage: React.FC = () => {
         id: data.title,
         tag: "reccomendation",
         userGuid: userGuid,
-      };
-    });
+      }
+    })
 
   useEffect(() => {
     if (content === "events") {
-      setTimelineData(filteredEvents);
+      setTimelineData(filteredEvents)
     } else if (content === "articles") {
-      setTimelineData(filteredBlogs);
+      setTimelineData(filteredBlogs)
     } else if (content === "reccomendation") {
-      setTimelineData(filteredTestimonials);
+      setTimelineData(filteredTestimonials)
     } else {
-      const mergedData = [...(filteredEvents ?? []), ...(filteredBlogs ?? [])];
-      setTimelineData(mergedData);
+      const mergedData = [...(filteredEvents ?? []), ...(filteredBlogs ?? [])]
+      setTimelineData(mergedData)
     }
-  }, [content, eventRows, blogs]);
+  }, [content, eventRows, blogs])
 
   // Make left and right sidebar sticky when scrolled
   useEffect(() => {
     const handleScroll = () => {
-      const timeline = document.querySelector(".left-col");
-      const sidebar = document.querySelector(".right-col");
+      const timeline = document.querySelector(".left-col")
+      const sidebar = document.querySelector(".right-col")
 
       if (timeline && sidebar) {
-        const timelineRect = timeline.getBoundingClientRect();
-        const sidebarRect = sidebar.getBoundingClientRect();
+        const timelineRect = timeline.getBoundingClientRect()
+        const sidebarRect = sidebar.getBoundingClientRect()
 
         // Adjust this value based on when you want the sidebar to become sticky
-        const threshold = timelineRect.top + 50;
+        const threshold = timelineRect.top + 50
 
-        setSticky(window.scrollY >= threshold);
+        setSticky(window.scrollY >= threshold)
       }
-    };
+    }
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll)
 
     // Cleanup the event listener on component unmount
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
   return (
     <MyWebPageWrapper showNavBar showFooter profile={profile} loading={loading}>
@@ -295,6 +303,28 @@ const MyWebPage: React.FC = () => {
                           <FiSend /> <span>Recommendation</span>
                         </div>
                       </Button>
+                      <Button
+                        variant="default"
+                        onClick={() => setModalOpen(true)}
+                      >
+                        {" "}
+                        <div className="button-content">
+                          <TiBusinessCard />
+                          <span>Business Card</span>{" "}
+                        </div>
+                      </Button>
+                      <BusinessCardModal
+                        modalOpen={modalOpen}
+                        setModalOpen={setModalOpen}
+                        emailAddress={profile?.emailAddress}
+                        firstName={profile?.firstName}
+                        lastName={profile?.lastName}
+                        position={profile?.position[0].value}
+                        licenseNumber={profile?.licenseNumber}
+                        phoneNumber={profile?.phoneNumber}
+                        state={profile?.state}
+                        userGuid={profile?.userGuid}
+                      />
                     </div>
                   </div>
                 </Grid>
@@ -338,7 +368,7 @@ const MyWebPage: React.FC = () => {
         </div>
       )}
     </MyWebPageWrapper>
-  );
-};
+  )
+}
 
-export default MyWebPage;
+export default MyWebPage
