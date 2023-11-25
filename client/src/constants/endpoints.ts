@@ -15,6 +15,8 @@ const ENDPOINTS = {
   EVENT_INVITE_BY_EVENT_ID: "/api/events/eventInviteCount/:id",
   USER_ADMIN_LIST: "/api/users",
   USER_ADMIN_BY_ID: "/api/users/:id",
+  ACHIEVEMENT_ONE_YEAR_TEAM: "/api/achievements/one-year-team",
+  REWARDS: "/api/event-orders",
   AGENTS: "/api/agents",
   AGENT_BY_ID: "/api/agents/:id",
   AGENT_UPDATE_STATUS: "/api/agents/agent-status/:agentId",

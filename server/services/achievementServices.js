@@ -79,14 +79,7 @@ export const fetchOneYearTeam = async (userGuid) => {
         recruiterUserGuid: 1,
         emailAddress: "$agentDoc.emailAddress",
         birthMonth: {
-          $month: {
-            $dateFromString: {
-              dateString: "$agentDoc.birthDate",
-              timezone: "America/New_York",
-              format: "%Y-%m-%dT%H:%M:%S.%LZ",
-              onError: new Date(0),
-            },
-          },
+          $month: "$agentDoc.birthDate"
         },
       },
     },
