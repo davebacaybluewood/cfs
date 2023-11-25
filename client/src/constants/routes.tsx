@@ -1,4 +1,4 @@
-import adminPaths from "admin/constants/routes";
+import adminPaths from "admin/constants/routes"
 
 const paths = {
   ...adminPaths,
@@ -17,6 +17,7 @@ const paths = {
   events: "/events",
   portal: "/portal",
   testimonialForm: "/testimonial-form/:userGuid",
+  contactEmailForm: "/contact-email-form/:userGuid",
   pricing: "/pricing",
   rsvpForm: "/rsvp-form/:eventId",
   portalArticle: "/article/portal",
@@ -64,7 +65,7 @@ const paths = {
   /* Mission Micro Pages */
   /*Agent of Agents */
   missions: "/events/mission/",
-  registrationMission: "events/mission/registration",
+  registrationMission: "/events/mission/registration",
   rewards: "/events/mission/rewards",
   treeDiagram: "/events/mission/hierarchy",
   aaClaimReward: "/events/mission/claim/:rewardId",
@@ -72,6 +73,7 @@ const paths = {
 
   /* My WebPage */
   myWebPage: "/agent/:user",
+  webinarPage: "/agent/:user/webinars"
 };
 
-export { paths };
+export { paths }

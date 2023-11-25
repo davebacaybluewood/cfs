@@ -5,8 +5,19 @@ import multerConfig from "../utils/multer.js";
 
 const router = express.Router();
 
-router
-  .route("/")
-  .post(protect, multerConfig.single("licensePic"), requestContractController);
+router.route("/").post(
+  protect,
+  multerConfig.fields([
+    {
+      name: "licensePic",
+      maxCount: 1,
+    },
+    {
+      name: "eAndO",
+      maxCount: 1,
+    },
+  ]),
+  requestContractController
+);
 
 export default router;

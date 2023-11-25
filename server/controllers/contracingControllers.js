@@ -34,12 +34,18 @@ const requestContractController = expressAsync((req, res, next) => {
     {
       // file on disk as an attachment
       filename: "license-image.png",
-      path: req.file?.path, // stream this file
-      cid: req.file?.path,
+      path: req.files.licensePic?.length ? req.files.licensePic[0]?.path : "", // stream this file
+      cid: req.files.licensePic?.length ? req.files.licensePic[0]?.path : "",
+    },
+    {
+      // file on disk as an attachment
+      filename: req.files.eAndO[0].originalname,
+      path: req.files.eAndO[0]?.path, // stream this file
+      cid: req.files.eAndO[0]?.path,
     },
   ];
 
-  const contractEmail = "contracting@gocfs.pro";
+  const contractEmail = "spencerbacay@gmail.com";
   try {
     sendHTMLEmail = sendEmail(
       contractEmail,

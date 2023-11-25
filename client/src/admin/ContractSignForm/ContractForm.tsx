@@ -21,6 +21,7 @@ import moment from "moment";
 import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter";
 import useUserRole from "hooks/useUserRole";
 import AccessIndicator from "admin/components/AccessIndicator/AccessIndicator";
+import classnames from "classnames";
 
 const LIFE_INSURANCE = [
   "Foresters",
@@ -53,6 +54,7 @@ const ContractForm: React.FC = () => {
     dateOfBirth: Yup.string().required("Date of birth is required"),
     phoneNumber: Yup.string().required("Phone number is required."),
     licenseNumber: Yup.string().required("License number is required."),
+    eAndO: Yup.string().required("E&O is required."),
     ssnNumber: Yup.string().required("SSN Number is required."),
     carrier: Yup.array()
       .min(1, "Pick at least 1 Insurance Carrier")
@@ -124,6 +126,10 @@ const ContractForm: React.FC = () => {
   );
   const { isFreeTrial } = useUserRole();
   const [thumbnailPreview, setThumbnailPreview] = useState("");
+  const [eAndOPreview, setEAndOPreview] = useState({
+    value: "",
+    error: false,
+  });
   const [initialValues, setInitialValues] = useState({
     firstName: "",
     lastName: "",
@@ -135,6 +141,7 @@ const ContractForm: React.FC = () => {
     licenseNumber: "",
     ssnNumber: "",
     licensePic: "",
+    eAndO: "",
     carrier: [],
     annuity: [],
     dateOfBirth: "",
@@ -152,6 +159,7 @@ const ContractForm: React.FC = () => {
       ssnNumber: "",
       state: profile?.state ?? "",
       licensePic: "",
+      eAndO: "",
       carrier: [],
       annuity: [],
       dateOfBirth: "",
@@ -169,6 +177,10 @@ const ContractForm: React.FC = () => {
   const curr = new Date();
   curr.setDate(curr.getDate() + 3);
   const currentDate = curr.toISOString().substring(0, 10);
+
+  const eAndOClassnames = classnames("eAndO-field", {
+    error: eAndOPreview.error,
+  });
 
   return (
     <Wrapper
@@ -199,6 +211,7 @@ const ContractForm: React.FC = () => {
             onSubmit={async (data) => {
               setLoading(true);
               try {
+                console.log(data);
                 const response = await agent.Contracting.requestContract(data);
 
                 if (response) {
@@ -455,6 +468,50 @@ const ContractForm: React.FC = () => {
                         </div>
                       ) : null}
                     </Grid>
+                    <Grid item xs={12} md={12} lg={12} marginTop={2}>
+                      <label>E&O (Required)</label>
+                      <br />
+                      <MUIButton
+                        variant="contained"
+                        component="label"
+                        className="primary-cfs-btn input-file-btn"
+                        disabled={isFreeTrial}
+                      >
+                        Upload File
+                        <input
+                          type="file"
+                          hidden
+                          name="eAndO"
+                          onChange={(event) => {
+                            setFieldValue(
+                              "eAndO",
+                              event.currentTarget.files![0]
+                            );
+                            setEAndOPreview({
+                              value: event.currentTarget.files![0]?.name,
+                              error: false,
+                            });
+                          }}
+                          onClick={() => {
+                            setTouched({ ...touched, eAndO: true });
+                            clickedFileInput();
+                          }}
+                        />
+                      </MUIButton>
+                      {eAndOPreview ||
+                      (typeof values.eAndO === "string" && values.eAndO) ? (
+                        <span className="eAndO-field">
+                          {typeof values.eAndO === "string"
+                            ? values.eAndO
+                            : eAndOPreview.value}
+                        </span>
+                      ) : null}
+                      {errors.eAndO && touched.eAndO ? (
+                        <span className="eAndO-field error">
+                          E&O field is required.
+                        </span>
+                      ) : null}
+                    </Grid>
                     <Grid
                       item
                       sm={12}
@@ -481,7 +538,8 @@ const ContractForm: React.FC = () => {
                     Submit
                   </Button>
                   {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(errors, null, 2)}</pre>
+                  <pre>{JSON.stringify(touched, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}

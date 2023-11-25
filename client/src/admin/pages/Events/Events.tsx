@@ -103,7 +103,6 @@ const Events: React.FC = () => {
   const { eventRows } = useFetchEvents(userGuid);
   const [clipboardValue, setClipboardValue] = useCopyToClipboard();
 
-  const [events, setEvents] = useState<EventsData[] | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
   const [dialogConfig, setDialogConfig] = useState({
     id: "",
@@ -147,17 +146,39 @@ const Events: React.FC = () => {
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget);
+      console.log(pageEventRows);
     };
     const handleFilterStatus = (status: string) => {
-      setEvents((prevState) => {
-        const filteredData = events?.filter((data) => data.status === status);
+      const modifiedStatus = status.toUpperCase();
 
-        return status === "All" ? events : filteredData;
+      setPageEventRows((prevState) => {
+        const filteredData = eventRows?.filter(
+          (data) => data.status.toUpperCase() === modifiedStatus
+        );
+
+        return status === "All" ? eventRows : filteredData;
       });
       setAnchorEl(null);
     };
 
-    const status = ["All", "Coming Soon", "Ongoing", "Completed", "Cancelled"];
+    const status = [
+      {
+        text: "All",
+        value: "All",
+      },
+      {
+        text: "Active",
+        value: "ACTIVE",
+      },
+      {
+        text: "Coming Soon",
+        value: "COMING_SOON",
+      },
+      {
+        text: "Completed",
+        value: "COMPLETED",
+      },
+    ];
     return (
       <GridToolbarContainer className="custom-toolbar">
         <GridToolbarColumnsButton />
@@ -169,10 +190,10 @@ const Events: React.FC = () => {
         </Button>
 
         <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
-          {status.map((s) => {
+          {status.map((s, index) => {
             return (
-              <MenuItem key={s} onClick={() => handleFilterStatus(s)}>
-                {s}
+              <MenuItem key={index} onClick={() => handleFilterStatus(s.value)}>
+                {s.text}
               </MenuItem>
             );
           })}
@@ -334,7 +355,7 @@ const Events: React.FC = () => {
 
         <div className="events-table">
           <NoInformationToDisplay
-            showNoInfo={!eventDataRows?.length}
+            showNoInfo={!eventRows?.length}
             message="No information to display"
             title="No events available."
           >

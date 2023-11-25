@@ -8,11 +8,7 @@ const agentLinks = (
   twitter?: string
 ) => {
   return [
-    {
-      icon: <HiLocationMarker />,
-      title: "Address",
-      link: address,
-    },
+
     {
       icon: <FaFacebook />,
       title: "Facebook",

@@ -28,8 +28,7 @@ const authUser = expressAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   const agent = await Agent.findOne({ emailAddress: email });
-  const isValidStatus =
-    agent.status === "ACTIVATED" || agent.status === "DEACTIVATED";
+  const isValidStatus = agent.status === "ACTIVATED";
 
   /** Login using CFS credentials */
   const bearerToken = await backOfficeServices.backOfficeLogin();
@@ -51,9 +50,21 @@ const authUser = expressAsync(async (req, res) => {
     isNotAdmin = true;
   }
 
+  const isFreeTrial = agent.position.some(
+    (e) => e.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+  );
+  const isSubscriber = agent.position.some(
+    (e) => e.value === PROFILE_POSITIONS.SUBSCRIBER.value
+  );
+
   if (accountingSystemEmailAddress.includes(email) && isNotAdmin) {
     agent.roles = [AGENT_ROLES[0]];
     agent.position = [PROFILE_POSITIONS.AGENT];
+    agent.previousRole = isFreeTrial
+      ? PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+      : isSubscriber
+      ? PROFILE_POSITIONS.SUBSCRIBER.value
+      : PROFILE_POSITIONS.AGENT.value;
     user.roles = [AGENT_ROLES[0]];
     user.position = [PROFILE_POSITIONS.AGENT];
 

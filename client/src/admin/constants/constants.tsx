@@ -622,7 +622,7 @@ export const adminRoutes = [
     ),
   },
   {
-    path: adminPathsNew.merchandises,
+    path: adminPathsNew.myRewards,
     element: (
       <GuardedWrapper>
         <Merchandises />

@@ -5,6 +5,7 @@ import {
   getQuickDraw,
   getSmokingGun,
   getMasterAgent,
+  getMachineGunner,
 } from "../controllers/achievementControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -15,5 +16,5 @@ router.route("/one-year-team").get(protect, getOneYearTeam);
 router.route("/quick-draw").get(protect, getQuickDraw);
 router.route("/smoking-gun").get(protect, getSmokingGun);
 router.route("/master-agent/:userGuid").get(protect, getMasterAgent);
-
+router.route("/machine-gunner/:userGuid").get(protect, getMachineGunner);
 export default router;

@@ -8,13 +8,16 @@ const getEvents = async (req, res, next) => {
     res.status(401).json(API_RES_FAIL("[Events] Params are required."));
     return;
   }
+  try {
+    const getResponse = await eventServices.getEvents(userGuid);
 
-  const getResponse = await eventServices.getEvents(userGuid);
-
-  if (getResponse) {
-    res.json(getResponse);
-  } else {
-    res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    if (getResponse) {
+      res.json(getResponse);
+    } else {
+      res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    }
+  } catch (error) {
+    res.status(400).json(API_RES_FAIL("[Events] Error Occured"));
   }
 };
 
