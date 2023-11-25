@@ -5,7 +5,7 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { styled } from "@mui/material/styles";
-import { faqs } from "../constants/faqs";
+import { faqs } from "../faqs";
 import React from "react";
 
 const FAQ = () => {
