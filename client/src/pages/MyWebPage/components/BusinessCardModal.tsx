@@ -1,4 +1,7 @@
 import { Box, Modal, Typography } from "@mui/material"
+import "../../../admin/pages/Profile/components/ProfileHeader/BusinessCard/BusinessCard.scss"
+import WebPageBusinessCard from "./WebPageBusinessCard"
+import { exportComponentAsJPEG } from "react-component-export-image"
 import BusinessCard from "admin/pages/Profile/components/ProfileHeader/BusinessCard/BusinessCard"
 
 const BusinessCardModal = ({
@@ -12,6 +15,7 @@ const BusinessCardModal = ({
   phoneNumber,
   state,
   userGuid,
+  CardDownloadHandler,
 }) => {
   return (
     <Modal
@@ -41,21 +45,18 @@ const BusinessCardModal = ({
             justifyContent: "center",
           }}
         >
-          <BusinessCard
-            email={emailAddress}
-            name={`${firstName} ${lastName}` ?? ""}
-            position={
-              position === "ROLE_MASTER_ADMIN"
-                ? "ROLE: MASTER ADMIN"
-                : position === "POSITION_AGENT"
-                ? "ROLE: AGENT"
-                : position ?? ""
-            }
-            licenseNumber={licenseNumber ?? ""}
+          <WebPageBusinessCard
+            name={firstName + " " + lastName}
             phoneNumber={phoneNumber ?? ""}
             state={state ?? ""}
+            licenseNumber={licenseNumber ?? ""}
             userGuid={userGuid ?? ""}
+            email={emailAddress ?? ""}
+            position={position[0].value ?? ""}
           />
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <button onClick={CardDownloadHandler}>Download</button>
         </div>
         <hr
           style={{
