@@ -161,7 +161,7 @@
       .left-col-actions,
       .qr-code {
         button {
-          width: 250px;
+          width: 100%;
           padding: 1rem;
           transition: 0.2s;
           display: block;
@@ -186,6 +186,10 @@
             color: #353738;
             background: transparent;
             border: 1px solid #00004d;
+          }
+
+          @media only screen and (min-width: 900px) and (max-width: 1024px) {
+            width: 192px;
           }
         }
       }
