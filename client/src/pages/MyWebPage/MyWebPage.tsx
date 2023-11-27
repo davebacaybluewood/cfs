@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import MyWebPageWrapper from "./Layout/MyWebPageWrapper"
 import { Container, Grid } from "@mui/material"
 import Spinner from "library/Spinner/Spinner"
@@ -28,8 +28,9 @@ import useFetchEvents from "admin/pages/Events/hooks/useFetchEvents"
 import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
 import { formatISODateOnly } from "helpers/date"
 import BusinessCardModal from "./components/BusinessCardModal"
+import WebPageBusinessCard from "./components/WebPageBusinessCard"
+import { exportComponentAsJPEG } from "react-component-export-image"
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
-import Alert from "library/AlertMessage/Alert"
 
 const MyWebPage: React.FC = () => {
   const [content, setContent] = useState<ContentTypes>("home")
@@ -40,7 +41,7 @@ const MyWebPage: React.FC = () => {
   const [clipboardValue, setClipboardValue] = useCopyToClipboard()
   const [isSticky, setSticky] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
-  const [showInformation, setShowInformation] = useState(false)
+  const businessCardRef = useRef<HTMLInputElement>()
 
   const { user: userGuid } = useParams()
   const navigate = useNavigate()
@@ -62,6 +63,12 @@ const MyWebPage: React.FC = () => {
     testimonials,
     profile,
   } = useAgentData(userGuid ?? "")
+
+  const CardDownloadHandler = () => {
+    exportComponentAsJPEG(businessCardRef as any, {
+      fileName: `${profile?.firstName} - Business Card`,
+    })
+  }
 
   const links = agentLinks(address, facebook, linkedIn, twitter)
   const contactLink = contactLinks(
@@ -155,7 +162,6 @@ const MyWebPage: React.FC = () => {
 
       if (timeline && sidebar) {
         const timelineRect = timeline.getBoundingClientRect()
-        const sidebarRect = sidebar.getBoundingClientRect()
 
         // Adjust this value based on when you want the sidebar to become sticky
         const threshold = timelineRect.top + 30
@@ -214,9 +220,11 @@ const MyWebPage: React.FC = () => {
                       <div className="social-links">
                         {links.map((item, index) => (
                           <div className="social-content" key={index}>
-                            <a href={item.link} target="_blank">
-                              {item.icon} <span>{item.title}</span>
-                            </a>
+                            {item.link && (
+                              <a href={item.link} target="_blank">
+                                {item.icon} <span>{item.title}</span>
+                              </a>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -345,6 +353,7 @@ const MyWebPage: React.FC = () => {
                         phoneNumber={profile?.phoneNumber}
                         state={profile?.state}
                         userGuid={profile?.userGuid}
+                        CardDownloadHandler={CardDownloadHandler}
                       />
                     </div>
                   </div>
@@ -387,6 +396,22 @@ const MyWebPage: React.FC = () => {
                 </Grid>
               </Grid>
             </Container>
+          </div>
+
+          {/* PURPOSE: a workaround for businesscard bug that doesn't download full image */}
+          <div
+            style={{ position: "absolute", zIndex: "-1", top: "0 ", left: "0" }}
+          >
+            <WebPageBusinessCard
+              name={profile?.firstName + " " + profile?.lastName}
+              phoneNumber={profile?.phoneNumber ?? ""}
+              state={profile?.state ?? ""}
+              licenseNumber={profile?.licenseNumber ?? ""}
+              userGuid={profile?.userGuid ?? ""}
+              email={profile?.emailAddress ?? ""}
+              position={profile?.position[0].value ?? ""}
+              businessCardRef={businessCardRef}
+            />
           </div>
         </div>
       )}
