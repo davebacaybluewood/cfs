@@ -18,7 +18,7 @@ import contactLinks from "./helpers/contactLinks"
 import RouteLinks from "./helpers/routeLinks"
 import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard"
 import { toast } from "react-toastify"
-import { FaShareSquare } from "react-icons/fa"
+import { FaExclamation, FaShareSquare } from "react-icons/fa"
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip"
 import { MdOutlineQrCode2 } from "react-icons/md"
 import { QRCode } from "react-qrcode-logo"
@@ -28,6 +28,8 @@ import useFetchEvents from "admin/pages/Events/hooks/useFetchEvents"
 import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
 import { formatISODateOnly } from "helpers/date"
 import BusinessCardModal from "./components/BusinessCardModal"
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
+import Alert from "library/AlertMessage/Alert"
 
 const MyWebPage: React.FC = () => {
   const [content, setContent] = useState<ContentTypes>("home")
@@ -38,6 +40,7 @@ const MyWebPage: React.FC = () => {
   const [clipboardValue, setClipboardValue] = useCopyToClipboard()
   const [isSticky, setSticky] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [showInformation, setShowInformation] = useState(false)
 
   const { user: userGuid } = useParams()
   const navigate = useNavigate()
@@ -69,10 +72,6 @@ const MyWebPage: React.FC = () => {
     languages ?? []
   )
 
-  useEffect(() => {
-    console.log(profile)
-  }, [profile])
-
   const agentURL = window.location.host + location.pathname
 
   const { blogs, loading: blogLoading } = useFetchBlogResource(0, 5)
@@ -82,7 +81,6 @@ const MyWebPage: React.FC = () => {
     setClipboardValue(agentURL)
     toast("Link copied to Clipboard")
   }
-
   const filteredEvents: TimelinePostProps[] | undefined = eventRows?.map(
     (data) => {
       const eventClickedHandler = (eventId: string) => {
@@ -128,8 +126,12 @@ const MyWebPage: React.FC = () => {
         id: data.title,
         tag: "reccomendation",
         userGuid: userGuid,
+        isDisplayed: data.isDisplayed
       }
     })
+
+
+
 
   useEffect(() => {
     if (content === "events") {
@@ -144,6 +146,7 @@ const MyWebPage: React.FC = () => {
     }
   }, [content, eventRows, blogs])
 
+
   // Make left and right sidebar sticky when scrolled
   useEffect(() => {
     const handleScroll = () => {
@@ -155,7 +158,7 @@ const MyWebPage: React.FC = () => {
         const sidebarRect = sidebar.getBoundingClientRect()
 
         // Adjust this value based on when you want the sidebar to become sticky
-        const threshold = timelineRect.top + 50
+        const threshold = timelineRect.top + 30
 
         setSticky(window.scrollY >= threshold)
       }
@@ -168,6 +171,24 @@ const MyWebPage: React.FC = () => {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
+
+  /* Check if arrays are empty */
+  const isTestimonialsEmpty = !testimonials || !testimonials.length
+  const isEventsEmpty = !eventRows || !eventRows.length
+  const isBlogsEmpty = !blogs || !blogs.length
+  const isHomeEmpty = isTestimonialsEmpty && isBlogsEmpty && isEventsEmpty
+
+
+  const contentValidity =
+    content === 'reccomendation' && isTestimonialsEmpty ? (
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Reccomendation" />
+    ) : content === 'events' && isEventsEmpty ? (
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Events" />
+    ) : content === 'articles' && isEventsEmpty ? (
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Blogs" />
+    ) : content === 'home' && isHomeEmpty && (
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Home" />
+    )
 
   return (
     <MyWebPageWrapper showNavBar showFooter profile={profile} loading={loading}>
@@ -263,7 +284,7 @@ const MyWebPage: React.FC = () => {
                         >
                           <div className="qr-code-content">
                             <QRCode
-                              value={`https://www.gocfs.pro/agent/${userGuid}`}
+                              value={agentURL}
                               size={120}
                               bgColor="transparent"
                               fgColor="#000000"
@@ -335,10 +356,12 @@ const MyWebPage: React.FC = () => {
                         <FeedTabs {...{ content, setContent }} />
                       </div>
                       <div className="tabs-content">
+                        {contentValidity}
                         <Timeline
                           data={timelineData}
                           loading={eventLoading || blogLoading}
                         />
+
                       </div>
                     </React.Fragment>
                   </div>
@@ -359,7 +382,7 @@ const MyWebPage: React.FC = () => {
                           <AiOutlineArrowRight />
                         </span>
                       </Button>
-                    </div> */}
+                    </div> Please discard for a while, can be used in the future*/}
                   </div>
                 </Grid>
               </Grid>

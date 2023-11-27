@@ -16,8 +16,6 @@ interface MyWebPageWrapperProps {
 const MyWebPageWrapper: React.FC<MyWebPageWrapperProps> = (props) => {
   const navigate = useNavigate();
 
-  console.log(props.loading);
-
   if (!props.profile && !props.loading) {
     navigate("invalid-agent");
   }
