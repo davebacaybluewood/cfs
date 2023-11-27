@@ -13,16 +13,14 @@ import Timeline from "pages/MyWebPage/Timeline"
 import agentLinks from "./helpers/agentLinks"
 import useAgentData from "./useAgentData"
 import FeedTabs, { ContentTypes } from "./FeedTabs"
-import useFetchUserProfile from "admin/hooks/useFetchProfile"
 import contactLinks from "./helpers/contactLinks"
 import RouteLinks from "./helpers/routeLinks"
 import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard"
 import { toast } from "react-toastify"
-import { FaExclamation, FaShareSquare } from "react-icons/fa"
+import { FaExclamation, FaRegCopy } from "react-icons/fa"
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip"
 import { MdOutlineQrCode2 } from "react-icons/md"
 import { QRCode } from "react-qrcode-logo"
-import "./MyWebPage.scss"
 import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource"
 import useFetchEvents from "admin/pages/Events/hooks/useFetchEvents"
 import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
@@ -31,6 +29,8 @@ import BusinessCardModal from "./components/BusinessCardModal"
 import WebPageBusinessCard from "./components/WebPageBusinessCard"
 import { exportComponentAsJPEG } from "react-component-export-image"
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
+import "./MyWebPage.scss"
+
 
 const MyWebPage: React.FC = () => {
   const [content, setContent] = useState<ContentTypes>("home")
@@ -76,7 +76,7 @@ const MyWebPage: React.FC = () => {
     phoneNumber ?? "",
     email ?? "",
     licenseNumber ?? "",
-    languages ?? []
+    languages ?? ''
   )
 
   const agentURL = window.location.host + location.pathname
@@ -125,7 +125,7 @@ const MyWebPage: React.FC = () => {
   })
 
   const filteredTestimonials: TimelinePostProps[] | undefined =
-    testimonials?.map((data) => {
+    testimonials?.filter((display) => display.isDisplayed).map((data) => {
       return {
         content: data.comment,
         title: data.title,
@@ -179,9 +179,9 @@ const MyWebPage: React.FC = () => {
   }, [])
 
   /* Check if arrays are empty */
-  const isTestimonialsEmpty = !testimonials || !testimonials.length
-  const isEventsEmpty = !eventRows || !eventRows.length
-  const isBlogsEmpty = !blogs || !blogs.length
+  const isTestimonialsEmpty = !filteredTestimonials?.length
+  const isEventsEmpty = !eventRows?.length
+  const isBlogsEmpty = !blogs?.length
   const isHomeEmpty = isTestimonialsEmpty && isBlogsEmpty && isEventsEmpty
 
 
@@ -190,7 +190,7 @@ const MyWebPage: React.FC = () => {
       <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Reccomendation" />
     ) : content === 'events' && isEventsEmpty ? (
       <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Events" />
-    ) : content === 'articles' && isEventsEmpty ? (
+    ) : content === 'articles' && isBlogsEmpty ? (
       <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Blogs" />
     ) : content === 'home' && isHomeEmpty && (
       <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Home" />
@@ -243,7 +243,7 @@ const MyWebPage: React.FC = () => {
                           <div onClick={() => handleCopyToClipboard()}>
                             <span>
                               {" "}
-                              <FaShareSquare />{" "}
+                              <FaRegCopy />
                             </span>
                           </div>
                         </HtmlTooltip>
