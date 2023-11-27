@@ -193,9 +193,11 @@ const MyWebPage: React.FC = () => {
                       <div className="social-links">
                         {links.map((item, index) => (
                           <div className="social-content" key={index}>
-                            <a href={item.link} target="_blank">
-                              {item.icon} <span>{item.title}</span>
-                            </a>
+                            {item.link && (
+                              <a href={item.link} target="_blank">
+                                {item.icon} <span>{item.title}</span>
+                              </a>
+                            )}
                           </div>
                         ))}
                       </div>

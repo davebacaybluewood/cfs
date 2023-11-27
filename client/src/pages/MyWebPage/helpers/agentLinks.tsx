@@ -1,5 +1,5 @@
-import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { HiLocationMarker } from "react-icons/hi";
+import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa"
+import { HiLocationMarker } from "react-icons/hi"
 
 const agentLinks = (
   address?: string,
@@ -8,7 +8,6 @@ const agentLinks = (
   twitter?: string
 ) => {
   return [
-
     {
       icon: <FaFacebook />,
       title: "Facebook",
@@ -24,7 +23,7 @@ const agentLinks = (
       title: "Twitter",
       link: twitter,
     },
-  ];
-};
+  ]
+}
 
-export default agentLinks;
+export default agentLinks
