@@ -14,7 +14,6 @@ const eventsRSVPModel = mongoose.Schema(
     },
     remarks: {
       type: String,
-      required: true,
     },
   },
   {
