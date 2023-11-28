@@ -86,6 +86,8 @@ const submitRSVP = expressAsync(async (req, res) => {
     } else {
       await Agent.updateOne({ userGuid: userGuid }, { $set: { status: status.ACTIVATED } });
     }
+  } else if (isEmailExists && account[0].status === status.UNSUBSCRIBED) {
+    await Agent.updateOne({ userGuid: userGuid }, { $set: { status: status.ACTIVATED } });
   } else {
     const data = await subscriberServices.subscriberRegistration(
       emailAddress,
