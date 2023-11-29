@@ -568,7 +568,7 @@ const ContractForm: React.FC = () => {
                             let data = {
                               _id: "",
                               userGuid: userGuid,
-                              emailAddress: input,
+                              emailAddress: input.trim(),
                             };
                             handleCreateContact(data);
                             setFieldValue("recipients", [

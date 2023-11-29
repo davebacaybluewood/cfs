@@ -15,7 +15,8 @@ const contactModel = mongoose.Schema(
     emailAddress: {
       type: String,
       required: true,
-      validate: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(.){1}[a-zA-Z0-9-]+$/,
+      validate:
+        /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(.){1}[a-zA-Z0-9-]+(.){1}[a-zA-Z0-9-]+$/,
     },
   },
   {
