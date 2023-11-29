@@ -13,16 +13,14 @@ import Timeline from "pages/MyWebPage/Timeline"
 import agentLinks from "./helpers/agentLinks"
 import useAgentData from "./useAgentData"
 import FeedTabs, { ContentTypes } from "./FeedTabs"
-import useFetchUserProfile from "admin/hooks/useFetchProfile"
 import contactLinks from "./helpers/contactLinks"
 import RouteLinks from "./helpers/routeLinks"
 import { useCopyToClipboard } from "admin/hooks/useCopyToClipboard"
 import { toast } from "react-toastify"
-import { FaShareSquare } from "react-icons/fa"
+import { FaExclamation, FaRegCopy } from "react-icons/fa"
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip"
 import { MdOutlineQrCode2 } from "react-icons/md"
 import { QRCode } from "react-qrcode-logo"
-import "./MyWebPage.scss"
 import useFetchBlogResource from "pages/BlogPage/hooks/useFetchBlogResource"
 import useFetchEvents from "admin/pages/Events/hooks/useFetchEvents"
 import { TimelinePostProps } from "library/TimelinePost/TimelinePost"
@@ -30,6 +28,9 @@ import { formatISODateOnly } from "helpers/date"
 import BusinessCardModal from "./components/BusinessCardModal"
 import WebPageBusinessCard from "./components/WebPageBusinessCard"
 import { exportComponentAsJPEG } from "react-component-export-image"
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
+import "./MyWebPage.scss"
+
 
 const MyWebPage: React.FC = () => {
   const [content, setContent] = useState<ContentTypes>("home")
@@ -75,7 +76,7 @@ const MyWebPage: React.FC = () => {
     phoneNumber ?? "",
     email ?? "",
     licenseNumber ?? "",
-    languages ?? []
+    languages ?? ''
   )
 
   const agentURL = window.location.host + location.pathname
@@ -87,7 +88,6 @@ const MyWebPage: React.FC = () => {
     setClipboardValue(agentURL)
     toast("Link copied to Clipboard")
   }
-
   const filteredEvents: TimelinePostProps[] | undefined = eventRows?.map(
     (data) => {
       const eventClickedHandler = (eventId: string) => {
@@ -125,7 +125,7 @@ const MyWebPage: React.FC = () => {
   })
 
   const filteredTestimonials: TimelinePostProps[] | undefined =
-    testimonials?.map((data) => {
+    testimonials?.filter((display) => display.isDisplayed).map((data) => {
       return {
         content: data.comment,
         title: data.title,
@@ -133,8 +133,12 @@ const MyWebPage: React.FC = () => {
         id: data.title,
         tag: "reccomendation",
         userGuid: userGuid,
+        isDisplayed: data.isDisplayed
       }
     })
+
+
+
 
   useEffect(() => {
     if (content === "events") {
@@ -149,6 +153,7 @@ const MyWebPage: React.FC = () => {
     }
   }, [content, eventRows, blogs])
 
+
   // Make left and right sidebar sticky when scrolled
   useEffect(() => {
     const handleScroll = () => {
@@ -159,7 +164,7 @@ const MyWebPage: React.FC = () => {
         const timelineRect = timeline.getBoundingClientRect()
 
         // Adjust this value based on when you want the sidebar to become sticky
-        const threshold = timelineRect.top + 50
+        const threshold = timelineRect.top + 30
 
         setSticky(window.scrollY >= threshold)
       }
@@ -172,6 +177,24 @@ const MyWebPage: React.FC = () => {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
+
+  /* Check if arrays are empty */
+  const isTestimonialsEmpty = !filteredTestimonials?.length
+  const isEventsEmpty = !eventRows?.length
+  const isBlogsEmpty = !blogs?.length
+  const isHomeEmpty = isTestimonialsEmpty && isBlogsEmpty && isEventsEmpty
+
+
+  const contentValidity =
+    content === 'reccomendation' && isTestimonialsEmpty ? (
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Reccomendation" />
+    ) : content === 'events' && isEventsEmpty ? (
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Events" />
+    ) : content === 'articles' && isBlogsEmpty ? (
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Blogs" />
+    ) : content === 'home' && isHomeEmpty && (
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Home" />
+    )
 
   return (
     <MyWebPageWrapper showNavBar showFooter profile={profile} loading={loading}>
@@ -220,7 +243,7 @@ const MyWebPage: React.FC = () => {
                           <div onClick={() => handleCopyToClipboard()}>
                             <span>
                               {" "}
-                              <FaShareSquare />{" "}
+                              <FaRegCopy />
                             </span>
                           </div>
                         </HtmlTooltip>
@@ -269,7 +292,7 @@ const MyWebPage: React.FC = () => {
                         >
                           <div className="qr-code-content">
                             <QRCode
-                              value={`https://www.gocfs.pro/agent/${userGuid}`}
+                              value={agentURL}
                               size={120}
                               bgColor="transparent"
                               fgColor="#000000"
@@ -342,10 +365,12 @@ const MyWebPage: React.FC = () => {
                         <FeedTabs {...{ content, setContent }} />
                       </div>
                       <div className="tabs-content">
+                        {contentValidity}
                         <Timeline
                           data={timelineData}
                           loading={eventLoading || blogLoading}
                         />
+
                       </div>
                     </React.Fragment>
                   </div>
@@ -366,7 +391,7 @@ const MyWebPage: React.FC = () => {
                           <AiOutlineArrowRight />
                         </span>
                       </Button>
-                    </div> */}
+                    </div> Please discard for a while, can be used in the future*/}
                   </div>
                 </Grid>
               </Grid>
