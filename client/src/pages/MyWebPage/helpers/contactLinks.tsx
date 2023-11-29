@@ -17,8 +17,8 @@ const contactLinks = (address: string, phoneNumber: string, email: string, licen
             text: email
         },
         {
-            icon: <FaAddressCard />,
-            text: licenseNumber
+            icon: licenseNumber === '' ? <></> : <FaAddressCard />,
+            text: licenseNumber === '' ? '' : licenseNumber
         },
         {
             icon: <FaLanguage />,
