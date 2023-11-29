@@ -5,24 +5,24 @@ import { MdEmail } from 'react-icons/md'
 const contactLinks = (address: string, phoneNumber: string, email: string, licenseNumber: string, languages: string) => {
     return [
         {
-            icon: <HiLocationMarker />,
-            text: address
+            icon: address === '' ? <></> : <HiLocationMarker />,
+            text: address === '' ? '' : address
         },
         {
-            icon: <FaPhone />,
-            text: phoneNumber
+            icon: phoneNumber === '' ? <></> : <FaPhone />,
+            text: phoneNumber === '' ? '' : phoneNumber
         },
         {
-            icon: <MdEmail />,
-            text: email
+            icon: email === '' ? <></> : <MdEmail />,
+            text: email === '' ? '' : email
         },
         {
             icon: licenseNumber === '' ? <></> : <FaAddressCard />,
             text: licenseNumber === '' ? '' : licenseNumber
         },
         {
-            icon: <FaLanguage />,
-            text: languages
+            icon: languages === '' ? <></> : <FaLanguage />,
+            text: languages === '' ? '' : languages
         },
     ]
 }
