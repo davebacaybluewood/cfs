@@ -49,8 +49,8 @@ const TimelinePost: React.FC<TimelinePostProps> = (props) => {
         : ""
 
   return (
-    <div className={`timeline-post`} onClick={onClick}>
-      <Stack flexDirection={"row"} gap={2}>
+    <div className={`timeline-post`} >
+      <Stack flexDirection={"row"} gap={2} onClick={onClick}>
         {profileImg && (
           <div>
             <img className="profile-image" src={profileImg} alt="" />
@@ -115,9 +115,9 @@ const TimelinePost: React.FC<TimelinePostProps> = (props) => {
               </span>
             ) : null}
           </p>
-          <PostButtons shareUrl={shareUrl} />
         </Stack>
       </Stack>
+      <PostButtons shareUrl={shareUrl} />
     </div>
   )
 }
