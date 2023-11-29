@@ -262,7 +262,10 @@ const MyWebPage: React.FC = () => {
                     <div className="contact-container">
                       {contactLink.map((con) => (
                         <div className="contact">
-                          {con.icon} <span>{con.text}</span>{" "}
+                          <div className="icon-holder">
+                            {con.icon}
+                          </div>
+                          <span>{con.text}</span>
                         </div>
                       ))}
                     </div>
