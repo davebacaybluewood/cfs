@@ -161,14 +161,14 @@
       .left-col-actions,
       .qr-code {
         button {
-          width: 250px;
+          width: 100%;
           padding: 1rem;
           transition: 0.2s;
           display: block;
           margin: 0.5rem auto;
 
           .button-content {
-            display: flex; 
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 0 0.5rem;
@@ -187,6 +187,10 @@
             background: transparent;
             border: 1px solid #00004d;
           }
+
+          @media only screen and (min-width: 900px) and (max-width: 1024px) {
+            width: 192px;
+          }
         }
       }
     }
@@ -195,6 +199,17 @@
       background: #fff;
       box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
       border-radius: 5px;
+
+      .tabs-content {
+        .no-display {
+          display: flex;
+          justify-content: center;
+
+          .MuiPaper-root {
+            width: 100%;
+          }
+        }
+      }
 
       .navbar-main-feed {
         display: flex;
@@ -206,7 +221,7 @@
           border-bottom: 2px solid #00004d;
         }
 
-        .active-nav > h2 {
+        .active-nav>h2 {
           font: 700 1.5rem "Montserrat" !important;
         }
 
