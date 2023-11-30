@@ -23,6 +23,9 @@ const hierarchyModel = mongoose.Schema(
     agentCode: {
       type: String,
     },
+    source: {
+      type: String,
+    },
   },
   {
     timestamps: true,

@@ -367,9 +367,9 @@ const ContractForm: React.FC = () => {
     });
   }
 
-  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
+  const loadDesign = useCallback(() => { }, [emailEditorRef, design]);
 
-  useEffect(() => {}, [design]);
+  useEffect(() => { }, [design]);
 
   const handleDeleteContact = async (contactId: string) => {
     if (contactId) {
@@ -460,6 +460,7 @@ const ContractForm: React.FC = () => {
               const finalData: any = {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
+                templateId
               };
 
               finalData.recipients =
