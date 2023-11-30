@@ -180,7 +180,7 @@ const TestimonialForm: React.FC = () => {
                     actions.resetForm()
                     setLoading(false)
 
-                    toast.success(`Testimonial Submitted`, {
+                    toast.success(`Recommendation Submitted`, {
                       position: "top-right",
                       autoClose: 5000,
                       hideProgressBar: false,
@@ -236,10 +236,10 @@ const TestimonialForm: React.FC = () => {
                         />
                       </div>
                       <div className="form-control">
-                        <h5>Testimonial *</h5>
+                        <h5>Recommendation *</h5>
                         <FormikTextInput
                           name="testimonial"
-                          placeholder="Enter your testimonial here"
+                          placeholder="Enter your recommendation here"
                           value={values.testimonial}
                           variant="outlined"
                           isTextArea
@@ -247,7 +247,7 @@ const TestimonialForm: React.FC = () => {
                       </div>
 
                       <Button variant="danger" onClick={() => handleSubmit()}>
-                        Submit Testimonial
+                        Submit Recommendation
                       </Button>
                     </React.Fragment>
                   )
