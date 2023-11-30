@@ -1,8 +1,6 @@
 import { Box, Modal, Typography } from "@mui/material"
-import "../../../admin/pages/Profile/components/ProfileHeader/BusinessCard/BusinessCard.scss"
 import WebPageBusinessCard from "./WebPageBusinessCard"
-import { exportComponentAsJPEG } from "react-component-export-image"
-import BusinessCard from "admin/pages/Profile/components/ProfileHeader/BusinessCard/BusinessCard"
+import { AiOutlineDownload } from "react-icons/ai"
 
 const BusinessCardModal = ({
   modalOpen,
@@ -31,7 +29,7 @@ const BusinessCardModal = ({
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "336px",
+          width: "450px",
           bgcolor: "background.paper",
           border: "2px solid #00004d",
           boxShadow: 24,
@@ -55,8 +53,14 @@ const BusinessCardModal = ({
             position={position[0].value ?? ""}
           />
         </div>
-        <div style={{ textAlign: "center" }}>
-          <button onClick={CardDownloadHandler}>Download</button>
+        <div style={{ textAlign: "center", marginTop: "0.5rem" }}>
+          <button
+            className="download-btn"
+            onClick={CardDownloadHandler}
+          >
+            <AiOutlineDownload style={{ fontSize: "16px" }} />
+            Download
+          </button>
         </div>
         <hr
           style={{

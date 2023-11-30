@@ -1,7 +1,7 @@
-import { exportComponentAsJPEG } from "react-component-export-image"
-import React, { useEffect, useRef } from "react"
+import React from "react"
 import { QRCode } from "react-qrcode-logo"
 import { MAIN_IMAGES } from "constants/constants"
+import "./WebPageBusinessCard.scss"
 
 interface BusinessCardProps {
   name: string
@@ -16,22 +16,24 @@ interface BusinessCardProps {
 }
 
 const WebPageBusinessCard: React.FC<BusinessCardProps> = (props) => {
-  const businessCardRef = useRef<HTMLInputElement>()
-
   const emailAddressLength = props.email?.length
 
-  const textSize = emailAddressLength > 20 ? "1rem" : "1.2rem"
+  const textSize = emailAddressLength > 20 ? "1.47rem" : "1.7rem"
 
   return (
-    <div className="business-card-wrapper">
+    <div className="my-webpage-business-card-wrapper">
       <div
         className="back-page"
         style={{
           backgroundImage: `url('/assets/images/templates/business-card-orig-size.png')`,
+          width: "100% !important", 
         }}
         ref={props.businessCardRef as any}
       >
-        <div className="business-card-content">
+        <div
+          className="business-card-content"
+          style={{ width: "100% !important" }}
+        >
           <div className="primary-info">
             <h2>{props.name}</h2>
             <h3>{props.position}</h3>
