@@ -33,4 +33,23 @@
             box-shadow: none;
         }
     }
+
+    .business-card-wrapper {
+        .back-page {
+            width: 100% !important;
+        }
+    }
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+    transition: 300ms;
+}
+
+.download-btn:hover {
+    transform: scale(1.05);
 }
