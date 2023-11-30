@@ -187,7 +187,7 @@ const MyWebPage: React.FC = () => {
 
   const contentValidity =
     content === 'reccomendation' && isTestimonialsEmpty ? (
-      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Reccomendation" />
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Recommendation" />
     ) : content === 'events' && isEventsEmpty ? (
       <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Events" />
     ) : content === 'articles' && isBlogsEmpty ? (
@@ -262,7 +262,10 @@ const MyWebPage: React.FC = () => {
                     <div className="contact-container">
                       {contactLink.map((con) => (
                         <div className="contact">
-                          {con.icon} <span>{con.text}</span>{" "}
+                          <div className="icon-holder">
+                            {con.icon}
+                          </div>
+                          <span>{con.text}</span>
                         </div>
                       ))}
                     </div>

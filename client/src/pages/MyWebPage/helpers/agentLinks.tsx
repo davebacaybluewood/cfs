@@ -23,7 +23,7 @@ const agentLinks = (
       title: "Twitter",
       link: twitter,
     },
-  ]
+  ].filter((data) => data.link)
 }
 
 export default agentLinks
