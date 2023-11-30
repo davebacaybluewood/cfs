@@ -187,7 +187,7 @@ const MyWebPage: React.FC = () => {
 
   const contentValidity =
     content === 'reccomendation' && isTestimonialsEmpty ? (
-      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Reccomendation" />
+      <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Recommendation" />
     ) : content === 'events' && isEventsEmpty ? (
       <NoInformationToDisplay icon={<FaExclamation />} showNoInfo message={" There's no information to display. "} title="Events" />
     ) : content === 'articles' && isBlogsEmpty ? (
