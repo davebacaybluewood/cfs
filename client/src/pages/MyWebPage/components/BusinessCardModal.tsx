@@ -29,7 +29,7 @@ const BusinessCardModal = ({
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "450px",
+          width: "550px",
           bgcolor: "background.paper",
           border: "2px solid #00004d",
           boxShadow: 24,
@@ -53,7 +53,7 @@ const BusinessCardModal = ({
             position={position[0].value ?? ""}
           />
         </div>
-        <div style={{ textAlign: "center", marginTop: "0.5rem" }}>
+        <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <button
             className="download-btn"
             onClick={CardDownloadHandler}
@@ -68,10 +68,10 @@ const BusinessCardModal = ({
             margin: "1rem auto",
           }}
         />
-        <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Typography id="modal-modal-title" variant="h5" component="h5">
           Download Business Card
         </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 0.2, mb: 2 }}>
+        <Typography id="modal-modal-description" sx={{ mt: 0.2 }}>
           Expand your professional network by downloading the business card from
           this profile. Click the 'Download' button to collect valuable contacts
           effortlessly.
