@@ -3,7 +3,7 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Button, Drawer } from "@mui/material";
 import { UserContext } from "admin/context/UserProvider";
 import { formatISODateOnly } from "helpers/date";
@@ -132,7 +132,11 @@ const AgentSubscribers: React.FC = () => {
                 </button>
               }
             >
-              <DataGrid rows={filteredRows || []} columns={columns} />
+              <DataGrid
+                rows={filteredRows || []}
+                columns={columns}
+                slots={{ toolbar: GridToolbar }}
+              />
             </NoInformationToDisplay>
           </div>
         </div>
