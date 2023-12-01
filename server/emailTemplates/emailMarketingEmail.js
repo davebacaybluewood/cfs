@@ -8,6 +8,7 @@ const emailMarketingEmail = (data) => {
   const host = "https://www.gocfs.pro";
 
   const subscriberLeadLink = `${host}/subscribe?userGuid=${userGuid}&templateId=${templateId}`
+  const portalLeadLink = `${host}/portal-registration?userGuid=${userGuid}&templateId=${templateId}`
 
   return `<!-- Free to use, HTML email template designed & built by FullSphere. Learn more about us at www.fullsphere.co.uk -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -176,7 +177,7 @@ const emailMarketingEmail = (data) => {
               </div>
               <div style="background: #e7e7e7; width: 254px; display: inline-block; text-align: center; padding-top: 13px; padding-bottom: 13px;">
                   <h2 style="margin: 0; font-size: 16px; color: #333333;">Access our Portal in 30days</h2>
-                  <a href="${host}/portal-registration?userGuid=${userGuid}">Click here to register</a>
+                  <a href="${portalLeadLink}">Click here to register</a>
               </div>
           </div>
     

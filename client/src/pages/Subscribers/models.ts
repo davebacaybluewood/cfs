@@ -6,4 +6,5 @@ export interface ValuesType {
   lastName: string;
   phoneNumber: string;
   confirmationUserCode: string;
+  templateId: string,
 }

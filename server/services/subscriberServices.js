@@ -16,6 +16,9 @@ import Hierarchy from "../models/hierarchyModel.js";
 import Points from "../models/pointsModel.js";
 import Agent from "../models/agentModel.js";
 import { status } from "../constants/constants.js";
+import EmailTemplate from '../models/emailTemplate.js'
+import mongoose from "mongoose";
+import Events from "../models/eventModel.js";
 
 const emailConfirmation = async (emailAddress) => {
   const isEmailExist = await User.find({
@@ -54,20 +57,35 @@ const emailConfirmation = async (emailAddress) => {
   }
 };
 
-const subscriberRegistration = async (
-  email,
-  password,
-  lastName,
-  firstName,
-  phoneNumber,
-  confirmationCode,
-  userGuid,
-  hasNoCode
-) => {
+const subscriberRegistration = async (subscriberData) => {
+  const {
+    email,
+    password,
+    lastName,
+    firstName,
+    phoneNumber,
+    verificationCode,
+    userGuid,
+    hasNoCode,
+    templateId,
+    eventId
+  } = subscriberData
+
   const isCodeExist = await VerificationCode.find({
-    verificationCode: confirmationCode,
+    verificationCode: verificationCode,
     emailAddress: email,
   });
+
+  let source = "";
+  if (templateId) {
+    const template = await EmailTemplate.findById(templateId)
+    source = template.subject;
+  }
+
+  if (eventId) {
+    const event = await Events.findById(eventId)
+    source = event.title
+  }
 
   const account = await Agent.find({ userGuid });
   const isSubscriber = account[0]?.position?.some((f) => {
@@ -120,18 +138,19 @@ const subscriberRegistration = async (
       const newHierarchyId = generateString(6);
       const hierarchyCode = generateString(6);
       const newHierarchy = [
-        {
+        { /** Recruiter Info */
           userGuid,
           parent: "",
           hierarchyId: hierarchyId,
           hierarchyCode: hierarchyCode,
         },
-        {
+        { /** Recruited Info */
           userGuid: newUserGuid,
           parent: hierarchyId,
           hierarchyId: newHierarchyId,
           hierarchyCode: hierarchyCode,
           recruiterUserGuid: userGuid,
+          source: source
         },
       ];
 
@@ -154,6 +173,7 @@ const subscriberRegistration = async (
         hierarchyId: newHierarchyId,
         hierarchyCode: hierarchyCode,
         recruiterUserGuid: userGuid,
+        source: source
       };
       await Hierarchy.create(newHierarchy);
     }

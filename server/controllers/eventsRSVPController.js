@@ -8,6 +8,7 @@ import subscriberServices from "../services/subscriberServices.js";
 import eventServices from "../services/eventServices.js";
 import eventInvite from "../emailTemplates/eventInvite.js";
 import EventsRSVP from "../models/eventsRSVPModel.js";
+import { status } from "../constants/constants.js";
 
 const getEventRVPS = expressAsync(async (req, res) => {
   const { eventId, isAdmin } = req.params;
@@ -48,7 +49,7 @@ const getEventRVPS = expressAsync(async (req, res) => {
   ]);
   res.json(rsvps);
 });
-import { status } from "../constants/constants.js";
+
 const submitRSVP = expressAsync(async (req, res) => {
   const {
     firstName,
@@ -69,47 +70,60 @@ const submitRSVP = expressAsync(async (req, res) => {
   let userGuid;
   const account = await Agent.find({ emailAddress });
   const password = generateString(10);
+  const event = await eventServices.getSingleEvent(eventId);
 
-  if (account.length) {
-    userGuid = account[0].userGuid;
+  try {
+    if (account.length) {
+      userGuid = account[0].userGuid;
 
-    const isEmailExists = await RSVP.findOne({
-      eventId: eventId,
-      userGuid: userGuid,
-    });
-    
-    if (isEmailExists && account[0].status === status.ACTIVATED) {
-      res
-        .status(400)
-        .json(API_RES_FAIL("Email has already been used for registration."));
-      return;
+      const isEmailExists = await RSVP.findOne({
+        eventId: eventId,
+        userGuid: userGuid,
+      });
+
+      if (isEmailExists && account[0].status === status.ACTIVATED) {
+        res
+          .status(400)
+          .json(API_RES_FAIL("Email has already been used for registration."));
+        return;
+      } else {
+        await Agent.updateOne({ userGuid: userGuid }, { $set: { status: status.ACTIVATED } });
+      }
     } else {
-      await Agent.updateOne({ userGuid: userGuid }, { $set: { status: status.ACTIVATED } });
-    }
-  } else {
-    const data = await subscriberServices.subscriberRegistration(
-      emailAddress,
-      password,
-      lastName,
-      firstName,
-      phoneNumber,
-      "",
-      recruiterUserGuid,
-      true
-    );
+      const data = await subscriberServices.subscriberRegistration(
+        {
+          email: emailAddress,
+          password,
+          lastName,
+          firstName,
+          phoneNumber,
+          userGuid: recruiterUserGuid,
+          verificationCode: "",
+          hasNoCode: true,
+          eventId: event._id
+        }
+      );
 
-    userGuid = data.userGuid;
+
+      userGuid = data.userGuid;
+    }
+  } catch (error) {
+    console.log(error)
   }
 
-  const rsvp = new RSVP({
-    userGuid,
-    remarks,
-    eventId,
-    recruiterUserGuid,
-  });
-  await rsvp.save();
+  try {
+    const rsvp = new RSVP({
+      userGuid,
+      remarks,
+      eventId,
+      recruiterUserGuid,
+    });
+    await rsvp.save();
+  } catch (error) {
+    console.log(error)
+  }
 
-  const event = await eventServices.getSingleEvent(eventId);
+
 
   const mailSubject = `RSVP - ${event.title}`;
   const eventName = event.title;
@@ -125,7 +139,9 @@ const submitRSVP = expressAsync(async (req, res) => {
   });
 
   try {
+    console.log("done222")
     await sendEmail(emailAddress, mailSubject, mailContent, []);
+    console.log("done1")
     res.status(200).json(API_RES_OK("Data Submitted"));
   } catch (error) {
     res.status(500);

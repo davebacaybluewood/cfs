@@ -43,6 +43,8 @@ const subscriberRegistration = async (req, res, next) => {
     phoneNumber,
     verificationCode,
     userGuid,
+    templateId,
+    hasNoCode
   } = req.body;
 
   if (
@@ -60,15 +62,18 @@ const subscriberRegistration = async (req, res, next) => {
     return;
   }
 
-  const registrationResponse = await subscriberServices.subscriberRegistration(
+  const registrationResponse = await subscriberServices.subscriberRegistration({
     email,
     password,
     lastName,
     firstName,
     phoneNumber,
     verificationCode,
-    userGuid
-  );
+    userGuid,
+    templateId,
+  });
+
+
 
   if (registrationResponse) {
     res.status(200).json({

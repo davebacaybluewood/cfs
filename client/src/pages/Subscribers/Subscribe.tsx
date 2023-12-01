@@ -31,10 +31,15 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
     firstName: "",
     phoneNumber: "",
     confirmationUserCode: "",
+    templateId: '',
+    eventId: ''
   };
 
   const search = useLocation().search;
   const userGuid = new URLSearchParams(search).get("userGuid");
+  const templateId = new URLSearchParams(search).get("templateId");
+  const eventId = new URLSearchParams(search).get("eventId");
+
 
   return (
     <div className="portal-registration-container">
@@ -99,7 +104,9 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                 data.firstName,
                 data.lastName,
                 data.phoneNumber,
-                userGuid ?? ""
+                userGuid ?? "",
+                templateId ?? '',
+                eventId ?? ''
               );
 
               if (req) {
@@ -124,7 +131,8 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                 data.lastName,
                 data.phoneNumber,
                 data.confirmationUserCode,
-                userGuid ?? ""
+                userGuid ?? "",
+                templateId ?? '',
               );
 
               if (req) {
@@ -148,10 +156,10 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
           {({ values, errors, handleSubmit }) => {
             const subscribeAccountDetailsValidity =
               errors.confirmPassword ||
-              errors.password ||
-              errors.email ||
-              errors.firstName ||
-              errors.lastName
+                errors.password ||
+                errors.email ||
+                errors.firstName ||
+                errors.lastName
                 ? false
                 : true;
 
