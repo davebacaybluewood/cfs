@@ -4,7 +4,7 @@ import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Button, Drawer } from "@mui/material";
+import { Button as MUIButton, Drawer } from "@mui/material";
 import { UserContext } from "admin/context/UserProvider";
 import { formatISODateOnly } from "helpers/date";
 import { toast } from "react-toastify";
@@ -16,8 +16,7 @@ import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter
 import "./AgentSubscribers.scss";
 import useUserRole from "hooks/useUserRole";
 import Pricing from "admin/components/Pricing/Pricing";
-import { FaCheckCircle } from "react-icons/fa";
-import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import Button from "library/Button/Button";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -61,6 +60,8 @@ const AgentSubscribers: React.FC = () => {
     { field: "firstName", headerName: "First Name", width: 250 },
     { field: "email", headerName: "Email Address", width: 250 },
     { field: "createdAt", headerName: "Date Created", width: 250 },
+    { field: "actions", headerName: "Actions", renderCell: (params) => params.value, width: 300, headerAlign: 'center' },
+
   ];
 
   const filteredRows = subscribers?.map((subscriber) => {
@@ -75,18 +76,24 @@ const AgentSubscribers: React.FC = () => {
         !subscriber.isSubscribed && subscriber.type === "SUBSCRIBER"
           ? "Subscriber"
           : !subscriber.isSubscribed && subscriber.type === "FREE 30DAYS TRIAL"
-          ? "Free 30days Trial"
-          : subscriber.previousRole === "POSITION_FREE_30DAYS_TRIAL"
-          ? "Free 30days Trial"
-          : "Subscriber",
+            ? "Free 30days Trial"
+            : subscriber.previousRole === "POSITION_FREE_30DAYS_TRIAL"
+              ? "Free 30days Trial"
+              : "Subscriber",
+      actions: <div className="cta-btns">
+        <button>Send Email</button>
+        <button>Delete</button>
+        <button>Download</button>
+      </div>
+
     };
   });
 
   function handleCopyToClipboard() {
     setClipboardValue(
       window.location.host +
-        paths.subscriberRegistration +
-        `?userGuid=${userGuid}`
+      paths.subscriberRegistration +
+      `?userGuid=${userGuid}`
     );
     toast("Link copied to Clipboard");
   }
@@ -103,19 +110,19 @@ const AgentSubscribers: React.FC = () => {
       <DocumentTitleSetter title="Leads | CFS Portal" />
       <div className="agent-subscribers-container">
         <Title title="Leads" subtitle="List of your leads">
-          <Button
+          <MUIButton
             onClick={() => handleCopyToClipboard()}
             variant="contained"
             style={{ marginRight: 10 }}
           >
             Copy Subscriber Registration Link
-          </Button>
-          <Button
+          </MUIButton>
+          <MUIButton
             onClick={() => handleCopyToClipboardTrial()}
             variant="contained"
           >
             Copy Free 30 days Trial Registration Link
-          </Button>
+          </MUIButton>
         </Title>
         <div className="agent-subscribers-table">
           <div style={{ width: "100%" }}>
