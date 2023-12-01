@@ -18,7 +18,7 @@ interface BusinessCardProps {
 const WebPageBusinessCard: React.FC<BusinessCardProps> = (props) => {
   const emailAddressLength = props.email?.length
 
-  const textSize = emailAddressLength > 20 ? "1.47rem" : "1.7rem"
+  const textSize = emailAddressLength > 20 ? "2rem" : "1.9rem"
 
   return (
     <div className="my-webpage-business-card-wrapper">
@@ -26,7 +26,7 @@ const WebPageBusinessCard: React.FC<BusinessCardProps> = (props) => {
         className="back-page"
         style={{
           backgroundImage: `url('/assets/images/templates/business-card-orig-size.png')`,
-          width: "100% !important", 
+          width: "100% !important",
         }}
         ref={props.businessCardRef as any}
       >
@@ -44,7 +44,9 @@ const WebPageBusinessCard: React.FC<BusinessCardProps> = (props) => {
               <h4 style={{ fontSize: textSize }}>{props.phoneNumber}</h4>
               <h4 style={{ fontSize: textSize }}>www.gocfs.pro</h4>
               <h4 style={{ fontSize: textSize }}>{props.state}</h4>
-              <p>LICENSE NO. {props.licenseNumber}</p>
+              <p style={{ fontSize: "1.4rem" }}>
+                LICENSE NO. {props.licenseNumber}
+              </p>
             </div>
             <div className="qr-code">
               <QRCode
