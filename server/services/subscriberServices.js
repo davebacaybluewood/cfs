@@ -198,9 +198,12 @@ const subscriberRegistration = async (
 
 const fetchSubscribersByUser = async (userGuid) => {
   try {
+    const user = await User.findOne({ userGuid });
+    const isAdmin = user?.isAdmin;
+
     const subscribers = await Hierarchy.aggregate([
       {
-        $match: { recruiterUserGuid: userGuid },
+        $match: isAdmin ? {recruiterUserGuid: { $exists: false }} : { recruiterUserGuid: userGuid },
       },
       {
         $lookup: {
@@ -302,9 +305,46 @@ const fetchAllSubscribers = async () => {
   return subscribers;
 };
 
+const fetchAdminLeads = async () => {
+  try {
+    const leadSubscribers = await Hierarchy.aggregate([
+      {
+        $match: { recruiterUserGuid: { $exists: false } },
+      },
+      {
+        $lookup: {
+          from: "agents",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "agentDoc",
+        },
+      },
+      {
+        $unwind: "$agentDoc",
+      },
+      {
+        $project: {
+          userGuid: "$agentDoc.userGuid",
+          firstName: "$agentDoc.firstName",
+          lastName: "$agentDoc.lastName",
+          email: "$agentDoc.emailAddress",
+          createdAt: "$agentDoc.createdAt",
+        },
+      },
+    ]);
+
+    return leadSubscribers;
+  } catch (error) {
+    // Handle the error appropriately (e.g., log it, throw an exception)
+    console.error("Error retrieving lead subscribers:", error);
+    throw error;
+  }
+};
+
 export default {
   emailConfirmation,
   subscriberRegistration,
   fetchSubscribersByUser,
   fetchAllSubscribers,
+  fetchAdminLeads
 };
