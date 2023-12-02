@@ -204,7 +204,7 @@ const Events: React.FC = () => {
 
   const eventDataRows = pageEventRows?.map((event) => {
     const modifiedData = {
-      _id: event._id,
+      id: event._id,
       title: event.title,
       eventDate: formatISODateOnly(event.eventDate),
       content: event.content,
@@ -368,7 +368,6 @@ const Events: React.FC = () => {
               rows={eventDataRows ?? []}
               columns={columns}
               slots={{ toolbar: FilteredGridToolbar }}
-              getRowId={(row: any) => generateRandomChars(5)}
             />
           </NoInformationToDisplay>
         </div>
