@@ -138,8 +138,15 @@ const Events: React.FC = () => {
   });
 
   useEffect(() => {
-    setPageEventRows(eventRows);
-  }, [userGuid, eventRows]);
+    setLoading(true);
+    const getEvents = async () => {
+      const data = await agent.Events.getEvents(userGuid);
+      setPageEventRows(data);
+      setLoading(false);
+    };
+
+    getEvents();
+  }, [userGuid]);
 
   const FilteredGridToolbar = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
