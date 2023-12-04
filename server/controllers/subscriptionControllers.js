@@ -9,25 +9,25 @@ import { API_RES_FAIL } from "../constants/constants.js";
  * @acess: Private
  */
 const createSubscription = expressAsync(async (req, res) => {
-  const { emailAddress } = req.body;
-
-  const subscription = await Subscriptions.find({
-    emailAddress: emailAddress,
-  }).count();
-
-  if (!emailAddress) {
-    throw new Error("Error Occured");
-  }
-
-  if (subscription) {
-    res.status(400).json({
-      error: "Email already registered.",
-    });
-
-    return;
-  }
-
   try {
+    const { emailAddress } = req.body;
+
+    const subscription = await Subscriptions.find({
+      emailAddress: emailAddress,
+    }).count();
+
+    if (!emailAddress) {
+      throw new Error("Error Occured");
+    }
+
+    if (subscription) {
+      res.status(400).json({
+        error: "Email already registered.",
+      });
+
+      return;
+    }
+
     const subscriptions = new Subscriptions({
       emailAddress,
     });
@@ -73,16 +73,20 @@ const deleteSubscription = expressAsync(async (req, res) => {
 });
 
 const getTrialHierarchyCode = async (req, res) => {
-  const data = await portalSubscriptionServices.getTrialHierarchyCode(
-    req,
-    res,
-    req.params.userGuid
-  );
+  try {
+    const data = await portalSubscriptionServices.getTrialHierarchyCode(
+      req,
+      res,
+      req.params.userGuid
+    );
 
-  if (data) {
-    res.json(data);
-  } else {
-    res.json(API_RES_FAIL("No data"));
+    if (data) {
+      res.json(data);
+    } else {
+      res.json(API_RES_FAIL("No data"));
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 };
 

@@ -10,18 +10,22 @@ import portalSubscriptionServices from "../services/portalSubscriptionServices.j
  * @access: Private
  */
 const subscribeFreeTrial = expressAsync(async (req, res) => {
-  const { userGuid } = req.body;
+  try {
+    const { userGuid } = req.body;
 
-  if (userGuid) {
-    const subscription = new PortalSubscription({
-      userGuid: userGuid,
-    });
+    if (userGuid) {
+      const subscription = new PortalSubscription({
+        userGuid: userGuid,
+      });
 
-    await subscription.save();
+      await subscription.save();
 
-    res.send(API_RES_OK("Subscription success"));
-  } else {
-    res.status(400).send(API_RES_FAIL("Failed to create Free trial"));
+      res.send(API_RES_OK("Subscription success"));
+    } else {
+      res.status(400).send(API_RES_FAIL("Failed to create Free trial"));
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -31,11 +35,11 @@ const subscribeFreeTrial = expressAsync(async (req, res) => {
  */
 
 const getAllSubscribeFreeTrial = expressAsync(async (req, res) => {
-  let subscribers;
-  const { userGuid } = req.body;
-  const role = ROLES[req.query.position];
-
   try {
+    let subscribers;
+    const { userGuid } = req.body;
+    const role = ROLES[req.query.position];
+
     switch (role) {
       case ROLES.ROLE_MASTER_ADMIN:
         subscribers = await subscriberServices.fetchAllSubscribers();
@@ -137,11 +141,15 @@ const getAllSubscribeFreeTrial = expressAsync(async (req, res) => {
 });
 
 const getTrialNumberOfDays = async (req, res) => {
-  const data = await portalSubscriptionServices.getTrialNumberOfDays(
-    req.params.userGuid
-  );
+  try {
+    const data = await portalSubscriptionServices.getTrialNumberOfDays(
+      req.params.userGuid
+    );
 
-  res.json(data);
+    res.json(data);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 };
 
 export { subscribeFreeTrial, getAllSubscribeFreeTrial, getTrialNumberOfDays };

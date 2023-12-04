@@ -7,7 +7,11 @@ import { v4 as uuidv4 } from "uuid";
 import WebinarAppointment from "../models/webinarAppointmentModel.js";
 import fetch from "node-fetch";
 import AgentAppointment from "../models/agentAppointment.js";
-import { AGENT_STATUSES, API_RES_FAIL, NOTIFICATION_ENUMS } from "../constants/constants.js";
+import {
+  AGENT_STATUSES,
+  API_RES_FAIL,
+  NOTIFICATION_ENUMS,
+} from "../constants/constants.js";
 
 /**
  * @desc: Fetch all webinars
@@ -15,8 +19,12 @@ import { AGENT_STATUSES, API_RES_FAIL, NOTIFICATION_ENUMS } from "../constants/c
  * @acess: Public
  */
 const getAllWebinars = expressAsync(async (req, res) => {
-  const webinars = await Webinars.find({});
-  res.json(webinars);
+  try {
+    const webinars = await Webinars.find({});
+    res.json(webinars);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -25,9 +33,9 @@ const getAllWebinars = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const getSingleWebinar = expressAsync(async (req, res) => {
-  const webinarGuid = req.query.isGuid;
-
   try {
+    const webinarGuid = req.query.isGuid;
+
     let webinar;
     if (webinarGuid) {
       webinar = await Webinars.find({
@@ -39,7 +47,7 @@ const getSingleWebinar = expressAsync(async (req, res) => {
 
     res.json(webinar);
   } catch (error) {
-    res.status(500).json(API_RES_FAIL("Error Occured"))
+    res.status(500).json(API_RES_FAIL("Error Occured"));
   }
 });
 
@@ -85,15 +93,19 @@ const createWebinar = expressAsync(async (req, res) => {
 // @route   DELETE /api/webinars/:id
 // @access  Private/Admin
 const deleteWebinar = expressAsync(async (req, res) => {
-  const contact = await Webinars.deleteOne({
-    _id: req.params.id,
-  });
+  try {
+    const contact = await Webinars.deleteOne({
+      _id: req.params.id,
+    });
 
-  if (contact) {
-    res.json({ message: "Webinar removed." });
-  } else {
-    res.status(404);
-    throw new Error("Webinar not found");
+    if (contact) {
+      res.json({ message: "Webinar removed." });
+    } else {
+      res.status(404);
+      throw new Error("Webinar not found");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -172,14 +184,18 @@ const updateWebinar = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const getActiveWebinars = expressAsync(async (req, res) => {
-  const webinars = await Webinars.find({}, "_id");
-  const agents = Agents.filter((agent) => {
-    return webinars
-      .map((webinarId) => webinarId.toString())
-      .includes(agent.webinars._id.toString());
-  });
+  try {
+    const webinars = await Webinars.find({}, "_id");
+    const agents = Agents.filter((agent) => {
+      return webinars
+        .map((webinarId) => webinarId.toString())
+        .includes(agent.webinars._id.toString());
+    });
 
-  res.json(agents);
+    res.json(agents);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -188,42 +204,48 @@ const getActiveWebinars = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const getAgentWebinarAppointments = expressAsync(async (req, res) => {
-  const userGuid = req.params.agentId;
+  try {
+    const userGuid = req.params.agentId;
 
-  const agents = await Agents.find({
-    userGuid: userGuid,
-  });
+    const agents = await Agents.find({
+      userGuid: userGuid,
+    });
 
-  const agentWebinarGuids = agents[0].webinars.map((data) => data.webinarGuid);
+    const agentWebinarGuids = agents[0].webinars.map(
+      (data) => data.webinarGuid
+    );
 
-  const webinars = await Webinars.find({
-    webinarGuid: { $in: agentWebinarGuids },
-  });
+    const webinars = await Webinars.find({
+      webinarGuid: { $in: agentWebinarGuids },
+    });
 
-  const appointments = await AgentAppointment.find({
-    agentGuid: userGuid,
-  });
+    const appointments = await AgentAppointment.find({
+      agentGuid: userGuid,
+    });
 
-  const filteredWebinars = webinars.map((webinar) => {
-    const noOfAppointments = () => {
-      const appointment = appointments
-        .map((apData) => {
-          return apData.webinarGuid === webinar.webinarGuid;
-        })
-        .filter((data) => data);
+    const filteredWebinars = webinars.map((webinar) => {
+      const noOfAppointments = () => {
+        const appointment = appointments
+          .map((apData) => {
+            return apData.webinarGuid === webinar.webinarGuid;
+          })
+          .filter((data) => data);
 
-      return appointment.length;
-    };
-    return {
-      title: webinar?.title,
-      webinarGuid: webinar?.webinarGuid,
-      _id: webinar?._id,
-      thumbnail: webinar?.thumbnail,
-      noOfAppointments: noOfAppointments(),
-    };
-  });
+        return appointment.length;
+      };
+      return {
+        title: webinar?.title,
+        webinarGuid: webinar?.webinarGuid,
+        _id: webinar?._id,
+        thumbnail: webinar?.thumbnail,
+        noOfAppointments: noOfAppointments(),
+      };
+    });
 
-  res.json(filteredWebinars);
+    res.json(filteredWebinars);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 /**
  * @desc:  Submit a webinar form for the agent
@@ -447,72 +469,80 @@ const submitAppointment = expressAsync(async (req, res) => {
 });
 
 const getAgentFilteredWebinars = expressAsync(async (req, res) => {
-  const agentWebinars = await Agents.find({});
-  const webinars = await Webinars.find({});
-  const status = req.params.status;
+  try {
+    const agentWebinars = await Agents.find({});
+    const webinars = await Webinars.find({});
+    const status = req.params.status;
 
-  const allAgentWebinars = agentWebinars
-    .filter((data) => data.status === AGENT_STATUSES.ACTIVATED)
-    .map((data) => {
-      const webinars = data?.webinars
-        ?.filter((data) => data.status === status)
-        ?.map((webinar) => {
+    const allAgentWebinars = agentWebinars
+      .filter((data) => data.status === AGENT_STATUSES.ACTIVATED)
+      .map((data) => {
+        const webinars = data?.webinars
+          ?.filter((data) => data.status === status)
+          ?.map((webinar) => {
+            return {
+              userGuid: webinar.userGuid,
+              webinarGuid: webinar.webinarGuid,
+              status: webinar.status,
+              calendlyUrl: webinar.calendlyUrl,
+              _id: webinar._id,
+              thumbnail: webinar?.thumbnail,
+              name: data?.name,
+              firstName: data?.firstName,
+              lastName: data?.lastName,
+              createdAt: data?.createdAt,
+            };
+          });
+
+        return webinars;
+      })
+      .flat(1);
+
+    const joinedWebinars = allAgentWebinars.map((data) => {
+      return webinars
+        .filter((webinar) => webinar.webinarGuid === data.webinarGuid)
+        .map((webinarData) => {
           return {
-            userGuid: webinar.userGuid,
-            webinarGuid: webinar.webinarGuid,
-            status: webinar.status,
-            calendlyUrl: webinar.calendlyUrl,
-            _id: webinar._id,
-            thumbnail: webinar?.thumbnail,
-            name: data?.name,
-            firstName: data?.firstName,
-            lastName: data?.lastName,
-            createdAt: data?.createdAt,
+            _id: webinarData._id,
+            title: webinarData.title,
+            webinarGuid: webinarData.webinarGuid,
+            introVideo: webinarData.introVideo,
+            introVideoContent: webinarData.introVideoContent,
+            introVideoTimeTracker: webinarData.introVideoTimeTracker,
+            fullVideo: webinarData.fullVideo,
+            fullVideoContent: webinarData.fullVideoContent,
+            fullVideoTimeTracker: webinarData.fullVideoTimeTracker,
+            calendlyLink: webinarData.calendlyLink,
+            userGuid: data.userGuid,
+            name: data.name,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            thumbnail: webinarData.thumbnail,
+            createdAt: data.createdAt,
           };
         });
+    });
 
-      return webinars;
-    })
-    .flat(1);
-
-  const joinedWebinars = allAgentWebinars.map((data) => {
-    return webinars
-      .filter((webinar) => webinar.webinarGuid === data.webinarGuid)
-      .map((webinarData) => {
-        return {
-          _id: webinarData._id,
-          title: webinarData.title,
-          webinarGuid: webinarData.webinarGuid,
-          introVideo: webinarData.introVideo,
-          introVideoContent: webinarData.introVideoContent,
-          introVideoTimeTracker: webinarData.introVideoTimeTracker,
-          fullVideo: webinarData.fullVideo,
-          fullVideoContent: webinarData.fullVideoContent,
-          fullVideoTimeTracker: webinarData.fullVideoTimeTracker,
-          calendlyLink: webinarData.calendlyLink,
-          userGuid: data.userGuid,
-          name: data.name,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          thumbnail: webinarData.thumbnail,
-          createdAt: data.createdAt,
-        };
-      });
-  });
-
-  res.json(joinedWebinars.flat(1));
+    res.json(joinedWebinars.flat(1));
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 const getSingleAgentWebinar = expressAsync(async (req, res) => {
-  const agentGuid = req.params.agentGuid;
-  const webinarGuid = req.params.webinarGuid;
-  const agent = await Agents.find({ userGuid: agentGuid });
+  try {
+    const agentGuid = req.params.agentGuid;
+    const webinarGuid = req.params.webinarGuid;
+    const agent = await Agents.find({ userGuid: agentGuid });
 
-  const agentWebinars = agent[0]?.webinars
-    .filter((filData) => filData.webinarGuid === webinarGuid)
-    .map((data) => data);
+    const agentWebinars = agent[0]?.webinars
+      .filter((filData) => filData.webinarGuid === webinarGuid)
+      .map((data) => data);
 
-  res.json(agentWebinars[0]);
+    res.json(agentWebinars[0]);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 export {
