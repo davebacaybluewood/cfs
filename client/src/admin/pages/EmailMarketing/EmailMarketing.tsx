@@ -35,7 +35,7 @@ import { toast } from "react-toastify";
 import DrawerBase, { Anchor } from "library/Drawer/Drawer";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { BsFillTrashFill, BsPlusCircle } from "react-icons/bs";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import nameFallback from "helpers/nameFallback";
 import { formatISODateOnly } from "helpers/date";
@@ -47,6 +47,7 @@ import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter
 import { Contacts } from "admin/models/contactsModel";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
+import useFetchSubscribers from "../RewardsHistory/useFetchSubscribers";
 
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -55,6 +56,8 @@ const ContractForm: React.FC = () => {
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
+  const { userGuid: agentGuid } = useParams()
+  const { subscribers } = useFetchSubscribers(agentGuid ?? '')
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -261,37 +264,6 @@ const ContractForm: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    const fetchTemplateInfo = async () => {
-      setLoading(true);
-      const data = await agent.EmailMarketing.getSingleTemplate(
-        userGuid,
-        templateId || ""
-      );
-      setInitialValues({
-        emailBody: data.templateBody,
-        subject: data.subject,
-        recipients: [],
-        settings: data.settings,
-        templateName: data.templateName,
-        status: data.status,
-        createdById: data.userGuid,
-      });
-      setDesign(data.design);
-
-      /** Load if edit mode */
-      if (Object.keys(data.design)?.length) {
-        emailEditorRef.current?.editor?.loadDesign(
-          JSON.parse(data.design || "{}")
-        );
-      }
-    };
-    if (userGuid && templateId) {
-      fetchTemplateInfo();
-      setLoading(false);
-    }
-  }, [templateId, userGuid]);
-
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     const unlayer = emailEditorRef.current?.editor;
 
@@ -367,9 +339,9 @@ const ContractForm: React.FC = () => {
     });
   }
 
-  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
+  const loadDesign = useCallback(() => { }, [emailEditorRef, design]);
 
-  useEffect(() => {}, [design]);
+  useEffect(() => { }, [design]);
 
   const handleDeleteContact = async (contactId: string) => {
     if (contactId) {

@@ -590,6 +590,14 @@ export const adminRoutes = [
     ),
   },
   {
+    path: adminPathsNew.emailMarketingWithGuid,
+    element: (
+      <GuardedWrapper>
+        <EmailMarketing />
+      </GuardedWrapper>
+    ),
+  },
+  {
     path: adminPathsNew.mailingList,
     element: (
       <GuardedWrapper>

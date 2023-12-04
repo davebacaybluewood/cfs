@@ -16,7 +16,6 @@ import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter
 import "./AgentSubscribers.scss";
 import useUserRole from "hooks/useUserRole";
 import Pricing from "admin/components/Pricing/Pricing";
-import Button from "library/Button/Button";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -65,6 +64,10 @@ const AgentSubscribers: React.FC = () => {
   ];
 
   const filteredRows = subscribers?.map((subscriber) => {
+    const sendEmailHandler = (userGuid: string) => {
+      window.open(`${paths.emailMarketingWithGuid}/`.replace(':userGuid', userGuid))
+      // alert(`${paths.emailMarketingWithGuid}/`.replace(':userGuid', userGuid))
+    }
     return {
       id: subscriber.userGuid,
       isSubscribed: subscriber.isSubscribed ? "YES" : "NO",
@@ -81,7 +84,7 @@ const AgentSubscribers: React.FC = () => {
               ? "Free 30days Trial"
               : "Subscriber",
       actions: <div className="cta-btns">
-        <button>Send Email</button>
+        <button onClick={() => sendEmailHandler(userGuid)}>Send Email</button>
         <button>Delete</button>
         <button>Download</button>
       </div>

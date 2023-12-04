@@ -347,6 +347,14 @@ const Points = {
 
     return res;
   },
+
+  getSubscriberByUserGuid: (userGuid: string) => {
+    const res = requests.get<SubscriberMainData | undefined>(
+      `/api/points/subscribers/${userGuid}`
+    );
+
+    return res;
+  },
 };
 
 const Orders = {
