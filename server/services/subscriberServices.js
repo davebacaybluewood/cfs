@@ -198,9 +198,12 @@ const subscriberRegistration = async (
 
 const fetchSubscribersByUser = async (userGuid) => {
   try {
+    const user = await User.findOne({ userGuid });
+    const isAdmin = user?.isAdmin;
+
     const subscribers = await Hierarchy.aggregate([
       {
-        $match: { recruiterUserGuid: userGuid },
+        $match: isAdmin ? {recruiterUserGuid: { $exists: false }} : { recruiterUserGuid: userGuid },
       },
       {
         $lookup: {
@@ -301,6 +304,7 @@ const fetchAllSubscribers = async () => {
 
   return subscribers;
 };
+
 
 export default {
   emailConfirmation,
