@@ -7,27 +7,28 @@ import expressAsync from "express-async-handler";
  * @acess: Private
  */
 
-const addLeads = expressAsync(async (req, res) =>{
-  const userGuid  = req.body.userGuid;
-  const agentUserGuid = req.body.agentUserGuid;
+const addLeads = expressAsync(async (req, res) => {
+  try {
+    const userGuid = req.body.userGuid;
+    const agentUserGuid = req.body.agentUserGuid;
 
-  if (
-    !userGuid ||
-    !agentUserGuid
-  ) {
-    throw new Error("Error occured adding leads.");
-  }
+    if (!userGuid || !agentUserGuid) {
+      throw new Error("Error occured adding leads.");
+    }
 
-  const leads = await Leads.create({
+    const leads = await Leads.create({
       userGuid,
       agentUserGuid,
-  });
+    });
 
-  if (leads) {
-    res.status(201).json("Lead has successfully added.")
-  } else {
-    res.status(400);
-    throw new Error("Invalid subscriber account data");
+    if (leads) {
+      res.status(201).json("Lead has successfully added.");
+    } else {
+      res.status(400);
+      throw new Error("Invalid subscriber account data");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -38,19 +39,23 @@ const addLeads = expressAsync(async (req, res) =>{
  */
 
 const getLeadByUserGuid = expressAsync(async (req, res) => {
-  const  userGuid  = req.params.userGuid;
+  try {
+    const userGuid = req.params.userGuid;
 
-  if (!userGuid) {
-    throw new Error("Error occured with user profile.");
-  }
+    if (!userGuid) {
+      throw new Error("Error occured with user profile.");
+    }
 
-  const leads = await Leads.find({ userGuid: userGuid });
+    const leads = await Leads.find({ userGuid: userGuid });
 
-  if (leads) {
-    res.json(leads);
-  } else {
-    res.status(404);
-    throw new Error("Subscriber does not Exist");
+    if (leads) {
+      res.json(leads);
+    } else {
+      res.status(404);
+      throw new Error("Subscriber does not Exist");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -61,19 +66,23 @@ const getLeadByUserGuid = expressAsync(async (req, res) => {
  */
 
 const getLeadByAgentUserGuid = expressAsync(async (req, res) => {
-  const agentUserGuid = req.params.agentUserGuid;
+  try {
+    const agentUserGuid = req.params.agentUserGuid;
 
-  if (!agentUserGuid) {
-    throw new Error("Error occured with agent profile.");
-  }
+    if (!agentUserGuid) {
+      throw new Error("Error occured with agent profile.");
+    }
 
-  const leads = await Leads.find({ agentUserGuid: agentUserGuid });
+    const leads = await Leads.find({ agentUserGuid: agentUserGuid });
 
-  if (leads.length > 0) {
-    res.json(leads);
-  } else {
-    res.status(404);
-    throw new Error("Agent does not Exist");
+    if (leads.length > 0) {
+      res.json(leads);
+    } else {
+      res.status(404);
+      throw new Error("Agent does not Exist");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 

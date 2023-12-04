@@ -10,40 +10,46 @@ import { v4 as uuidv4 } from "uuid";
  */
 
 const registerSubscriberAccount = expressAsync(async (req, res) => {
-  const { email, password, firstName, lastName, phoneNumber } = req.body;
+  try {
+    const { email, password, firstName, lastName, phoneNumber } = req.body;
 
-  if (!email || !password || !firstName || !lastName) {
-    throw new Error("Error occured in updating.");
-  }
+    if (!email || !password || !firstName || !lastName) {
+      throw new Error("Error occured in updating.");
+    }
 
-  const emailIsExist = await SubscriberAccount.findOne({ email });
+    const emailIsExist = await SubscriberAccount.findOne({ email });
 
-  if (emailIsExist) {
-    res.status(400);
-    throw new Error("Email already exist");
-  }
+    if (emailIsExist) {
+      res.status(400);
+      throw new Error("Email already exist");
+    }
 
-  //Generate a UUID for userGuid using uuidv4
-  const userGuid = uuidv4();
+    //Generate a UUID for userGuid using uuidv4
+    const userGuid = uuidv4();
 
-  //Hash the password using bcrypt
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+    //Hash the password using bcrypt
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-  const subscriberAccount = await SubscriberAccount.create({
-    email,
-    password: hashedPassword,
-    firstName,
-    lastName,
-    userGuid,
-    phoneNumber,
-  });
+    const subscriberAccount = await SubscriberAccount.create({
+      email,
+      password: hashedPassword,
+      firstName,
+      lastName,
+      userGuid,
+      phoneNumber,
+    });
 
-  if (subscriberAccount) {
-    res.status(201).json("[Subscriber Account] has been successfully created.");
-  } else {
-    res.status(400);
-    throw new Error("Invalid subscriber account data");
+    if (subscriberAccount) {
+      res
+        .status(201)
+        .json("[Subscriber Account] has been successfully created.");
+    } else {
+      res.status(400);
+      throw new Error("Invalid subscriber account data");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -54,19 +60,23 @@ const registerSubscriberAccount = expressAsync(async (req, res) => {
  */
 
 const getSubscriberAccountByUserGuid = expressAsync(async (req, res) => {
-  const userGuid = req.params.userGuid;
+  try {
+    const userGuid = req.params.userGuid;
 
-  if (!userGuid) {
-    throw new Error("Error occured in updating.");
-  }
+    if (!userGuid) {
+      throw new Error("Error occured in updating.");
+    }
 
-  const subscriberAccount = await SubscriberAccount.findOne(userGuid);
+    const subscriberAccount = await SubscriberAccount.findOne(userGuid);
 
-  if (subscriberAccount) {
-    res.json(subscriberAccount);
-  } else {
-    res.status(404);
-    throw new Error("Subscriber account not found");
+    if (subscriberAccount) {
+      res.json(subscriberAccount);
+    } else {
+      res.status(404);
+      throw new Error("Subscriber account not found");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -77,19 +87,23 @@ const getSubscriberAccountByUserGuid = expressAsync(async (req, res) => {
  */
 
 const getSubscriberAccountByAgentUserGuid = expressAsync(async (req, res) => {
-  const agentUserGuid = req.params.agentUserGuid;
+  try {
+    const agentUserGuid = req.params.agentUserGuid;
 
-  if (!agentUserGuid) {
-    throw new Error("Error occured in fetching data.");
-  }
+    if (!agentUserGuid) {
+      throw new Error("Error occured in fetching data.");
+    }
 
-  const subscriberAccount = await SubscriberAccount.findOne(agentUserGuid);
+    const subscriberAccount = await SubscriberAccount.findOne(agentUserGuid);
 
-  if (subscriberAccount) {
-    res.json(subscriberAccount);
-  } else {
-    res.status(404);
-    throw new Error("Agent Subscriber account not found");
+    if (subscriberAccount) {
+      res.json(subscriberAccount);
+    } else {
+      res.status(404);
+      throw new Error("Agent Subscriber account not found");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -100,9 +114,13 @@ const getSubscriberAccountByAgentUserGuid = expressAsync(async (req, res) => {
  */
 
 const getAllSubscriberAccounts = expressAsync(async (req, res) => {
-  const subscriberacconts = await SubscriberAccount.find({});
+  try {
+    const subscriberacconts = await SubscriberAccount.find({});
 
-  res.json(subscriberacconts);
+    res.json(subscriberacconts);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -112,19 +130,23 @@ const getAllSubscriberAccounts = expressAsync(async (req, res) => {
  */
 
 const validateEmail = expressAsync(async (req, res) => {
-  const { email } = req.body;
+  try {
+    const { email } = req.body;
 
-  if (!email) {
-    res.status(400);
-    throw new Error("Email is required");
-  }
+    if (!email) {
+      res.status(400);
+      throw new Error("Email is required");
+    }
 
-  const subscriberAccount = await SubscriberAccount.findOne({ email });
+    const subscriberAccount = await SubscriberAccount.findOne({ email });
 
-  if (subscriberAccount) {
-    res.json(false); //Email already exist, return false
-  } else {
-    res.json(true);
+    if (subscriberAccount) {
+      res.json(false); //Email already exist, return false
+    } else {
+      res.json(true);
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 

@@ -13,17 +13,23 @@ import { AGENT_STATUSES, PROFILE_POSITIONS } from "../constants/constants.js";
  * @acess: Private
  */
 const listProfile = expressAsync(async (req, res) => {
-  const profiles = await Agents.find({
-    $and: [
-      {
-        status: { $in: [AGENT_STATUSES.ACTIVATED, AGENT_STATUSES.DEACTIVATED] },
-      },
-      { status: { $ne: AGENT_STATUSES.ARCHIVED } },
-    ],
-  }).sort({
-    createdAt: -1,
-  });
-  res.json(profiles);
+  try {
+    const profiles = await Agents.find({
+      $and: [
+        {
+          status: {
+            $in: [AGENT_STATUSES.ACTIVATED, AGENT_STATUSES.DEACTIVATED],
+          },
+        },
+        { status: { $ne: AGENT_STATUSES.ARCHIVED } },
+      ],
+    }).sort({
+      createdAt: -1,
+    });
+    res.json(profiles);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -32,13 +38,17 @@ const listProfile = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const getProfile = expressAsync(async (req, res) => {
-  const userGuid = req.params.userGuid;
-  if (userGuid) {
-    const agent = await Agents.find({ userGuid: userGuid });
-    res.json(agent[0]);
-  } else {
-    res.status(404);
-    throw new Error("Profile not found.");
+  try {
+    const userGuid = req.params.userGuid;
+    if (userGuid) {
+      const agent = await Agents.find({ userGuid: userGuid });
+      res.json(agent[0]);
+    } else {
+      res.status(404);
+      throw new Error("Profile not found.");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -48,8 +58,9 @@ const getProfile = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const editProfile = expressAsync(async (req, res) => {
-  const userGuid = req.params.userGuid;
   try {
+    const userGuid = req.params.userGuid;
+
     /** Upload avatar to cloudinary */
     let profilePicResult;
     try {
@@ -134,22 +145,26 @@ const editProfile = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const changePassword = expressAsync(async (req, res) => {
-  const userGuid = req.params.userGuid;
-  const { password, newPassword } = req.body;
-  const user = await User.findOne({ userGuid });
-  const agentModel = await Agents.find({ userGuid });
-  const agent = agentModel[0];
+  try {
+    const userGuid = req.params.userGuid;
+    const { password, newPassword } = req.body;
+    const user = await User.findOne({ userGuid });
+    const agentModel = await Agents.find({ userGuid });
+    const agent = agentModel[0];
 
-  if (user && (await user.matchPassword(password))) {
-    agent.password = newPassword;
-    user.password = newPassword;
+    if (user && (await user.matchPassword(password))) {
+      agent.password = newPassword;
+      user.password = newPassword;
 
-    agent.save();
-    user.save();
-    res.json("success");
-  } else {
-    res.status(401);
-    throw new Error("Invalid credentials.");
+      agent.save();
+      user.save();
+      res.json("success");
+    } else {
+      res.status(401);
+      throw new Error("Invalid credentials.");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -159,19 +174,23 @@ const changePassword = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const updateProfileSettings = expressAsync(async (req, res) => {
-  const userGuid = req.params.userGuid;
-  const { displayCalendly } = req.body;
+  try {
+    const userGuid = req.params.userGuid;
+    const { displayCalendly } = req.body;
 
-  const agentModel = await Agents.find({ userGuid });
-  const agent = agentModel[0];
+    const agentModel = await Agents.find({ userGuid });
+    const agent = agentModel[0];
 
-  if (agentModel.length) {
-    agent.displayCalendly = displayCalendly;
-    agent.save();
-    res.status(200).json({ message: "ok" });
-  } else {
-    res.status(401);
-    throw new Error("Error occured.");
+    if (agentModel.length) {
+      agent.displayCalendly = displayCalendly;
+      agent.save();
+      res.status(200).json({ message: "ok" });
+    } else {
+      res.status(401);
+      throw new Error("Error occured.");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -181,67 +200,71 @@ const updateProfileSettings = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const preCreateProfile = expressAsync(async (req, res, next) => {
-  const { emailAddress, password, roles, position, languages } = req.body;
-  const userModel = await User.findOne({ email: emailAddress });
-  const preProfileModel = await PreProfile.findOne({
-    emailAddress: emailAddress,
-  });
-
-  if (!emailAddress) {
-    res.status(401).json({
-      error: "EMAIL_CHECK",
-      message: "Email is required.",
+  try {
+    const { emailAddress, password, roles, position, languages } = req.body;
+    const userModel = await User.findOne({ email: emailAddress });
+    const preProfileModel = await PreProfile.findOne({
+      emailAddress: emailAddress,
     });
-  }
 
-  if (userModel) {
-    res.status(401).json({
-      error: "EMAIL_CHECK",
-      message: "Email Already Taken",
-    });
-  } else {
-    if (preProfileModel) {
-      const accountExists = preProfileModel.password === password;
+    if (!emailAddress) {
+      res.status(401).json({
+        error: "EMAIL_CHECK",
+        message: "Email is required.",
+      });
+    }
 
-      if (accountExists) {
-        next();
-      }
+    if (userModel) {
+      res.status(401).json({
+        error: "EMAIL_CHECK",
+        message: "Email Already Taken",
+      });
     } else {
-      const emptyProfile = {
-        name: "",
-        firstName: "",
-        lastName: "",
-        state: "",
-        licenseNumber: "",
-        userGuid: uuid(),
-        avatar: "",
-        bio: "",
-        phoneNumber: "",
-        emailAddress: emailAddress,
-        address: "",
-        twitter: "",
-        instagram: "",
-        linkedIn: "",
-        facebook: "",
-        weChat: "",
-        discordId: "",
-        password: password,
-        languages: languages,
-        position: position,
-        roles: roles,
-        specialties: [],
-      };
+      if (preProfileModel) {
+        const accountExists = preProfileModel.password === password;
 
-      const preProfile = new PreProfile(emptyProfile);
-      const savePreProfile = await preProfile.save();
-
-      if (savePreProfile) {
-        res.json(savePreProfile);
+        if (accountExists) {
+          next();
+        }
       } else {
-        res.status(401);
-        throw new Error("Error occured.");
+        const emptyProfile = {
+          name: "",
+          firstName: "",
+          lastName: "",
+          state: "",
+          licenseNumber: "",
+          userGuid: uuid(),
+          avatar: "",
+          bio: "",
+          phoneNumber: "",
+          emailAddress: emailAddress,
+          address: "",
+          twitter: "",
+          instagram: "",
+          linkedIn: "",
+          facebook: "",
+          weChat: "",
+          discordId: "",
+          password: password,
+          languages: languages,
+          position: position,
+          roles: roles,
+          specialties: [],
+        };
+
+        const preProfile = new PreProfile(emptyProfile);
+        const savePreProfile = await preProfile.save();
+
+        if (savePreProfile) {
+          res.json(savePreProfile);
+        } else {
+          res.status(401);
+          throw new Error("Error occured.");
+        }
       }
     }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -251,16 +274,20 @@ const preCreateProfile = expressAsync(async (req, res, next) => {
  * @acess: Public
  */
 const fetchPreProfile = expressAsync(async (req, res) => {
-  const preProfile = await PreProfile.findOne({
-    emailAddress: req.body.emailAddress,
-  });
+  try {
+    const preProfile = await PreProfile.findOne({
+      emailAddress: req.body.emailAddress,
+    });
 
-  const passwordCorrect = preProfile.password === req.body.password;
+    const passwordCorrect = preProfile.password === req.body.password;
 
-  if (passwordCorrect) {
-    res.json(preProfile);
-  } else {
-    throw new Error("Error occured.");
+    if (passwordCorrect) {
+      res.json(preProfile);
+    } else {
+      throw new Error("Error occured.");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -421,44 +448,48 @@ const registerPreProfile = expressAsync(async (req, res) => {
  * @acess: Private / Admin
  */
 const updatePositionAndRole = expressAsync(async (req, res) => {
-  const userGuid = req.params.userGuid;
-  const { position, roles } = req.body;
+  try {
+    const userGuid = req.params.userGuid;
+    const { position, roles } = req.body;
 
-  const profileModel = await Agents.find({ userGuid });
-  const userModel = await User.find({ userGuid });
-  const profile = profileModel[0];
-  const user = userModel[0];
+    const profileModel = await Agents.find({ userGuid });
+    const userModel = await User.find({ userGuid });
+    const profile = profileModel[0];
+    const user = userModel[0];
 
-  const isAdminRole = position?.filter(
-    (data) => data.value === PROFILE_POSITIONS.MASTER_ADMIN.value
-  );
+    const isAdminRole = position?.filter(
+      (data) => data.value === PROFILE_POSITIONS.MASTER_ADMIN.value
+    );
 
-  if (profileModel.length) {
-    profile.roles = roles;
-    profile.position = position;
+    if (profileModel.length) {
+      profile.roles = roles;
+      profile.position = position;
 
-    if (userModel.length === 0) {
-      const user = new User({
-        userGuid: profile.userGuid,
-        name: profile.firstName + " " + profile.lastName,
-        email: profile.emailAddress,
-        password: profile.password,
-        roles: roles,
-        position: position,
-      });
-      user.save();
-      profile.save();
-      res.status(200).json({ message: "ok" });
+      if (userModel.length === 0) {
+        const user = new User({
+          userGuid: profile.userGuid,
+          name: profile.firstName + " " + profile.lastName,
+          email: profile.emailAddress,
+          password: profile.password,
+          roles: roles,
+          position: position,
+        });
+        user.save();
+        profile.save();
+        res.status(200).json({ message: "ok" });
+      } else {
+        user.position = position;
+        user.roles = roles;
+        user.isAdmin = isAdminRole !== 0 ? true : false;
+        profile.save();
+        res.status(200).json({ message: "ok" });
+      }
     } else {
-      user.position = position;
-      user.roles = roles;
-      user.isAdmin = isAdminRole !== 0 ? true : false;
-      profile.save();
-      res.status(200).json({ message: "ok" });
+      res.status(401);
+      throw new Error("Error occured.");
     }
-  } else {
-    res.status(401);
-    throw new Error("Error occured.");
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 

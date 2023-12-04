@@ -1,7 +1,6 @@
 import expressAsync from "express-async-handler";
 import LandingPageRegisteredUsers from "../models/landingPageRegisteredUsers.js";
 import LandingPage from "../models/landingPageModel.js";
-import Agent from "../models/agentModel.js";
 
 /**
  * @desc: Fetch all registered users in the landing poages
@@ -9,28 +8,32 @@ import Agent from "../models/agentModel.js";
  * @acess: Public
  */
 const getAllPageUserRegistered = expressAsync(async (req, res) => {
-  const filteredData = await LandingPageRegisteredUsers.aggregate([
-    {
-      $lookup: {
-        from: "agents",
-        localField: "userGuid",
-        foreignField: "userGuid",
-        as: "landingPageDoc",
-      },
-    },
-    {
-      $set: {
-        agentName: {
-          $first: "$landingPageDoc.name",
+  try {
+    const filteredData = await LandingPageRegisteredUsers.aggregate([
+      {
+        $lookup: {
+          from: "agents",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "landingPageDoc",
         },
       },
-    },
-    {
-      $unset: "landingPageDoc",
-    },
-  ]);
+      {
+        $set: {
+          agentName: {
+            $first: "$landingPageDoc.name",
+          },
+        },
+      },
+      {
+        $unset: "landingPageDoc",
+      },
+    ]);
 
-  res.json(filteredData);
+    res.json(filteredData);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 /**
  * @desc: Fetch all registered users in the landing poages
@@ -38,33 +41,37 @@ const getAllPageUserRegistered = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const getPageRegisteredUsers = expressAsync(async (req, res) => {
-  const filteredData = await LandingPageRegisteredUsers.aggregate([
-    {
-      $match: {
-        pageId: req.params.pageId ?? "",
-      },
-    },
-    {
-      $lookup: {
-        from: "agents",
-        localField: "userGuid",
-        foreignField: "userGuid",
-        as: "landingPageDoc",
-      },
-    },
-    {
-      $set: {
-        agentName: {
-          $first: "$landingPageDoc.name",
+  try {
+    const filteredData = await LandingPageRegisteredUsers.aggregate([
+      {
+        $match: {
+          pageId: req.params.pageId ?? "",
         },
       },
-    },
-    {
-      $unset: "landingPageDoc",
-    },
-  ]);
+      {
+        $lookup: {
+          from: "agents",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "landingPageDoc",
+        },
+      },
+      {
+        $set: {
+          agentName: {
+            $first: "$landingPageDoc.name",
+          },
+        },
+      },
+      {
+        $unset: "landingPageDoc",
+      },
+    ]);
 
-  res.json(filteredData);
+    res.json(filteredData);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**

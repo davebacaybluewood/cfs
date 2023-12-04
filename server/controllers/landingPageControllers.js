@@ -9,41 +9,47 @@ import LandingPageStatistics from "../models/landingPageStatisticsModel.js";
  * @acess: Public
  */
 const getAllLandingPages = expressAsync(async (req, res) => {
-  const landingPages = await LandingPage.find({});
+  try {
+    const landingPages = await LandingPage.find({});
 
-  const landingPageRegisteredUsers = await LandingPageRegisteredUsers.find({});
-  const landingPageViews = await LandingPageStatistics.aggregate([
-    {
-      $group: {
-        _id: null,
-        total: {
-          $sum: "$timeSpent",
+    const landingPageRegisteredUsers = await LandingPageRegisteredUsers.find(
+      {}
+    );
+    const landingPageViews = await LandingPageStatistics.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: {
+            $sum: "$timeSpent",
+          },
         },
       },
-    },
-  ]);
+    ]);
 
-  const filteredData = landingPages.map((landingPage) => {
-    const noOfRegistered = () => {
-      const registeredUsers = landingPageRegisteredUsers
-        .map((apData) => {
-          return apData.pageId === landingPage.pageCustomId;
-        })
-        .filter((data) => data);
+    const filteredData = landingPages.map((landingPage) => {
+      const noOfRegistered = () => {
+        const registeredUsers = landingPageRegisteredUsers
+          .map((apData) => {
+            return apData.pageId === landingPage.pageCustomId;
+          })
+          .filter((data) => data);
 
-      return registeredUsers.length;
-    };
+        return registeredUsers.length;
+      };
 
-    return {
-      noOfRegisteredUsers: noOfRegistered(),
-      name: landingPage.name,
-      pageCustomId: landingPage.pageCustomId,
-      createdAt: landingPage.createdAt,
-      updatedAt: landingPage.updatedAt,
-    };
-  });
+      return {
+        noOfRegisteredUsers: noOfRegistered(),
+        name: landingPage.name,
+        pageCustomId: landingPage.pageCustomId,
+        createdAt: landingPage.createdAt,
+        updatedAt: landingPage.updatedAt,
+      };
+    });
 
-  res.json(filteredData);
+    res.json(filteredData);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -52,11 +58,15 @@ const getAllLandingPages = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const getSingleLandingPage = expressAsync(async (req, res) => {
-  const landingPage = await LandingPage.find({
-    pageCustomId: req.params.pageId,
-  });
+  try {
+    const landingPage = await LandingPage.find({
+      pageCustomId: req.params.pageId,
+    });
 
-  res.json(landingPage[0]);
+    res.json(landingPage[0]);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -65,18 +75,22 @@ const getSingleLandingPage = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const createLandingPage = expressAsync(async (req, res) => {
-  const data = [
-    {
-      pageCustomId: "cfs-edge",
-      name: "CFS Edge",
-    },
-    {
-      pageCustomId: "cfs-advantage",
-      name: "CFS Advantage",
-    },
-  ];
-  const landingPage = await LandingPage.insertMany(data);
-  res.json(landingPage);
+  try {
+    const data = [
+      {
+        pageCustomId: "cfs-edge",
+        name: "CFS Edge",
+      },
+      {
+        pageCustomId: "cfs-advantage",
+        name: "CFS Advantage",
+      },
+    ];
+    const landingPage = await LandingPage.insertMany(data);
+    res.json(landingPage);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 export { getAllLandingPages, createLandingPage, getSingleLandingPage };
