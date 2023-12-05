@@ -3,8 +3,8 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import { DataGrid, GridColDef, GridToolbar, GridToolbarExport } from "@mui/x-data-grid";
-import { Button as MUIButton, Drawer, Modal, Box, Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions } from "@mui/material";
+import { DataGrid, GridColDef, GridToolbar, } from "@mui/x-data-grid";
+import { Button as MUIButton, Drawer, Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions } from "@mui/material";
 import { UserContext } from "admin/context/UserProvider";
 import { formatISODateOnly } from "helpers/date";
 import { toast } from "react-toastify";
@@ -17,7 +17,10 @@ import useUserRole from "hooks/useUserRole";
 import Pricing from "admin/components/Pricing/Pricing";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import agent from "admin/api/agent";
+import * as Papa from 'papaparse';
+import { saveAs } from 'file-saver';
 import "./AgentSubscribers.scss";
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 
 
 const crumbs: CrumbTypes[] = [
@@ -73,6 +76,13 @@ const AgentSubscribers: React.FC = () => {
 
   ];
 
+  const downloadAsCSV = (data: any[], filename: string) => {
+    const csv = Papa.unparse(data);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, filename);
+  };
+
+
   const handlers = {
     sendEmail: (userGuid: string) => {
       navigate({
@@ -82,8 +92,39 @@ const AgentSubscribers: React.FC = () => {
         }).toString()
       })
     },
-    downloadAsCSV: () => {
-      alert('download')
+    downloadAsCSV: (userGuid: string) => {
+      alert(userGuid)
+      const leadData = subscribers?.map((data) => {
+        return {
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          userType: !data.isSubscribed && data.type === "SUBSCRIBER"
+            ? "Subscriber"
+            : !data.isSubscribed && data.type === "FREE 30DAYS TRIAL"
+              ? "Free 30days Trial"
+              : data.previousRole === "POSITION_FREE_30DAYS_TRIAL"
+                ? "Free 30days Trial"
+                : "Subscriber",
+          createdAt: formatISODateOnly(data.createdAt ?? ""),
+          id: data.userGuid,
+          isUpgradeToAgent: data.isSubscribed ? "YES" : "NO",
+        }
+      })
+      const filteredLeadData = leadData?.filter(data => data.id === userGuid).map(s => {
+        return {
+          ['First Name']: s.firstName,
+          ['Last Name']: s.lastName,
+          ['Date Created']: s.createdAt,
+          ['User Type']: s.userType,
+          ['Email Address']: s.email,
+          ['Is Upgraded to Agent']: s.isUpgradeToAgent,
+        }
+      })
+      if (userGuid) {
+        downloadAsCSV(filteredLeadData as any, 'Leads.csv')
+        toast.success('Lead Data sucessfully downloaded.')
+      }
     },
     delete: async (userGuid: string) => {
       setOpen(false)
@@ -121,8 +162,32 @@ const AgentSubscribers: React.FC = () => {
               ? "Free 30days Trial"
               : "Subscriber",
       actions: <div className="cta-btns">
-        <button onClick={() => handlers.sendEmail(subscriber.userGuid)}>Send Email</button>
-        <button onClick={() => handlers.downloadAsCSV()}>Download</button>
+        <HtmlTooltip
+          title={
+            <div
+              style={{
+                fontSize: "1.3rem",
+              }}
+            >
+              Send Email to {subscriber.email}.
+            </div>
+          }
+        >
+          <button onClick={() => handlers.sendEmail(subscriber.userGuid)}>Send Email</button>
+        </HtmlTooltip>
+        <HtmlTooltip
+          title={
+            <div
+              style={{
+                fontSize: "1.3rem",
+              }}
+            >
+              Download Lead Data as CSV file.
+            </div>
+          }
+        >
+          <button onClick={() => handlers.downloadAsCSV(subscriber.userGuid)}>Download</button>
+        </HtmlTooltip>
         <button onClick={() => {
           setOpen(true)
           setActiveId(subscriber.userGuid)
@@ -149,13 +214,7 @@ const AgentSubscribers: React.FC = () => {
     toast("Link copied to Clipboard");
   }
 
-  <GridToolbarExport
-    csvOptions={{
-      fileName: 'customerDataBase',
-      delimiter: ';',
-      utf8WithBom: true,
-    }}
-  />
+
 
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
