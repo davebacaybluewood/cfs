@@ -228,26 +228,6 @@ const MyWebPage: React.FC = () => {
                           </div>
                         ))}
                       </div>
-                      <div className="copy">
-                        <HtmlTooltip
-                          title={
-                            <div
-                              style={{
-                                fontSize: "1.3rem",
-                              }}
-                            >
-                              Copy Link to Clipboard
-                            </div>
-                          }
-                        >
-                          <div onClick={() => handleCopyToClipboard()}>
-                            <span>
-                              {" "}
-                              <FaRegCopy />
-                            </span>
-                          </div>
-                        </HtmlTooltip>
-                      </div>
                     </div>
                   </div>
                 </Grid>
@@ -262,12 +242,35 @@ const MyWebPage: React.FC = () => {
                     <div className="contact-container">
                       {contactLink.map((con) => (
                         <div className="contact">
-                          <div className="icon-holder">
-                            {con.icon}
-                          </div>
+                          <div className="icon-holder">{con.icon}</div>
                           <span>{con.text}</span>
                         </div>
                       ))}
+                      <div
+                          className="contact copy" 
+                          style={{ marginBottom: "2rem" }}
+                      >
+                        <HtmlTooltip
+                          title={
+                            <div
+                              style={{
+                                fontSize: "1.3rem",
+                              }}
+                            >
+                              Copy Link to Clipboard
+                            </div>
+                          }
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: "7px" }} onClick={() => handleCopyToClipboard()}>
+                            <div>
+                              <FaRegCopy />
+                            </div>
+                            <div style={{ margin: "0px !important", fontSize: "12px" }}>
+                              Copy Link
+                            </div>
+                          </div>
+                        </HtmlTooltip>
+                      </div>
                     </div>
                     <div className="qr-code">
                       <Button
@@ -373,7 +376,6 @@ const MyWebPage: React.FC = () => {
                           data={timelineData}
                           loading={eventLoading || blogLoading}
                         />
-
                       </div>
                     </React.Fragment>
                   </div>

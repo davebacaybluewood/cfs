@@ -9,39 +9,43 @@ import sendEmail from "../utils/sendNodeMail.js";
 const model = "Event Orders";
 
 const getEventOrders = async (req, res) => {
-  const { userGuid } = req.params;
+  try {
+    const { userGuid } = req.params;
 
-  if (!userGuid) {
-    res.status(401).json(API_RES_FAIL(`[${model}] Params are required.`));
-    return;
-  }
+    if (!userGuid) {
+      res.status(401).json(API_RES_FAIL(`[${model}] Params are required.`));
+      return;
+    }
 
-  const orders = await EventOrders.find({ userGuid: userGuid });
+    const orders = await EventOrders.find({ userGuid: userGuid });
 
-  if (orders) {
-    res.json(orders);
-  } else {
-    res.status(401).json(API_RES_FAIL(`[${model}] Error Occured`));
+    if (orders) {
+      res.json(orders);
+    } else {
+      res.status(401).json(API_RES_FAIL(`[${model}] Error Occured`));
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 };
 
 const claimReward = async (req, res) => {
-  const { rewardId } = req.params;
-  const { userGuid, addressLine1, addressLine2, state, zipCode, notes } =
-    req.body;
-
-  if (!userGuid || !rewardId || !addressLine1) {
-    res.status(401).json(API_RES_FAIL(`[${model}] Params are required.`));
-    return;
-  }
-
-  const recipient = await User.find({ userGuid: req.body.userGuid });
-  if (!recipient.length) {
-    res.status(400).json(API_RES_FAIL("[Event Order] Agent not found"));
-    return;
-  }
-
   try {
+    const { rewardId } = req.params;
+    const { userGuid, addressLine1, addressLine2, state, zipCode, notes } =
+      req.body;
+
+    if (!userGuid || !rewardId || !addressLine1) {
+      res.status(401).json(API_RES_FAIL(`[${model}] Params are required.`));
+      return;
+    }
+
+    const recipient = await User.find({ userGuid: req.body.userGuid });
+    if (!recipient.length) {
+      res.status(400).json(API_RES_FAIL("[Event Order] Agent not found"));
+      return;
+    }
+
     const orders = new EventOrders({
       rewardId: rewardId,
       userGuid: userGuid,

@@ -7,15 +7,19 @@ import WebinarStatistics from "../models/webinarStatisticsModel.js";
  * @acess: Private
  */
 const getWebinarClicks = expressAsync(async (req, res) => {
-  const webinarGuid = req.params.webinarGuid;
-  const userGuid = req.params.userGuid;
+  try {
+    const webinarGuid = req.params.webinarGuid;
+    const userGuid = req.params.userGuid;
 
-  const webinars = await WebinarStatistics.find({
-    webinarGuid,
-    userGuid,
-  }).count();
+    const webinars = await WebinarStatistics.find({
+      webinarGuid,
+      userGuid,
+    }).count();
 
-  res.json(webinars);
+    res.json(webinars);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -24,13 +28,17 @@ const getWebinarClicks = expressAsync(async (req, res) => {
  * @acess: Private Admin
  */
 const getAdminWebinarVisitsCount = expressAsync(async (req, res) => {
-  const webinarGuid = req.params.webinarGuid;
+  try {
+    const webinarGuid = req.params.webinarGuid;
 
-  const webinars = await WebinarStatistics.find({
-    webinarGuid,
-  }).count();
+    const webinars = await WebinarStatistics.find({
+      webinarGuid,
+    }).count();
 
-  res.json(webinars);
+    res.json(webinars);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -39,17 +47,21 @@ const getAdminWebinarVisitsCount = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const createWebinarClick = expressAsync(async (req, res) => {
-  const webinarGuid = req.params.webinarGuid;
-  const userGuid = req.params.userGuid;
+  try {
+    const webinarGuid = req.params.webinarGuid;
+    const userGuid = req.params.userGuid;
 
-  let webinar = new WebinarStatistics({
-    webinarGuid,
-    userGuid,
-  });
+    let webinar = new WebinarStatistics({
+      webinarGuid,
+      userGuid,
+    });
 
-  webinar.save();
+    webinar.save();
 
-  res.json(webinar);
+    res.json(webinar);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 export { getWebinarClicks, createWebinarClick, getAdminWebinarVisitsCount };

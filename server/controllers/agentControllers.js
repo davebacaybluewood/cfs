@@ -21,26 +21,30 @@ import nodemailer from "nodemailer";
  * @acess: Private
  */
 const getAgents = expressAsync(async (req, res) => {
-  const status = req.query.status;
+  try {
+    const status = req.query.status;
 
-  const filteredAgentOptions = {
-    role: ROLES.ROLE_AGENT,
-    status: status ? status : undefined,
-  };
+    const filteredAgentOptions = {
+      role: ROLES.ROLE_AGENT,
+      status: status ? status : undefined,
+    };
 
-  /** Remove the status key if status is falsy */
-  for (let i in filteredAgentOptions) {
-    if (!filteredAgentOptions[i]) {
-      delete filteredAgentOptions[i];
+    /** Remove the status key if status is falsy */
+    for (let i in filteredAgentOptions) {
+      if (!filteredAgentOptions[i]) {
+        delete filteredAgentOptions[i];
+      }
     }
-  }
-  // const agents = await Agents.find(filteredAgentOptions);
+    // const agents = await Agents.find(filteredAgentOptions);
 
-  const agents = await Agents.find({
-    status: status ? status : undefined,
-    $or: [{ "roles.value": AGENT_ROLES[0].value }],
-  });
-  res.json(agents);
+    const agents = await Agents.find({
+      status: status ? status : undefined,
+      $or: [{ "roles.value": AGENT_ROLES[0].value }],
+    });
+    res.json(agents);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -49,64 +53,68 @@ const getAgents = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const getAgentsCount = expressAsync(async (req, res) => {
-  const activeAgents = await Agents.find({
-    $or: [
-      { "roles.value": AGENT_ROLES[0].value },
-      { "roles.value": AGENT_ROLES[1].value },
-      { "roles.value": AGENT_ROLES[2].value },
-      { "roles.value": AGENT_ROLES[3].value },
-      { "roles.value": AGENT_ROLES[4].value },
-      { "roles.value": AGENT_ROLES[5].value },
-      { "roles.value": AGENT_ROLES[6].value },
-      { "roles.value": AGENT_ROLES[7].value },
-    ],
-    status: AGENT_STATUSES.ACTIVATED,
-  });
-  const declinedAgents = await Agents.find({
-    $or: [
-      { "roles.value": AGENT_ROLES[0].value },
-      { "roles.value": AGENT_ROLES[1].value },
-      { "roles.value": AGENT_ROLES[2].value },
-      { "roles.value": AGENT_ROLES[3].value },
-      { "roles.value": AGENT_ROLES[4].value },
-      { "roles.value": AGENT_ROLES[5].value },
-      { "roles.value": AGENT_ROLES[6].value },
-      { "roles.value": AGENT_ROLES[7].value },
-    ],
-    status: AGENT_STATUSES.DECLINED,
-  });
-  const pendingAgents = await Agents.find({
-    $or: [
-      { "roles.value": AGENT_ROLES[0].value },
-      { "roles.value": AGENT_ROLES[1].value },
-      { "roles.value": AGENT_ROLES[2].value },
-      { "roles.value": AGENT_ROLES[3].value },
-      { "roles.value": AGENT_ROLES[4].value },
-      { "roles.value": AGENT_ROLES[5].value },
-      { "roles.value": AGENT_ROLES[6].value },
-      { "roles.value": AGENT_ROLES[7].value },
-    ],
-    status: AGENT_STATUSES.PENDING,
-  });
-  const deactivatedAgents = await Agents.find({
-    $or: [
-      { "roles.value": AGENT_ROLES[0].value },
-      { "roles.value": AGENT_ROLES[1].value },
-      { "roles.value": AGENT_ROLES[2].value },
-      { "roles.value": AGENT_ROLES[3].value },
-      { "roles.value": AGENT_ROLES[4].value },
-      { "roles.value": AGENT_ROLES[5].value },
-      { "roles.value": AGENT_ROLES[6].value },
-      { "roles.value": AGENT_ROLES[7].value },
-    ],
-    status: AGENT_STATUSES.DEACTIVATED,
-  });
-  res.json({
-    activeAgents: activeAgents.length,
-    declinedAgents: declinedAgents.length,
-    pendingAgents: pendingAgents.length,
-    deactivatedAgents: deactivatedAgents.length,
-  });
+  try {
+    const activeAgents = await Agents.find({
+      $or: [
+        { "roles.value": AGENT_ROLES[0].value },
+        { "roles.value": AGENT_ROLES[1].value },
+        { "roles.value": AGENT_ROLES[2].value },
+        { "roles.value": AGENT_ROLES[3].value },
+        { "roles.value": AGENT_ROLES[4].value },
+        { "roles.value": AGENT_ROLES[5].value },
+        { "roles.value": AGENT_ROLES[6].value },
+        { "roles.value": AGENT_ROLES[7].value },
+      ],
+      status: AGENT_STATUSES.ACTIVATED,
+    });
+    const declinedAgents = await Agents.find({
+      $or: [
+        { "roles.value": AGENT_ROLES[0].value },
+        { "roles.value": AGENT_ROLES[1].value },
+        { "roles.value": AGENT_ROLES[2].value },
+        { "roles.value": AGENT_ROLES[3].value },
+        { "roles.value": AGENT_ROLES[4].value },
+        { "roles.value": AGENT_ROLES[5].value },
+        { "roles.value": AGENT_ROLES[6].value },
+        { "roles.value": AGENT_ROLES[7].value },
+      ],
+      status: AGENT_STATUSES.DECLINED,
+    });
+    const pendingAgents = await Agents.find({
+      $or: [
+        { "roles.value": AGENT_ROLES[0].value },
+        { "roles.value": AGENT_ROLES[1].value },
+        { "roles.value": AGENT_ROLES[2].value },
+        { "roles.value": AGENT_ROLES[3].value },
+        { "roles.value": AGENT_ROLES[4].value },
+        { "roles.value": AGENT_ROLES[5].value },
+        { "roles.value": AGENT_ROLES[6].value },
+        { "roles.value": AGENT_ROLES[7].value },
+      ],
+      status: AGENT_STATUSES.PENDING,
+    });
+    const deactivatedAgents = await Agents.find({
+      $or: [
+        { "roles.value": AGENT_ROLES[0].value },
+        { "roles.value": AGENT_ROLES[1].value },
+        { "roles.value": AGENT_ROLES[2].value },
+        { "roles.value": AGENT_ROLES[3].value },
+        { "roles.value": AGENT_ROLES[4].value },
+        { "roles.value": AGENT_ROLES[5].value },
+        { "roles.value": AGENT_ROLES[6].value },
+        { "roles.value": AGENT_ROLES[7].value },
+      ],
+      status: AGENT_STATUSES.DEACTIVATED,
+    });
+    res.json({
+      activeAgents: activeAgents.length,
+      declinedAgents: declinedAgents.length,
+      pendingAgents: pendingAgents.length,
+      deactivatedAgents: deactivatedAgents.length,
+    });
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -115,66 +123,70 @@ const getAgentsCount = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const getSingleAgent = expressAsync(async (req, res) => {
-  const role = req.query.role;
+  try {
+    const role = req.query.role;
 
-  if (req.params.id) {
-    if (role === ROLES.ROLE_MASTER_ADMIN) {
-      const agent = await Agents.find({ userGuid: req.params.id });
-      res.json(agent[0]);
-    } else {
-      const agent = await Agents.aggregate([
-        {
-          $match: {
-            userGuid: req.params.id,
+    if (req.params.id) {
+      if (role === ROLES.ROLE_MASTER_ADMIN) {
+        const agent = await Agents.find({ userGuid: req.params.id });
+        res.json(agent[0]);
+      } else {
+        const agent = await Agents.aggregate([
+          {
+            $match: {
+              userGuid: req.params.id,
+            },
           },
-        },
-        {
-          $project: {
-            name: 1,
-            userGuid: 1,
-            avatar: 1,
-            title: 1,
-            bio: 1,
-            phoneNumber: 1,
-            emailAddress: 1,
-            address: 1,
-            twitter: 1,
-            instagram: 1,
-            linkedIn: 1,
-            facebook: 1,
-            password: 1,
-            languages: 1,
-            role: 1,
-            roles: 1,
-            status: 1,
-            telNumber: 1,
-            webinars: 1,
-            specialties: 1,
-            isDeclined: 1,
-            createdAt: 1,
-            updatedAt: 1,
-            calendlyLink: 1,
-            firstName: 1,
-            lastName: 1,
-            state: 1,
-            licenseNumber: 1,
-            displayCalendly: 1,
-            testimonials: {
-              $filter: {
-                input: "$testimonials",
-                cond: {
-                  $eq: ["$$this.isDisplayed", true],
+          {
+            $project: {
+              name: 1,
+              userGuid: 1,
+              avatar: 1,
+              title: 1,
+              bio: 1,
+              phoneNumber: 1,
+              emailAddress: 1,
+              address: 1,
+              twitter: 1,
+              instagram: 1,
+              linkedIn: 1,
+              facebook: 1,
+              password: 1,
+              languages: 1,
+              role: 1,
+              roles: 1,
+              status: 1,
+              telNumber: 1,
+              webinars: 1,
+              specialties: 1,
+              isDeclined: 1,
+              createdAt: 1,
+              updatedAt: 1,
+              calendlyLink: 1,
+              firstName: 1,
+              lastName: 1,
+              state: 1,
+              licenseNumber: 1,
+              displayCalendly: 1,
+              testimonials: {
+                $filter: {
+                  input: "$testimonials",
+                  cond: {
+                    $eq: ["$$this.isDisplayed", true],
+                  },
                 },
               },
             },
           },
-        },
-      ]);
-      res.json(agent[0]);
+        ]);
+        res.json(agent[0]);
+      }
+    } else {
+      res.status(404);
+      throw new Error("Agent not found.");
     }
-  } else {
-    res.status(404);
-    throw new Error("Agent not found.");
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -182,19 +194,23 @@ const getSingleAgent = expressAsync(async (req, res) => {
 // @route   DELETE /api/agents/:id
 // @access  Private/Admin
 const deleteAgent = expressAsync(async (req, res) => {
-  const agent = await Agents.deleteOne({
-    userGuid: req.params.id,
-  });
+  try {
+    const agent = await Agents.deleteOne({
+      userGuid: req.params.id,
+    });
 
-  await User.deleteOne({
-    userGuid: req.params.id,
-  });
+    await User.deleteOne({
+      userGuid: req.params.id,
+    });
 
-  if (agent) {
-    res.json({ message: "Agent removed." });
-  } else {
-    res.status(404);
-    throw new Error("Agent not found");
+    if (agent) {
+      res.json({ message: "Agent removed." });
+    } else {
+      res.status(404);
+      throw new Error("Agent not found");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -243,8 +259,8 @@ const updateAgent = expressAsync(async (req, res) => {
         typeof req.body.avatar === "string"
           ? req.body.avatar
           : agentImgResult.secure_url
-            ? agentImgResult.secure_url
-            : agent.avatar;
+          ? agentImgResult.secure_url
+          : agent.avatar;
       agent.avatar_cloudinary_id = agentImgResult.public_id
         ? agentImgResult.public_id
         : agent.avatar_cloudinary_id;
@@ -351,13 +367,13 @@ const updateAgentStatus = expressAsync(async (req, res) => {
   @access  Private/Admin
 */
 const createAgent = expressAsync(async (req, res) => {
-  const userGuid = uuidv4();
   try {
+    const userGuid = uuidv4();
     /** Check if the email is existing. */
     const emailIsExist = await User.findOne({ email: req.body.emailAddress });
 
     if (emailIsExist) {
-      res.status(400);
+      res.status(500);
       throw new Error("Email already exists.");
     }
 
@@ -438,7 +454,7 @@ const createAgent = expressAsync(async (req, res) => {
 
       res.status(201).json(agent);
     } else {
-      res.status(400);
+      res.status(500);
       throw new Error("Invalid user data.");
     }
   } catch (err) {
@@ -452,58 +468,64 @@ const createAgent = expressAsync(async (req, res) => {
 // @route   POST /api/agents/:id/contact
 // @access  Private
 const sendContactEmail = expressAsync((req, res) => {
-  const { subject, content, fromEmail, toEmail } = req.body
+  try {
+    const { subject, content, fromEmail, toEmail } = req.body;
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.MAIL_CONFIGS_EMAIL,
-      pass: process.env.MAIL_CONFIGS_PASSWORD,
-    },
-  });
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL_CONFIGS_EMAIL,
+        pass: process.env.MAIL_CONFIGS_PASSWORD,
+      },
+    });
 
-  // Email content
-  const mailOptions = {
-    from: fromEmail,
-    to: toEmail,
-    subject: subject,
-    text: content + `\n\nSent by ${fromEmail}`,
-  };
+    // Email content
+    const mailOptions = {
+      from: fromEmail,
+      to: toEmail,
+      subject: subject,
+      text: content + `\n\nSent by ${fromEmail}`,
+    };
 
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.error(error);
-    }
-    res.send('Email sent: ' + info.response)
-  });
-
-})
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.error(error);
+      }
+      res.send("Email sent: " + info.response);
+    });
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
+});
 
 // @desc    Add new testimonial
 // @route   POST /api/agents/:id/testimonials
 // @access  Private
 const addAgentTestimonial = expressAsync(async (req, res) => {
-  const { name, title, comment, emailAddress } = req.body;
-  const testimonialGuid = uuidv4();
-  const agent = await Agents.findById(req.params.id);
+  try {
+    const { name, title, comment, emailAddress } = req.body;
+    const testimonialGuid = uuidv4();
+    const agent = await Agents.findById(req.params.id);
 
-  if (agent) {
-    const testimonial = {
-      name: name.toString(),
-      title: title.toString(),
-      comment: comment.toString(),
-      emailAddress: emailAddress.toString(),
-      testimonialGuid,
-    };
+    if (agent) {
+      const testimonial = {
+        name: name.toString(),
+        title: title.toString(),
+        comment: comment.toString(),
+        emailAddress: emailAddress.toString(),
+        testimonialGuid,
+      };
 
-    agent.testimonials.push(testimonial);
+      agent.testimonials.push(testimonial);
 
-    await agent.save();
-    res.status(201).json({ message: "Testimonial added" });
-  } else {
-    res.status(404);
-    throw new Error("Testimonial not found");
+      await agent.save();
+      res.status(201).json({ message: "Testimonial added" });
+    } else {
+      res.status(404);
+      throw new Error("Testimonial not found");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -511,84 +533,96 @@ const addAgentTestimonial = expressAsync(async (req, res) => {
 // @route   PUT /api/agents/:id/testimonials/update
 // @access  Private
 const updateAgentTestimonial = expressAsync(async (req, res) => {
-  const { testimonialGuid } = req.body;
+  try {
+    const { testimonialGuid } = req.body;
 
-  const agent = await Agents.findOne({ userGuid: req.params.id }).then(
-    (agent) => {
-      let testimonial = agent.testimonials.find(
-        (t) => t.testimonialGuid === testimonialGuid
-      );
+    const agent = await Agents.findOne({ userGuid: req.params.id }).then(
+      (agent) => {
+        let testimonial = agent.testimonials.find(
+          (t) => t.testimonialGuid === testimonialGuid
+        );
 
-      testimonial.isDisplayed = testimonial.isDisplayed ? false : true;
-      return agent.save();
+        testimonial.isDisplayed = testimonial.isDisplayed ? false : true;
+        return agent.save();
+      }
+    );
+
+    if (Object.keys(agent).length !== 0) {
+      res.status(200).json(agent.testimonials);
+    } else {
+      res.status(500).json("Bad Request");
     }
-  );
-
-  if (Object.keys(agent).length !== 0) {
-    res.status(200).json(agent.testimonials);
-  } else {
-    res.status(400).json("Bad Request");
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
 const updateAgentWebinar = expressAsync(async (req, res) => {
-  const webinarGuid = req.params.webinarGuid;
-  const isAdd = req.body.mode;
+  try {
+    const webinarGuid = req.params.webinarGuid;
+    const isAdd = req.body.mode;
 
-  const webinarData = {
-    userGuid: req.params.agentId,
-    webinarGuid: req.params.webinarGuid,
-    calendlyUrl: req.body.calendlyUrl,
-    status: req.body.status,
-  };
-
-  if (!isAdd) {
-    const agent = await Agents.findOne({ userGuid: req.params.agentId }).then(
-      (agent) => {
-        let webinar = agent.webinars?.find(
-          (t) => t.webinarGuid === webinarGuid
-        );
-
-        webinar.status = webinarData.status;
-        webinar.calendlyUrl = webinarData.calendlyUrl;
-        return agent.save();
-      }
-    );
-    res.status(201).json(agent);
-  } else {
-    await Agents.update(
-      { userGuid: req.params.agentId },
-      {
-        $push: {
-          webinars: webinarData,
-        },
-      }
-    );
-    const updatedAgentInfo = await Agents.find({
+    const webinarData = {
       userGuid: req.params.agentId,
-    });
-    res.status(201).json(updatedAgentInfo);
+      webinarGuid: req.params.webinarGuid,
+      calendlyUrl: req.body.calendlyUrl,
+      status: req.body.status,
+    };
+
+    if (!isAdd) {
+      const agent = await Agents.findOne({ userGuid: req.params.agentId }).then(
+        (agent) => {
+          let webinar = agent.webinars?.find(
+            (t) => t.webinarGuid === webinarGuid
+          );
+
+          webinar.status = webinarData.status;
+          webinar.calendlyUrl = webinarData.calendlyUrl;
+          return agent.save();
+        }
+      );
+      res.status(201).json(agent);
+    } else {
+      await Agents.update(
+        { userGuid: req.params.agentId },
+        {
+          $push: {
+            webinars: webinarData,
+          },
+        }
+      );
+      const updatedAgentInfo = await Agents.find({
+        userGuid: req.params.agentId,
+      });
+      res.status(201).json(updatedAgentInfo);
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
 const getAllActiveWebinar = expressAsync(async (req, res) => {
-  const webinarGuids = req.body.webinarGuids;
-  const activeWebinars = await Webinars.find({
-    webinarGuid: { $in: webinarGuids },
-  });
+  try {
+    const webinarGuids = req.body.webinarGuids;
+    const activeWebinars = await Webinars.find({
+      webinarGuid: { $in: webinarGuids },
+    });
 
-  res.status(200).json(activeWebinars);
+    res.status(200).json(activeWebinars);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /** Version 2 of creating an portal account */
 const registerAccount = expressAsync(async (req, res) => {
-  const userGuid = uuidv4();
   try {
+    const userGuid = uuidv4();
     /** Check if the email is existing. */
     const emailIsExist = await User.findOne({ email: req.body.emailAddress });
 
     if (emailIsExist) {
-      res.status(400);
+      res.status(500);
       throw new Error("Email already exists.");
     }
 
@@ -670,7 +704,7 @@ const registerAccount = expressAsync(async (req, res) => {
 
       res.status(201).json(portalAccount);
     } else {
-      res.status(400);
+      res.status(500);
       throw new Error("Invalid user data.");
     }
   } catch (err) {
@@ -693,5 +727,5 @@ export {
   updateAgentWebinar,
   getAllActiveWebinar,
   registerAccount,
-  sendContactEmail
+  sendContactEmail,
 };

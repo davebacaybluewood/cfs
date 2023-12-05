@@ -1,39 +1,43 @@
 import Orders from "../models/ordersModel.js";
 
 const getOrdersHistoryByUserGuid = async (req, res, next) => {
-  const { userGuid } = req.params;
+  try {
+    const { userGuid } = req.params;
 
-  if (!userGuid) {
-    res.status(401).json({
-      message: "[Orders] Params is required.",
-      success: false,
-    });
-    return;
-  }
+    if (!userGuid) {
+      res.status(401).json({
+        message: "[Orders] Params is required.",
+        success: false,
+      });
+      return;
+    }
 
-  const orders = await Orders.aggregate([
-    { $match: { userGuid: userGuid } },
-    {
-      $lookup: {
-        from: "merchandises",
-        localField: "merchandiseId",
-        foreignField: "_id",
-        as: "merchandiseDoc",
-      },
-    },
-    {
-      $set: {
-        merchandiseName: {
-          $first: "$merchandiseDoc.name",
+    const orders = await Orders.aggregate([
+      { $match: { userGuid: userGuid } },
+      {
+        $lookup: {
+          from: "merchandises",
+          localField: "merchandiseId",
+          foreignField: "_id",
+          as: "merchandiseDoc",
         },
       },
-    },
-    {
-      $unset: "merchandiseDoc",
-    },
-  ]).skip(1);
+      {
+        $set: {
+          merchandiseName: {
+            $first: "$merchandiseDoc.name",
+          },
+        },
+      },
+      {
+        $unset: "merchandiseDoc",
+      },
+    ]).skip(1);
 
-  res.json(orders);
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 };
 
 export { getOrdersHistoryByUserGuid };

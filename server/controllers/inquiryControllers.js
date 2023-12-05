@@ -10,8 +10,12 @@ import inquiryEmail from "../emailTemplates/inquiry-email.js";
  * @acess: Private
  */
 const getInquiries = expressAsync(async (req, res) => {
-  const inquiries = await Inquiries.find({});
-  res.json(inquiries);
+  try {
+    const inquiries = await Inquiries.find({});
+    res.json(inquiries);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -20,15 +24,19 @@ const getInquiries = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const getSingleInquiry = expressAsync(async (req, res) => {
-  const inquiry = await Inquiries.findOne({
-    _id: req.params.id,
-  });
+  try {
+    const inquiry = await Inquiries.findOne({
+      _id: req.params.id,
+    });
 
-  if (inquiry) {
-    res.json(inquiry);
-  } else {
-    res.status(404);
-    throw new Error("Inquiry not found.");
+    if (inquiry) {
+      res.json(inquiry);
+    } else {
+      res.status(404);
+      throw new Error("Inquiry not found.");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -36,15 +44,19 @@ const getSingleInquiry = expressAsync(async (req, res) => {
 // @route   DELETE /api/inquiries/:id
 // @access  Private/Admin
 const deleteInquiry = expressAsync(async (req, res) => {
-  const inquiry = await Inquiries.deleteOne({
-    _id: req.params.id,
-  });
+  try {
+    const inquiry = await Inquiries.deleteOne({
+      _id: req.params.id,
+    });
 
-  if (inquiry) {
-    res.json({ message: "Inquiry removed." });
-  } else {
-    res.status(404);
-    throw new Error("Inquiry not found");
+    if (inquiry) {
+      res.json({ message: "Inquiry removed." });
+    } else {
+      res.status(404);
+      throw new Error("Inquiry not found");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -52,18 +64,18 @@ const deleteInquiry = expressAsync(async (req, res) => {
 // @route   POST /api/inquiries/
 // @access  Public
 const submitInquiry = expressAsync(async (req, res) => {
-  const { fullName, phoneNumber, emailAddress, state, message } = req.body;
-
-  const mailSubject = "Customer Inquiry";
-  const mailContent = inquiryEmail({
-    fullName,
-    phoneNumber,
-    emailAddress,
-    state,
-    message,
-  });
-
   try {
+    const { fullName, phoneNumber, emailAddress, state, message } = req.body;
+
+    const mailSubject = "Customer Inquiry";
+    const mailContent = inquiryEmail({
+      fullName,
+      phoneNumber,
+      emailAddress,
+      state,
+      message,
+    });
+
     await sendEmail("dave.bacay@gocfs.pro", mailSubject, mailContent, []);
     res.json("Email sent.");
   } catch (error) {
