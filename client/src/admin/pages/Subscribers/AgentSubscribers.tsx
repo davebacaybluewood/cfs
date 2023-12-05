@@ -3,7 +3,7 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridToolbar, GridToolbarExport } from "@mui/x-data-grid";
 import { Button as MUIButton, Drawer, Modal, Box, Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions } from "@mui/material";
 import { UserContext } from "admin/context/UserProvider";
 import { formatISODateOnly } from "helpers/date";
@@ -52,13 +52,13 @@ const AgentSubscribers: React.FC = () => {
     {
       field: "type",
       headerName: "User Type",
-      width: 250,
+      width: 150,
       renderCell: (params) => params.value,
     },
     {
       field: "isSubscribed",
       headerName: "Is Upgraded to Agent?",
-      width: 250,
+      width: 200,
       renderCell: (params) => params.value,
     },
     {
@@ -68,7 +68,7 @@ const AgentSubscribers: React.FC = () => {
     },
     { field: "firstName", headerName: "First Name", width: 250 },
     { field: "email", headerName: "Email Address", width: 250 },
-    { field: "createdAt", headerName: "Date Created", width: 250 },
+    { field: "createdAt", headerName: "Date Created", width: 200 },
     { field: "actions", headerName: "Actions", renderCell: (params) => params.value, width: 300, headerAlign: 'center' },
 
   ];
@@ -149,6 +149,14 @@ const AgentSubscribers: React.FC = () => {
     toast("Link copied to Clipboard");
   }
 
+  <GridToolbarExport
+    csvOptions={{
+      fileName: 'customerDataBase',
+      delimiter: ';',
+      utf8WithBom: true,
+    }}
+  />
+
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
       <DocumentTitleSetter title="Leads | CFS Portal" />
@@ -183,7 +191,7 @@ const AgentSubscribers: React.FC = () => {
                 </button>
               }
             >
-              <DataGrid rows={filteredRows || []} columns={columns} />
+              <DataGrid rows={filteredRows || []} columns={columns} slots={{ toolbar: GridToolbar }} />
             </NoInformationToDisplay>
           </div>
         </div>
