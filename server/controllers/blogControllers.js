@@ -11,27 +11,31 @@ import mongoose from "mongoose";
  */
 
 const getAllBlogs = expressAsync(async (req, res) => {
-  const blogs = await Blogs.aggregate([
-    {
-      $lookup: {
-        from: "users",
-        localField: "author",
-        foreignField: "_id",
-        as: "blogDoc",
-      },
-    },
-    {
-      $set: {
-        authorName: {
-          $first: "$blogDoc.name",
+  try {
+    const blogs = await Blogs.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "blogDoc",
         },
       },
-    },
-    {
-      $unset: "blogDoc",
-    },
-  ]);
-  res.json(blogs);
+      {
+        $set: {
+          authorName: {
+            $first: "$blogDoc.name",
+          },
+        },
+      },
+      {
+        $unset: "blogDoc",
+      },
+    ]);
+    res.json(blogs);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 /**
  * @desc: Fetch single blogs
@@ -39,31 +43,35 @@ const getAllBlogs = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const getSingleBlog = expressAsync(async (req, res) => {
-  let id = mongoose.Types.ObjectId(req.params.id);
-  const singleBlog = await Blogs.aggregate([
-    {
-      $match: { _id: id },
-    },
-    {
-      $lookup: {
-        from: "users",
-        localField: "author",
-        foreignField: "_id",
-        as: "singleBlogDoc",
+  try {
+    let id = mongoose.Types.ObjectId(req.params.id);
+    const singleBlog = await Blogs.aggregate([
+      {
+        $match: { _id: id },
       },
-    },
-    {
-      $set: {
-        singleAuthorName: {
-          $first: "$singleBlogDoc.name",
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "singleBlogDoc",
         },
       },
-    },
-    {
-      $unset: "singleBlogDoc",
-    },
-  ]);
-  res.status(200).json(singleBlog);
+      {
+        $set: {
+          singleAuthorName: {
+            $first: "$singleBlogDoc.name",
+          },
+        },
+      },
+      {
+        $unset: "singleBlogDoc",
+      },
+    ]);
+    res.status(200).json(singleBlog);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -72,36 +80,40 @@ const getSingleBlog = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const getSingleBlogByTitle = expressAsync(async (req, res) => {
-  let title = req.params.title;
-  const singleBlogByTitle = await Blogs.aggregate([
-    {
-      $match: {
-        title: {
-          $regex: title,
-          $options: "i",
+  try {
+    let title = req.params.title;
+    const singleBlogByTitle = await Blogs.aggregate([
+      {
+        $match: {
+          title: {
+            $regex: title,
+            $options: "i",
+          },
         },
       },
-    },
-    {
-      $lookup: {
-        from: "users",
-        localField: "author",
-        foreignField: "_id",
-        as: "singleBlogDoc",
-      },
-    },
-    {
-      $set: {
-        singleAuthorName: {
-          $first: "$singleBlogDoc.name",
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "singleBlogDoc",
         },
       },
-    },
-    {
-      $unset: "singleBlogDoc",
-    },
-  ]);
-  res.status(200).json(singleBlogByTitle);
+      {
+        $set: {
+          singleAuthorName: {
+            $first: "$singleBlogDoc.name",
+          },
+        },
+      },
+      {
+        $unset: "singleBlogDoc",
+      },
+    ]);
+    res.status(200).json(singleBlogByTitle);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -110,17 +122,18 @@ const getSingleBlogByTitle = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const createBlog = expressAsync(async (req, res) => {
-  const {
-    metaTagTitle,
-    metaTagDescription,
-    metaTagKeywords,
-    title,
-    content,
-    tags,
-    author,
-    thumbnailAlt,
-  } = req.body;
   try {
+    const {
+      metaTagTitle,
+      metaTagDescription,
+      metaTagKeywords,
+      title,
+      content,
+      tags,
+      author,
+      thumbnailAlt,
+    } = req.body;
+
     const blogThumbnailResult = await cloudinaryImport.v2.uploader.upload(
       req.file.path,
       {
@@ -215,14 +228,18 @@ const updateBlog = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const deleteBlog = expressAsync(async (req, res) => {
-  const blog = await Blogs.deleteOne({
-    _id: req.params.id,
-  });
+  try {
+    const blog = await Blogs.deleteOne({
+      _id: req.params.id,
+    });
 
-  if (blog) {
-    res.status(200).json({ message: "Deleted" });
-  } else {
-    res.status(404).json({ message: "Error Occured" });
+    if (blog) {
+      res.status(200).json({ message: "Deleted" });
+    } else {
+      res.status(404).json({ message: "Error Occured" });
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -232,36 +249,40 @@ const deleteBlog = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const getBlogsByCategoryIds = expressAsync(async (req, res) => {
-  const blog = await Blogs.aggregate([
-    // Get just the docs that contain a shapes element where color is 'red'
-    {
-      $match: {
-        "tags._id": mongoose.Types.ObjectId("641b7a61a2ddaa304bbdf3f9"),
+  try {
+    const blog = await Blogs.aggregate([
+      // Get just the docs that contain a shapes element where color is 'red'
+      {
+        $match: {
+          "tags._id": mongoose.Types.ObjectId("641b7a61a2ddaa304bbdf3f9"),
+        },
       },
-    },
-    {
-      $project: {
-        tags: {
-          $filter: {
-            input: "$tags",
-            as: "tag",
-            cond: {
-              $eq: [
-                "$$tag._id",
-                mongoose.Types.ObjectId("641b7a61a2ddaa304bbdf3f9"),
-              ],
+      {
+        $project: {
+          tags: {
+            $filter: {
+              input: "$tags",
+              as: "tag",
+              cond: {
+                $eq: [
+                  "$$tag._id",
+                  mongoose.Types.ObjectId("641b7a61a2ddaa304bbdf3f9"),
+                ],
+              },
             },
           },
+          _id: 0,
         },
-        _id: 0,
       },
-    },
-  ]);
+    ]);
 
-  if (blog) {
-    res.status(200).json(blog);
-  } else {
-    res.status(400).json({ message: "Error Occured" });
+    if (blog) {
+      res.status(200).json(blog);
+    } else {
+      res.status(400).json({ message: "Error Occured" });
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 

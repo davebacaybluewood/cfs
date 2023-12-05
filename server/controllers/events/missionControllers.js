@@ -10,10 +10,10 @@ import Agent from "../../models/agentModel.js";
  * @acess: Private
  */
 const agentMissionRegistration = expressAsync(async (req, res) => {
-  const { emailAddress, state, zipCode, birthDate } = req.body;
   try {
-    /* Checks if Fields are empty */
+    const { emailAddress, state, zipCode, birthDate } = req.body;
 
+    /* Checks if Fields are empty */
     const validation = !state || !zipCode || !birthDate;
 
     if (validation) {
@@ -78,20 +78,20 @@ const agentMissionRegistration = expressAsync(async (req, res) => {
  */
 
 const getAgentMissionRegistration = expressAsync(async (req, res) => {
-  const { userGuid } = req.params;
-
-  if (!req.params.userGuid) {
-    res
-      .status(400)
-      .json(
-        API_RES_FAIL(
-          "[Agents] Failed  to get mission registration. UserGuid is required"
-        )
-      );
-    return;
-  }
-
   try {
+    const { userGuid } = req.params;
+
+    if (!req.params.userGuid) {
+      res
+        .status(400)
+        .json(
+          API_RES_FAIL(
+            "[Agents] Failed  to get mission registration. UserGuid is required"
+          )
+        );
+      return;
+    }
+
     const registration = await EventUser.findOne({ userGuid: userGuid });
 
     if (registration)

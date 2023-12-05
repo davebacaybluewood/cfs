@@ -8,32 +8,45 @@ import { TICKET_STATUS } from "../constants/constants.js";
  * @access: Private
  */
 const createRaiseSupport = expressAsync(async (req, res) => {
-  const { name, email, contactNumber, subject, issue, status, type } = req.body;
-
-  // Check if any of the required fields are empty
-  if (!name || !email || !contactNumber || !subject || !issue || !status || !type) {
-    res.status(400).json({
-      error: "required_validation",
-      message: "Fields are required.",
-    });
-    return;
-  }
-
   try {
-    const newRaiseSupport = new RaiseSupport({
-      name,
-      email,
-      contactNumber,
-      subject,
-      issue,
-      status,
-      type
-    });
+    const { name, email, contactNumber, subject, issue, status, type } =
+      req.body;
 
-    const createdRaiseTicket = await newRaiseSupport.save();
-    res.status(201).json(createdRaiseTicket);
-  } catch (error) {
-    throw new Error("Error occured in adding ticket.");
+    // Check if any of the required fields are empty
+    if (
+      !name ||
+      !email ||
+      !contactNumber ||
+      !subject ||
+      !issue ||
+      !status ||
+      !type
+    ) {
+      res.status(400).json({
+        error: "required_validation",
+        message: "Fields are required.",
+      });
+      return;
+    }
+
+    try {
+      const newRaiseSupport = new RaiseSupport({
+        name,
+        email,
+        contactNumber,
+        subject,
+        issue,
+        status,
+        type,
+      });
+
+      const createdRaiseTicket = await newRaiseSupport.save();
+      res.status(201).json(createdRaiseTicket);
+    } catch (error) {
+      throw new Error("Error occured in adding ticket.");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -44,9 +57,13 @@ const createRaiseSupport = expressAsync(async (req, res) => {
  */
 
 const getRaiseSupport = expressAsync(async (req, res) => {
-  const raiseSupport = await RaiseSupport.find({});
+  try {
+    const raiseSupport = await RaiseSupport.find({});
 
-  res.json(raiseSupport);
+    res.json(raiseSupport);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -56,38 +73,42 @@ const getRaiseSupport = expressAsync(async (req, res) => {
  */
 
 const getRaiseSupportById = expressAsync(async (req, res) => {
-  const id = req.params.id;
+  try {
+    const id = req.params.id;
 
-  if (!id) {
-    throw new Error("Invalid Params.");
-  }
+    if (!id) {
+      throw new Error("Invalid Params.");
+    }
 
-  const raiseSupport = await RaiseSupport.find({ _id: id });
+    const raiseSupport = await RaiseSupport.find({ _id: id });
 
-  if (raiseSupport.length) {
-    res.json(raiseSupport[0]);
-  } else {
-    throw new Error("No Ticket found.");
+    if (raiseSupport.length) {
+      res.json(raiseSupport[0]);
+    } else {
+      throw new Error("No Ticket found.");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
 /**
-* @desc: Update the status of a Raise Support Ticket to "RESOLVED" by ID
-* @route: PUT /api/raise-support/:id
-* @access: Private
-*/
+ * @desc: Update the status of a Raise Support Ticket to "RESOLVED" by ID
+ * @route: PUT /api/raise-support/:id
+ * @access: Private
+ */
 const markRaiseSupportAsResolved = expressAsync(async (req, res) => {
-  const id = req.params.id;
-
-  if (!id) {
-    res.status(400).json({
-      error: "invalid_params",
-      message: "Invalid ID provided.",
-    });
-    return;
-  }
-
   try {
+    const id = req.params.id;
+
+    if (!id) {
+      res.status(400).json({
+        error: "invalid_params",
+        message: "Invalid ID provided.",
+      });
+      return;
+    }
+
     const raiseSupport = await RaiseSupport.findById(id);
 
     if (!raiseSupport) {
@@ -113,18 +134,18 @@ const markRaiseSupportAsResolved = expressAsync(async (req, res) => {
 });
 
 const changeRaiseSupportType = expressAsync(async (req, res) => {
-  const id = req.params.id;
-  const type = req.body.type;
-
-  if (!id) {
-    res.status(400).json({
-      error: "invalid_params",
-      message: "Invalid ID provided.",
-    });
-    return;
-  }
-
   try {
+    const id = req.params.id;
+    const type = req.body.type;
+
+    if (!id) {
+      res.status(400).json({
+        error: "invalid_params",
+        message: "Invalid ID provided.",
+      });
+      return;
+    }
+
     const raiseSupport = await RaiseSupport.findById(id);
 
     if (!raiseSupport) {
@@ -149,4 +170,10 @@ const changeRaiseSupportType = expressAsync(async (req, res) => {
   }
 });
 
-export { createRaiseSupport, getRaiseSupport, getRaiseSupportById, markRaiseSupportAsResolved, changeRaiseSupportType };
+export {
+  createRaiseSupport,
+  getRaiseSupport,
+  getRaiseSupportById,
+  markRaiseSupportAsResolved,
+  changeRaiseSupportType,
+};

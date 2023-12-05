@@ -3,8 +3,13 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import { DataGrid, GridColDef, GridToolbar, } from "@mui/x-data-grid";
 import { Button as MUIButton, Drawer, Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions } from "@mui/material";
+import {
+  DataGrid,
+  GridColDef,
+  GridRowParams,
+  GridToolbar,
+} from "@mui/x-data-grid";
 import { UserContext } from "admin/context/UserProvider";
 import { formatISODateOnly } from "helpers/date";
 import { toast } from "react-toastify";
@@ -21,6 +26,7 @@ import * as Papa from 'papaparse';
 import { saveAs } from 'file-saver';
 import "./AgentSubscribers.scss";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import capitalizeText from "../../../helpers/capitalizeText";
 
 
 const crumbs: CrumbTypes[] = [
@@ -149,8 +155,8 @@ const AgentSubscribers: React.FC = () => {
     return {
       id: subscriber.userGuid,
       isSubscribed: subscriber.isSubscribed ? "YES" : "NO",
-      firstName: subscriber.firstName,
-      lastName: subscriber.lastName,
+      firstName: capitalizeText(subscriber.firstName),
+      lastName: capitalizeText(subscriber.firstName),
       email: subscriber.email,
       createdAt: formatISODateOnly(subscriber.createdAt ?? ""),
       type:
@@ -250,11 +256,18 @@ const AgentSubscribers: React.FC = () => {
                 </button>
               }
             >
-              <DataGrid rows={filteredRows || []} columns={columns} slots={{ toolbar: GridToolbar }} />
-            </NoInformationToDisplay>
-          </div>
-        </div>
-      </div>
+              <DataGrid
+                rows={filteredRows || []}
+                columns={columns}
+                slots={{ toolbar: GridToolbar }}
+                isRowSelectable={(params: GridRowParams) =>
+                  params.row.quantity < 1
+                }
+              />
+            </NoInformationToDisplay >
+          </div >
+        </div >
+      </div >
       {loading || isLoading ? <Spinner variant="fixed" /> : null}
       <Drawer
         anchor="right"
@@ -285,7 +298,7 @@ const AgentSubscribers: React.FC = () => {
           </DialogActions>
         </Dialog>
       </div>
-    </Wrapper>
+    </Wrapper >
   );
 };
 

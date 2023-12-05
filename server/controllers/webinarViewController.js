@@ -7,27 +7,31 @@ import WebinarView from "../models/webinarViewModel.js";
  * @acess: Private
  */
 const getWebinarViews = expressAsync(async (req, res) => {
-  const webinarGuid = req.params.webinarGuid;
-  const page = req.params.page;
+  try {
+    const webinarGuid = req.params.webinarGuid;
+    const page = req.params.page;
 
-  const webinars = await WebinarView.aggregate([
-    {
-      $match: {
-        webinarGuid: webinarGuid,
-        page: page,
-      },
-    },
-    {
-      $group: {
-        _id: null,
-        total: {
-          $sum: "$timeSpent",
+    const webinars = await WebinarView.aggregate([
+      {
+        $match: {
+          webinarGuid: webinarGuid,
+          page: page,
         },
       },
-    },
-  ]);
+      {
+        $group: {
+          _id: null,
+          total: {
+            $sum: "$timeSpent",
+          },
+        },
+      },
+    ]);
 
-  res.json(webinars[0]?.total);
+    res.json(webinars[0]?.total);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -36,25 +40,29 @@ const getWebinarViews = expressAsync(async (req, res) => {
  * @acess: Public
  */
 const createWebinarView = expressAsync(async (req, res) => {
-  const webinarGuid = req.params.webinarGuid;
-  const userGuid = req.params.userGuid;
-  const timeTracker = req.params.timeTracker;
-  const timeSpent = req.params.timeSpent;
-  const page = req.body.page;
+  try {
+    const webinarGuid = req.params.webinarGuid;
+    const userGuid = req.params.userGuid;
+    const timeTracker = req.params.timeTracker;
+    const timeSpent = req.params.timeSpent;
+    const page = req.body.page;
 
-  console.log(req.body);
+    console.log(req.body);
 
-  let webinar = new WebinarView({
-    webinarGuid,
-    userGuid,
-    timeTracker,
-    timeSpent,
-    page,
-  });
+    let webinar = new WebinarView({
+      webinarGuid,
+      userGuid,
+      timeTracker,
+      timeSpent,
+      page,
+    });
 
-  webinar.save();
+    webinar.save();
 
-  res.json(webinar);
+    res.json(webinar);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 export { getWebinarViews, createWebinarView };
