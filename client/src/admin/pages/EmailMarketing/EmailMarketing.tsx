@@ -47,7 +47,6 @@ import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter
 import { Contacts } from "admin/models/contactsModel";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
-import useFetchSubscribers from "../RewardsHistory/useFetchSubscribers";
 
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -56,8 +55,7 @@ const ContractForm: React.FC = () => {
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
-  const { userGuid: agentGuid } = useParams()
-  const { subscribers } = useFetchSubscribers(agentGuid ?? '')
+
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -152,6 +150,8 @@ const ContractForm: React.FC = () => {
       setLoading(false);
     }
   }, [userGuid]);
+
+
 
   const handleCreateContact = async (data: Contacts) => {
     setRecipientLoading(true);
@@ -334,7 +334,7 @@ const ContractForm: React.FC = () => {
     validationSchema = Yup.object({
       subject: Yup.string().required("Subject is required."),
       recipients: Yup.array()
-        .min(1, "Pick at least 1 recipients")
+        .min(1, "Pick at least 1 recipient")
         .required("Recipients is required."),
     });
   }
@@ -409,9 +409,20 @@ const ContractForm: React.FC = () => {
   const { profile, loading: profileLoading } = useFetchUserProfile(
     userCtx?.user?.userGuid ?? ""
   );
+
   const isAdmin = profile?.roles?.some((f) => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
+
+  const leadUserGuid = new URLSearchParams(search).get("leadUserGuid")
+  const { profile: leadProfile, loading: leadProfileLoading } = useFetchUserProfile(leadUserGuid ?? '')
+
+  useEffect(() => {
+    setContactsValue([{
+      label: leadProfile?.emailAddress,
+      value: leadProfile?.emailAddress,
+    }]);
+  }, [leadUserGuid, leadProfile])
 
   return (
     <Wrapper

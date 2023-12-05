@@ -152,6 +152,11 @@ const AgentSubscribers = {
 
     return res;
   },
+  deleteAgentSubsriber: (userGuid: string) => {
+    const res = requests.del(`/api/subscriberaccounts/user/${userGuid}`)
+
+    return res
+  }
 };
 
 const EmailMarketing = {
