@@ -39,7 +39,7 @@ const SimpleNavbar: React.FC<SimpleNavbarProps> = (props) => {
           {showAgentLink ? (
             <li>
               <Link
-                to={paths.agent_with_id.replace(":id", userGuid ?? "")}
+                to={paths.myWebPage.replace(":user", userGuid ?? "")}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -56,7 +56,7 @@ const SimpleNavbar: React.FC<SimpleNavbarProps> = (props) => {
         </ul>
       </Container>
     </div>
-  );
+  )
 };
 
 export default SimpleNavbar;

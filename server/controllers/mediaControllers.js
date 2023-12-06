@@ -8,14 +8,18 @@ import subscribedCloudinary from "../utils/subscribedCloudinary.js";
  * @acess: Private
  */
 const getAllMedias = expressAsync(async (req, res) => {
-  const images = await subscribedCloudinary.api.resources(
-    { type: "upload", prefix: "{medias}" },
-    function (error, result) {
-      return result;
-    }
-  );
+  try {
+    const images = await subscribedCloudinary.api.resources(
+      { type: "upload", prefix: "{medias}" },
+      function (error, result) {
+        return result;
+      }
+    );
 
-  res.json(images);
+    res.json(images);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 export { getAllMedias };

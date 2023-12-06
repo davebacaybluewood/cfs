@@ -11,35 +11,39 @@ import undefinedValidator from "./helpers/undefinedValidator.js";
  * @access: Public
  */
 const getAllBlogs = expressAsync(async (req, res) => {
-  const blogs = await BlogsAndResource.aggregate([
-    {
-      $lookup: {
-        from: "agents",
-        localField: "userGuid",
-        foreignField: "userGuid",
-        as: "blogDoc",
-      },
-    },
-    {
-      $set: {
-        authorName: {
-          $first: "$blogDoc.name"
-            ? "$blogDoc.name"
-            : "$blogDoc.firstName" + " " + "$blogDoc.lastName",
-        },
-        authorThumbnail: {
-          $first: "$blogDoc.avatar",
+  try {
+    const blogs = await BlogsAndResource.aggregate([
+      {
+        $lookup: {
+          from: "agents",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "blogDoc",
         },
       },
-    },
-    {
-      $unset: "blogDoc",
-    },
-  ])
-    .sort({ _id: -1 })
-    .limit(3);
+      {
+        $set: {
+          authorName: {
+            $first: "$blogDoc.name"
+              ? "$blogDoc.name"
+              : "$blogDoc.firstName" + " " + "$blogDoc.lastName",
+          },
+          authorThumbnail: {
+            $first: "$blogDoc.avatar",
+          },
+        },
+      },
+      {
+        $unset: "blogDoc",
+      },
+    ])
+      .sort({ _id: -1 })
+      .limit(3);
 
-  res.json(blogs);
+    res.json(blogs);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -48,9 +52,8 @@ const getAllBlogs = expressAsync(async (req, res) => {
  * @access: Public
  */
 const getSingleBlogByTitle = expressAsync(async (req, res) => {
-  const blogTitle = req.params.blogTitle;
-
   try {
+    const blogTitle = req.params.blogTitle;
     const blog = await BlogsAndResource.aggregate([
       {
         $match: {
@@ -111,9 +114,8 @@ const getSingleBlogByTitle = expressAsync(async (req, res) => {
  * @access: Public
  */
 const getSingleBlogById = expressAsync(async (req, res) => {
-  const blogId = mongoose.Types.ObjectId(req.params.id);
-
   try {
+    const blogId = mongoose.Types.ObjectId(req.params.id);
     const blog = await BlogsAndResource.aggregate([
       {
         $match: { _id: blogId },
@@ -169,54 +171,58 @@ const getSingleBlogById = expressAsync(async (req, res) => {
  * @access: Public
  */
 const getRecentNumberedBlogs = expressAsync(async (req, res) => {
-  const skipItemNumber = req.params.skipItemNumber;
-  const limit = req.params.limit ? parseInt(req.params.limit) : 100;
-  const blogs = await BlogsAndResource.aggregate([
-    {
-      $lookup: {
-        from: "agents",
-        localField: "userGuid",
-        foreignField: "userGuid",
-        as: "blogDoc",
-      },
-    },
-    {
-      $set: {
-        authorName: {
-          $first: "$blogDoc.firstName",
-        },
-        authorThumbnail: {
-          $first: "$blogDoc.avatar",
+  try {
+    const skipItemNumber = req.params.skipItemNumber;
+    const limit = req.params.limit ? parseInt(req.params.limit) : 100;
+    const blogs = await BlogsAndResource.aggregate([
+      {
+        $lookup: {
+          from: "agents",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "blogDoc",
         },
       },
-    },
-    {
-      $unset: "blogDoc",
-    },
-  ])
-    .sort({ _id: -1 })
-    .skip(parseInt(skipItemNumber))
-    .limit(limit);
+      {
+        $set: {
+          authorName: {
+            $first: "$blogDoc.firstName",
+          },
+          authorThumbnail: {
+            $first: "$blogDoc.avatar",
+          },
+        },
+      },
+      {
+        $unset: "blogDoc",
+      },
+    ])
+      .sort({ _id: -1 })
+      .skip(parseInt(skipItemNumber))
+      .limit(limit);
 
-  const blogLength = await BlogsAndResource.find({}).count();
+    const blogLength = await BlogsAndResource.find({}).count();
 
-  const filteredBlogs = await Promise.all(
-    blogs?.map(async (data) => {
-      const author = await Agents.find({ userGuid: data.userGuid });
-      const authorData = author[0];
-      return {
-        ...data,
-        authorName: authorData?.firstName
-          ? `${authorData.firstName} ${authorData.lastName}`
-          : authorData.name,
-      };
-    })
-  );
+    const filteredBlogs = await Promise.all(
+      blogs?.map(async (data) => {
+        const author = await Agents.find({ userGuid: data.userGuid });
+        const authorData = author[0];
+        return {
+          ...data,
+          authorName: authorData?.firstName
+            ? `${authorData.firstName} ${authorData.lastName}`
+            : authorData.name,
+        };
+      })
+    );
 
-  res.json({
-    blogLength: blogLength,
-    blogs: filteredBlogs,
-  });
+    res.json({
+      blogLength: blogLength,
+      blogs: filteredBlogs,
+    });
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -225,18 +231,18 @@ const getRecentNumberedBlogs = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const createBlog = expressAsync(async (req, res) => {
-  const {
-    metaTagTitle,
-    metaTagDescription,
-    metaTagKeywords: bodyMetatagkeywords,
-    title,
-    content,
-    tags: bodyTags,
-    authorID: userGuid,
-    thumbnailAlt,
-  } = req.body;
-
   try {
+    const {
+      metaTagTitle,
+      metaTagDescription,
+      metaTagKeywords: bodyMetatagkeywords,
+      title,
+      content,
+      tags: bodyTags,
+      authorID: userGuid,
+      thumbnailAlt,
+    } = req.body;
+
     const blogThumbnailResult = await cloudinaryImport.v2.uploader.upload(
       req.file.path,
       {
@@ -344,9 +350,9 @@ const updateBlog = expressAsync(async (req, res) => {
  */
 
 const searchBlogByTitle = expressAsync(async (req, res) => {
-  const title = req.body.title;
-
   try {
+    const title = req.body.title;
+
     const result = await BlogsAndResource.aggregate([
       {
         $match: {
@@ -398,14 +404,18 @@ const searchBlogByTitle = expressAsync(async (req, res) => {
  * @acess: Private
  */
 const deleteBlog = expressAsync(async (req, res) => {
-  const blog = await BlogsAndResource.deleteOne({
-    _id: req.params.id,
-  });
+  try {
+    const blog = await BlogsAndResource.deleteOne({
+      _id: req.params.id,
+    });
 
-  if (blog) {
-    res.status(200).json({ message: "Deleted" });
-  } else {
-    res.status(404).json({ message: "Error Occured" });
+    if (blog) {
+      res.status(200).json({ message: "Deleted" });
+    } else {
+      res.status(404).json({ message: "Error Occured" });
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 

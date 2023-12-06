@@ -18,54 +18,59 @@ import { API_RES_FAIL, PROFILE_POSITIONS } from "../constants/constants.js";
  * @access: Private
  */
 const sendEmailMarketing = expressAsync(async (req, res, next) => {
-  let sendHTMLEmail;
-  const mailSubject = req.body.subject;
-  const contractEmail = req.body.recipients;
-  const templateId = req.body.templateId
-  const settings = req.body.settings;
+  try {
+    let sendHTMLEmail;
+    const mailSubject = req.body.subject;
+    const contractEmail = req.body.recipients;
+    const templateId = req.body.templateId
+    const settings = req.body.settings;
 
-  const blogs = await BlogsAndResource.find().limit(5).sort({ $natural: -1 });
-  const agent = await Agents.find({ userGuid: req.body.userGuid });
-  const isAgent = agent.position?.some((e) => e.value === "POSITION_AGENT");
+    const blogs = await BlogsAndResource.find().limit(5).sort({ $natural: -1 });
+    const agent = await Agents.find({ userGuid: req.body.userGuid });
+    const isAgent = agent.position?.some((e) => e.value === "POSITION_AGENT");
 
-  let userGuid;
-  if (isAgent) {
-    userGuid = agent[0].userGuid;
-  } else {
-    const hierarchy = await Hierarchy.findOne({ userGuid: req.body.userGuid });
-
-    if (hierarchy) {
-      const hierarchyCode = hierarchy.hierarchyCode;
-      const agentHierarchy = await Hierarchy.findOne({
-        hierarchyCode,
-        parent: "",
+    let userGuid;
+    if (isAgent) {
+      userGuid = agent[0].userGuid;
+    } else {
+      const hierarchy = await Hierarchy.findOne({
+        userGuid: req.body.userGuid,
       });
 
-      userGuid = agentHierarchy.userGuid;
-    } else {
-      userGuid = "";
+      if (hierarchy) {
+        const hierarchyCode = hierarchy.hierarchyCode;
+        const agentHierarchy = await Hierarchy.findOne({
+          hierarchyCode,
+          parent: "",
+        });
+
+        userGuid = agentHierarchy.userGuid;
+      } else {
+        userGuid = "";
+      }
     }
-  }
 
-  const agentInfo = {
-    name: agent[0].firstName
-      ? agent[0].firstName + " " + agent[0].lastName
-      : agent[0].name,
-    bio: agent[0].bio,
-    phoneNumber: agent[0].phoneNumber,
-    emailAddress: agent[0].emailAddress,
-    userGuid: userGuid,
-    avatar: agent[0].avatar
-      ? agent[0].avatar
-      : "https://www.gocfs.pro/assets/others/no-image.png",
-    licenseNumber: agent[0].licenseNumber,
-    position: agent[0].roles[0].label,
-  };
+    const agentInfo = {
+      name: agent[0].firstName
+        ? agent[0].firstName + " " + agent[0].lastName
+        : agent[0].name,
+      bio: agent[0].bio,
+      phoneNumber: agent[0].phoneNumber,
+      emailAddress: agent[0].emailAddress,
+      userGuid: userGuid,
+      avatar: agent[0].avatar
+        ? agent[0].avatar
+        : "https://www.gocfs.pro/assets/others/no-image.png",
+      licenseNumber: agent[0].licenseNumber,
+      position: agent[0].roles[0].label,
+    };
 
-  const blogEmail = blogs?.map((data) => {
-    const content = data.content.replace(/<[^>]*>/g, "").replace("&quot;", " ");
-    const filteredTitle = data.title.split(" ").join("-").toLowerCase();
-    const filteredContent = `<div style="margin-bottom: 30px">
+    const blogEmail = blogs?.map((data) => {
+      const content = data.content
+        .replace(/<[^>]*>/g, "")
+        .replace("&quot;", " ");
+      const filteredTitle = data.title.split(" ").join("-").toLowerCase();
+      const filteredContent = `<div style="margin-bottom: 30px">
               <h5 style="font-size: 16px; margin: 0; color: #333;">
                 ${data.title}
               </h5>
@@ -84,9 +89,9 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
                 "
               >
                 ${content.length > 250
-        ? content.substring(0, 250) + "..."
-        : content
-      }
+          ? content.substring(0, 250) + "..."
+          : content
+        }
               </p>
               <a
                 style="
@@ -102,20 +107,19 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
               >
             </div>`;
 
-    return filteredContent.replace(",", "");
-  });
+      return filteredContent.replace(",", "");
+    });
 
-  const mailContent = emailMarketingEmail({
-    agentInfo: agentInfo,
-    body: req.body.emailBody,
-    blogEmail: settings.includes("BLOGS") ? blogEmail.join("") : null,
-    userGuid: userGuid,
-    templateId
-  });
+    const mailContent = emailMarketingEmail({
+      agentInfo: agentInfo,
+      body: req.body.emailBody,
+      blogEmail: settings.includes("BLOGS") ? blogEmail.join("") : null,
+      userGuid: userGuid,
 
-  const bcc = contractEmail;
+    });
 
-  try {
+    const bcc = contractEmail;
+
     sendHTMLEmail = sendEmail(
       agentInfo.emailAddress,
       mailSubject,
@@ -146,50 +150,54 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
  * @access: Private
  */
 const saveEmailTemplate = expressAsync(async (req, res, next) => {
-  const {
-    templateName,
-    templateBody,
-    templateStatus,
-    isAddedByMarketing,
-    subject,
-    design,
-    settings,
-  } = req.body;
-  const { userGuid } = req.params;
-  const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
+  try {
+    const {
+      templateName,
+      templateBody,
+      templateStatus,
+      isAddedByMarketing,
+      subject,
+      design,
+      settings,
+    } = req.body;
+    const { userGuid } = req.params;
+    const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
 
-  if (
-    !templateName ||
-    !templateBody ||
-    !userGuid ||
-    !templateStatus ||
-    !validStatuses.includes(templateStatus) ||
-    !subject ||
-    !design
-  ) {
-    throw new Error("Error occured in submission.");
+    if (
+      !templateName ||
+      !templateBody ||
+      !userGuid ||
+      !templateStatus ||
+      !validStatuses.includes(templateStatus) ||
+      !subject ||
+      !design
+    ) {
+      throw new Error("Error occured in submission.");
+    }
+
+    const hierarchyCode = generateString(6);
+
+    const newTemplate = {
+      templateName,
+      templateBody,
+      userGuid,
+      status: templateStatus,
+      isAddedByMarketing,
+      subject,
+      design,
+      hierarchyCode,
+      settings,
+    };
+
+    const emailTemplate = new EmailTemplate(newTemplate);
+
+    const result = await emailTemplate.save();
+    res
+      .status(201)
+      .json({ message: "[Email Template] succcessfully added.", data: result });
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
-
-  const hierarchyCode = generateString(6);
-
-  const newTemplate = {
-    templateName,
-    templateBody,
-    userGuid,
-    status: templateStatus,
-    isAddedByMarketing,
-    subject,
-    design,
-    hierarchyCode,
-    settings,
-  };
-
-  const emailTemplate = new EmailTemplate(newTemplate);
-
-  const result = await emailTemplate.save();
-  res
-    .status(201)
-    .json({ message: "[Email Template] succcessfully added.", data: result });
 });
 
 /**
@@ -198,100 +206,106 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
  * @access: Private
  */
 const getEmailTemplates = expressAsync(async (req, res, next) => {
-  const { userGuid } = req.params;
-  const { status } = req.query;
+  try {
+    const { userGuid } = req.params;
+    const { status } = req.query;
 
-  if (!userGuid) {
-    throw new Error("Error occured in fetching.");
-  }
-
-  const statusCondition = status
-    ? {
-      $match: {
-        $or: [
-          {
-            $and: [
-              { userGuid: { $eq: userGuid } },
-              { status: { $eq: status } },
-            ],
-          },
-          { isAddedByMarketing: true, status: "ACTIVATED" },
-        ],
-      },
+    if (!userGuid) {
+      throw new Error("Error occured in fetching.");
     }
-    : {
-      $match: {
-        $or: [
-          {
-            status: {
-              $in: ["ACTIVATED", "DRAFT", "DEACTIVATED"],
+
+    const statusCondition = status
+      ? {
+        $match: {
+          $or: [
+            {
+              $and: [
+                { userGuid: { $eq: userGuid } },
+                { status: { $eq: status } },
+              ],
             },
+            { isAddedByMarketing: true, status: "ACTIVATED" },
+          ],
+        },
+      }
+      : {
+        $match: {
+          $or: [
+            {
+              status: {
+                $in: ["ACTIVATED", "DRAFT", "DEACTIVATED"],
+              },
+            },
+          ],
+        },
+      };
+    const filteredAggregate = [
+      {
+        $lookup: {
+          from: "agents",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "templateDoc",
+        },
+      },
+      {
+        $set: {
+          authorName: {
+            $first: "$templateDoc.name",
           },
-        ],
-      },
-    };
-  const filteredAggregate = [
-    {
-      $lookup: {
-        from: "agents",
-        localField: "userGuid",
-        foreignField: "userGuid",
-        as: "templateDoc",
-      },
-    },
-    {
-      $set: {
-        authorName: {
-          $first: "$templateDoc.name",
-        },
-        authorThumbnail: {
-          $first: "$templateDoc.avatar",
-        },
-        authorFirstname: {
-          $first: "$templateDoc.firstName",
-        },
-        authorLastname: {
-          $first: "$templateDoc.lastName",
+          authorThumbnail: {
+            $first: "$templateDoc.avatar",
+          },
+          authorFirstname: {
+            $first: "$templateDoc.firstName",
+          },
+          authorLastname: {
+            $first: "$templateDoc.lastName",
+          },
         },
       },
-    },
-    statusCondition,
-    {
-      $unset: "templateDoc",
-    },
-  ];
+      statusCondition,
+      {
+        $unset: "templateDoc",
+      },
+    ];
 
-  const emailTemplates = await EmailTemplate.aggregate(filteredAggregate).sort({
-    _id: -1,
-  });
+    const emailTemplates = await EmailTemplate.aggregate(
+      filteredAggregate
+    ).sort({
+      _id: -1,
+    });
 
-  const agent = await Agent.find({ userGuid });
-  const agentInfo = agent[0];
+    const agent = await Agent.find({ userGuid });
+    const agentInfo = agent[0];
 
-  const isAdmin = agentInfo?.roles?.some((f) => {
-    return f.value === "ROLE_MASTER_ADMIN";
-  });
+    const isAdmin = agentInfo?.roles?.some((f) => {
+      return f.value === "ROLE_MASTER_ADMIN";
+    });
 
-  const isFreeTrial = agentInfo?.position?.some((f) => {
-    return f.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value;
-  });
+    const isFreeTrial = agentInfo?.position?.some((f) => {
+      return f.value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value;
+    });
 
-  const isAgent = agentInfo?.position?.some((f) => {
-    return f.value === PROFILE_POSITIONS.AGENT.value;
-  });
+    const isAgent = agentInfo?.position?.some((f) => {
+      return f.value === PROFILE_POSITIONS.AGENT.value;
+    });
 
-  const filteredEmailTemplates = emailTemplates.filter((data) => {
-    const personalEmailTempaltes =
-      data.isAddedByMarketing || data.userGuid === agentInfo.userGuid;
+    const filteredEmailTemplates = emailTemplates.filter((data) => {
+      const personalEmailTempaltes =
+        data.isAddedByMarketing || data.userGuid === agentInfo.userGuid;
 
-    if (isAdmin || isAgent || isFreeTrial) {
-      return data;
-    } else {
-      return personalEmailTempaltes;
-    }
-  });
+      if (isAdmin || isAgent || isFreeTrial) {
+        return data;
+      } else {
+        return personalEmailTempaltes;
+      }
+    });
 
-  res.json(filteredEmailTemplates);
+    res.json(filteredEmailTemplates);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -300,13 +314,13 @@ const getEmailTemplates = expressAsync(async (req, res, next) => {
  * @access: Private
  */
 const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
-  const { userGuid } = req.params;
-  const { status } = req.query;
-
-  if (!userGuid) throw new Error("UserGuid not provided.");
-  if (!status) throw new Error("Template status not provided.");
-
   try {
+    const { userGuid } = req.params;
+    const { status } = req.query;
+
+    if (!userGuid) throw new Error("UserGuid not provided.");
+    if (!status) throw new Error("Template status not provided.");
+
     /** Find the hierarchy */
     const hierarchy = await Hierarchy.find({ userGuid });
     const hierachyCode = hierarchy[0].hierachyCode;
@@ -348,49 +362,53 @@ const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
  * @access: Private
  */
 const getSingleEmailTemplate = expressAsync(async (req, res, next) => {
-  const { userGuid, templateId } = req.params;
+  try {
+    const { userGuid, templateId } = req.params;
 
-  if (!userGuid || !templateId) {
-    throw new Error("Error occured in fetching.");
-  }
+    if (!userGuid || !templateId) {
+      throw new Error("Error occured in fetching.");
+    }
 
-  const emailTemplate = await EmailTemplate.aggregate([
-    {
-      $match: { _id: mongoose.Types.ObjectId(templateId) },
-    },
-    {
-      $lookup: {
-        from: "agents",
-        localField: "userGuid",
-        foreignField: "userGuid",
-        as: "templateDoc",
+    const emailTemplate = await EmailTemplate.aggregate([
+      {
+        $match: { _id: mongoose.Types.ObjectId(templateId) },
       },
-    },
-    {
-      $set: {
-        authorName: {
-          $first: "$templateDoc.name",
-        },
-        authorThumbnail: {
-          $first: "$templateDoc.avatar",
-        },
-        authorFirstname: {
-          $first: "$templateDoc.firstName",
-        },
-        authorLastname: {
-          $first: "$templateDoc.lastName",
+      {
+        $lookup: {
+          from: "agents",
+          localField: "userGuid",
+          foreignField: "userGuid",
+          as: "templateDoc",
         },
       },
-    },
-    {
-      $unset: "templateDoc",
-    },
-  ]);
+      {
+        $set: {
+          authorName: {
+            $first: "$templateDoc.name",
+          },
+          authorThumbnail: {
+            $first: "$templateDoc.avatar",
+          },
+          authorFirstname: {
+            $first: "$templateDoc.firstName",
+          },
+          authorLastname: {
+            $first: "$templateDoc.lastName",
+          },
+        },
+      },
+      {
+        $unset: "templateDoc",
+      },
+    ]);
 
-  if (!emailTemplate.length) {
-    throw new Error("No data available.");
-  } else {
-    res.json(emailTemplate[0]);
+    if (!emailTemplate.length) {
+      throw new Error("No data available.");
+    } else {
+      res.json(emailTemplate[0]);
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -400,59 +418,66 @@ const getSingleEmailTemplate = expressAsync(async (req, res, next) => {
  * @access: Private
  */
 const updateEmailTemplate = expressAsync(async (req, res, next) => {
-  const { userGuid, templateId } = req.params;
-  const {
-    templateName,
-    templateBody,
-    templateStatus,
-    subject,
-    design,
-    settings,
-  } = req.body;
-  const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
+  try {
+    const { userGuid, templateId } = req.params;
+    const {
+      templateName,
+      templateBody,
+      templateStatus,
+      subject,
+      design,
+      settings,
+    } = req.body;
+    const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
 
-  if (
-    !userGuid ||
-    !templateId ||
-    !templateStatus ||
-    !templateBody ||
-    !templateName ||
-    !validStatuses.includes(templateStatus) ||
-    !subject ||
-    !design
-  ) {
-    throw new Error("Error occured in updating.");
-  }
+    if (
+      !userGuid ||
+      !templateId ||
+      !templateStatus ||
+      !templateBody ||
+      !templateName ||
+      !validStatuses.includes(templateStatus) ||
+      !subject ||
+      !design
+    ) {
+      throw new Error("Error occured in updating.");
+    }
 
-  const emailTemplateData = await EmailTemplate.find({
-    _id: mongoose.Types.ObjectId(templateId),
-    // userGuid: userGuid,
-  });
+    const emailTemplateData = await EmailTemplate.find({
+      _id: mongoose.Types.ObjectId(templateId),
+      // userGuid: userGuid,
+    });
 
-  const emailTemplate = emailTemplateData[0];
+    const emailTemplate = emailTemplateData[0];
 
-  if (emailTemplateData.length) {
-    emailTemplate.templateName = undefinedValidator(
-      emailTemplate.templateName,
-      templateName
-    );
-    emailTemplate.templateBody = undefinedValidator(
-      emailTemplate.templateBody,
-      templateBody
-    );
-    emailTemplate.design = undefinedValidator(emailTemplate.design, design);
-    emailTemplate.status = undefinedValidator(
-      emailTemplate.status,
-      templateStatus
-    );
-    emailTemplate.settings = settings.length
-      ? settings
-      : emailTemplate.settings;
-    emailTemplate.subject = undefinedValidator(emailTemplate.subject, subject);
-    await emailTemplate.save();
-    res.json("[Email Template] has been successfuly updated.");
-  } else {
-    throw new Error("Error occured in updating.");
+    if (emailTemplateData.length) {
+      emailTemplate.templateName = undefinedValidator(
+        emailTemplate.templateName,
+        templateName
+      );
+      emailTemplate.templateBody = undefinedValidator(
+        emailTemplate.templateBody,
+        templateBody
+      );
+      emailTemplate.design = undefinedValidator(emailTemplate.design, design);
+      emailTemplate.status = undefinedValidator(
+        emailTemplate.status,
+        templateStatus
+      );
+      emailTemplate.settings = settings.length
+        ? settings
+        : emailTemplate.settings;
+      emailTemplate.subject = undefinedValidator(
+        emailTemplate.subject,
+        subject
+      );
+      await emailTemplate.save();
+      res.json("[Email Template] has been successfuly updated.");
+    } else {
+      throw new Error("Error occured in updating.");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
