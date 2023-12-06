@@ -31,6 +31,27 @@ const getAllChannelsByHierarchyCode = async (req, res, next) => {
   }
 };
 
+const updateChannelByChannelId = async (req, res, next) => {
+  if (!req.params.channelId || !req.body.name) {
+    res.status(400).json(API_RES_FAIL("[Channels] Fields are required"));
+    return;
+  }
+  try {
+    const channel = await channelServices.updateChannelByChannelId(
+      req.params.channelId,
+      req.body.name
+    );
+    if (channel) {
+      res.json(channel);
+    } else {
+      res.status(500).json(API_RES_FAIL("[Channels] Error Occured"));
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(API_RES_FAIL("[Channels] Error Occured"));
+  }
+};
+
 const getAllChannelsByUserGuid = async (req, res, next) => {
   try {
     const channel = await channelServices.getAllChannelsByUserGuid(
@@ -66,7 +87,8 @@ const createChannel = async (req, res, next) => {
   try {
     const channel = await channelServices.createChannel(body);
     if (channel) {
-      res.json(API_RES_OK("[Channels] Channel has been created"));
+      // res.json(API_RES_OK("[Channels] Channel has been created"));
+      res.json(channel);
     } else {
       res.status(500).json(API_RES_FAIL("[Channels] Error Occured"));
     }
@@ -103,4 +125,5 @@ export default {
   getAllChannels,
   createChannel,
   deleteChannel,
+  updateChannelByChannelId,
 };

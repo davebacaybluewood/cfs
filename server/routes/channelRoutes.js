@@ -13,9 +13,14 @@ router
     await channelControllers.getAllChannels(req, res, next);
   });
 
-router.route("/channels/:channelId").delete(protect, async (req, res, next) => {
-  await channelControllers.deleteChannel(req, res, next);
-});
+router
+  .route("/channels/:channelId")
+  .delete(protect, async (req, res, next) => {
+    await channelControllers.deleteChannel(req, res, next);
+  })
+  .put(protect, async (req, res, next) => {
+    await channelControllers.updateChannelByChannelId(req, res, next);
+  });
 router
   .route("/channels/:hierarchyCode/hierarchy-code")
   .get(protect, async (req, res, next) => {

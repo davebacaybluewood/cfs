@@ -77,14 +77,17 @@ const submitRSVP = expressAsync(async (req, res) => {
       eventId: eventId,
       userGuid: userGuid,
     });
-    
+
     if (isEmailExists && account[0].status === status.ACTIVATED) {
       res
         .status(400)
         .json(API_RES_FAIL("Email has already been used for registration."));
       return;
     } else {
-      await Agent.updateOne({ userGuid: userGuid }, { $set: { status: status.ACTIVATED } });
+      await Agent.updateOne(
+        { userGuid: userGuid },
+        { $set: { status: status.ACTIVATED } }
+      );
     }
   } else {
     const data = await subscriberServices.subscriberRegistration(

@@ -65,6 +65,20 @@ const createChannel = async (body) => {
   }
 };
 
+const updateChannelByChannelId = async (channelId, channelName) => {
+  try {
+    const data = await Channels.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(channelId) },
+      { $set: { name: channelName } },
+      { returnOriginal: false }
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 const deleteChannel = async (channelId) => {
   try {
     const data = await Channels.deleteOne({
@@ -83,4 +97,5 @@ export default {
   getAllChannels,
   getAllChannelsByHierarchyCode,
   getAllChannelsByUserGuid,
+  updateChannelByChannelId,
 };
