@@ -2,13 +2,14 @@ import { API_RES_FAIL, API_RES_OK } from "../constants/constants.js";
 import eventServices from "../services/eventServices.js";
 
 const getEvents = async (req, res, next) => {
-  const { userGuid } = req.query;
-
-  if (!userGuid) {
-    res.status(401).json(API_RES_FAIL("[Events] Params are required."));
-    return;
-  }
   try {
+    const { userGuid } = req.query;
+
+    if (!userGuid) {
+      res.status(401).json(API_RES_FAIL("[Events] Params are required."));
+      return;
+    }
+
     const getResponse = await eventServices.getEvents(userGuid);
 
     if (getResponse) {
@@ -17,94 +18,110 @@ const getEvents = async (req, res, next) => {
       res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
     }
   } catch (error) {
-    res.status(400).json(API_RES_FAIL("[Events] Error Occured"));
+    res.status(500).json(API_RES_FAIL("[Events] Error Occured"));
   }
 };
 
 const getSingleEvent = async (req, res, next) => {
-  const { eventId } = req.params;
+  try {
+    const { eventId } = req.params;
 
-  if (!eventId) {
-    res.status(401).json(API_RES_FAIL("[Events] Params are required."));
-    return;
-  }
+    if (!eventId) {
+      res.status(401).json(API_RES_FAIL("[Events] Params are required."));
+      return;
+    }
 
-  const getResponse = await eventServices.getSingleEvent(eventId);
+    const getResponse = await eventServices.getSingleEvent(eventId);
 
-  if (getResponse) {
-    res.json(getResponse);
-  } else {
-    res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    if (getResponse) {
+      res.json(getResponse);
+    } else {
+      res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 };
 
 const createEvent = async (req, res, next) => {
-  const { userGuid, title, eventDate, shortDescription, status, privacy } =
-    req.body;
+  try {
+    const { userGuid, title, eventDate, shortDescription, status, privacy } =
+      req.body;
 
-  if (
-    !userGuid ||
-    !title ||
-    !eventDate ||
-    !shortDescription ||
-    !status ||
-    !privacy
-  ) {
-    res.status(401).json(API_RES_FAIL("Fields are required."));
-    return;
-  }
+    if (
+      !userGuid ||
+      !title ||
+      !eventDate ||
+      !shortDescription ||
+      !status ||
+      !privacy
+    ) {
+      res.status(401).json(API_RES_FAIL("Fields are required."));
+      return;
+    }
 
-  const createResponse = await eventServices.createEvent(req, res, next);
+    const createResponse = await eventServices.createEvent(req, res, next);
 
-  if (createResponse) {
-    res.status(200).json(API_RES_OK("[Events] Event Created"));
-  } else {
-    res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    if (createResponse) {
+      res.status(200).json(API_RES_OK("[Events] Event Created"));
+    } else {
+      res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 };
 
 const updateEvent = async (req, res, next) => {
-  const { userGuid, title, eventDate, shortDescription, status, privacy } =
-    req.body;
+  try {
+    const { userGuid, title, eventDate, shortDescription, status, privacy } =
+      req.body;
 
-  const { eventId } = req.params;
+    const { eventId } = req.params;
 
-  if (
-    !userGuid ||
-    !title ||
-    !eventDate ||
-    !shortDescription ||
-    !status ||
-    !privacy ||
-    !eventId
-  ) {
-    res.status(401).json(API_RES_FAIL("Fields are required."));
-    return;
-  }
+    if (
+      !userGuid ||
+      !title ||
+      !eventDate ||
+      !shortDescription ||
+      !status ||
+      !privacy ||
+      !eventId
+    ) {
+      res.status(401).json(API_RES_FAIL("Fields are required."));
+      return;
+    }
 
-  const updateResponse = await eventServices.updateEvent(req, res, next);
+    const updateResponse = await eventServices.updateEvent(req, res, next);
 
-  if (updateResponse) {
-    res.status(200).json(API_RES_OK("[Events] Event Updated"));
-  } else {
-    res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    if (updateResponse) {
+      res.status(200).json(API_RES_OK("[Events] Event Updated"));
+    } else {
+      res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 };
 
 const deleteEvent = async (req, res, next) => {
-  const { eventId } = req.params;
+  try {
+    const { eventId } = req.params;
 
-  if (!eventId) {
-    res.status(401).json(API_RES_FAIL("Fields are required."));
-    return;
-  }
+    if (!eventId) {
+      res.status(401).json(API_RES_FAIL("Fields are required."));
+      return;
+    }
 
-  const deleteResponse = await eventServices.deleteEvent(eventId);
+    const deleteResponse = await eventServices.deleteEvent(eventId);
 
-  if (deleteResponse) {
-    res.status(200).json(API_RES_OK("[Events] Event Deleted"));
-  } else {
-    res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    if (deleteResponse) {
+      res.status(200).json(API_RES_OK("[Events] Event Deleted"));
+    } else {
+      res.status(401).json(API_RES_FAIL("[Events] Error Occured"));
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 };
 

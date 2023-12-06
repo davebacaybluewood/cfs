@@ -110,8 +110,23 @@
 
     .left-col {
       .contact-container {
-        padding: 1rem;
         border-radius: 20px;
+
+        .copy {
+          justify-content: center;
+          margin: 7px 0px;
+          cursor: pointer;
+          background-color: white;
+          padding: 7px 2px;
+          border: lightgray dashed 1px;
+          text-align: center;
+          transition: 300ms;
+          border-radius: 7px;
+        }
+
+        .copy:hover {
+          transform: scale(1.03);
+        }
 
         .contact {
           display: flex;

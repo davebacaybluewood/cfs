@@ -3,7 +3,12 @@ import Wrapper from "admin/components/Wrapper/Wrapper";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridRowParams,
+  GridToolbar,
+} from "@mui/x-data-grid";
 import { Button, Drawer } from "@mui/material";
 import { UserContext } from "admin/context/UserProvider";
 import { formatISODateOnly } from "helpers/date";
@@ -16,8 +21,7 @@ import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter
 import "./AgentSubscribers.scss";
 import useUserRole from "hooks/useUserRole";
 import Pricing from "admin/components/Pricing/Pricing";
-import { FaCheckCircle } from "react-icons/fa";
-import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import capitalizeText from "../../../helpers/capitalizeText";
 import ChannelDrawer from "admin/components/ChannelDrawer/ChannelDrawer";
 
 const crumbs: CrumbTypes[] = [
@@ -69,8 +73,8 @@ const AgentSubscribers: React.FC = () => {
     return {
       id: subscriber.userGuid,
       isSubscribed: subscriber.isSubscribed ? "YES" : "NO",
-      firstName: subscriber.firstName,
-      lastName: subscriber.lastName,
+      firstName: capitalizeText(subscriber.firstName),
+      lastName: capitalizeText(subscriber.firstName),
       email: subscriber.email,
       createdAt: formatISODateOnly(subscriber.createdAt ?? ""),
       type:
@@ -141,7 +145,14 @@ const AgentSubscribers: React.FC = () => {
                 </button>
               }
             >
-              <DataGrid rows={filteredRows || []} columns={columns} />
+              <DataGrid
+                rows={filteredRows || []}
+                columns={columns}
+                slots={{ toolbar: GridToolbar }}
+                isRowSelectable={(params: GridRowParams) =>
+                  params.row.quantity < 1
+                }
+              />
             </NoInformationToDisplay>
           </div>
         </div>

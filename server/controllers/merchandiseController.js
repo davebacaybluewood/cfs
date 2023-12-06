@@ -20,9 +20,9 @@ function isFieldEmpty(field) {
  * @access: Private
  */
 const createMerchandise = expressAsync(async (req, res) => {
-  const { name, points } = req.body;
-
   try {
+    const { name, points } = req.body;
+
     if (isFieldEmpty(name) || isFieldEmpty(points)) {
       throw new Error("Fields are required.");
     }
@@ -74,25 +74,29 @@ const createMerchandise = expressAsync(async (req, res) => {
  * @access: Private
  */
 const deleteMerchandise = expressAsync(async (req, res) => {
-  const merchandiseId = req.params.id;
+  try {
+    const merchandiseId = req.params.id;
 
-  // Check if the merchandise ID is empty
-  if (isFieldEmpty(merchandiseId)) {
-    res.status(400).json({
-      error: "required_validation",
-      message: "Merchandise ID is required.",
-    });
-    return;
-  }
+    // Check if the merchandise ID is empty
+    if (isFieldEmpty(merchandiseId)) {
+      res.status(400).json({
+        error: "required_validation",
+        message: "Merchandise ID is required.",
+      });
+      return;
+    }
 
-  const merchandise = await Merchandise.findById(merchandiseId);
+    const merchandise = await Merchandise.findById(merchandiseId);
 
-  if (merchandise) {
-    await merchandise.remove();
-    res.json({ message: "Merchandise deleted", success: true });
-  } else {
-    res.status(404);
-    throw new Error("Merchandise not found");
+    if (merchandise) {
+      await merchandise.remove();
+      res.json({ message: "Merchandise deleted", success: true });
+    } else {
+      res.status(404);
+      throw new Error("Merchandise not found");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -103,9 +107,13 @@ const deleteMerchandise = expressAsync(async (req, res) => {
  */
 
 const getMerchandise = expressAsync(async (req, res) => {
-  const merchandises = await Merchandise.find({});
+  try {
+    const merchandises = await Merchandise.find({});
 
-  res.json(merchandises);
+    res.json(merchandises);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
 });
 
 /**
@@ -115,18 +123,22 @@ const getMerchandise = expressAsync(async (req, res) => {
  */
 
 const getMerchandiseById = expressAsync(async (req, res) => {
-  const id = req.params.id;
+  try {
+    const id = req.params.id;
 
-  if (!id) {
-    throw new Error("Invalid Params.");
-  }
+    if (!id) {
+      throw new Error("Invalid Params.");
+    }
 
-  const merchandises = await Merchandise.find({ _id: id });
+    const merchandises = await Merchandise.find({ _id: id });
 
-  if (merchandises.length) {
-    res.json(merchandises[0]);
-  } else {
-    throw new Error("No merchandise found.");
+    if (merchandises.length) {
+      res.json(merchandises[0]);
+    } else {
+      throw new Error("No merchandise found.");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -136,46 +148,50 @@ const getMerchandiseById = expressAsync(async (req, res) => {
  * @access: Private
  */
 const updateMerchandiseDetails = expressAsync(async (req, res) => {
-  const merchandiseId = req.params.id;
-  const { name, points, image } = req.body;
-
-  // Check if any of the required fields are empty
-  if (!name || !points) {
-    res.status(400).json({
-      error: "required_validation",
-      message: "Fields are required.",
-    });
-    return;
-  }
-
-  const merchandise = await Merchandise.findById(merchandiseId);
-
-  /** Upload avatar to cloudinary */
-  let merchandiseImage;
   try {
-    merchandiseImage = await cloudinary.v2.uploader.upload(req.file?.path, {
-      folder: "merchandises",
-      use_filename: true,
-    });
-  } catch (error) {
-    merchandiseImage = image || "";
-  }
+    const merchandiseId = req.params.id;
+    const { name, points, image } = req.body;
 
-  if (merchandise) {
-    merchandise.name = name;
-    merchandise.points = points;
-    merchandise.image =
-      typeof req.body.image === "string"
-        ? req.body.image
-        : merchandiseImage.secure_url
-        ? merchandiseImage.secure_url
-        : merchandise.image;
+    // Check if any of the required fields are empty
+    if (!name || !points) {
+      res.status(400).json({
+        error: "required_validation",
+        message: "Fields are required.",
+      });
+      return;
+    }
 
-    const updatedMerchandise = await merchandise.save();
-    res.json(updatedMerchandise);
-  } else {
-    res.status(404);
-    throw new Error("Merchandise not found");
+    const merchandise = await Merchandise.findById(merchandiseId);
+
+    /** Upload avatar to cloudinary */
+    let merchandiseImage;
+    try {
+      merchandiseImage = await cloudinary.v2.uploader.upload(req.file?.path, {
+        folder: "merchandises",
+        use_filename: true,
+      });
+    } catch (error) {
+      merchandiseImage = image || "";
+    }
+
+    if (merchandise) {
+      merchandise.name = name;
+      merchandise.points = points;
+      merchandise.image =
+        typeof req.body.image === "string"
+          ? req.body.image
+          : merchandiseImage.secure_url
+          ? merchandiseImage.secure_url
+          : merchandise.image;
+
+      const updatedMerchandise = await merchandise.save();
+      res.json(updatedMerchandise);
+    } else {
+      res.status(404);
+      throw new Error("Merchandise not found");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -185,28 +201,32 @@ const updateMerchandiseDetails = expressAsync(async (req, res) => {
  * @access: Private
  */
 const updateMerchandiseStatus = expressAsync(async (req, res) => {
-  const merchandiseId = req.params.id;
-  const status = req.query.status;
+  try {
+    const merchandiseId = req.params.id;
+    const status = req.query.status;
 
-  // Check if status is empty
-  if (isFieldEmpty(status)) {
-    res.status(400).json({
-      error: "required_validation",
-      message: "Status is required.",
-    });
-    return;
-  }
+    // Check if status is empty
+    if (isFieldEmpty(status)) {
+      res.status(400).json({
+        error: "required_validation",
+        message: "Status is required.",
+      });
+      return;
+    }
 
-  const merchandise = await Merchandise.findById(merchandiseId);
+    const merchandise = await Merchandise.findById(merchandiseId);
 
-  if (merchandise) {
-    merchandise.status = status;
+    if (merchandise) {
+      merchandise.status = status;
 
-    const updatedMerchandise = await merchandise.save();
-    res.json(updatedMerchandise);
-  } else {
-    res.status(404);
-    throw new Error("Merchandise not found");
+      const updatedMerchandise = await merchandise.save();
+      res.json(updatedMerchandise);
+    } else {
+      res.status(404);
+      throw new Error("Merchandise not found");
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -216,53 +236,57 @@ const updateMerchandiseStatus = expressAsync(async (req, res) => {
  * @access: Private
  */
 const redeemMerchandise = expressAsync(async (req, res, next) => {
-  const { name, address, phoneNumber, emailAddress, remarks, userGuid } =
-    req.body;
-  const { merchandiseId } = req.params;
+  try {
+    const { name, address, phoneNumber, emailAddress, remarks, userGuid } =
+      req.body;
+    const { merchandiseId } = req.params;
 
-  // Check fields if empty
-  if (
-    !merchandiseId ||
-    !name ||
-    !address ||
-    !phoneNumber ||
-    !emailAddress ||
-    !userGuid
-  ) {
-    res.status(400).json({
-      error: "required_validation",
-      message: "Fields are required.",
-    });
-    return;
-  }
+    // Check fields if empty
+    if (
+      !merchandiseId ||
+      !name ||
+      !address ||
+      !phoneNumber ||
+      !emailAddress ||
+      !userGuid
+    ) {
+      res.status(400).json({
+        error: "required_validation",
+        message: "Fields are required.",
+      });
+      return;
+    }
 
-  const merchandise = await Merchandise.find({
-    _id: merchandiseId,
-  });
-
-  if (merchandise.length) {
-    const newOrder = new Orders({
-      userGuid,
-      merchandiseId,
-      points: merchandise[0].points,
-      status: "PENDING",
-      name,
-      emailAddress,
-      phoneNumber,
-      address,
-      remarks,
+    const merchandise = await Merchandise.find({
+      _id: merchandiseId,
     });
 
-    const redeemedPoints = new RedeemedPoints({
-      userGuid,
-      points: merchandise[0].points,
-      type: "MERCHANDISE_ORDER",
-    });
+    if (merchandise.length) {
+      const newOrder = new Orders({
+        userGuid,
+        merchandiseId,
+        points: merchandise[0].points,
+        status: "PENDING",
+        name,
+        emailAddress,
+        phoneNumber,
+        address,
+        remarks,
+      });
 
-    await redeemedPoints.save();
-    await newOrder.save();
+      const redeemedPoints = new RedeemedPoints({
+        userGuid,
+        points: merchandise[0].points,
+        type: "MERCHANDISE_ORDER",
+      });
 
-    next();
+      await redeemedPoints.save();
+      await newOrder.save();
+
+      next();
+    }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
   }
 });
 
@@ -273,41 +297,41 @@ const redeemMerchandise = expressAsync(async (req, res, next) => {
  */
 
 const emailRedeemMerchNotif = expressAsync(async (req, res) => {
-  const mailSubject = "Merchandise Ship Request";
-  const { emailAddress, name } = req.body;
-  const shipAddr = req.body.address;
-  const note = req.body.remarks;
-  const { merchandiseId } = req.params;
-
-  const subscriber = await User.findOne({ userGuid: req.body.userGuid });
-  subscriber.email = emailAddress;
-
-  const admin = await User.find({
-    isAdmin: true,
-  });
-
-  const merchandise = await Merchandise.find({
-    _id: merchandiseId,
-  });
-  const merchandiseData = {
-    merchantName: merchandise[0].name,
-    merchantImage: merchandise[0].image,
-    merchantPoints: merchandise[0].points + " points",
-  };
-
-  const addDays = (date, days) => {
-    date.setDate(date.getDate() + days);
-    return date;
-  };
-
-  const dateRequested = new Date();
-  let shipDate = new Date();
-  shipDate = addDays(shipDate, 2);
-  let resultMsg = [];
-
-  const recipients = [subscriber, ...admin];
-
   try {
+    const mailSubject = "Merchandise Ship Request";
+    const { emailAddress, name } = req.body;
+    const shipAddr = req.body.address;
+    const note = req.body.remarks;
+    const { merchandiseId } = req.params;
+
+    const subscriber = await User.findOne({ userGuid: req.body.userGuid });
+    subscriber.email = emailAddress;
+
+    const admin = await User.find({
+      isAdmin: true,
+    });
+
+    const merchandise = await Merchandise.find({
+      _id: merchandiseId,
+    });
+    const merchandiseData = {
+      merchantName: merchandise[0].name,
+      merchantImage: merchandise[0].image,
+      merchantPoints: merchandise[0].points + " points",
+    };
+
+    const addDays = (date, days) => {
+      date.setDate(date.getDate() + days);
+      return date;
+    };
+
+    const dateRequested = new Date();
+    let shipDate = new Date();
+    shipDate = addDays(shipDate, 2);
+    let resultMsg = [];
+
+    const recipients = [subscriber, ...admin];
+
     const emailPromise = recipients.map((user) => {
       const subscriberName = name;
       let recipientEmail = user.email;
