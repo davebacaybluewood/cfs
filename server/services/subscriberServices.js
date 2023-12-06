@@ -36,6 +36,7 @@ const emailConfirmation = async (emailAddress) => {
     verificationCode,
   });
 
+
   code.save();
 
   /** Email variables */
@@ -223,7 +224,7 @@ const fetchSubscribersByUser = async (userGuid) => {
 
     const subscribers = await Hierarchy.aggregate([
       {
-        $match: isAdmin ? {recruiterUserGuid: { $exists: false }} : { recruiterUserGuid: userGuid },
+        $match: isAdmin ? { recruiterUserGuid: { $exists: false } } : { recruiterUserGuid: userGuid },
       },
       {
         $lookup: {

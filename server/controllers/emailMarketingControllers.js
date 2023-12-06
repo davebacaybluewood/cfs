@@ -22,8 +22,8 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
     let sendHTMLEmail;
     const mailSubject = req.body.subject;
     const contractEmail = req.body.recipients;
-    const templateId = req.body.templateId
     const settings = req.body.settings;
+    const templateId = req.body.templateId
 
     const blogs = await BlogsAndResource.find().limit(5).sort({ $natural: -1 });
     const agent = await Agents.find({ userGuid: req.body.userGuid });
@@ -115,7 +115,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
       body: req.body.emailBody,
       blogEmail: settings.includes("BLOGS") ? blogEmail.join("") : null,
       userGuid: userGuid,
-
+      templateId
     });
 
     const bcc = contractEmail;

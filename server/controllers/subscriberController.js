@@ -69,14 +69,16 @@ const subscriberRegistration = async (req, res, next) => {
 
     const registrationResponse =
       await subscriberServices.subscriberRegistration(
-        email,
-        password,
-        lastName,
-        firstName,
-        phoneNumber,
-        verificationCode,
-        userGuid,
-        templateId,
+        {
+          email,
+          password,
+          lastName,
+          firstName,
+          phoneNumber,
+          verificationCode,
+          userGuid,
+          templateId,
+        }
       );
 
     if (registrationResponse) {
