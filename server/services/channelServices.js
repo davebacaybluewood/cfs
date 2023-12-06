@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Channels from "../models/channelModel.js";
 
-const getAllChannels = async (req, res) => {
+const getAllChannels = async () => {
   try {
     const data = await Channels.find({});
     data.sort(function (a, b) {
