@@ -153,6 +153,11 @@ const AgentSubscribers = {
 
     return res;
   },
+  deleteAgentSubsriber: (userGuid: string) => {
+    const res = requests.del(`/api/subscriberaccounts/user/${userGuid}`)
+
+    return res
+  }
 };
 
 const EmailMarketing = {
@@ -342,6 +347,14 @@ const Points = {
     return res;
   },
   getSubscribersByUserGuid: (userGuid: string) => {
+    const res = requests.get<SubscriberMainData | undefined>(
+      `/api/points/subscribers/${userGuid}`
+    );
+
+    return res;
+  },
+
+  getSubscriberByUserGuid: (userGuid: string) => {
     const res = requests.get<SubscriberMainData | undefined>(
       `/api/points/subscribers/${userGuid}`
     );

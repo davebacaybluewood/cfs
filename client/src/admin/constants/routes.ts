@@ -12,6 +12,7 @@ const adminPaths = {
   licensing: adminCfsRoute + "licensing",
   contracting: adminCfsRoute + "contracting",
   emailMarketing: adminCfsRoute + "emailpro",
+  emailMarketingWithGuid: adminCfsRoute + "emailpro/userGuid/:userGuid",
   profileFormWithProfileId: adminCfsRoute + "profile/form/:userGuid",
   profileFormAdd: adminCfsRoute + "form/add-user",
   appointments: adminCfsRoute + "appointments/",
