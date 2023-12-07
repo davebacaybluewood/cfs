@@ -35,7 +35,7 @@ import { toast } from "react-toastify";
 import DrawerBase, { Anchor } from "library/Drawer/Drawer";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { BsFillTrashFill, BsPlusCircle } from "react-icons/bs";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import nameFallback from "helpers/nameFallback";
 import { formatISODateOnly } from "helpers/date";
@@ -55,6 +55,7 @@ const ContractForm: React.FC = () => {
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
+
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -149,6 +150,8 @@ const ContractForm: React.FC = () => {
       setLoading(false);
     }
   }, [userGuid]);
+
+
 
   const handleCreateContact = async (data: Contacts) => {
     setRecipientLoading(true);
@@ -261,37 +264,6 @@ const ContractForm: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    const fetchTemplateInfo = async () => {
-      setLoading(true);
-      const data = await agent.EmailMarketing.getSingleTemplate(
-        userGuid,
-        templateId || ""
-      );
-      setInitialValues({
-        emailBody: data.templateBody,
-        subject: data.subject,
-        recipients: [],
-        settings: data.settings,
-        templateName: data.templateName,
-        status: data.status,
-        createdById: data.userGuid,
-      });
-      setDesign(data.design);
-
-      /** Load if edit mode */
-      if (Object.keys(data.design)?.length) {
-        emailEditorRef.current?.editor?.loadDesign(
-          JSON.parse(data.design || "{}")
-        );
-      }
-    };
-    if (userGuid && templateId) {
-      fetchTemplateInfo();
-      setLoading(false);
-    }
-  }, [templateId, userGuid]);
-
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     const unlayer = emailEditorRef.current?.editor;
 
@@ -362,14 +334,14 @@ const ContractForm: React.FC = () => {
     validationSchema = Yup.object({
       subject: Yup.string().required("Subject is required."),
       recipients: Yup.array()
-        .min(1, "Pick at least 1 recipients")
+        .min(1, "Pick at least 1 recipient")
         .required("Recipients is required."),
     });
   }
 
-  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
+  const loadDesign = useCallback(() => { }, [emailEditorRef, design]);
 
-  useEffect(() => {}, [design]);
+  useEffect(() => { }, [design]);
 
   const handleDeleteContact = async (contactId: string) => {
     if (contactId) {
@@ -437,9 +409,20 @@ const ContractForm: React.FC = () => {
   const { profile, loading: profileLoading } = useFetchUserProfile(
     userCtx?.user?.userGuid ?? ""
   );
+
   const isAdmin = profile?.roles?.some((f) => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
+
+  const leadUserGuid = new URLSearchParams(search).get("leadUserGuid")
+  const { profile: leadProfile, loading: leadProfileLoading } = useFetchUserProfile(leadUserGuid ?? '')
+
+  useEffect(() => {
+    setContactsValue([{
+      label: leadProfile?.emailAddress,
+      value: leadProfile?.emailAddress,
+    }]);
+  }, [leadUserGuid, leadProfile])
 
   return (
     <Wrapper

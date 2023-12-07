@@ -18,5 +18,5 @@ export interface SubscribersData {
 
 export interface SubscriberMainData {
   totalSubscribers: number;
-  subscribers: SubscribersData[];
+  subscribers: SubscribersData[] | undefined;
 }

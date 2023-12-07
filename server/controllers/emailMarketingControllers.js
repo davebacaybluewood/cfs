@@ -321,15 +321,22 @@ const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
     if (!status) throw new Error("Template status not provided.");
 
     /** Find the hierarchy */
+    let userGuidHead;
+    let agentName;
     const hierarchy = await Hierarchy.find({ userGuid });
-    const hierachyCode = hierarchy[0].hierachyCode;
+    if (hierarchy.length > 0) {
+      const hierachyCode = hierarchy[0].hierachyCode;
 
-    /** Get the head of hierarchy to get the user guid */
-    const hierarchyHead = await Hierarchy.find({ hierachyCode });
-    const userGuidHead = hierarchyHead[0].userGuid;
+      /** Get the head of hierarchy to get the user guid */
+      const hierarchyHead = await Hierarchy.find({ hierachyCode });
+      userGuidHead = hierarchyHead[0].userGuid;
 
-    /** Get the head information */
-    const agents = await Agents.find({ userGuid: userGuidHead });
+      /** Get the head information */
+      const agent = await Agents.findOne({ userGuid: userGuidHead });
+      if (agent) {
+        agentName = agent.firstName + " " + agent.lastName;
+      }
+    }
 
     /** Get all admin userGuid */
     let adminUsers = await User.find(
@@ -347,7 +354,7 @@ const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
 
     res.json({
       templates,
-      name: agents[0].firstName + " " + agents[0].lastName,
+      name: agentName,
     });
   } catch (err) {
     console.log(err);

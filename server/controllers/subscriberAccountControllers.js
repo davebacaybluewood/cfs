@@ -2,6 +2,9 @@ import SubscriberAccount from "../models/subscriberAccountModel.js";
 import expressAsync from "express-async-handler";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
+import { API_RES_FAIL, API_RES_OK, status } from "../constants/constants.js";
+import Agent from "../models/agentModel.js";
+import Hierarchy from "../models/hierarchyModel.js";
 
 /**
  * @desc:  Register a new user
@@ -124,6 +127,36 @@ const getAllSubscriberAccounts = expressAsync(async (req, res) => {
 });
 
 /**
+ * @desc: Delete a subscriber account
+ * @route: DEL /api/subscriberaccounts/:id
+ * @access: Private
+ */
+
+const deleteSubscriberAccount = expressAsync(async (req, res) => {
+
+  try {
+    const { userGuid } = req.params
+
+    // Delete Agent - Deactivate
+    const agent = await Agent.updateOne({ userGuid }, { $set: { status: status.DEACTIVATED } })
+
+    // Delete Hierarchy
+    const hierarchy = await Hierarchy.deleteOne({ userGuid })
+
+    if (agent && hierarchy) {
+      res.send(API_RES_OK('[Lead] successfully deleted'))
+    } else {
+      res.send(API_RES_FAIL('[Lead] not found')).status(404)
+    }
+
+  } catch (error) {
+    console.log(error);
+    res.send(API_RES_FAIL('Error Occured')).status(500)
+  }
+
+});
+
+/**
  * @desc: Validate Email
  * @route: POST /api/subscriberaccounts/validateEmail
  * @access: Public
@@ -155,5 +188,6 @@ export {
   getSubscriberAccountByUserGuid,
   getSubscriberAccountByAgentUserGuid,
   getAllSubscriberAccounts,
+  deleteSubscriberAccount,
   validateEmail,
 };
