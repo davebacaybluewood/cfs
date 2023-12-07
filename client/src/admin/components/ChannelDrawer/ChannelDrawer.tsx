@@ -122,7 +122,7 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
         channelLoading: false,
         drawerLoading: false,
       });
-      toast.success("Channel Deleted");
+      // toast.success("Channel Deleted");
       return true;
     }
   };
@@ -163,13 +163,15 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
             : el
         );
       });
+      // toast.success("Channel Created");
+      return true;
+    } catch (error) {
+      toast.error("Channel name already existing");
     } finally {
-      toast.success("Channel Created");
       setIsLoading({
         channelLoading: false,
         drawerLoading: false,
       });
-      return true;
     }
   };
 
@@ -200,13 +202,13 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
             : el
         );
       });
+      // toast.success("Channel Updated");
+      return true;
     } finally {
-      toast.success("Channel Updated");
       setIsLoading({
         channelLoading: false,
         drawerLoading: false,
       });
-      return true;
     }
   };
 
@@ -238,61 +240,69 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
                 return (
                   <Form>
                     <div>
-                      <NoInformationToDisplay
-                        message="No information to display"
-                        title="No existing channel"
-                        showNoInfo={!channels.length}
-                      >
-                        <React.Fragment>
-                          {channels?.map((data, index) => (
-                            <div key={index}>
-                              <div className="input-holder">
-                                <div className="input-container">
-                                  <FormikTextInput
-                                    name={data.name}
-                                    key={index}
-                                    placeholder="Enter your channel name here"
-                                    variant="outlined"
-                                    value={data.initialValue}
-                                    error={
-                                      !!(
-                                        touched[data.name] && errors[data.name]
-                                      )
-                                    }
-                                    noErrorText={true}
-                                    onBlur={(e) => {
-                                      if (data.isNew) {
-                                        addChannel(e.target.value, data.id);
-                                      } else {
-                                        updateChannel(e.target.value, data.id);
+                      <div className="fields-container">
+                        <NoInformationToDisplay
+                          message="No information to display"
+                          title="No existing channel"
+                          showNoInfo={!channels.length}
+                        >
+                          <React.Fragment>
+                            {channels?.map((data, index) => (
+                              <div key={index}>
+                                <div className="input-holder">
+                                  <div className="input-container">
+                                    <FormikTextInput
+                                      name={data.name}
+                                      key={index}
+                                      placeholder="Enter your channel name here"
+                                      variant="outlined"
+                                      value={data.initialValue}
+                                      error={
+                                        !!(
+                                          touched[data.name] &&
+                                          errors[data.name]
+                                        )
                                       }
-                                    }}
-                                  />
-                                  {!!(
-                                    touched[data.name] && errors[data.name]
-                                  ) && (
-                                    <p className="form-error">
-                                      Field is required.
-                                    </p>
-                                  )}
-                                </div>
+                                      noErrorText={true}
+                                      onBlur={(e) => {
+                                        if (data.isNew && e.target.value) {
+                                          addChannel(e.target.value, data.id);
+                                        }
 
-                                <button
-                                  onClick={() => {
-                                    removeChannel(
-                                      data.id,
-                                      data.name,
-                                      data.isNew ?? false
-                                    );
-                                  }}
-                                >
-                                  <MdDeleteOutline />
-                                </button>
+                                        if (!data.isNew && e.target.value) {
+                                          updateChannel(
+                                            e.target.value,
+                                            data.id
+                                          );
+                                        }
+                                      }}
+                                    />
+                                    {!!(
+                                      touched[data.name] && errors[data.name]
+                                    ) && (
+                                      <p className="form-error">
+                                        Field is required.
+                                      </p>
+                                    )}
+                                  </div>
+
+                                  <button
+                                    onClick={() => {
+                                      removeChannel(
+                                        data.id,
+                                        data.name,
+                                        data.isNew ?? false
+                                      );
+                                    }}
+                                  >
+                                    <MdDeleteOutline />
+                                  </button>
+                                </div>
                               </div>
-                            </div>
-                          ))}
-                        </React.Fragment>
-                      </NoInformationToDisplay>
+                            ))}
+                          </React.Fragment>
+                        </NoInformationToDisplay>
+                      </div>
                       <div className="add-field-container">
                         <button
                           type="button"

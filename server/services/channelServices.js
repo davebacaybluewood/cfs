@@ -47,6 +47,19 @@ const getAllChannelsByUserGuid = async (userGuid) => {
 const createChannel = async (body) => {
   const { channels, hierarchyCode, userGuid } = body;
 
+  const channelNames = channels.map((data) => data.name);
+
+  const isChannelExists = await Channels.find({
+    name: { $in: channelNames },
+  });
+
+  if (isChannelExists.length > 0) {
+    return {
+      error: "channel_validation",
+      description: "[Channel] Channel name exists",
+    };
+  }
+
   const mappedChannels = channels.map((channel) => {
     return {
       name: channel.name,
@@ -67,6 +80,18 @@ const createChannel = async (body) => {
 
 const updateChannelByChannelId = async (channelId, channelName) => {
   try {
+    const isChannelExists = await Channels.find({
+      name: { $in: [channelName] },
+      _id: { $in: [mongoose.Types.ObjectId(channelId)] },
+    });
+
+    if (isChannelExists.length) {
+      return {
+        error: "channel_validation",
+        description: "[Channel] Channel name exists",
+      };
+    }
+
     const data = await Channels.findOneAndUpdate(
       { _id: mongoose.Types.ObjectId(channelId) },
       { $set: { name: channelName } },

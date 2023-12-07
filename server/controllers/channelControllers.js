@@ -41,6 +41,12 @@ const updateChannelByChannelId = async (req, res, next) => {
       req.params.channelId,
       req.body.name
     );
+
+    if (channel?.error) {
+      res.status(400).json(channel);
+      return;
+    }
+
     if (channel) {
       res.json(channel);
     } else {
@@ -86,8 +92,13 @@ const createChannel = async (req, res, next) => {
 
   try {
     const channel = await channelServices.createChannel(body);
+
+    if (channel?.error) {
+      res.status(400).json(channel);
+      return;
+    }
+
     if (channel) {
-      // res.json(API_RES_OK("[Channels] Channel has been created"));
       res.json(channel);
     } else {
       res.status(500).json(API_RES_FAIL("[Channels] Error Occured"));
