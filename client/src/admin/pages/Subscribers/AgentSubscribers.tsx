@@ -27,6 +27,7 @@ import { saveAs } from 'file-saver';
 import "./AgentSubscribers.scss";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import capitalizeText from "../../../helpers/capitalizeText";
+import ChannelDrawer from "admin/components/ChannelDrawer/ChannelDrawer";
 
 
 const crumbs: CrumbTypes[] = [
@@ -56,6 +57,7 @@ const AgentSubscribers: React.FC = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [channelDrawerOpen, setChannelDrawerOpen] = useState(false);
 
   const columns: GridColDef[] = [
     {
@@ -99,7 +101,6 @@ const AgentSubscribers: React.FC = () => {
       })
     },
     downloadAsCSV: (userGuid: string) => {
-      alert(userGuid)
       const leadData = subscribers?.map((data) => {
         return {
           email: data.email,
@@ -228,6 +229,13 @@ const AgentSubscribers: React.FC = () => {
       <div className="agent-subscribers-container">
         <Title title="Leads" subtitle="List of your leads">
           <MUIButton
+            onClick={() => setChannelDrawerOpen(true)}
+            variant="contained"
+            style={{ marginRight: 10 }}
+          >
+            Channels
+          </MUIButton>
+          <MUIButton
             onClick={() => handleCopyToClipboard()}
             variant="contained"
             style={{ marginRight: 10 }}
@@ -298,6 +306,14 @@ const AgentSubscribers: React.FC = () => {
           </DialogActions>
         </Dialog>
       </div>
+      <React.Fragment>
+        <ChannelDrawer
+          title="Channels"
+          subtitle="List of your channels"
+          open={channelDrawerOpen}
+          onClose={() => setChannelDrawerOpen(false)}
+        />
+      </React.Fragment>
     </Wrapper >
   );
 };
