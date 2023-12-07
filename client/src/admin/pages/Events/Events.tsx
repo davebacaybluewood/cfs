@@ -127,6 +127,7 @@ const Events: React.FC = () => {
       f.value === PROFILE_ROLES.AGENT.ROLE_TRAINING_ASSOCIATE.value
     );
   });
+
   const isSubscriber = profile?.roles?.some((f) => {
     return f.value === PROFILE_ROLES.SUBSCRIBER.ROLE_SUBSRIBER.value;
   });
@@ -350,7 +351,7 @@ const Events: React.FC = () => {
       <DocumentTitleSetter title="Events | CFS Portal" />
       <div className="events-container">
         <Title title="Events" subtitle="List of amazing events">
-          {isAdmin ? (
+          {isAdmin || isAgent ? (
             <Button
               onClick={() => navigate(paths.newAdminEventsForm + "?action=add")}
               variant="contained"
@@ -420,7 +421,7 @@ const Events: React.FC = () => {
         </DialogActions>
       </Dialog>
     </Wrapper>
-  );
+  )
 };
 
 export default memo(Events);
