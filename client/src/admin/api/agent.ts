@@ -29,6 +29,7 @@ import Event, { EventBody, ResponseMessage } from "admin/models/eventModel";
 import { RSVPData } from "admin/models/rsvpModel";
 import { Contacts as ContactsData } from "admin/models/contactsModel";
 import { SubscriptionData } from "admin/models/subscriptionModel";
+import Channels from "./channelServices/channelServices";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -54,7 +55,7 @@ axios.interceptors.request.use((config) => {
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
-const requests = {
+export const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
   post: <T>(url: string, body: {}) =>
     axios.post<T>(url, body).then(responseBody),
@@ -469,6 +470,7 @@ const Contacts = {
 };
 
 const agent = {
+  ...Channels,
   LandingPage,
   LandingPageRegisteredUsers,
   Agents,

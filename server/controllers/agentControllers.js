@@ -3,10 +3,16 @@ import Webinars from "../models/webinarModel.js";
 import expressAsync from "express-async-handler";
 import cloudinary from "../utils/cloudinary.js";
 import undefinedValidator from "./helpers/undefinedValidator.js";
-import { AGENT_STATUSES, ROLES } from "../constants/constants.js";
+import {
+  AGENT_STATUSES,
+  API_RES_FAIL,
+  PROFILE_POSITIONS,
+  ROLES,
+} from "../constants/constants.js";
 import User from "../models/userModel.js";
 import { v4 as uuidv4 } from "uuid";
 import agentRegistrationSuccess from "../emailTemplates/agent-registration-success.js";
+import trialRegistrationSuccess from "../emailTemplates/trial-registration-success.js";
 import sendEmail from "../utils/sendNodeMail.js";
 import agentApproved from "../emailTemplates/agent-approved.js";
 import PreProfile from "../models/preProfileModel.js";
@@ -451,6 +457,22 @@ const createAgent = expressAsync(async (req, res) => {
       });
 
       await subscription.save();
+
+      if (
+        req.body.position[0].value === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+      ) {
+        const mailSubject = "CFS - 30 Days Free-trial Registration";
+
+        await sendEmail(
+          req.body.emailAddress,
+          mailSubject,
+          trialRegistrationSuccess(subscription.userGuid, agent?.specialties),
+          [],
+          req.body.emailAddress //bcc
+        ).then((resolve, reject) => {
+          if (reject) console.log(reject + " Email not sent"); //update with application log here
+        });
+      }
 
       res.status(201).json(agent);
     } else {

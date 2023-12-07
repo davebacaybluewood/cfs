@@ -17,8 +17,8 @@ const crumbs: CrumbTypes[] = [
     isActive: false,
   },
   {
-    title: "Settings",
-    url: paths.settings,
+    title: "Shareable Emails",
+    url: paths.shareableEmails,
     isActive: true,
   },
 ]

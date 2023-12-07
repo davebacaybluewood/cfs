@@ -1,37 +1,38 @@
-import React, { useEffect, useState } from "react"
-import { useField } from "formik"
-import { TextField, BaseTextFieldProps } from "@mui/material"
+import React, { useEffect, useState } from "react";
+import { useField } from "formik";
+import { TextField, BaseTextFieldProps } from "@mui/material";
 
 interface IFormikTextInput extends BaseTextFieldProps {
-  isTextArea?: boolean
-  isDate?: boolean
-  modifiedInputProps?: any
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  isTextArea?: boolean;
+  isDate?: boolean;
+  modifiedInputProps?: any;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  noErrorText?: boolean;
 }
 const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
-  const [field, meta, helper] = useField<string>(props.name ?? "")
-  const errorText = meta.error && meta.touched ? meta.error : ""
-  const [value, setValue] = useState(props.value || "")
+  const [field, meta, helper] = useField<string>(props.name ?? "");
+  const errorText = meta.error && meta.touched ? meta.error : "";
+  const [value, setValue] = useState(props.value || "");
 
   const handleOnChange = (event: any) => {
-    const newValue = event.target.value || ""
+    const newValue = event.target.value || "";
 
-    setValue(newValue)
-    helper.setValue(newValue)
-  }
+    setValue(newValue);
+    helper.setValue(newValue);
+  };
 
   useEffect(() => {
-    const newValue = (props?.value as string) ?? ""
-    setValue(newValue)
-    helper.setValue(newValue)
-  }, [props?.value])
+    const newValue = (props?.value as string) ?? "";
+    setValue(newValue);
+    helper.setValue(newValue);
+  }, [props?.value]);
 
   const clonedProps = {
     ...props,
-  }
+  };
 
-  delete clonedProps.isTextArea
-  delete clonedProps.isDate
+  delete clonedProps.isTextArea;
+  delete clonedProps.isDate;
 
   return (
     <React.Fragment>
@@ -40,7 +41,7 @@ const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
         {...clonedProps}
         value={field.value}
         onChange={handleOnChange}
-        helperText={errorText}
+        helperText={props.noErrorText ? "" : errorText}
         error={!!errorText}
         label={props.label}
         variant={props.variant ?? "filled"}
@@ -55,6 +56,6 @@ const FormikTextInput: React.FC<IFormikTextInput> = (props) => {
         InputProps={props.modifiedInputProps}
       />
     </React.Fragment>
-  )
-}
-export default FormikTextInput
+  );
+};
+export default FormikTextInput;
