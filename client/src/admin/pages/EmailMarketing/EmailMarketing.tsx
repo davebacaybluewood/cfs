@@ -264,6 +264,37 @@ const ContractForm: React.FC = () => {
     },
   ];
 
+  useEffect(() => {
+    const fetchTemplateInfo = async () => {
+      setLoading(true);
+      const data = await agent.EmailMarketing.getSingleTemplate(
+        userGuid,
+        templateId || ""
+      );
+      setInitialValues({
+        emailBody: data.templateBody,
+        subject: data.subject,
+        recipients: [],
+        settings: data.settings,
+        templateName: data.templateName,
+        status: data.status,
+        createdById: data.userGuid,
+      });
+      setDesign(data.design);
+
+      /** Load if edit mode */
+      if (Object.keys(data.design)?.length) {
+        emailEditorRef.current?.editor?.loadDesign(
+          JSON.parse(data.design || "{}")
+        );
+      }
+    };
+    if (userGuid && templateId) {
+      fetchTemplateInfo();
+      setLoading(false);
+    }
+  }, [templateId, userGuid]);
+
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     const unlayer = emailEditorRef.current?.editor;
 
