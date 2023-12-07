@@ -22,6 +22,7 @@ import "./AgentSubscribers.scss";
 import useUserRole from "hooks/useUserRole";
 import Pricing from "admin/components/Pricing/Pricing";
 import capitalizeText from "../../../helpers/capitalizeText";
+import ChannelDrawer from "admin/components/ChannelDrawer/ChannelDrawer";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -43,6 +44,7 @@ const AgentSubscribers: React.FC = () => {
   const { loading, subscribers } = useFetchSubscribers(userGuid);
   const { isFreeTrial, loading: roleLoading } = useUserRole();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [channelDrawerOpen, setChannelDrawerOpen] = useState(false);
 
   const columns: GridColDef[] = [
     {
@@ -108,6 +110,13 @@ const AgentSubscribers: React.FC = () => {
       <div className="agent-subscribers-container">
         <Title title="Leads" subtitle="List of your leads">
           <Button
+            onClick={() => setChannelDrawerOpen(true)}
+            variant="contained"
+            style={{ marginRight: 10 }}
+          >
+            Channels
+          </Button>
+          <Button
             onClick={() => handleCopyToClipboard()}
             variant="contained"
             style={{ marginRight: 10 }}
@@ -156,6 +165,12 @@ const AgentSubscribers: React.FC = () => {
       >
         <Pricing />
       </Drawer>
+      <ChannelDrawer
+        title="Channels"
+        subtitle="List of your channels"
+        open={channelDrawerOpen}
+        onClose={() => setChannelDrawerOpen(false)}
+      />
     </Wrapper>
   );
 };

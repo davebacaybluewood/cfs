@@ -41,6 +41,7 @@ import cors from "cors";
 import missionRoutes from "./routes/events/missionRoutes.js";
 import eventOrderRoutes from "./routes/eventOrderRoutes.js";
 import achievementRoutes from "./routes/achievementRoutes.js";
+import channelRoutes from "./routes/channelRoutes.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -99,6 +100,7 @@ app.use("/api/rsvp-event/", eventsRSVPRoutes);
 app.use("/api/events/mission", missionRoutes);
 app.use("/api/event-orders/", eventOrderRoutes);
 app.use("/api/achievements/", achievementRoutes);
+app.use("/api/", channelRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
