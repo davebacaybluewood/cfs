@@ -17,6 +17,27 @@ const GuardedWrapper: React.FC<GuardedWrapperProps> = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const handleResize = () => {
+      // Check if the screen width is below a certain threshold (e.g., 768 pixels)
+      const isMobile = window.innerWidth < 768
+
+      // Update the state based on the mobile condition
+      setCollapsed(isMobile)
+    }
+
+    // Initial check on component mount
+    handleResize()
+
+    // Attach event listener for window resize
+    window.addEventListener("resize", handleResize)
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  useEffect(() => {
     const isAuthenticated =
       "token" in JSON.parse(localStorage.getItem("userInfo") ?? "{}");
 
