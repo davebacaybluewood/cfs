@@ -6,10 +6,14 @@ const recentContactSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    emailAddress: {
+    label: {
       type: String,
       required: true,
     },
+    value: {
+      type: String,
+      required: true,
+    }
   },
   {
     timestamps: true,

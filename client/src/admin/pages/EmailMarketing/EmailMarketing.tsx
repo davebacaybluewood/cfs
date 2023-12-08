@@ -55,6 +55,7 @@ import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import axios from "axios";
 import { Close } from "@mui/icons-material"
+import Agent from "../../api/agent";
 
 interface Contact {
   value: string;
@@ -70,7 +71,7 @@ const ContractForm: React.FC = () => {
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
 
   const [openContactListDrawerOpen, setOpenContactListDrawerOpen] = useState(false);
-  const [recentContacts, setRecentContacts] = useState<Array<{ _id: string; emailAddress: string }>>([]);
+  const [recentContacts, setRecentContacts] = useState<Array<{ value: string; label: string }>>([]);
   const [filteredRecentContacts, setFilteredRecentContacts] = useState<Contact[]>([]);
   const [filteredRecipients, setFilteredRecipients] = useState<Contact[]>([]);
 
@@ -161,9 +162,20 @@ const ContractForm: React.FC = () => {
       setContacts(emailArray);
     };
 
+    const fetchRecentContactData = async () => {
+      try {
+        setLoading(true);
+        const recentContactsData = await agent.Contacts.getRecentContact(userGuid);
+        setRecentContacts(recentContactsData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (userGuid) {
       fetchEmailTemplates();
       fetchMailingList();
+      fetchRecentContactData();
       setLoading(false);
     }
   }, [userGuid]);
@@ -459,59 +471,11 @@ const ContractForm: React.FC = () => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
 
-  const handlesRecentContact = (contactsValue) => {
-    if (contactsValue && contactsValue.length > 0) {
-      contactsValue.forEach(async (contact) => {
-        try {
-          await axios.post('/api/contacts/recent/', {
-            userGuid: userGuid,
-            emailAddress: contact.label || contact.emailAddress,
-          });
-        } catch (error) {
-          console.error('Error adding recent contact:', error);
-        }
-      });
-    }
-  }
 
-  useEffect(() => {
-    const fetchRecentContacts = async () => {
-      try {
-        const response = await axios.get(`/api/contacts/recent/${userGuid}`);
-        setRecentContacts(response.data);
-      } catch (error) {
 
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    if (userGuid) {
-      fetchRecentContacts();
-    }
-  }, [userGuid]);
 
-  const transformRecentContacts = (recentContacts) => {
-    return recentContacts.map(contact => ({
-      value: contact._id,
-      label: contact.emailAddress,
-    }));
-  };
 
-  useEffect(() => {
-    const filteredRecent = transformRecentContacts(recentContacts)
-      .filter((recentContact) => !contactsValue.some((selectedContact) => selectedContact.value === recentContact.value));
-
-    setFilteredRecentContacts(filteredRecent);
-
-    const filteredRecipients = contacts
-      .filter((contact) => !contactsValue.some((selectedContact) => selectedContact.value === contact.value));
-
-    setFilteredRecipients(filteredRecipients);
-
-    console.log("the effect");
-
-  }, [contacts, recentContacts, contactsValue]);
 
   return (
     <Wrapper
@@ -609,7 +573,6 @@ const ContractForm: React.FC = () => {
                   setLoading(false);
                 }
               }
-              handlesRecentContact(contactsValue);
             }}
             validationSchema={validationSchema}
           >
@@ -622,9 +585,12 @@ const ContractForm: React.FC = () => {
               errors,
             }) => {
               const handleAddContactFromDrawer = (contact) => {
-                const newContactValues = Array.from(new Set([...contactsValue, contact]));
-                setContactsValue(newContactValues);
-              }
+                const newContactValuesDrawer = Array.from(new Set([...contactsValue, contact]));
+                setContactsValue(newContactValuesDrawer);
+                const newContactValues = Array.from(new Set([...values.recipients, contact]));
+                setFieldValue("recipients", newContactValues);
+              };
+
 
               return (
                 <React.Fragment>
@@ -668,22 +634,11 @@ const ContractForm: React.FC = () => {
                                   }}
                                 />
                               </ListItem>
-                              {transformRecentContacts(recentContacts)
-                                .filter(recentContact => !contactsValue.some(selectedContact => selectedContact.value === recentContact.value))
-                                .map(recentContact => (
-                                  <ListItem
-                                    key={recentContact.value}
-                                    onClick={() => handleAddContactFromDrawer(recentContact)}
-                                    sx={{
-                                      cursor: 'pointer',
-                                      '&:hover': {
-                                        backgroundColor: '#e1f5fe', // Add background color here
-                                      },
-                                    }}
-                                  >
-                                    <ListItemText primary={recentContact.label} />
-                                  </ListItem>
-                                ))}
+                              {recentContacts.map((contact) => (
+                                <ListItem key={`${contact.value}-${contact.label}`} onClick={() => handleAddContactFromDrawer(contact)}>
+                                  <ListItemText primary={contact.label} />
+                                </ListItem>
+                              ))}
                             </List>
                             <List sx={{ width: '100%' }}>
                               <ListItem>
@@ -692,26 +647,15 @@ const ContractForm: React.FC = () => {
                                   primaryTypographyProps={{
                                     variant: 'subtitle1',
                                     fontWeight: 'bold',
-                                    color: 'primary', // Add color here
+                                    color: 'primary',
                                   }}
                                 />
                               </ListItem>
-                              {contacts
-                                .filter(contact => !contactsValue.some(selectedContact => selectedContact.value === contact.value))
-                                .map(contact => (
-                                  <ListItem
-                                    key={contact.value}
-                                    onClick={() => handleAddContactFromDrawer(contact)}
-                                    sx={{
-                                      cursor: 'pointer',
-                                      '&:hover': {
-                                        backgroundColor: '#e1f5fe', // Add background color here
-                                      },
-                                    }}
-                                  >
-                                    <ListItemText primary={contact.label} />
-                                  </ListItem>
-                                ))}
+                              {contacts.map((contact) => (
+                                <ListItem key={`${contact.value}-${contact.label}`} onClick={() => handleAddContactFromDrawer(contact)}>
+                                  <ListItemText primary={contact.label} />
+                                </ListItem>
+                              ))}
                             </List>
                           </Box>
                         </Drawer>

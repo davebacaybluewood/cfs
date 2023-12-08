@@ -143,10 +143,10 @@ const recentContactsController = {
   },
 
   async postRecentContact(req, res) {
-    const { userGuid, emailAddress } = req.body;
+    const { userGuid, label } = req.body;
 
     try {
-      const newRecentContact = await RecentContactService.addRecentContact(userGuid, emailAddress);
+      const newRecentContact = await RecentContactService.addRecentContact(userGuid, label);
       res.status(201).json(newRecentContact);
     } catch (error) {
       res.status(500).json({ error: error });

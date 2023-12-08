@@ -480,6 +480,10 @@ const Contacts = {
     const res = axios.delete(`/api/contacts/mailing-list/${contactId}`);
     return res;
   },
+  getRecentContact: async (userGuid: string) => {
+    const res = await axios.get(`/api/contacts/recent/${userGuid}`);
+    return res.data;
+  },
 };
 
 const agent = {
