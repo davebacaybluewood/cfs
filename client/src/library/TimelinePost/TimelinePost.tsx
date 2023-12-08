@@ -49,48 +49,45 @@ const TimelinePost: React.FC<TimelinePostProps> = (props) => {
         : ""
 
   return (
-    <div className={`timeline-post`} >
-      <Stack flexDirection={"row"} gap={2} onClick={onClick}>
+    <div className={`timeline-post`}>
+      <Stack flexDirection={"row"} gap={2}>
         {profileImg && (
           <div>
-            <img className="profile-image" src={profileImg} alt="" />
+            <img
+              className="profile-image"
+              src={profileImg}
+              alt=""
+              onClick={onClick}
+            />
           </div>
         )}
 
         <Stack flexDirection="column" gap={1} sx={{ position: "relative" }}>
           {tag && (
             <div
-              className={`${(tag === "article" ||
-                tag === "blog" ||
-                (tag === "event" && imgContent)) &&
+              className={`${
+                (tag === "article" ||
+                  tag === "blog" ||
+                  (tag === "event" && imgContent)) &&
                 "position-top-left"
-                } tag`}
+              } tag`}
             >
               {tag.toUpperCase()}
             </div>
           )}
 
           {imgContent && (
-            <img style={{ width: "100%" }} src={imgContent} alt="" />
+            <img
+              style={{ width: "100%" }}
+              src={imgContent}
+              alt=""
+              onClick={onClick}
+            />
           )}
           <Stack flexDirection={"row"} gap={1} sx={{ textAlign: "left" }}>
-            {tag === "blog" || tag === "article" ? (
-              <h2
-                className="blog-title"
-                onClick={() =>
-                  navigate(
-                    paths.single_blog.replace(
-                      ":blogTitle",
-                      title.split(" ").join("-").toLowerCase()
-                    )
-                  )
-                }
-              >
-                {title}
-              </h2>
-            ) : (
-              <h2>{title}</h2>
-            )}
+            <h2 className="blog-title" onClick={onClick}>
+              {title}
+            </h2>
             {userName && <h2 className="username">@{userName}</h2>}
 
             <h2 style={{ color: "gray" }}>·</h2>
@@ -104,11 +101,9 @@ const TimelinePost: React.FC<TimelinePostProps> = (props) => {
             {isContentFull
               ? content.replace(/<[^>]*>/g, "").replace("&quot;", " ")
               : content
-                .replace(/<[^>]*>/g, "")
-                .replace("&quot;", " ")
-                .slice(0, 300)}
-
-
+                  .replace(/<[^>]*>/g, "")
+                  .replace("&quot;", " ")
+                  .slice(0, 300)}
             {!isContentFull && content.length > 300 ? (
               <span className="see-more" onClick={() => setIsContentFull(true)}>
                 See more
