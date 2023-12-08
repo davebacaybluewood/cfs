@@ -392,7 +392,7 @@ const ContractForm: React.FC = () => {
     validationSchema = Yup.object({
       subject: Yup.string().required("Subject is required."),
       recipients: Yup.array()
-        .min(1, "Pick at least 1 recipients")
+        .min(1, "Pick at least 1 recipient")
         .required("Recipients is required."),
     });
   }
