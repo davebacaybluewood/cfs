@@ -9,6 +9,7 @@ import { v4 as uuid } from "uuid";
 import { AGENT_ROLES, PROFILE_POSITIONS } from "../constants/constants.js";
 import generateToken from "../utils/generateToken.js";
 import Agent from "../models/agentModel.js";
+import { consumeCode } from "./verificationCodeServices.js";
 
 const BACK_OFFICE_ENDPOINTS = {
   SPECIFIC_AGENT_BY_CODE:
@@ -272,6 +273,7 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
       }
 
       token = generateToken(user._id);
+      consumeCode({ emailAddress });
 
       response = {
         _id: user._id,
