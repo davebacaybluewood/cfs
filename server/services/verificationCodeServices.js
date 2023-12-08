@@ -1,6 +1,8 @@
 import VerificationCode from "../models/verificationCodeModel.js";
 
 const consumeCode = async ({ emailAddress = "", vCode = "" }) => {
+  if (emailAddress && vCode) throw new Error("Only 1 parameter can be used");
+
   let res;
 
   if (emailAddress) {
