@@ -9,6 +9,8 @@ import { v4 as uuid } from "uuid";
 import { AGENT_ROLES, PROFILE_POSITIONS } from "../constants/constants.js";
 import generateToken from "../utils/generateToken.js";
 import Agent from "../models/agentModel.js";
+import { consumeCode } from "./verificationCodeServices.js";
+import { AGENT_STATUSES } from "../constants/constants.js";
 
 const BACK_OFFICE_ENDPOINTS = {
   SPECIFIC_AGENT_BY_CODE:
@@ -162,6 +164,14 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
       email: emailAddress,
     });
 
+    //Get User/Agent status
+    const isAgentActive = await Agent.findOne({
+      userGuid: isEmailExist[0].userGuid,
+      status: AGENT_STATUSES.ACTIVATED,
+    });
+
+    if (!isAgentActive) return false;
+
     let token;
     let response;
 
@@ -272,6 +282,7 @@ const loginUsingCode = async (verificationCode, emailAddress, agentCode) => {
       }
 
       token = generateToken(user._id);
+      consumeCode({ emailAddress });
 
       response = {
         _id: user._id,
