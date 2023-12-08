@@ -102,7 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       collapsed={collapsed}
       toggled={toggled}
       onToggle={handleToggleSidebar}
-      breakPoint="md"
+      // breakPoint="xs"
     >
       {loading ? <Spinner variant="fixed" /> : null}
       <SidebarHeader>
