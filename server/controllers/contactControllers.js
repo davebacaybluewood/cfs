@@ -2,7 +2,7 @@ import { API_RES_FAIL } from "../constants/constants.js";
 import Contacts from "../models/contactModel.js";
 import expressAsync from "express-async-handler";
 import User from "../models/userModel.js";
-import RecentContactService from "../services/recentContactServices.js";
+import { getRecentContacts, addRecentContact } from "../services/recentContactServices.js";
 
 /**
  * @desc: Fetch all contacts
@@ -130,28 +130,26 @@ const deleteUserContact = expressAsync(async (req, res) => {
   }
 });
 
-const recentContactsController = {
-  async getRecentContacts(req, res) {
-    const { userGuid } = req.params;
+const fetchRecentContacts = async (req, res) => {
+  const { userGuid } = req.params;
 
-    try {
-      const recentContacts = await RecentContactService.getRecentContacts(userGuid);
-      res.json(recentContacts);
-    } catch (error) {
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  },
+  try {
+    const recentContacts = await getRecentContacts(userGuid);
+    res.json(recentContacts);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
-  async postRecentContact(req, res) {
-    const { userGuid, label } = req.body;
+const postRecentContact = async (req, res) => {
+  const { userGuid, label } = req.body;
 
-    try {
-      const newRecentContact = await RecentContactService.addRecentContact(userGuid, label);
-      res.status(201).json(newRecentContact);
-    } catch (error) {
-      res.status(500).json({ error: error });
-    }
-  },
+  try {
+    const newRecentContact = await addRecentContact(userGuid, label);
+    res.status(201).json(newRecentContact);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
 };
 
 export {
@@ -161,5 +159,6 @@ export {
   getContactsByUser,
   createUserContact,
   deleteContact,
-  recentContactsController as recentContactController,
+  fetchRecentContacts,
+  postRecentContact,
 };

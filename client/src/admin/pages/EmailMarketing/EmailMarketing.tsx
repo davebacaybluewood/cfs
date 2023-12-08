@@ -72,8 +72,6 @@ const ContractForm: React.FC = () => {
 
   const [openContactListDrawerOpen, setOpenContactListDrawerOpen] = useState(false);
   const [recentContacts, setRecentContacts] = useState<Array<{ value: string; label: string }>>([]);
-  const [filteredRecentContacts, setFilteredRecentContacts] = useState<Contact[]>([]);
-  const [filteredRecipients, setFilteredRecipients] = useState<Contact[]>([]);
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -291,37 +289,6 @@ const ContractForm: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    const fetchTemplateInfo = async () => {
-      setLoading(true);
-      const data = await agent.EmailMarketing.getSingleTemplate(
-        userGuid,
-        templateId || ""
-      );
-      setInitialValues({
-        emailBody: data.templateBody,
-        subject: data.subject,
-        recipients: [],
-        settings: data.settings,
-        templateName: data.templateName,
-        status: data.status,
-        createdById: data.userGuid,
-      });
-      setDesign(data.design);
-
-      /** Load if edit mode */
-      if (Object.keys(data.design)?.length) {
-        emailEditorRef.current?.editor?.loadDesign(
-          JSON.parse(data.design || "{}")
-        );
-      }
-    };
-    if (userGuid && templateId) {
-      fetchTemplateInfo();
-      setLoading(false);
-    }
-  }, [templateId, userGuid]);
-
   const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     const unlayer = emailEditorRef.current?.editor;
 
@@ -471,7 +438,26 @@ const ContractForm: React.FC = () => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
 
+  const addRecentContact = async (userGuid: string, recipients) => {
+    try {
+      setLoading(true);
 
+      await Promise.all(recipients.map(async (emailAddress) => {
+        try {
+          await agent.Contacts.addRecentContact(userGuid, emailAddress);
+        } catch (error) {
+          console.error(`Error adding recent contact for ${emailAddress}:`, error);
+        }
+      }));
+    } finally {
+      setLoading(false);
+      window.location.reload();
+
+    }
+  
+    // Reload the page after adding recent contacts
+    
+  }
 
 
 
@@ -573,6 +559,9 @@ const ContractForm: React.FC = () => {
                   setLoading(false);
                 }
               }
+              // console.log(finalData.recipients);
+              // console.log("user: " + userGuid);
+              addRecentContact(userGuid, finalData.recipients);
             }}
             validationSchema={validationSchema}
           >
@@ -590,6 +579,8 @@ const ContractForm: React.FC = () => {
                 const newContactValues = Array.from(new Set([...values.recipients, contact]));
                 setFieldValue("recipients", newContactValues);
               };
+
+              
 
 
               return (
