@@ -9,6 +9,8 @@ import eventServices from "../services/eventServices.js";
 import eventInvite from "../emailTemplates/eventInvite.js";
 import EventsRSVP from "../models/eventsRSVPModel.js";
 import { status } from "../constants/constants.js";
+import Hierarchy from "../models/hierarchyModel.js";
+import { v4 as uuidV4 } from 'uuid'
 
 const getEventRVPS = expressAsync(async (req, res) => {
   try {
@@ -133,8 +135,27 @@ const submitRSVP = expressAsync(async (req, res) => {
       firstName,
     });
 
+    /* Generate Source from event */
+    /* Get Hierarchy Code  */
+
+    const hierarchy = await Hierarchy.findOne({ recruiterUserGuid })
+    const hierarchyCode = hierarchy.hierarchyCode
+    const agentCode = hierarchy.agentCode
+
+
+    const NewHierarchy = new Hierarchy({
+      userGuid: uuidV4(),
+      recruiterUserGuid: hierarchy.recruiterUserGuid,
+      hierarchyId: generateString(6),
+      hierarchyCode: hierarchyCode,
+      parent: hierarchy.hierarchyId,
+      agentCode: agentCode,
+      source: eventName
+    })
+
+    await NewHierarchy.save()
+
     await sendEmail(emailAddress, mailSubject, mailContent, []);
-    console.log("done1")
     res.status(200).json(API_RES_OK("Data Submitted"));
   } catch (error) {
     res.status(500);
