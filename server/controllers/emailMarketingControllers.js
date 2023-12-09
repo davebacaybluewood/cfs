@@ -11,6 +11,7 @@ import User from "../models/userModel.js";
 import Hierarchy from "../models/hierarchyModel.js";
 import generateString from "../utils/generateString.js";
 import { API_RES_FAIL, PROFILE_POSITIONS } from "../constants/constants.js";
+import * as es from "../services/emailServices.js";
 
 /**
  * @desc: Send an email marketing
@@ -345,16 +346,13 @@ const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
     );
     adminUsers = adminUsers.map((user) => user.userGuid).flat();
 
-    const templates = await EmailTemplate.find({
-      userGuid: {
-        $in: [...adminUsers, userGuidHead],
-      },
-      status,
-    });
+    const templates = await es.getEmailTemplates(
+      [...adminUsers, userGuidHead],
+      status
+    );
 
     res.json({
       templates,
-      name: agentName,
     });
   } catch (err) {
     console.log(err);
