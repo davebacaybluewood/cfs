@@ -4,6 +4,7 @@ import PortalSubscription from "../models/portalSubscription.js";
 import Agent from "../models/agentModel.js";
 import subscriberServices from "../services/subscriberServices.js";
 import portalSubscriptionServices from "../services/portalSubscriptionServices.js";
+import Hierarchy from "../models/hierarchyModel.js";
 
 /* @desc:  Subscribe Free Trial
  * @route: POST /api/portal-subscription/free-trial
@@ -19,6 +20,27 @@ const subscribeFreeTrial = expressAsync(async (req, res) => {
       });
 
       await subscription.save();
+
+      /* Generate Hierarchy from Email Template: Portal Registration */
+      const hierarchy = await Hierarchy.findOne({ recruiterUserGuid: userGuid })
+      const hierarchyCode = hierarchy.hierarchyCode
+      const agentCode = hierarchy.agentCode
+
+      if (hierarchy) {
+        const NewHierarchy = new Hierarchy({
+          userGuid: uuidV4(),
+          recruiterUserGuid: hierarchy.recruiterUserGuid,
+          hierarchyId: generateString(6),
+          hierarchyCode: hierarchyCode,
+          parent: hierarchy.hierarchyId,
+          agentCode: agentCode,
+          source: eventName
+        })
+
+        await NewHierarchy.save()
+      }
+
+
 
       res.send(API_RES_OK("Subscription success"));
     } else {
