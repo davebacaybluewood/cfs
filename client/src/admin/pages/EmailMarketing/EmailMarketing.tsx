@@ -453,16 +453,8 @@ const ContractForm: React.FC = () => {
       setLoading(false);
       window.location.reload();
 
-    }
-  
-    // Reload the page after adding recent contacts
-    
+    }   
   }
-
-
-
-
-
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -559,8 +551,6 @@ const ContractForm: React.FC = () => {
                   setLoading(false);
                 }
               }
-              // console.log(finalData.recipients);
-              // console.log("user: " + userGuid);
               addRecentContact(userGuid, finalData.recipients);
             }}
             validationSchema={validationSchema}
@@ -579,10 +569,6 @@ const ContractForm: React.FC = () => {
                 const newContactValues = Array.from(new Set([...values.recipients, contact]));
                 setFieldValue("recipients", newContactValues);
               };
-
-              
-
-
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -621,7 +607,7 @@ const ContractForm: React.FC = () => {
                                   primaryTypographyProps={{
                                     variant: 'subtitle1',
                                     fontWeight: 'bold',
-                                    color: 'primary', // Add color here
+                                    color: 'primary',
                                   }}
                                 />
                               </ListItem>
