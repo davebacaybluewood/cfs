@@ -189,6 +189,13 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
 							: undefined
 					}
 				/>
+				<ErrorText
+				isError={
+					props.values.nationality === undefined &&
+					!!props.touched.nationality
+				}
+				text="Nationality is required."
+				/>
 			</Grid>
 			<Grid item xs={12} sm={12} md={12} lg={12}>
 				<label className="form-label">Languages (Optional)</label>
