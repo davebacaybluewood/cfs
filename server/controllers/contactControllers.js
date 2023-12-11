@@ -2,6 +2,7 @@ import { API_RES_FAIL } from "../constants/constants.js";
 import Contacts from "../models/contactModel.js";
 import expressAsync from "express-async-handler";
 import User from "../models/userModel.js";
+import { getRecentContacts, addRecentContact } from "../services/recentContactServices.js";
 
 /**
  * @desc: Fetch all contacts
@@ -129,6 +130,28 @@ const deleteUserContact = expressAsync(async (req, res) => {
   }
 });
 
+const fetchRecentContacts = async (req, res) => {
+  const { userGuid } = req.params;
+
+  try {
+    const recentContacts = await getRecentContacts(userGuid);
+    res.json(recentContacts);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const postRecentContact = async (req, res) => {
+  const { userGuid, label } = req.body;
+
+  try {
+    const newRecentContact = await addRecentContact(userGuid, label);
+    res.status(201).json(newRecentContact);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+};
+
 export {
   getContacts,
   getSingleContact,
@@ -136,4 +159,6 @@ export {
   getContactsByUser,
   createUserContact,
   deleteContact,
+  fetchRecentContacts,
+  postRecentContact,
 };

@@ -6,6 +6,8 @@ import {
   getContactsByUser,
   createUserContact,
   deleteUserContact,
+  fetchRecentContacts,
+  postRecentContact
 } from "../controllers/contactControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -22,5 +24,13 @@ router
   .get(protect, getContactsByUser)
   .post(protect, createUserContact);
 router.route("/mailing-list/:contactId").delete(protect, deleteUserContact);
+
+router.route("/recent/:userGuid").get(async (req, res, next) => {
+  await fetchRecentContacts(req, res, next);
+});
+
+router.route("/recent").post(async (req, res, next) => {
+  await postRecentContact(req, res, next);
+});
 
 export default router;

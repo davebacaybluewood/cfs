@@ -44,7 +44,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
           parent: "",
         });
 
-        userGuid = agentHierarchy.userGuid;
+        userGuid = agentHierarchy?.userGuid || agent[0].userGuid;
       } else {
         userGuid = "";
       }
