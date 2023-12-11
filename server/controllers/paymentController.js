@@ -5,6 +5,7 @@ const PAYPAL_CLIENT_SECRET =
   "EEIT8fYtc-xVQjP0PkHh__LQvRrcqef7CrXW3l-W7d40_WWgUGPczM9t6poX71V75CEjKMNiNnVVrVrz";
 const base = "https://api-m.sandbox.paypal.com";
 import fetch from "node-fetch";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * Generate an OAuth 2.0 access token for authenticating with PayPal REST APIs.

@@ -5,7 +5,11 @@ import cloudinary from "../utils/cloudinary.js";
 import User from "../models/userModel.js";
 import { v4 as uuid } from "uuid";
 import PreProfile from "../models/preProfileModel.js";
-import { AGENT_STATUSES, PROFILE_POSITIONS } from "../constants/constants.js";
+import {
+  AGENT_STATUSES,
+  PROFILE_POSITIONS,
+  API_RES_FAIL,
+} from "../constants/constants.js";
 
 /**
  * @desc: List of all profiles

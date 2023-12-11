@@ -1,6 +1,7 @@
 import expressAsync from "express-async-handler";
 import WebinarStatistics from "../models/webinarStatisticsModel.js";
 import LandingPageStatistics from "../models/landingPageStatisticsModel.js";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * @desc: Get all statistics

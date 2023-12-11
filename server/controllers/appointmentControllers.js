@@ -5,6 +5,7 @@ import {
   APPOINTMENT_STATUSES,
   APPOINTMENT_TYPES,
   ROLES,
+  API_RES_FAIL
 } from "../constants/constants.js";
 import AgentAppointment from "../models/agentAppointment.js";
 
