@@ -33,6 +33,9 @@ import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import EmailEditor, { EditorRef } from "react-email-editor";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CreatableSelect from "react-select/creatable";
+import { ClearIndicatorStyles } from "library/MultiSelectInput/MultiSelectInputV2";
+import { EMAIL_TEMPLATES_CATEGORIES } from "admin/constants/constants";
 
 const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -43,6 +46,7 @@ const MailLibraryForm: React.FC = () => {
     subject: "",
     templateName: "",
     settings: [""],
+    categories: [],
   });
 
   const validationSchema = Yup.object({
@@ -245,12 +249,19 @@ const MailLibraryForm: React.FC = () => {
                 subject: data.subject,
                 design: JSON.stringify(design),
                 settings: data.settings,
+                categories: data.categories,
               };
               saveTemplateHandler(finalData);
             }}
             validationSchema={validationSchema}
           >
-            {({ values, handleSubmit, errors, setFieldValue }) => {
+            {({
+              values,
+              handleSubmit,
+              errors,
+              setFieldValue,
+              setFieldTouched,
+            }) => {
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -267,6 +278,55 @@ const MailLibraryForm: React.FC = () => {
                         variant="outlined"
                         name="templateName"
                         value={values.templateName}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      className="form-card-container"
+                    >
+                      <label>Categories (Required)</label>
+                      <CreatableSelect
+                        isMulti
+                        options={EMAIL_TEMPLATES_CATEGORIES}
+                        placeholder="Select a category item to add"
+                        styles={{
+                          clearIndicator: ClearIndicatorStyles,
+                          placeholder: (defaultStyles) => {
+                            return {
+                              ...defaultStyles,
+                              color: "rgba(0, 0, 0, 0.3)",
+                              zIndex: 9,
+                            };
+                          },
+
+                          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                          control: (baseStyles, state) => {
+                            return {
+                              ...baseStyles,
+                              fontSize: "13px",
+                              paddingTop: "5px",
+                              paddingBottom: "5px",
+                              borderColor: "hsl(0, 0%, 80%)",
+                            };
+                          },
+                        }}
+                        onChange={(e) => {
+                          const modifiedValue = e?.map((category) => {
+                            return {
+                              label: category.label,
+                              value: category.value,
+                              keyword: category.keyword,
+                            };
+                          });
+                          setFieldValue("categories", modifiedValue);
+                        }}
+                        onBlur={(e) => {
+                          if (values.categories.length <= 0)
+                            setFieldTouched("categories", true);
+                        }}
                       />
                     </Grid>
                     <Grid

@@ -170,6 +170,19 @@ export const CONTENT_CREATOR_ROLES = [
   },
 ];
 
+export const EMAIL_TEMPLATES_CATEGORIES = [
+  {
+    keyword: "Phase 1",
+    value: "PHASE_1",
+    label: "Phase 1",
+  },
+  {
+    keyword: "Phase 2",
+    value: "PHASE_2",
+    label: "Phase 2",
+  },
+];
+
 export const adminRoutes = [
   {
     path: adminPathsNew.login,
