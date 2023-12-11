@@ -21,6 +21,7 @@ export interface EmailTemplateData {
   subject: string;
   design: string;
   settings: string[];
+  categories: string[];
 }
 
 export interface EmailTemplateTableData {
@@ -35,6 +36,11 @@ export interface EmailTemplateTableData {
   subject: string;
 }
 
+export type CategoryType = {
+  label: string;
+  value: string;
+  keyword: string;
+};
 export interface EmailTemplateParameter {
   templateName: string;
   templateBody: string;
@@ -43,6 +49,7 @@ export interface EmailTemplateParameter {
   subject: string;
   design: string;
   settings: string[];
+  categories?: string[] | CategoryType[] | undefined[];
 }
 
 export interface EmailTemplateDataSubscriber {

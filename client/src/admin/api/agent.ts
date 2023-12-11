@@ -154,10 +154,10 @@ const AgentSubscribers = {
     return res;
   },
   deleteAgentSubsriber: (userGuid: string) => {
-    const res = requests.del(`/api/subscriberaccounts/user/${userGuid}`)
+    const res = requests.del(`/api/subscriberaccounts/user/${userGuid}`);
 
-    return res
-  }
+    return res;
+  },
 };
 
 const EmailMarketing = {
@@ -195,6 +195,7 @@ const EmailMarketing = {
         subject: params.subject,
         design: params.design,
         settings: params.settings,
+        categories: params.categories,
       }
     );
 
@@ -211,6 +212,7 @@ const EmailMarketing = {
         subject: params.subject,
         design: params.design,
         settings: params.settings,
+        categories: params.categories,
       }
     );
     return res;
