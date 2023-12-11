@@ -2,6 +2,7 @@ import expressAsync from "express-async-handler";
 import LandingPage from "../models/landingPageModel.js";
 import LandingPageRegisteredUsers from "../models/landingPageRegisteredUsers.js";
 import LandingPageStatistics from "../models/landingPageStatisticsModel.js";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * @desc: Fetch all landing poages

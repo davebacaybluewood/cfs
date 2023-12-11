@@ -1,5 +1,6 @@
 import expressAsync from "express-async-handler";
 import WebinarView from "../models/webinarViewModel.js";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * @desc: Get all webinar view counts
