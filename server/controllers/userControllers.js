@@ -37,6 +37,9 @@ const authUser = expressAsync(async (req, res) => {
     // /** Get the list of agents from back office */
     // const agentsData = await backOfficeServices.backOfficeAgents(bearerToken);
     // const agents = agentsData.items || [];
+    // const accountingSystemEmailAddress = agents?.map(
+    //   (data) => data.emailAddress
+    // );
     const accountingSystemEmailAddress = [];
 
     let isNotAdmin = false;
