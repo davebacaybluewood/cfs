@@ -1,5 +1,5 @@
 import expressAsync from "express-async-handler";
-import { NOTIFICATION_ENUMS } from "../constants/constants.js";
+import { NOTIFICATION_ENUMS, API_RES_FAIL } from "../constants/constants.js";
 import Notifications from "../models/notificationModel.js";
 
 /**

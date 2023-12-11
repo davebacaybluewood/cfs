@@ -54,5 +54,4 @@ export interface EmailTemplateParameter {
 
 export interface EmailTemplateDataSubscriber {
   templates: EmailTemplateData[];
-  name: string;
 }

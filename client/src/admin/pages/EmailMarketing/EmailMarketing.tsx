@@ -2,10 +2,16 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Checkbox,
+  Drawer,
   FormControlLabel,
   FormGroup,
   Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -35,7 +41,7 @@ import { toast } from "react-toastify";
 import DrawerBase, { Anchor } from "library/Drawer/Drawer";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { BsFillTrashFill, BsPlusCircle } from "react-icons/bs";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import nameFallback from "helpers/nameFallback";
 import { formatISODateOnly } from "helpers/date";
@@ -48,6 +54,14 @@ import { Contacts } from "admin/models/contactsModel";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
 import { EMAIL_TEMPLATES_CATEGORIES } from "admin/constants/constants";
+import axios from "axios";
+import { Close } from "@mui/icons-material";
+import Agent from "../../api/agent";
+
+interface Contact {
+  value: string;
+  label: string;
+}
 
 interface EmailMarketingFormValues {
   recipients: undefined[] | string[];
@@ -66,6 +80,12 @@ const ContractForm: React.FC = () => {
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
+
+  const [openContactListDrawerOpen, setOpenContactListDrawerOpen] =
+    useState(false);
+  const [recentContacts, setRecentContacts] = useState<
+    Array<{ value: string; label: string }>
+  >([]);
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -157,9 +177,22 @@ const ContractForm: React.FC = () => {
       setContacts(emailArray);
     };
 
+    const fetchRecentContactData = async () => {
+      try {
+        setLoading(true);
+        const recentContactsData = await agent.Contacts.getRecentContact(
+          userGuid
+        );
+        setRecentContacts(recentContactsData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (userGuid) {
       fetchEmailTemplates();
       fetchMailingList();
+      fetchRecentContactData();
       setLoading(false);
     }
   }, [userGuid]);
@@ -453,7 +486,6 @@ const ContractForm: React.FC = () => {
   const { profile, loading: profileLoading } = useFetchUserProfile(
     userCtx?.user?.userGuid ?? ""
   );
-
   const isAdmin = profile?.roles?.some((f) => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
@@ -470,7 +502,27 @@ const ContractForm: React.FC = () => {
       },
     ]);
   }, [leadUserGuid, leadProfile]);
+  const addRecentContact = async (userGuid: string, recipients) => {
+    try {
+      setLoading(true);
 
+      await Promise.all(
+        recipients.map(async (emailAddress) => {
+          try {
+            await agent.Contacts.addRecentContact(userGuid, emailAddress);
+          } catch (error) {
+            console.error(
+              `Error adding recent contact for ${emailAddress}:`,
+              error
+            );
+          }
+        })
+      );
+    } finally {
+      setLoading(false);
+      window.location.reload();
+    }
+  };
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -574,6 +626,7 @@ const ContractForm: React.FC = () => {
                   setLoading(false);
                 }
               }
+              addRecentContact(userGuid, finalData.recipients);
             }}
             validationSchema={validationSchema}
           >
@@ -585,12 +638,95 @@ const ContractForm: React.FC = () => {
               setFieldTouched,
               errors,
             }) => {
+              const handleAddContactFromDrawer = (contact) => {
+                const newContactValuesDrawer = Array.from(
+                  new Set([...contactsValue, contact])
+                );
+                setContactsValue(newContactValuesDrawer);
+                const newContactValues = Array.from(
+                  new Set([...values.recipients, contact])
+                );
+                setFieldValue("recipients", newContactValues);
+              };
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
                     {action !== "edit" ? (
                       <Grid item xs={12} md={12} lg={12}>
                         <label htmlFor="">Recipients (Required)</label>
+
+                        <Drawer
+                          anchor="right"
+                          open={openContactListDrawerOpen}
+                          onClose={() => setOpenContactListDrawerOpen(false)}
+                        >
+                          <Box
+                            sx={{
+                              width: 300,
+                              padding: 2,
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              backgroundColor: "#f8f8f8",
+                            }}
+                            role="presentation"
+                          >
+                            <IconButton
+                              edge="start"
+                              color="inherit"
+                              onClick={() =>
+                                setOpenContactListDrawerOpen(false)
+                              }
+                              sx={{ marginBottom: 2 }}
+                            >
+                              <Close />
+                            </IconButton>
+                            <List sx={{ width: "100%", marginBottom: 2 }}>
+                              <ListItem>
+                                <ListItemText
+                                  primary="Recent Used"
+                                  primaryTypographyProps={{
+                                    variant: "subtitle1",
+                                    fontWeight: "bold",
+                                    color: "primary",
+                                  }}
+                                />
+                              </ListItem>
+                              {recentContacts.map((contact) => (
+                                <ListItem
+                                  key={`${contact.value}-${contact.label}`}
+                                  onClick={() =>
+                                    handleAddContactFromDrawer(contact)
+                                  }
+                                >
+                                  <ListItemText primary={contact.label} />
+                                </ListItem>
+                              ))}
+                            </List>
+                            <List sx={{ width: "100%" }}>
+                              <ListItem>
+                                <ListItemText
+                                  primary="Recipients"
+                                  primaryTypographyProps={{
+                                    variant: "subtitle1",
+                                    fontWeight: "bold",
+                                    color: "primary",
+                                  }}
+                                />
+                              </ListItem>
+                              {contacts.map((contact) => (
+                                <ListItem
+                                  key={`${contact.value}-${contact.label}`}
+                                  onClick={() =>
+                                    handleAddContactFromDrawer(contact)
+                                  }
+                                >
+                                  <ListItemText primary={contact.label} />
+                                </ListItem>
+                              ))}
+                            </List>
+                          </Box>
+                        </Drawer>
 
                         <CreatableSelect
                           isMulti
@@ -649,6 +785,14 @@ const ContractForm: React.FC = () => {
                             },
                           }}
                         />
+                        <Link
+                          to="#"
+                          onClick={() => {
+                            setOpenContactListDrawerOpen(true);
+                          }}
+                        >
+                          Add Recipients
+                        </Link>
 
                         <ErrorText
                           isError={

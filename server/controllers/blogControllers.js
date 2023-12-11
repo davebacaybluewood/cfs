@@ -3,6 +3,7 @@ import Blogs from "../models/blogModel.js";
 import cloudinaryImport from "../utils/cloudinary.js";
 import undefinedValidator from "./helpers/undefinedValidator.js";
 import mongoose from "mongoose";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * @desc: Fetch all blogs

@@ -4,7 +4,7 @@ import { FaRegShareSquare } from "react-icons/fa";
 
 interface EmailCardProps {
   subject: string;
-  createdBy: string;
+  createdBy?: string;
   onClick: () => void;
 }
 const EmailCard: React.FC<EmailCardProps> = (props) => {
@@ -12,7 +12,7 @@ const EmailCard: React.FC<EmailCardProps> = (props) => {
     <div className="email-card">
       <div className="captions">
         <h2>{props.subject}</h2>
-        <p>Created by: Dave Bacay</p>
+        <p>Created by: {props.createdBy}</p>
       </div>
       <div className="actions">
         <button onClick={() => props.onClick()}>
