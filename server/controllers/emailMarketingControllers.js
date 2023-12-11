@@ -158,6 +158,7 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
       subject,
       design,
       settings,
+      categories,
     } = req.body;
     const { userGuid } = req.params;
     const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
@@ -169,7 +170,8 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
       !templateStatus ||
       !validStatuses.includes(templateStatus) ||
       !subject ||
-      !design
+      !design ||
+      !categories.length
     ) {
       throw new Error("Error occured in submission.");
     }
@@ -186,6 +188,7 @@ const saveEmailTemplate = expressAsync(async (req, res, next) => {
       design,
       hierarchyCode,
       settings,
+      categories,
     };
 
     const emailTemplate = new EmailTemplate(newTemplate);
@@ -433,6 +436,7 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
       subject,
       design,
       settings,
+      categories,
     } = req.body;
     const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
 
@@ -444,7 +448,8 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
       !templateName ||
       !validStatuses.includes(templateStatus) ||
       !subject ||
-      !design
+      !design ||
+      !categories?.length
     ) {
       throw new Error("Error occured in updating.");
     }
@@ -473,6 +478,9 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
       emailTemplate.settings = settings.length
         ? settings
         : emailTemplate.settings;
+      emailTemplate.categories = categories.length
+        ? categories
+        : emailTemplate.categories;
       emailTemplate.subject = undefinedValidator(
         emailTemplate.subject,
         subject

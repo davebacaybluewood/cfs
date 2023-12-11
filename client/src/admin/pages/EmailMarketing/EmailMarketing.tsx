@@ -47,7 +47,18 @@ import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter
 import { Contacts } from "admin/models/contactsModel";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
+import { EMAIL_TEMPLATES_CATEGORIES } from "admin/constants/constants";
 
+interface EmailMarketingFormValues {
+  recipients: undefined[] | string[];
+  emailBody: string;
+  subject: string;
+  settings: string[];
+  templateName: string;
+  status: string;
+  createdById: string;
+  categories: undefined[] | string[];
+}
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -55,7 +66,6 @@ const ContractForm: React.FC = () => {
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
-
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -75,7 +85,7 @@ const ContractForm: React.FC = () => {
     },
   ];
 
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues, setInitialValues] = useState<EmailMarketingFormValues>({
     recipients: [],
     emailBody: "",
     subject: "",
@@ -83,6 +93,7 @@ const ContractForm: React.FC = () => {
     templateName: "",
     status: "",
     createdById: "",
+    categories: [],
   });
 
   const [templates, setTemplates] = useState<any>([]);
@@ -104,7 +115,8 @@ const ContractForm: React.FC = () => {
     settings: string[],
     templateName: string,
     status: string,
-    createdById: string
+    createdById: string,
+    categories: string[]
   ) => {
     setInitialValues((prevState) => ({
       recipients: prevState.recipients,
@@ -114,6 +126,7 @@ const ContractForm: React.FC = () => {
       templateName: templateName,
       status: status,
       createdById: userGuid,
+      categories: categories,
     }));
 
     emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || ""));
@@ -150,8 +163,6 @@ const ContractForm: React.FC = () => {
       setLoading(false);
     }
   }, [userGuid]);
-
-
 
   const handleCreateContact = async (data: Contacts) => {
     setRecipientLoading(true);
@@ -235,7 +246,8 @@ const ContractForm: React.FC = () => {
                 template.settings,
                 template.templateName,
                 template.status,
-                template.createdById
+                template.createdById,
+                template.categories
               );
             }}
           >
@@ -279,6 +291,7 @@ const ContractForm: React.FC = () => {
         templateName: data.templateName,
         status: data.status,
         createdById: data.userGuid,
+        categories: data.categories,
       });
       setDesign(data.design);
 
@@ -370,9 +383,9 @@ const ContractForm: React.FC = () => {
     });
   }
 
-  const loadDesign = useCallback(() => { }, [emailEditorRef, design]);
+  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
 
-  useEffect(() => { }, [design]);
+  useEffect(() => {}, [design]);
 
   const handleDeleteContact = async (contactId: string) => {
     if (contactId) {
@@ -445,15 +458,18 @@ const ContractForm: React.FC = () => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
 
-  const leadUserGuid = new URLSearchParams(search).get("leadUserGuid")
-  const { profile: leadProfile, loading: leadProfileLoading } = useFetchUserProfile(leadUserGuid ?? '')
+  const leadUserGuid = new URLSearchParams(search).get("leadUserGuid");
+  const { profile: leadProfile, loading: leadProfileLoading } =
+    useFetchUserProfile(leadUserGuid ?? "");
 
   useEffect(() => {
-    setContactsValue([{
-      label: leadProfile?.emailAddress,
-      value: leadProfile?.emailAddress,
-    }]);
-  }, [leadUserGuid, leadProfile])
+    setContactsValue([
+      {
+        label: leadProfile?.emailAddress,
+        value: leadProfile?.emailAddress,
+      },
+    ]);
+  }, [leadUserGuid, leadProfile]);
 
   return (
     <Wrapper
@@ -494,6 +510,13 @@ const ContractForm: React.FC = () => {
                   subject: data.subject,
                   design: JSON.stringify(design),
                   settings: data.settings,
+                  categories: data.categories.map((c) => {
+                    return {
+                      keyword: c.label,
+                      value: c.value,
+                      label: c.label,
+                    };
+                  }),
                 };
                 saveTemplateHandler(finalPayloadData);
                 return;
@@ -675,6 +698,62 @@ const ContractForm: React.FC = () => {
                       lg={12}
                       className="form-card-container"
                     >
+                      <label>Categories (Required)</label>
+                      <CreatableSelect
+                        isMulti
+                        options={EMAIL_TEMPLATES_CATEGORIES}
+                        placeholder="Select a category item to add"
+                        value={values.categories?.map((data) => {
+                          return {
+                            keyword: data.keyword,
+                            label: data.label,
+                            value: data.value,
+                          };
+                        })}
+                        styles={{
+                          clearIndicator: ClearIndicatorStyles,
+                          placeholder: (defaultStyles) => {
+                            return {
+                              ...defaultStyles,
+                              color: "rgba(0, 0, 0, 0.3)",
+                              zIndex: 9,
+                            };
+                          },
+
+                          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                          control: (baseStyles, state) => {
+                            return {
+                              ...baseStyles,
+                              fontSize: "13px",
+                              paddingTop: "5px",
+                              paddingBottom: "5px",
+                              borderColor: "hsl(0, 0%, 80%)",
+                            };
+                          },
+                        }}
+                        onChange={(e) => {
+                          const modifiedValue = e?.map((category) => {
+                            return {
+                              label: category.label,
+                              value: category.value,
+                              keyword: category.keyword,
+                            };
+                          });
+                          setFieldValue("categories", modifiedValue);
+                        }}
+                        onBlur={(e) => {
+                          if (values.categories.length <= 0)
+                            setFieldTouched("categories", true);
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      className="form-card-container"
+                    >
                       {action !== "view" ? (
                         <React.Fragment>
                           <label>Email Body (Required)</label>
@@ -823,6 +902,13 @@ const ContractForm: React.FC = () => {
                                     subject: values.subject,
                                     design: JSON.stringify(design),
                                     settings: values.settings,
+                                    categories: values.categories.map((c) => {
+                                      return {
+                                        keyword: c.label,
+                                        value: c.value,
+                                        label: c.label,
+                                      };
+                                    }),
                                   })
                                 }
                               >
@@ -839,6 +925,13 @@ const ContractForm: React.FC = () => {
                                     subject: values.subject,
                                     design: JSON.stringify(design),
                                     settings: values.settings,
+                                    categories: values.categories.map((c) => {
+                                      return {
+                                        keyword: c.label,
+                                        value: c.value,
+                                        label: c.label,
+                                      };
+                                    }),
                                   })
                                 }
                               >

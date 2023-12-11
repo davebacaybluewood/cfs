@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+const categorySchema = mongoose.Schema(
+  {
+    label: { type: String, required: true },
+    value: { type: String, required: true },
+    keyword: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const emailTemplateModel = mongoose.Schema(
   {
     userGuid: {
@@ -34,6 +45,9 @@ const emailTemplateModel = mongoose.Schema(
     },
     settings: {
       type: [String],
+    },
+    categories: {
+      type: [categorySchema],
     },
   },
   {
