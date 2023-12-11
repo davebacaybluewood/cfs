@@ -28,6 +28,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
   const navigate = useNavigate();
   const search = useLocation().search;
   const recruiterUserGuid = new URLSearchParams(search).get("userGuid");
+  const templateId = new URLSearchParams(search).get("templateId");
   const [initialValues, setInitialValues] = useState<ValuesType>({
     emailAddress: "",
     password: "",
@@ -67,12 +68,12 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     stage === 1
       ? "Create an account"
       : stage === 2
-      ? "Personal Information"
-      : stage === 3
-      ? "Contact Information"
-      : stage === 4
-      ? "Social Media Links"
-      : "Confirm Account Information";
+        ? "Personal Information"
+        : stage === 3
+          ? "Contact Information"
+          : stage === 4
+            ? "Social Media Links"
+            : "Confirm Account Information";
 
   const changeStage = (newStage: number) => {
     setStage(newStage);
@@ -236,6 +237,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                   birthDate: values.birthDate,
                   zipCode: values.zipCode,
                   recruiterUserGuid: recruiterUserGuid,
+                  templateId: templateId
                 },
                 config
               );
@@ -269,11 +271,11 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
 
             const personalInfoValidity =
               errors.firstName ||
-              errors.lastName ||
-              errors.position ||
-              errors.roles ||
-              errors.bio ||
-              errors.nationality
+                errors.lastName ||
+                errors.position ||
+                errors.roles ||
+                errors.bio ||
+                errors.nationality
                 ? true
                 : false;
 

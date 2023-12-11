@@ -69,7 +69,6 @@ const subscriberRegistration = async (subscriberData) => {
     userGuid,
     hasNoCode,
     templateId,
-    eventId
   } = subscriberData
 
   const isCodeExist = await VerificationCode.find({
@@ -81,11 +80,6 @@ const subscriberRegistration = async (subscriberData) => {
   if (templateId) {
     const template = await EmailTemplate.findById(templateId)
     source = template.subject;
-  }
-
-  if (eventId) {
-    const event = await Events.findById(eventId)
-    source = event.title
   }
 
   const account = await Agent.find({ userGuid });

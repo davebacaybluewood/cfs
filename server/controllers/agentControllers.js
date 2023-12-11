@@ -20,6 +20,11 @@ import { AGENT_ROLES } from "../constants/constants.js";
 import { registerUserHierarchyAndPoints } from "../services/userServices.js";
 import PortalSubscription from "../models/portalSubscription.js";
 import nodemailer from "nodemailer";
+import EmailTemplate from "../models/emailTemplate.js";
+import Hierarchy from '../models/hierarchyModel.js'
+import generateString from "../utils/generateString.js";
+import mongoose from "mongoose";
+
 
 /**
  * @desc: Fetch all agents
@@ -265,8 +270,8 @@ const updateAgent = expressAsync(async (req, res) => {
         typeof req.body.avatar === "string"
           ? req.body.avatar
           : agentImgResult.secure_url
-          ? agentImgResult.secure_url
-          : agent.avatar;
+            ? agentImgResult.secure_url
+            : agent.avatar;
       agent.avatar_cloudinary_id = agentImgResult.public_id
         ? agentImgResult.public_id
         : agent.avatar_cloudinary_id;
@@ -447,7 +452,9 @@ const createAgent = expressAsync(async (req, res) => {
       const user = new User(userData);
       await user.save();
 
-      await registerUserHierarchyAndPoints(req, res, userGuid);
+      const { templateId } = req.body
+
+      await registerUserHierarchyAndPoints(req, res, userGuid, templateId);
       await PreProfile.deleteOne({
         emailAddress: req.body?.emailAddress,
       });
