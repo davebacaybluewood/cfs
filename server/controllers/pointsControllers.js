@@ -1,6 +1,7 @@
 import Points from "../models/pointsModel.js";
 import RedeeemPoints from "../models/redeemedPointsModel.js";
 import subscriberServices from "../services/subscriberServices.js";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 const getPointsByUserGuid = async (req, res, next) => {
   try {

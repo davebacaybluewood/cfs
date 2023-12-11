@@ -4,6 +4,7 @@ import cloudinaryImport from "../utils/cloudinary.js";
 import Agents from "../models/agentModel.js";
 import mongoose from "mongoose";
 import undefinedValidator from "./helpers/undefinedValidator.js";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * @desc: Fetch all blogs
