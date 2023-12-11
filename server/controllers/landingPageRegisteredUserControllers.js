@@ -1,6 +1,7 @@
 import expressAsync from "express-async-handler";
 import LandingPageRegisteredUsers from "../models/landingPageRegisteredUsers.js";
 import LandingPage from "../models/landingPageModel.js";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * @desc: Fetch all registered users in the landing poages

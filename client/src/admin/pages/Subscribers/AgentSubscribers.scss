@@ -1,90 +1,138 @@
 .agent-subscribers-container {
-    .agent-subscribers-table {
-      background-color: #fff;
-      box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
-  
-      .MuiDataGrid-root {
-        button,
-        span,
-        p,
-        input,
-        select,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        div,
-        label {
-          font-size: 1.2rem;
+  .agent-subscribers-table {
+    background-color: #fff;
+    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+
+    .MuiDataGrid-root {
+
+      button,
+      span,
+      p,
+      input,
+      select,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      div,
+      label {
+        font-size: 1.2rem;
+      }
+
+      .MuiDataGrid-cell {
+        .cta-btns {
+          button {
+            margin: 0 .5rem;
+            padding: 1rem;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font: 500 1.3rem "Montserrat";
+            color: #fff;
+            transition: .3s;
+
+            &:nth-of-type(1),
+            &:nth-of-type(2),
+            &:nth-of-type(3) {
+              &:hover {
+                background: #fff;
+                color: #333;
+                border: 1px solid #333;
+              }
+            }
+
+            &:nth-of-type(1) {
+              background: #457b9d;
+
+            }
+
+            &:nth-of-type(2) {
+              background: #1565d8;
+            }
+
+            &:nth-of-type(3) {
+              background: #ed3e4b;
+            }
+          }
+
+
+
         }
       }
-  
-      .MuiDataGrid-columnHeaderTitle {
-        font-weight: 800;
-        font-size: 1.6rem !important;
-      }
-  
-      .template-name-header {
-        display: flex;
-        align-items: center;
-  
-        span {
-          margin-right: 0.5rem;
-        }
-  
-        svg {
-          color: #4caf50;
-          font-size: 1.5rem;
-        }
-      }
-  
-      .select-btn {
-        display: flex;
-        align-items: center;
-        background-color: #1565d8;
-        padding: 0.5rem 1rem;
-        color: #fff;
-        border: none;
-        border-radius: 3px;
-        margin-left: 1rem;
-        span {
-          margin-right: 1rem;
-          color: #fff;
-        }
-      }
-  
-      .danger {
-        background-color: #ed3e4b;
-      }
-  
-      .select-btn:disabled,
-      .select-btn[disabled] {
-        border: 1px solid #999999;
-        background-color: #cccccc;
-        color: #666666;
-        cursor: auto;
-      }
+
+
     }
-  }
-  
-  .capitalize-first {
-    text-transform: lowercase;
-  }
-  .capitalize-first::first-letter {
-    text-transform: uppercase;
-  }
-  .custom-toolbar {
-    .filter-status-btn {
-      align-items: center;
+
+    .MuiDataGrid-columnHeaderTitle {
+      font-weight: 800;
+      font-size: 1.6rem !important;
+    }
+
+    .template-name-header {
       display: flex;
-      position: relative;
-      top: 1px;
-      left: -15px;
+      align-items: center;
+
+      span {
+        margin-right: 0.5rem;
+      }
+
       svg {
-        margin-right: 1rem;
-        font-size: 1.6rem;
+        color: #4caf50;
+        font-size: 1.5rem;
       }
     }
+
+    .select-btn {
+      display: flex;
+      align-items: center;
+      background-color: #1565d8;
+      padding: 0.5rem 1rem;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      margin-left: 1rem;
+
+      span {
+        margin-right: 1rem;
+        color: #fff;
+      }
+    }
+
+    .danger {
+      background-color: #ed3e4b;
+    }
+
+    .select-btn:disabled,
+    .select-btn[disabled] {
+      border: 1px solid #999999;
+      background-color: #cccccc;
+      color: #666666;
+      cursor: auto;
+    }
   }
-  
+
+
+}
+
+.capitalize-first {
+  text-transform: lowercase;
+}
+
+.capitalize-first::first-letter {
+  text-transform: uppercase;
+}
+
+.custom-toolbar {
+  .filter-status-btn {
+    align-items: center;
+    display: flex;
+    position: relative;
+    top: 1px;
+    left: -15px;
+
+    svg {
+      margin-right: 1rem;
+      font-size: 1.6rem;
+    }
+  }
+}

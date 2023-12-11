@@ -17,8 +17,8 @@ const crumbs: CrumbTypes[] = [
     isActive: false,
   },
   {
-    title: "Settings",
-    url: paths.settings,
+    title: "Shareable Emails",
+    url: paths.shareableEmails,
     isActive: true,
   },
 ]
@@ -30,26 +30,24 @@ const ShareableEmails: React.FC = () => {
   const userGuid = userCtx?.user?.userGuid
   const [templates, setTemplates] = useState<
     EmailTemplateDataSubscriber | undefined
-  >()
-  const [name, setName] = useState("")
+  >();
 
   useEffect(() => {
-    setLoading(false)
+    setLoading(false);
     const fetchEmailTemplates = async () => {
-      setLoading(true)
+      setLoading(true);
       const data = await agent.EmailMarketing.getEmailTemplatesBySubscriber(
         userGuid
-      )
+      );
 
-      setTemplates(data)
-      setName(data?.name ?? "")
-    }
+      setTemplates(data);
+    };
 
     if (userGuid) {
-      fetchEmailTemplates()
-      setLoading(false)
+      fetchEmailTemplates();
+      setLoading(false);
     }
-  }, [userGuid])
+  }, [userGuid]);
 
   return (
     <Wrapper breadcrumb={crumbs} loading={loading} error={false}>
@@ -62,7 +60,7 @@ const ShareableEmails: React.FC = () => {
         return (
           <EmailCard
             subject={data.subject}
-            createdBy={name}
+            createdBy={data.authorName}
             onClick={() =>
               navigate({
                 pathname: paths.emailMarketing,
@@ -73,10 +71,10 @@ const ShareableEmails: React.FC = () => {
               })
             }
           />
-        )
+        );
       })}
     </Wrapper>
-  )
-}
+  );
+};
 
-export default ShareableEmails
+export default ShareableEmails;

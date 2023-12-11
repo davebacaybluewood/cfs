@@ -1,4 +1,5 @@
 import subscriberServices from "../services/subscriberServices.js";
+import { API_RES_FAIL } from "../constants/constants.js";
 
 const subscribeEmailConfirmation = async (req, res, next) => {
   try {

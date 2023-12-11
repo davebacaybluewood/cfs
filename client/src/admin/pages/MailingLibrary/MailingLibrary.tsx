@@ -71,6 +71,14 @@ const MailLibrary: React.FC = () => {
       headerName: "Template Name",
       width: 200,
       renderCell: (params) => params.value,
+      disableExport: true,
+      filterable: false,
+    },
+    {
+      field: "templateValue",
+      headerName: "Template Name",
+      disableColumnMenu: true,
+      hideable: true,
     },
     {
       field: "subject",
@@ -102,6 +110,7 @@ const MailLibrary: React.FC = () => {
       width: 320,
       align: "right",
       renderCell: (params) => params.value,
+      disableExport: true,
     },
   ];
 
@@ -189,6 +198,7 @@ const MailLibrary: React.FC = () => {
         template.authorLastname
       ),
       createdAt: formatISODateOnly(template.createdAt ?? ""),
+      templateValue: template.templateName,
       templateName: (
         <>
           <Tooltip
@@ -396,6 +406,13 @@ const MailLibrary: React.FC = () => {
             }}
             rows={filteredRows}
             columns={columns}
+            initialState={{
+              columns: {
+                columnVisibilityModel: {
+                  templateValue: false,
+                },
+              },
+            }}
             slots={{ toolbar: FilteredGridToolbar }}
           />
         </div>

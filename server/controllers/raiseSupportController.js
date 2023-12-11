@@ -1,6 +1,6 @@
 import RaiseSupport from "../models/raiseSupportModel.js";
 import expressAsync from "express-async-handler";
-import { TICKET_STATUS } from "../constants/constants.js";
+import { TICKET_STATUS, API_RES_FAIL } from "../constants/constants.js";
 
 /**
  * @desc: Create a new Raise Support

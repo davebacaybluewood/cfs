@@ -29,6 +29,7 @@ import Event, { EventBody, ResponseMessage } from "admin/models/eventModel";
 import { RSVPData } from "admin/models/rsvpModel";
 import { Contacts as ContactsData } from "admin/models/contactsModel";
 import { SubscriptionData } from "admin/models/subscriptionModel";
+import Channels from "./channelServices/channelServices";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -54,7 +55,7 @@ axios.interceptors.request.use((config) => {
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
-const requests = {
+export const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
   post: <T>(url: string, body: {}) =>
     axios.post<T>(url, body).then(responseBody),
@@ -152,6 +153,11 @@ const AgentSubscribers = {
 
     return res;
   },
+  deleteAgentSubsriber: (userGuid: string) => {
+    const res = requests.del(`/api/subscriberaccounts/user/${userGuid}`)
+
+    return res
+  }
 };
 
 const EmailMarketing = {
@@ -347,6 +353,14 @@ const Points = {
 
     return res;
   },
+
+  getSubscriberByUserGuid: (userGuid: string) => {
+    const res = requests.get<SubscriberMainData | undefined>(
+      `/api/points/subscribers/${userGuid}`
+    );
+
+    return res;
+  },
 };
 
 const Orders = {
@@ -466,9 +480,23 @@ const Contacts = {
     const res = axios.delete(`/api/contacts/mailing-list/${contactId}`);
     return res;
   },
+  getRecentContact: async (userGuid: string) => {
+    const res = await axios.get(`/api/contacts/recent/${userGuid}`);
+    return res.data;
+  },
+  addRecentContact: async (userGuid: string, label: string) => {
+    try {
+      const res = await axios.post(`/api/contacts/recent`, { userGuid, label });
+      return res.data; 
+    } catch (error) {
+      console.error(`Error adding recent contact for ${label}:`, error);
+      throw error;
+    }
+  },
 };
 
 const agent = {
+  ...Channels,
   LandingPage,
   LandingPageRegisteredUsers,
   Agents,

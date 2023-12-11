@@ -23,6 +23,7 @@ const useFetchSubscribers = (userGuid: string) => {
     loading,
     subscribers: subscribers?.subscribers,
     totalSubscribers: subscribers?.totalSubscribers,
+    setSubscribers
   };
 };
 

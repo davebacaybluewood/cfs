@@ -11,6 +11,7 @@ import User from "../models/userModel.js";
 import Hierarchy from "../models/hierarchyModel.js";
 import generateString from "../utils/generateString.js";
 import { API_RES_FAIL, PROFILE_POSITIONS } from "../constants/constants.js";
+import * as es from "../services/emailServices.js";
 
 /**
  * @desc: Send an email marketing
@@ -44,7 +45,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
           parent: "",
         });
 
-        userGuid = agentHierarchy.userGuid;
+        userGuid = agentHierarchy?.userGuid || agent[0].userGuid;
       } else {
         userGuid = "";
       }
@@ -322,15 +323,22 @@ const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
     if (!status) throw new Error("Template status not provided.");
 
     /** Find the hierarchy */
+    let userGuidHead;
+    let agentName;
     const hierarchy = await Hierarchy.find({ userGuid });
-    const hierachyCode = hierarchy[0].hierachyCode;
+    if (hierarchy.length > 0) {
+      const hierachyCode = hierarchy[0].hierachyCode;
 
-    /** Get the head of hierarchy to get the user guid */
-    const hierarchyHead = await Hierarchy.find({ hierachyCode });
-    const userGuidHead = hierarchyHead[0].userGuid;
+      /** Get the head of hierarchy to get the user guid */
+      const hierarchyHead = await Hierarchy.find({ hierachyCode });
+      userGuidHead = hierarchyHead[0].userGuid;
 
-    /** Get the head information */
-    const agents = await Agents.find({ userGuid: userGuidHead });
+      /** Get the head information */
+      const agent = await Agents.findOne({ userGuid: userGuidHead });
+      if (agent) {
+        agentName = agent.firstName + " " + agent.lastName;
+      }
+    }
 
     /** Get all admin userGuid */
     let adminUsers = await User.find(
@@ -339,16 +347,13 @@ const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
     );
     adminUsers = adminUsers.map((user) => user.userGuid).flat();
 
-    const templates = await EmailTemplate.find({
-      userGuid: {
-        $in: [...adminUsers, userGuidHead],
-      },
-      status,
-    });
+    const templates = await es.getEmailTemplates(
+      [...adminUsers, userGuidHead],
+      status
+    );
 
     res.json({
       templates,
-      name: agents[0].firstName + " " + agents[0].lastName,
     });
   } catch (err) {
     console.log(err);
