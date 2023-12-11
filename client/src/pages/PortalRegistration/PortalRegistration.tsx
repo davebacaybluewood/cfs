@@ -272,7 +272,8 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
               errors.lastName ||
               errors.position ||
               errors.roles ||
-              errors.bio
+              errors.bio ||
+              errors.nationality
                 ? true
                 : false;
 
