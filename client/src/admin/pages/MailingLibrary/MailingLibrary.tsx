@@ -29,9 +29,11 @@ import classNames from "classnames";
 import { HiOutlineTrash } from "react-icons/hi";
 import { RiExternalLinkFill } from "react-icons/ri";
 import Spinner from "library/Spinner/Spinner";
-import { BiFilterAlt } from "react-icons/bi";
+import { BiCategory, BiFilterAlt } from "react-icons/bi";
 import "./MailingLibrary.scss";
 import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter";
+import { BLANK_VALUE } from "constants/constants";
+import Badge from "library/Badge/Badge";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -83,6 +85,12 @@ const MailLibrary: React.FC = () => {
     {
       field: "subject",
       headerName: "Subject",
+      width: 200,
+      renderCell: (params) => <TextOverFlow value={params.value} />,
+    },
+    {
+      field: "categories",
+      headerName: "Categories",
       width: 200,
       renderCell: (params) => <TextOverFlow value={params.value} />,
     },
@@ -222,6 +230,19 @@ const MailLibrary: React.FC = () => {
         </>
       ),
       subject: template.subject,
+      categories: template.categories?.length
+        ? template.categories?.map((data) => {
+            if (data.label) {
+              return (
+                <Badge>
+                  <span>{data.label}</span>
+                </Badge>
+              );
+            } else {
+              return BLANK_VALUE;
+            }
+          })
+        : BLANK_VALUE,
       body: template.templateBody,
       status:
         template.status.charAt(0).toUpperCase() +
@@ -345,11 +366,24 @@ const MailLibrary: React.FC = () => {
 
   // This will be refactor september
   const FilteredGridToolbar = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [openStatus, setOpenStatus] = useState(false);
+    const [categoriesAnchorEl, setCategoriesAnchorEl] =
+      useState<null | HTMLElement>(null);
+    const [openCategories, setOpenCategories] = useState(false);
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setOpenStatus(true);
       setAnchorEl(event.currentTarget);
     };
+
+    const categoriesFilterHandler = (
+      event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+      setOpenCategories(true);
+      setCategoriesAnchorEl(event.currentTarget);
+    };
+
     const filterHandler = (status: string) => {
       setTemplates((prevState) => {
         const filteredData = originalTemplates?.filter(
@@ -359,6 +393,38 @@ const MailLibrary: React.FC = () => {
       });
       setAnchorEl(null);
     };
+
+    const filterCategoryHandler = (categoryValue: string) => {
+      setTemplates((prevState) => {
+        let result = originalTemplates.filter((cl) =>
+          cl.categories?.some((c) => c.value == categoryValue)
+        );
+
+        return categoryValue === "ALL" ? originalTemplates : result;
+      });
+      setAnchorEl(null);
+    };
+
+    const categories = templates
+      .map((data) => {
+        const deepCategory = data.categories?.map((c) => {
+          return {
+            value: c?.value,
+            label: c?.label,
+            keyword: c?.label,
+          };
+        });
+
+        return deepCategory;
+      })
+      .filter((data) => data)
+      .filter((data) => data.length);
+
+    const finalCategories = Object.values(categories)
+      .filter((x) => Array.isArray(x))
+      .flat()
+      .filter((data: any) => data?.value);
+
     return (
       <GridToolbarContainer className="custom-toolbar">
         <GridToolbar />
@@ -366,7 +432,14 @@ const MailLibrary: React.FC = () => {
           <BiFilterAlt />
           Filter by Status
         </Button>
-        <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
+        <Menu
+          anchorEl={anchorEl}
+          open={openStatus}
+          onClose={() => {
+            setAnchorEl(null);
+            setOpenStatus(false);
+          }}
+        >
           <MenuItem onClick={() => filterHandler("ALL")}>All Status</MenuItem>
           <MenuItem onClick={() => filterHandler("ACTIVATED")}>
             Activated
@@ -375,6 +448,30 @@ const MailLibrary: React.FC = () => {
           <MenuItem onClick={() => filterHandler("DEACTIVATED")}>
             Deactivated
           </MenuItem>
+        </Menu>
+
+        <Button onClick={categoriesFilterHandler} className="filter-status-btn">
+          <BiCategory />
+          Filter by Categories
+        </Button>
+        <Menu
+          anchorEl={categoriesAnchorEl}
+          open={openCategories}
+          onClose={() => {
+            setCategoriesAnchorEl(null);
+            setOpenCategories(false);
+          }}
+        >
+          <MenuItem onClick={() => filterCategoryHandler("ALL")}>
+            All Categories
+          </MenuItem>
+          {finalCategories?.map((data: any) => {
+            return (
+              <MenuItem onClick={() => filterCategoryHandler(data?.value)}>
+                {data?.label}
+              </MenuItem>
+            );
+          })}
         </Menu>
       </GridToolbarContainer>
     );

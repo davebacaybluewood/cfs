@@ -53,8 +53,9 @@ import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter
 import { Contacts } from "admin/models/contactsModel";
 import useFetchUserProfile from "admin/hooks/useFetchProfile";
 import { PROFILE_ROLES } from "pages/PortalRegistration/constants";
+import { EMAIL_TEMPLATES_CATEGORIES } from "admin/constants/constants";
 import axios from "axios";
-import { Close } from "@mui/icons-material"
+import { Close } from "@mui/icons-material";
 import Agent from "../../api/agent";
 
 interface Contact {
@@ -62,6 +63,16 @@ interface Contact {
   label: string;
 }
 
+interface EmailMarketingFormValues {
+  recipients: undefined[] | string[];
+  emailBody: string;
+  subject: string;
+  settings: string[];
+  templateName: string;
+  status: string;
+  createdById: string;
+  categories: undefined[] | string[];
+}
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -70,8 +81,11 @@ const ContractForm: React.FC = () => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
 
-  const [openContactListDrawerOpen, setOpenContactListDrawerOpen] = useState(false);
-  const [recentContacts, setRecentContacts] = useState<Array<{ value: string; label: string }>>([]);
+  const [openContactListDrawerOpen, setOpenContactListDrawerOpen] =
+    useState(false);
+  const [recentContacts, setRecentContacts] = useState<
+    Array<{ value: string; label: string }>
+  >([]);
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -91,7 +105,7 @@ const ContractForm: React.FC = () => {
     },
   ];
 
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues, setInitialValues] = useState<EmailMarketingFormValues>({
     recipients: [],
     emailBody: "",
     subject: "",
@@ -99,6 +113,7 @@ const ContractForm: React.FC = () => {
     templateName: "",
     status: "",
     createdById: "",
+    categories: [],
   });
 
   const [templates, setTemplates] = useState<any>([]);
@@ -120,7 +135,8 @@ const ContractForm: React.FC = () => {
     settings: string[],
     templateName: string,
     status: string,
-    createdById: string
+    createdById: string,
+    categories: string[]
   ) => {
     setInitialValues((prevState) => ({
       recipients: prevState.recipients,
@@ -130,6 +146,7 @@ const ContractForm: React.FC = () => {
       templateName: templateName,
       status: status,
       createdById: userGuid,
+      categories: categories,
     }));
 
     emailEditorRef.current?.editor?.loadDesign(JSON.parse(design || ""));
@@ -163,7 +180,9 @@ const ContractForm: React.FC = () => {
     const fetchRecentContactData = async () => {
       try {
         setLoading(true);
-        const recentContactsData = await agent.Contacts.getRecentContact(userGuid);
+        const recentContactsData = await agent.Contacts.getRecentContact(
+          userGuid
+        );
         setRecentContacts(recentContactsData);
       } finally {
         setLoading(false);
@@ -260,7 +279,8 @@ const ContractForm: React.FC = () => {
                 template.settings,
                 template.templateName,
                 template.status,
-                template.createdById
+                template.createdById,
+                template.categories
               );
             }}
           >
@@ -304,6 +324,7 @@ const ContractForm: React.FC = () => {
         templateName: data.templateName,
         status: data.status,
         createdById: data.userGuid,
+        categories: data.categories,
       });
       setDesign(data.design);
 
@@ -395,9 +416,9 @@ const ContractForm: React.FC = () => {
     });
   }
 
-  const loadDesign = useCallback(() => { }, [emailEditorRef, design]);
+  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
 
-  useEffect(() => { }, [design]);
+  useEffect(() => {}, [design]);
 
   const handleDeleteContact = async (contactId: string) => {
     if (contactId) {
@@ -469,23 +490,39 @@ const ContractForm: React.FC = () => {
     return f.value === PROFILE_ROLES.MASTER_ADMIN.ROLE_MASTER_ADMIN.value;
   });
 
+  const leadUserGuid = new URLSearchParams(search).get("leadUserGuid");
+  const { profile: leadProfile, loading: leadProfileLoading } =
+    useFetchUserProfile(leadUserGuid ?? "");
+
+  useEffect(() => {
+    setContactsValue([
+      {
+        label: leadProfile?.emailAddress,
+        value: leadProfile?.emailAddress,
+      },
+    ]);
+  }, [leadUserGuid, leadProfile]);
   const addRecentContact = async (userGuid: string, recipients) => {
     try {
       setLoading(true);
 
-      await Promise.all(recipients.map(async (emailAddress) => {
-        try {
-          await agent.Contacts.addRecentContact(userGuid, emailAddress);
-        } catch (error) {
-          console.error(`Error adding recent contact for ${emailAddress}:`, error);
-        }
-      }));
+      await Promise.all(
+        recipients.map(async (emailAddress) => {
+          try {
+            await agent.Contacts.addRecentContact(userGuid, emailAddress);
+          } catch (error) {
+            console.error(
+              `Error adding recent contact for ${emailAddress}:`,
+              error
+            );
+          }
+        })
+      );
     } finally {
       setLoading(false);
       window.location.reload();
-
-    }   
-  }
+    }
+  };
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -525,6 +562,13 @@ const ContractForm: React.FC = () => {
                   subject: data.subject,
                   design: JSON.stringify(design),
                   settings: data.settings,
+                  categories: data.categories.map((c) => {
+                    return {
+                      keyword: c.label,
+                      value: c.value,
+                      label: c.label,
+                    };
+                  }),
                 };
                 saveTemplateHandler(finalPayloadData);
                 return;
@@ -595,9 +639,13 @@ const ContractForm: React.FC = () => {
               errors,
             }) => {
               const handleAddContactFromDrawer = (contact) => {
-                const newContactValuesDrawer = Array.from(new Set([...contactsValue, contact]));
+                const newContactValuesDrawer = Array.from(
+                  new Set([...contactsValue, contact])
+                );
                 setContactsValue(newContactValuesDrawer);
-                const newContactValues = Array.from(new Set([...values.recipients, contact]));
+                const newContactValues = Array.from(
+                  new Set([...values.recipients, contact])
+                );
                 setFieldValue("recipients", newContactValues);
               };
               return (
@@ -616,51 +664,63 @@ const ContractForm: React.FC = () => {
                             sx={{
                               width: 300,
                               padding: 2,
-                              display: 'flex',
-                              flexDirection: 'column',
-                              alignItems: 'center',
-                              backgroundColor: '#f8f8f8',
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              backgroundColor: "#f8f8f8",
                             }}
                             role="presentation"
                           >
                             <IconButton
                               edge="start"
                               color="inherit"
-                              onClick={() => setOpenContactListDrawerOpen(false)}
+                              onClick={() =>
+                                setOpenContactListDrawerOpen(false)
+                              }
                               sx={{ marginBottom: 2 }}
                             >
                               <Close />
                             </IconButton>
-                            <List sx={{ width: '100%', marginBottom: 2 }}>
+                            <List sx={{ width: "100%", marginBottom: 2 }}>
                               <ListItem>
                                 <ListItemText
                                   primary="Recent Used"
                                   primaryTypographyProps={{
-                                    variant: 'subtitle1',
-                                    fontWeight: 'bold',
-                                    color: 'primary',
+                                    variant: "subtitle1",
+                                    fontWeight: "bold",
+                                    color: "primary",
                                   }}
                                 />
                               </ListItem>
                               {recentContacts.map((contact) => (
-                                <ListItem key={`${contact.value}-${contact.label}`} onClick={() => handleAddContactFromDrawer(contact)}>
+                                <ListItem
+                                  key={`${contact.value}-${contact.label}`}
+                                  onClick={() =>
+                                    handleAddContactFromDrawer(contact)
+                                  }
+                                >
                                   <ListItemText primary={contact.label} />
                                 </ListItem>
                               ))}
                             </List>
-                            <List sx={{ width: '100%' }}>
+                            <List sx={{ width: "100%" }}>
                               <ListItem>
                                 <ListItemText
                                   primary="Recipients"
                                   primaryTypographyProps={{
-                                    variant: 'subtitle1',
-                                    fontWeight: 'bold',
-                                    color: 'primary',
+                                    variant: "subtitle1",
+                                    fontWeight: "bold",
+                                    color: "primary",
                                   }}
                                 />
                               </ListItem>
                               {contacts.map((contact) => (
-                                <ListItem key={`${contact.value}-${contact.label}`} onClick={() => handleAddContactFromDrawer(contact)}>
+                                <ListItem
+                                  key={`${contact.value}-${contact.label}`}
+                                  onClick={() =>
+                                    handleAddContactFromDrawer(contact)
+                                  }
+                                >
                                   <ListItemText primary={contact.label} />
                                 </ListItem>
                               ))}
@@ -725,7 +785,12 @@ const ContractForm: React.FC = () => {
                             },
                           }}
                         />
-                        <Link to="#" onClick={() => { setOpenContactListDrawerOpen(true); }}>
+                        <Link
+                          to="#"
+                          onClick={() => {
+                            setOpenContactListDrawerOpen(true);
+                          }}
+                        >
                           Add Recipients
                         </Link>
 
@@ -768,6 +833,62 @@ const ContractForm: React.FC = () => {
                         variant="outlined"
                         name="subject"
                         value={values.subject}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      className="form-card-container"
+                    >
+                      <label>Categories (Required)</label>
+                      <CreatableSelect
+                        isMulti
+                        options={EMAIL_TEMPLATES_CATEGORIES}
+                        placeholder="Select a category item to add"
+                        value={values.categories?.map((data) => {
+                          return {
+                            keyword: data.keyword,
+                            label: data.label,
+                            value: data.value,
+                          };
+                        })}
+                        styles={{
+                          clearIndicator: ClearIndicatorStyles,
+                          placeholder: (defaultStyles) => {
+                            return {
+                              ...defaultStyles,
+                              color: "rgba(0, 0, 0, 0.3)",
+                              zIndex: 9,
+                            };
+                          },
+
+                          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                          control: (baseStyles, state) => {
+                            return {
+                              ...baseStyles,
+                              fontSize: "13px",
+                              paddingTop: "5px",
+                              paddingBottom: "5px",
+                              borderColor: "hsl(0, 0%, 80%)",
+                            };
+                          },
+                        }}
+                        onChange={(e) => {
+                          const modifiedValue = e?.map((category) => {
+                            return {
+                              label: category.label,
+                              value: category.value,
+                              keyword: category.keyword,
+                            };
+                          });
+                          setFieldValue("categories", modifiedValue);
+                        }}
+                        onBlur={(e) => {
+                          if (values.categories.length <= 0)
+                            setFieldTouched("categories", true);
+                        }}
                       />
                     </Grid>
                     <Grid
@@ -925,6 +1046,13 @@ const ContractForm: React.FC = () => {
                                     subject: values.subject,
                                     design: JSON.stringify(design),
                                     settings: values.settings,
+                                    categories: values.categories.map((c) => {
+                                      return {
+                                        keyword: c.label,
+                                        value: c.value,
+                                        label: c.label,
+                                      };
+                                    }),
                                   })
                                 }
                               >
@@ -941,6 +1069,13 @@ const ContractForm: React.FC = () => {
                                     subject: values.subject,
                                     design: JSON.stringify(design),
                                     settings: values.settings,
+                                    categories: values.categories.map((c) => {
+                                      return {
+                                        keyword: c.label,
+                                        value: c.value,
+                                        label: c.label,
+                                      };
+                                    }),
                                   })
                                 }
                               >
