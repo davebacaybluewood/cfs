@@ -141,17 +141,17 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
           }}
           validationSchema={
             currentPage === 1
-              ? validationSchema.validationSchemaEmail
-              : validationSchema.validationSchemaCode
+            && validationSchema.validationSchemaEmail
+            // : validationSchema.validationSchemaCode
           }
         >
           {({ values, errors, handleSubmit }) => {
             const subscribeAccountDetailsValidity =
               errors.confirmPassword ||
-              errors.password ||
-              errors.email ||
-              errors.firstName ||
-              errors.lastName
+                errors.password ||
+                errors.email ||
+                errors.firstName ||
+                errors.lastName
                 ? false
                 : true;
 
