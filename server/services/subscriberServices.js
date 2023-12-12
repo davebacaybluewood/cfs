@@ -255,6 +255,7 @@ const fetchSubscribersByUser = async (userGuid) => {
           parent: 1,
           createdAt: 1,
           updatedAt: 1,
+          source: 1,
           position: "$userDoc.position",
           firstName: "$userDoc.firstName",
           lastName: "$userDoc.lastName",
@@ -274,12 +275,14 @@ const fetchSubscribersByUser = async (userGuid) => {
       const isSubscriber = data.position?.some(
         (e) => e.value === "POSITION_SUBSCRIBER"
       );
+      const source = data.source
 
       return {
         ...data,
         type: isSubscriber ? "SUBSCRIBER" : "FREE 30DAYS TRIAL",
         previousRole: data.previousRole || "",
         isSubscribed: isAgent,
+        source
       };
     });
 

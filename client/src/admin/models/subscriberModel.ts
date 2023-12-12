@@ -14,6 +14,7 @@ export interface SubscribersData {
   type: string;
   isSubscribed: string;
   previousRole?: string;
+  source: string;
 }
 
 export interface SubscriberMainData {
