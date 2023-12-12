@@ -72,12 +72,12 @@ const AgentSubscribers: React.FC = () => {
       width: 200,
       renderCell: (params) => params.value,
     },
+    { field: "firstName", headerName: "First Name", width: 250 },
     {
       field: "lastName",
       headerName: "Last Name",
       width: 250,
     },
-    { field: "firstName", headerName: "First Name", width: 250 },
     { field: "email", headerName: "Email Address", width: 250 },
     { field: "createdAt", headerName: "Date Created", width: 200 },
     { field: "actions", headerName: "Actions", renderCell: (params) => params.value, width: 300, headerAlign: 'center' },
@@ -157,7 +157,7 @@ const AgentSubscribers: React.FC = () => {
       id: subscriber.userGuid,
       isSubscribed: subscriber.isSubscribed ? "YES" : "NO",
       firstName: capitalizeText(subscriber.firstName),
-      lastName: capitalizeText(subscriber.firstName),
+      lastName: capitalizeText(subscriber.lastName),
       email: subscriber.email,
       createdAt: formatISODateOnly(subscriber.createdAt ?? ""),
       type:
