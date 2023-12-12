@@ -28,7 +28,7 @@ interface AccountDetailsProps {
   isAdmin?: boolean;
 }
 const AccountDetails: React.FC<AccountDetailsProps> = (props) => {
-  const [verified, setVerified] = useState(false);
+  const [verified, setVerified] = useState(true);
 
   const recaptchaOnChangeHandler = (value) => {
     setVerified(!!value);
