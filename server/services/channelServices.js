@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Channels from "../models/channelModel.js";
+import Hierarchy from "../models/hierarchyModel.js";
 
 const getAllChannels = async () => {
   try {
@@ -116,6 +117,22 @@ const deleteChannel = async (channelId) => {
   }
 };
 
+const updateLeadChannelLead = async (userGuid, channels) => {
+  try {
+    const hierarchy = await Hierarchy.findOne({
+      userGuid,
+    });
+
+    hierarchy.channels = channels;
+    await hierarchy.save();
+
+    return hierarchy;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export default {
   createChannel,
   deleteChannel,
@@ -123,4 +140,5 @@ export default {
   getAllChannelsByHierarchyCode,
   getAllChannelsByUserGuid,
   updateChannelByChannelId,
+  updateLeadChannelLead,
 };

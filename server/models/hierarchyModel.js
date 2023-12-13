@@ -26,6 +26,9 @@ const hierarchyModel = mongoose.Schema(
     source: {
       type: String,
     },
+    channels: {
+      type: [String],
+    },
   },
   {
     timestamps: true,
