@@ -85,8 +85,15 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid, templateId) =>
 
   let source = ""
   if (templateId) {
-    const template = await EmailTemplate.findById(mongoose.Types.ObjectId(templateId))
-    source = template.subject
+    const findEmailTemplate = async () => {
+      const template = await EmailTemplate.findById(templateId);
+      source = template.subject;
+    }
+    if (templateId === "CUSTOM_EMAIL") {
+      source = "Custom Email";
+    } else {
+      source = findEmailTemplate()
+    }
   }
 
   const agentProfile = await Agent.findOne({ userGuid });
