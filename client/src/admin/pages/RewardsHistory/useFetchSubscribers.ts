@@ -1,9 +1,6 @@
 import agent from "admin/api/agent";
 import { useEffect, useState } from "react";
-import {
-  SubscriberMainData,
-  SubscribersData,
-} from "admin/models/subscriberModel";
+import { SubscribersData } from "admin/models/subscriberModel";
 
 const useFetchSubscribers = (userGuid: string, leadDrawerOpen?: boolean) => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +16,7 @@ const useFetchSubscribers = (userGuid: string, leadDrawerOpen?: boolean) => {
     };
 
     if (!leadDrawerOpen) {
-      // setLoading(true);
+      setLoading(true);
       getData();
     }
   }, [userGuid, leadDrawerOpen]);
