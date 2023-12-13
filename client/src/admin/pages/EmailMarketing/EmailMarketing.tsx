@@ -542,6 +542,7 @@ const ContractForm: React.FC = () => {
               const finalData: any = {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
+                templateId
               };
 
               finalData.recipients =

@@ -356,13 +356,6 @@ const Points = {
     return res;
   },
 
-  getSubscriberByUserGuid: (userGuid: string) => {
-    const res = requests.get<SubscriberMainData | undefined>(
-      `/api/points/subscribers/${userGuid}`
-    );
-
-    return res;
-  },
 };
 
 const Orders = {
@@ -489,7 +482,7 @@ const Contacts = {
   addRecentContact: async (userGuid: string, label: string) => {
     try {
       const res = await axios.post(`/api/contacts/recent`, { userGuid, label });
-      return res.data; 
+      return res.data;
     } catch (error) {
       console.error(`Error adding recent contact for ${label}:`, error);
       throw error;

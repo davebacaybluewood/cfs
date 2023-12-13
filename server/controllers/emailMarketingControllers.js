@@ -24,6 +24,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
     const mailSubject = req.body.subject;
     const contractEmail = req.body.recipients;
     const settings = req.body.settings;
+    const templateId = req.body.templateId
 
     const blogs = await BlogsAndResource.find().limit(5).sort({ $natural: -1 });
     const agent = await Agents.find({ userGuid: req.body.userGuid });
@@ -88,11 +89,10 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
                   margin-bottom: 10px;
                 "
               >
-                ${
-                  content.length > 250
-                    ? content.substring(0, 250) + "..."
-                    : content
-                }
+                ${content.length > 250
+          ? content.substring(0, 250) + "..."
+          : content
+        }
               </p>
               <a
                 style="
@@ -116,6 +116,7 @@ const sendEmailMarketing = expressAsync(async (req, res, next) => {
       body: req.body.emailBody,
       blogEmail: settings.includes("BLOGS") ? blogEmail.join("") : null,
       userGuid: userGuid,
+      templateId
     });
 
     const bcc = contractEmail;
@@ -219,29 +220,29 @@ const getEmailTemplates = expressAsync(async (req, res, next) => {
 
     const statusCondition = status
       ? {
-          $match: {
-            $or: [
-              {
-                $and: [
-                  { userGuid: { $eq: userGuid } },
-                  { status: { $eq: status } },
-                ],
-              },
-              { isAddedByMarketing: true, status: "ACTIVATED" },
-            ],
-          },
-        }
+        $match: {
+          $or: [
+            {
+              $and: [
+                { userGuid: { $eq: userGuid } },
+                { status: { $eq: status } },
+              ],
+            },
+            { isAddedByMarketing: true, status: "ACTIVATED" },
+          ],
+        },
+      }
       : {
-          $match: {
-            $or: [
-              {
-                status: {
-                  $in: ["ACTIVATED", "DRAFT", "DEACTIVATED"],
-                },
+        $match: {
+          $or: [
+            {
+              status: {
+                $in: ["ACTIVATED", "DRAFT", "DEACTIVATED"],
               },
-            ],
-          },
-        };
+            },
+          ],
+        },
+      };
     const filteredAggregate = [
       {
         $lookup: {

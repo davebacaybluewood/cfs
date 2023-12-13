@@ -28,6 +28,7 @@ import "./AgentSubscribers.scss";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import capitalizeText from "../../../helpers/capitalizeText";
 import ChannelDrawer from "admin/components/ChannelDrawer/ChannelDrawer";
+import { BLANK_VALUE } from "constants/constants";
 
 
 const crumbs: CrumbTypes[] = [
@@ -72,13 +73,14 @@ const AgentSubscribers: React.FC = () => {
       width: 200,
       renderCell: (params) => params.value,
     },
+    { field: "firstName", headerName: "First Name", width: 200 },
     {
       field: "lastName",
       headerName: "Last Name",
-      width: 250,
+      width: 200,
     },
-    { field: "firstName", headerName: "First Name", width: 250 },
-    { field: "email", headerName: "Email Address", width: 250 },
+    { field: "email", headerName: "Email Address", width: 200 },
+    { field: "source", headerName: "Source", width: 150, headerAlign: 'center', align: 'center' },
     { field: "createdAt", headerName: "Date Created", width: 200 },
     { field: "actions", headerName: "Actions", renderCell: (params) => params.value, width: 300, headerAlign: 'center' },
 
@@ -106,6 +108,7 @@ const AgentSubscribers: React.FC = () => {
           email: data.email,
           firstName: data.firstName,
           lastName: data.lastName,
+          source: data.source,
           userType: !data.isSubscribed && data.type === "SUBSCRIBER"
             ? "Subscriber"
             : !data.isSubscribed && data.type === "FREE 30DAYS TRIAL"
@@ -122,10 +125,11 @@ const AgentSubscribers: React.FC = () => {
         return {
           ['First Name']: s.firstName,
           ['Last Name']: s.lastName,
-          ['Date Created']: s.createdAt,
           ['User Type']: s.userType,
           ['Email Address']: s.email,
+          ['Source']: s.source,
           ['Is Upgraded to Agent']: s.isUpgradeToAgent,
+          ['Date Created']: s.createdAt,
         }
       })
       if (userGuid) {
@@ -157,8 +161,9 @@ const AgentSubscribers: React.FC = () => {
       id: subscriber.userGuid,
       isSubscribed: subscriber.isSubscribed ? "YES" : "NO",
       firstName: capitalizeText(subscriber.firstName),
-      lastName: capitalizeText(subscriber.firstName),
+      lastName: capitalizeText(subscriber.lastName),
       email: subscriber.email,
+      source: subscriber.source ?? BLANK_VALUE,
       createdAt: formatISODateOnly(subscriber.createdAt ?? ""),
       type:
         !subscriber.isSubscribed && subscriber.type === "SUBSCRIBER"
