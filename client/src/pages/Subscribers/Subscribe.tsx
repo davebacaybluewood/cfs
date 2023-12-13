@@ -149,8 +149,8 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
           }}
           validationSchema={
             currentPage === 1
-              ? validationSchema.validationSchemaEmail
-              : validationSchema.validationSchemaCode
+            && validationSchema.validationSchemaEmail
+            // : validationSchema.validationSchemaCode
           }
         >
           {({ values, errors, handleSubmit }) => {
