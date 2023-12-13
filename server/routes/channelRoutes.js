@@ -11,6 +11,9 @@ router
   })
   .get(protect, async (req, res, next) => {
     await channelControllers.getAllChannels(req, res, next);
+  })
+  .put(protect, async (req, res, next) => {
+    await channelControllers.updateLeadChannelLead(req, res, next);
   });
 
 router

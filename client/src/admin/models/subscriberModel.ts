@@ -15,6 +15,7 @@ export interface SubscribersData {
   isSubscribed: string;
   previousRole?: string;
   source: string;
+  channels: string[] | undefined;
 }
 
 export interface SubscriberMainData {

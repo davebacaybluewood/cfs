@@ -1,14 +1,26 @@
-import React, { SetStateAction, useContext, useState } from "react";
+import React, { SetStateAction, useContext, useEffect, useState } from "react";
 import Wrapper from "admin/components/Wrapper/Wrapper";
 import { CrumbTypes } from "../Dashboard/types";
 import { paths } from "constants/routes";
 import Title from "admin/components/Title/Title";
-import { Button as MUIButton, Drawer, Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions } from "@mui/material";
+import {
+  Button as MUIButton,
+  Drawer,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+  Button,
+  MenuItem,
+  Menu,
+} from "@mui/material";
 import {
   DataGrid,
   GridColDef,
   GridRowParams,
   GridToolbar,
+  GridToolbarContainer,
 } from "@mui/x-data-grid";
 import { UserContext } from "admin/context/UserProvider";
 import { formatISODateOnly } from "helpers/date";
@@ -22,14 +34,16 @@ import useUserRole from "hooks/useUserRole";
 import Pricing from "admin/components/Pricing/Pricing";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import agent from "admin/api/agent";
-import * as Papa from 'papaparse';
-import { saveAs } from 'file-saver';
+import * as Papa from "papaparse";
+import { saveAs } from "file-saver";
 import "./AgentSubscribers.scss";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import capitalizeText from "../../../helpers/capitalizeText";
 import ChannelDrawer from "admin/components/ChannelDrawer/ChannelDrawer";
 import { BLANK_VALUE } from "constants/constants";
-
+import Badge from "library/Badge/Badge";
+import { BiCategory } from "react-icons/bi";
+import { SubscribersData } from "admin/models/subscriberModel";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -44,21 +58,43 @@ const crumbs: CrumbTypes[] = [
   },
 ];
 
+type ActiveChannelType = {
+  channelId: string;
+  channelName: string;
+  channels: never[] | string[];
+  leadUserGuid: string;
+};
+
 const AgentSubscribers: React.FC = () => {
+  const [leadDrawerOpen, setLeadDrawerOpen] = useState(false);
   const userCtx = useContext(UserContext) as any;
   const userGuid = userCtx?.user?.userGuid;
   const [clipboardValue, setClipboardValue] = useCopyToClipboard();
-  const { loading, subscribers, setSubscribers, totalSubscribers } = useFetchSubscribers(userGuid);
+  const { loading, subscribers, setSubscribers, totalSubscribers } =
+    useFetchSubscribers(userGuid, leadDrawerOpen);
+  const [clonedSubscribers, setClonedSubscribers] = useState<
+    SubscribersData[] | undefined
+  >();
   const { isFreeTrial, loading: roleLoading } = useUserRole();
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
-  const [activeId, setActiveId] = useState("")
-  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeId, setActiveId] = useState("");
+  const [activeChannel, setActiveChannel] = useState<ActiveChannelType>({
+    channelId: "",
+    channelName: "",
+    channels: [],
+    leadUserGuid: "",
+  });
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [channelDrawerOpen, setChannelDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    setClonedSubscribers(subscribers);
+  }, [subscribers]);
 
   const columns: GridColDef[] = [
     {
@@ -80,27 +116,45 @@ const AgentSubscribers: React.FC = () => {
       width: 200,
     },
     { field: "email", headerName: "Email Address", width: 200 },
-    { field: "source", headerName: "Source", width: 250, headerAlign: 'center', align: 'center' },
+    {
+      field: "source",
+      headerName: "Source",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "channels",
+      headerName: "Channels",
+      width: 350,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => params.value,
+    },
     { field: "createdAt", headerName: "Date Created", width: 200 },
-    { field: "actions", headerName: "Actions", renderCell: (params) => params.value, width: 300, headerAlign: 'center' },
-
+    {
+      field: "actions",
+      headerName: "Actions",
+      renderCell: (params) => params.value,
+      width: 400,
+      headerAlign: "center",
+    },
   ];
 
   const downloadAsCSV = (data: any[], filename: string) => {
     const csv = Papa.unparse(data);
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     saveAs(blob, filename);
   };
-
 
   const handlers = {
     sendEmail: (userGuid: string) => {
       navigate({
         pathname: paths.emailMarketing,
         search: createSearchParams({
-          leadUserGuid: userGuid
-        }).toString()
-      })
+          leadUserGuid: userGuid,
+        }).toString(),
+      });
     },
     downloadAsCSV: (userGuid: string) => {
       const leadData = subscribers?.map((data) => {
@@ -109,52 +163,51 @@ const AgentSubscribers: React.FC = () => {
           firstName: data.firstName,
           lastName: data.lastName,
           source: data.source,
-          userType: !data.isSubscribed && data.type === "SUBSCRIBER"
-            ? "Subscriber"
-            : !data.isSubscribed && data.type === "FREE 30DAYS TRIAL"
+          userType:
+            !data.isSubscribed && data.type === "SUBSCRIBER"
+              ? "Subscriber"
+              : !data.isSubscribed && data.type === "FREE 30DAYS TRIAL"
               ? "Free 30days Trial"
               : data.previousRole === "POSITION_FREE_30DAYS_TRIAL"
-                ? "Free 30days Trial"
-                : "Subscriber",
+              ? "Free 30days Trial"
+              : "Subscriber",
           createdAt: formatISODateOnly(data.createdAt ?? ""),
           id: data.userGuid,
           isUpgradeToAgent: data.isSubscribed ? "YES" : "NO",
-        }
-      })
-      const filteredLeadData = leadData?.filter(data => data.id === userGuid).map(s => {
-        return {
-          ['First Name']: s.firstName,
-          ['Last Name']: s.lastName,
-          ['User Type']: s.userType,
-          ['Email Address']: s.email,
-          ['Source']: s.source,
-          ['Is Upgraded to Agent']: s.isUpgradeToAgent,
-          ['Date Created']: s.createdAt,
-        }
-      })
+        };
+      });
+      const filteredLeadData = leadData
+        ?.filter((data) => data.id === userGuid)
+        .map((s) => {
+          return {
+            ["First Name"]: s.firstName,
+            ["Last Name"]: s.lastName,
+            ["User Type"]: s.userType,
+            ["Email Address"]: s.email,
+            ["Source"]: s.source,
+            ["Is Upgraded to Agent"]: s.isUpgradeToAgent,
+            ["Date Created"]: s.createdAt,
+          };
+        });
       if (userGuid) {
-        downloadAsCSV(filteredLeadData as any, 'Leads.csv')
-        toast.success('Lead Data sucessfully downloaded.')
+        downloadAsCSV(filteredLeadData as any, "Leads.csv");
+        toast.success("Lead Data sucessfully downloaded.");
       }
     },
     delete: async (userGuid: string) => {
-      setOpen(false)
-      setActiveId(userGuid)
-      setIsLoading(true)
-      await agent.AgentSubscribers.deleteAgentSubsriber(userGuid)
-      setSubscribers({
-        subscribers: subscribers?.filter((data) => data.userGuid !== userGuid),
-        totalSubscribers: parseInt(totalSubscribers?.toString() ?? "") - 1
-      })
-      setIsLoading(false)
-      toast.success('Lead Sucessfully Deleted.')
+      setOpen(false);
+      setActiveId(userGuid);
+      setIsLoading(true);
+      await agent.AgentSubscribers.deleteAgentSubsriber(userGuid);
+      setSubscribers(subscribers?.filter((data) => data.userGuid !== userGuid));
+      setIsLoading(false);
+      toast.success("Lead Sucessfully Deleted.");
+    },
+  };
 
-    }
-  }
-
-  const filteredRows = subscribers?.map((subscriber) => {
+  const filteredRows = clonedSubscribers?.map((subscriber) => {
     if (isLoading) {
-      <Spinner variant="relative" />
+      <Spinner variant="relative" />;
     }
 
     return {
@@ -164,57 +217,99 @@ const AgentSubscribers: React.FC = () => {
       lastName: capitalizeText(subscriber.lastName),
       email: subscriber.email,
       source: subscriber.source ?? BLANK_VALUE,
+      channels: subscriber.channels?.length
+        ? subscriber?.channels?.map((data) => {
+            return (
+              <Badge>
+                <span>{data}</span>
+              </Badge>
+            );
+          })
+        : BLANK_VALUE,
       createdAt: formatISODateOnly(subscriber.createdAt ?? ""),
       type:
         !subscriber.isSubscribed && subscriber.type === "SUBSCRIBER"
           ? "Subscriber"
           : !subscriber.isSubscribed && subscriber.type === "FREE 30DAYS TRIAL"
-            ? "Free 30days Trial"
-            : subscriber.previousRole === "POSITION_FREE_30DAYS_TRIAL"
-              ? "Free 30days Trial"
-              : "Subscriber",
-      actions: <div className="cta-btns">
-        <HtmlTooltip
-          title={
-            <div
-              style={{
-                fontSize: "1.3rem",
+          ? "Free 30days Trial"
+          : subscriber.previousRole === "POSITION_FREE_30DAYS_TRIAL"
+          ? "Free 30days Trial"
+          : "Subscriber",
+      actions: (
+        <div className="cta-btns">
+          <HtmlTooltip
+            title={
+              <div
+                style={{
+                  fontSize: "1.3rem",
+                }}
+              >
+                View All Channels of this lead
+              </div>
+            }
+          >
+            <button
+              onClick={() => {
+                setActiveChannel({
+                  channelId: subscriber.userGuid,
+                  channelName: subscriber.firstName + " " + subscriber.lastName,
+                  leadUserGuid: subscriber.userGuid,
+                  channels: subscriber.channels ?? [],
+                });
+                setLeadDrawerOpen(true);
               }}
             >
-              Send Email to {subscriber.email}.
-            </div>
-          }
-        >
-          <button onClick={() => handlers.sendEmail(subscriber.userGuid)}>Send Email</button>
-        </HtmlTooltip>
-        <HtmlTooltip
-          title={
-            <div
-              style={{
-                fontSize: "1.3rem",
-              }}
-            >
-              Download Lead Data as CSV file.
-            </div>
-          }
-        >
-          <button onClick={() => handlers.downloadAsCSV(subscriber.userGuid)}>Download</button>
-        </HtmlTooltip>
-        <button onClick={() => {
-          setOpen(true)
-          setActiveId(subscriber.userGuid)
-        }}>Delete</button>
-
-      </div >
-
+              Channels
+            </button>
+          </HtmlTooltip>
+          <HtmlTooltip
+            title={
+              <div
+                style={{
+                  fontSize: "1.3rem",
+                }}
+              >
+                Send Email to {subscriber.email}.
+              </div>
+            }
+          >
+            <button onClick={() => handlers.sendEmail(subscriber.userGuid)}>
+              Send Email
+            </button>
+          </HtmlTooltip>
+          <HtmlTooltip
+            title={
+              <div
+                style={{
+                  fontSize: "1.3rem",
+                }}
+              >
+                Download Lead Data as CSV file.
+              </div>
+            }
+          >
+            <button onClick={() => handlers.downloadAsCSV(subscriber.userGuid)}>
+              Download
+            </button>
+          </HtmlTooltip>
+          <button
+            onClick={() => {
+              setOpen(true);
+              setActiveId(subscriber.userGuid);
+            }}
+          >
+            Delete
+          </button>
+        </div>
+      ),
     };
   });
 
   function handleCopyToClipboard() {
     setClipboardValue(
       window.location.host +
-      paths.subscriberRegistration +
-      `?userGuid=${userGuid}`
+        paths.subscriberRegistration +
+        `?userGuid=${userGuid}`
     );
     toast("Link copied to Clipboard");
   }
@@ -226,7 +321,84 @@ const AgentSubscribers: React.FC = () => {
     toast("Link copied to Clipboard");
   }
 
+  // This will be refactor september
+  const FilteredGridToolbar = () => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [openStatus, setOpenStatus] = useState(false);
+    const [categoriesAnchorEl, setCategoriesAnchorEl] =
+      useState<null | HTMLElement>(null);
+    const [openCategories, setOpenCategories] = useState(false);
 
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setOpenStatus(true);
+      setAnchorEl(event.currentTarget);
+    };
+
+    const categoriesFilterHandler = (
+      event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+      setOpenCategories(true);
+      setCategoriesAnchorEl(event.currentTarget);
+    };
+
+    const filterCategoryHandler = (channelName: string) => {
+      setClonedSubscribers((prevState) => {
+        let result = subscribers?.filter((cl) =>
+          cl.channels?.some((c) => c == channelName)
+        );
+
+        if (channelName === "ALL") {
+          return subscribers;
+        } else {
+          return result;
+        }
+      });
+      setAnchorEl(null);
+    };
+
+    const channels = subscribers
+      ?.map((data) => data.channels?.map((c) => c))
+      .filter((data) => data)
+      .filter((data) => data?.length);
+
+    const allChannels = Object.values(channels ?? [])
+      .filter((x) => Array.isArray(x))
+      .flat()
+      .filter((data: any) => data);
+
+    const uniqueChannels = allChannels.filter(function (item, pos) {
+      return allChannels.indexOf(item) == pos;
+    });
+
+    return (
+      <GridToolbarContainer className="custom-toolbar">
+        <GridToolbar />
+        <Button onClick={categoriesFilterHandler} className="filter-status-btn">
+          <BiCategory />
+          Filter by Categories
+        </Button>
+        <Menu
+          anchorEl={categoriesAnchorEl}
+          open={openCategories}
+          onClose={() => {
+            setCategoriesAnchorEl(null);
+            setOpenCategories(false);
+          }}
+        >
+          <MenuItem onClick={() => filterCategoryHandler("ALL")}>
+            All Channels
+          </MenuItem>
+          {uniqueChannels?.map((data) => {
+            return (
+              <MenuItem onClick={() => filterCategoryHandler(data ?? "")}>
+                {data}
+              </MenuItem>
+            );
+          })}
+        </Menu>
+      </GridToolbarContainer>
+    );
+  };
 
   return (
     <Wrapper breadcrumb={crumbs} error={false} loading={loading}>
@@ -272,15 +444,15 @@ const AgentSubscribers: React.FC = () => {
               <DataGrid
                 rows={filteredRows || []}
                 columns={columns}
-                slots={{ toolbar: GridToolbar }}
+                slots={{ toolbar: FilteredGridToolbar }}
                 isRowSelectable={(params: GridRowParams) =>
                   params.row.quantity < 1
                 }
               />
-            </NoInformationToDisplay >
-          </div >
-        </div >
-      </div >
+            </NoInformationToDisplay>
+          </div>
+        </div>
+      </div>
       {loading || isLoading ? <Spinner variant="fixed" /> : null}
       <Drawer
         anchor="right"
@@ -302,12 +474,40 @@ const AgentSubscribers: React.FC = () => {
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               <h2>Are you sure you want to delete this one?</h2>
-              <i style={{ color: '#ed3e4b', fontSize: '11px' }}>Actions cannot be reverted once done.</i>
+              <i style={{ color: "#ed3e4b", fontSize: "11px" }}>
+                Actions cannot be reverted once done.
+              </i>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <button onClick={() => handlers.delete(activeId)} style={{ border: '1px solid #000', width: '80px', background: '#1565d8', color: '#fff', padding: '.5rem ', borderRadius: '5px', margin: '1rem .5rem' }}>Yes</button>
-            <button onClick={() => setOpen(false)} style={{ border: '1px solid #000', width: '80px', background: '#ed3e4b', color: '#fff', padding: '.5rem ', borderRadius: '5px', margin: '1rem .5rem' }}>No</button>
+            <button
+              onClick={() => handlers.delete(activeId)}
+              style={{
+                border: "1px solid #000",
+                width: "80px",
+                background: "#1565d8",
+                color: "#fff",
+                padding: ".5rem ",
+                borderRadius: "5px",
+                margin: "1rem .5rem",
+              }}
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => setOpen(false)}
+              style={{
+                border: "1px solid #000",
+                width: "80px",
+                background: "#ed3e4b",
+                color: "#fff",
+                padding: ".5rem ",
+                borderRadius: "5px",
+                margin: "1rem .5rem",
+              }}
+            >
+              No
+            </button>
           </DialogActions>
         </Dialog>
       </div>
@@ -318,8 +518,17 @@ const AgentSubscribers: React.FC = () => {
           open={channelDrawerOpen}
           onClose={() => setChannelDrawerOpen(false)}
         />
+        <ChannelDrawer
+          type="DYNAMIC"
+          title={activeChannel.channelName}
+          leadUserGuid={activeChannel.leadUserGuid}
+          channels={activeChannel.channels}
+          subtitle="Channels of this lead"
+          open={leadDrawerOpen}
+          onClose={() => setLeadDrawerOpen(false)}
+        />
       </React.Fragment>
-    </Wrapper >
+    </Wrapper>
   );
 };
 
