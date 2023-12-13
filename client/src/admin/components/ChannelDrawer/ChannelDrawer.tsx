@@ -297,32 +297,38 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
                               <div key={index}>
                                 <div className="input-holder">
                                   <div className="input-container">
-                                    <FormikTextInput
-                                      name={data.name}
-                                      key={index}
-                                      placeholder="Enter your channel name here"
-                                      variant="outlined"
-                                      value={data.initialValue}
-                                      error={
-                                        !!(
-                                          touched[data.name] &&
-                                          errors[data.name]
-                                        )
-                                      }
-                                      noErrorText={true}
-                                      onBlur={(e) => {
-                                        if (data.isNew && e.target.value) {
-                                          addChannel(e.target.value, data.id);
+                                    {props.type === "DYNAMIC" ? (
+                                      <p style={{ fontSize: 15 }}>
+                                        {data.label}
+                                      </p>
+                                    ) : (
+                                      <FormikTextInput
+                                        name={data.name}
+                                        key={index}
+                                        placeholder="Enter your channel name here"
+                                        variant="outlined"
+                                        value={data.initialValue}
+                                        error={
+                                          !!(
+                                            touched[data.name] &&
+                                            errors[data.name]
+                                          )
                                         }
+                                        noErrorText={true}
+                                        onBlur={(e) => {
+                                          if (data.isNew && e.target.value) {
+                                            addChannel(e.target.value, data.id);
+                                          }
 
-                                        if (!data.isNew && e.target.value) {
-                                          updateChannel(
-                                            e.target.value,
-                                            data.id
-                                          );
-                                        }
-                                      }}
-                                    />
+                                          if (!data.isNew && e.target.value) {
+                                            updateChannel(
+                                              e.target.value,
+                                              data.id
+                                            );
+                                          }
+                                        }}
+                                      />
+                                    )}
                                     {!!(
                                       touched[data.name] && errors[data.name]
                                     ) && (
