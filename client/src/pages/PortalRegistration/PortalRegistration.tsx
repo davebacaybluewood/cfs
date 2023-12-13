@@ -283,7 +283,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                 ? true
                 : false;
 
-            const contactInfoValidity = errors.phoneNumber ? true : false;
+            const contactInfoValidity = errors.address1 || errors.phoneNumber ? true : false;
             return (
               <div className="portal-form">
                 {loading ? <Spinner variant="fixed" /> : null}
