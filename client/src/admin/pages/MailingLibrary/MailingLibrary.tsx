@@ -425,6 +425,11 @@ const MailLibrary: React.FC = () => {
       .flat()
       .filter((data: any) => data?.value);
 
+    const uniqueCategories = finalCategories.filter(
+      (v: any, i: any, a: any) =>
+        a.findIndex((v2) => v.label === v2.label && v.value === v2.value) === i
+    );
+
     return (
       <GridToolbarContainer className="custom-toolbar">
         <GridToolbar />
@@ -465,7 +470,7 @@ const MailLibrary: React.FC = () => {
           <MenuItem onClick={() => filterCategoryHandler("ALL")}>
             All Categories
           </MenuItem>
-          {finalCategories?.map((data: any) => {
+          {uniqueCategories?.map((data: any) => {
             return (
               <MenuItem onClick={() => filterCategoryHandler(data?.value)}>
                 {data?.label}

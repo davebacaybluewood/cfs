@@ -1,5 +1,5 @@
 function capitalizeText(text: string) {
-  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  return text?.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
 
 export default capitalizeText;
