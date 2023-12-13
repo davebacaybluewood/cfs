@@ -16,7 +16,7 @@ import Hierarchy from "../models/hierarchyModel.js";
 import Points from "../models/pointsModel.js";
 import Agent from "../models/agentModel.js";
 import { status } from "../constants/constants.js";
-import EmailTemplate from '../models/emailTemplate.js'
+import EmailTemplate from "../models/emailTemplate.js";
 import mongoose from "mongoose";
 import Events from "../models/eventModel.js";
 
@@ -35,7 +35,6 @@ const emailConfirmation = async (emailAddress) => {
     emailAddress,
     verificationCode,
   });
-
 
   code.save();
 
@@ -69,7 +68,7 @@ const subscriberRegistration = async (subscriberData) => {
     userGuid,
     hasNoCode,
     templateId,
-  } = subscriberData
+  } = subscriberData;
 
   const isCodeExist = await VerificationCode.find({
     verificationCode: verificationCode,
@@ -78,7 +77,7 @@ const subscriberRegistration = async (subscriberData) => {
 
   let source = "";
   if (templateId) {
-    const template = await EmailTemplate.findById(templateId)
+    const template = await EmailTemplate.findById(templateId);
     source = template.subject;
   }
 
@@ -133,19 +132,19 @@ const subscriberRegistration = async (subscriberData) => {
       const newHierarchyId = generateString(6);
       const hierarchyCode = generateString(6);
       const newHierarchy = [
-        { /** Recruiter Info */
-          userGuid,
+        {
+          /** Recruiter Info */ userGuid,
           parent: "",
           hierarchyId: hierarchyId,
           hierarchyCode: hierarchyCode,
         },
-        { /** Recruited Info */
-          userGuid: newUserGuid,
+        {
+          /** Recruited Info */ userGuid: newUserGuid,
           parent: hierarchyId,
           hierarchyId: newHierarchyId,
           hierarchyCode: hierarchyCode,
           recruiterUserGuid: userGuid,
-          source: source
+          source: source,
         },
       ];
 
@@ -168,7 +167,7 @@ const subscriberRegistration = async (subscriberData) => {
         hierarchyId: newHierarchyId,
         hierarchyCode: hierarchyCode,
         recruiterUserGuid: userGuid,
-        source: source
+        source: source,
       };
       await Hierarchy.create(newHierarchy);
     }
@@ -218,7 +217,9 @@ const fetchSubscribersByUser = async (userGuid) => {
 
     const subscribers = await Hierarchy.aggregate([
       {
-        $match: isAdmin ? { recruiterUserGuid: { $exists: false } } : { recruiterUserGuid: userGuid },
+        $match: isAdmin
+          ? { recruiterUserGuid: { $exists: false } }
+          : { recruiterUserGuid: userGuid },
       },
       {
         $lookup: {
@@ -256,6 +257,7 @@ const fetchSubscribersByUser = async (userGuid) => {
           createdAt: 1,
           updatedAt: 1,
           source: 1,
+          channels: 1,
           position: "$userDoc.position",
           firstName: "$userDoc.firstName",
           lastName: "$userDoc.lastName",
@@ -275,14 +277,14 @@ const fetchSubscribersByUser = async (userGuid) => {
       const isSubscriber = data.position?.some(
         (e) => e.value === "POSITION_SUBSCRIBER"
       );
-      const source = data.source
+      const source = data.source;
 
       return {
         ...data,
         type: isSubscriber ? "SUBSCRIBER" : "FREE 30DAYS TRIAL",
         previousRole: data.previousRole || "",
         isSubscribed: isAgent,
-        source
+        source,
       };
     });
 
@@ -322,7 +324,6 @@ const fetchAllSubscribers = async () => {
 
   return subscribers;
 };
-
 
 export default {
   emailConfirmation,

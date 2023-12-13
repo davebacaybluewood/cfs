@@ -1,29 +1,31 @@
 import agent from "admin/api/agent";
 import { useEffect, useState } from "react";
-import { SubscriberMainData } from "admin/models/subscriberModel";
+import { SubscribersData } from "admin/models/subscriberModel";
 
-const useFetchSubscribers = (userGuid: string) => {
+const useFetchSubscribers = (userGuid: string, leadDrawerOpen?: boolean) => {
   const [loading, setLoading] = useState(false);
   const [subscribers, setSubscribers] = useState<
-    SubscriberMainData | undefined
+    SubscribersData[] | undefined
   >();
 
   useEffect(() => {
-    setLoading(true);
     const getData = async () => {
       const data = await agent.Points.getSubscribersByUserGuid(userGuid);
-      setSubscribers(data);
+      setSubscribers(data?.subscribers);
       setLoading(false);
     };
 
-    getData();
-  }, [userGuid]);
+    if (!leadDrawerOpen) {
+      setLoading(true);
+      getData();
+    }
+  }, [userGuid, leadDrawerOpen]);
 
   return {
     loading,
-    subscribers: subscribers?.subscribers,
-    totalSubscribers: subscribers?.totalSubscribers,
-    setSubscribers
+    subscribers: subscribers,
+    totalSubscribers: subscribers?.length,
+    setSubscribers,
   };
 };
 

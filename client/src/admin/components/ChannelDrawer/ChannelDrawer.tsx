@@ -15,6 +15,11 @@ import "./ChannelDrawer.scss";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import { toast } from "react-toastify";
 import { ChannelData } from "admin/api/channelServices/channelModels";
+import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
+import {
+  SubscriberMainData,
+  SubscribersData,
+} from "admin/models/subscriberModel";
 
 interface IField {
   name: string;
@@ -30,6 +35,9 @@ interface ChannelDrawerProps extends DrawerProps {
   children?: React.ReactNode | JSX.Element;
   subtitle: string;
   onClose: () => void;
+  type?: "DYNAMIC" | "ALL";
+  leadUserGuid?: string;
+  channels?: never[] | string[];
 }
 const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
   const [activeChannel, setActiveChannel] = useState({
@@ -48,6 +56,11 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
   const initialValues = Object.fromEntries(
     channels.map((field) => [field.name, field.initialValue])
   );
+  const [addedChannels, setAddedChannels] = useState<string[]>();
+
+  useEffect(() => {
+    setAddedChannels(props.channels);
+  }, [props.channels]);
 
   useEffect(() => {
     const getData = async () => {
@@ -212,6 +225,39 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
     }
   };
 
+  const updateLeadChannelLead = async (
+    leadUserGuid: string,
+    channels: string[] | undefined,
+    newChannelName: string,
+    type: "ADD" | "REMOVE"
+  ) => {
+    setIsLoading({
+      channelLoading: false,
+      drawerLoading: true,
+    });
+
+    try {
+      const newChannelData = [...(channels ?? []), newChannelName];
+      const removedChannelData = channels?.filter(
+        (data) => data !== newChannelName
+      );
+      const modifiedChannelData =
+        type === "ADD" ? newChannelData : removedChannelData ?? [];
+
+      await agent.Channels.updateLeadChannelLead(
+        leadUserGuid ?? "",
+        modifiedChannelData
+      );
+      setAddedChannels(modifiedChannelData);
+      return true;
+    } finally {
+      setIsLoading({
+        channelLoading: false,
+        drawerLoading: false,
+      });
+    }
+  };
+
   return (
     <Drawer
       anchor="right"
@@ -286,34 +332,70 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
                                     )}
                                   </div>
 
-                                  <button
-                                    onClick={() => {
-                                      removeChannel(
-                                        data.id,
-                                        data.name,
-                                        data.isNew ?? false
-                                      );
-                                    }}
-                                  >
-                                    <MdDeleteOutline />
-                                  </button>
+                                  {props.type === "DYNAMIC" ? (
+                                    <React.Fragment>
+                                      {addedChannels?.includes(data.label) ? (
+                                        <button
+                                          onClick={() => {
+                                            updateLeadChannelLead(
+                                              props.leadUserGuid ?? "",
+                                              addedChannels,
+                                              data.label,
+                                              "REMOVE"
+                                            );
+                                          }}
+                                        >
+                                          <FiMinusCircle />
+                                        </button>
+                                      ) : (
+                                        <button
+                                          onClick={() => {
+                                            updateLeadChannelLead(
+                                              props.leadUserGuid ?? "",
+                                              addedChannels,
+                                              data.label,
+                                              "ADD"
+                                            );
+                                          }}
+                                        >
+                                          <FiPlusCircle
+                                            style={{ color: "#1565d8" }}
+                                          />
+                                        </button>
+                                      )}
+                                    </React.Fragment>
+                                  ) : (
+                                    <button
+                                      onClick={() => {
+                                        removeChannel(
+                                          data.id,
+                                          data.name,
+                                          data.isNew ?? false
+                                        );
+                                      }}
+                                    >
+                                      <MdDeleteOutline />
+                                    </button>
+                                  )}
                                 </div>
                               </div>
                             ))}
                           </React.Fragment>
                         </NoInformationToDisplay>
                       </div>
-                      <div className="add-field-container">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            addAnotherChannelHandler(generateRandomChars(5))
-                          }
-                        >
-                          <span>Add another channel </span>
-                          <FaPlus />
-                        </button>
-                      </div>
+                      {props.type === "ALL" && (
+                        <div className="add-field-container">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              addAnotherChannelHandler(generateRandomChars(5))
+                            }
+                          >
+                            <span>Add another channel </span>
+                            <FaPlus />
+                          </button>
+                        </div>
+                      )}
                       <div className="drawer-action-buttons">
                         <button
                           type="button"
@@ -353,6 +435,10 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
       />
     </Drawer>
   );
+};
+
+ChannelDrawer.defaultProps = {
+  type: "ALL",
 };
 
 export default ChannelDrawer;

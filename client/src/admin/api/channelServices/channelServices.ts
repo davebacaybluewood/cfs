@@ -48,6 +48,16 @@ const Channels = {
       console.log(error);
     }
   },
+  updateLeadChannelLead: async (userGuid: string, channels: string[]) => {
+    try {
+      return await requests.put<ChannelData>(`/api/channels/`, {
+        channels,
+        userGuid,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default {
