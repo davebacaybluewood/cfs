@@ -32,15 +32,15 @@ const authUser = expressAsync(async (req, res) => {
     const isValidStatus = agent.status === "ACTIVATED";
 
     /** Login using CFS credentials */
-    // const bearerToken = await backOfficeServices.backOfficeLogin();
+    const bearerToken = await backOfficeServices.backOfficeLogin();
 
-    // /** Get the list of agents from back office */
-    // const agentsData = await backOfficeServices.backOfficeAgents(bearerToken);
-    // const agents = agentsData.items || [];
-    // const accountingSystemEmailAddress = agents?.map(
-    //   (data) => data.emailAddress
-    // );
-    const accountingSystemEmailAddress = [];
+    /** Get the list of agents from back office */
+    const agentsData = await backOfficeServices.backOfficeAgents(bearerToken);
+    const agents = agentsData.items || [];
+    const accountingSystemEmailAddress = agents?.map(
+      (data) => data.emailAddress
+    );
+    // const accountingSystemEmailAddress = [];
 
     let isNotAdmin = false;
 
