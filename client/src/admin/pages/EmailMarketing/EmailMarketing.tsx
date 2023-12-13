@@ -416,9 +416,9 @@ const ContractForm: React.FC = () => {
     });
   }
 
-  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
+  const loadDesign = useCallback(() => { }, [emailEditorRef, design]);
 
-  useEffect(() => {}, [design]);
+  useEffect(() => { }, [design]);
 
   const handleDeleteContact = async (contactId: string) => {
     if (contactId) {
@@ -495,13 +495,18 @@ const ContractForm: React.FC = () => {
     useFetchUserProfile(leadUserGuid ?? "");
 
   useEffect(() => {
-    setContactsValue([
-      {
-        label: leadProfile?.emailAddress,
-        value: leadProfile?.emailAddress,
-      },
-    ]);
+    if (leadProfile?.emailAddress) {
+      setContactsValue([
+        {
+          label: leadProfile.emailAddress,
+          value: leadProfile.emailAddress,
+        }
+      ]);
+    } else {
+      setContactsValue([]);
+    }
   }, [leadUserGuid, leadProfile]);
+
   const addRecentContact = async (userGuid: string, recipients) => {
     try {
       setLoading(true);
@@ -523,6 +528,8 @@ const ContractForm: React.FC = () => {
       window.location.reload();
     }
   };
+
+
   return (
     <Wrapper
       breadcrumb={crumbs}
