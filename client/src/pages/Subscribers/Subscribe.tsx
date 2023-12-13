@@ -127,8 +127,8 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
               const req = await agent.Subscriber.subscriberRegistration(
                 data.email,
                 data.password,
-                data.firstName,
                 data.lastName,
+                data.firstName,
                 data.phoneNumber,
                 data.confirmationUserCode,
                 userGuid ?? "",
