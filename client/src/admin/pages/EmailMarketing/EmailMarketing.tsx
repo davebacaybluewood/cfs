@@ -416,9 +416,9 @@ const ContractForm: React.FC = () => {
     });
   }
 
-  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
+  const loadDesign = useCallback(() => { }, [emailEditorRef, design]);
 
-  useEffect(() => {}, [design]);
+  useEffect(() => { }, [design]);
 
   const handleDeleteContact = async (contactId: string) => {
     if (contactId) {
@@ -495,6 +495,15 @@ const ContractForm: React.FC = () => {
     useFetchUserProfile(leadUserGuid ?? "");
 
   useEffect(() => {
+    setInitialValues((old) => {
+      return {
+        ...old,
+        recipients: [{
+          label: leadProfile?.emailAddress ?? "",
+          value: leadProfile?.emailAddress ?? "",
+        } as any]
+      }
+    })
     setContactsValue([
       {
         label: leadProfile?.emailAddress,
@@ -502,6 +511,7 @@ const ContractForm: React.FC = () => {
       },
     ]);
   }, [leadUserGuid, leadProfile]);
+
   const addRecentContact = async (userGuid: string, recipients) => {
     try {
       setLoading(true);
@@ -520,7 +530,7 @@ const ContractForm: React.FC = () => {
       );
     } finally {
       setLoading(false);
-      window.location.reload();
+      // window.location.reload();
     }
   };
   return (
@@ -542,7 +552,7 @@ const ContractForm: React.FC = () => {
               const finalData: any = {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
-                templateId
+                templateId: templateId || "CUSTOM_EMAIL"
               };
 
               finalData.recipients =
