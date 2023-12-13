@@ -16,6 +16,9 @@ import Hierarchy from "../models/hierarchyModel.js";
 import Points from "../models/pointsModel.js";
 import Agent from "../models/agentModel.js";
 import { status } from "../constants/constants.js";
+import EmailTemplate from "../models/emailTemplate.js";
+import mongoose from "mongoose";
+import Events from "../models/eventModel.js";
 
 const emailConfirmation = async (emailAddress) => {
   const isEmailExist = await User.find({
@@ -54,20 +57,39 @@ const emailConfirmation = async (emailAddress) => {
   }
 };
 
-const subscriberRegistration = async (
-  email,
-  password,
-  lastName,
-  firstName,
-  phoneNumber,
-  confirmationCode,
-  userGuid,
-  hasNoCode
-) => {
+const subscriberRegistration = async (subscriberData) => {
+  const {
+    email,
+    password,
+    lastName,
+    firstName,
+    phoneNumber,
+    verificationCode,
+    userGuid,
+    hasNoCode,
+    templateId,
+  } = subscriberData;
+
   const isCodeExist = await VerificationCode.find({
-    verificationCode: confirmationCode,
+    verificationCode: verificationCode,
     emailAddress: email,
   });
+
+  let source = "";
+  if (templateId) {
+
+    const findEmailTemplate = async () => {
+      const template = await EmailTemplate.findById(templateId);
+      source = template.subject;
+    }
+
+    if (templateId === "CUSTOM_EMAIL") {
+      source = "Custom Email";
+    } else {
+      source = findEmailTemplate()
+    }
+
+  }
 
   const account = await Agent.find({ userGuid });
   const isSubscriber = account[0]?.position?.some((f) => {
@@ -121,17 +143,18 @@ const subscriberRegistration = async (
       const hierarchyCode = generateString(6);
       const newHierarchy = [
         {
-          userGuid,
+          /** Recruiter Info */ userGuid,
           parent: "",
           hierarchyId: hierarchyId,
           hierarchyCode: hierarchyCode,
         },
         {
-          userGuid: newUserGuid,
+          /** Recruited Info */ userGuid: newUserGuid,
           parent: hierarchyId,
           hierarchyId: newHierarchyId,
           hierarchyCode: hierarchyCode,
           recruiterUserGuid: userGuid,
+          source: source,
         },
       ];
 
@@ -154,6 +177,7 @@ const subscriberRegistration = async (
         hierarchyId: newHierarchyId,
         hierarchyCode: hierarchyCode,
         recruiterUserGuid: userGuid,
+        source: source,
       };
       await Hierarchy.create(newHierarchy);
     }
@@ -203,7 +227,9 @@ const fetchSubscribersByUser = async (userGuid) => {
 
     const subscribers = await Hierarchy.aggregate([
       {
-        $match: isAdmin ? {recruiterUserGuid: { $exists: false }} : { recruiterUserGuid: userGuid },
+        $match: isAdmin
+          ? { recruiterUserGuid: { $exists: false } }
+          : { recruiterUserGuid: userGuid },
       },
       {
         $lookup: {
@@ -240,6 +266,8 @@ const fetchSubscribersByUser = async (userGuid) => {
           parent: 1,
           createdAt: 1,
           updatedAt: 1,
+          source: 1,
+          channels: 1,
           position: "$userDoc.position",
           firstName: "$userDoc.firstName",
           lastName: "$userDoc.lastName",
@@ -259,12 +287,14 @@ const fetchSubscribersByUser = async (userGuid) => {
       const isSubscriber = data.position?.some(
         (e) => e.value === "POSITION_SUBSCRIBER"
       );
+      const source = data.source;
 
       return {
         ...data,
         type: isSubscriber ? "SUBSCRIBER" : "FREE 30DAYS TRIAL",
         previousRole: data.previousRole || "",
         isSubscribed: isAgent,
+        source,
       };
     });
 
@@ -304,7 +334,6 @@ const fetchAllSubscribers = async () => {
 
   return subscribers;
 };
-
 
 export default {
   emailConfirmation,

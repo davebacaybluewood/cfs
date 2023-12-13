@@ -11,6 +11,8 @@ import Hierarchy from "../models/hierarchyModel.js";
 import Points from "../models/pointsModel.js";
 import generateString from "../utils/generateString.js";
 import backOfficeServices from "./backOfficeServices.js";
+import EmailTemplate from "../models/emailTemplate.js";
+import mongoose from "mongoose";
 
 const registerPaidUser = async (req, res) => {
   try {
@@ -65,7 +67,7 @@ const registerPaidUser = async (req, res) => {
   }
 };
 
-const registerUserHierarchyAndPoints = async (req, res, userGuid) => {
+const registerUserHierarchyAndPoints = async (req, res, userGuid, templateId) => {
   const { recruiterUserGuid } = req.body;
 
   // const recruiterInfo = await Agent.findOne({ userGuid: recruiterUserGuid });
@@ -80,6 +82,19 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid) => {
   //   recruiterInfo,
   //   accountingSystemEmailAddress,
   // });
+
+  let source = ""
+  if (templateId) {
+    const findEmailTemplate = async () => {
+      const template = await EmailTemplate.findById(templateId);
+      source = template.subject;
+    }
+    if (templateId === "CUSTOM_EMAIL") {
+      source = "Custom Email";
+    } else {
+      source = findEmailTemplate()
+    }
+  }
 
   const agentProfile = await Agent.findOne({ userGuid });
   const isSubscriber = agentProfile?.position?.some((f) => {
@@ -137,6 +152,7 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid) => {
           hierarchyId: newHierarchyId,
           hierarchyCode: hierarchyCode,
           recruiterUserGuid: recruiterUserGuid,
+          source
         },
       ];
 
@@ -159,6 +175,7 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid) => {
         hierarchyId: newHierarchyId,
         hierarchyCode: hierarchyCode,
         recruiterUserGuid: recruiterUserGuid,
+        source
       };
       await Hierarchy.create(newHierarchy);
     }
@@ -171,6 +188,7 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid) => {
       parent: "",
       hierarchyId: hierarchyId,
       hierarchyCode: hierarchyCode,
+      source
     };
     await Hierarchy.create(newHierarchy);
   }

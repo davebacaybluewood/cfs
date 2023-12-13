@@ -44,8 +44,7 @@ const requests = {
 const BlogAndResource = {
   list: (skipItemNumber?: number, limit?: number) =>
     requests.get<BlogDataWithLength | undefined>(
-      `/api/blog-and-resource/numbered-recent-blogs/${skipItemNumber}/${
-        limit ? limit : 100
+      `/api/blog-and-resource/numbered-recent-blogs/${skipItemNumber}/${limit ? limit : 100
       }`
     ),
   listSingle: (blogTitle: string) =>
@@ -187,7 +186,10 @@ const Subscriber = {
     lastName: string,
     firstName: string,
     phoneNumber: string,
-    userGuid: string
+    userGuid: string,
+    templateId: string,
+    eventId: string
+
   ) => {
     const endpoint = "/api/subscriber/subscribe-email";
 
@@ -199,6 +201,8 @@ const Subscriber = {
         firstName,
         phoneNumber,
         userGuid,
+        templateId,
+        eventId
       });
 
       return res;
@@ -214,7 +218,9 @@ const Subscriber = {
     firstName: string,
     phoneNumber: string,
     verificationCode: string,
-    userGuid: string
+    userGuid: string,
+    templateId: string,
+
   ) => {
     const endpoint = "/api/subscriber/subscribe-code";
 
@@ -227,6 +233,7 @@ const Subscriber = {
         phoneNumber,
         verificationCode,
         userGuid,
+        templateId,
       });
 
       return res;

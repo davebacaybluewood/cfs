@@ -130,6 +130,30 @@ const deleteChannel = async (req, res) => {
   }
 };
 
+const updateLeadChannelLead = async (req, res) => {
+  const { userGuid, channels } = req.body;
+
+  if (!userGuid || !channels?.length) {
+    res.status(400).json(API_RES_FAIL("[Channels] Fields are required"));
+    return;
+  }
+
+  try {
+    const channel = await channelServices.updateLeadChannelLead(
+      userGuid,
+      channels
+    );
+    if (channel) {
+      res.json(API_RES_OK("[Channels] Channel has been added to this lead"));
+    } else {
+      res.status(500).json(API_RES_FAIL("[Channels] Error Occured"));
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(API_RES_FAIL("[Channels] Error Occured"));
+  }
+};
+
 export default {
   getAllChannelsByHierarchyCode,
   getAllChannelsByUserGuid,
@@ -137,4 +161,5 @@ export default {
   createChannel,
   deleteChannel,
   updateChannelByChannelId,
+  updateLeadChannelLead,
 };

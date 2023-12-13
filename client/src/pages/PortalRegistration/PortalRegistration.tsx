@@ -24,10 +24,12 @@ interface PortalRegistrationProps {
 const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
   const [stage, setStage] = useState(1);
   const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const search = useLocation().search;
   const recruiterUserGuid = new URLSearchParams(search).get("userGuid");
+  const templateId = new URLSearchParams(search).get("templateId");
   const [initialValues, setInitialValues] = useState<ValuesType>({
     emailAddress: "",
     password: "",
@@ -67,12 +69,12 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     stage === 1
       ? "Create an account"
       : stage === 2
-      ? "Personal Information"
-      : stage === 3
-      ? "Contact Information"
-      : stage === 4
-      ? "Social Media Links"
-      : "Confirm Account Information";
+        ? "Personal Information"
+        : stage === 3
+          ? "Contact Information"
+          : stage === 4
+            ? "Social Media Links"
+            : "Confirm Account Information";
 
   const changeStage = (newStage: number) => {
     setStage(newStage);
@@ -89,8 +91,8 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     ) => void
   ) => {
     setLoading(true);
-    try {
-      const { data } = await axios.post(ENDPOINTS.CREATE_PRE_PROFILE, {
+    await axios
+      .post(ENDPOINTS.CREATE_PRE_PROFILE, {
         emailAddress: emailAddress,
         password: password,
         position: [
@@ -106,19 +108,22 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
           },
         ],
         languages: ["English"],
+      })
+      .then((res) => {
+        Object.keys(initialValues).map((dataValue) => {
+          setFieldValue(dataValue, res.data[dataValue]);
+        });
+        setFieldValue("confirmPassword", res.data.password);
+        setError(false);
+        setStage(2);
+        setLoading(false);
+      })
+      .catch((err) => {
+        const errMsg = JSON.parse(err.request.response)?.message;
+        setErrorMsg(errMsg);
+        setError(true);
+        setLoading(false);
       });
-
-      Object.keys(initialValues).map((dataValue) => {
-        setFieldValue(dataValue, data[dataValue]);
-      });
-      setFieldValue("confirmPassword", data.password);
-      setError(false);
-      setStage(2);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setError(true);
-    }
   };
 
   /** Second Stage */
@@ -236,6 +241,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                   birthDate: values.birthDate,
                   zipCode: values.zipCode,
                   recruiterUserGuid: recruiterUserGuid,
+                  templateId: templateId
                 },
                 config
               );
@@ -269,15 +275,15 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
 
             const personalInfoValidity =
               errors.firstName ||
-              errors.lastName ||
-              errors.position ||
-              errors.roles ||
-              errors.bio ||
-              errors.nationality
+                errors.lastName ||
+                errors.position ||
+                errors.roles ||
+                errors.bio ||
+                errors.nationality
                 ? true
                 : false;
 
-            const contactInfoValidity = errors.phoneNumber ? true : false;
+            const contactInfoValidity = errors.address1 || errors.phoneNumber ? true : false;
             return (
               <div className="portal-form">
                 {loading ? <Spinner variant="fixed" /> : null}
@@ -289,15 +295,15 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                     </React.Fragment>
                   )}
 
-                  {error ? (
+                  {error && (
                     <Alert
                       variant="filled"
                       severity="error"
                       className="error-alert"
                     >
-                      Email Address already taken.
+                      {errorMsg}
                     </Alert>
-                  ) : null}
+                  )}
                 </div>
                 {stage === 1 && (
                   <AccountDetails

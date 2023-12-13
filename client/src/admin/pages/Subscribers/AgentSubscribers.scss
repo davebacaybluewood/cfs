@@ -30,6 +30,7 @@
             font: 500 1.3rem "Montserrat";
             color: #fff;
             transition: .3s;
+            background: #1b4965;
 
             &:nth-of-type(1),
             &:nth-of-type(2),
@@ -51,6 +52,10 @@
             }
 
             &:nth-of-type(3) {
+              background: #40916c;
+            }
+
+            &:nth-of-type(4) {
               background: #ed3e4b;
             }
           }

@@ -211,6 +211,18 @@ const preCreateProfile = expressAsync(async (req, res, next) => {
       emailAddress: emailAddress,
     });
 
+    if (userModel) {
+      const agent = await Agents.findOne({ userGuid: userModel.userGuid });
+
+      if (!(agent.status === AGENT_STATUSES.ACTIVATED)) {
+        res.status(400).json({
+          error: "AGENT_STATUS_CHECK",
+          message: `This account has been ${agent.status}`,
+        });
+        return;
+      }
+    }
+
     if (!emailAddress) {
       res.status(401).json({
         error: "EMAIL_CHECK",
