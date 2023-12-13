@@ -495,6 +495,16 @@ const ContractForm: React.FC = () => {
     useFetchUserProfile(leadUserGuid ?? "");
 
   useEffect(() => {
+    if (leadProfile?.emailAddress) {
+      setContactsValue([
+        {
+          label: leadProfile.emailAddress,
+          value: leadProfile.emailAddress,
+        }
+      ]);
+    } else {
+      setContactsValue([]);
+    }
     setInitialValues((old) => {
       return {
         ...old,
@@ -533,6 +543,8 @@ const ContractForm: React.FC = () => {
       // window.location.reload();
     }
   };
+
+
   return (
     <Wrapper
       breadcrumb={crumbs}
