@@ -80,7 +80,7 @@ const AgentSubscribers: React.FC = () => {
       width: 200,
     },
     { field: "email", headerName: "Email Address", width: 200 },
-    { field: "source", headerName: "Source", width: 150, headerAlign: 'center', align: 'center' },
+    { field: "source", headerName: "Source", width: 250, headerAlign: 'center', align: 'center' },
     { field: "createdAt", headerName: "Date Created", width: 200 },
     { field: "actions", headerName: "Actions", renderCell: (params) => params.value, width: 300, headerAlign: 'center' },
 
