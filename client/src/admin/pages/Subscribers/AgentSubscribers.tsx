@@ -20,7 +20,11 @@ import {
   GridColDef,
   GridRowParams,
   GridToolbar,
+  GridToolbarColumnsButton,
   GridToolbarContainer,
+  GridToolbarDensitySelector,
+  GridToolbarExport,
+  GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import { UserContext } from "admin/context/UserProvider";
 import { formatISODateOnly } from "helpers/date";
@@ -130,6 +134,14 @@ const AgentSubscribers: React.FC = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (params) => params.value,
+      filterable: false,
+      disableExport: true,
+    },
+    {
+      field: "channelsValue",
+      headerName: "Channels",
+      disableColumnMenu: true,
+      hideable: true,
     },
     { field: "createdAt", headerName: "Date Created", width: 200 },
     {
@@ -138,6 +150,7 @@ const AgentSubscribers: React.FC = () => {
       renderCell: (params) => params.value,
       width: 400,
       headerAlign: "center",
+      disableExport: true,
     },
   ];
 
@@ -226,6 +239,11 @@ const AgentSubscribers: React.FC = () => {
             );
           })
         : BLANK_VALUE,
+      channelsValue: subscriber?.channels
+        ?.map((ch) => {
+          return ch + "|";
+        })
+        .join(""),
       createdAt: formatISODateOnly(subscriber.createdAt ?? ""),
       type:
         !subscriber.isSubscribed && subscriber.type === "SUBSCRIBER"
@@ -372,7 +390,10 @@ const AgentSubscribers: React.FC = () => {
 
     return (
       <GridToolbarContainer className="custom-toolbar">
-        <GridToolbar />
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarExport csvOptions={{ allColumns: true }} />
         <Button onClick={categoriesFilterHandler} className="filter-status-btn">
           <BiCategory />
           Filter by Categories
@@ -448,6 +469,13 @@ const AgentSubscribers: React.FC = () => {
                 isRowSelectable={(params: GridRowParams) =>
                   params.row.quantity < 1
                 }
+                initialState={{
+                  columns: {
+                    columnVisibilityModel: {
+                      channelsValue: false,
+                    },
+                  },
+                }}
               />
             </NoInformationToDisplay>
           </div>
