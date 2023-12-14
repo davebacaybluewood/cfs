@@ -133,7 +133,7 @@ const deleteChannel = async (req, res) => {
 const updateLeadChannelLead = async (req, res) => {
   const { userGuid, channels } = req.body;
 
-  if (!userGuid || !channels?.length) {
+  if (!userGuid) {
     res.status(400).json(API_RES_FAIL("[Channels] Fields are required"));
     return;
   }
