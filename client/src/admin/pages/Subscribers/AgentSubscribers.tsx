@@ -375,7 +375,7 @@ const AgentSubscribers: React.FC = () => {
         <GridToolbar />
         <Button onClick={categoriesFilterHandler} className="filter-status-btn">
           <BiCategory />
-          Filter by Categories
+          Filter by Channels
         </Button>
         <Menu
           anchorEl={categoriesAnchorEl}
