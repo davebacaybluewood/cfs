@@ -63,7 +63,7 @@ const registerPaidUser = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(404).json(err);
-    throw new Error("Error occured in registering profile.");
+    throw new Error("Error occured upon registering profile.");
   }
 };
 
