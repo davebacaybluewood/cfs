@@ -140,7 +140,6 @@ const AgentSubscribers: React.FC = () => {
     {
       field: "channelsValue",
       headerName: "Channels",
-      width: 500,
       disableColumnMenu: true,
       hideable: true,
     },
