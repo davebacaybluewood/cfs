@@ -98,16 +98,17 @@ const submitRSVP = expressAsync(async (req, res) => {
         );
       }
     } else {
-      const data = await subscriberServices.subscriberRegistration(
-        emailAddress,
+      const data = await subscriberServices.subscriberRegistration({
+        email: emailAddress,
         password,
         lastName,
         firstName,
         phoneNumber,
-        "",
-        recruiterUserGuid,
-        true
-      );
+        verificationCode: "",
+        userGuid: recruiterUserGuid,
+        hasNoCode: true,
+        eventId,
+      });
 
       userGuid = data.userGuid;
     }

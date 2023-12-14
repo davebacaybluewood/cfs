@@ -68,6 +68,7 @@ const subscriberRegistration = async (subscriberData) => {
     userGuid,
     hasNoCode,
     templateId,
+    eventId
   } = subscriberData;
 
   const isCodeExist = await VerificationCode.find({
@@ -89,6 +90,13 @@ const subscriberRegistration = async (subscriberData) => {
       source = findEmailTemplate()
     }
 
+  } else {
+    source = "Custom Email";
+  }
+
+  if (eventId) {
+    const event = await Events.findById(mongoose.Types.ObjectId(eventId))
+    source = event.title
   }
 
   const account = await Agent.find({ userGuid });
