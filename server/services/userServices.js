@@ -94,6 +94,8 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid, templateId) =>
     } else {
       source = findEmailTemplate()
     }
+  } else {
+    source = "Custom Email";
   }
 
   const agentProfile = await Agent.findOne({ userGuid });
