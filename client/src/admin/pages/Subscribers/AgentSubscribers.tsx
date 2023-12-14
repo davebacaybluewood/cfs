@@ -213,8 +213,8 @@ const AgentSubscribers: React.FC = () => {
     return {
       id: subscriber.userGuid,
       isSubscribed: subscriber.isSubscribed ? "YES" : "NO",
-      firstName: capitalizeText(subscriber.firstName ?? ""),
-      lastName: capitalizeText(subscriber.lastName ?? ""),
+      firstName: subscriber.firstName,
+      lastName: subscriber.lastName,
       email: subscriber.email,
       source: subscriber.source ?? BLANK_VALUE,
       channels: subscriber.channels?.length
