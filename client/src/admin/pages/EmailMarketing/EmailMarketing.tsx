@@ -671,6 +671,9 @@ const ContractForm: React.FC = () => {
                 );
                 setFieldValue("recipients", newContactValues);
               };
+
+              const contactValue = contactsValue?.filter((data: any) => data.value)
+
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -756,7 +759,7 @@ const ContractForm: React.FC = () => {
                           options={contacts}
                           isLoading={recipientLoading}
                           isDisabled={recipientLoading}
-                          value={contactsValue}
+                          value={contactValue}
                           name="recipients"
                           components={{ Option: RemoveContactButton }}
                           placeholder="Select a recipient item to add"
@@ -1141,8 +1144,8 @@ const ContractForm: React.FC = () => {
                       )}
                     </div>
                   </div>
-                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre>
                 </React.Fragment>
               );
             }}
