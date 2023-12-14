@@ -77,18 +77,18 @@ const subscriberRegistration = async (subscriberData) => {
 
   let source = "";
   if (templateId) {
-
     const findEmailTemplate = async () => {
       const template = await EmailTemplate.findById(templateId);
       source = template.subject;
-    }
+    };
 
     if (templateId === "CUSTOM_EMAIL") {
       source = "Custom Email";
     } else {
-      source = findEmailTemplate()
+      source = findEmailTemplate();
     }
-
+  } else {
+    source = "Custom Email";
   }
 
   const account = await Agent.find({ userGuid });

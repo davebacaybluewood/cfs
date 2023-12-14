@@ -416,9 +416,9 @@ const ContractForm: React.FC = () => {
     });
   }
 
-  const loadDesign = useCallback(() => { }, [emailEditorRef, design]);
+  const loadDesign = useCallback(() => {}, [emailEditorRef, design]);
 
-  useEffect(() => { }, [design]);
+  useEffect(() => {}, [design]);
 
   const handleDeleteContact = async (contactId: string) => {
     if (contactId) {
@@ -500,7 +500,7 @@ const ContractForm: React.FC = () => {
         {
           label: leadProfile.emailAddress,
           value: leadProfile.emailAddress,
-        }
+        },
       ]);
     } else {
       setContactsValue([]);
@@ -508,12 +508,14 @@ const ContractForm: React.FC = () => {
     setInitialValues((old) => {
       return {
         ...old,
-        recipients: [{
-          label: leadProfile?.emailAddress ?? "",
-          value: leadProfile?.emailAddress ?? "",
-        } as any]
-      }
-    })
+        recipients: [
+          {
+            label: leadProfile?.emailAddress ?? "",
+            value: leadProfile?.emailAddress ?? "",
+          } as any,
+        ],
+      };
+    });
     setContactsValue([
       {
         label: leadProfile?.emailAddress,
@@ -544,7 +546,6 @@ const ContractForm: React.FC = () => {
     }
   };
 
-
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -564,7 +565,7 @@ const ContractForm: React.FC = () => {
               const finalData: any = {
                 ...data,
                 userGuid: userCtx?.user?.userGuid,
-                templateId: templateId || "CUSTOM_EMAIL"
+                templateId: templateId || "CUSTOM_EMAIL",
               };
 
               finalData.recipients =
@@ -672,7 +673,9 @@ const ContractForm: React.FC = () => {
                 setFieldValue("recipients", newContactValues);
               };
 
-              const contactValue = contactsValue?.filter((data: any) => data.value)
+              const contactValue = contactsValue?.filter(
+                (data: any) => data.value
+              );
 
               return (
                 <React.Fragment>
@@ -1144,8 +1147,8 @@ const ContractForm: React.FC = () => {
                       )}
                     </div>
                   </div>
-                  <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre>
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}

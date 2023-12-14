@@ -67,7 +67,12 @@ const registerPaidUser = async (req, res) => {
   }
 };
 
-const registerUserHierarchyAndPoints = async (req, res, userGuid, templateId) => {
+const registerUserHierarchyAndPoints = async (
+  req,
+  res,
+  userGuid,
+  templateId
+) => {
   const { recruiterUserGuid } = req.body;
 
   // const recruiterInfo = await Agent.findOne({ userGuid: recruiterUserGuid });
@@ -83,17 +88,19 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid, templateId) =>
   //   accountingSystemEmailAddress,
   // });
 
-  let source = ""
+  let source = "";
   if (templateId) {
     const findEmailTemplate = async () => {
       const template = await EmailTemplate.findById(templateId);
       source = template.subject;
-    }
+    };
     if (templateId === "CUSTOM_EMAIL") {
       source = "Custom Email";
     } else {
-      source = findEmailTemplate()
+      source = findEmailTemplate();
     }
+  } else {
+    source = "Custom Email";
   }
 
   const agentProfile = await Agent.findOne({ userGuid });
@@ -152,7 +159,7 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid, templateId) =>
           hierarchyId: newHierarchyId,
           hierarchyCode: hierarchyCode,
           recruiterUserGuid: recruiterUserGuid,
-          source
+          source,
         },
       ];
 
@@ -175,7 +182,7 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid, templateId) =>
         hierarchyId: newHierarchyId,
         hierarchyCode: hierarchyCode,
         recruiterUserGuid: recruiterUserGuid,
-        source
+        source,
       };
       await Hierarchy.create(newHierarchy);
     }
@@ -188,7 +195,7 @@ const registerUserHierarchyAndPoints = async (req, res, userGuid, templateId) =>
       parent: "",
       hierarchyId: hierarchyId,
       hierarchyCode: hierarchyCode,
-      source
+      source,
     };
     await Hierarchy.create(newHierarchy);
   }
