@@ -17,6 +17,9 @@ import classNames from "classnames";
 import { useLocation, useNavigate } from "react-router-dom";
 import { paths } from "constants/routes";
 import { PROFILE_POSITIONS, PROFILE_ROLES } from "./constants";
+import LoginPromotions from "library/LogInPromotions/LoginPromotions";
+import { FaQuestionCircle } from "react-icons/fa";
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 
 interface PortalRegistrationProps {
   isAdmin?: boolean;
@@ -67,12 +70,12 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     stage === 1
       ? "Create an account"
       : stage === 2
-      ? "Personal Information"
-      : stage === 3
-      ? "Contact Information"
-      : stage === 4
-      ? "Social Media Links"
-      : "Confirm Account Information";
+        ? "Personal Information"
+        : stage === 3
+          ? "Contact Information"
+          : stage === 4
+            ? "Social Media Links"
+            : "Confirm Account Information";
 
   const changeStage = (newStage: number) => {
     setStage(newStage);
@@ -148,54 +151,26 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
   return (
     <div className="portal-registration-container">
       <div className="left-col">
-        <div className="captions">
-          {stage === 6 ? (
-            <h1 style={{ fontSize: "6rem" }}>Congratulations!</h1>
-          ) : (
-            <h1 className={classNames({ "left-header": props.isAdmin })}>
-              {props.isAdmin ? (
-                <React.Fragment>
-                  CFS <br /> Registration
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  Welcome <br /> to CFS
-                </React.Fragment>
-              )}
-            </h1>
-          )}
-          {!props.isAdmin ? (
-            <React.Fragment>
-              {stage === 1 ? (
-                <p>
-                  Start your journey <br /> with us today.
-                </p>
-              ) : stage === 6 ? (
-                <p>Registration Completed</p>
-              ) : (
-                <p>
-                  Please provide your <br /> personal information.
-                </p>
-              )}
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {stage === 1 ? (
-                <p>
-                  Please provide the agent <br /> information.
-                </p>
-              ) : stage === 6 ? (
-                <p>Registration Completed</p>
-              ) : (
-                <p>
-                  Please provide the agent <br /> information.
-                </p>
-              )}
-            </React.Fragment>
-          )}
-        </div>
+        <LoginPromotions />
       </div>
       <div className="right-col">
+        <div className="light-bulb">
+          <HtmlTooltip
+            title={
+              <div
+                style={{
+                  fontSize: "1.3rem",
+                  lineHeight: '1.5rem',
+                }}
+              >
+                <h2 style={{ fontSize: '1.5rem', margin: '1rem 0' }}>Why you should Join CFS?</h2>
+                <p>Registration opens doors to a realm of personalized experiences – join us!</p>
+              </div>
+            }
+          >
+            <div><FaQuestionCircle /></div>
+          </HtmlTooltip>
+        </div>
         <Formik
           initialValues={initialValues}
           enableReinitialize
@@ -269,11 +244,11 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
 
             const personalInfoValidity =
               errors.firstName ||
-              errors.lastName ||
-              errors.position ||
-              errors.roles ||
-              errors.bio ||
-              errors.nationality
+                errors.lastName ||
+                errors.position ||
+                errors.roles ||
+                errors.bio ||
+                errors.nationality
                 ? true
                 : false;
 

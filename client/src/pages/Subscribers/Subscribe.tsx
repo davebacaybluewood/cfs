@@ -10,6 +10,9 @@ import { MAIN_IMAGES } from "constants/constants";
 import agent from "api/agent";
 import "./Subscribe.scss";
 import { useLocation } from "react-router-dom";
+import LoginPromotions from "library/LogInPromotions/LoginPromotions";
+import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import { FaQuestionCircle } from "react-icons/fa";
 
 interface SubscribeProps {
   isAdmin?: boolean;
@@ -39,54 +42,26 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
   return (
     <div className="portal-registration-container">
       <div className="left-col">
-        <div className="captions">
-          {stage === 6 ? (
-            <h1 style={{ fontSize: "6rem" }}>Congratulations!</h1>
-          ) : (
-            <h1 className={classNames({ "left-header": props.isAdmin })}>
-              {props.isAdmin ? (
-                <React.Fragment>
-                  CFS <br /> Registration
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  Welcome <br /> to CFS
-                </React.Fragment>
-              )}
-            </h1>
-          )}
-          {!props.isAdmin ? (
-            <React.Fragment>
-              {stage === 1 ? (
-                <p>
-                  Start your journey <br /> with us today.
-                </p>
-              ) : stage === 6 ? (
-                <p>Registration Completed</p>
-              ) : (
-                <p>
-                  Please provide your <br /> personal information.
-                </p>
-              )}
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {stage === 1 ? (
-                <p>
-                  Please provide the agent <br /> information.
-                </p>
-              ) : stage === 6 ? (
-                <p>Registration Completed</p>
-              ) : (
-                <p>
-                  Please provide the agent <br /> information.
-                </p>
-              )}
-            </React.Fragment>
-          )}
-        </div>
+        <LoginPromotions />
       </div>
       <div className="right-col">
+        <div className="light-bulb">
+          <HtmlTooltip
+            title={
+              <div
+                style={{
+                  fontSize: "1.3rem",
+                  lineHeight: '1.5rem',
+                }}
+              >
+                <h2 style={{ fontSize: '1.5rem', margin: '1rem 0' }}>Why you should Subscribe in CFS?</h2>
+                <p>Join our community for personalized updates and special offers!</p>
+              </div>
+            }
+          >
+            <div><FaQuestionCircle /></div>
+          </HtmlTooltip>
+        </div>
         <Formik
           initialValues={initialValues}
           enableReinitialize
@@ -148,10 +123,10 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
           {({ values, errors, handleSubmit }) => {
             const subscribeAccountDetailsValidity =
               errors.confirmPassword ||
-              errors.password ||
-              errors.email ||
-              errors.firstName ||
-              errors.lastName
+                errors.password ||
+                errors.email ||
+                errors.firstName ||
+                errors.lastName
                 ? false
                 : true;
 

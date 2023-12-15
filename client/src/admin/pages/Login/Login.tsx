@@ -76,7 +76,7 @@ const PortalRegistration: React.FC = () => {
 
   return (
     <div className="portal-registration-container">
-      <div className="left-col">
+      <div className="left-col" style={{ background: '#0057b7' }}>
         <div className="captions">
           <PageCaptions />
         </div>
