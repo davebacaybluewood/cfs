@@ -8,7 +8,7 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = (props) => {
     return (
-        <CarouselMui indicators={false}>{props.items?.map((item, index) => <img key={index} src={item} />)}</CarouselMui>
+        <CarouselMui indicators={false}>{props.items?.map((item, index) => <img key={index} src={item} alt={item} />)}</CarouselMui>
     )
 }
 

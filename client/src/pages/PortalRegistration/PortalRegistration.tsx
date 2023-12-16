@@ -164,7 +164,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                 }}
               >
                 <h2 style={{ fontSize: '1.5rem', margin: '1rem 0' }}>Why you should Join CFS?</h2>
-                <p>Registration opens doors to a realm of personalized experiences – join us!</p>
+                <p> CFS offers financial protection and support structure an agent can use to win in any type of market . Joining us exposes you to cutting edge innovations that gurantees a career even during economic downturns .</p>
               </div>
             }
           >

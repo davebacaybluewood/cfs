@@ -54,8 +54,8 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                   lineHeight: '1.5rem',
                 }}
               >
-                <h2 style={{ fontSize: '1.5rem', margin: '1rem 0' }}>Why you should Subscribe in CFS?</h2>
-                <p>Join our community for personalized updates and special offers!</p>
+                <h2 style={{ fontSize: '1.5rem', margin: '1rem 0' }}>Why you should subscribe in CFS?</h2>
+                <p>Subscribing to CFS can offer several benefits and rewards which includes understaning the types of coverage that best suit your situation and tailored approaches specific to your needs .</p>
               </div>
             }
           >
