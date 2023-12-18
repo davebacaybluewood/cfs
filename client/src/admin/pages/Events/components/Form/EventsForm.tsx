@@ -66,6 +66,10 @@ const EventsForm = () => {
     title: Yup.string().required("Title is required."),
     eventDate: Yup.string().required("Event Date is required."),
     shortDescription: Yup.string().required("Short Description is required."),
+    meetingLink: Yup.string().matches(
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)\/.*/,
+      "Meeting link is invalid format"
+    ),
   });
 
   const handleFocusBack = () => {
