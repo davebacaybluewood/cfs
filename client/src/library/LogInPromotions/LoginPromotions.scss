@@ -1,0 +1,28 @@
+.login-rewards {
+    height: 100vh;
+    // overflow: hidden;
+
+    .captions-header {
+        padding: 2rem 0;
+        background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.44) 100%);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        h2 {
+            font: 900 8rem "Agrandir";
+            text-align: center;
+            text-transform: uppercase;
+        }
+    }
+
+    .carousel-container {
+        .image-holder {
+
+            img {
+                width: 100%;
+                height: 100vh;
+            }
+        }
+
+    }
+}

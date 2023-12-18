@@ -44,6 +44,7 @@
     "react-google-recaptcha": "^2.1.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.8.0",
+    "react-material-ui-carousel": "^3.4.2",
     "react-moving-text": "^0.0.7",
     "react-multi-carousel": "^2.8.4",
     "react-organizational-chart": "^2.2.1",
