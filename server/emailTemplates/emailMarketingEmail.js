@@ -192,11 +192,11 @@ const emailMarketingEmail = (data) => {
               >${agentInfo.name}</span
             >
             <br />
-            ${agentInfo.licenseNumber
-      ? `License #${agentInfo.licenseNumber} <br />`
-      : ""
-    }
-            ${agentInfo.position}
+            ${
+              agentInfo.licenseNumber
+                ? `License #${agentInfo.licenseNumber} <br />`
+                : ""
+            }
           </div>
         </div>
         <!-- End of email body -->
