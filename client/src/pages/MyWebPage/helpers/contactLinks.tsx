@@ -14,7 +14,7 @@ const contactLinks = (address: string, phoneNumber: string, email: string, licen
             text: phoneNumber ?? ''
         },
         {
-            icon: email ? <HiLocationMarker /> : '',
+            icon: email ? <MdEmail /> : '',
             text: email ? email : ''
         },
         {

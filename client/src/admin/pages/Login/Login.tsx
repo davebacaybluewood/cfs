@@ -21,6 +21,7 @@ import "pages/PortalRegistration/PortalRegistration.scss";
 import "./Login.scss";
 import { USER_LOGIN_ACTION_TYPES } from "constants/redux-constants";
 import ForgotPasswordForm from "./components/ForgotPasswordForm";
+import LoginPromotions from "library/LogInPromotions/LoginPromotions";
 
 type LoginWithValues = {
   emailAddress: string;
@@ -76,10 +77,8 @@ const PortalRegistration: React.FC = () => {
 
   return (
     <div className="portal-registration-container">
-      <div className="left-col">
-        <div className="captions">
-          <PageCaptions />
-        </div>
+      <div className="left-col" style={{ background: '#0057b7' }}>
+        <LoginPromotions />
       </div>
       <div className="right-col-login">
         <div className="login-container" style={{ width: "100%" }}>
