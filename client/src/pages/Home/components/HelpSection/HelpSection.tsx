@@ -8,10 +8,6 @@ const HelpSection: React.FC = () => {
   return (
     <div className="help-section">
       <Container>
-        <Typography variant="h3" className="header__name">
-          How Can We Help
-        </Typography>
-
         <div className="content__container">
           <Grid container spacing={3} justifyContent="center">
             <Grid item sm={12} md={4} lg={4}>

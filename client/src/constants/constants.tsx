@@ -42,6 +42,7 @@ import AALogin from "../events/mission/AALogin/AALogin"
 import ClaimReward from "events/mission/ClaimReward/ClaimReward"
 import WebinarPage from "pages/MyWebPage/components/WebinarPage"
 import ContactEmailForm from "pages/ContactEmailForm/ContactEmailForm"
+import HomeV2 from "pages/Home/HomeV2"
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean
@@ -174,15 +175,27 @@ const filteredAdminRoutes: ReactRoutesType[] = adminRoutes.map((data) => {
 
 const REACT_ROUTES: ReactRoutesType[] = [
   ...filteredAdminRoutes,
+  // {
+  //   element: <Home key="main-index" />,
+  //   path: paths.index,
+  //   showPartners: true,
+  // },
+  // {
+  //   element: <Home key="index" />,
+  //   path: paths.home,
+  //   showPartners: true,
+  // },
   {
-    element: <Home key="main-index" />,
+    element: <HomeV2 key="main-index" />,
     path: paths.index,
-    showPartners: true,
+    showPartners: false,
+    showHeadline: false
   },
   {
-    element: <Home key="index" />,
+    element: <HomeV2 key="index" />,
     path: paths.home,
-    showPartners: true,
+    showPartners: false,
+    showHeadline: false
   },
   {
     element: <PortalArticle />,
@@ -194,8 +207,8 @@ const REACT_ROUTES: ReactRoutesType[] = [
     element: (
       <AgentMissionModal
         openModal={true}
-        showModal={() => {}}
-        onClick={() => {}}
+        showModal={() => { }}
+        onClick={() => { }}
         agentName="Black Noir"
       />
     ),
