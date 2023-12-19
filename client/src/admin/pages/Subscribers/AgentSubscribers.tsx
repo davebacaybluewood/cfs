@@ -134,14 +134,6 @@ const AgentSubscribers: React.FC = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (params) => params.value,
-      filterable: false,
-      disableExport: true,
-    },
-    {
-      field: "channelsValue",
-      headerName: "Channels",
-      disableColumnMenu: true,
-      hideable: true,
     },
     { field: "createdAt", headerName: "Date Created", width: 200 },
     {

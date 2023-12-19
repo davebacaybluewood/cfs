@@ -73,14 +73,7 @@ const MailLibrary: React.FC = () => {
       headerName: "Template Name",
       width: 200,
       renderCell: (params) => params.value,
-      disableExport: true,
       filterable: false,
-    },
-    {
-      field: "templateValue",
-      headerName: "Template Name",
-      disableColumnMenu: true,
-      hideable: true,
     },
     {
       field: "subject",
