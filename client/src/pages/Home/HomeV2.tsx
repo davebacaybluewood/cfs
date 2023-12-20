@@ -27,16 +27,18 @@ const HomeV2: React.FC = () => {
                     } />
                     <div className="border"></div>
                 </div>
-                <div className="partner-carousel">
-                    <Partners />
+            </Container>
+            <div className="partner-carousel">
+                <Partners />
+            </div>
+            <div className="features-section">
+                <div className="captions">
+                    <h2>Built for growing organizations.</h2>
+                    <p>Simplify work and get more done using one powerful application.</p>
                 </div>
-                <div className="features-section">
-                    <div className="captions">
-                        <h2>Built for growing organizations.</h2>
-                        <p>Simplify work and get more done using one powerful application.</p>
-                    </div>
-                    <HelpSection />
-                </div>
+                <HelpSection />
+            </div>
+            <Container>
                 <div className="dual-col-section">
                     <TwoColContent leftCol={
                         <React.Fragment>
@@ -138,10 +140,10 @@ const HomeV2: React.FC = () => {
                         <p>Lorem ipsum dolor sit amet.</p>
                     </div>
                 </div>
-                <div className="partners">
-                    <Partners />
-                </div>
             </Container>
+            <div className="partner-carousel">
+                <Partners />
+            </div>
 
 
         </div >
