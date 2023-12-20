@@ -5,11 +5,11 @@ import Button from 'library/Button/Button'
 import Partners from 'library/Partners/Partners'
 import HelpSection from './components/HelpSection/HelpSection'
 import TwoColContent from 'library/TwoColContent/TwoColContent'
-import { FaCheckCircle } from 'react-icons/fa'
+import { FaArrowCircleRight, FaCheckCircle } from 'react-icons/fa'
 
 const HomeV2: React.FC = () => {
     return (
-        <div className="home-page-container">
+        <div className="home-page-container" >
             <Container>
                 <div className='leading-section'>
                     <TwoColContent leftCol={
@@ -69,6 +69,9 @@ const HomeV2: React.FC = () => {
                             </React.Fragment>
                         } />
                 </div>
+            </Container>
+            {/* <div className='testimonial-container'></div> discarded for future use */}
+            <Container>
                 <div className="product-highlights">
                     <TwoColContent leftSize={9} leftCol={
                         <React.Fragment>
@@ -79,15 +82,15 @@ const HomeV2: React.FC = () => {
                             <TwoColContent leftCol={
                                 <React.Fragment>
                                     <ul className='left-list'>
-                                        <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit amet.</h2> </span> </li>
-                                        <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit amet.</h2> </span></li>
+                                        <li> <FaCheckCircle /> <span> <h2>Free Email Support</h2> </span> </li>
+                                        <li> <FaCheckCircle /> <span> <h2>Lunch & Learns</h2> </span></li>
                                     </ul>
                                 </React.Fragment>
                             } rightCol={
                                 <React.Fragment>
                                     <ul className='right-list'>
-                                        <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit amet.</h2> </span></li>
-                                        <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit amet.</h2> </span></li>
+                                        <li> <FaCheckCircle /> <span> <h2>Online Knowledge Base</h2> </span></li>
+                                        <li> <FaCheckCircle /> <span> <h2>Email Pro</h2> </span></li>
                                     </ul>
                                 </React.Fragment>
                             } />
@@ -101,8 +104,47 @@ const HomeV2: React.FC = () => {
                         </React.Fragment>
                     } />
                 </div>
+                <div className="calendar-container">
+                    <div className="content-header">
+                        <h2>Getting to your “OMG” and “Aha!” moment is just a demo away</h2>
+                    </div>
+
+                    <div className="offers">
+                        <TwoColContent leftCol={
+                            <React.Fragment>
+                                <ul>
+                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                </ul>
+                            </React.Fragment>
+                        } rightCol={
+                            <React.Fragment>
+                                <ul>
+                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                </ul>
+                            </React.Fragment>
+                        } />
+                    </div>
+
+                    <div className="captions">
+                        <h2>Got 15 minutes?</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe asperiores voluptates corporis sint?</p>
+                        <Button variant='primary'>Get a Demo <FaArrowCircleRight /> </Button>
+                        <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
+                </div>
+                <div className="partners">
+                    <Partners />
+                </div>
             </Container>
-        </div>
+
+
+        </div >
     )
 }
 

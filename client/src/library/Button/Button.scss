@@ -22,6 +22,7 @@
     }
   }
 }
+
 .cfs-btn-danger {
   button {
     color: white;
@@ -55,13 +56,15 @@
     color: #fff;
     border: none;
     margin-bottom: 1.7rem;
-    border: 1px solid white;
+    border: 1px solid transparent;
     background-color: #00004d;
+    transition: .2s;
 
     &:hover {
-      color: white;
+      color: #00004d;
       cursor: pointer;
-      opacity: 0.8;
+      background: transparent;
+      border: 1px solid #333;
     }
   }
 }

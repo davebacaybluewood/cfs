@@ -91,6 +91,12 @@
         }
     }
 
+    .testimonial-container {
+        background: url('https://img.freepik.com/premium-vector/abstract-background-design-perfect-landing-page-background-other-you-want_288336-2.jpg');
+        background-attachment: fixed;
+        height: 90vh;
+    }
+
     .section-b {
         margin: 2rem 0;
 
@@ -151,7 +157,85 @@
         }
 
         img {
-            width: 500px;
+            width: 100%;
+        }
+    }
+
+    .calendar-container {
+        background: #01497c;
+        border-radius: 20px;
+        padding: 4rem 3rem;
+        color: #fff;
+
+        .content-header {
+            h2 {
+                text-align: center;
+                font: 700 5rem "Montserrat";
+                margin: 3rem 0;
+            }
+        }
+
+        .offers {
+            margin: 2rem 0;
+
+            ul {
+                li {
+                    display: flex;
+                    align-items: center;
+                    margin: 1rem 0;
+                    justify-content: center;
+
+                    svg {
+                        font-size: 1.5rem;
+                        color: #619b8a;
+                    }
+
+                    span {
+                        margin: 0 1rem;
+
+                        h2 {
+                            font: 400 2rem "Montserrat";
+
+                        }
+                    }
+                }
+            }
+
+        }
+
+        .captions {
+            text-align: center;
+
+            h2 {
+                font: 500 2.5rem "Montserrat";
+                margin: 1rem 0;
+            }
+
+            p {
+                font: 300 1.5rem "Montserrat";
+            }
+
+            .cfs-btn-primary {
+                display: flex;
+                justify-content: center;
+                margin: 1rem 0 0 0;
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    font: 600 2rem "Montserrat";
+
+                    &:hover {
+                        background: #fff;
+                    }
+
+                    svg {
+                        margin-left: .5rem;
+                    }
+                }
+            }
+
+
         }
     }
 }
