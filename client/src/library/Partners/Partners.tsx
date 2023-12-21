@@ -105,9 +105,11 @@ const Partners: React.FC = () => {
       >
         {logos.map((data) => {
           return (
-            <Link to={data.link} target="_blank">
-              <img src={data.image} alt={data.image} />
-            </Link>
+            <div className="partners-container">
+              <Link to={data.link} target="_blank">
+                <img src={data.image} alt={data.image} />
+              </Link>
+            </div>
           );
         })}
       </ReactMultiCarousel>
