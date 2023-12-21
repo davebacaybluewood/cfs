@@ -65,7 +65,7 @@ const Home: React.FC = () => {
       <div className="map-section">
         <div className="half-bg" />
         <MapSection />
-        <CalendlySection />
+        {/* <CalendlySection /> */}
       </div>
       <Subscription />
       <Blogs

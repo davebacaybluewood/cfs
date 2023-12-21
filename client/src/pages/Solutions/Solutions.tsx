@@ -167,41 +167,6 @@ const Solutions = () => {
             ))}
           </div>
         </div>
-        <div className="contact-us">
-          <Container>
-            <Grid
-              container
-              spacing={6}
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Grid item sm={12} md={12} lg={4}>
-                <div className="grid-left-captions">
-                  <h3>Callendly Appointment</h3>
-                  <i>Powered by Calendly</i>
-                </div>
-              </Grid>
-              <Grid item sm={12} md={12} lg={5}>
-                <div className="grid-middle">
-                  <h2>Contact with us!</h2>
-                </div>
-              </Grid>
-              <Grid item sm={12} md={12} lg={3}>
-                <div className="grid-right-btn">
-                  <button onClick={() => setOpenCalendlyModal(true)}>
-                    BOOK APPOINTMENT <AiOutlineArrowRight />
-                  </button>
-                </div>
-              </Grid>
-            </Grid>
-            <PopupModal
-              url={CALENDLY.CONSULTATION}
-              onModalClose={() => setOpenCalendlyModal(false)}
-              open={openCalendlyModal}
-              rootElement={document.getElementById("root") as any}
-            />
-          </Container>
-        </div>
       </Container>
       {/* <WorkingSteps
         backgroundImage="/assets/event-1 (1).png"
