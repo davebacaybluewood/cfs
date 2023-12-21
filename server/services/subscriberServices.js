@@ -89,7 +89,7 @@ const subscriberRegistration = async (subscriberData) => {
       source = findEmailTemplate();
     }
   } else {
-    source = "Custom Email";
+    source = "Individual Registration";
   }
 
   if (eventId) {
@@ -187,6 +187,16 @@ const subscriberRegistration = async (subscriberData) => {
       };
       await Hierarchy.create(newHierarchy);
     }
+  } else {
+    const newHierarchy = {
+      userGuid: newUserGuid,
+      parent: "",
+      hierarchyId: generateString(6),
+      hierarchyCode: generateString(6),
+      recruiterUserGuid: "",
+      source: source,
+    };
+    await Hierarchy.create(newHierarchy);
   }
 
   /** Generate points */
@@ -231,62 +241,123 @@ const fetchSubscribersByUser = async (userGuid) => {
     const user = await User.findOne({ userGuid });
     const isAdmin = user?.isAdmin;
 
-    const subscribers = await Hierarchy.aggregate([
-      {
-        $match: isAdmin
-          ? { recruiterUserGuid: { $exists: false } }
-          : { recruiterUserGuid: userGuid },
-      },
-      {
-        $lookup: {
-          from: "users",
-          localField: "userGuid",
-          foreignField: "userGuid",
-          as: "userDoc",
+    let subscribers;
+    if (!isAdmin) {
+      subscribers = await Hierarchy.aggregate([
+        {
+          $match: { recruiterUserGuid: userGuid },
         },
-      },
-      {
-        $unwind: "$userDoc",
-      },
-      {
-        $lookup: {
-          from: "agents",
-          localField: "userGuid",
-          foreignField: "userGuid",
-          as: "agentDoc",
+        {
+          $lookup: {
+            from: "users",
+            localField: "userGuid",
+            foreignField: "userGuid",
+            as: "userDoc",
+          },
         },
-      },
-      {
-        $unwind: "$agentDoc",
-      },
-      {
-        $match: { "agentDoc.status": status.ACTIVATED },
-      },
-      {
-        $project: {
-          _id: 1,
-          userGuid: 1,
-          recruiterUserGuid: 1,
-          hierarchyId: 1,
-          hierarchyCode: 1,
-          parent: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          source: 1,
-          channels: 1,
-          position: "$userDoc.position",
-          firstName: "$userDoc.firstName",
-          lastName: "$userDoc.lastName",
-          email: "$userDoc.email",
-          status: "$agentDoc.status",
-          nationality: "$agentDoc.nationality",
-          birthdate: "$agentDoc.birthDate",
+        {
+          $unwind: "$userDoc",
         },
-      },
-      {
-        $unset: "userDoc",
-      },
-    ]);
+        {
+          $lookup: {
+            from: "agents",
+            localField: "userGuid",
+            foreignField: "userGuid",
+            as: "agentDoc",
+          },
+        },
+        {
+          $unwind: "$agentDoc",
+        },
+        {
+          $match: { "agentDoc.status": status.ACTIVATED },
+        },
+        {
+          $project: {
+            _id: 1,
+            userGuid: 1,
+            recruiterUserGuid: 1,
+            hierarchyId: 1,
+            hierarchyCode: 1,
+            parent: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            source: 1,
+            channels: 1,
+            position: "$userDoc.position",
+            firstName: "$userDoc.firstName",
+            lastName: "$userDoc.lastName",
+            email: "$userDoc.email",
+            status: "$agentDoc.status",
+            nationality: "$agentDoc.nationality",
+            birthdate: "$agentDoc.birthDate",
+          },
+        },
+        {
+          $unset: "userDoc",
+        },
+      ]);
+    } else {
+      subscribers = await Hierarchy.aggregate([
+        {
+          $match: {
+            $or: [
+              { recruiterUserGuid: { $exists: false } },
+              { recruiterUserGuid: "" },
+            ],
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userGuid",
+            foreignField: "userGuid",
+            as: "userDoc",
+          },
+        },
+        {
+          $unwind: "$userDoc",
+        },
+        {
+          $lookup: {
+            from: "agents",
+            localField: "userGuid",
+            foreignField: "userGuid",
+            as: "agentDoc",
+          },
+        },
+        {
+          $unwind: "$agentDoc",
+        },
+        {
+          $match: { "agentDoc.status": status.ACTIVATED },
+        },
+        {
+          $project: {
+            _id: 1,
+            userGuid: 1,
+            recruiterUserGuid: 1,
+            hierarchyId: 1,
+            hierarchyCode: 1,
+            parent: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            source: 1,
+            channels: 1,
+            position: "$userDoc.position",
+            firstName: "$userDoc.firstName",
+            lastName: "$userDoc.lastName",
+            email: "$userDoc.email",
+            status: "$agentDoc.status",
+            nationality: "$agentDoc.nationality",
+            birthdate: "$agentDoc.birthDate",
+          },
+        },
+        {
+          $unset: "userDoc",
+        },
+      ]);
+    }
 
     const filteredSubscriber = subscribers.map((data) => {
       const isAgent = data.position?.some((e) => e.value === "POSITION_AGENT");

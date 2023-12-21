@@ -167,7 +167,7 @@ const Solutions = () => {
             ))}
           </div>
         </div>
-        <div className="contact-us">
+        {/* <div className="contact-us">
           <Container>
             <Grid
               container
@@ -201,7 +201,7 @@ const Solutions = () => {
               rootElement={document.getElementById("root") as any}
             />
           </Container>
-        </div>
+        </div> */}
       </Container>
       {/* <WorkingSteps
         backgroundImage="/assets/event-1 (1).png"

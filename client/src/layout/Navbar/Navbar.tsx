@@ -80,11 +80,11 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                       },
                     ],
                   },
-                  {
-                    link: paths.events,
-                    text: "Events",
-                    className: setActive(paths.events),
-                  },
+                  // {
+                  //   link: paths.events,
+                  //   text: "Events",
+                  //   className: setActive(paths.events),
+                  // },
                   {
                     link: paths.resources,
                     text: "Resources",
@@ -171,7 +171,17 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               </li>
               <li>
                 <a href={SOCIAL_MEDIA_LINKS.TWITTER} target="_blank">
-                  <TWITTER_LOGO width={14} height={14} viewBox={"0 0 24 24"} reactX={0} reactY={0} reactWidth={24} reactHeight={24} reactFill={"#0e1f51"} pathFill={"#FFFFFF"}/>
+                  <TWITTER_LOGO
+                    width={14}
+                    height={14}
+                    viewBox={"0 0 24 24"}
+                    reactX={0}
+                    reactY={0}
+                    reactWidth={24}
+                    reactHeight={24}
+                    reactFill={"#0e1f51"}
+                    pathFill={"#FFFFFF"}
+                  />
                 </a>
               </li>
             </ul>

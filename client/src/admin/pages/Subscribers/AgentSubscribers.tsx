@@ -449,9 +449,15 @@ const AgentSubscribers: React.FC = () => {
                   : "You don't have any leads yet"
               }
               message={
-                <button onClick={() => setOpenDrawer(true)}>
-                  Click here to upgrade to agent pro
-                </button>
+                isFreeTrial ? (
+                  <button onClick={() => setOpenDrawer(true)}>
+                    Click here to upgrade to agent pro
+                  </button>
+                ) : (
+                  <p>
+                    Generate leads by sending email templates or sharing events.
+                  </p>
+                )
               }
             >
               <DataGrid
