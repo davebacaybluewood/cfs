@@ -350,6 +350,7 @@ const MailLibraryForm: React.FC = () => {
                       md={12}
                       lg={12}
                       className="form-card-container"
+                      style={{ overflow: "auto" }}
                     >
                       <label>Email Body (Required)</label>
 

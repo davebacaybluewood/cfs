@@ -926,6 +926,7 @@ const ContractForm: React.FC = () => {
                       md={12}
                       lg={12}
                       className="form-card-container"
+                      style={{ overflow: "auto" }}
                     >
                       {action !== "view" ? (
                         <React.Fragment>
