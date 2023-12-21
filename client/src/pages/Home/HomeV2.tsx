@@ -1,33 +1,33 @@
 import React from 'react'
 import './HomeV2.scss'
-import { Container } from '@mui/material'
+import { Container, Grid } from '@mui/material'
 import Button from 'library/Button/Button'
 import Partners from 'library/Partners/Partners'
 import HelpSection from './components/HelpSection/HelpSection'
 import TwoColContent from 'library/TwoColContent/TwoColContent'
 import { FaArrowCircleRight, FaCheckCircle } from 'react-icons/fa'
+import HeadLine from './components/Headline/HeadLine'
+import Blogs from 'library/Blogs/Blogs'
+import Card, { CardProps } from './components/Card/Card'
 
 const HomeV2: React.FC = () => {
+    const topAgents: CardProps[] = [
+        {
+            name: 'Jane Doe',
+            description: 'Bravo Agent',
+            profileImage: 'https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+        },
+        {
+            name: 'John Doe',
+            description: 'Wealth Builder Agent',
+            profileImage: 'https://images.pexels.com/photos/2589653/pexels-photo-2589653.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+        }
+    ]
     return (
         <div className="home-page-container" >
-            <Container>
-                <div className='leading-section'>
-                    <TwoColContent leftCol={
-                        <React.Fragment>
-                            <h2>One platform to run your organization, all in one place.</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quasi voluptatem pariatur voluptatibus quam voluptas necessitatibus obcaecati, itaque rerum laboriosam?</p>
-                            <Button variant='primary'>Get A Demo</Button>
-                        </React.Fragment>
-                    } rightCol={
-                        <React.Fragment>
-                            <div className="image-holder">
-                                <img src="https://www.tieit.ai/wp-content/uploads/2023/03/TIEIT-All-in-one-image-2-e1678066112361.png" alt="chart" />
-                            </div>
-                        </React.Fragment>
-                    } />
-                    <div className="border"></div>
-                </div>
-            </Container>
+            <div className="lead-section">
+                <HeadLine />
+            </div>
             <div className="partner-carousel">
                 <Partners />
             </div>
@@ -71,9 +71,7 @@ const HomeV2: React.FC = () => {
                             </React.Fragment>
                         } />
                 </div>
-            </Container>
-            {/* <div className='testimonial-container'></div> discarded for future use */}
-            <Container>
+                {/* <div className='testimonial-container'></div> discarded for future use */}
                 <div className="product-highlights">
                     <TwoColContent leftSize={9} leftCol={
                         <React.Fragment>
@@ -105,6 +103,15 @@ const HomeV2: React.FC = () => {
                             <img src="/assets/images/homev2/educate.png" alt="" />
                         </React.Fragment>
                     } />
+                </div>
+                <div className="blogs-container">
+                    <Blogs
+                        title="CFS Blogs"
+                        blogsConfig={{
+                            limit: 3,
+                            skip: 0,
+                        }}
+                    />
                 </div>
                 <div className="calendar-container">
                     <div className="content-header">
@@ -139,6 +146,7 @@ const HomeV2: React.FC = () => {
                         <Button variant='primary'>Get a Demo <FaArrowCircleRight /> </Button>
                         <p>Lorem ipsum dolor sit amet.</p>
                     </div>
+
                 </div>
             </Container>
             <div className="partner-carousel">

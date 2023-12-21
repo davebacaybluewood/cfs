@@ -2,9 +2,9 @@ import React from "react";
 import "./Card.scss";
 
 interface CardProps {
-  image: string;
+  image?: string;
   cardTitle: string;
-  subtitle: string;
+  subtitle?: string;
 }
 const Card: React.FC<CardProps> = (props) => {
   return (
