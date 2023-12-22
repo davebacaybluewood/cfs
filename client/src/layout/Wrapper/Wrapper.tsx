@@ -9,7 +9,7 @@ interface WrapperProps {
   showNavbar?: boolean;
   showHeadline?: boolean;
   children: React.ReactNode | JSX.Element;
-  theme?: "SKY" | "RED" | "NAVY";
+  theme?: "SKY" | "RED" | "NAVY" | "WHITE";
   showPartners?: boolean;
 }
 

@@ -1,41 +1,50 @@
 .home-page-container {
+    .border {
+        border: 1px solid #eee;
+        margin: 2rem 4rem;
+    }
+
     .lead-section {
         // background: #000;
+        padding-bottom: 2rem;
 
         .carousel-headline {
-            margin: 1rem 0;
+            .headline-img-holder {
 
-            img {
-                width: 100%;
-                height: 45vh;
-                object-fit: cover;
+                img {
+                    width: 100%;
+                    height: 500px;
+                    object-fit: cover;
+                }
             }
 
             .card-headline-container {
-                display: flex;
-                justify-content: flex-end;
+                margin: 2rem 0;
 
-                .card-content {
-                    background: #fff;
-                    border-radius: 20px;
-                    box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
-                    padding: 2rem;
-                    width: 400px;
-                    margin: -11rem 5rem 3rem 0;
+                .MuiContainer-root {
+                    .card-content {
+                        z-index: 2000;
+                        border-radius: 20px;
+                        background: #fff;
+                        box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+                        padding: 2.3rem;
+                        width: 400px;
+                        margin: -11rem 0 3rem 0;
 
-                    h2 {
-                        font: 700 1.7rem "Montserrat";
-                        margin: 1rem 0;
+                        h2 {
+                            font: 700 1.7rem "Montserrat";
+                            margin: 1rem 0;
 
-                    }
+                        }
 
-                    p {
-                        font: 500 1.5rem "Montserrat";
-                        line-height: 3rem;
-                    }
+                        p {
+                            font: 500 1.5rem "Montserrat";
+                            line-height: 3rem;
+                        }
 
-                    button {
-                        padding: .5rem 1rem;
+                        button {
+                            padding: .5rem 1rem;
+                        }
                     }
                 }
             }
@@ -182,24 +191,29 @@
         .offers {
             margin: 2rem 0;
 
-            ul {
-                li {
-                    display: flex;
-                    align-items: center;
-                    margin: 1rem 0;
-                    justify-content: center;
+            .MuiGrid-item {
+                display: flex;
+                justify-content: center;
 
-                    svg {
-                        font-size: 1.5rem;
-                        color: #619b8a;
-                    }
+                ul {
 
-                    span {
-                        margin: 0 1rem;
+                    li {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        margin: 1rem 0;
 
-                        h2 {
-                            font: 400 2rem "Montserrat";
+                        svg {
+                            font-size: 1.5rem;
+                            color: #619b8a;
+                        }
 
+                        span {
+                            margin: 0 1rem;
+
+                            h2 {
+                                font: 400 2rem "Montserrat";
+                            }
                         }
                     }
                 }
