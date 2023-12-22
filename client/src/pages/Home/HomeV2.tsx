@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Container } from '@mui/material'
 import Button from 'library/Button/Button'
 import Partners from 'library/Partners/Partners'
-import HelpSection from './components/HelpSection/HelpSection'
 import TwoColContent from 'pages/Home/components/TwoColContent/TwoColContent'
 import { FaArrowCircleRight, FaCheckCircle } from 'react-icons/fa'
 import HeadLine from './components/Headline/HeadLine'
 import Blogs from 'library/Blogs/Blogs'
-import './HomeV2.scss'
 import { useMediaQuery } from 'react-responsive'
 import InquirySection from './components/Inquiry-Section/InquirySection'
+import './HomeV2.scss'
+
 
 const HomeV2: React.FC = () => {
 
@@ -21,9 +21,7 @@ const HomeV2: React.FC = () => {
             <div className="lead-section">
                 <HeadLine />
             </div>
-            <div className="tri-section">
-                <InquirySection />
-            </div>
+
 
             {/* <div className="features-section">
                 <div className="captions">
@@ -66,6 +64,11 @@ const HomeV2: React.FC = () => {
                             </React.Fragment>
                         } />
                 </div>
+
+                <div className="tri-section">
+                    <InquirySection />
+                </div>
+
                 <Container>
                     <div className="border"></div>
                 </Container>
