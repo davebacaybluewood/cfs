@@ -48,7 +48,7 @@ type ReactRoutesType = RouteProps & {
   showFooter?: boolean
   showNavbar?: boolean
   showHeadline?: boolean
-  theme?: "SKY" | "RED" | "NAVY"
+  theme?: "SKY" | "RED" | "NAVY" | "WHITE"
   showPartners?: boolean
 }
 
@@ -189,13 +189,15 @@ const REACT_ROUTES: ReactRoutesType[] = [
     element: <HomeV2 key="main-index" />,
     path: paths.index,
     showPartners: false,
-    showHeadline: false
+    showHeadline: false,
+    theme: 'WHITE'
   },
   {
     element: <HomeV2 key="index" />,
     path: paths.home,
     showPartners: false,
-    showHeadline: false
+    showHeadline: false,
+    theme: 'WHITE'
   },
   {
     element: <PortalArticle />,
