@@ -1,11 +1,9 @@
 import { Container } from '@mui/material'
 import Button from 'library/Button/Button'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Carousel from 'react-material-ui-carousel'
 
 const HeadLine: React.FC = () => {
-
-    const [index, setIndex] = useState(1)
 
     const items = [
         {
@@ -31,39 +29,6 @@ const HeadLine: React.FC = () => {
         },
 
     ]
-
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'ArrowRight') {
-                if (index > items.length) {
-                    setIndex(1)
-                }
-                else {
-                    setIndex((prev) => prev + 1)
-                }
-            } else if (event.key === 'ArrowLeft') {
-                if (index < 1) {
-                    setIndex(1)
-                }
-                else {
-                    setIndex((prev) => prev - 1)
-                }
-            }
-            console.log(index);
-
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, []);
-
-
-
-
 
     return (
         <Carousel indicators={false} navButtonsAlwaysVisible interval={5000} >
