@@ -42,6 +42,7 @@ import missionRoutes from "./routes/events/missionRoutes.js";
 import eventOrderRoutes from "./routes/eventOrderRoutes.js";
 import achievementRoutes from "./routes/achievementRoutes.js";
 import channelRoutes from "./routes/channelRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -101,6 +102,7 @@ app.use("/api/events/mission", missionRoutes);
 app.use("/api/event-orders/", eventOrderRoutes);
 app.use("/api/achievements/", achievementRoutes);
 app.use("/api/", channelRoutes);
+app.use("/api/", categoryRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

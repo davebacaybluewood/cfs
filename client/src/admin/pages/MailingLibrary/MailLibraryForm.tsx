@@ -36,11 +36,26 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CreatableSelect from "react-select/creatable";
 import { ClearIndicatorStyles } from "library/MultiSelectInput/MultiSelectInputV2";
 import { EMAIL_TEMPLATES_CATEGORIES } from "admin/constants/constants";
+import {
+  CategoryData,
+  CategoryPayload,
+} from "admin/api/categoryServices/categoryModels";
+import { components } from "react-select";
+import { BsFillTrashFill } from "react-icons/bs";
 
+type CategoryValue = {
+  label: string;
+  value: string;
+  keyword: string;
+};
 const MailLibraryForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const emailEditorRef = useRef<EditorRef>(null);
   const [design, setDesign] = useState<any>();
+  const [categories, setCategories] = useState<any>();
+  const [categoryValue, setCategoryValue] = useState<
+    CategoryValue[] | undefined
+  >();
   const [initialValues, setInitialValues] = useState<any>({
     emailBody: "",
     subject: "",
@@ -48,6 +63,7 @@ const MailLibraryForm: React.FC = () => {
     settings: [""],
     categories: [],
   });
+  const [categoryLoading, setCategoryLoading] = useState(false);
 
   const validationSchema = Yup.object({
     subject: Yup.string().required("Subject is required."),
@@ -226,6 +242,112 @@ const MailLibraryForm: React.FC = () => {
 
   useEffect(() => {}, [design]);
 
+  useEffect(() => {
+    const getData = async () => {
+      const data = await agent.Categories.getAllCategoriesByUserGuid(userGuid);
+
+      setCategories(data);
+    };
+
+    if (userGuid) {
+      getData();
+    }
+  }, [userGuid]);
+
+  const handleDeleteContact = async (categoryId: string) => {
+    setCategoryLoading(true);
+    try {
+      await agent.Categories.deleteCategory(categoryId);
+      setCategories(categories.filter((data) => data._id !== categoryId));
+      toast.info(`Category Removed`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setCategoryLoading(false);
+    } catch (error) {
+      toast.error("Invalid Request", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setCategoryLoading(false);
+    }
+  };
+
+  const RemoveCategoryButton = (props) => {
+    return (
+      <components.Option {...props}>
+        {props.children}
+        {!props.children?.match(/^Create/) && ( //disable button on Create option
+          <button
+            className="close"
+            style={{ marginLeft: "2px" }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDeleteContact(props.data.value);
+            }}
+          >
+            <BsFillTrashFill style={{ color: "red" }} />
+          </button>
+        )}
+      </components.Option>
+    );
+  };
+
+  const createOption = (label: string, value: string) => ({
+    label: label,
+    value: value,
+    keyword: "",
+  });
+  const handleCreateCategory = async (data: CategoryPayload) => {
+    setCategoryLoading(true);
+    try {
+      const req = await agent.Categories.createCategory(
+        data.name,
+        userGuid,
+        data.isPublic
+      );
+      const newContact = createOption(req?.name ?? "", req?._id ?? "");
+      setCategories([...(categories ?? []), newContact ?? []]);
+      setCategoryValue([...(categoryValue ?? []), newContact]);
+
+      setCategoryLoading(false);
+      toast.info(`New Category Added`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (err) {
+      setCategoryLoading(false);
+      toast.error("Category name is already exist", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -262,6 +384,13 @@ const MailLibraryForm: React.FC = () => {
               setFieldValue,
               setFieldTouched,
             }) => {
+              const filteredCategory = categories?.map((e) => {
+                return {
+                  value: e._id,
+                  label: e.name,
+                  keyword: e.name,
+                };
+              });
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -290,8 +419,44 @@ const MailLibraryForm: React.FC = () => {
                       <label>Categories (Required)</label>
                       <CreatableSelect
                         isMulti
-                        options={EMAIL_TEMPLATES_CATEGORIES}
-                        placeholder="Select a category item to add"
+                        options={filteredCategory}
+                        isLoading={categoryLoading}
+                        isDisabled={categoryLoading}
+                        value={categoryValue}
+                        name="categories"
+                        components={{ Option: RemoveCategoryButton }}
+                        placeholder="Select category item to add"
+                        onCreateOption={(input) => {
+                          let data = {
+                            _id: "",
+                            userGuid: userGuid,
+                            emailAddress: input.trim(),
+                          };
+                          handleCreateCategory({
+                            name: input.trim(),
+                            _id: "",
+                            isPublic: true,
+                          });
+                          setFieldValue("categories", [
+                            ...values.categories,
+                            data,
+                          ]);
+                        }}
+                        onChange={(e) => {
+                          const modifiedValue = e?.map((contact) => {
+                            return {
+                              label: contact.label,
+                              value: contact.value,
+                              keyword: contact.label,
+                            };
+                          });
+                          setFieldValue("categories", modifiedValue);
+                          setCategoryValue(modifiedValue);
+                        }}
+                        onBlur={(e) => {
+                          if (values.categories.length <= 0)
+                            setFieldTouched("categories", true);
+                        }}
                         styles={{
                           clearIndicator: ClearIndicatorStyles,
                           placeholder: (defaultStyles) => {
@@ -310,22 +475,9 @@ const MailLibraryForm: React.FC = () => {
                               paddingTop: "5px",
                               paddingBottom: "5px",
                               borderColor: "hsl(0, 0%, 80%)",
+                              marginBottom: 5,
                             };
                           },
-                        }}
-                        onChange={(e) => {
-                          const modifiedValue = e?.map((category) => {
-                            return {
-                              label: category.label,
-                              value: category.value,
-                              keyword: category.keyword,
-                            };
-                          });
-                          setFieldValue("categories", modifiedValue);
-                        }}
-                        onBlur={(e) => {
-                          if (values.categories.length <= 0)
-                            setFieldTouched("categories", true);
                         }}
                       />
                     </Grid>
