@@ -12,6 +12,15 @@ export interface ChannelDefaultResponse {
   status: string;
 }
 
+export type LeadChannelData = {
+  channelId: string;
+  channelName?: string;
+};
+
+export interface LeadChannelPayloadData {
+  channels: LeadChannelData[];
+}
+
 export interface ChannelPayload {
   name: string;
   displayOrder?: number;

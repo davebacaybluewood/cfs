@@ -84,7 +84,7 @@ const subscriberRegistration = async (subscriberData) => {
     };
 
     if (templateId === "CUSTOM_EMAIL") {
-      source = "Custom Email";
+      source = "Individual Registration";
     } else {
       source = findEmailTemplate();
     }

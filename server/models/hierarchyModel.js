@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 
+const channelSchema = mongoose.Schema(
+  {
+    channelId: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const hierarchyModel = mongoose.Schema(
   {
     userGuid: {
@@ -27,7 +36,7 @@ const hierarchyModel = mongoose.Schema(
       type: String,
     },
     channels: {
-      type: [String],
+      type: [channelSchema],
     },
   },
   {

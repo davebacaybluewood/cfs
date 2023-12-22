@@ -48,6 +48,9 @@ import { BLANK_VALUE } from "constants/constants";
 import Badge from "library/Badge/Badge";
 import { BiCategory } from "react-icons/bi";
 import { SubscribersData } from "admin/models/subscriberModel";
+import { LeadsContext } from "admin/context/LeadsProvider";
+import { LeadChannelData } from "admin/api/channelServices/channelModels";
+import { ChannelContext } from "admin/context/ChannelProvider";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -63,9 +66,8 @@ const crumbs: CrumbTypes[] = [
 ];
 
 type ActiveChannelType = {
-  channelId: string;
   channelName: string;
-  channels: never[] | string[];
+  channels: LeadChannelData[] | undefined;
   leadUserGuid: string;
 };
 
@@ -76,28 +78,24 @@ const AgentSubscribers: React.FC = () => {
   const [clipboardValue, setClipboardValue] = useCopyToClipboard();
   const { loading, subscribers, setSubscribers, totalSubscribers } =
     useFetchSubscribers(userGuid, leadDrawerOpen);
-  const [clonedSubscribers, setClonedSubscribers] = useState<
-    SubscribersData[] | undefined
-  >();
   const { isFreeTrial, loading: roleLoading } = useUserRole();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activeId, setActiveId] = useState("");
   const [activeChannel, setActiveChannel] = useState<ActiveChannelType>({
-    channelId: "",
     channelName: "",
     channels: [],
     leadUserGuid: "",
   });
   const navigate = useNavigate();
-
+  const { leads, setLeads } = useContext(LeadsContext);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [channelDrawerOpen, setChannelDrawerOpen] = useState(false);
+  const { channels: _channels } = useContext(ChannelContext);
 
   useEffect(() => {
-    setClonedSubscribers(subscribers);
+    setLeads(subscribers);
   }, [subscribers]);
 
   const columns: GridColDef[] = [
@@ -210,7 +208,7 @@ const AgentSubscribers: React.FC = () => {
     },
   };
 
-  const filteredRows = clonedSubscribers?.map((subscriber) => {
+  const filteredRows = leads?.map((subscriber) => {
     if (isLoading) {
       <Spinner variant="relative" />;
     }
@@ -224,9 +222,12 @@ const AgentSubscribers: React.FC = () => {
       source: subscriber.source ?? BLANK_VALUE,
       channels: subscriber.channels?.length
         ? subscriber?.channels?.map((data) => {
+            const channelName = _channels?.find(
+              (c) => c.channelId === data.channelId
+            )?.channelName;
             return (
               <Badge>
-                <span>{data}</span>
+                <span>{channelName}</span>
               </Badge>
             );
           })
@@ -261,10 +262,9 @@ const AgentSubscribers: React.FC = () => {
             <button
               onClick={() => {
                 setActiveChannel({
-                  channelId: subscriber.userGuid,
                   channelName: subscriber.firstName + " " + subscriber.lastName,
                   leadUserGuid: subscriber.userGuid,
-                  channels: subscriber.channels ?? [],
+                  channels: subscriber.channels,
                 });
                 setLeadDrawerOpen(true);
               }}
@@ -351,13 +351,13 @@ const AgentSubscribers: React.FC = () => {
       setCategoriesAnchorEl(event.currentTarget);
     };
 
-    const filterCategoryHandler = (channelName: string) => {
-      setClonedSubscribers((prevState) => {
+    const filterCategoryHandler = (channelId: string) => {
+      setLeads((prevState) => {
         let result = subscribers?.filter((cl) =>
-          cl.channels?.some((c) => c == channelName)
+          cl.channels?.some((c) => c.channelId === channelId)
         );
 
-        if (channelName === "ALL") {
+        if (channelId === "ALL") {
           return subscribers;
         } else {
           return result;
@@ -402,9 +402,14 @@ const AgentSubscribers: React.FC = () => {
             All Channels
           </MenuItem>
           {uniqueChannels?.map((data) => {
+            const channelName = _channels?.find(
+              (c) => c.channelId === data?.channelId
+            )?.channelName;
             return (
-              <MenuItem onClick={() => filterCategoryHandler(data ?? "")}>
-                {data}
+              <MenuItem
+                onClick={() => filterCategoryHandler(data?.channelId ?? "")}
+              >
+                {channelName}
               </MenuItem>
             );
           })}

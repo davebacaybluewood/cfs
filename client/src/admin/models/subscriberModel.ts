@@ -1,3 +1,5 @@
+import { LeadChannelData } from "admin/api/channelServices/channelModels";
+
 export interface SubscribersData {
   _id: string;
   userGuid: string;
@@ -15,7 +17,7 @@ export interface SubscribersData {
   isSubscribed: string;
   previousRole?: string;
   source: string;
-  channels: string[] | undefined;
+  channels: LeadChannelData[] | undefined;
 }
 
 export interface SubscriberMainData {

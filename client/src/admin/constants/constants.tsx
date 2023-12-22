@@ -31,7 +31,6 @@ import ActivatedWebinars from "admin/pages/Webinars/LandingPages/ActivatedWebina
 import RequestedWebinars from "admin/pages/Webinars/LandingPages/RequestedWebinars";
 import DynamicWebinarInformation from "admin/pages/Webinars/LandingPages/WebinarSingle/DynamicWebinarInformation";
 import GuardedWrapper from "../layouts/GuardedWrapper";
-import AdminAgentWrapper from "../../library/AdminAgentWrapper/AdminAgentWrapper";
 import Agents from "../pages/Agents/LandingPages/ActiveAgents/Agents";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import adminPathsNew from "./routes";
@@ -43,7 +42,6 @@ import ProfileSettings from "admin/pages/Profile/components/ProfileSettings/Prof
 import WebinarForm from "admin/pages/FileMaintenance/pages/Webinars/WebinarForm";
 import Users from "admin/pages/Users/Users";
 import ViewBlog from "admin/pages/Blogs/ViewBlog";
-import CommissionSimulation from "admin/pages/CommissionSimulation/CommissionSimulation";
 import MailingList from "admin/pages/MailingList/MailingList";
 import ProfileFormAdd from "admin/pages/Profile/components/ProfileForm/ProfileFormAdd";
 import Licensing from "admin/pages/Licensing/Licensing";
@@ -63,6 +61,8 @@ import EventsForm from "admin/pages/Events/components/Form/EventsForm";
 import RSVPLanding from "admin/pages/EventsRSVP/RSVPLanding";
 import SubscriptionGuard from "library/SubscriptionGuard/SubscriptionGuard";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
+import { LeadsProvider } from "admin/context/LeadsProvider";
+import { ChannelProvider } from "admin/context/ChannelProvider";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -638,7 +638,11 @@ export const adminRoutes = [
     path: adminPathsNew.myLeads,
     element: (
       <GuardedWrapper>
-        <AgentSubscribers />
+        <ChannelProvider>
+          <LeadsProvider>
+            <AgentSubscribers />
+          </LeadsProvider>
+        </ChannelProvider>
       </GuardedWrapper>
     ),
   },

@@ -16,7 +16,7 @@ const useFetchSubscribers = (userGuid: string, leadDrawerOpen?: boolean) => {
     };
 
     if (!leadDrawerOpen) {
-      setLoading(true);
+      // setLoading(true);
       getData();
     }
   }, [userGuid, leadDrawerOpen]);
