@@ -8,21 +8,25 @@ import { FaArrowCircleRight, FaCheckCircle } from 'react-icons/fa'
 import HeadLine from './components/Headline/HeadLine'
 import Blogs from 'library/Blogs/Blogs'
 import './HomeV2.scss'
+import { useMediaQuery } from 'react-responsive'
 
 const HomeV2: React.FC = () => {
+
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+
 
     return (
         <div className="home-page-container" >
             <div className="lead-section">
                 <HeadLine />
             </div>
-            <div className="features-section">
+            {/* <div className="features-section">
                 <div className="captions">
                     <h2>Built for growing organizations.</h2>
                     <p>Simplify work and get more done using one powerful application.</p>
                 </div>
                 <HelpSection />
-            </div>
+            </div> */}
             <Container>
                 <div className="dual-col-section">
                     <TwoColContent leftCol={
@@ -36,6 +40,11 @@ const HomeV2: React.FC = () => {
                         <img src="https://www.tieit.ai/wp-content/uploads/2022/12/13634-data-analysis-animation.gif" alt="chart" />
                     } />
                 </div>
+
+                {isMobile && <Container>
+                    <div className="border"></div>
+                </Container>}
+
                 <div className="dual-col-section section-b">
                     <TwoColContent leftCol={
                         <img src="https://www.tieit.ai/wp-content/uploads/2022/12/13634-data-analysis-animation.gif" alt="chart" />} rightCol={

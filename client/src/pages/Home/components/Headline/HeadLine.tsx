@@ -2,8 +2,10 @@ import { Container } from '@mui/material'
 import Button from 'library/Button/Button'
 import React from 'react'
 import Carousel from 'react-material-ui-carousel'
+import { useMediaQuery } from 'react-responsive'
 
 const HeadLine: React.FC = () => {
+    const isMobile = useMediaQuery({ maxWidth: 767 })
 
     const items = [
         {
@@ -34,11 +36,9 @@ const HeadLine: React.FC = () => {
         <Carousel indicators={false} navButtonsAlwaysVisible interval={5000} >
             {items.map((i, index) => (
                 <div className="carousel-headline" key={index}>
-                    <div className="headline-img-holder">
-                        <img src={i.image} alt={i.image} />
-                    </div>
+                    <img src={i.image} alt={i.image} />
                     <div className="card-headline-container">
-                        <Container sx={i.position === 'left' ? { display: 'flex', justifyContent: 'flex-start' } : i.position === 'right' ? { display: 'flex', justifyContent: 'flex-end' } : { display: 'flex', justifyContent: 'center' }}   >
+                        <Container sx={i.position === 'left' && !isMobile ? { display: 'flex', justifyContent: 'flex-start' } : i.position === 'right' && !isMobile ? { display: 'flex', justifyContent: 'flex-end' } : { display: 'flex', justifyContent: 'center' }}   >
                             <div className="card-content">
                                 <h2>{i.title}</h2>
                                 <p>{i.description}</p>
