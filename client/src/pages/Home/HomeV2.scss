@@ -48,6 +48,11 @@
         }
     }
 
+    .tri-section {
+        box-shadow: 0 4px 6px -1px #eee, 0 2px 4px -1px #eee;
+        padding: 2rem 0;
+    }
+
     .partner-carousel {
         margin: 3rem 0;
     }
@@ -75,6 +80,8 @@
     }
 
     .dual-col-section {
+        margin: 3rem 0;
+
         .captions {
             color: #353535;
 
@@ -88,6 +95,7 @@
                 line-height: 3rem;
             }
         }
+
 
         img {
             width: 500px;

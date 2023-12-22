@@ -9,6 +9,7 @@ import HeadLine from './components/Headline/HeadLine'
 import Blogs from 'library/Blogs/Blogs'
 import './HomeV2.scss'
 import { useMediaQuery } from 'react-responsive'
+import InquirySection from './components/Inquiry-Section/InquirySection'
 
 const HomeV2: React.FC = () => {
 
@@ -20,6 +21,10 @@ const HomeV2: React.FC = () => {
             <div className="lead-section">
                 <HeadLine />
             </div>
+            <div className="tri-section">
+                <InquirySection />
+            </div>
+
             {/* <div className="features-section">
                 <div className="captions">
                     <h2>Built for growing organizations.</h2>
