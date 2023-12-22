@@ -225,11 +225,13 @@ const AgentSubscribers: React.FC = () => {
             const channelName = _channels?.find(
               (c) => c.channelId === data.channelId
             )?.channelName;
-            return (
-              <Badge>
-                <span>{channelName}</span>
-              </Badge>
-            );
+            if (channelName) {
+              return (
+                <Badge>
+                  <span>{channelName}</span>
+                </Badge>
+              );
+            }
           })
         : BLANK_VALUE,
       channelsValue: subscriber?.channels
@@ -405,13 +407,15 @@ const AgentSubscribers: React.FC = () => {
             const channelName = _channels?.find(
               (c) => c.channelId === data?.channelId
             )?.channelName;
-            return (
-              <MenuItem
-                onClick={() => filterCategoryHandler(data?.channelId ?? "")}
-              >
-                {channelName}
-              </MenuItem>
-            );
+
+            if (channelName)
+              return (
+                <MenuItem
+                  onClick={() => filterCategoryHandler(data?.channelId ?? "")}
+                >
+                  {channelName}
+                </MenuItem>
+              );
           })}
         </Menu>
       </GridToolbarContainer>

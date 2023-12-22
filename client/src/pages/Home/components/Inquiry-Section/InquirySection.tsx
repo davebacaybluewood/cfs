@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 type InquiryType =
   | "individual-protection"
   | "family-protection"
-  | "become-a-cfs-agent";
+  | "join-our-team";
 
 const InquirySection: React.FC = () => {
   const navigate = useNavigate();
@@ -14,8 +14,8 @@ const InquirySection: React.FC = () => {
   const learnMoreHandler = (type: InquiryType) => {
     let btnLink: string;
 
-    if (type === "become-a-cfs-agent") {
-      btnLink = "/become-a-cfs-agent";
+    if (type === "join-our-team") {
+      btnLink = "/join-our-team";
     } else if (type === "individual-protection") {
       btnLink = "/individual-protection";
     } else {
@@ -96,7 +96,7 @@ const InquirySection: React.FC = () => {
         color="red"
         buttonConfigs={{
           text: "Learn More",
-          onClick: () => learnMoreHandler("become-a-cfs-agent"),
+          onClick: () => learnMoreHandler("join-our-team"),
         }}
       />
     </Container>

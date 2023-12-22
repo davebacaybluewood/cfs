@@ -1,60 +1,55 @@
-import React from 'react'
-import './HomeV2.scss'
-import { Container, Grid } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Container } from '@mui/material'
 import Button from 'library/Button/Button'
 import Partners from 'library/Partners/Partners'
 import HelpSection from './components/HelpSection/HelpSection'
-import TwoColContent from 'library/TwoColContent/TwoColContent'
+import TwoColContent from 'pages/Home/components/TwoColContent/TwoColContent'
 import { FaArrowCircleRight, FaCheckCircle } from 'react-icons/fa'
 import HeadLine from './components/Headline/HeadLine'
 import Blogs from 'library/Blogs/Blogs'
-import Card, { CardProps } from './components/Card/Card'
+import './HomeV2.scss'
+import { useMediaQuery } from 'react-responsive'
+import InquirySection from './components/Inquiry-Section/InquirySection'
 
 const HomeV2: React.FC = () => {
-    const topAgents: CardProps[] = [
-        {
-            name: 'Jane Doe',
-            description: 'Bravo Agent',
-            profileImage: 'https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-        },
-        {
-            name: 'John Doe',
-            description: 'Wealth Builder Agent',
-            profileImage: 'https://images.pexels.com/photos/2589653/pexels-photo-2589653.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-        }
-    ]
+
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+
+
     return (
         <div className="home-page-container" >
             <div className="lead-section">
                 <HeadLine />
             </div>
-            <div className="partner-carousel">
-                <Partners />
+            <div className="tri-section">
+                <InquirySection />
             </div>
-            <div className="features-section">
+
+            {/* <div className="features-section">
                 <div className="captions">
                     <h2>Built for growing organizations.</h2>
                     <p>Simplify work and get more done using one powerful application.</p>
                 </div>
                 <HelpSection />
-            </div>
+            </div> */}
             <Container>
                 <div className="dual-col-section">
                     <TwoColContent leftCol={
-                        <React.Fragment>
-                            <div className="captions">
-                                <h2>One app keeps your business moving forward.</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet corrupti ducimus necessitatibus nostrum laboriosam fuga!
-                                </p>
-                            </div>
-                        </React.Fragment>
+                        <div className="captions">
+                            <h2>One app keeps your business moving forward.</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet corrupti ducimus necessitatibus nostrum laboriosam fuga!
+                            </p>
+                        </div>
                     } rightCol={
-                        <React.Fragment>
-                            <img src="https://www.tieit.ai/wp-content/uploads/2022/12/13634-data-analysis-animation.gif" alt="chart" />
-                        </React.Fragment>
+                        <img src="https://www.tieit.ai/wp-content/uploads/2022/12/13634-data-analysis-animation.gif" alt="chart" />
                     } />
                 </div>
+
+                {isMobile && <Container>
+                    <div className="border"></div>
+                </Container>}
+
                 <div className="dual-col-section section-b">
                     <TwoColContent leftCol={
                         <img src="https://www.tieit.ai/wp-content/uploads/2022/12/13634-data-analysis-animation.gif" alt="chart" />} rightCol={
@@ -71,6 +66,9 @@ const HomeV2: React.FC = () => {
                             </React.Fragment>
                         } />
                 </div>
+                <Container>
+                    <div className="border"></div>
+                </Container>
                 {/* <div className='testimonial-container'></div> discarded for future use */}
                 <div className="product-highlights">
                     <TwoColContent leftSize={9} leftCol={
@@ -104,6 +102,9 @@ const HomeV2: React.FC = () => {
                         </React.Fragment>
                     } />
                 </div>
+                <Container>
+                    <div className="border"></div>
+                </Container>
                 <div className="blogs-container">
                     <Blogs
                         title="CFS Blogs"
@@ -122,19 +123,19 @@ const HomeV2: React.FC = () => {
                         <TwoColContent leftCol={
                             <React.Fragment>
                                 <ul>
-                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
-                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
-                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
-                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Email Pro</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Agent Calculator</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Rewards</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>CFS Portal</h2> </span> </li>
                                 </ul>
                             </React.Fragment>
                         } rightCol={
                             <React.Fragment>
                                 <ul>
-                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
-                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
-                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
-                                    <li> <FaCheckCircle /> <span> <h2>Lorem ipsum dolor sit.</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>CFS Calendar</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Financial Blogs</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Agent Consultation</h2> </span> </li>
+                                    <li> <FaCheckCircle /> <span> <h2>Personal Webpage</h2> </span> </li>
                                 </ul>
                             </React.Fragment>
                         } />

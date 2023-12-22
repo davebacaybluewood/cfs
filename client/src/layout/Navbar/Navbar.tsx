@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavLinksDesktop from "./components/NavLinksDesktop";
 import { Container, SwipeableDrawer, Typography } from "@mui/material";
 import { FaBars, FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
@@ -11,7 +11,7 @@ import "./Navbar.scss";
 import { TWITTER_LOGO } from "constants/constants";
 
 interface NavbarProps {
-  theme?: "SKY" | "RED" | "NAVY";
+  theme?: "SKY" | "RED" | "NAVY" | "WHITE";
 }
 const Navbar: React.FC<NavbarProps> = (props) => {
   const [openDropdown, setOpenDropDown] = useState(false);
@@ -22,6 +22,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     "color-navy": props.theme === "NAVY",
     "color-red": props.theme === "RED",
     "color-sky": props.theme === "SKY",
+    "color-white": props.theme === "WHITE",
   });
 
   const url = window.location.href;

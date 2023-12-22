@@ -415,7 +415,7 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
                                     </React.Fragment>
                                   ) : (
                                     <button
-                                      onClick={() => {
+                                      onClick={(e) => {
                                         removeChannel(
                                           data.id,
                                           data.name,
