@@ -300,7 +300,7 @@ const getEmailTemplates = expressAsync(async (req, res, next) => {
       const personalEmailTempaltes =
         data.isAddedByMarketing || data.userGuid === agentInfo.userGuid;
 
-      if (isAdmin || isAgent || isFreeTrial) {
+      if (isAdmin) {
         return data;
       } else {
         return personalEmailTempaltes;

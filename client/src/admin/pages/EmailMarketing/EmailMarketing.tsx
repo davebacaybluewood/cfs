@@ -88,9 +88,7 @@ const ContractForm: React.FC = () => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
   const [categories, setCategories] = useState<any>();
-  const [categoryValue, setCategoryValue] = useState<
-    CategoryValue[] | undefined
-  >();
+  const [categoryValue, setCategoryValue] = useState<any>();
   const [categoryLoading, setCategoryLoading] = useState(false);
 
   const [openContactListDrawerOpen, setOpenContactListDrawerOpen] =
@@ -657,7 +655,13 @@ const ContractForm: React.FC = () => {
           updatedAt: req?.updatedAt,
         },
       ]);
-      setCategoryValue([...(categoryValue ?? []), newContact]);
+      setCategoryValue([
+        ...categoryValue,
+        {
+          label: req?.name,
+          value: req?._id,
+        },
+      ]);
 
       setCategoryLoading(false);
       toast.info(`New Category Added`, {
@@ -725,7 +729,7 @@ const ContractForm: React.FC = () => {
                   subject: data.subject,
                   design: JSON.stringify(design),
                   settings: data.settings,
-                  categories: data.categories.map((c) => {
+                  categories: categoryValue.map((c) => {
                     return {
                       keyword: c.label,
                       value: c.value,
@@ -966,8 +970,7 @@ const ContractForm: React.FC = () => {
 
                         <ErrorText
                           isError={
-                            values.recipients.length === 0 &&
-                            !!touched.recipients
+                            contactValue.length === 0 && !!touched.recipients
                           }
                           text="Recipients field is required."
                         />
@@ -1233,7 +1236,7 @@ const ContractForm: React.FC = () => {
                                     subject: values.subject,
                                     design: JSON.stringify(design),
                                     settings: values.settings,
-                                    categories: values.categories.map((c) => {
+                                    categories: categoryValue.map((c) => {
                                       return {
                                         keyword: c.label,
                                         value: c.value,
@@ -1256,7 +1259,7 @@ const ContractForm: React.FC = () => {
                                     subject: values.subject,
                                     design: JSON.stringify(design),
                                     settings: values.settings,
-                                    categories: values.categories.map((c) => {
+                                    categories: categoryValue.map((c) => {
                                       return {
                                         keyword: c.label,
                                         value: c.value,
@@ -1298,6 +1301,10 @@ const ContractForm: React.FC = () => {
                           <Button
                             variant="danger"
                             onClick={() => handleSubmit()}
+                            disabled={
+                              Object.values(errors).length !== 0 ||
+                              contactValue?.length === 0
+                            }
                           >
                             Send
                           </Button>
@@ -1306,7 +1313,8 @@ const ContractForm: React.FC = () => {
                     </div>
                   </div>
                   {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(errors, null, 2)}</pre>
+                  <pre>{JSON.stringify(contactValue, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}
