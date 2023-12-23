@@ -646,7 +646,17 @@ const ContractForm: React.FC = () => {
         data.isPublic
       );
       const newContact = createOption(req?.name ?? "", req?._id ?? "");
-      setCategories([...(categories ?? []), newContact ?? []]);
+      setCategories([
+        ...(categories ?? []),
+        {
+          userGuid: userGuid,
+          name: req?.name,
+          isPublic: req?.isPublic,
+          _id: req?._id,
+          createdAt: req?.createdAt,
+          updatedAt: req?.updatedAt,
+        },
+      ]);
       setCategoryValue([...(categoryValue ?? []), newContact]);
 
       setCategoryLoading(false);

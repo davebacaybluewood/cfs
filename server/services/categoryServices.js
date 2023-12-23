@@ -16,6 +16,7 @@ const createCategory = async (body) => {
 
   const isCategoryExist = await Categories.find({
     name,
+    userGuid,
   });
 
   if (isCategoryExist.length > 0) {

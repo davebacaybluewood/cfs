@@ -63,6 +63,7 @@ import SubscriptionGuard from "library/SubscriptionGuard/SubscriptionGuard";
 import TreeDiagram from "admin/pages/TreeDiagram/TreeDiagram";
 import { LeadsProvider } from "admin/context/LeadsProvider";
 import { ChannelProvider } from "admin/context/ChannelProvider";
+import { CategoryProvider } from "admin/context/CategoryProvider";
 
 export const ROLES = {
   ROLE_AGENT: "ROLE_AGENT",
@@ -638,11 +639,13 @@ export const adminRoutes = [
     path: adminPathsNew.myLeads,
     element: (
       <GuardedWrapper>
-        <ChannelProvider>
-          <LeadsProvider>
-            <AgentSubscribers />
-          </LeadsProvider>
-        </ChannelProvider>
+        <CategoryProvider>
+          <ChannelProvider>
+            <LeadsProvider>
+              <AgentSubscribers />
+            </LeadsProvider>
+          </ChannelProvider>
+        </CategoryProvider>
       </GuardedWrapper>
     ),
   },
