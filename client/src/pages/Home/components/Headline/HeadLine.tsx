@@ -2,52 +2,49 @@ import { Container } from '@mui/material'
 import Button from 'library/Button/Button'
 import React from 'react'
 import Carousel from 'react-material-ui-carousel'
-import { useMediaQuery } from 'react-responsive'
 
 const HeadLine: React.FC = () => {
-    const isMobile = useMediaQuery({ maxWidth: 767 })
 
     const items = [
         {
-            position: 'left',
             title: '$1,000,000 retirement plan?',
-            image: '/assets/images/homev2/retire.jpg',
+            image: 'https://www.foresters.com/-/media/forestersmvc/images/life-insurance/planright/21planrightns.jpg',
             learnMore: '',
-            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam ut fugit recusandae sit quasi tempora eligendi doloremque quas optio fugiat?'
+            description: 'Secure your golden years with our exclusive opportunities that gurantees a robust retirement income of $1 million or more . Embrace financial peace of mind and live your retirement dreams worry free'
         },
         {
-            position: 'right',
             title: 'Struggling with getting leads?',
-            image: '/assets/images/homev2/team.jpg',
+            image: 'https://www.foresters.com/-/media/forestersmvc/images/life-insurance/universal-life/4smartuniversalbanner.jpg',
             learnMore: '',
-            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis laborum inventore qui perferendis consectetur dicta hic minus dolorem perspiciatis adipisci?'
+            description: 'Our proven strategies will supercharge your lead generation efforts , ensuring a steady stream of qualified prospects for your business growth . Join now for a seamless experience that transforms leads into success !'
         },
         {
-            position: 'center',
             title: 'Want to achieve Financial Freedom?',
-            image: '/assets/images/homev2/earn.jpg',
+            image: 'https://www.foresters.com/-/media/forestersmvc/images/life-insurance/brightfutures/18brightfuturens.jpg',
             learnMore: '',
-            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis laborum inventore qui perferendis consectetur dicta hic minus dolorem perspiciatis adipisci?'
+            description: 'Transform your financial landscape and achieve true freedom . Our tailored solutions and personalized strategies empower you to break free from financial constraints , opening doors to a life of independence and prosperity .  Take the first step towards your financial goals today .'
         },
 
     ]
 
     return (
-        <Carousel indicators={false} navButtonsAlwaysVisible interval={5000} >
-            {items.map((i, index) => (
-                <div className="carousel-headline" key={index}>
-                    <img src={i.image} alt={i.image} />
-                    <div className="card-headline-container">
-                        <Container sx={i.position === 'left' && !isMobile ? { display: 'flex', justifyContent: 'flex-start' } : i.position === 'right' && !isMobile ? { display: 'flex', justifyContent: 'flex-end' } : { display: 'flex', justifyContent: 'center' }}   >
-                            <div className="card-content">
-                                <h2>{i.title}</h2>
-                                <p>{i.description}</p>
-                                <Button variant='primary'>Learn More</Button>
-                            </div>
-                        </Container>
+        <Carousel indicators={false} navButtonsAlwaysVisible interval={5000} height={700} >
+            {
+                items.map((i, index) => (
+                    <div className="carousel-headline" key={index}>
+                        <img src={i.image} alt={i.image} />
+                        <div className="card-headline-container">
+                            <Container>
+                                <div className="card-content">
+                                    <h2>{i.title}</h2>
+                                    <p>{i.description}</p>
+                                    <Button variant='primary'>Learn More</Button>
+                                </div>
+                            </Container>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))
+            }
         </Carousel>
     )
 }
