@@ -1,0 +1,36 @@
+.agent-card {
+    margin: 2rem 0;
+    width: 400px;
+
+    img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        padding: 2rem;
+        display: block;
+        margin: auto;
+        object-fit: cover;
+    }
+
+    .captions-agent {
+        text-align: center;
+
+        h2 {
+            margin: 0;
+        }
+
+        p {
+            font: 500 1.7rem "Montserrat";
+            margin: 1.5rem 0;
+            height: 100px;
+        }
+    }
+
+    button {
+        display: block;
+        margin: auto;
+        transition: .2s;
+        padding: .5rem 1rem;
+        width: 140px;
+    }
+}
