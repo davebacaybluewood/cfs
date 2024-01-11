@@ -94,6 +94,8 @@ const useFetchUserProfile = (userGuid: string) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!userGuid) return;
+
     setLoading(true);
     axios
       .get(ENDPOINTS.PROFILE.replace(":userGuid", userGuid))
