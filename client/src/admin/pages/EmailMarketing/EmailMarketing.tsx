@@ -57,6 +57,7 @@ import { EMAIL_TEMPLATES_CATEGORIES } from "admin/constants/constants";
 import axios from "axios";
 import { Close } from "@mui/icons-material";
 import Agent from "../../api/agent";
+import { CategoryPayload } from "admin/api/categoryServices/categoryModels";
 
 interface Contact {
   value: string;
@@ -73,13 +74,22 @@ interface EmailMarketingFormValues {
   createdById: string;
   categories: undefined[] | string[];
 }
+type CategoryValue = {
+  label: string;
+  value: string;
+  keyword: string;
+};
 const ContractForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [contactDrawer, setContactDrawer] = useState(false);
   const emailEditorRef = useRef<EditorRef>(null);
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
+  const [categories, setCategories] = useState<any>();
+  const [categoryValue, setCategoryValue] = useState<any>();
+  const [categoryLoading, setCategoryLoading] = useState(false);
 
   const [openContactListDrawerOpen, setOpenContactListDrawerOpen] =
     useState(false);
@@ -309,6 +319,21 @@ const ContractForm: React.FC = () => {
     },
   ];
 
+  const contactColumns: GridColDef[] = [
+    {
+      field: "emailAddress",
+      headerName: "Email Address",
+      width: 300,
+      renderCell: (params) => params.value,
+    },
+    {
+      field: "actions",
+      headerName: "",
+      align: "center",
+      renderCell: (params) => params.value,
+    },
+  ];
+
   useEffect(() => {
     const fetchTemplateInfo = async () => {
       setLoading(true);
@@ -326,6 +351,7 @@ const ContractForm: React.FC = () => {
         createdById: data.userGuid,
         categories: data.categories,
       });
+      setCategoryValue(data.categories as any);
       setDesign(data.design);
 
       /** Load if edit mode */
@@ -540,6 +566,123 @@ const ContractForm: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const getData = async () => {
+      const data = await agent.Categories.getAllCategoriesByUserGuid(userGuid);
+
+      setCategories(data);
+    };
+
+    if (userGuid) {
+      getData();
+    }
+  }, [userGuid]);
+
+  const handleDeleteCategory = async (categoryId: string) => {
+    setCategoryLoading(true);
+    try {
+      await agent.Categories.deleteCategory(categoryId);
+      setCategories(categories.filter((data) => data._id !== categoryId));
+      toast.info(`Category Removed`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setCategoryLoading(false);
+    } catch (error) {
+      toast.error("Invalid Request", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setCategoryLoading(false);
+    }
+  };
+
+  const RemoveCategoryButton = (props) => {
+    return (
+      <components.Option {...props}>
+        {props.children}
+        {!props.children?.match(/^Create/) && ( //disable button on Create option
+          <button
+            className="close"
+            style={{ marginLeft: "2px" }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDeleteCategory(props.data.value);
+            }}
+          >
+            <BsFillTrashFill style={{ color: "red" }} />
+          </button>
+        )}
+      </components.Option>
+    );
+  };
+
+  const handleCreateCategory = async (data: CategoryPayload) => {
+    setCategoryLoading(true);
+    try {
+      const req = await agent.Categories.createCategory(
+        data.name,
+        userGuid,
+        data.isPublic
+      );
+      const newContact = createOption(req?.name ?? "", req?._id ?? "");
+      setCategories([
+        ...(categories ?? []),
+        {
+          userGuid: userGuid,
+          name: req?.name,
+          isPublic: req?.isPublic,
+          _id: req?._id,
+          createdAt: req?.createdAt,
+          updatedAt: req?.updatedAt,
+        },
+      ]);
+      setCategoryValue([
+        ...categoryValue,
+        {
+          label: req?.name,
+          value: req?._id,
+        },
+      ]);
+
+      setCategoryLoading(false);
+      toast.info(`New Category Added`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (err) {
+      setCategoryLoading(false);
+      toast.error("Category name is already exist", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   return (
     <Wrapper
       breadcrumb={crumbs}
@@ -580,7 +723,7 @@ const ContractForm: React.FC = () => {
                   subject: data.subject,
                   design: JSON.stringify(design),
                   settings: data.settings,
-                  categories: data.categories.map((c) => {
+                  categories: categoryValue.map((c) => {
                     return {
                       keyword: c.label,
                       value: c.value,
@@ -667,10 +810,44 @@ const ContractForm: React.FC = () => {
                 setFieldValue("recipients", newContactValues);
               };
 
+              const importAll = () => {
+                const newContactValuesDrawer = [...contactsValue, ...contacts];
+                setContactsValue(newContactValuesDrawer);
+                setFieldValue("recipients", newContactValuesDrawer);
+              };
+
+              const contactRows: GridRowsProp = contacts?.map((contact) => {
+                const isInserted =
+                  contactsValue.filter((data) => data.label === contact.label)
+                    .length >= 1;
+                return {
+                  id: contact.value,
+                  emailAddress: contact.label,
+                  actions: (
+                    <React.Fragment>
+                      <button
+                        className="select-btn"
+                        onClick={() => handleAddContactFromDrawer(contact)}
+                        disabled={isInserted}
+                      >
+                        <span>Import</span> <BsPlusCircle />
+                      </button>
+                    </React.Fragment>
+                  ),
+                };
+              });
+
               const contactValue = contactsValue?.filter(
                 (data: any) => data.value
               );
 
+              const filteredCategory = categories?.map((e) => {
+                return {
+                  value: e._id,
+                  label: e.name,
+                  keyword: e.name,
+                };
+              });
               return (
                 <React.Fragment>
                   <Grid container spacing={2}>
@@ -678,78 +855,39 @@ const ContractForm: React.FC = () => {
                       <Grid item xs={12} md={12} lg={12}>
                         <label htmlFor="">Recipients (Required)</label>
 
-                        <Drawer
-                          anchor="right"
-                          open={openContactListDrawerOpen}
-                          onClose={() => setOpenContactListDrawerOpen(false)}
+                        <DrawerBase
+                          open={contactDrawer}
+                          onClose={() => setContactDrawer(false)}
+                          anchor={Anchor.Right}
+                          title="Contacts"
+                          className="drawer-contact-library"
+                          footer={
+                            <React.Fragment>
+                              <Button
+                                variant="default"
+                                onClick={() => setContactDrawer(false)}
+                              >
+                                Close
+                              </Button>
+                              <Button
+                                variant="primary"
+                                onClick={() => {
+                                  importAll();
+                                  setContactDrawer(false);
+                                }}
+                              >
+                                Import All
+                              </Button>
+                            </React.Fragment>
+                          }
                         >
-                          <Box
-                            sx={{
-                              width: 300,
-                              padding: 2,
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              backgroundColor: "#f8f8f8",
-                            }}
-                            role="presentation"
-                          >
-                            <IconButton
-                              edge="start"
-                              color="inherit"
-                              onClick={() =>
-                                setOpenContactListDrawerOpen(false)
-                              }
-                              sx={{ marginBottom: 2 }}
-                            >
-                              <Close />
-                            </IconButton>
-                            <List sx={{ width: "100%", marginBottom: 2 }}>
-                              <ListItem>
-                                <ListItemText
-                                  primary="Recent Used"
-                                  primaryTypographyProps={{
-                                    variant: "subtitle1",
-                                    fontWeight: "bold",
-                                    color: "primary",
-                                  }}
-                                />
-                              </ListItem>
-                              {recentContacts.map((contact) => (
-                                <ListItem
-                                  key={`${contact.value}-${contact.label}`}
-                                  onClick={() =>
-                                    handleAddContactFromDrawer(contact)
-                                  }
-                                >
-                                  <ListItemText primary={contact.label} />
-                                </ListItem>
-                              ))}
-                            </List>
-                            <List sx={{ width: "100%" }}>
-                              <ListItem>
-                                <ListItemText
-                                  primary="Recipients"
-                                  primaryTypographyProps={{
-                                    variant: "subtitle1",
-                                    fontWeight: "bold",
-                                    color: "primary",
-                                  }}
-                                />
-                              </ListItem>
-                              {contacts.map((contact) => (
-                                <ListItem
-                                  key={`${contact.value}-${contact.label}`}
-                                  onClick={() =>
-                                    handleAddContactFromDrawer(contact)
-                                  }
-                                >
-                                  <ListItemText primary={contact.label} />
-                                </ListItem>
-                              ))}
-                            </List>
-                          </Box>
-                        </Drawer>
+                          <div className="datagrid-content">
+                            <DataGrid
+                              rows={contactRows}
+                              columns={contactColumns}
+                            />
+                          </div>
+                        </DrawerBase>
 
                         <CreatableSelect
                           isMulti
@@ -804,23 +942,29 @@ const ContractForm: React.FC = () => {
                                 paddingTop: "5px",
                                 paddingBottom: "5px",
                                 borderColor: "hsl(0, 0%, 80%)",
+                                marginBottom: 5,
                               };
                             },
                           }}
                         />
-                        <Link
-                          to="#"
+                        <button
                           onClick={() => {
-                            setOpenContactListDrawerOpen(true);
+                            setContactDrawer(true);
+                          }}
+                          style={{
+                            fontSize: 12,
+                            color: "#1565d8",
+                            borderBottom: "1px dotted #1565d8",
+                            paddingTop: 4,
+                            marginRight: 10,
                           }}
                         >
                           Add Recipients
-                        </Link>
+                        </button>
 
                         <ErrorText
                           isError={
-                            values.recipients.length === 0 &&
-                            !!touched.recipients
+                            contactValue.length === 0 && !!touched.recipients
                           }
                           text="Recipients field is required."
                         />
@@ -868,15 +1012,44 @@ const ContractForm: React.FC = () => {
                       <label>Categories (Required)</label>
                       <CreatableSelect
                         isMulti
-                        options={EMAIL_TEMPLATES_CATEGORIES}
-                        placeholder="Select a category item to add"
-                        value={values.categories?.map((data) => {
-                          return {
-                            keyword: data.keyword,
-                            label: data.label,
-                            value: data.value,
+                        options={filteredCategory}
+                        isLoading={categoryLoading}
+                        isDisabled={categoryLoading}
+                        value={categoryValue}
+                        name="categories"
+                        components={{ Option: RemoveCategoryButton }}
+                        placeholder="Select category item to add"
+                        onCreateOption={(input) => {
+                          let data = {
+                            _id: "",
+                            userGuid: userGuid,
+                            emailAddress: input.trim(),
                           };
-                        })}
+                          handleCreateCategory({
+                            name: input.trim(),
+                            _id: "",
+                            isPublic: true,
+                          });
+                          setFieldValue("categories", [
+                            ...values.categories,
+                            data,
+                          ]);
+                        }}
+                        onChange={(e) => {
+                          const modifiedValue = e?.map((contact) => {
+                            return {
+                              label: contact.label,
+                              value: contact.value,
+                              keyword: contact.label,
+                            };
+                          });
+                          setFieldValue("categories", modifiedValue);
+                          setCategoryValue(modifiedValue);
+                        }}
+                        onBlur={(e) => {
+                          if (values.categories.length <= 0)
+                            setFieldTouched("categories", true);
+                        }}
                         styles={{
                           clearIndicator: ClearIndicatorStyles,
                           placeholder: (defaultStyles) => {
@@ -895,22 +1068,9 @@ const ContractForm: React.FC = () => {
                               paddingTop: "5px",
                               paddingBottom: "5px",
                               borderColor: "hsl(0, 0%, 80%)",
+                              marginBottom: 5,
                             };
                           },
-                        }}
-                        onChange={(e) => {
-                          const modifiedValue = e?.map((category) => {
-                            return {
-                              label: category.label,
-                              value: category.value,
-                              keyword: category.keyword,
-                            };
-                          });
-                          setFieldValue("categories", modifiedValue);
-                        }}
-                        onBlur={(e) => {
-                          if (values.categories.length <= 0)
-                            setFieldTouched("categories", true);
                         }}
                       />
                     </Grid>
@@ -920,6 +1080,7 @@ const ContractForm: React.FC = () => {
                       md={12}
                       lg={12}
                       className="form-card-container"
+                      style={{ overflow: "auto" }}
                     >
                       {action !== "view" ? (
                         <React.Fragment>
@@ -1069,7 +1230,7 @@ const ContractForm: React.FC = () => {
                                     subject: values.subject,
                                     design: JSON.stringify(design),
                                     settings: values.settings,
-                                    categories: values.categories.map((c) => {
+                                    categories: categoryValue.map((c) => {
                                       return {
                                         keyword: c.label,
                                         value: c.value,
@@ -1092,7 +1253,7 @@ const ContractForm: React.FC = () => {
                                     subject: values.subject,
                                     design: JSON.stringify(design),
                                     settings: values.settings,
-                                    categories: values.categories.map((c) => {
+                                    categories: categoryValue.map((c) => {
                                       return {
                                         keyword: c.label,
                                         value: c.value,
@@ -1134,6 +1295,10 @@ const ContractForm: React.FC = () => {
                           <Button
                             variant="danger"
                             onClick={() => handleSubmit()}
+                            disabled={
+                              Object.values(errors).length !== 0 ||
+                              contactValue?.length === 0
+                            }
                           >
                             Send
                           </Button>
@@ -1142,7 +1307,8 @@ const ContractForm: React.FC = () => {
                     </div>
                   </div>
                   {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                  <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                  <pre>{JSON.stringify(errors, null, 2)}</pre>
+                  <pre>{JSON.stringify(contactValue, null, 2)}</pre> */}
                 </React.Fragment>
               );
             }}

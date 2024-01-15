@@ -3,6 +3,7 @@ import {
   ChannelData,
   ChannelDefaultResponse,
   ChannelPayload,
+  LeadChannelData,
 } from "./channelModels";
 
 const Channels = {
@@ -48,7 +49,10 @@ const Channels = {
       console.log(error);
     }
   },
-  updateLeadChannelLead: async (userGuid: string, channels: string[]) => {
+  updateLeadChannelLead: async (
+    userGuid: string,
+    channels: LeadChannelData[]
+  ) => {
     try {
       return await requests.put<ChannelData>(`/api/channels/`, {
         channels,

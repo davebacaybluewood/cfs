@@ -107,7 +107,7 @@ const MailLibrary: React.FC = () => {
     },
     {
       field: "actions",
-      headerName: "",
+      headerName: "Actions",
       width: 320,
       align: "right",
       renderCell: (params) => params.value,

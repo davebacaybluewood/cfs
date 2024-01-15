@@ -95,12 +95,12 @@ const registerUserHierarchyAndPoints = async (
       source = template.subject;
     };
     if (templateId === "CUSTOM_EMAIL") {
-      source = "Custom Email";
+      source = "Individual Registration";
     } else {
       source = findEmailTemplate();
     }
   } else {
-    source = "Custom Email";
+    source = "Individual Registration";
   }
 
   const agentProfile = await Agent.findOne({ userGuid });

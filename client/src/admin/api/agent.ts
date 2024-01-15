@@ -30,6 +30,7 @@ import { RSVPData } from "admin/models/rsvpModel";
 import { Contacts as ContactsData } from "admin/models/contactsModel";
 import { SubscriptionData } from "admin/models/subscriptionModel";
 import Channels from "./channelServices/channelServices";
+import Categories from "./categoryServices/categoryService";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -355,7 +356,6 @@ const Points = {
 
     return res;
   },
-
 };
 
 const Orders = {
@@ -492,6 +492,7 @@ const Contacts = {
 
 const agent = {
   ...Channels,
+  ...Categories,
   LandingPage,
   LandingPageRegisteredUsers,
   Agents,

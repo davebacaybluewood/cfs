@@ -14,12 +14,17 @@ import DrawerLoading from "./DrawerLoading";
 import "./ChannelDrawer.scss";
 import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
 import { toast } from "react-toastify";
-import { ChannelData } from "admin/api/channelServices/channelModels";
+import {
+  ChannelData,
+  LeadChannelData,
+} from "admin/api/channelServices/channelModels";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import {
   SubscriberMainData,
   SubscribersData,
 } from "admin/models/subscriberModel";
+import { ChannelContext } from "admin/context/ChannelProvider";
+import { LeadsContext } from "admin/context/LeadsProvider";
 
 interface IField {
   name: string;
@@ -37,9 +42,12 @@ interface ChannelDrawerProps extends DrawerProps {
   onClose: () => void;
   type?: "DYNAMIC" | "ALL";
   leadUserGuid?: string;
-  channels?: never[] | string[];
+  channels?: LeadChannelData[] | undefined;
 }
 const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
+  const { setChannels: _setChannels, channels: _channels } =
+    useContext(ChannelContext);
+  const { setLeads, leads } = useContext(LeadsContext);
   const [activeChannel, setActiveChannel] = useState({
     title: "",
     id: "",
@@ -56,7 +64,9 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
   const initialValues = Object.fromEntries(
     channels.map((field) => [field.name, field.initialValue])
   );
-  const [addedChannels, setAddedChannels] = useState<string[]>();
+  const [addedChannels, setAddedChannels] = useState<
+    LeadChannelData[] | undefined
+  >();
 
   useEffect(() => {
     setAddedChannels(props.channels);
@@ -89,7 +99,7 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
     };
 
     getData();
-  }, [userGuid]);
+  }, [userGuid, props.open]);
 
   const addAnotherChannelHandler = (id: string) => {
     const newData: IField[] = [
@@ -102,7 +112,8 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
         isNew: true,
       },
     ];
-    setChannels([...channels, ...newData]);
+    const mergedData = [...channels, ...newData];
+    setChannels(mergedData);
   };
 
   const removeChannel = (id: string, title: string, isNew: boolean) => {
@@ -227,8 +238,9 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
 
   const updateLeadChannelLead = async (
     leadUserGuid: string,
-    channels: string[] | undefined,
+    channels: LeadChannelData[] | undefined,
     newChannelName: string,
+    channelId: string,
     type: "ADD" | "REMOVE"
   ) => {
     setIsLoading({
@@ -237,9 +249,14 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
     });
 
     try {
-      const newChannelData = [...(channels ?? []), newChannelName];
+      const newChannelData = [
+        ...(channels ?? []),
+        {
+          channelId,
+        },
+      ];
       const removedChannelData = channels?.filter(
-        (data) => data !== newChannelName
+        (data) => data.channelId !== channelId
       );
       const modifiedChannelData =
         type === "ADD" ? newChannelData : removedChannelData ?? [];
@@ -249,6 +266,21 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
         modifiedChannelData
       );
       setAddedChannels(modifiedChannelData);
+      setLeads((prevState) => {
+        if (type === "ADD") {
+          const objectData = leads?.find(
+            (obj) => obj.userGuid === props.leadUserGuid
+          );
+          objectData!.channels = newChannelData;
+          return leads;
+        } else {
+          const objectData = leads?.find(
+            (obj) => obj.userGuid === props.leadUserGuid
+          );
+          objectData!.channels = removedChannelData;
+          return leads;
+        }
+      });
       return true;
     } finally {
       setIsLoading({
@@ -257,6 +289,16 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
       });
     }
   };
+
+  useEffect(() => {
+    const modifiedChannelIds = channels.map((data) => {
+      return {
+        channelId: data.id,
+        channelName: data.name,
+      };
+    });
+    _setChannels(modifiedChannelIds);
+  }, [channels]);
 
   return (
     <Drawer
@@ -278,10 +320,7 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
           <Spinner variant="relative" />
         ) : (
           <div className="dynamic-textbox">
-            <Formik
-              initialValues={initialValues}
-              onSubmit={(values) => console.log({ values })}
-            >
+            <Formik initialValues={initialValues} onSubmit={(values) => {}}>
               {({ values, errors, touched }) => {
                 return (
                   <Form>
@@ -340,13 +379,16 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
 
                                   {props.type === "DYNAMIC" ? (
                                     <React.Fragment>
-                                      {addedChannels?.includes(data.label) ? (
+                                      {addedChannels?.filter(
+                                        (c) => c.channelId === data.id
+                                      ).length ? (
                                         <button
                                           onClick={() => {
                                             updateLeadChannelLead(
                                               props.leadUserGuid ?? "",
                                               addedChannels,
                                               data.label,
+                                              data.id,
                                               "REMOVE"
                                             );
                                           }}
@@ -360,6 +402,7 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
                                               props.leadUserGuid ?? "",
                                               addedChannels,
                                               data.label,
+                                              data.id,
                                               "ADD"
                                             );
                                           }}
@@ -372,7 +415,7 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
                                     </React.Fragment>
                                   ) : (
                                     <button
-                                      onClick={() => {
+                                      onClick={(e) => {
                                         removeChannel(
                                           data.id,
                                           data.name,

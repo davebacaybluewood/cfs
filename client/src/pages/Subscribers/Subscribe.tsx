@@ -18,7 +18,6 @@ interface SubscribeProps {
   isAdmin?: boolean;
 }
 const Subscribe: React.FC<SubscribeProps> = (props) => {
-  const [stage, setStage] = useState(1);
   const [invalid, setInvalid] = useState({
     isInvalid: false,
     text: "",
@@ -34,15 +33,14 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
     firstName: "",
     phoneNumber: "",
     confirmationUserCode: "",
-    templateId: '',
-    eventId: ''
+    templateId: "",
+    eventId: "",
   };
 
   const search = useLocation().search;
   const userGuid = new URLSearchParams(search).get("userGuid");
   const templateId = new URLSearchParams(search).get("templateId");
   const eventId = new URLSearchParams(search).get("eventId");
-
 
   return (
     <div className="portal-registration-container">
@@ -56,15 +54,24 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
               <div
                 style={{
                   fontSize: "1.3rem",
-                  lineHeight: '1.5rem',
+                  lineHeight: "1.5rem",
                 }}
               >
-                <h2 style={{ fontSize: '1.5rem', margin: '1rem 0' }}>Why you should subscribe in CFS?</h2>
-                <p>Subscribing to CFS can offer several benefits and rewards which includes understaning the types of coverage that best suit your situation and tailored approaches specific to your needs .</p>
+                <h2 style={{ fontSize: "1.5rem", margin: "1rem 0" }}>
+                  Why you should subscribe in CFS?
+                </h2>
+                <p>
+                  Subscribing to CFS can offer several benefits and rewards
+                  which includes understaning the types of coverage that best
+                  suit your situation and tailored approaches specific to your
+                  needs .
+                </p>
               </div>
             }
           >
-            <div><FaQuestionCircle /></div>
+            <div>
+              <FaQuestionCircle />
+            </div>
           </HtmlTooltip>
         </div>
         <Formik
@@ -80,8 +87,8 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                 data.lastName,
                 data.phoneNumber,
                 userGuid ?? "",
-                templateId ?? '',
-                eventId ?? ''
+                templateId ?? "",
+                eventId ?? ""
               );
 
               if (req) {
@@ -107,7 +114,7 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                 data.phoneNumber,
                 data.confirmationUserCode,
                 userGuid ?? "",
-                templateId ?? '',
+                templateId ?? ""
               );
 
               if (req) {
@@ -123,18 +130,17 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
             }
           }}
           validationSchema={
-            currentPage === 1
-            && validationSchema.validationSchemaEmail
+            currentPage === 1 && validationSchema.validationSchemaEmail
             // : validationSchema.validationSchemaCode
           }
         >
           {({ values, errors, handleSubmit }) => {
             const subscribeAccountDetailsValidity =
               errors.confirmPassword ||
-                errors.password ||
-                errors.email ||
-                errors.firstName ||
-                errors.lastName
+              errors.password ||
+              errors.email ||
+              errors.firstName ||
+              errors.lastName
                 ? false
                 : true;
 
