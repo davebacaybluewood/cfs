@@ -1,0 +1,164 @@
+$breakpoint-lg: 1388px;
+
+$color-midnight-blue: #00004d;
+$color-carmine-pink: #ed3e4b;
+
+.sub-reg-landing-page {
+  font-family: "Montserrat", sans-serif;
+
+  & > .about-section {
+    min-height: 30vh;
+  }
+
+  .carousel-section {
+    min-height: 90vh;
+    background-color: #d9d9d9;
+
+    & > .carousel-container-title {
+      max-width: 40vw !important;
+      margin-left: auto;
+      position: absolute;
+      top: 250px;
+      left: 100px;
+
+      & > * {
+        margin-bottom: 1rem;
+      }
+
+      & > h1 {
+        font-weight: bold;
+        color: $color-midnight-blue;
+        font-size: 4rem;
+        margin-left: 0;
+      }
+
+      & > button.cta {
+        background-color: $color-carmine-pink;
+        color: white;
+        padding: 10px;
+        width: 300px;
+        border-radius: 10px;
+        font-size: 3rem;
+
+        &:hover {
+          background-color: $color-midnight-blue;
+          border-color: 1px solid white;
+        }
+      }
+    }
+  }
+
+  > .about-section {
+    & > .about-container {
+      & > .about-container-info {
+        display: flex;
+        flex-wrap: row wrap;
+        justify-content: left;
+
+        & > .info-group {
+          flex: 1;
+          margin-right: 20px;
+          display: flex;
+
+          & > svg {
+            flex: 1;
+          }
+
+          & > p {
+            flex: 3;
+          }
+        }
+      }
+    }
+  }
+
+  > .rewards-section {
+    background-color: #ffeaea;
+    min-height: 50vh;
+
+    & > .rewards-container {
+      & > .rewards-card-list {
+        & .merchandise-card {
+          & > .merchandise-captions {
+            background: $color-carmine-pink;
+            text-align: center;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  & > section {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    padding: 50px 0;
+
+    & > div[class*="-container"] {
+      max-width: calc($breakpoint-lg - 100px);
+      margin-left: auto;
+      margin-right: auto;
+
+      & > * {
+        margin-bottom: 2rem;
+      }
+    }
+
+    .vertical-border {
+      border-left: 5px solid $color-carmine-pink;
+    }
+
+    & h1 {
+      font-size: 3rem;
+      font-weight: normal;
+      margin-bottom: 1rem;
+      margin-left: 10px;
+    }
+
+    & p {
+      font-size: 1.3rem;
+    }
+  }
+
+  & * {
+    font-family: inherit;
+  }
+
+  & > #ways {
+    // background-color: red;
+
+    & .ways-list {
+      margin-left: auto;
+      margin-right: auto;
+
+      &-card {
+        margin-left: auto;
+        margin-right: auto;
+        height: 250px;
+        // max-height: 30vh;
+        width: 25vw;
+      }
+    }
+  }
+
+  // & > .MuiDrawer-root .portal-registration-container {
+  //   background-color: black;
+  // }
+
+  // .MuiDialog-root {
+  //   background-color: yellow;
+
+  //   & > .MuiDialog-container {
+  //     background-color: black;
+
+  //     & > .MuiPaper-root {
+  //       background-color: red;
+
+  //       & .MuiDialogContent-root {
+  //         padding: 0;
+  //       }
+  //     }
+  //   }
+  // }
+}
