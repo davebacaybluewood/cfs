@@ -1,4 +1,5 @@
 import {
+  Backdrop,
   Button,
   Dialog,
   DialogActions,
@@ -12,23 +13,38 @@ import "./SubscriberRegistration.scss";
 import WaysToEarnCard from "./components/WaysToEarnCard";
 import { waysToEarn } from "./utilities/constants";
 import MerchandiseCard from "admin/components/MerchandiseCard/MerchandiseCard";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import agent from "api/agent";
 import { MerchandiseData } from "admin/models/merchandiseModel";
 import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
-import Carousel from "library/Carousel/Carousel";
 import { useLocation } from "react-router-dom";
+import { MAIN_IMAGES } from "constants/constants";
+import Carousel from "react-material-ui-carousel";
+import RewardsHeroSection from "./components/RewardsHeroSection";
+import RewardsHeroListSection from "./components/RewardsListHeroSection";
+import SubscribeAccountDetails from "pages/Subscribers/SubscribeAccountDetails";
+import { WidthFull } from "@mui/icons-material";
+import Registration from "./components/Registration";
 
 const SubscriberRegistration = (props) => {
   const colorCarminePink = "#ed3e4b";
+  const awards_thumbnail =
+    "/assets/images/subs-reg-landing-page/awards-thumbnail.png";
   const [merchandises, setMerchandises] = useState<MerchandiseData[]>();
   const [openMerchDialog, setOpenMerchDialog] = useState(false);
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openRegDrawer, setOpenRegDrawer] = useState(false);
 
   const search = useLocation().search;
   const merchandiseId = new URLSearchParams(search).get("merchandiseId");
+  const modalBtnRef = useRef<HTMLButtonElement>(null);
+
+  const [activeSlide, setActiveSlide] = useState(0);
+
   useEffect(() => {
-    if (merchandiseId) setOpenMerchDialog(true);
+    if (merchandiseId) {
+      setOpenMerchDialog(true);
+      modalBtnRef.current?.focus();
+    }
   }, [merchandiseId]);
 
   useEffect(() => {
@@ -40,29 +56,38 @@ const SubscriberRegistration = (props) => {
     fetchMerchandises();
   }, []);
 
+  // useLayoutEffect(() => {
+  //   var leftCol = document.querySelector(
+  //     "#portal-registration-container > .left-col"
+  //   );
+
+  //   if (leftCol) leftCol?.remove();
+  //   else alert("nope");
+
+  //   // portalReg?.parentElement?.removeChild()
+  // }, []);
+
+  const handleToggleRegDrawer = (isOpen: boolean) => {
+    isOpen ? setActiveSlide(1) : setActiveSlide(0);
+    setOpenRegDrawer(isOpen);
+  };
+
   return (
     <main className="sub-reg-landing-page">
       <section id="carousel" className="carousel-section">
-        {/* <div className="carousel-section-slides">
-          <div className="image-holder">
-            <Carousel items={items} />
-          </div>
-        </div> */}
-        <div className="carousel-container-title">
-          <h1>Unlock Exclusive Rewards</h1>
-          <p>
-            Join our CFS program for a rewarding journey. Simplify lead
-            generation, expand your reach, and increase brand visibility. Gain
-            insights and feedback while earning valuable points and unlocking
-            incredible rewards. Don't miss out on this extraordinary experience!
-          </p>
-          <button
-            type="button"
-            className="cta"
-            onClick={() => setOpenDrawer(true)}
+        <div className="carousel-section-slides">
+          <Carousel
+            autoPlay={false}
+            animation="slide"
+            indicators={false}
+            index={activeSlide}
           >
-            JOIN US NOW
-          </button>
+            <RewardsHeroSection
+              setOpenMerchDialog={setOpenMerchDialog}
+              setOpenRegDrawer={handleToggleRegDrawer}
+            />
+            <RewardsHeroListSection />
+          </Carousel>
         </div>
       </section>
       <section id="about" className="about-section">
@@ -174,36 +199,65 @@ const SubscriberRegistration = (props) => {
         </div>
       </section>
 
-      <Dialog
-        open={openMerchDialog}
-        id="subs-reg-dialog"
-        onClose={() => setOpenMerchDialog(false)}
-        style={{ background: "transparent" }}
+      <div
+        className={`modale ${openMerchDialog && "opened"}`}
+        aria-hidden="true"
       >
-        <DialogContent>
-          <DialogContentText fontSize={15}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-            adipisci minima tenetur quod commodi numquam! A, dignissimos
-            sapiente eligendi sequi cumque soluta ratione dolorum nostrum quas
-            recusandae nisi tempora et?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => setOpenMerchDialog(false)}
-            style={{ fontSize: "13px" }}
-          >
-            No
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <div className="modal-dialog">
+          <div className="modal-header">
+            <a
+              href="#"
+              className="btn-close"
+              aria-hidden="true"
+              onClick={() => setOpenMerchDialog(false)}
+            >
+              &times;
+            </a>
+            <img src={awards_thumbnail} alt="" />
+          </div>
+          <div className="modal-body">
+            <h3>Congratulations</h3>
+            <p>
+              You are on your way on earning your first reward. Click join now
+              to register.
+            </p>
+            <button
+              type="button"
+              ref={modalBtnRef}
+              onClick={() => {
+                setOpenRegDrawer(true);
+              }}
+            >
+              Join Now
+            </button>
+            <div className="logo-container">
+              <img src={MAIN_IMAGES.MAIN_LOGO} alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
 
       <Drawer
         anchor="right"
-        open={openDrawer}
-        onClose={() => setOpenDrawer(false)}
+        open={openRegDrawer}
+        onClose={() => {
+          handleToggleRegDrawer(false);
+          setOpenMerchDialog(false);
+        }}
       >
-        <PortalRegistration />
+        <Registration />
+        {/* <SubscribeAccountDetails
+          confirmPassword=""
+          confirmationUserCode=""
+          currentPage={1}
+          email=""
+          firstName=""
+          isValid
+          lastName=""
+          onSubmit={() => {}}
+          password=""
+          phoneNumber=""
+        /> */}
       </Drawer>
     </main>
   );
