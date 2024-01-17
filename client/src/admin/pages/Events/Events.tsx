@@ -253,7 +253,7 @@ const Events: React.FC = () => {
           >
             <span>Copy Link</span> <FaCopy />
           </button>
-          {isAdmin ? (
+          {isAdmin || isAgent ? (
             <React.Fragment>
               <button
                 className="select-btn"
