@@ -41,7 +41,7 @@ import { toast } from "react-toastify";
 import DrawerBase, { Anchor } from "library/Drawer/Drawer";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { BsFillTrashFill, BsPlusCircle } from "react-icons/bs";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import nameFallback from "helpers/nameFallback";
 import { formatISODateOnly } from "helpers/date";
@@ -80,6 +80,8 @@ const ContractForm: React.FC = () => {
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
+  const history = useLocation();
+  const unlayer = emailEditorRef.current?.editor;
 
   const [openContactListDrawerOpen, setOpenContactListDrawerOpen] =
     useState(false);
@@ -341,9 +343,26 @@ const ContractForm: React.FC = () => {
     }
   }, [templateId, userGuid]);
 
-  const saveTemplateHandler = async (data: EmailTemplateParameter) => {
-    const unlayer = emailEditorRef.current?.editor;
+  useEffect(() => {
+    if (history.search === "") {
+      setInitialValues((prevState) => ({
+        ...prevState,
+        recipients: [],
+        subject: "",
+        categories: [],
+        emailBody: "",
+        templateName: "",
+        settings: [""],
+        status: "",
+        createdById: "",
+      }));
 
+      setContactsValue([]);
+      unlayer?.loadBlank({});
+    }
+  }, [history]);
+
+  const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     unlayer?.exportHtml(async (htmlData) => {
       const { design: updatedDesign, html } = htmlData;
       let action = new URLSearchParams(window.location.search).get("action");
