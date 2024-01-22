@@ -1,4 +1,8 @@
-$breakpoint-lg: 1388px;
+$breakpoint-xs: 390px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
 
 $color-midnight-blue: #00004d;
 $color-carmine-pink: #ed3e4b;
@@ -26,7 +30,7 @@ $color-carmine-pink: #ed3e4b;
 
       /*Rewards Hero section Slide*/
       & #carousel-rewards-hero-container {
-        max-width: calc($breakpoint-lg - 100px);
+        max-width: calc($breakpoint-xl - 100px);
         margin: auto;
 
         & > img {
@@ -79,10 +83,11 @@ $color-carmine-pink: #ed3e4b;
     & > .about-container {
       & > .about-container-info {
         display: flex;
-        flex-wrap: row wrap;
+        flex-flow: row wrap;
         justify-content: left;
 
         & > .info-group {
+          margin-top: 1rem;
           flex: 1;
           margin-right: 20px;
           display: flex;
@@ -123,7 +128,7 @@ $color-carmine-pink: #ed3e4b;
     padding: 50px 0;
 
     & > div[class*="-container"] {
-      max-width: calc($breakpoint-lg - 100px);
+      max-width: calc($breakpoint-xl - 100px);
       margin-left: auto;
       margin-right: auto;
 
@@ -163,7 +168,6 @@ $color-carmine-pink: #ed3e4b;
         margin-left: auto;
         margin-right: auto;
         height: 250px;
-        // max-height: 30vh;
         width: 25vw;
       }
     }
@@ -307,17 +311,51 @@ $color-carmine-pink: #ed3e4b;
   .modal-header h2 {
     font-size: 20px;
   }
+
+  // .carousel-section {
+  //   & > .carousel-section-slides {
+  //     /*Rewards Hero section Slide*/
+  //     & #carousel-rewards-hero-container {
+  //       // max-width: calc($breakpoint-lg - 100px);
+  //     }
+  //   }
+  // }
+
+  @media (max-width: $breakpoint-lg) {
+    & > section {
+      & > div[class*="-container"] {
+        max-width: calc($breakpoint-lg - 250px);
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    & > section {
+      & > div[class*="-container"] {
+        max-width: calc($breakpoint-md - 250px);
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    & > section {
+      & > div[class*="-container"] {
+        max-width: calc($breakpoint-sm - 250px);
+      }
+    }
+  }
 }
 
 //Drawer registration
-div[role="presentation"] {
-  & #subscriber-registration {
+.portal-form {
+  &.sub-reg {
     min-width: 400px;
-    height: 100%;
-    font-family: "Montserrat", sans-serif;
+    height: 200%;
     background-color: #d9d9d9;
+    font-family: "Montserrat", sans-serif;
 
     & > .header {
+      position: relative;
       text-align: center;
       vertical-align: middle;
       padding: 20px 10px;
@@ -326,6 +364,15 @@ div[role="presentation"] {
       height: 5vh;
       font-size: 1rem;
       font-family: inherit;
+
+      & > .closeDrawer {
+        font-size: 3rem;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        text-decoration: none;
+        color: white;
+      }
     }
 
     & > h3 {
@@ -336,33 +383,63 @@ div[role="presentation"] {
       border-radius: 20px;
     }
 
-    & > form {
-      padding: 20px 20px;
-      padding-top: 0;
-      display: grid;
-      gap: 1rem;
-      font-size: 1rem;
+    & .sub-reg-landing-page-form {
+      font-size: 1.2rem;
 
-      & > label {
-        font-size: 1.5rem;
-      }
-
-      & > input[type="text"],
+      & input[type="text"],
       input[type="password"] {
         padding: 10px;
         border-radius: 10px;
-        font-size: 1.5rem;
         background-color: #e0efff;
         border-width: thin;
       }
 
-      & > button {
+      & button {
         background-color: $color-carmine-pink;
         color: white;
         padding: 10px;
-        width: 150px;
+        width: 250px;
         border-radius: 10px;
+        margin-bottom: 1rem;
+
+        &:hover {
+          background-color: $color-midnight-blue;
+          border-color: 1px solid white;
+        }
+      }
+
+      & .login-caption {
+        margin-top: 2rem;
+        margin-right: 0.5rem;
+        font-weight: 300;
+
+        & span {
+          margin-right: 0.5rem;
+          color: rgba(0, 0, 0, 0.75);
+          font-weight: 300;
+        }
+      }
+    }
+
+    & .sub-reg-landing-page-success {
+      & > h2 {
+        color: #00004d;
+        font-size: 2rem;
+        margin: 10px 10px;
+      }
+
+      & > p {
         font-size: 1.5rem;
+        margin: 10px 10px;
+      }
+
+      & .faq-accordions {
+        font-size: 1.3rem;
+
+        & p {
+          font-size: inherit;
+          padding: 0.5rem;
+        }
       }
     }
   }

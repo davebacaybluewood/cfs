@@ -1,30 +1,22 @@
-import {
-  Backdrop,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  Drawer,
-  Grid,
-} from "@mui/material";
+import { Alert, Drawer, Grid } from "@mui/material";
 import "./SubscriberRegistration.scss";
 
 import WaysToEarnCard from "./components/WaysToEarnCard";
 import { waysToEarn } from "./utilities/constants";
 import MerchandiseCard from "admin/components/MerchandiseCard/MerchandiseCard";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import agent from "api/agent";
 import { MerchandiseData } from "admin/models/merchandiseModel";
-import PortalRegistration from "pages/PortalRegistration/PortalRegistration";
 import { useLocation } from "react-router-dom";
 import { MAIN_IMAGES } from "constants/constants";
 import Carousel from "react-material-ui-carousel";
 import RewardsHeroSection from "./components/RewardsHeroSection";
 import RewardsHeroListSection from "./components/RewardsListHeroSection";
 import SubscribeAccountDetails from "pages/Subscribers/SubscribeAccountDetails";
-import { WidthFull } from "@mui/icons-material";
-import Registration from "./components/Registration";
+import { Formik } from "formik";
+import validationSchema from "./validationSchema";
+import Spinner from "library/Spinner/Spinner";
+import { ValuesType } from "pages/Subscribers/models";
 
 const SubscriberRegistration = (props) => {
   const colorCarminePink = "#ed3e4b";
@@ -37,8 +29,30 @@ const SubscriberRegistration = (props) => {
   const search = useLocation().search;
   const merchandiseId = new URLSearchParams(search).get("merchandiseId");
   const modalBtnRef = useRef<HTMLButtonElement>(null);
-
   const [activeSlide, setActiveSlide] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [invalid, setInvalid] = useState({
+    isInvalid: false,
+    text: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const userGuid = new URLSearchParams(search).get("userGuid");
+  const templateId = new URLSearchParams(search).get("templateId");
+  const eventId = new URLSearchParams(search).get("eventId");
+  const isSubRegLandingPage = true; //apply landing page css
+
+  const initialValues = {
+    email: "",
+    password: "",
+    confirmPassword: "",
+    lastName: "",
+    firstName: "",
+    phoneNumber: "",
+    confirmationUserCode: "",
+    templateId: "",
+    eventId: "",
+  };
 
   useEffect(() => {
     if (merchandiseId) {
@@ -56,20 +70,10 @@ const SubscriberRegistration = (props) => {
     fetchMerchandises();
   }, []);
 
-  // useLayoutEffect(() => {
-  //   var leftCol = document.querySelector(
-  //     "#portal-registration-container > .left-col"
-  //   );
-
-  //   if (leftCol) leftCol?.remove();
-  //   else alert("nope");
-
-  //   // portalReg?.parentElement?.removeChild()
-  // }, []);
-
   const handleToggleRegDrawer = (isOpen: boolean) => {
     isOpen ? setActiveSlide(1) : setActiveSlide(0);
     setOpenRegDrawer(isOpen);
+    setCurrentPage(1);
   };
 
   return (
@@ -162,7 +166,7 @@ const SubscriberRegistration = (props) => {
             <Grid container spacing={2}>
               {merchandises?.map((merch) => {
                 return (
-                  <Grid item sm={2}>
+                  <Grid item lg={2} md={4} sm={6}>
                     <MerchandiseCard
                       image={merch.image}
                       name={merch.name}
@@ -184,7 +188,7 @@ const SubscriberRegistration = (props) => {
             <Grid container spacing={4} direction="row" alignItems="center">
               {waysToEarn.map((info) => {
                 return (
-                  <Grid item sm={4}>
+                  <Grid item xs={12} sm={6} md={6} lg={4}>
                     <WaysToEarnCard
                       key={info.id}
                       image={info.image}
@@ -209,7 +213,7 @@ const SubscriberRegistration = (props) => {
               href="#"
               className="btn-close"
               aria-hidden="true"
-              onClick={() => setOpenMerchDialog(false)}
+              onClick={() => handleToggleRegDrawer(true)}
             >
               &times;
             </a>
@@ -226,12 +230,14 @@ const SubscriberRegistration = (props) => {
               ref={modalBtnRef}
               onClick={() => {
                 setOpenRegDrawer(true);
+                setOpenMerchDialog(false);
+                setActiveSlide(1);
               }}
             >
               Join Now
             </button>
             <div className="logo-container">
-              <img src={MAIN_IMAGES.MAIN_LOGO} alt="" />
+              <img src={MAIN_IMAGES.MAIN_LOGO} alt={MAIN_IMAGES.MAIN_LOGO} />
             </div>
           </div>
         </div>
@@ -244,20 +250,132 @@ const SubscriberRegistration = (props) => {
           handleToggleRegDrawer(false);
           setOpenMerchDialog(false);
         }}
+        hideBackdrop={true}
       >
-        <Registration />
-        {/* <SubscribeAccountDetails
-          confirmPassword=""
-          confirmationUserCode=""
-          currentPage={1}
-          email=""
-          firstName=""
-          isValid
-          lastName=""
-          onSubmit={() => {}}
-          password=""
-          phoneNumber=""
-        /> */}
+        <Formik
+          initialValues={initialValues}
+          enableReinitialize
+          onSubmit={async (data: ValuesType) => {
+            setLoading(true);
+            if (currentPage === 1) {
+              const req = await agent.Subscriber.emailConfirmation(
+                data.email,
+                data.password,
+                data.firstName,
+                data.lastName,
+                data.phoneNumber,
+                userGuid ?? "",
+                templateId ?? "",
+                eventId ?? ""
+              );
+
+              if (req) {
+                setLoading(false);
+                setCurrentPage(2);
+                setInvalid({
+                  text: "",
+                  isInvalid: false,
+                });
+              } else {
+                setLoading(false);
+                setInvalid({
+                  text: "Email Address already taken.",
+                  isInvalid: true,
+                });
+              }
+            } else if (currentPage === 2) {
+              const req = await agent.Subscriber.subscriberRegistration(
+                data.email,
+                data.password,
+                data.lastName,
+                data.firstName,
+                data.phoneNumber,
+                data.confirmationUserCode,
+                userGuid ?? "",
+                templateId ?? ""
+              );
+
+              if (req) {
+                setLoading(false);
+                setCurrentPage(3);
+              } else {
+                setLoading(false);
+                setInvalid({
+                  text: "Invalid Verification Code",
+                  isInvalid: true,
+                });
+              }
+            }
+          }}
+          validationSchema={
+            currentPage === 1 && validationSchema.validationSchemaEmail
+          }
+        >
+          {({ values, errors, handleSubmit }) => {
+            const subscribeAccountDetailsValidity =
+              errors.confirmPassword ||
+              errors.password ||
+              errors.email ||
+              errors.firstName ||
+              errors.lastName
+                ? false
+                : true;
+
+            return (
+              <div
+                className={`portal-form ${
+                  isSubRegLandingPage ? "sub-reg" : ""
+                }`}
+              >
+                {loading ? <Spinner variant="fixed" /> : null}
+                {currentPage !== 3 ? (
+                  <React.Fragment>
+                    <div className="header">
+                      <h2 style={{ fontFamily: "Montserrat" }}>
+                        REGISTER ACCOUNT
+                      </h2>
+                      <a
+                        className="closeDrawer"
+                        onClick={() => handleToggleRegDrawer(false)}
+                        href="#"
+                      >
+                        &times;
+                      </a>
+                    </div>
+                    <h3 style={{ fontFamily: "Montserrat" }}>
+                      Be a Subscriber For Free
+                    </h3>
+
+                    {invalid.isInvalid ? (
+                      <Alert
+                        variant="filled"
+                        severity="error"
+                        className="error-alert"
+                      >
+                        {invalid.text}
+                      </Alert>
+                    ) : null}
+                  </React.Fragment>
+                ) : null}
+
+                <SubscribeAccountDetails
+                  confirmPassword={values.confirmPassword}
+                  email={values.email}
+                  firstName={values.firstName}
+                  lastName={values.lastName}
+                  phoneNumber={values.phoneNumber}
+                  password={values.password}
+                  confirmationUserCode={values.confirmationUserCode}
+                  isValid={subscribeAccountDetailsValidity}
+                  onSubmit={() => handleSubmit()}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  isSubRegLandingPage={isSubRegLandingPage}
+                />
+              </div>
+            );
+          }}
+        </Formik>
       </Drawer>
     </main>
   );
