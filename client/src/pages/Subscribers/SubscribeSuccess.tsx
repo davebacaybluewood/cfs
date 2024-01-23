@@ -7,14 +7,22 @@ import {
 import { USER_FAQ } from "pages/PortalRegistration/constants";
 import React from "react";
 
-const SuccessPage: React.FC = () => {
+interface SuccessPageProps {
+  isSubRegLandingPage?: boolean;
+}
+
+const SuccessPage: React.FC<SuccessPageProps> = (props) => {
   const [expanded, setExpanded] = React.useState();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
   return (
-    <div className="success-page">
+    <div
+      className={`success-page ${
+        props.isSubRegLandingPage ? "sub-reg-landing-page-success" : ""
+      }`}
+    >
       <img
         src="/assets/icons/success.svg"
         alt="success-indicator"

@@ -43,6 +43,7 @@ import ClaimReward from "events/mission/ClaimReward/ClaimReward";
 import WebinarPage from "pages/MyWebPage/components/WebinarPage";
 import ContactEmailForm from "pages/ContactEmailForm/ContactEmailForm";
 import HomeV2 from "pages/Home/HomeV2";
+import SubscriberRegistration from "pages/LandingPages/pages/SubscriberRegistration/SubscriberRegistration";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -188,10 +189,20 @@ const REACT_ROUTES: ReactRoutesType[] = [
   // {
   //   element: <HomeV2 key="main-index" />,
   //   path: paths.index,
-  //   showPartners: false,
-  //   showHeadline: false,
-  //   theme: 'WHITE'
+  //   showPartners: true,
   // },
+  // {
+  //   element: <Home key="index" />,
+  //   path: paths.home,
+  //   showPartners: true,
+  // },
+  {
+    element: <HomeV2 key="main-index" />,
+    path: paths.index,
+    showPartners: false,
+    showHeadline: false,
+    theme: "WHITE",
+  },
   {
     element: <HomeV2 key="index" />,
     path: paths.home,
@@ -441,6 +452,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
     showNavbar: false,
     showHeadline: false,
     showFooter: false,
+  },
+  {
+    element: <SubscriberRegistration />,
+    path: paths.subRegLandingPage,
+    showNavbar: true,
+    showHeadline: false,
+    showFooter: true,
   },
 ];
 
