@@ -213,7 +213,9 @@ const SubscriberRegistration = (props) => {
               href="#"
               className="btn-close"
               aria-hidden="true"
-              onClick={() => handleToggleRegDrawer(true)}
+              onClick={() => {
+                setOpenMerchDialog(false);
+              }}
             >
               &times;
             </a>
