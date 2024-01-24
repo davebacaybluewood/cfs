@@ -383,6 +383,7 @@ const ContractForm: React.FC = () => {
         createdById: "",
       }));
 
+      setCategoryValue([]);
       setContactsValue([]);
       unlayer?.loadBlank({});
     }
