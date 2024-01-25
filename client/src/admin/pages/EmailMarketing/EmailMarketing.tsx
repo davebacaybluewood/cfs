@@ -1317,7 +1317,8 @@ const ContractForm: React.FC = () => {
                             onClick={() => handleSubmit()}
                             disabled={
                               Object.values(errors).length !== 0 ||
-                              contactValue?.length === 0
+                              contactValue?.length === 0 ||
+                              categoryValue?.length === 0
                             }
                           >
                             Send

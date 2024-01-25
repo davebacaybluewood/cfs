@@ -68,6 +68,9 @@ const MailLibraryForm: React.FC = () => {
   const validationSchema = Yup.object({
     subject: Yup.string().required("Subject is required."),
     templateName: Yup.string().required("Template name is required."),
+    categories: Yup.array()
+      .min(1, "Pick at least 1 categories")
+      .required("Categories is required."),
   });
 
   const crumbs: CrumbTypes[] = [
@@ -196,19 +199,31 @@ const MailLibraryForm: React.FC = () => {
     } else {
       setLoading(true);
       unlayer?.exportHtml(async (htmlData) => {
-        const { design, html } = htmlData;
+        try {
+          const { design, html } = htmlData;
 
-        data.templateBody = html;
-        data.design = JSON.stringify(design);
-        data.templateStatus = "ACTIVATED";
+          data.templateBody = html;
+          data.design = JSON.stringify(design);
 
-        const response = await agent.EmailMarketing.createEmailTemplate(
-          userGuid,
-          data
-        );
+          const response = await agent.EmailMarketing.createEmailTemplate(
+            userGuid,
+            data
+          );
 
-        if (response) {
-          toast.info(`Email Template has been added.`, {
+          if (response) {
+            toast.info(`Email Template has been added.`, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        } catch (ex) {
+          toast.error(`Error saving template`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -218,6 +233,7 @@ const MailLibraryForm: React.FC = () => {
             progress: undefined,
             theme: "light",
           });
+        } finally {
           setLoading(false);
         }
       });
@@ -376,7 +392,7 @@ const MailLibraryForm: React.FC = () => {
               const finalData = {
                 templateName: data.templateName,
                 templateBody: data.emailBody,
-                templateStatus: data.status,
+                templateStatus: "ACTIVATED",
                 isAddedByMarketing: !!isAdmin,
                 subject: data.subject,
                 design: JSON.stringify(design),
@@ -636,6 +652,10 @@ const MailLibraryForm: React.FC = () => {
                         <React.Fragment>
                           <Button
                             variant="default"
+                            disabled={
+                              Object.values(errors).length !== 0 ||
+                              categoryValue?.length === 0
+                            }
                             onClick={async () =>
                               saveTemplateHandler({
                                 templateName: values.templateName,
@@ -645,6 +665,7 @@ const MailLibraryForm: React.FC = () => {
                                 subject: values.subject,
                                 design: JSON.stringify(design),
                                 settings: values.settings,
+                                categories: values.categories,
                               })
                             }
                           >
@@ -652,6 +673,10 @@ const MailLibraryForm: React.FC = () => {
                           </Button>
                           <Button
                             variant="danger"
+                            disabled={
+                              Object.values(errors).length !== 0 ||
+                              categoryValue?.length === 0
+                            }
                             onClick={() => handleSubmit()}
                           >
                             Save Template
