@@ -15,6 +15,8 @@ import Event from "admin/models/eventModel";
 import { formatISODateOnly } from "helpers/date";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { Skeleton } from "@mui/material";
+import { BOP_INFO } from "pages/PortalRegistration/constants/successpg";
+import SuccessPage from "pages/PortalRegistration/components/SuccessPage";
 
 const RSVPForm: React.FC = () => {
   const { eventId } = useParams();
@@ -38,9 +40,10 @@ const RSVPForm: React.FC = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [isDataSubmitted, setIsDataSubmitted] = useState(false);
+  const [isDataSubmitted, setIsDataSubmitted] = useState(true);
   const [event, setEvent] = useState<Event | undefined>();
   const [error, setError] = useState("");
+  const [agentInfo, setAgentInfo] = useState<any>({});
 
   useEffect(() => {
     const getSingleEvent = async () => {
@@ -50,6 +53,18 @@ const RSVPForm: React.FC = () => {
 
     getSingleEvent();
   }, [eventId]);
+
+  useEffect(() => {
+    const getAgentInfo = async () => {
+      const res = await adminAgent.Agents.agentInformation(
+        recruiterUserGuid ?? ""
+      );
+
+      setAgentInfo(res);
+    };
+
+    if (recruiterUserGuid) getAgentInfo();
+  }, [recruiterUserGuid]);
 
   return (
     <div className="rsvp-form-container">
@@ -112,16 +127,26 @@ const RSVPForm: React.FC = () => {
             </div>
           </Grid>
           <Grid sm={12} md={4} lg={6}>
-            <div className="user-form">
+            <div
+              className={`user-form ${
+                isDataSubmitted ? "success-stage rsvp" : ""
+              }`}
+            >
               {isDataSubmitted ? (
-                <div className="success-message">
-                  <img src="\assets\images\modal-message.png" />
-                  <h2>Your RSVP has been submitted</h2>
-                  <p>
-                    Your request has been successfully submitted. Please check
-                    your email for confirmation.
-                  </p>
-                </div>
+                // <div className="success-message">
+                //   <img src="\assets\images\modal-message.png" />
+                //   <h2>Your RSVP has been submitted</h2>
+                //   <p>
+                //     Your request has been successfully submitted. Please check
+                //     your email for confirmation.
+                //   </p>
+                // </div>
+                <SuccessPage
+                  agentInfo={agentInfo}
+                  bannerImg={BOP_INFO.bannerImg}
+                  mainMsg={BOP_INFO.mainMsg}
+                  secondaryMsg={BOP_INFO.secondaryMsg}
+                />
               ) : (
                 <React.Fragment>
                   <h2>Enter Details</h2>

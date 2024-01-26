@@ -47,7 +47,11 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
       <div className="left-col">
         <LoginPromotions />
       </div>
-      <div className="right-col">
+      <div
+        className={`right-col ${
+          currentPage === 3 ? "success-stage subscriber" : ""
+        }`}
+      >
         <div className="light-bulb">
           <HtmlTooltip
             title={
@@ -145,7 +149,11 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                 : true;
 
             return (
-              <div className="portal-form">
+              <div
+                className={`portal-form ${
+                  currentPage === 3 ? "success-stage" : ""
+                }`}
+              >
                 {loading ? <Spinner variant="fixed" /> : null}
                 {currentPage !== 3 ? (
                   <React.Fragment>

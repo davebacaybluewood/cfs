@@ -1,0 +1,48 @@
+.success-page {
+  & > .header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & > .admin-logo {
+      width: 15rem;
+      margin-left: 0;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    & > .socials {
+      & > .social-icons {
+        svg {
+          font-size: 2rem;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .success-image {
+    width: 800px;
+
+    @media (min-width: 390px) {
+      max-width: 400px;
+    }
+  }
+
+  .sucess-title {
+    font-size: x-large;
+    padding: 10px;
+  }
+
+  .sucess-message {
+    font-size: small;
+    text-align: center;
+    padding: 10px;
+    padding-bottom: 20px;
+  }
+}

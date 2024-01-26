@@ -89,6 +89,16 @@
 		align-items: center;
 		flex-direction: column;
 
+		&.success-stage.free-trial {
+			background-color: #95bafe; /* For browsers that do not support gradients */
+			background-image: linear-gradient(to right, #ccfed9, #95bafe);
+		}
+	
+		&.success-stage.subscriber {
+			background-color: #adadad; /* For browsers that do not support gradients */
+			background-image: linear-gradient(to right, #adadad, #fefefe);
+		}
+
 		.light-bulb {
 			padding: 2rem;
 			width: 93%;
@@ -196,6 +206,10 @@
 			width: 50%;
 			margin: auto;
 			position: relative;
+
+			&.success-stage {
+				width: 80%;
+			}
 		}
 
 		button {

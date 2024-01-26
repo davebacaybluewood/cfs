@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import AccountDetails from "./components/AccountDetails";
 import PersonalInfo from "./components/PersonalInfo";
@@ -20,6 +20,8 @@ import { PROFILE_POSITIONS, PROFILE_ROLES } from "./constants";
 import LoginPromotions from "library/LogInPromotions/LoginPromotions";
 import { FaQuestionCircle } from "react-icons/fa";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import agent from "admin/api/agent";
+import { FREE_TRIAL_INFO } from "./constants/successpg";
 
 interface PortalRegistrationProps {
   isAdmin?: boolean;
@@ -67,6 +69,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     nationality: "",
     birthDate: "",
   });
+  const [agentInfo, setAgentInfo] = useState<any>({});
 
   const stageHeader =
     stage === 1
@@ -153,27 +156,49 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     }
   };
 
+  useEffect(() => {
+    const getAgentInfo = async () => {
+      const res = await agent.Agents.agentInformation(recruiterUserGuid ?? "");
+
+      setAgentInfo(res);
+    };
+
+    if (recruiterUserGuid) getAgentInfo();
+  }, [recruiterUserGuid]);
+
   return (
     <div className="portal-registration-container">
       <div className="left-col">
         <LoginPromotions />
       </div>
-      <div className="right-col">
+      <div
+        className={`right-col ${stage === 6 ? "success-stage free-trial" : ""}`}
+      >
         <div className="light-bulb">
           <HtmlTooltip
             title={
               <div
                 style={{
                   fontSize: "1.3rem",
-                  lineHeight: '1.5rem',
+                  lineHeight: "1.5rem",
                 }}
               >
-                <h2 style={{ fontSize: '1.5rem', margin: '1rem 0' }}>Why you should Join CFS?</h2>
-                <p> CFS offers financial protection and support structure an agent can use to win in any type of market . Joining us exposes you to cutting edge innovations that gurantees a career even during economic downturns .</p>
+                <h2 style={{ fontSize: "1.5rem", margin: "1rem 0" }}>
+                  Why you should Join CFS?
+                </h2>
+                <p>
+                  {" "}
+                  CFS offers financial protection and support structure an agent
+                  can use to win in any type of market . Joining us exposes you
+                  to cutting edge innovations that gurantees a career even
+                  during economic downturns .
+                </p>
               </div>
             }
           >
-            <div><FaQuestionCircle /></div>
+            <div>
+              <FaQuestionCircle />
+            </div>
           </HtmlTooltip>
         </div>
         <Formik
@@ -260,7 +285,9 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
 
             const contactInfoValidity = errors.address1 || errors.phoneNumber ? true : false;
             return (
-              <div className="portal-form">
+              <div
+                className={`portal-form ${stage === 6 ? "success-stage" : ""}`}
+              >
                 {loading ? <Spinner variant="fixed" /> : null}
                 <div className="form-header">
                   {stage !== 6 && (
@@ -330,7 +357,13 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                     onSubmit={handleSubmit}
                   />
                 )}
-                {stage === 6 && <SuccessPage />}
+                {stage === 6 && (
+                  <SuccessPage
+                    agentInfo={agentInfo}
+                    bannerImg={FREE_TRIAL_INFO.bannerImg}
+                    mainMsg={FREE_TRIAL_INFO.mainMsg}
+                  />
+                )}
                 {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(initialValues, null, 2)}</pre>  */}
                 {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}

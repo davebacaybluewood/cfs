@@ -1,10 +1,12 @@
 import { Grid } from "@mui/material";
 import { paths } from "constants/routes";
 import FormikTextInput from "library/Formik/FormikInput";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
-import SuccessPage from "./SubscribeSuccess";
+import SuccessPage from "pages/PortalRegistration/components/SuccessPage";
+import { SUBSCRIBER_INFO } from "pages/PortalRegistration/constants/successpg";
+import agent from "admin/api/agent";
 
 interface SubscribeAccountDetailsProps {
   email: string;
@@ -24,10 +26,24 @@ const SubscribeAccountDetails: React.FC<SubscribeAccountDetailsProps> = (
   props
 ) => {
   const [verified, setVerified] = useState(false);
+  const search = useLocation().search;
+  const recruiterUserGuid = new URLSearchParams(search).get("userGuid");
 
   const recaptchaOnChangeHandler = (value: any) => {
     setVerified(!!value);
   };
+
+  const [agentInfo, setAgentInfo] = useState<any>({});
+
+  useEffect(() => {
+    const getAgentInfo = async () => {
+      const res = await agent.Agents.agentInformation(recruiterUserGuid ?? "");
+
+      setAgentInfo(res);
+    };
+
+    if (recruiterUserGuid) getAgentInfo();
+  }, [recruiterUserGuid]);
 
   return (
     <React.Fragment>
@@ -158,7 +174,12 @@ const SubscribeAccountDetails: React.FC<SubscribeAccountDetailsProps> = (
           </Grid>
         </Grid>
       ) : props.currentPage === 3 ? (
-        <SuccessPage isSubRegLandingPage={props.isSubRegLandingPage} />
+        // <SuccessPage isSubRegLandingPage={props.isSubRegLandingPage} />
+        <SuccessPage
+          agentInfo={agentInfo}
+          bannerImg={SUBSCRIBER_INFO.bannerImg}
+          mainMsg={SUBSCRIBER_INFO.mainMsg}
+        />
       ) : null}
     </React.Fragment>
   );
