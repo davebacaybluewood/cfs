@@ -173,26 +173,6 @@ $color-carmine-pink: #ed3e4b;
     }
   }
 
-  // & > .MuiDrawer-root .portal-registration-container {
-  //   background-color: black;
-  // }
-
-  // .MuiDialog-root {
-  //   background-color: yellow;
-
-  //   & > .MuiDialog-container {
-  //     background-color: black;
-
-  //     & > .MuiPaper-root {
-  //       background-color: red;
-
-  //       & .MuiDialogContent-root {
-  //         padding: 0;
-  //       }
-  //     }
-  //   }
-  // }
-
   .modale:before {
     content: "";
     display: none;
@@ -210,75 +190,117 @@ $color-carmine-pink: #ed3e4b;
   .opened .modal-dialog {
     -webkit-transform: translate(0, 0);
     -ms-transform: translate(0, 0);
-    transform: translate(0, 0);
+    transform: translate(-50%, 0);
     top: 10%;
+    left: 50%;
   }
   .modal-dialog {
     background: #fefefe;
     border: #333333 solid 0px;
     border-radius: 5px;
-    margin-left: -200px;
     text-align: center;
     position: fixed;
     left: 50%;
     top: -100%;
     z-index: 11;
-    max-width: 360px;
+    min-width: 800px;
+    max-width: 800px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    -webkit-transform: translate(0, -500%);
-    -ms-transform: translate(0, -500%);
-    transform: translate(0, -500%);
+    -webkit-transform: translate(-50%, -500%);
+    -ms-transform: translate(-50%, -500%);
+    transform: translate(-50%, -500%);
     -webkit-transition: -webkit-transform 0.3s ease-out;
     -moz-transition: -moz-transform 0.3s ease-out;
     -o-transition: -o-transform 0.3s ease-out;
     transition: transform 0.3s ease-out;
+
+    &.join-btn {
+      min-width: 400px;
+      max-width: 400px;
+    }
   }
 
   .modal-body {
     background-color: #e0efff;
     position: relative;
+    display: flex;
 
-    & > * {
-      margin-bottom: 2rem;
+    & > .right {
+      width: 50%;
+      text-align: initial;
+      background-color: #d9d9d9;
+
+      &.join-btn {
+        width: 100%;
+      }
+
+      & .Mui-error,
+      .MuiAlert-message {
+        font-size: 10px !important;
+      }
     }
 
-    & > h3 {
-      font-size: 3.5rem;
-      font-family: "Shadows Into Light", Arial, Helvetica, sans-serif;
-      font-weight: 400;
-    }
+    & > .left {
+      width: 50%;
 
-    & > p {
-      font-size: 1.5rem;
-    }
+      &.join-btn {
+        display: none;
+      }
 
-    & > button {
-      background-color: $color-midnight-blue;
-      color: white;
-      padding: 10px;
-      width: 300px;
-      border-radius: 10px;
-      font-size: 2.5rem;
-    }
+      & > .left-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-left: 2rem;
+        padding-right: 2rem;
 
-    & > .logo-container {
-      position: relative;
-      height: 75px;
-      width: 100%;
-      margin-bottom: 0;
+        & > * {
+          margin-bottom: 2rem;
+        }
+
+        & > h3 {
+          font-size: 3.5rem;
+          font-family: "Shadows Into Light", Arial, Helvetica, sans-serif;
+          font-weight: 400;
+        }
+
+        & > p {
+          font-size: 1.5rem;
+        }
+
+        & > button {
+          background-color: $color-midnight-blue;
+          color: white;
+          padding: 10px;
+          width: 300px;
+          border-radius: 10px;
+          font-size: 2.5rem;
+        }
+      }
 
       & > img {
-        position: absolute;
-        bottom: 0;
-        right: 20px;
         object-fit: contain;
+        width: 100%;
+      }
+
+      & > .logo-container {
+        position: relative;
         height: 75px;
-        width: 75px;
+        width: 100%;
+        margin-bottom: 0;
+
+        & > img {
+          position: absolute;
+          bottom: 0;
+          right: 20px;
+          object-fit: contain;
+          height: 100px;
+          width: 100px;
+        }
       }
     }
   }
   .modal-body input {
-    width: 200px;
     padding: 8px;
     border: 1px solid #ddd;
     color: #888;
@@ -290,13 +312,8 @@ $color-carmine-pink: #ed3e4b;
   .modal-header {
     border-bottom: #eeeeee solid 1px;
 
-    & > img {
-      object-fit: cover;
-      height: 100%;
-      width: 100%;
-    }
-
     & > .btn-close {
+      z-index: 100;
       position: absolute;
       right: -20px;
       top: -20px;
@@ -320,6 +337,55 @@ $color-carmine-pink: #ed3e4b;
   //     }
   //   }
   // }
+
+  .join-button-container {
+    display: none;
+    position: fixed;
+    right: 10%;
+    bottom: 5%;
+    z-index: 9999;
+    &.show {
+      display: block;
+    }
+
+    & > button {
+      width: 130px;
+      height: 40px;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px 25px;
+      font-family: "Lato", sans-serif;
+      font-weight: 500;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+        7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+      outline: none;
+      font-size: 15px;
+
+      background: $color-carmine-pink;
+      background: linear-gradient(
+        0deg,
+        $color-carmine-pink 0%,
+        $color-carmine-pink 100%
+      );
+      border: none;
+    }
+
+    & > button::before {
+      height: 0%;
+      width: 2px;
+    }
+
+    & > button:hover {
+      box-shadow: 11px 9px 10px -7px rgba(0, 0, 0, 0.59) inset;
+      -webkit-box-shadow: 11px 9px 10px -7px rgba(0, 0, 0, 0.59) inset;
+      -moz-box-shadow: 11px 9px 10px -7px rgba(0, 0, 0, 0.59) inset;
+    }
+  }
 
   @media (max-width: $breakpoint-lg) {
     & > section {
@@ -349,8 +415,6 @@ $color-carmine-pink: #ed3e4b;
 //Drawer registration
 .portal-form {
   &.sub-reg {
-    min-width: 400px;
-    height: 200%;
     background-color: #d9d9d9;
     font-family: "Montserrat", sans-serif;
 
@@ -365,14 +429,9 @@ $color-carmine-pink: #ed3e4b;
       font-size: 1rem;
       font-family: inherit;
 
-      & > .closeDrawer {
-        font-size: 3rem;
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        text-decoration: none;
-        color: white;
-      }
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     & > h3 {

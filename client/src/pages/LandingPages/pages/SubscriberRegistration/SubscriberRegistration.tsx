@@ -1,6 +1,5 @@
 import { Alert, Drawer, Grid } from "@mui/material";
 import "./SubscriberRegistration.scss";
-
 import WaysToEarnCard from "./components/WaysToEarnCard";
 import { waysToEarn } from "./utilities/constants";
 import MerchandiseCard from "admin/components/MerchandiseCard/MerchandiseCard";
@@ -9,9 +8,7 @@ import agent from "api/agent";
 import { MerchandiseData } from "admin/models/merchandiseModel";
 import { useLocation } from "react-router-dom";
 import { MAIN_IMAGES } from "constants/constants";
-import Carousel from "react-material-ui-carousel";
 import RewardsHeroSection from "./components/RewardsHeroSection";
-import RewardsHeroListSection from "./components/RewardsListHeroSection";
 import SubscribeAccountDetails from "pages/Subscribers/SubscribeAccountDetails";
 import { Formik } from "formik";
 import validationSchema from "./validationSchema";
@@ -24,13 +21,14 @@ const SubscriberRegistration = (props) => {
     "/assets/images/subs-reg-landing-page/awards-thumbnail.png";
   const [merchandises, setMerchandises] = useState<MerchandiseData[]>();
   const [openMerchDialog, setOpenMerchDialog] = useState(false);
-  const [openRegDrawer, setOpenRegDrawer] = useState(false);
 
   const search = useLocation().search;
   const merchandiseId = new URLSearchParams(search).get("merchandiseId");
   const modalBtnRef = useRef<HTMLButtonElement>(null);
-  const [activeSlide, setActiveSlide] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showJoinButton, setShowJoinButton] = useState(false);
+  const [clickedJoinButton, setClickedJoinButton] = useState(false);
+
   const [invalid, setInvalid] = useState({
     isInvalid: false,
     text: "",
@@ -54,6 +52,21 @@ const SubscriberRegistration = (props) => {
     eventId: "",
   };
 
+  const handleShowJoinButton = () => {
+    const clientHeight = document.documentElement.clientHeight;
+    let scrollDistance = document.documentElement.scrollTop;
+
+    if (scrollDistance > clientHeight / 2) setShowJoinButton(true);
+    else setShowJoinButton(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleShowJoinButton);
+    return () => {
+      window.removeEventListener("scroll", handleShowJoinButton);
+    };
+  }, []);
+
   useEffect(() => {
     if (merchandiseId) {
       setOpenMerchDialog(true);
@@ -70,28 +83,27 @@ const SubscriberRegistration = (props) => {
     fetchMerchandises();
   }, []);
 
-  const handleToggleRegDrawer = (isOpen: boolean) => {
-    isOpen ? setActiveSlide(1) : setActiveSlide(0);
-    setOpenRegDrawer(isOpen);
-    setCurrentPage(1);
+  const handleOpenRegistration = (isOpen: boolean) => {
+    setOpenMerchDialog(true);
+    setClickedJoinButton(true);
   };
 
   return (
     <main className="sub-reg-landing-page">
       <section id="carousel" className="carousel-section">
         <div className="carousel-section-slides">
-          <Carousel
+          {/* <Carousel
             autoPlay={false}
             animation="slide"
             indicators={false}
             index={activeSlide}
-          >
-            <RewardsHeroSection
-              setOpenMerchDialog={setOpenMerchDialog}
-              setOpenRegDrawer={handleToggleRegDrawer}
-            />
-            <RewardsHeroListSection />
-          </Carousel>
+          > */}
+          <RewardsHeroSection
+            setOpenMerchDialog={setOpenMerchDialog}
+            setOpenRegDrawer={handleOpenRegistration}
+          />
+          {/* <RewardsHeroListSection />
+          </Carousel> */}
         </div>
       </section>
       <section id="about" className="about-section">
@@ -207,7 +219,7 @@ const SubscriberRegistration = (props) => {
         className={`modale ${openMerchDialog && "opened"}`}
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className={`modal-dialog ${clickedJoinButton && "join-btn"}`}>
           <div className="modal-header">
             <a
               href="#"
@@ -215,170 +227,169 @@ const SubscriberRegistration = (props) => {
               aria-hidden="true"
               onClick={() => {
                 setOpenMerchDialog(false);
+                setClickedJoinButton(false);
               }}
             >
               &times;
             </a>
-            <img src={awards_thumbnail} alt="" />
           </div>
           <div className="modal-body">
-            <h3>Congratulations</h3>
-            <p>
-              You are on your way on earning your first reward. Click join now
-              to register.
-            </p>
-            <button
-              type="button"
-              ref={modalBtnRef}
-              onClick={() => {
-                setOpenRegDrawer(true);
-                setOpenMerchDialog(false);
-                setActiveSlide(1);
-              }}
-            >
-              Join Now
-            </button>
-            <div className="logo-container">
-              <img src={MAIN_IMAGES.MAIN_LOGO} alt={MAIN_IMAGES.MAIN_LOGO} />
+            <div className={`left ${clickedJoinButton && "join-btn"}`}>
+              <img src={awards_thumbnail} alt="awards_thumbnail" />
+              <div className="left-container">
+                <h3>Congratulations</h3>
+                <p>
+                  You are on your way on earning your first reward. Click join
+                  now to register.
+                </p>
+                {/* <button
+                  type="button"
+                  ref={modalBtnRef}
+                  onClick={() => {
+                    setOpenRegDrawer(true);
+                    setOpenMerchDialog(false);
+                    setActiveSlide(1);
+                  }}
+                >
+                  Join Now
+                </button> */}
+              </div>
+
+              <div className="logo-container">
+                <img src={MAIN_IMAGES.MAIN_LOGO} alt={MAIN_IMAGES.MAIN_LOGO} />
+              </div>
+            </div>
+            <div className={`right ${clickedJoinButton && "join-btn"}`}>
+              <Formik
+                initialValues={initialValues}
+                enableReinitialize
+                onSubmit={async (data: ValuesType) => {
+                  setLoading(true);
+                  if (currentPage === 1) {
+                    const req = await agent.Subscriber.emailConfirmation(
+                      data.email,
+                      data.password,
+                      data.firstName,
+                      data.lastName,
+                      data.phoneNumber,
+                      userGuid ?? "",
+                      templateId ?? "",
+                      eventId ?? ""
+                    );
+
+                    if (req) {
+                      setLoading(false);
+                      setCurrentPage(2);
+                      setInvalid({
+                        text: "",
+                        isInvalid: false,
+                      });
+                    } else {
+                      setLoading(false);
+                      setInvalid({
+                        text: "Email Address already taken.",
+                        isInvalid: true,
+                      });
+                    }
+                  } else if (currentPage === 2) {
+                    const req = await agent.Subscriber.subscriberRegistration(
+                      data.email,
+                      data.password,
+                      data.lastName,
+                      data.firstName,
+                      data.phoneNumber,
+                      data.confirmationUserCode,
+                      userGuid ?? "",
+                      templateId ?? ""
+                    );
+
+                    if (req) {
+                      setLoading(false);
+                      setCurrentPage(3);
+                    } else {
+                      setLoading(false);
+                      setInvalid({
+                        text: "Invalid Verification Code",
+                        isInvalid: true,
+                      });
+                    }
+                  }
+                }}
+                validationSchema={
+                  currentPage === 1 && validationSchema.validationSchemaEmail
+                }
+              >
+                {({ values, errors, handleSubmit }) => {
+                  const subscribeAccountDetailsValidity =
+                    errors.confirmPassword ||
+                    errors.password ||
+                    errors.email ||
+                    errors.firstName ||
+                    errors.lastName
+                      ? false
+                      : true;
+
+                  return (
+                    <div
+                      className={`portal-form ${
+                        isSubRegLandingPage ? "sub-reg" : ""
+                      }`}
+                    >
+                      {loading ? <Spinner variant="fixed" /> : null}
+                      {currentPage !== 3 ? (
+                        <React.Fragment>
+                          <div className="header">
+                            <h2 style={{ fontFamily: "Montserrat" }}>
+                              Be a Subscriber For Free
+                            </h2>
+                          </div>
+                          {invalid.isInvalid ? (
+                            <Alert
+                              variant="filled"
+                              severity="error"
+                              className="error-alert"
+                            >
+                              {invalid.text}
+                            </Alert>
+                          ) : null}
+                        </React.Fragment>
+                      ) : null}
+
+                      <SubscribeAccountDetails
+                        confirmPassword={values.confirmPassword}
+                        email={values.email}
+                        firstName={values.firstName}
+                        lastName={values.lastName}
+                        phoneNumber={values.phoneNumber}
+                        password={values.password}
+                        confirmationUserCode={values.confirmationUserCode}
+                        isValid={subscribeAccountDetailsValidity}
+                        onSubmit={() => handleSubmit()}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        isSubRegLandingPage={isSubRegLandingPage}
+                      />
+                    </div>
+                  );
+                }}
+              </Formik>
             </div>
           </div>
         </div>
       </div>
 
-      <Drawer
-        anchor="right"
-        open={openRegDrawer}
-        onClose={() => {
-          handleToggleRegDrawer(false);
-          setOpenMerchDialog(false);
-        }}
-        hideBackdrop={true}
-      >
-        <Formik
-          initialValues={initialValues}
-          enableReinitialize
-          onSubmit={async (data: ValuesType) => {
-            setLoading(true);
-            if (currentPage === 1) {
-              const req = await agent.Subscriber.emailConfirmation(
-                data.email,
-                data.password,
-                data.firstName,
-                data.lastName,
-                data.phoneNumber,
-                userGuid ?? "",
-                templateId ?? "",
-                eventId ?? ""
-              );
-
-              if (req) {
-                setLoading(false);
-                setCurrentPage(2);
-                setInvalid({
-                  text: "",
-                  isInvalid: false,
-                });
-              } else {
-                setLoading(false);
-                setInvalid({
-                  text: "Email Address already taken.",
-                  isInvalid: true,
-                });
-              }
-            } else if (currentPage === 2) {
-              const req = await agent.Subscriber.subscriberRegistration(
-                data.email,
-                data.password,
-                data.lastName,
-                data.firstName,
-                data.phoneNumber,
-                data.confirmationUserCode,
-                userGuid ?? "",
-                templateId ?? ""
-              );
-
-              if (req) {
-                setLoading(false);
-                setCurrentPage(3);
-              } else {
-                setLoading(false);
-                setInvalid({
-                  text: "Invalid Verification Code",
-                  isInvalid: true,
-                });
-              }
-            }
+      <div className={`join-button-container ${showJoinButton && "show"}`}>
+        <button
+          type="button"
+          onClick={() => {
+            setOpenMerchDialog(true);
+            setShowJoinButton(false);
+            setClickedJoinButton(true);
           }}
-          validationSchema={
-            currentPage === 1 && validationSchema.validationSchemaEmail
-          }
         >
-          {({ values, errors, handleSubmit }) => {
-            const subscribeAccountDetailsValidity =
-              errors.confirmPassword ||
-              errors.password ||
-              errors.email ||
-              errors.firstName ||
-              errors.lastName
-                ? false
-                : true;
-
-            return (
-              <div
-                className={`portal-form ${
-                  isSubRegLandingPage ? "sub-reg" : ""
-                }`}
-              >
-                {loading ? <Spinner variant="fixed" /> : null}
-                {currentPage !== 3 ? (
-                  <React.Fragment>
-                    <div className="header">
-                      <h2 style={{ fontFamily: "Montserrat" }}>
-                        REGISTER ACCOUNT
-                      </h2>
-                      <a
-                        className="closeDrawer"
-                        onClick={() => handleToggleRegDrawer(false)}
-                        href="#"
-                      >
-                        &times;
-                      </a>
-                    </div>
-                    <h3 style={{ fontFamily: "Montserrat" }}>
-                      Be a Subscriber For Free
-                    </h3>
-
-                    {invalid.isInvalid ? (
-                      <Alert
-                        variant="filled"
-                        severity="error"
-                        className="error-alert"
-                      >
-                        {invalid.text}
-                      </Alert>
-                    ) : null}
-                  </React.Fragment>
-                ) : null}
-
-                <SubscribeAccountDetails
-                  confirmPassword={values.confirmPassword}
-                  email={values.email}
-                  firstName={values.firstName}
-                  lastName={values.lastName}
-                  phoneNumber={values.phoneNumber}
-                  password={values.password}
-                  confirmationUserCode={values.confirmationUserCode}
-                  isValid={subscribeAccountDetailsValidity}
-                  onSubmit={() => handleSubmit()}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  isSubRegLandingPage={isSubRegLandingPage}
-                />
-              </div>
-            );
-          }}
-        </Formik>
-      </Drawer>
+          Join Now
+        </button>
+      </div>
     </main>
   );
 };
