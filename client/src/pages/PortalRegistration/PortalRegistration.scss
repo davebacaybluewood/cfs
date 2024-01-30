@@ -100,6 +100,13 @@
 		}
 
 		.light-bulb {
+      &.success-stage.free-trial {
+          padding-top: 1rem;
+          padding-left: 2rem;
+          padding-right: 2rem;
+          padding-bottom: 0;
+      }
+
 			padding: 2rem;
 			width: 93%;
 			display: flex;
@@ -342,24 +349,24 @@
 	}
 
 	.success-page {
-		text-align: center;
+    text-align: center;
 
-		img {
-			width: 80%;
-			margin: auto;
-			display: block;
-			margin-bottom: 4rem;
-		}
+    img {
+        width: 80%;
+        margin: auto;
+        display: block;
+        margin-bottom: 4rem;
+    }
 
-		h2 {
-			font-size: 3rem;
-			color: black;
-			font-weight: 900;
-			margin-bottom: 2rem;
-		}
+    h2 {
+        font-size: 3rem;
+        color: black;
+        font-weight: 900;
+        margin-bottom: 2rem;
+    }
 
-		p {
-			font-size: 17px;
+    p {
+      font-size: 17px;
 			letter-spacing: 0.6px;
 			line-height: 1.5;
 			font-weight: 300;

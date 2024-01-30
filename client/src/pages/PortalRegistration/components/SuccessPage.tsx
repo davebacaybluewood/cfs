@@ -14,6 +14,7 @@ type SuccessPageProps = {
   bannerImg: string;
   mainMsg: JSX.Element | React.ReactNode | undefined;
   secondaryMsg?: JSX.Element | React.ReactNode | undefined;
+  banner?: any;
 };
 
 const SuccessPage: React.FC<SuccessPageProps> = (props) => {
@@ -76,32 +77,27 @@ const SuccessPage: React.FC<SuccessPageProps> = (props) => {
       {agentName && (
         <p>
           Your designated contact person is <b>{agentName}</b>. If you have any
-          concerns or questions Click <a href="#">here</a>.
+          concerns or questions Click{" "}
+          <a href="mailto:support@gocfs.pro">here</a>.
         </p>
       )}
-
-      {/* <div className="faq-accordions">
-        {USER_FAQ.map((data) => {
-          return (
-            <Accordion
-              expanded={expanded === data.id}
-              onChange={handleChange(data.id)}
-            >
-              <AccordionSummary
-                aria-controls="panel1d-content"
-                id="panel1d-header"
-              >
-                <Typography>{data.title}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{data.description}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          );
-        })}
-      </div> */}
-
       {props?.secondaryMsg && props?.secondaryMsg}
+
+      {props?.banner && (
+        <Link
+          className="linkToAgentReg"
+          to={props?.banner?.link}
+          target="_blank"
+        >
+          <div className="banner-actions">
+            <img src={props?.banner?.img} alt="success-indicator" />
+            <div className="banner-action-msg">
+              <h3>{props?.banner?.header}</h3>
+              <p>{props?.banner?.subheader}</p>
+            </div>
+          </div>
+        </Link>
+      )}
     </div>
   );
 };

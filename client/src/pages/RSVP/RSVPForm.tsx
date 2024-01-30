@@ -40,7 +40,7 @@ const RSVPForm: React.FC = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [isDataSubmitted, setIsDataSubmitted] = useState(true);
+  const [isDataSubmitted, setIsDataSubmitted] = useState(false);
   const [event, setEvent] = useState<Event | undefined>();
   const [error, setError] = useState("");
   const [agentInfo, setAgentInfo] = useState<any>({});

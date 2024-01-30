@@ -174,7 +174,11 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
       <div
         className={`right-col ${stage === 6 ? "success-stage free-trial" : ""}`}
       >
-        <div className="light-bulb">
+        <div
+          className={`light-bulb ${
+            stage === 6 ? "success-stage free-trial" : ""
+          }`}
+        >
           <HtmlTooltip
             title={
               <div
@@ -362,6 +366,7 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                     agentInfo={agentInfo}
                     bannerImg={FREE_TRIAL_INFO.bannerImg}
                     mainMsg={FREE_TRIAL_INFO.mainMsg}
+                    banner={FREE_TRIAL_INFO.banner}
                   />
                 )}
                 {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}

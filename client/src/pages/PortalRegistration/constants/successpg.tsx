@@ -2,6 +2,12 @@ const FREE_TRIAL_INFO = {
   bannerImg: "/assets/images/success-page/free-trial-reg-confirm.jpg",
   mainMsg:
     "Thank you for registering to our 30 days free trial! Now enjoy the access to all CFS Edge tools and features.",
+  banner: {
+    header: "UNLEASH YOUR POTENTIAL",
+    subheader: "Join CFS and become agent and elevate your insurance career",
+    img: "/assets/images/success-page/Agent_1.png",
+    link: "https://agent.comfortfinancialsolutions.com/Signup/Wizard/0",
+  },
 };
 
 const BOP_INFO = {
