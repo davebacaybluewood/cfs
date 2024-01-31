@@ -41,7 +41,7 @@ import { toast } from "react-toastify";
 import DrawerBase, { Anchor } from "library/Drawer/Drawer";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { BsFillTrashFill, BsPlusCircle } from "react-icons/bs";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { EmailTemplateParameter } from "admin/models/emailMarketing";
 import nameFallback from "helpers/nameFallback";
 import { formatISODateOnly } from "helpers/date";
@@ -87,6 +87,8 @@ const ContractForm: React.FC = () => {
   const [design, setDesign] = useState<any>();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [saveTemplateError, setSaveTemplateError] = useState<string>("");
+  const history = useLocation();
+  const unlayer = emailEditorRef.current?.editor;
   const [categories, setCategories] = useState<any>();
   const [categoryValue, setCategoryValue] = useState<any>();
   const [categoryLoading, setCategoryLoading] = useState(false);
@@ -367,9 +369,27 @@ const ContractForm: React.FC = () => {
     }
   }, [templateId, userGuid]);
 
-  const saveTemplateHandler = async (data: EmailTemplateParameter) => {
-    const unlayer = emailEditorRef.current?.editor;
+  useEffect(() => {
+    if (history.search === "") {
+      setInitialValues((prevState) => ({
+        ...prevState,
+        recipients: [],
+        subject: "",
+        categories: [],
+        emailBody: "",
+        templateName: "",
+        settings: [""],
+        status: "",
+        createdById: "",
+      }));
 
+      setCategoryValue([]);
+      setContactsValue([]);
+      unlayer?.loadBlank({});
+    }
+  }, [history]);
+
+  const saveTemplateHandler = async (data: EmailTemplateParameter) => {
     unlayer?.exportHtml(async (htmlData) => {
       const { design: updatedDesign, html } = htmlData;
       let action = new URLSearchParams(window.location.search).get("action");
@@ -1297,7 +1317,8 @@ const ContractForm: React.FC = () => {
                             onClick={() => handleSubmit()}
                             disabled={
                               Object.values(errors).length !== 0 ||
-                              contactValue?.length === 0
+                              contactValue?.length === 0 ||
+                              categoryValue?.length === 0
                             }
                           >
                             Send

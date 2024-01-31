@@ -302,7 +302,7 @@ const getEmailTemplates = expressAsync(async (req, res, next) => {
 
       if (isAdmin) {
         return data;
-      } else {
+      } else if (isAgent || isFreeTrial) {
         return personalEmailTempaltes;
       }
     });

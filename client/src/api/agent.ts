@@ -8,6 +8,7 @@ import {
 import { SubscriptionsData } from "./models/Subscriptions";
 import { SubscriberRegisterData } from "./models/Subscriber";
 import { DefaultResSuccess } from "./models/Defaults";
+import { MerchandiseData } from "admin/models/merchandiseModel";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -44,7 +45,8 @@ const requests = {
 const BlogAndResource = {
   list: (skipItemNumber?: number, limit?: number) =>
     requests.get<BlogDataWithLength | undefined>(
-      `/api/blog-and-resource/numbered-recent-blogs/${skipItemNumber}/${limit ? limit : 100
+      `/api/blog-and-resource/numbered-recent-blogs/${skipItemNumber}/${
+        limit ? limit : 100
       }`
     ),
   listSingle: (blogTitle: string) =>
@@ -189,7 +191,6 @@ const Subscriber = {
     userGuid: string,
     templateId: string,
     eventId: string
-
   ) => {
     const endpoint = "/api/subscriber/subscribe-email";
 
@@ -202,7 +203,7 @@ const Subscriber = {
         phoneNumber,
         userGuid,
         templateId,
-        eventId
+        eventId,
       });
 
       return res;
@@ -219,8 +220,7 @@ const Subscriber = {
     phoneNumber: string,
     verificationCode: string,
     userGuid: string,
-    templateId: string,
-
+    templateId: string
   ) => {
     const endpoint = "/api/subscriber/subscribe-code";
 
@@ -282,71 +282,87 @@ const RSVP = {
 };
 
 const Mission = {
-  createMissionAgent: async (
-    emailAddress: string,
-    state: string,
-    zipCode: string,
-    birthDate: Date,
-    profileImage: string
-  ) => {
-    axios.interceptors.request.use((config) => {
-      const token = getUserToken();
-      if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
-        config.headers["Content-Type"] = "multipart/form-data";
-      }
-      return config;
-    });
-
-    const endpoint = `/api/events/mission/registration`;
-    const res = await requests.post(endpoint, {
-      emailAddress,
-      state,
-      zipCode,
-      birthDate,
-      profileImage,
-    });
-    return res;
-  },
-  checkMissionRegistration: async (userGuid: string) => {
-    const endpoint = `/api/events/mission/registration/${userGuid}`;
-    const res = await requests.get<DefaultResSuccess>(endpoint).catch((err) => {
-      let api_res = {
-        message: err.response?.data?.description ?? "Something went wrong",
-        status: "error",
-      };
-
-      return api_res;
-    });
-
-    return res;
-  },
-  claimReward: async (rewardId: string, data) => {
-    const endpoint = `/api/event-orders/claim-reward/${rewardId}`;
-    const { userGuid, addressLine1, addressLine2, state, zipCode, notes } =
-      data;
-
-    const res = await requests
-      .post<DefaultResSuccess>(endpoint, {
-        userGuid,
-        addressLine1,
-        addressLine2,
-        state,
-        zipCode,
-        notes,
-      })
-      .catch((err) => {
-        let api_res = {
-          message: err.response?.data?.description ?? "Something went wrong",
-          status: "error",
-        };
-
-        return api_res;
+    createMissionAgent: async (
+      emailAddress: string,
+      state: string,
+      zipCode: string,
+      birthDate: Date,
+      profileImage: string
+    ) => {
+      axios.interceptors.request.use((config) => {
+        const token = getUserToken();
+        if (token && config.headers) {
+          config.headers.Authorization = `Bearer ${token}`;
+          config.headers["Content-Type"] = "multipart/form-data";
+        }
+        return config;
       });
 
-    return res;
+      const endpoint = `/api/events/mission/registration`;
+      const res = await requests.post(endpoint, {
+        emailAddress,
+        state,
+        zipCode,
+        birthDate,
+        profileImage,
+      });
+      return res;
+    },
+    checkMissionRegistration: async (userGuid: string) => {
+      const endpoint = `/api/events/mission/registration/${userGuid}`;
+      const res = await requests
+        .get<DefaultResSuccess>(endpoint)
+        .catch((err) => {
+          let api_res = {
+            message: err.response?.data?.description ?? "Something went wrong",
+            status: "error",
+          };
+
+          return api_res;
+        });
+
+      return res;
+    },
+    claimReward: async (rewardId: string, data) => {
+      const endpoint = `/api/event-orders/claim-reward/${rewardId}`;
+      const { userGuid, addressLine1, addressLine2, state, zipCode, notes } =
+        data;
+
+      const res = await requests
+        .post<DefaultResSuccess>(endpoint, {
+          userGuid,
+          addressLine1,
+          addressLine2,
+          state,
+          zipCode,
+          notes,
+        })
+        .catch((err) => {
+          let api_res = {
+            message: err.response?.data?.description ?? "Something went wrong",
+            status: "error",
+          };
+
+          return api_res;
+        });
+
+      return res;
+    },
   },
-};
+  Merchandise = {
+    getAllMerchandise: async () => {
+      const url = "/api/merchandise/all";
+      const res = await requests.get<MerchandiseData[]>(url);
+      // .then((data) => {
+      //   return data;
+      // })
+      // .catch((err) => {
+      //   // return false;
+      // });
+
+      return res;
+    },
+  };
 
 const agent = {
   BlogAndResource,
@@ -355,6 +371,7 @@ const agent = {
   Subscriber,
   RSVP,
   Mission,
+  Merchandise,
 };
 
 export default agent;

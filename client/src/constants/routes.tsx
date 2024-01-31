@@ -1,4 +1,4 @@
-import adminPaths from "admin/constants/routes"
+import adminPaths from "admin/constants/routes";
 
 const paths = {
   ...adminPaths,
@@ -73,7 +73,9 @@ const paths = {
 
   /* My WebPage */
   myWebPage: "/agent/:user",
-  webinarPage: "/agent/:user/webinars"
+  webinarPage: "/agent/:user/webinars",
+
+  subRegLandingPage: "/subscriber/registration",
 };
 
-export { paths }
+export { paths };

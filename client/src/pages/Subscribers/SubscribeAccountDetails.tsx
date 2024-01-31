@@ -18,6 +18,7 @@ interface SubscribeAccountDetailsProps {
   onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  isSubRegLandingPage?: boolean;
 }
 const SubscribeAccountDetails: React.FC<SubscribeAccountDetailsProps> = (
   props
@@ -28,14 +29,18 @@ const SubscribeAccountDetails: React.FC<SubscribeAccountDetailsProps> = (
     setVerified(!!value);
   };
 
-  if (props.currentPage === 3) {
-    return <SuccessPage />;
-  }
-
   return (
     <React.Fragment>
       {props.currentPage === 1 ? (
-        <Grid container spacing={2}>
+        <Grid
+          container
+          spacing={2}
+          maxWidth={props.isSubRegLandingPage ? 500 : 1000}
+          padding={props.isSubRegLandingPage ? 3 : 0}
+          className={
+            props.isSubRegLandingPage ? "sub-reg-landing-page-form" : ""
+          }
+        >
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <label className="form-label">Email Address</label>
             <FormikTextInput
@@ -107,7 +112,15 @@ const SubscribeAccountDetails: React.FC<SubscribeAccountDetailsProps> = (
           </Grid>
         </Grid>
       ) : props.currentPage === 2 ? (
-        <Grid container spacing={2}>
+        <Grid
+          container
+          spacing={2}
+          maxWidth={props.isSubRegLandingPage ? 500 : 1000}
+          padding={props.isSubRegLandingPage ? 3 : 0}
+          className={
+            props.isSubRegLandingPage ? "sub-reg-landing-page-form" : ""
+          }
+        >
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <label className="form-label">Verification Code</label>
             <FormikTextInput
@@ -144,6 +157,8 @@ const SubscribeAccountDetails: React.FC<SubscribeAccountDetailsProps> = (
             </div>
           </Grid>
         </Grid>
+      ) : props.currentPage === 3 ? (
+        <SuccessPage isSubRegLandingPage={props.isSubRegLandingPage} />
       ) : null}
     </React.Fragment>
   );
