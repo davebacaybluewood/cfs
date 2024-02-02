@@ -353,12 +353,12 @@ const Mission = {
     getAllMerchandise: async () => {
       const url = "/api/merchandise/all";
       const res = await requests.get<MerchandiseData[]>(url);
-      // .then((data) => {
-      //   return data;
-      // })
-      // .catch((err) => {
-      //   // return false;
-      // });
+
+      return res;
+    },
+    getMerchandiseById: async (merchandiseId: string) => {
+      const url = `/api/merchandise/rewards/${merchandiseId}`;
+      const res = await requests.get<MerchandiseData>(url);
 
       return res;
     },
