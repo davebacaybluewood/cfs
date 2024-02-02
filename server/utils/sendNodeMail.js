@@ -8,6 +8,10 @@ function sendEmail(email, subject, content, attachments, bcc) {
         user: process.env.MAIL_CONFIGS_EMAIL,
         pass: process.env.MAIL_CONFIGS_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized:
+          process.env.NODE_ENV === "development" ? false : true,
+      },
     });
 
     let from = `Comfort Financial Solutions <${process.env.MAIL_CONFIGS_EMAIL}>`;
