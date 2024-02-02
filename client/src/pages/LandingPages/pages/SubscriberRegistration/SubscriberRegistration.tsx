@@ -1,4 +1,4 @@
-import { Alert, Drawer, Grid } from "@mui/material";
+import { Alert, Drawer, Grid, Skeleton } from "@mui/material";
 import "./SubscriberRegistration.scss";
 import WaysToEarnCard from "./components/WaysToEarnCard";
 import { waysToEarn } from "./utilities/constants";
@@ -17,10 +17,9 @@ import { ValuesType } from "pages/Subscribers/models";
 
 const SubscriberRegistration = (props) => {
   const colorCarminePink = "#ed3e4b";
-  const awards_thumbnail =
-    "/assets/images/subs-reg-landing-page/awards-thumbnail.png";
   const [merchandises, setMerchandises] = useState<MerchandiseData[]>();
   const [openMerchDialog, setOpenMerchDialog] = useState(false);
+  const [dialogImage, setDialogImage] = useState("");
 
   const search = useLocation().search;
   const merchandiseId = new URLSearchParams(search).get("merchandiseId");
@@ -71,6 +70,26 @@ const SubscriberRegistration = (props) => {
     if (merchandiseId) {
       setOpenMerchDialog(true);
       modalBtnRef.current?.focus();
+
+      const getMerchandiseInfo = async () => {
+        try {
+          setLoading(true);
+          const res = await agent.Merchandise.getMerchandiseById(merchandiseId)
+            .then((data) => {
+              setDialogImage(data.image);
+            })
+            .catch((err) => {
+              setDialogImage(
+                "/assets/images/subs-reg-landing-page/awards-thumbnail.png"
+              );
+            });
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      getMerchandiseInfo();
+      setShowJoinButton(false);
     }
   }, [merchandiseId]);
 
@@ -84,26 +103,26 @@ const SubscriberRegistration = (props) => {
   }, []);
 
   const handleOpenRegistration = (isOpen: boolean) => {
-    setOpenMerchDialog(true);
-    setClickedJoinButton(true);
+    setOpenMerchDialog(isOpen);
+    setClickedJoinButton(isOpen);
   };
+
+  useEffect(() => {
+    if (openMerchDialog) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [openMerchDialog]);
 
   return (
     <main className="sub-reg-landing-page">
       <section id="carousel" className="carousel-section">
         <div className="carousel-section-slides">
-          {/* <Carousel
-            autoPlay={false}
-            animation="slide"
-            indicators={false}
-            index={activeSlide}
-          > */}
           <RewardsHeroSection
             setOpenMerchDialog={setOpenMerchDialog}
             setOpenRegDrawer={handleOpenRegistration}
           />
-          {/* <RewardsHeroListSection />
-          </Carousel> */}
         </div>
       </section>
       <section id="about" className="about-section">
@@ -235,24 +254,17 @@ const SubscriberRegistration = (props) => {
           </div>
           <div className="modal-body">
             <div className={`left ${clickedJoinButton && "join-btn"}`}>
-              <img src={awards_thumbnail} alt="awards_thumbnail" />
+              {loading ? (
+                <Skeleton width={20} height={20} />
+              ) : (
+                <img src={dialogImage} alt="awards_thumbnail" />
+              )}
               <div className="left-container">
                 <h3>Congratulations</h3>
                 <p>
                   You are on your way on earning your first reward. Click join
                   now to register.
                 </p>
-                {/* <button
-                  type="button"
-                  ref={modalBtnRef}
-                  onClick={() => {
-                    setOpenRegDrawer(true);
-                    setOpenMerchDialog(false);
-                    setActiveSlide(1);
-                  }}
-                >
-                  Join Now
-                </button> */}
               </div>
 
               <div className="logo-container">
