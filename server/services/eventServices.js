@@ -151,7 +151,7 @@ const getEvents = async (userGuid) => {
   }
 
   let events;
-  if (position === PROFILE_POSITIONS.AGENT.value) {
+  if (position === PROFILE_POSITIONS.MASTER_ADMIN.value) {
     const agentEvents = await Events.find({
       $or: [{ postedBy: PROFILE_POSITIONS.MASTER_ADMIN.value }, { userGuid }],
     }).sort({ createdAt: -1 });
