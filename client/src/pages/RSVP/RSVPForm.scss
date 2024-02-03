@@ -112,16 +112,6 @@
           font-size: 1.4rem;
         }
       }
-
-      &.success-stage.rsvp {
-        background-color: #59d9e3; /* For browsers that do not support gradients */
-        background-image: linear-gradient(to right, #59d9e3, #034eaf);
-
-        & li {
-          font-size: 1rem;
-          margin-top: 1rem;
-        }
-      }
     }
   }
 }

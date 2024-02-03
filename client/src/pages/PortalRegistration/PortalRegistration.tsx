@@ -9,7 +9,7 @@ import axios from "axios";
 import AccountSummary from "./components/AccountSummary";
 import ENDPOINTS from "constants/endpoints";
 import { Alert } from "@mui/material";
-import SuccessPage from "./components/SuccessPage";
+import SuccessPage from "../LandingPages/pages/RegistrationSuccessPage/SuccessPage";
 import { ValuesType } from "./models";
 import validationSchema from "./helpers/validationSchema";
 import "./PortalRegistration.scss";
@@ -21,7 +21,6 @@ import LoginPromotions from "library/LogInPromotions/LoginPromotions";
 import { FaQuestionCircle } from "react-icons/fa";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import agent from "admin/api/agent";
-import { FREE_TRIAL_INFO } from "./constants/successpg";
 
 interface PortalRegistrationProps {
   isAdmin?: boolean;
@@ -69,18 +68,17 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     nationality: "",
     birthDate: "",
   });
-  const [agentInfo, setAgentInfo] = useState<any>({});
 
   const stageHeader =
     stage === 1
       ? "Create an account"
       : stage === 2
-        ? "Personal Information"
-        : stage === 3
-          ? "Contact Information"
-          : stage === 4
-            ? "Social Media Links"
-            : "Confirm Account Information";
+      ? "Personal Information"
+      : stage === 3
+      ? "Contact Information"
+      : stage === 4
+      ? "Social Media Links"
+      : "Confirm Account Information";
 
   const changeStage = (newStage: number) => {
     setStage(newStage);
@@ -155,16 +153,6 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
       setError(true);
     }
   };
-
-  useEffect(() => {
-    const getAgentInfo = async () => {
-      const res = await agent.Agents.agentInformation(recruiterUserGuid ?? "");
-
-      setAgentInfo(res);
-    };
-
-    if (recruiterUserGuid) getAgentInfo();
-  }, [recruiterUserGuid]);
 
   return (
     <div className="portal-registration-container">
@@ -245,10 +233,19 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                   birthDate: values.birthDate,
                   zipCode: values.zipCode,
                   recruiterUserGuid: recruiterUserGuid,
-                  templateId: templateId
+                  templateId: templateId,
                 },
                 config
               );
+
+              if (data) {
+                setLoading(false);
+                const successPgUrl = `${paths.regSuccessPage
+                  .replace(":regSrc", "subscriber")
+                  .replace(":userGuid", recruiterUserGuid ?? "")}`;
+
+                navigate(successPgUrl);
+              }
 
               setLoading(false);
               setStage(6);
@@ -279,15 +276,16 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
 
             const personalInfoValidity =
               errors.firstName ||
-                errors.lastName ||
-                errors.position ||
-                errors.roles ||
-                errors.bio ||
-                errors.nationality
+              errors.lastName ||
+              errors.position ||
+              errors.roles ||
+              errors.bio ||
+              errors.nationality
                 ? true
                 : false;
 
-            const contactInfoValidity = errors.address1 || errors.phoneNumber ? true : false;
+            const contactInfoValidity =
+              errors.address1 || errors.phoneNumber ? true : false;
             return (
               <div
                 className={`portal-form ${stage === 6 ? "success-stage" : ""}`}
@@ -361,14 +359,14 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                     onSubmit={handleSubmit}
                   />
                 )}
-                {stage === 6 && (
+                {/* {stage === 6 && (
                   <SuccessPage
                     agentInfo={agentInfo}
                     bannerImg={FREE_TRIAL_INFO.bannerImg}
                     mainMsg={FREE_TRIAL_INFO.mainMsg}
                     banner={FREE_TRIAL_INFO.banner}
                   />
-                )}
+                )} */}
                 {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(initialValues, null, 2)}</pre>  */}
                 {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}

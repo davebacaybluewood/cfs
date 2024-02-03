@@ -44,6 +44,7 @@ import WebinarPage from "pages/MyWebPage/components/WebinarPage";
 import ContactEmailForm from "pages/ContactEmailForm/ContactEmailForm";
 import HomeV2 from "pages/Home/HomeV2";
 import SubscriberRegistration from "pages/LandingPages/pages/SubscriberRegistration/SubscriberRegistration";
+import SuccessPage from "pages/LandingPages/pages/RegistrationSuccessPage/SuccessPage";
 
 type ReactRoutesType = RouteProps & {
   showFooter?: boolean;
@@ -456,6 +457,13 @@ const REACT_ROUTES: ReactRoutesType[] = [
   {
     element: <SubscriberRegistration />,
     path: paths.subRegLandingPage,
+    showNavbar: true,
+    showHeadline: false,
+    showFooter: true,
+  },
+  {
+    element: <SuccessPage />,
+    path: paths.regSuccessPage,
     showNavbar: true,
     showHeadline: false,
     showFooter: true,

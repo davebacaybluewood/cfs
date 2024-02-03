@@ -10,17 +10,17 @@ import "./RSVPForm.scss";
 import { FaClock } from "react-icons/fa";
 import agent from "api/agent";
 import adminAgent from "admin/api/agent";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Event from "admin/models/eventModel";
 import { formatISODateOnly } from "helpers/date";
 import ErrorText from "pages/PortalRegistration/components/ErrorText";
 import { Skeleton } from "@mui/material";
-import { BOP_INFO } from "pages/PortalRegistration/constants/successpg";
-import SuccessPage from "pages/PortalRegistration/components/SuccessPage";
+import { paths } from "constants/routes";
 
 const RSVPForm: React.FC = () => {
   const { eventId } = useParams();
   const search = useLocation().search;
+  const navigate = useNavigate();
   const recruiterUserGuid = new URLSearchParams(search).get("userGuid");
   const initialValues = {
     emailAddress: "",
@@ -132,130 +132,114 @@ const RSVPForm: React.FC = () => {
                 isDataSubmitted ? "success-stage rsvp" : ""
               }`}
             >
-              {isDataSubmitted ? (
-                // <div className="success-message">
-                //   <img src="\assets\images\modal-message.png" />
-                //   <h2>Your RSVP has been submitted</h2>
-                //   <p>
-                //     Your request has been successfully submitted. Please check
-                //     your email for confirmation.
-                //   </p>
-                // </div>
-                <SuccessPage
-                  agentInfo={agentInfo}
-                  bannerImg={BOP_INFO.bannerImg}
-                  mainMsg={BOP_INFO.mainMsg}
-                  secondaryMsg={BOP_INFO.secondaryMsg}
-                />
-              ) : (
-                <React.Fragment>
-                  <h2>Enter Details</h2>
+              <React.Fragment>
+                <h2>Enter Details</h2>
 
-                  <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={async (data) => {
-                      setLoading(true);
-                      const req: any = await agent.RSVP.submitRSVP(
-                        data.firstName,
-                        data.lastName,
-                        data.emailAddress,
-                        data.phoneNumber,
-                        data.remarks,
-                        eventId ?? "",
-                        recruiterUserGuid || ""
-                      );
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  onSubmit={async (data) => {
+                    setLoading(true);
+                    const req: any = await agent.RSVP.submitRSVP(
+                      data.firstName,
+                      data.lastName,
+                      data.emailAddress,
+                      data.phoneNumber,
+                      data.remarks,
+                      eventId ?? "",
+                      recruiterUserGuid || ""
+                    );
 
-                      if (req.status == "error") {
-                        setError(req.message);
-                      } else {
-                        setIsDataSubmitted(true);
-                      }
+                    if (req.status == "error") {
+                      setError(req.message);
+                    } else {
+                      const successPgUrl = `${paths.regSuccessPage
+                        .replace(":regSrc", "bop_rsvp")
+                        .replace(":userGuid", recruiterUserGuid ?? "")}`;
 
-                      setLoading(false);
-                    }}
-                  >
-                    {({ values, handleSubmit }) => {
-                      return (
-                        <React.Fragment>
-                          <Grid container spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={6}>
-                              <div className="form-control">
-                                <h5>First Name (Required)</h5>
-                                <FormikTextInput
-                                  name="firstName"
-                                  placeholder="Enter your first name here"
-                                  value={values.firstName}
-                                  variant="outlined"
-                                />
-                              </div>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={12}
-                              sm={12}
-                              md={6}
-                              lg={6}
-                              paddingTop={0}
-                            >
-                              <div className="form-control">
-                                <h5>Last Name (Required)</h5>
-                                <FormikTextInput
-                                  name="lastName"
-                                  placeholder="Enter your last name here"
-                                  value={values.lastName}
-                                  variant="outlined"
-                                />
-                              </div>
-                            </Grid>
-                            <Grid item xs={12} sm={12} lg={12} paddingTop={0}>
-                              <div className="form-control">
-                                <h5>Email Address (Required)</h5>
-                                <FormikTextInput
-                                  name="emailAddress"
-                                  placeholder="Enter your email address here"
-                                  value={values.emailAddress}
-                                  variant="outlined"
-                                />
-                              </div>
-                            </Grid>
-                            <Grid item xs={12} sm={12} lg={12} paddingTop={0}>
-                              <div className="form-control">
-                                <h5>Phone Number (Required)</h5>
-                                <FormikTextInput
-                                  name="phoneNumber"
-                                  placeholder="Enter your phone number here"
-                                  value={values.phoneNumber}
-                                  variant="outlined"
-                                />
-                              </div>
-                            </Grid>
-                            <Grid item xs={12} sm={12} lg={12}>
-                              <div className="form-control">
-                                <h5>Remarks</h5>
-                                <FormikTextInput
-                                  name="remarks"
-                                  placeholder="Enter your remarks here"
-                                  value={values.remarks}
-                                  variant="outlined"
-                                  isTextArea
-                                />
-                              </div>
-                            </Grid>
+                      navigate(successPgUrl);
+                    }
+
+                    setLoading(false);
+                  }}
+                >
+                  {({ values, handleSubmit }) => {
+                    return (
+                      <React.Fragment>
+                        <Grid container spacing={2}>
+                          <Grid item xs={12} sm={12} md={6} lg={6}>
+                            <div className="form-control">
+                              <h5>First Name (Required)</h5>
+                              <FormikTextInput
+                                name="firstName"
+                                placeholder="Enter your first name here"
+                                value={values.firstName}
+                                variant="outlined"
+                              />
+                            </div>
                           </Grid>
-                          <ErrorText isError={error !== ""} text={error} />
-                          <Button
-                            variant="danger"
-                            onClick={() => handleSubmit()}
+                          <Grid
+                            item
+                            xs={12}
+                            sm={12}
+                            md={6}
+                            lg={6}
+                            paddingTop={0}
                           >
-                            RSVP
-                          </Button>
-                        </React.Fragment>
-                      );
-                    }}
-                  </Formik>
-                </React.Fragment>
-              )}
+                            <div className="form-control">
+                              <h5>Last Name (Required)</h5>
+                              <FormikTextInput
+                                name="lastName"
+                                placeholder="Enter your last name here"
+                                value={values.lastName}
+                                variant="outlined"
+                              />
+                            </div>
+                          </Grid>
+                          <Grid item xs={12} sm={12} lg={12} paddingTop={0}>
+                            <div className="form-control">
+                              <h5>Email Address (Required)</h5>
+                              <FormikTextInput
+                                name="emailAddress"
+                                placeholder="Enter your email address here"
+                                value={values.emailAddress}
+                                variant="outlined"
+                              />
+                            </div>
+                          </Grid>
+                          <Grid item xs={12} sm={12} lg={12} paddingTop={0}>
+                            <div className="form-control">
+                              <h5>Phone Number (Required)</h5>
+                              <FormikTextInput
+                                name="phoneNumber"
+                                placeholder="Enter your phone number here"
+                                value={values.phoneNumber}
+                                variant="outlined"
+                              />
+                            </div>
+                          </Grid>
+                          <Grid item xs={12} sm={12} lg={12}>
+                            <div className="form-control">
+                              <h5>Remarks</h5>
+                              <FormikTextInput
+                                name="remarks"
+                                placeholder="Enter your remarks here"
+                                value={values.remarks}
+                                variant="outlined"
+                                isTextArea
+                              />
+                            </div>
+                          </Grid>
+                        </Grid>
+                        <ErrorText isError={error !== ""} text={error} />
+                        <Button variant="danger" onClick={() => handleSubmit()}>
+                          RSVP
+                        </Button>
+                      </React.Fragment>
+                    );
+                  }}
+                </Formik>
+              </React.Fragment>
             </div>
           </Grid>
         </Grid>

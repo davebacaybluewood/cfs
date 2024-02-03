@@ -4,8 +4,7 @@ import FormikTextInput from "library/Formik/FormikInput";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
-import SuccessPage from "pages/PortalRegistration/components/SuccessPage";
-import { SUBSCRIBER_INFO } from "pages/PortalRegistration/constants/successpg";
+import SuccessPage from "pages/LandingPages/pages/RegistrationSuccessPage/SuccessPage";
 import agent from "admin/api/agent";
 
 interface SubscribeAccountDetailsProps {
@@ -32,18 +31,6 @@ const SubscribeAccountDetails: React.FC<SubscribeAccountDetailsProps> = (
   const recaptchaOnChangeHandler = (value: any) => {
     setVerified(!!value);
   };
-
-  const [agentInfo, setAgentInfo] = useState<any>({});
-
-  useEffect(() => {
-    const getAgentInfo = async () => {
-      const res = await agent.Agents.agentInformation(recruiterUserGuid ?? "");
-
-      setAgentInfo(res);
-    };
-
-    if (recruiterUserGuid) getAgentInfo();
-  }, [recruiterUserGuid]);
 
   return (
     <React.Fragment>
@@ -173,13 +160,6 @@ const SubscribeAccountDetails: React.FC<SubscribeAccountDetailsProps> = (
             </div>
           </Grid>
         </Grid>
-      ) : props.currentPage === 3 ? (
-        // <SuccessPage isSubRegLandingPage={props.isSubRegLandingPage} />
-        <SuccessPage
-          agentInfo={agentInfo}
-          bannerImg={SUBSCRIBER_INFO.bannerImg}
-          mainMsg={SUBSCRIBER_INFO.mainMsg}
-        />
       ) : null}
     </React.Fragment>
   );
