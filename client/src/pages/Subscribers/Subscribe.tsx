@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import SubscribeAccountDetails from "./SubscribeAccountDetails";
 import Spinner from "library/Spinner/Spinner";
@@ -9,10 +9,11 @@ import classNames from "classnames";
 import { MAIN_IMAGES } from "constants/constants";
 import agent from "api/agent";
 import "./Subscribe.scss";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LoginPromotions from "library/LogInPromotions/LoginPromotions";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
 import { FaQuestionCircle } from "react-icons/fa";
+import { paths } from "constants/routes";
 
 interface SubscribeProps {
   isAdmin?: boolean;
@@ -24,6 +25,15 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
   });
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const successPgUrl = `${paths.regSuccessPage
+      .replace(":regSrc", "subscriber")
+      .replace(":userGuid", userGuid ?? "userGuid=?")}`;
+
+    navigate(successPgUrl);
+  }, []);
 
   const initialValues = {
     email: "",
@@ -47,7 +57,11 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
       <div className="left-col">
         <LoginPromotions />
       </div>
-      <div className="right-col">
+      <div
+        className={`right-col ${
+          currentPage === 3 ? "success-stage subscriber" : ""
+        }`}
+      >
         <div className="light-bulb">
           <HtmlTooltip
             title={
@@ -119,7 +133,11 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
 
               if (req) {
                 setLoading(false);
-                setCurrentPage(3);
+                const successPgUrl = `${paths.regSuccessPage
+                  .replace(":regSrc", "subscriber")
+                  .replace(":userGuid", userGuid ?? "no-recruit")}`;
+
+                navigate(successPgUrl);
               } else {
                 setLoading(false);
                 setInvalid({
@@ -145,7 +163,11 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
                 : true;
 
             return (
-              <div className="portal-form">
+              <div
+                className={`portal-form ${
+                  currentPage === 3 ? "success-stage" : ""
+                }`}
+              >
                 {loading ? <Spinner variant="fixed" /> : null}
                 {currentPage !== 3 ? (
                   <React.Fragment>
