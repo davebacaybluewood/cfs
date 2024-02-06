@@ -204,6 +204,13 @@ const getEvents = async (userGuid) => {
 
   if (events.length < 1) return;
 
+  events.map((data) => {
+    if (data.postedBy === PROFILE_POSITIONS.MASTER_ADMIN.value) {
+      data.authorFirstName = "CFS Admin";
+      data.authorLastName = "";
+    }
+  });
+
   const filteredEvents = events.map((data) => {
     const currentDate = Date.parse(new Date());
     const currentMonth = new Date().getMonth() + 1;
