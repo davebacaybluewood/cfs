@@ -150,56 +150,59 @@ const getEvents = async (userGuid) => {
     position = PROFILE_POSITIONS.MASTER_ADMIN.value;
   }
 
+  /* Events list Visibility
+   * admin = admin/own
+   * agent = admin/own
+   * subscriber = admin/recruiter
+   * free-trial = admin/recruiter
+   */
   let events;
-  if (position === PROFILE_POSITIONS.MASTER_ADMIN.value) {
-    const agentEvents = await Events.find({
-      $or: [{ postedBy: PROFILE_POSITIONS.MASTER_ADMIN.value }, { userGuid }],
-    }).sort({ createdAt: -1 });
-    events = agentEvents?.map((data) => {
-      data.authorFirstName = "CFS Admin";
-      data.authorLastName = "";
-
-      return data;
-    });
-  } else if (position === PROFILE_POSITIONS.SUBSCRIBER.value) {
-    const subscriberEvents = await Events.find({
-      $or: [
-        { postedBy: PROFILE_POSITIONS.MASTER_ADMIN.value },
-        { userGuid: recruiterUserGuid },
-      ],
-    }).sort({ createdAt: -1 });
-
-    events = subscriberEvents?.map((data) => {
-      data.authorFirstName = "Admin";
-      data.authorLastName = "";
-
-      return data;
-    });
-  } else {
-    events = await Events.aggregate([
-      {
-        $lookup: {
-          from: "agents",
-          localField: "userGuid",
-          foreignField: "userGuid",
-          as: "eventDoc",
-        },
-      },
-      {
-        $set: {
-          authorFirstName: {
-            $first: "$eventDoc.firstName",
-          },
-          authorLastName: {
-            $first: "$eventDoc.lastName",
-          },
-        },
-      },
-      {
-        $unset: "eventDoc",
-      },
-    ]).sort({ createdAt: -1 });
+  let userGuidFilter;
+  if (
+    position === PROFILE_POSITIONS.MASTER_ADMIN.value ||
+    position === PROFILE_POSITIONS.AGENT.value
+  ) {
+    userGuidFilter = userGuid;
+  } else if (
+    position === PROFILE_POSITIONS.SUBSCRIBER.value ||
+    position === PROFILE_POSITIONS.FREE_30DAYS_TRIAL.value
+  ) {
+    userGuidFilter = recruiterUserGuid;
   }
+
+  events = await Events.aggregate([
+    {
+      $match: {
+        $or: [
+          { postedBy: PROFILE_POSITIONS.MASTER_ADMIN.value },
+          { userGuid: userGuidFilter },
+        ],
+      },
+    },
+    {
+      $lookup: {
+        from: "agents",
+        localField: "userGuid",
+        foreignField: "userGuid",
+        as: "eventDoc",
+      },
+    },
+    {
+      $set: {
+        authorFirstName: {
+          $first: "$eventDoc.firstName",
+        },
+        authorLastName: {
+          $first: "$eventDoc.lastName",
+        },
+      },
+    },
+    {
+      $unset: "eventDoc",
+    },
+  ]).sort({ createdAt: -1 });
+
+  if (events.length < 1) return;
 
   const filteredEvents = events.map((data) => {
     const currentDate = Date.parse(new Date());
