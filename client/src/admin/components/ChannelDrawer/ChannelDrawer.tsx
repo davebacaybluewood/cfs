@@ -211,21 +211,18 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
         channelName ?? ""
       );
 
-      setChannels((prevState) => {
-        return prevState.map((el) =>
-          el.id === channelId
+      setChannels(
+        channels.map((channel) =>
+          channel.id === channelId
             ? {
-                ...el,
+                ...channel,
                 label: channelName,
-                id: data?._id ?? "",
                 initialValue: channelName,
-                isNew: false,
                 name: channelName,
-                type: string().required(),
               }
-            : el
-        );
-      });
+            : channel
+        )
+      );
       // toast.success("Channel Updated");
       return true;
     } finally {
