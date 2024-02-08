@@ -416,6 +416,10 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
                                     </React.Fragment>
                                   ) : (
                                     <button
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter")
+                                          e.preventDefault();
+                                      }}
                                       onClick={(e) => {
                                         removeChannel(
                                           data.id,
