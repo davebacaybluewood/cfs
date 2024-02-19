@@ -27,14 +27,6 @@ const Subscribe: React.FC<SubscribeProps> = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const successPgUrl = `${paths.regSuccessPage
-      .replace(":regSrc", "subscriber")
-      .replace(":userGuid", userGuid ?? "userGuid=?")}`;
-
-    navigate(successPgUrl);
-  }, []);
-
   const initialValues = {
     email: "",
     password: "",
