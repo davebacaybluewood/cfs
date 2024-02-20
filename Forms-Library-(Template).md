@@ -1,8 +1,13 @@
 # Overview
 The forms library is a set forms where the user can able to create or generate a form in the project by clicking a button.
 
-Search
-**onChange**: should be 3 characters to be able to filter the forms
+GET
+- **onChange**: should be 3 characters to be able to filter the forms
+
+- **props condition**
+   - disabled: if project is finalized
+   - if the form has been added in the project management view, the add button will filled else it's outlined
+   -
 
 - Endpoint: {form-domain}/projectforms/{projectId}
 - Method: POST
