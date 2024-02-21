@@ -74,6 +74,7 @@ export const profileInitialValues = {
   instagram: "",
   linkedIn: "",
   facebook: "",
+  discordId: "",
   password: "",
   languages: [],
   role: "",
