@@ -20,6 +20,9 @@ const createEvent = async (req, res, next) => {
     meetingLink,
   } = req.body;
 
+  const event = await Events.find({ userGuid, title });
+  if (event.length > 0) return false;
+
   /** Upload image to cloudinary */
   let thumbnail;
   try {
