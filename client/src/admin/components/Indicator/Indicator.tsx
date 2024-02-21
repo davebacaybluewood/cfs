@@ -20,7 +20,6 @@ const Indicator: React.FC<IndicatorProps> = (props) => {
         </div>
         <div className="caption-holder">
           <h2>{props.header || "Currently working on this page."}</h2>
-          <p>{props.description || "Phase 3.1 Development"}</p>
         </div>
       </div>
       {props.buttonConfigs ? (
