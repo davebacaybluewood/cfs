@@ -366,8 +366,8 @@ const emailMarketingEmail = (data) => {
                 >
                   <p style="margin: 0; font-weight: 400; font-size: 12px">
                     Have a question or need help? Email me:
-                    <a href="mailto: spencerbacay@gmail.com"
-                      >spencerbacay@gmail.com</a
+                    <a href="mailto: support@gocfs.pro"
+                      >support@gocfs.pro</a
                     >
                   </p>
                   <p style="margin: 0; font-weight: 400; font-size: 12px">
