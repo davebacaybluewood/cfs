@@ -831,7 +831,9 @@ const ContractForm: React.FC = () => {
               };
 
               const importAll = () => {
-                const newContactValuesDrawer = [...contactsValue, ...contacts];
+                const newContactValuesDrawer = Array.from(
+                  new Set([...contactsValue, ...contacts])
+                );
                 setContactsValue(newContactValuesDrawer);
                 setFieldValue("recipients", newContactValuesDrawer);
               };
