@@ -388,15 +388,7 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                   <FormikTextInput
                     name="discordId"
                     label="Discord ID (Optional)"
-                    value={values.facebook}
-                    variant="filled"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={2}>
-                  <FormikTextInput
-                    name="facebook"
-                    label="Facebook (Optional)"
-                    value={values.facebook}
+                    value={values.discordId}
                     variant="filled"
                   />
                 </Grid>

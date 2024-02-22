@@ -48,6 +48,12 @@
         .captions {
           position: relative;
           top: 8px;
+          display: flex;
+          flex-flow: column;
+          max-width: 250px;
+          flex-wrap: nowrap;
+          overflow-wrap: break-word;
+
           h4 {
             font-weight: 300;
             color: white;

@@ -5,11 +5,18 @@ const emailMarketingEmail = (data) => {
   const userGuid = data.userGuid;
   const templateId = data.templateId
 
-  const host = "https://www.gocfs.pro";
+  const host =
+    process.env.NODE_ENV === "production"
+      ? "https://gocfs.pro"
+      : process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : process.env.NODE_ENV === "qa" ?
+        process.env.QA_URL.toString()
+      : "";
 
   const subscriberLeadLink = `${host}/subscribe?userGuid=${userGuid}&templateId=${templateId}`
   const portalLeadLink = `${host}/portal-registration?userGuid=${userGuid}&templateId=${templateId}`
-
+  
   return `<!-- Free to use, HTML email template designed & built by FullSphere. Learn more about us at www.fullsphere.co.uk -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html
@@ -289,7 +296,7 @@ const emailMarketingEmail = (data) => {
             </div>
 
             <div style="margin-top: 25px;">
-              <a href="https://www.gocfs.pro/agents/${agentInfo.userGuid}" 
+              <a href="${host}/agents/${agentInfo.userGuid}" 
               style="
                 background-color: #0057b7;
                 color: #fff;
@@ -366,8 +373,8 @@ const emailMarketingEmail = (data) => {
                 >
                   <p style="margin: 0; font-weight: 400; font-size: 12px">
                     Have a question or need help? Email me:
-                    <a href="mailto: spencerbacay@gmail.com"
-                      >spencerbacay@gmail.com</a
+                    <a href="mailto: support@gocfs.pro"
+                      >support@gocfs.pro</a
                     >
                   </p>
                   <p style="margin: 0; font-weight: 400; font-size: 12px">

@@ -80,7 +80,7 @@ const EventsForm = () => {
     window.addEventListener("focus", handleFocusBack);
   };
 
-  const submitHandler = async (data) => {
+  const submitHandler = async (data: any): Promise<boolean> => {
     setLoading(true);
     const res = await agent.Events.createEvent({
       userGuid,
@@ -91,22 +91,30 @@ const EventsForm = () => {
       privacy: "PUBLIC",
       thumbnail: data.thumbnail,
       meetingLink: data.meetingLink,
-    });
+    })
+      .then((data) => {
+        toast.success(`Event has been created.`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
 
-    if (res) {
-      toast.success(`Event has been created.`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+        return true;
+      })
+      .catch((err) => {
+        toast.error("Error encountered creating event!");
+        return false;
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
-      setLoading(false);
-    }
+    return res;
   };
 
   const editHandler = async (data) => {
@@ -184,7 +192,7 @@ const EventsForm = () => {
                   meetingLink: data.meetingLink,
                 });
               } else {
-                await submitHandler({
+                const res = await submitHandler({
                   userGuid,
                   title: data.title,
                   eventDate: data.eventDate,
@@ -194,6 +202,22 @@ const EventsForm = () => {
                   thumbnail: data.thumbnail,
                   meetingLink: data.meetingLink,
                 });
+
+                console.log(res);
+
+                if (res)
+                  actions.resetForm({
+                    values: {
+                      thumbnail: "",
+                      title: "",
+                      eventDate: "",
+                      status: "",
+                      content: "",
+                      design: "",
+                      shortDescription: "",
+                      meetingLink: "",
+                    },
+                  });
               }
             }}
             validationSchema={validationSchema}
