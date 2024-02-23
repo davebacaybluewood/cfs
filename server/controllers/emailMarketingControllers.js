@@ -331,10 +331,10 @@ const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
     let agentName;
     const hierarchy = await Hierarchy.find({ userGuid });
     if (hierarchy.length > 0) {
-      const hierachyCode = hierarchy[0].hierachyCode;
+      const hierarchyCode = hierarchy[0].hierarchyCode;
 
       /** Get the head of hierarchy to get the user guid */
-      const hierarchyHead = await Hierarchy.find({ hierachyCode });
+      const hierarchyHead = await Hierarchy.find({ hierarchyCode });
       userGuidHead = hierarchyHead[0].userGuid;
 
       /** Get the head information */
