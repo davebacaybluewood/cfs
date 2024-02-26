@@ -11,6 +11,7 @@ import {
   updateAgent,
   updateAgentStatus,
   updateAgentTestimonial,
+  getAgentTestimonials,
   updateAgentWebinar,
   sendContactEmail,
 } from "../controllers/agentControllers.js";
@@ -28,6 +29,7 @@ router
 router.route("/:id").get(getSingleAgent).delete(protect, deleteAgent);
 router.route("/agent-status/:id").put(protect, adminAuth, updateAgentStatus);
 router.route("/agent-counts/all").get(protect, adminAuth, getAgentsCount);
+router.route("/:id/testimonials").get(getAgentTestimonials);
 router.route("/:id/testimonials").put(addAgentTestimonial);
 router.route("/:id/contact").post(sendContactEmail);
 router.route("/:id/testimonials/update").put(protect, updateAgentTestimonial);

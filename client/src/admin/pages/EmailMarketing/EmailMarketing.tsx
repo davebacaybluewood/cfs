@@ -58,6 +58,7 @@ import axios from "axios";
 import { Close } from "@mui/icons-material";
 import Agent from "../../api/agent";
 import { CategoryPayload } from "admin/api/categoryServices/categoryModels";
+import uniqBy from "lodash/uniqBy.js";
 
 interface Contact {
   value: string;
@@ -831,9 +832,11 @@ const ContractForm: React.FC = () => {
               };
 
               const importAll = () => {
-                const newContactValuesDrawer = Array.from(
-                  new Set([...contactsValue, ...contacts])
+                const newContactValuesDrawer = uniqBy(
+                  [...contactsValue, ...contacts],
+                  (c) => c.value
                 );
+
                 setContactsValue(newContactValuesDrawer);
                 setFieldValue("recipients", newContactValuesDrawer);
               };

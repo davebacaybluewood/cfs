@@ -241,8 +241,8 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
               if (data) {
                 setLoading(false);
                 const successPgUrl = `${paths.regSuccessPage
-                  .replace(":regSrc", "subscriber")
-                  .replace(":userGuid", recruiterUserGuid ?? "")}`;
+                  .replace(":regSrc", "free_trial")
+                  .replace(":userGuid", recruiterUserGuid ?? "none")}`;
 
                 navigate(successPgUrl);
               }

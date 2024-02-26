@@ -20,7 +20,6 @@ const SuccessPage = () => {
   const location = useLocation().pathname;
   const locArr = location.split("/");
   const recruiterUserGuid = locArr[locArr.length - 1];
-  console.log("recruiterUserGuid", recruiterUserGuid);
   const regSrc = locArr[locArr.length - 2];
   const [pageInfo, setPageInfo] = useState<any>();
   const [agentName, setAgentName] = useState("");
