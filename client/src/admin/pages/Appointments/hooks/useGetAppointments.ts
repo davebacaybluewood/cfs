@@ -20,7 +20,10 @@ type FetchDataResult = {
   loading: boolean;
   appointments: AppointmentTypes[] | [];
 };
-const useGetAppointments = (appointment_type: string): FetchDataResult => {
+const useGetAppointments = (
+  userGuid: string,
+  appointment_type: string
+): FetchDataResult => {
   const [isLoading, setIsLoading] = useState(false);
   const [appointments, setAppointments] = useState<AppointmentTypes[]>([]);
 
@@ -48,6 +51,29 @@ const useGetAppointments = (appointment_type: string): FetchDataResult => {
 
     fetchAppointments();
   }, [appointment_type]);
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      setIsLoading(true);
+      try {
+        let res = await axios({
+          method: "get",
+          url: `${ENDPOINTS.APPOINTMENT_AGENTS}/agent/${userGuid}`,
+          headers: {
+            Authorization: "Bearer " + getUserToken(),
+            "Content-Type": "application/json",
+          },
+        });
+
+        setAppointments(res.data.data);
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAppointments();
+  }, [userGuid]);
 
   return {
     appointments: appointments,
