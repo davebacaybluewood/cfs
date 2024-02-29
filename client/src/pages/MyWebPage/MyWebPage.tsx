@@ -240,12 +240,14 @@ const MyWebPage: React.FC = () => {
                 <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className={`left-col ${isSticky ? "sticky" : ""}`}>
                     <div className="contact-container">
-                      {contactLink.map((con) => (
-                        <div className="contact">
-                          <div className="icon-holder">{con.icon}</div>
-                          <span>{con.text}</span>
-                        </div>
-                      ))}
+                      {contactLink
+                        .filter((c) => c.text != "")
+                        .map((con) => (
+                          <div className="contact">
+                            <div className="icon-holder">{con.icon}</div>
+                            <span>{con.text}</span>
+                          </div>
+                        ))}
                       <div
                           className="contact copy" 
                           style={{ marginBottom: "2rem" }}
