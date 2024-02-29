@@ -140,6 +140,7 @@ const ContractForm: React.FC = () => {
   const [templateId, setTemplateId] = useState(
     new URLSearchParams(search).get("templateId")
   );
+  const [formAction, setFormAction] = useState("");
 
   const populateForm = (
     emailBody: string,
@@ -387,6 +388,7 @@ const ContractForm: React.FC = () => {
       setCategoryValue([]);
       setContactsValue([]);
       unlayer?.loadBlank({});
+      setFormAction("send");
     }
   }, [history]);
 
@@ -1034,7 +1036,9 @@ const ContractForm: React.FC = () => {
                       lg={12}
                       className="form-card-container"
                     >
-                      <label>Categories (Required)</label>
+                      <label>
+                        Categories {formAction !== "send" && "(Required)"}
+                      </label>
                       <CreatableSelect
                         isMulti
                         options={filteredCategory}
@@ -1097,6 +1101,14 @@ const ContractForm: React.FC = () => {
                             };
                           },
                         }}
+                      />
+                      <ErrorText
+                        isError={
+                          categoryValue?.length === 0 &&
+                          !!touched.categories &&
+                          formAction !== "send"
+                        }
+                        text="Category field is required."
                       />
                     </Grid>
                     <Grid
@@ -1323,7 +1335,8 @@ const ContractForm: React.FC = () => {
                             disabled={
                               Object.values(errors).length !== 0 ||
                               contactValue?.length === 0 ||
-                              categoryValue?.length === 0
+                              (categoryValue?.length === 0 &&
+                                formAction !== "send")
                             }
                           >
                             Send
