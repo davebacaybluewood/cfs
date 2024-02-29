@@ -218,6 +218,7 @@ const EventsForm = () => {
                       meetingLink: "",
                     },
                   });
+                setThumbnailPreview("");
               }
             }}
             validationSchema={validationSchema}
