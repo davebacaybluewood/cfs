@@ -55,7 +55,9 @@ const ContractForm: React.FC = () => {
     phoneNumber: Yup.string().required("Phone number is required."),
     licenseNumber: Yup.string().required("License number is required."),
     eAndO: Yup.string().required("E&O is required."),
-    ssnNumber: Yup.string().required("SSN Number is required."),
+    ssnNumber: Yup.string()
+      .required("SSN Number is required.")
+      .length(9, "SSN Number should be 9 digits only"),
     carrier: Yup.array()
       .min(1, "Pick at least 1 Insurance Carrier")
       .required("Insurance Carrier is required."),
