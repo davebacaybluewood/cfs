@@ -957,7 +957,6 @@ const ContractForm: React.FC = () => {
                               return {
                                 ...defaultStyles,
                                 color: "rgba(0, 0, 0, 0.3)",
-                                zIndex: 9,
                               };
                             },
 
@@ -1085,7 +1084,6 @@ const ContractForm: React.FC = () => {
                             return {
                               ...defaultStyles,
                               color: "rgba(0, 0, 0, 0.3)",
-                              zIndex: 9,
                             };
                           },
 
