@@ -171,6 +171,7 @@ const MailLibrary: React.FC = () => {
         });
       }
     } catch (error) {
+      toast.error("Error updating status of template");
     } finally {
       setFixedLoading(false);
     }
