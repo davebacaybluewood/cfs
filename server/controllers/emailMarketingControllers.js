@@ -440,6 +440,26 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
     } = req.body;
     const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
 
+    const emailTemplateData = await EmailTemplate.find({
+      _id: mongoose.Types.ObjectId(templateId),
+      // userGuid: userGuid,
+    });
+
+    const emailTemplate = emailTemplateData[0];
+
+    const changeStatus = emailTemplate.status !== templateStatus ? true : false;
+
+    if (changeStatus) {
+      emailTemplate.status = undefinedValidator(
+        emailTemplate.status,
+        templateStatus
+      );
+
+      await emailTemplate.save();
+      res.json(`[Email Template] has been successfuly ${templateStatus}.`);
+      return;
+    }
+
     if (
       !userGuid ||
       !templateId ||
@@ -453,13 +473,6 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
     ) {
       throw new Error("Error occured in updating.");
     }
-
-    const emailTemplateData = await EmailTemplate.find({
-      _id: mongoose.Types.ObjectId(templateId),
-      // userGuid: userGuid,
-    });
-
-    const emailTemplate = emailTemplateData[0];
 
     if (emailTemplateData.length) {
       emailTemplate.templateName = undefinedValidator(
