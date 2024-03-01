@@ -66,8 +66,8 @@ const MailLibraryForm: React.FC = () => {
   const [categoryLoading, setCategoryLoading] = useState(false);
 
   const validationSchema = Yup.object({
-    subject: Yup.string().required("Subject is required."),
-    templateName: Yup.string().required("Template name is required."),
+    subject: Yup.string().trim().required("Subject is required."),
+    templateName: Yup.string().trim().required("Template name is required."),
     categories: Yup.array()
       .min(1, "Pick at least 1 categories")
       .required("Categories is required."),
