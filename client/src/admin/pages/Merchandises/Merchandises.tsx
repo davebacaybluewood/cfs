@@ -52,7 +52,7 @@ const Merchandises = () => {
   });
 
   return (
-    <Wrapper loading={loading} breadcrumb={crumbs}>
+    <Wrapper loading={false} breadcrumb={crumbs}>
       <DocumentTitleSetter title="Merchandises | CFS Portal" />
       {isAdmin ? (
         <MerchandiseAdmin />
