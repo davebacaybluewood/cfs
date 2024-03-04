@@ -91,15 +91,18 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
           id: channel._id,
         };
       });
-      setChannels(filteredChannels ?? []);
-      setIsLoading({
-        channelLoading: false,
-        drawerLoading: isLoading.drawerLoading,
-      });
+
+      if (data) {
+        setChannels(filteredChannels ?? []);
+        setIsLoading({
+          channelLoading: false,
+          drawerLoading: isLoading.drawerLoading,
+        });
+      }
     };
 
     getData();
-  }, [userGuid, props.open]);
+  }, [props.open]);
 
   const addAnotherChannelHandler = (id: string) => {
     const newData: IField[] = [
@@ -296,10 +299,6 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
     });
     _setChannels(modifiedChannelIds);
   }, [channels]);
-
-  useEffect(() => {
-    setIsLoading({ channelLoading: false, drawerLoading: false });
-  }, [props.open]);
 
   return (
     <Drawer
