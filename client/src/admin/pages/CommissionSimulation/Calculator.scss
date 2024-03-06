@@ -72,6 +72,17 @@
           overflow: hidden;
           text-overflow: ellipsis;
 
+          .member-holder {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            svg {
+              margin-right: 1rem;
+            }
+          }
+
           h2 {
             font-family: "Montserrat", sans-serif;
             font-size: 3rem;

@@ -129,7 +129,9 @@ const deleteEvent = async (eventId) => {
 };
 
 const getEvents = async (userGuid) => {
+  console.log(userGuid);
   const agentModel = await Agent.find({ userGuid });
+  console.log(agentModel);
   const agentPositions = agentModel[0].position;
   const filteredPositions = agentPositions.map((data) => data.value);
 
@@ -286,6 +288,8 @@ const getEvents = async (userGuid) => {
       },
     };
   });
+
+  console.log(modifiedEvents);
 
   return modifiedEvents;
 };
