@@ -135,38 +135,45 @@ const MailLibrary: React.FC = () => {
       design,
       settings,
     };
-    const res = await agent.EmailMarketing.updateEmailTemplate(
-      userGuid,
-      templateId,
-      body
-    );
-    if (res) {
-      toast.info(`Template Updated`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setFixedLoading(false);
 
-      setTemplates((prevRows) => {
-        return prevRows.map((row, index) => {
-          const newData =
-            row._id === templateId
-              ? {
-                  ...row,
-                  status: templateStatus,
-                }
-              : row;
-
-          console.log(newData);
-          return newData;
+    try {
+      const res = await agent.EmailMarketing.updateEmailTemplate(
+        userGuid,
+        templateId,
+        body
+      );
+      if (res) {
+        toast.info(`Template Updated`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
         });
-      });
+        setFixedLoading(false);
+
+        setTemplates((prevRows) => {
+          return prevRows.map((row, index) => {
+            const newData =
+              row._id === templateId
+                ? {
+                    ...row,
+                    status: templateStatus,
+                  }
+                : row;
+
+            console.log(newData);
+            return newData;
+          });
+        });
+      }
+    } catch (error) {
+      toast.error("Error updating status of template");
+    } finally {
+      setFixedLoading(false);
     }
   };
 

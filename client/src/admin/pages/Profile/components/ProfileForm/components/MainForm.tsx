@@ -1,4 +1,10 @@
-import { Grid, Button as MUIButton } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Grid,
+  Button as MUIButton,
+  TextField,
+} from "@mui/material";
 import { AGENT_SPECIALTIES } from "constants/constants";
 import { Formik } from "formik";
 import Button from "library/Button/Button";
@@ -275,72 +281,51 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
-                  {/* <FormikTextInput
-                    name="state"
-                    label="State *"
-                    value={values.state}
-                    variant="filled"
-                  /> */}
-                  <Select
-                    className="basic-single"
-                    classNamePrefix="select"
-                    onChange={(event) => {
-                      setFieldValue("state", event!.value);
+                  <Autocomplete
+                    id="select-state"
+                    sx={{
+                      "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline":
+                        {
+                          border: "0",
+                        },
+                      background: "rgba(0, 0, 0, 0.06)",
                     }}
-                    onBlur={(e) => {
-                      if (!values.state) {
-                        setTouched({ ...touched, state: true });
-                      }
-                    }}
-                    placeholder="Select a state"
-                    isSearchable={true}
-                    name="state"
                     options={US_STATES.map((st) => {
-                      return {
-                        label: st.name,
-                        value: st.name,
-                      };
+                      return st.name;
                     })}
-                    styles={{
-                      placeholder: (defaultStyles) => {
-                        return {
-                          ...defaultStyles,
-                          color:
-                            !values.state && !!touched.state
-                              ? "#d32f2f"
-                              : "hsl(0, 0%, 50%)",
-                        };
-                      },
-                      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                      control: (baseStyles, state) => {
-                        return {
-                          ...baseStyles,
-                          background: "rgba(0, 0, 0, 0.06)",
-                          border: "none",
-                          borderBottom:
-                            !values.state && !!touched.state
-                              ? "1px solid #d32f2f"
-                              : "1px solid #333",
-                          borderBottomLeftRadius: "0",
-                          borderBottomRightRadius: "0",
-                          fontSize: "15px",
-                          paddingTop: "7px",
-                          paddingBottom: "7px",
-                          borderColor:
-                            !values.state && !!touched.state
-                              ? "#d32f2f"
-                              : "hsl(0, 0%, 80%)",
-                        };
-                      },
+                    getOptionLabel={(option) => option}
+                    renderOption={(props, option) => (
+                      <Box
+                        component="li"
+                        sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                        {...props}
+                      >
+                        {option}
+                      </Box>
+                    )}
+                    onChange={(event: any, newValue: any | null) => {
+                      setFieldValue("state", newValue);
                     }}
-                    value={
-                      values.state
-                        ? {
-                            label: values.state,
-                            value: values.state,
+                    value={values.state}
+                    // inputValue={values.state}
+                    onInputChange={(event, newInputValue) => {
+                      setFieldValue("state", newInputValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="State"
+                        onBlur={(e) => {
+                          if (!values.state) {
+                            setTouched({ ...touched, state: true });
                           }
-                        : undefined
-                    }
+                        }}
+                        inputProps={{
+                          ...params.inputProps,
+                          autoComplete: "new-password", // disable autocomplete and autofill
+                        }}
+                      />
+                    )}
                   />
                   <ErrorText
                     isError={!values.state && !!touched.state}
@@ -388,15 +373,7 @@ const MainForm: React.FC<MainFormProps> = (props) => {
                   <FormikTextInput
                     name="discordId"
                     label="Discord ID (Optional)"
-                    value={values.facebook}
-                    variant="filled"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={2}>
-                  <FormikTextInput
-                    name="facebook"
-                    label="Facebook (Optional)"
-                    value={values.facebook}
+                    value={values.discordId}
                     variant="filled"
                   />
                 </Grid>

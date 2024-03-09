@@ -239,13 +239,24 @@ const subscriberRegistration = async (subscriberData) => {
 const fetchSubscribersByUser = async (userGuid) => {
   try {
     const user = await User.findOne({ userGuid });
+    const userHierarchy = await Hierarchy.findOne({ userGuid });
     const isAdmin = user?.isAdmin;
+
 
     let subscribers;
     if (!isAdmin) {
       subscribers = await Hierarchy.aggregate([
         {
-          $match: { recruiterUserGuid: userGuid },
+          $match: { hierarchyCode: userHierarchy.hierarchyCode },
+        },
+        {
+          $graphLookup: {
+            from: "hierarchies",
+            startWith: "$recruiterUserGuid",
+            connectFromField: "recruiterUserGuid",
+            connectToField: "userGuid",
+            as: "hierarchy",
+          },
         },
         {
           $lookup: {

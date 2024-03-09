@@ -21,10 +21,9 @@ import { registerUserHierarchyAndPoints } from "../services/userServices.js";
 import PortalSubscription from "../models/portalSubscription.js";
 import nodemailer from "nodemailer";
 import EmailTemplate from "../models/emailTemplate.js";
-import Hierarchy from '../models/hierarchyModel.js'
+import Hierarchy from "../models/hierarchyModel.js";
 import generateString from "../utils/generateString.js";
 import mongoose from "mongoose";
-
 
 /**
  * @desc: Fetch all agents
@@ -270,8 +269,8 @@ const updateAgent = expressAsync(async (req, res) => {
         typeof req.body.avatar === "string"
           ? req.body.avatar
           : agentImgResult.secure_url
-            ? agentImgResult.secure_url
-            : agent.avatar;
+          ? agentImgResult.secure_url
+          : agent.avatar;
       agent.avatar_cloudinary_id = agentImgResult.public_id
         ? agentImgResult.public_id
         : agent.avatar_cloudinary_id;
@@ -452,7 +451,7 @@ const createAgent = expressAsync(async (req, res) => {
       const user = new User(userData);
       await user.save();
 
-      const { templateId } = req.body
+      const { templateId } = req.body;
 
       await registerUserHierarchyAndPoints(req, res, userGuid, templateId);
       await PreProfile.deleteOne({
@@ -581,6 +580,19 @@ const updateAgentTestimonial = expressAsync(async (req, res) => {
     } else {
       res.status(500).json("Bad Request");
     }
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
+});
+
+// @desc    Get all agent Testimonial
+// @route   GET /api/agents/:id/testimonials/
+// @access  Private
+const getAgentTestimonials = expressAsync(async (req, res) => {
+  try {
+    const agent = await Agents.findOne({ userGuid: req.params.id });
+
+    res.status(200).json(API_RES_OK(agent.testimonials));
   } catch (err) {
     res.status(500).json(API_RES_FAIL(err));
   }
@@ -753,6 +765,7 @@ export {
   getAgentsCount,
   addAgentTestimonial,
   updateAgentTestimonial,
+  getAgentTestimonials,
   updateAgentWebinar,
   getAllActiveWebinar,
   registerAccount,

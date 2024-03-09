@@ -51,6 +51,7 @@ const createChannel = async (body) => {
   const channelNames = channels.map((data) => data.name);
 
   const isChannelExists = await Channels.find({
+    userGuid,
     name: { $in: channelNames },
   });
 

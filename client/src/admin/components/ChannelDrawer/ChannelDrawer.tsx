@@ -91,15 +91,18 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
           id: channel._id,
         };
       });
-      setChannels(filteredChannels ?? []);
-      setIsLoading({
-        channelLoading: false,
-        drawerLoading: isLoading.drawerLoading,
-      });
+
+      if (data) {
+        setChannels(filteredChannels ?? []);
+        setIsLoading({
+          channelLoading: false,
+          drawerLoading: isLoading.drawerLoading,
+        });
+      }
     };
 
     getData();
-  }, [userGuid, props.open]);
+  }, [props.open]);
 
   const addAnotherChannelHandler = (id: string) => {
     const newData: IField[] = [
@@ -211,21 +214,18 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
         channelName ?? ""
       );
 
-      setChannels((prevState) => {
-        return prevState.map((el) =>
-          el.id === channelId
+      setChannels(
+        channels.map((channel) =>
+          channel.id === channelId
             ? {
-                ...el,
+                ...channel,
                 label: channelName,
-                id: data?._id ?? "",
                 initialValue: channelName,
-                isNew: false,
                 name: channelName,
-                type: string().required(),
               }
-            : el
-        );
-      });
+            : channel
+        )
+      );
       // toast.success("Channel Updated");
       return true;
     } finally {
@@ -415,6 +415,10 @@ const ChannelDrawer: React.FC<ChannelDrawerProps> = (props) => {
                                     </React.Fragment>
                                   ) : (
                                     <button
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter")
+                                          e.preventDefault();
+                                      }}
                                       onClick={(e) => {
                                         removeChannel(
                                           data.id,

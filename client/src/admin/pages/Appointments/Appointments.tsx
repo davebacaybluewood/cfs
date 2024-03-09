@@ -1,14 +1,14 @@
-import { Grid } from "@mui/material"
-import Title from "admin/components/Title/Title"
-import Wrapper from "admin/components/Wrapper/Wrapper"
-import adminPathsNew from "admin/constants/routes"
-import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay"
-import React from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { CrumbTypes } from "../Dashboard/types"
-import "./Appointments.scss"
-import useGetAppointments from "./hooks/useGetAppointments"
-import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter"
+import { Grid } from "@mui/material";
+import Title from "admin/components/Title/Title";
+import Wrapper from "admin/components/Wrapper/Wrapper";
+import adminPathsNew from "admin/constants/routes";
+import NoInformationToDisplay from "library/NoInformationToDisplay/NoInformationToDisplay";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { CrumbTypes } from "../Dashboard/types";
+import "./Appointments.scss";
+import useGetAppointments from "./hooks/useGetAppointments";
+import DocumentTitleSetter from "library/DocumentTitleSetter/DocumentTitleSetter";
 
 const crumbs: CrumbTypes[] = [
   {
@@ -21,28 +21,31 @@ const crumbs: CrumbTypes[] = [
     url: adminPathsNew.appointments,
     isActive: true,
   },
-]
+];
 
 export const APPOINTMENT_STATUS = {
   ONGOING: "ONGOING",
   ACTIVE: "ACTIVE",
   CANCELLED: "CANCELLED",
-}
+};
 
 const Appointments: React.FC = () => {
-  const navigate = useNavigate()
-  const { typeId } = useParams()
-  const { appointments, loading } = useGetAppointments(typeId ?? "")
+  const navigate = useNavigate();
+  const { typeId, userGuid } = useParams();
+  const { appointments, loading } = useGetAppointments(
+    userGuid ?? "",
+    typeId ?? ""
+  );
 
   const cardClickHandler = (agentId: string) => {
     navigate({
       pathname: adminPathsNew.agentAppointments
         .replace(":agentId", agentId ?? "")
         .replace(":typeId", typeId ?? ""),
-    })
-  }
+    });
+  };
 
-  const pageTitle = typeId === "webinar" ? "Webinar" : "Personal Website"
+  const pageTitle = typeId === "webinar" ? "Webinar" : "Personal Website";
 
   return (
     <Wrapper
@@ -96,12 +99,12 @@ const Appointments: React.FC = () => {
                   </Grid>
                 </div>
               </Grid>
-            )
+            );
           })}
         </Grid>
       </NoInformationToDisplay>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Appointments
+export default Appointments;

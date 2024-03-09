@@ -94,7 +94,7 @@
       }
 
       h2 {
-        margin-bottom: 2rem;
+        margin: 0 2rem;
         text-transform: uppercase;
         color: #333;
       }
@@ -112,17 +112,6 @@
           font-size: 1.4rem;
         }
       }
-    }
-  }
-
-  .success-message {
-    text-align: center;
-    h2 {
-      font-weight: 900;
-      font-size: 1.8rem;
-    }
-    img {
-      width: 100%;
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import AccountDetails from "./components/AccountDetails";
 import PersonalInfo from "./components/PersonalInfo";
@@ -9,7 +9,7 @@ import axios from "axios";
 import AccountSummary from "./components/AccountSummary";
 import ENDPOINTS from "constants/endpoints";
 import { Alert } from "@mui/material";
-import SuccessPage from "./components/SuccessPage";
+import SuccessPage from "../LandingPages/pages/RegistrationSuccessPage/SuccessPage";
 import { ValuesType } from "./models";
 import validationSchema from "./helpers/validationSchema";
 import "./PortalRegistration.scss";
@@ -20,6 +20,7 @@ import { PROFILE_POSITIONS, PROFILE_ROLES } from "./constants";
 import LoginPromotions from "library/LogInPromotions/LoginPromotions";
 import { FaQuestionCircle } from "react-icons/fa";
 import HtmlTooltip from "library/HtmlTooltip/HtmlTooltip";
+import agent from "admin/api/agent";
 
 interface PortalRegistrationProps {
   isAdmin?: boolean;
@@ -72,12 +73,12 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
     stage === 1
       ? "Create an account"
       : stage === 2
-        ? "Personal Information"
-        : stage === 3
-          ? "Contact Information"
-          : stage === 4
-            ? "Social Media Links"
-            : "Confirm Account Information";
+      ? "Personal Information"
+      : stage === 3
+      ? "Contact Information"
+      : stage === 4
+      ? "Social Media Links"
+      : "Confirm Account Information";
 
   const changeStage = (newStage: number) => {
     setStage(newStage);
@@ -158,22 +159,38 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
       <div className="left-col">
         <LoginPromotions />
       </div>
-      <div className="right-col">
-        <div className="light-bulb">
+      <div
+        className={`right-col ${stage === 6 ? "success-stage free-trial" : ""}`}
+      >
+        <div
+          className={`light-bulb ${
+            stage === 6 ? "success-stage free-trial" : ""
+          }`}
+        >
           <HtmlTooltip
             title={
               <div
                 style={{
                   fontSize: "1.3rem",
-                  lineHeight: '1.5rem',
+                  lineHeight: "1.5rem",
                 }}
               >
-                <h2 style={{ fontSize: '1.5rem', margin: '1rem 0' }}>Why you should Join CFS?</h2>
-                <p> CFS offers financial protection and support structure an agent can use to win in any type of market . Joining us exposes you to cutting edge innovations that gurantees a career even during economic downturns .</p>
+                <h2 style={{ fontSize: "1.5rem", margin: "1rem 0" }}>
+                  Why you should Join CFS?
+                </h2>
+                <p>
+                  {" "}
+                  CFS offers financial protection and support structure an agent
+                  can use to win in any type of market . Joining us exposes you
+                  to cutting edge innovations that gurantees a career even
+                  during economic downturns .
+                </p>
               </div>
             }
           >
-            <div><FaQuestionCircle /></div>
+            <div>
+              <FaQuestionCircle />
+            </div>
           </HtmlTooltip>
         </div>
         <Formik
@@ -216,10 +233,19 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                   birthDate: values.birthDate,
                   zipCode: values.zipCode,
                   recruiterUserGuid: recruiterUserGuid,
-                  templateId: templateId
+                  templateId: templateId,
                 },
                 config
               );
+
+              if (data) {
+                setLoading(false);
+                const successPgUrl = `${paths.regSuccessPage
+                  .replace(":regSrc", "free_trial")
+                  .replace(":userGuid", recruiterUserGuid ?? "none")}`;
+
+                navigate(successPgUrl);
+              }
 
               setLoading(false);
               setStage(6);
@@ -250,17 +276,20 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
 
             const personalInfoValidity =
               errors.firstName ||
-                errors.lastName ||
-                errors.position ||
-                errors.roles ||
-                errors.bio ||
-                errors.nationality
+              errors.lastName ||
+              errors.position ||
+              errors.roles ||
+              errors.bio ||
+              errors.nationality
                 ? true
                 : false;
 
-            const contactInfoValidity = errors.address1 || errors.phoneNumber ? true : false;
+            const contactInfoValidity =
+              errors.address1 || errors.phoneNumber ? true : false;
             return (
-              <div className="portal-form">
+              <div
+                className={`portal-form ${stage === 6 ? "success-stage" : ""}`}
+              >
                 {loading ? <Spinner variant="fixed" /> : null}
                 <div className="form-header">
                   {stage !== 6 && (
@@ -330,7 +359,14 @@ const PortalRegistration: React.FC<PortalRegistrationProps> = (props) => {
                     onSubmit={handleSubmit}
                   />
                 )}
-                {stage === 6 && <SuccessPage />}
+                {/* {stage === 6 && (
+                  <SuccessPage
+                    agentInfo={agentInfo}
+                    bannerImg={FREE_TRIAL_INFO.bannerImg}
+                    mainMsg={FREE_TRIAL_INFO.mainMsg}
+                    banner={FREE_TRIAL_INFO.banner}
+                  />
+                )} */}
                 {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(initialValues, null, 2)}</pre>  */}
                 {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}

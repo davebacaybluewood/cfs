@@ -331,10 +331,10 @@ const getEmailTemplatesBySubscriber = expressAsync(async (req, res, next) => {
     let agentName;
     const hierarchy = await Hierarchy.find({ userGuid });
     if (hierarchy.length > 0) {
-      const hierachyCode = hierarchy[0].hierachyCode;
+      const hierarchyCode = hierarchy[0].hierarchyCode;
 
       /** Get the head of hierarchy to get the user guid */
-      const hierarchyHead = await Hierarchy.find({ hierachyCode });
+      const hierarchyHead = await Hierarchy.find({ hierarchyCode });
       userGuidHead = hierarchyHead[0].userGuid;
 
       /** Get the head information */
@@ -440,6 +440,26 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
     } = req.body;
     const validStatuses = ["DRAFT", "ACTIVATED", "DEACTIVATED"];
 
+    const emailTemplateData = await EmailTemplate.find({
+      _id: mongoose.Types.ObjectId(templateId),
+      // userGuid: userGuid,
+    });
+
+    const emailTemplate = emailTemplateData[0];
+
+    const changeStatus = emailTemplate.status !== templateStatus ? true : false;
+
+    if (changeStatus) {
+      emailTemplate.status = undefinedValidator(
+        emailTemplate.status,
+        templateStatus
+      );
+
+      await emailTemplate.save();
+      res.json(`[Email Template] has been successfuly ${templateStatus}.`);
+      return;
+    }
+
     if (
       !userGuid ||
       !templateId ||
@@ -453,13 +473,6 @@ const updateEmailTemplate = expressAsync(async (req, res, next) => {
     ) {
       throw new Error("Error occured in updating.");
     }
-
-    const emailTemplateData = await EmailTemplate.find({
-      _id: mongoose.Types.ObjectId(templateId),
-      // userGuid: userGuid,
-    });
-
-    const emailTemplate = emailTemplateData[0];
 
     if (emailTemplateData.length) {
       emailTemplate.templateName = undefinedValidator(

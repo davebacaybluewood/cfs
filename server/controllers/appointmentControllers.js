@@ -5,7 +5,7 @@ import {
   APPOINTMENT_STATUSES,
   APPOINTMENT_TYPES,
   ROLES,
-  API_RES_FAIL
+  API_RES_FAIL,
 } from "../constants/constants.js";
 import AgentAppointment from "../models/agentAppointment.js";
 
@@ -14,7 +14,7 @@ import AgentAppointment from "../models/agentAppointment.js";
  * @route: GET /api/appointments
  * @acess: Private
  */
-const getAgentAppointments = expressAsync(async (req, res) => {
+const getAllAgentAppointments = expressAsync(async (req, res) => {
   try {
     const status = req.query.status;
     const type = req.query.type;
@@ -41,6 +41,82 @@ const getAgentAppointments = expressAsync(async (req, res) => {
       : {};
 
     const agents = await Agents.find(filteredAgentOptions);
+    const appointments = await AgentAppointment.find(
+      filteredAppointmentOptions
+    );
+
+    const data = agents
+      .map((agent) => {
+        const noOfAppointments = () => {
+          const appointment = appointments
+            .map((apData) => {
+              return apData.agentGuid === agent.userGuid;
+            })
+            .filter((data) => data);
+
+          return appointment.length;
+        };
+        return {
+          _id: agent._id,
+          agentGuid: agent.userGuid,
+          avatar: agent.avatar ? agent.avatar : "/assets/others/no-image.png",
+          name:
+            !agent.firstName && !agent.lastName
+              ? agent?.name
+              : agent?.firstName + " " + agent?.lastName,
+          emailAddress: agent.emailAddress,
+          numberOfAppointments: noOfAppointments(),
+          title: agent.roles[0],
+        };
+      })
+      .filter((data) => data.numberOfAppointments !== 0);
+
+    const filteredAgents = {
+      data: data,
+      totalRecords: data.length,
+    };
+
+    res.json(filteredAgents);
+  } catch (err) {
+    res.status(500).json(API_RES_FAIL(err));
+  }
+});
+
+const getAgentAppointments = expressAsync(async (req, res) => {
+  try {
+    const agentId = req.params.agentId;
+    const status = req.query.status;
+    const type = req.query.type;
+
+    const filteredAgentOptions = {
+      role: ROLES.ROLE_AGENT,
+      status: status ? status : undefined,
+    };
+
+    /** Remove the status key if status is falsy */
+    for (let i in filteredAgentOptions) {
+      if (!filteredAgentOptions[i]) {
+        delete filteredAgentOptions[i];
+      }
+    }
+
+    const filteredAppointmentOptions = type
+      ? {
+          appointment_type:
+            type === APPOINTMENT_TYPES.WEBINAR
+              ? APPOINTMENT_TYPES.WEBINAR
+              : type === APPOINTMENT_TYPES.WEBINAR
+              ? APPOINTMENT_TYPES.PAW
+              : "",
+        }
+      : {};
+
+    const agents = await Agents.find({
+      // filteredAgentOptions,
+      userGuid: agentId,
+    });
+
+    console.log(agents);
     const appointments = await AgentAppointment.find(
       filteredAppointmentOptions
     );
@@ -173,6 +249,7 @@ const getWebinarNumberOfAppointments = expressAsync(async (req, res) => {
 });
 
 export {
+  getAllAgentAppointments,
   getAgentAppointments,
   getScheduleAppointments,
   getSingleAppointment,

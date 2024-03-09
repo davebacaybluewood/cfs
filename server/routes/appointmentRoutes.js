@@ -1,6 +1,7 @@
 import express from "express";
 import {
   cancelAppointment,
+  getAllAgentAppointments,
   getAgentAppointments,
   getScheduleAppointments,
   getSingleAppointment,
@@ -10,7 +11,8 @@ import { adminAuth, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.route("/").get(protect, getAgentAppointments);
+router.route("/").get(protect, getAllAgentAppointments);
+router.route("/agent/:agentId/").get(protect, getAgentAppointments);
 router
   .route("/:appointmentId")
   .get(protect, getSingleAppointment)

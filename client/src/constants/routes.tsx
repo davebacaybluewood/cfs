@@ -76,6 +76,7 @@ const paths = {
   webinarPage: "/agent/:user/webinars",
 
   subRegLandingPage: "/subscriber/registration",
+  regSuccessPage: "/registration/success/:regSrc/:userGuid",
 };
 
 export { paths };

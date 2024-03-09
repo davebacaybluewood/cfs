@@ -15,6 +15,7 @@ import multer from "../utils/multer.js";
 const router = express.Router();
 
 router.route("/all").get(getMerchandise);
+router.route("/rewards/:id").get(getMerchandiseById);
 router
   .route("/")
   .get(protect, getMerchandise)

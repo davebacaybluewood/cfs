@@ -5,7 +5,14 @@ const emailMarketingEmail = (data) => {
   const userGuid = data.userGuid;
   const templateId = data.templateId;
 
-  const host = "https://comfort-financial-solutions-9bdd19a81b7f.herokuapp.com";
+  const host =
+    process.env.NODE_ENV === "production"
+      ? "https://gocfs.pro"
+      : process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : process.env.NODE_ENV === "qa"
+      ? process.env.QA_URL.toString()
+      : "";
 
   const subscriberLeadLink = `${host}/subscribe?userGuid=${userGuid}&templateId=${templateId}`;
   const portalLeadLink = `${host}/portal-registration?userGuid=${userGuid}&templateId=${templateId}`;
@@ -192,11 +199,7 @@ const emailMarketingEmail = (data) => {
               >${agentInfo.name}</span
             >
             <br />
-            ${
-              agentInfo.licenseNumber
-                ? `License #${agentInfo.licenseNumber} <br />`
-                : ""
-            }
+            ${agentInfo.licenseNumber ? `License #${agentInfo.licenseNumber} <br />` : ""}
           </div>
         </div>
         <!-- End of email body -->
@@ -238,9 +241,7 @@ const emailMarketingEmail = (data) => {
               width: 100%;
             "
           >
-            <h3 style="margin-bottom: 0; margin-top: 0; color: #333;">${
-              agentInfo.name
-            }</h3>
+            <h3 style="margin-bottom: 0; margin-top: 0; color: #333;">${agentInfo.name}</h3>
             ${
               agentInfo.bio
                 ? `<p
@@ -293,7 +294,7 @@ const emailMarketingEmail = (data) => {
             </div>
 
             <div style="margin-top: 25px;">
-              <a href="https://www.gocfs.pro/agents/${agentInfo.userGuid}" 
+              <a href="${host}/agents/${agentInfo.userGuid}" 
               style="
                 background-color: #0057b7;
                 color: #fff;
@@ -371,8 +372,8 @@ const emailMarketingEmail = (data) => {
                 >
                   <p style="margin: 0; font-weight: 400; font-size: 12px">
                     Have a question or need help? Email me:
-                    <a href="mailto: spencerbacay@gmail.com"
-                      >spencerbacay@gmail.com</a
+                    <a href="mailto: support@gocfs.pro"
+                      >support@gocfs.pro</a
                     >
                   </p>
                   <p style="margin: 0; font-weight: 400; font-size: 12px">
