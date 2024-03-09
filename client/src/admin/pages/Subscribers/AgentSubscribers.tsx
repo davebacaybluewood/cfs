@@ -368,20 +368,6 @@ const AgentSubscribers: React.FC = () => {
       setAnchorEl(null);
     };
 
-    const channels = subscribers
-      ?.map((data) => data.channels?.map((c) => c))
-      .filter((data) => data)
-      .filter((data) => data?.length);
-
-    const allChannels = Object.values(channels ?? [])
-      .filter((x) => Array.isArray(x))
-      .flat()
-      .filter((data: any) => data);
-
-    const uniqueChannels = allChannels.filter(function (item, pos) {
-      return allChannels.indexOf(item) == pos;
-    });
-
     return (
       <GridToolbarContainer className="custom-toolbar">
         <GridToolbarColumnsButton />
@@ -403,17 +389,13 @@ const AgentSubscribers: React.FC = () => {
           <MenuItem onClick={() => filterCategoryHandler("ALL")}>
             All Channels
           </MenuItem>
-          {uniqueChannels?.map((data) => {
-            const channelName = _channels?.find(
-              (c) => c.channelId === data?.channelId
-            )?.channelName;
-
-            if (channelName)
+          {_channels?.map((data) => {
+            if (data.channelName)
               return (
                 <MenuItem
                   onClick={() => filterCategoryHandler(data?.channelId ?? "")}
                 >
-                  {channelName}
+                  {data.channelName}
                 </MenuItem>
               );
           })}
