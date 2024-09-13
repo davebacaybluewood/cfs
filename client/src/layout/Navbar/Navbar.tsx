@@ -49,10 +49,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           </div>
           <div className="navbar__links">
             {isMobileMode ? (
-              <button
-                onClick={() => setIsMobileNavbarOpen(true)}
-                className="navbar-btn"
-              >
+              <button onClick={() => setIsMobileNavbarOpen(true)} className="navbar-btn">
                 <FaBars />
               </button>
             ) : (
@@ -96,12 +93,12 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                     text: "Contact Us",
                     className: setActive(paths.contact_us),
                   },
-                  {
-                    link: paths.portal,
-                    text: "Agent Portal",
-                    isButton: true,
-                    className: "navbar__btn_-desktop",
-                  },
+                  // {
+                  //   link: paths.portal,
+                  //   text: "Agent Portal",
+                  //   isButton: true,
+                  //   className: "navbar__btn_-desktop",
+                  // },
                 ]}
               />
             )}
@@ -132,9 +129,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               <Link to={paths.family_protection}>Family Protection</Link>
             </li>
             <li className="mobile-links">
-              <Link to={paths.individual_protection}>
-                Inidividual Protection
-              </Link>
+              <Link to={paths.individual_protection}>Inidividual Protection</Link>
             </li>
             <li className="mobile-links">
               <Link to={paths.join_our_team}>Join our team</Link>
@@ -149,10 +144,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               <Link to={paths.contact_us}>Contact Us</Link>
             </li>
             <li>
-              <button
-                onClick={() => navigate(paths.portal)}
-                className="portal-btn"
-              >
+              <button onClick={() => navigate(paths.portal)} className="portal-btn">
                 Agent Portal
               </button>
             </li>
